@@ -32,12 +32,12 @@ public:
     int list[3];
 };
 extern "C" {
-void func_001CF100(It6F6E0* it, void* c);
-void func_001CF0E0(It6F6E0* it, void* c);
-int func_001CEF10(It6F6E0* a, It6F6E0* b);
-void** func_001CF0D0(It6F6E0* it);
-void func_001CEF50(void* p);
-void func_001CEF30(It6F6E0* it);
+void cArray_cXformNodePtr_Begin(It6F6E0* it, void* c);
+void cArray_cXformNodePtr_End(It6F6E0* it, void* c);
+int cArray_cXformNodePtr_ConstIterator_opNe(It6F6E0* a, It6F6E0* b);
+void** cArray_cXformNodePtr_ConstIterator_opMul(It6F6E0* it);
+void cXformNode_SetNeedsUpdate(void* p);
+void cArray_cXformNodePtr_ConstIterator_opInc(It6F6E0* it);
 }
 static inline void MulRot(M6F6E0* out, M6F6E0* m, M6F6E0* rot)
 {
@@ -102,12 +102,12 @@ extern "C" void Xform_SetRotation(X6F6E0* self, M6F6E0* rot)
         It6F6E0 e;
         It6F6E0* pe;
         self->dirty = 1;
-        func_001CF100(&b, self->list);
-        func_001CF0E0(&e, self->list);
+        cArray_cXformNodePtr_Begin(&b, self->list);
+        cArray_cXformNodePtr_End(&e, self->list);
         pe = &e;
-        while (func_001CEF10(&b, pe)) {
-            func_001CEF50(*func_001CF0D0(&b));
-            func_001CEF30(&b);
+        while (cArray_cXformNodePtr_ConstIterator_opNe(&b, pe)) {
+            cXformNode_SetNeedsUpdate(*cArray_cXformNodePtr_ConstIterator_opMul(&b));
+            cArray_cXformNodePtr_ConstIterator_opInc(&b);
         }
     }
 }

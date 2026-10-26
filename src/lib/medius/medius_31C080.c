@@ -13,12 +13,12 @@ typedef struct {
     char pad19[3];
     void* inner;
 } Handle_0031C080;
-extern void func_00318300(void* p);
-int func_0031C080(Handle_0031C080* h)
+extern void NellySetPitchOffsetSase3200(void* p);
+int nciSetPitchOffsetSase3200(Handle_0031C080* h)
 {
     if (h == 0 || h->magic != 0xFACE) return 0x17D4;
     if (h->state != 10) return 0x17DE;
-    func_00318300(h->inner);
+    NellySetPitchOffsetSase3200(h->inner);
     return 0;
 }
 /* merge_units: end func_0031C080 */
@@ -31,12 +31,12 @@ typedef struct {
     char pad19[3];
     void* inner;
 } Handle_0031C0D0;
-extern void func_00318318(void* p);
-int func_0031C0D0(Handle_0031C0D0* h)
+extern void NellySetSpectralFactorSase3200(void* p);
+int nciSetSpectralFactorSase3200(Handle_0031C0D0* h)
 {
     if (h == 0 || h->magic != 0xFACE) return 0x17D4;
     if (h->state != 10) return 0x17DE;
-    func_00318318(h->inner);
+    NellySetSpectralFactorSase3200(h->inner);
     return 0;
 }
 /* merge_units: end func_0031C0D0 */
@@ -49,12 +49,12 @@ typedef struct {
     char pad19[3];
     void* inner;
 } Handle_0031C120;
-extern void func_00318348(void* p);
-int func_0031C120(Handle_0031C120* h)
+extern void NellySetSpectralLedgeSase3200(void* p);
+int nciSetSpectralLedgeSase3200(Handle_0031C120* h)
 {
     if (h == 0 || h->magic != 0xFACE) return 0x17D4;
     if (h->state != 10) return 0x17DE;
-    func_00318348(h->inner);
+    NellySetSpectralLedgeSase3200(h->inner);
     return 0;
 }
 /* merge_units: end func_0031C120 */
@@ -67,12 +67,12 @@ typedef struct {
     char pad19[3];
     void* inner;
 } Handle_0031C170;
-extern void func_00318378(void* p);
-int func_0031C170(Handle_0031C170* h)
+extern void NellySetWhisperFactorSase3200(void* p);
+int nciSetWhisperFactorSase3200(Handle_0031C170* h)
 {
     if (h == 0 || h->magic != 0xFACE) return 0x17D4;
     if (h->state != 10) return 0x17DE;
-    func_00318378(h->inner);
+    NellySetWhisperFactorSase3200(h->inner);
     return 0;
 }
 /* merge_units: end func_0031C170 */
@@ -85,12 +85,12 @@ typedef struct {
     char pad19[3];
     void* inner;
 } Handle_0031C1C0;
-extern void func_00318390(void* p);
-int func_0031C1C0(Handle_0031C1C0* h)
+extern void NellySetRoboticFactorSase3200(void* p);
+int nciSetRoboticFactorSase3200(Handle_0031C1C0* h)
 {
     if (h == 0 || h->magic != 0xFACE) return 0x17D4;
     if (h->state != 10) return 0x17DE;
-    func_00318390(h->inner);
+    NellySetRoboticFactorSase3200(h->inner);
     return 0;
 }
 /* merge_units: end func_0031C1C0 */
@@ -103,12 +103,12 @@ typedef struct {
     char pad19[3];
     void* inner;
 } Handle_0031C210;
-extern void func_003183A8(void* p);
-int func_0031C210(Handle_0031C210* h)
+extern void NellyPrimaryOnSase3200(void* p);
+int nciEnableVoiceFontsSase3200(Handle_0031C210* h)
 {
     if (h == 0 || h->magic != 0xFACE) return 0x17D4;
     if (h->state != 10) return 0x17DE;
-    func_003183A8(h->inner);
+    NellyPrimaryOnSase3200(h->inner);
     return 0;
 }
 /* merge_units: end func_0031C210 */
@@ -121,12 +121,12 @@ typedef struct {
     char pad19[3];
     void* inner;
 } Handle_0031C260;
-extern void func_003183B8(void* p);
-int func_0031C260(Handle_0031C260* h)
+extern void NellyPrimaryOffSase3200(void* p);
+int nciDisableVoiceFontsSase3200(Handle_0031C260* h)
 {
     if (h == 0 || h->magic != 0xFACE) return 0x17D4;
     if (h->state != 10) return 0x17DE;
-    func_003183B8(h->inner);
+    NellyPrimaryOffSase3200(h->inner);
     return 0;
 }
 /* merge_units: end func_0031C260 */
@@ -139,12 +139,12 @@ typedef struct {
     char pad19[3];
     void* inner;
 } Handle_0031C2B0;
-extern void func_003183C0(void* p);
-int func_0031C2B0(Handle_0031C2B0* h)
+extern void NellyRobotOnSase3200(void* p);
+int nciRobotOnSase3200(Handle_0031C2B0* h)
 {
     if (h == 0 || h->magic != 0xFACE) return 0x17D4;
     if (h->state != 10) return 0x17DE;
-    func_003183C0(h->inner);
+    NellyRobotOnSase3200(h->inner);
     return 0;
 }
 /* merge_units: end func_0031C2B0 */
@@ -157,12 +157,12 @@ typedef struct {
     char pad19[3];
     void* inner;
 } Handle_0031C300;
-extern void func_003183D0(void* p);
-int func_0031C300(Handle_0031C300* h)
+extern void NellyRobotOffSase3200(void* p);
+int nciRobotOffSase3200(Handle_0031C300* h)
 {
     if (h == 0 || h->magic != 0xFACE) return 0x17D4;
     if (h->state != 10) return 0x17DE;
-    func_003183D0(h->inner);
+    NellyRobotOffSase3200(h->inner);
     return 0;
 }
 /* merge_units: end func_0031C300 */
@@ -175,12 +175,12 @@ typedef struct {
     char pad19[3];
     void* inner;
 } Handle_0031C350;
-extern void func_003183E0(void* p);
-int func_0031C350(Handle_0031C350* h)
+extern void NellyWhisperOnSase3200(void* p);
+int nciWhisperOnSase3200(Handle_0031C350* h)
 {
     if (h == 0 || h->magic != 0xFACE) return 0x17D4;
     if (h->state != 10) return 0x17DE;
-    func_003183E0(h->inner);
+    NellyWhisperOnSase3200(h->inner);
     return 0;
 }
 /* merge_units: end func_0031C350 */
@@ -193,12 +193,12 @@ typedef struct {
     char pad19[3];
     void* inner;
 } Handle_0031C3A0;
-extern void func_003183F0(void* p);
-int func_0031C3A0(Handle_0031C3A0* h)
+extern void NellyWhisperOffSase3200(void* p);
+int nciWhisperOffSase3200(Handle_0031C3A0* h)
 {
     if (h == 0 || h->magic != 0xFACE) return 0x17D4;
     if (h->state != 10) return 0x17DE;
-    func_003183F0(h->inner);
+    NellyWhisperOffSase3200(h->inner);
     return 0;
 }
 /* merge_units: end func_0031C3A0 */
@@ -225,13 +225,13 @@ typedef struct {
 typedef struct { float f[20]; } Tmp_c3f0;
 
 extern int func_00323248(void);
-extern void func_00323550(Ctx_c3f0 *c);
-extern void func_003235B8(Ctx_c3f0 *c);
-extern void func_003177D0(void *in, void *st, Tmp_c3f0 *t);
-extern void func_003171A8(Tmp_c3f0 *o, void *st, Tmp_c3f0 *p);
-extern void func_0031C728(Tmp_c3f0 *t, void *out, unsigned short *pos, unsigned char *bit, unsigned short len, int flag);
+extern void VU0Save(Ctx_c3f0 *c);
+extern void VU0Restore(Ctx_c3f0 *c);
+extern void NellyEncodeSC(void *in, void *st, Tmp_c3f0 *t);
+extern void NellyQuantSC3(Tmp_c3f0 *o, void *st, Tmp_c3f0 *p);
+extern void NellyPackSC3(Tmp_c3f0 *t, void *out, unsigned short *pos, unsigned char *bit, unsigned short len, int flag);
 
-int func_0031C3F0(Ctx_c3f0 *c, Buf_c3f0 *b)
+int nciEncodeSase3200(Ctx_c3f0 *c, Buf_c3f0 *b)
 {
     Tmp_c3f0 t1, t2;
 
@@ -244,11 +244,11 @@ int func_0031C3F0(Ctx_c3f0 *c, Buf_c3f0 *b)
     if (b->b14 >= 8) return 0x17FC;
     if (c == 0 || c->magic != 0xFACE) return 0x17D4;
     if (c->b18 != 10) return 0x17DE;
-    if (func_00323248() == 3) func_00323550(c);
-    func_003177D0(b->in, c->st, &t1);
-    func_003171A8(&t2, c->st, &t1);
-    func_0031C728(&t2, b->out, &b->pos12, &b->b14, b->len, 0);
-    if (func_00323248() == 3) func_003235B8(c);
+    if (func_00323248() == 3) VU0Save(c);
+    NellyEncodeSC(b->in, c->st, &t1);
+    NellyQuantSC3(&t2, c->st, &t1);
+    NellyPackSC3(&t2, b->out, &b->pos12, &b->b14, b->len, 0);
+    if (func_00323248() == 3) VU0Restore(c);
     return 0;
 }
 /* merge_units: end func_0031C3F0 */

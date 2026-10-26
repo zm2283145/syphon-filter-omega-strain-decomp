@@ -502,7 +502,7 @@ static inline void MemberDtor_3A3210(Member_3A3210* m)
     }
 }
 
-extern "C" Obj_3A3210* func_003A3210(Obj_3A3210* self, short deleteFlag)
+extern "C" Obj_3A3210* cInsertList_cParticleBase_dtor(Obj_3A3210* self, short deleteFlag)
 {
     if (self) {
         self->vtable = D_004DFAC8;
@@ -524,13 +524,13 @@ static inline void merge_flush_func_003A3210(void) {}
 #include "vtable_chain_dtor.h"
 
 /* Deleting destructor: restore the vtable chain, optionally delete. */
-DEFINE_VTABLE_CHAIN_DTOR2(func_003A32B0, D_004DFAB8, D_004DFAD8)
+DEFINE_VTABLE_CHAIN_DTOR2(cInsertList_cParticleBase_cStartNode_dtor, D_004DFAB8, D_004DFAD8)
 #pragma pop /* merge_units */
 /* merge_units: end func_003A32B0 */
 
 /* merge_units: begin func_003A3310 */
 #pragma push /* merge_units */
-void func_003A3310(int a0, float f12, float f13) {
+void cParticle_SetBoxData_float_float(int a0, float f12, float f13) {
     int v1;
     int cond;
 
@@ -616,7 +616,7 @@ typedef struct PHandle_003A33B0 {
     PSys_003A33B0* system;
 } PHandle_003A33B0;
 
-void func_003A33B0(PHandle_003A33B0* h, int mode, int on, float x, float y, float z) {
+void cParticle_SetBoxData_cGOBJP_float_float_float_etc(PHandle_003A33B0* h, int mode, int on, float x, float y, float z) {
     PSys_003A33B0* s = h->system;
     if (s->sub) s = s->sub;
     s->mode = mode;

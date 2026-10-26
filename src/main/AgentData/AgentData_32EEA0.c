@@ -14,15 +14,15 @@
 
 #include "loose03_types.h"
 
-extern int func_00337B10(PairVec* v, Pair* pos, int count, Pair* value);
+extern int std_vector_imp_tParTimes_insert(PairVec* v, Pair* pos, int count, Pair* value);
 
 /* push_back on a vector of Pair. */
-int func_0032EEA0(PairVec* v, Pair* value) {
-    return func_00337B10(v, v->data + v->count, 1, value);
+int cArray_tParTimes_PushBackActual(PairVec* v, Pair* value) {
+    return std_vector_imp_tParTimes_insert(v, v->data + v->count, 1, value);
 }
 
 /* Pair constructor. */
-Pair* func_0032EEC0(Pair* self, int first, int second) {
+Pair* cAgentData_tParTimes_ctor(Pair* self, int first, int second) {
     self->first = first;
     self->second = second;
     return self;
@@ -52,16 +52,16 @@ extern int D_004926E0;
 extern int D_00532AF0;
 extern int D_00532B90;
 extern void* ObjectiveRow_Construct(LevelReq*, int, int, int);
-extern void func_00147600(void*, void*);
+extern void cArray_Record_PushBackActual(void*, void*);
 #if 0 /* merge_units */
-extern void* func_0032EEC0(LevelKey*, int, int);
+extern void* cAgentData_tParTimes_ctor(LevelKey*, int, int);
 #endif /* merge_units */
-#define func_0032EEC0(a0, a1, a2) ((void *)func_0032EEC0((Pair *)(a0), (a1), (a2))) /* merge_units */
+#define cAgentData_tParTimes_ctor(a0, a1, a2) ((void *)cAgentData_tParTimes_ctor((Pair *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_0032EEA0(void*, void*);
+extern void cArray_tParTimes_PushBackActual(void*, void*);
 #endif /* merge_units */
-#define func_0032EEA0(a0, a1) ((void)func_0032EEA0((PairVec *)(a0), (Pair *)(a1))) /* merge_units */
+#define cArray_tParTimes_PushBackActual(a0, a1) ((void)cArray_tParTimes_PushBackActual((PairVec *)(a0), (Pair *)(a1))) /* merge_units */
 
 
 /* Script: cAgentData::_RegisterLevel(a, b, c) - registers a level and its key. */
@@ -81,11 +81,11 @@ int Script_cAgentData__RegisterLevel(ScriptArg* args) {
     bv = *(int*)b;
     a[0] = args[0].i;
     D_004926E0 = index + 1;
-    func_00147600(&D_00532AF0, ObjectiveRow_Construct(&req, *(int*)a, -1, index));
-    func_0032EEA0(&D_00532B90, func_0032EEC0(&key, bv, cv));
+    cArray_Record_PushBackActual(&D_00532AF0, ObjectiveRow_Construct(&req, *(int*)a, -1, index));
+    cArray_tParTimes_PushBackActual(&D_00532B90, cAgentData_tParTimes_ctor(&key, bv, cv));
     return 0;
 }
-#undef func_0032EEC0 /* merge_units */
-#undef func_0032EEA0 /* merge_units */
+#undef cAgentData_tParTimes_ctor /* merge_units */
+#undef cArray_tParTimes_PushBackActual /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0032EED0 */

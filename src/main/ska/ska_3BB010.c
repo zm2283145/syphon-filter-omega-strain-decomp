@@ -3,7 +3,7 @@
 extern char g_TextureMgr[];
 extern int TexMan_ReleaseSlot(int, int);
 
-void func_003BB010(int a0, int a1) {
+void cUserFrameEnv_Deactivate(int a0, int a1) {
     int s0, v0, v1;
     int cond;
 

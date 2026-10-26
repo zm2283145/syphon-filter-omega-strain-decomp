@@ -7,14 +7,14 @@ typedef struct { char pad[0x20]; Elem1D0* elems; } Table1D2;
 typedef struct { int unk0; Table1D2* table; } Obj1D2;
 
 extern Slot1D2 UpperBodyNodeTable[];
-extern void func_00132840(Vec16* v);
+extern void cQuaternion_ctor_void(Vec16* v);
 extern void* Quat_Assign(Vec16* v, void* src);
-extern void* func_001D2C00(void* inner);
+extern void* cJointInfo_BoneSpaceToJointSpaceTransform(void* inner);
 extern void Quat_MulInPlace(void* dst, void* m);
-extern void func_001D2BA0(Vec16* a, Vec16* b);
+extern void nIk_NegateIfDotProductNegative(Vec16* a, Vec16* b);
 extern void* func_001D2870(void* inner);
 extern void UpperBody_LimitRotation(void* out, Vec16* v, void* m);
-extern void* func_001D29E0(void* inner);
+extern void* cJointInfo_JointSpaceToBoneSpaceTransform(void* inner);
 extern void UpperBodyIk_World(Slot1D2* slot);
 
 /* Transforms a point and the indexed element's position through slot idx and updates the slot. */
@@ -29,14 +29,14 @@ void UpperBodyIk_SetRotation(Obj1D2* self, void* point, int idx)
     slot = &UpperBodyNodeTable[idx];
     out = slot->out;
     pos = &self->table->elems[idx].pos;
-    func_00132840(&a);
+    cQuaternion_ctor_void(&a);
     r = Quat_Assign(&a, point);
-    Quat_MulInPlace(r, func_001D2C00(slot->inner));
-    func_00132840(&b);
+    Quat_MulInPlace(r, cJointInfo_BoneSpaceToJointSpaceTransform(slot->inner));
+    cQuaternion_ctor_void(&b);
     r = Quat_Assign(&b, pos);
-    Quat_MulInPlace(r, func_001D2C00(slot->inner));
-    func_001D2BA0(&a, &b);
+    Quat_MulInPlace(r, cJointInfo_BoneSpaceToJointSpaceTransform(slot->inner));
+    nIk_NegateIfDotProductNegative(&a, &b);
     UpperBody_LimitRotation(out, &a, func_001D2870(slot->inner));
-    Quat_MulInPlace(out, func_001D29E0(slot->inner));
+    Quat_MulInPlace(out, cJointInfo_JointSpaceToBoneSpaceTransform(slot->inner));
     UpperBodyIk_World(slot);
 }

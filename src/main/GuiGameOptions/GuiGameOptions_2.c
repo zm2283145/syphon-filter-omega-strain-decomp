@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-int func_0029BDA0(char* self) {
+int cGameSystem_GetPlayer(char* self) {
     return *(int*)(self + 188);
 }
 #pragma pop /* merge_units */

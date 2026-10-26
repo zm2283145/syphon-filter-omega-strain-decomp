@@ -6,10 +6,10 @@ typedef struct { L_198D00* n; } It_198D00;
 typedef struct { int raw; } RIt_198D00;
 extern void List_Begin_16E880(RIt_198D00* out, void* self);
 extern void List_End_13D890(RIt_198D00* out, void* self);
-extern void func_00198E70(It_198D00* out, int raw);
+extern void std_list_cSkaPlaybackGroupPtr_generic_iterator_1_ctor(It_198D00* out, int raw);
 extern void Footstep_GroupMatches(H_198D00* out, void* item);
-extern int func_00198DD0(void* key, H_198D00* h);
-void* func_00198D00(void* self, void* key)
+extern int cSkaPlaybackGroupId_opEq(void* key, H_198D00* h);
+void* cSkaPlaybackList_FindPlaybackGroup(void* self, void* key)
 {
     It_198D00 b;
     It_198D00 d;
@@ -20,14 +20,14 @@ void* func_00198D00(void* self, void* key)
     L_198D00* it;
     L_198D00* end;
     List_Begin_16E880(&a, self);
-    func_00198E70(&b, a.raw);
+    std_list_cSkaPlaybackGroupPtr_generic_iterator_1_ctor(&b, a.raw);
     it = b.n;
     List_End_13D890(&c, self);
-    func_00198E70(&d, c.raw);
+    std_list_cSkaPlaybackGroupPtr_generic_iterator_1_ctor(&d, c.raw);
     end = d.n;
     for (; it != end; it = it->next) {
         Footstep_GroupMatches(&h, it->item);
-        if (func_00198DD0(key, &h)) {
+        if (cSkaPlaybackGroupId_opEq(key, &h)) {
             r = it->item;
             break;
         }

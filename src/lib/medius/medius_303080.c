@@ -6,9 +6,9 @@
 
 #include "types.h"
 
-extern int func_00307128(int, int);
+extern int rt_udp_set_aggregation_interval(int, int);
 
-int func_00303080(int a0) {
+int rt_p2p_set_send_aggregation(int a0) {
     int a1, v0, v1;
     int cond;
 
@@ -16,7 +16,7 @@ int func_00303080(int a0) {
     cond = a0 == 0;
     if (cond) goto L003030A4;
     a0 = *(int*)((char*)a0 + 384);
-    v0 = func_00307128(a0, a1);
+    v0 = rt_udp_set_aggregation_interval(a0, a1);
     v1 = 0 + 7;
     if (v0 == 0) v1 = 0;
     v0 = v1;

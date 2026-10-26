@@ -4,7 +4,7 @@ typedef struct { int count; R378020 r[20]; } G378020;
 typedef struct { char p0[0x78]; int map[1]; } O378020;
 extern G378020 D_00492F80[5];
 /* Builds the index -> group map: -1 for gaps, the group number inside each range. */
-void func_00378020(O378020* o)
+void cVU1Man_BuildPageTable(O378020* o)
 {
     int k;
 int g;

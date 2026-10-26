@@ -20,7 +20,7 @@ typedef void (*DelFn)(void *);
 
 extern unsigned char *func_00100BC0(unsigned char *p, unsigned int *out);
 extern unsigned char *func_00100C70(unsigned char *p, int *out);
-extern void func_00100AB0(void);
+extern void std_terminate(void);
 extern void *func_001025D0(ThrowCtx *ctx, ActionInfo *info);
 extern void func_001021E0(void *x, ActionInfo *info);
 extern void func_00102510(ThrowCtx *ctx, ActionInfo *info);
@@ -37,7 +37,7 @@ void func_00101640(ThrowCtx *ctx, ActionInfo *info, unsigned char *catcher)
         if (p == 0) {
             func_001021E0(func_001025D0(ctx, info), info);
             if (info->x4 == 0)
-                func_00100AB0();
+                std_terminate();
             func_00102510(ctx, info);
             p = info->p;
             if (p == 0)
@@ -285,7 +285,7 @@ void func_00101640(ThrowCtx *ctx, ActionInfo *info, unsigned char *catcher)
             break;
         }
         default:
-            func_00100AB0();
+            std_terminate();
             break;
         }
         if (b & 0x80)

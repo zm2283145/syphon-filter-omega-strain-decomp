@@ -36,7 +36,7 @@ double Math_CosDouble(double x)
 /* merge_units: end func_00120BC0 */
 
 /* merge_units: begin func_00120CE8 */
-double func_00120CE8(double x)
+double Libc_Fabs(double x)
 {
     unsigned int high;
     do { ieee_double_shape_type gh_u; gh_u.value = (x); (high) = gh_u.parts.msw; } while (0);
@@ -59,7 +59,7 @@ __asm__(".set nomove\n"
 extern const double D_00499BA8;
 #define huge D_00499BA8
 
-double func_00120D20(double x)
+double Libc_Floor(double x)
 {
 	int i0,i1,j0;
 	unsigned int i,j;
@@ -272,7 +272,7 @@ float Math_Atan(float x)
 #define FLT_UWORD_IS_ZERO(x) ((x)<0x00800000L)
 #undef huge /* merge_units */
 #define huge 1.0e30f
-float func_00121570(float x)
+float Libc_Ceilf(float x)
 {
     int i0, j0;
     unsigned int i, ix;

@@ -9,11 +9,11 @@ typedef struct IfModelList {
 } IfModelList;
 extern char D_004E0800[];
 extern char D_004E07A0[];
-extern EVec* func_003F1A80(EVec* v);
+extern EVec* std_vector_cKeyframe_cXyz_ctor(EVec* v);
 extern void func_003F3150(EVec* v, int n);
 extern FloatVec3* func_003F3DF0(FloatVec3* dst, float** cursor);
 extern int func_003F2BC0(EVec* v, FloatVec3* pos, int n, FloatVec3* val);
-IfModelList* func_003F1980(IfModelList* self, int a, float** cursor)
+IfModelList* cKeyframeAnimation_cXyz_ctor(IfModelList* self, int a, float** cursor)
 {
     EVec* v;
     int n;
@@ -28,7 +28,7 @@ IfModelList* func_003F1980(IfModelList* self, int a, float** cursor)
     self->unk18 = 0;
     self->unk1C = a;
     v = &self->vec;
-    func_003F1A80(v);
+    std_vector_cKeyframe_cXyz_ctor(v);
     v->unk0C = 1;
     n = *(int*)*cursor;
     *cursor = *cursor + 1;

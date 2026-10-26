@@ -39,8 +39,8 @@ extern "C" {
 extern char D_004BD038[];
 extern char D_004DFC70[];
 void cGOBJ_dtor(void* self, int flag);
-void func_0036D5D0(void* p, int flag);
-void func_00377BD0(void* p, int flag);
+void cHogFile_dtor(void* p, int flag);
+void cVU1Model_dtor(void* p, int flag);
 void Model_Unload(void* p);
 void operator_delete(void* p);
 }
@@ -60,8 +60,8 @@ static inline void DelSky(SkyM* p)
             AllocGuard g2;
             Mem_Free(0, q, D_004BD038, 0x2B);
         }
-        func_00377BD0(p->m174, -1);
-        func_0036D5D0(p, -1);
+        cVU1Model_dtor(p->m174, -1);
+        cHogFile_dtor(p, -1);
     }
     Mem_Free(0, p, D_004BD038, 0x97);
 }

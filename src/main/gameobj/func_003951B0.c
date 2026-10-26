@@ -43,10 +43,10 @@ extern "C" {
 extern char D_004BC440[];
 extern char D_004BC448[];
 extern char D_004BC450[];
-void func_00395530(Obj3951B0* self, int x);
+void cVUM_GOBJ_CreateModelData(Obj3951B0* self, int x);
 void String_Copy(char* d, const char* s);
 char* strchr(const char* s, int c);
-void func_0036DFB0(Res3951B0* h, char* path, Res3951B0* r);
+void cFileMan_EncodeFilename_charP_cFileManR(Res3951B0* h, char* path, Res3951B0* r);
 int String_CompareNoCase(char* a, char* b);
 int FileMan_ReadData(Res3951B0* r);
 void Hog_OpenInMemory(void* ctx, void* data, int size, int z);
@@ -74,19 +74,19 @@ extern "C" void ModelAsset_Load(Obj3951B0* self, Desc3951B0* d)
         self->x64 = d->xC;
         return;
     }
-    func_00395530(self, d->xC);
+    cVUM_GOBJ_CreateModelData(self, d->xC);
     if (!d->xC) *self->res = *d->res;
     char* base = d->res->path;
     if (d->name) String_Copy(buf, d->name); else String_Copy(buf, base);
     String_Copy(strchr(buf, '.'), D_004BC440);
-    func_0036DFB0(self->h1E8, buf, self->res);
+    cFileMan_EncodeFilename_charP_cFileManR(self->h1E8, buf, self->res);
     if (d->name) String_Copy(buf, d->name); else String_Copy(buf, base);
     String_Copy(strchr(buf, '.'), D_004BC448);
-    func_0036DFB0(self->h1EC, buf, self->res);
+    cFileMan_EncodeFilename_charP_cFileManR(self->h1EC, buf, self->res);
     if (String_CompareNoCase(d->res2->name, d->res->name) == 0) {
         String_Copy(buf, base);
         String_Copy(strchr(buf, '.'), D_004BC450);
-        func_0036DFB0(self->h1E4, buf, self->res);
+        cFileMan_EncodeFilename_charP_cFileManR(self->h1E4, buf, self->res);
     } else {
         *self->h1E4 = *d->res2;
     }

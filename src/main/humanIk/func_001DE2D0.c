@@ -8,7 +8,7 @@ static inline bool K1DE2D0_less(const K1DE2D0& x, const K1DE2D0& y)
 {
     return x.a < y.a || (x.a == y.a && x.b < y.b);
 }
-extern "C" void func_001DE2D0(I1DE2D0* out, T1DE2D0* t, const K1DE2D0* k)
+extern "C" void std_tree_pair_cWeaponSlotPair_value_compare_find(I1DE2D0* out, T1DE2D0* t, const K1DE2D0* k)
 {
     N1DE2D0* x = t->root;
     N1DE2D0* y = (N1DE2D0*)&t->root;

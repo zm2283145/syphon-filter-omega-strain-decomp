@@ -9,7 +9,7 @@ struct M_29A0 { E_29A0 e[2]; };
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-extern "C" M_29A0* func_001CF4C0(M_29A0* m, const V4_29A0* a, const V4_29A0* b, const V4_29A0* c, const V4_29A0* d)
+extern "C" M_29A0* cHermiteSpline_cQuaternion_ctor_cQuaternionR_cQuaternionR_cQuaternionR_cQuaternionR(M_29A0* m, const V4_29A0* a, const V4_29A0* b, const V4_29A0* c, const V4_29A0* d)
 {
     { E_29A0* e = m->e; E_29A0* end = m->e + 2; do { new (e) E_29A0; } while (++e != end); }
     E_29A0* e1 = &m->e[1];

@@ -12,27 +12,27 @@ extern VP D_00497F00;
 
 void cGOBJ_ctor(void*, int, int, int*);
 void Object_AttachTransform(void*, void*, int);
-void func_0017F9D0(void*);
+void cCollisionRoutine_cBox_ctor(void*);
 V4* Vec4_GetZero(void);
 void Vec4_Assign(void*, V4*);
-void func_00132840(void*);
-void func_0017F980(void*);
+void cQuaternion_ctor_void(void*);
+void cArray_cVector_ctor(void*);
 V4 Vec4_SetOrigin(void);
 void func_0017F8B0(void*);
 float func_0017F860(float);
 V4 Quat_SetIdentity(void);
-void func_00132800(void*, V4*);
-V4 func_0017F820(void);
+void cQuaternion_ctor_cQuaternionR(void*, V4*);
+V4 cQuaternion_GetZero(void);
 void CameraCurve_MakeQuaternion(void*, V4*, V4*);
 void VecCurve_InitState(void*, V4*, V4*);
 void PhysicalBase_Construct(void*, float*, float*);
 void Placement_GetIdentity(VP*, V4*, V4*);
 void VecPair_Copy(VP*, VP*);
-void func_0017F330(void*);
-void func_0017F2E0(void*);
+void cSplinedMotion_Scalar_ctor(void*);
+void cCameraShake_cPulsedShakeMagnitude_ctor(void*);
 void Curve_Construct(void*);
-void func_00136540(void*, int*, int*);
-void func_001364B0(void*);
+void cCollisionModelList_ctor(void*, int*, int*);
+void cActivationTracker_ctor(void*);
 
 #define F(T, p, o) (*(T*)((char*)(p) + (o)))
 
@@ -67,11 +67,11 @@ static inline void Rig_Init(char* m0)
 {
     char* m = m0;
     V4 t0, t1, t2;
-    func_0017F9D0(m);
+    cCollisionRoutine_cBox_ctor(m);
     F(void*, m, 0) = D_004DAD90;
     Vec4_Assign(m + 0x10, Vec4_GetZero());
-    func_00132840(m + 0x20);
-    func_0017F980(m + 0x30);
+    cQuaternion_ctor_void(m + 0x20);
+    cArray_cVector_ctor(m + 0x30);
     t0 = Vec4_SetOrigin();
     Vec4_Assign(m + 0x40, &t0);
     t1 = Vec4_SetOrigin();
@@ -87,12 +87,12 @@ static inline void Fov_Init(char* m0)
 {
     char* m = m0;
     V4 q, t;
-    func_0017F9D0(m);
+    cCollisionRoutine_cBox_ctor(m);
     F(void*, m, 0) = D_004DAD70;
     F(unsigned char, m, 4) = 0;
     F(float, m, 8) = func_0017F860(D_004A3FC8);
     q = Quat_SetIdentity();
-    func_00132800(m + 0x10, &q);
+    cQuaternion_ctor_cQuaternionR(m + 0x10, &q);
     F(int, m, 0x20) = 0;
     F(int, m, 0x24) = 0;
     t = Vec4_SetOrigin();
@@ -105,7 +105,7 @@ static inline void QCurve_Init(char* m0, unsigned char on)
     char* m = m0;
     V4 q, r;
     q = Quat_SetIdentity();
-    r = func_0017F820();
+    r = cQuaternion_GetZero();
     CameraCurve_MakeQuaternion(m, &q, &r);
     F(void*, m, 0) = D_004DA440;
     F(unsigned char, m, 0xC0) = on;
@@ -151,8 +151,8 @@ static inline void Phys_Init(char* m0)
 static inline void Track_Init(char* m0)
 {
     char* m = m0;
-    func_0017F330(m);
-    func_0017F2E0(m + 0x38);
+    cSplinedMotion_Scalar_ctor(m);
+    cCameraShake_cPulsedShakeMagnitude_ctor(m + 0x38);
     Curve_Construct(m + 0x80);
 }
 
@@ -162,11 +162,11 @@ static inline void Tgt_Init(char* m0)
     int c, d;
     d = 0;
     c = 0;
-    func_00136540(m, &c, &d);
+    cCollisionModelList_ctor(m, &c, &d);
     F(void*, m, 0) = D_004DA2F0;
     F(int, m, 0x20) = 0;
     Vec4_Assign(m + 0x30, Vec4_GetZero());
-    func_001364B0(m + 0x40);
+    cActivationTracker_ctor(m + 0x40);
     F(int, m, 0x60) = 0;
 }
 

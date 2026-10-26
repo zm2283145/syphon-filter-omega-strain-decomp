@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_002D8AD8(int a0) {
+int GetResourceManager(int a0) {
     int tmp0;
 
     tmp0 = *(int*)((char*)a0 + 92);

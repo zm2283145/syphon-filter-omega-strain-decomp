@@ -20,7 +20,7 @@
 #pragma cplusplus on
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_00426DA0)
+DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_cArray_tTextElementPtr_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00426DA0 */
 

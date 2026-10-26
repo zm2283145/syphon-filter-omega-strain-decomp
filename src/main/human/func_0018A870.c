@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int* func_0018A870(int* pair) {
+int* cSkaAnimEvent_ctor_void(int* pair) {
     pair[0] = -1;
     pair[1] = 0;
     return pair;

@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-void func_00351CC0(PtrVec* a, PtrVec* b) {
+void std_swap_vectordeleterR_vectordeleterR_37(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;
         int* p;
@@ -43,16 +43,16 @@ typedef struct Elem5CD00 {
     char tail[0x10];
 } Elem5CD00;
 
-extern void func_00329930(Elem5CD00* dst, Elem5CD00* src);
-extern void func_003517B0(void* dst, void* src);
+extern void cString_opAssign(Elem5CD00* dst, Elem5CD00* src);
+extern void cArray_StatsRequirement_opAssign(void* dst, void* src);
 
 /* Fills n elements starting at dest with copies of value. */
-void func_00351D00(Elem5CD00* dest, int n, Elem5CD00* value) {
+void std_fill_n_MissionStats_int_fill_n(Elem5CD00* dest, int n, Elem5CD00* value) {
     for (; n != 0; --n, ++dest) {
-        func_00329930(dest, value);
+        cString_opAssign(dest, value);
         dest->flag = value->flag;
         dest->data = value->data;
-        func_003517B0(dest->tail, value->tail);
+        cArray_StatsRequirement_opAssign(dest->tail, value->tail);
     }
 }
 #pragma pop /* merge_units */

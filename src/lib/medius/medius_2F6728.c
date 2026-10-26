@@ -10,16 +10,16 @@
 /* Library code: matches with EE-GCC 2.95 -O2 (check.py --gcc). */
 
 typedef struct { void* ptr; int pad; } Arg;
-extern int func_002FB3C0(Arg* arg);
+extern int rt_memory_free(Arg* arg);
 
-/* Returns 2 for NULL, else whether func_002FB3C0 succeeded (non-zero). */
-int func_002F6728(void* ptr)
+/* Returns 2 for NULL, else whether rt_memory_free succeeded (non-zero). */
+int rt_comm_release_channel_id(void* ptr)
 {
     Arg arg;
     int r = 2;
     arg.ptr = ptr;
     if (ptr != 0)
-        r = func_002FB3C0(&arg) != 0;
+        r = rt_memory_free(&arg) != 0;
     return r;
 }
 /* merge_units: end func_002F6728 */
@@ -32,7 +32,7 @@ int func_002F6728(void* ptr)
  */
 
 
-int func_002F6758(int a0, int a1) {
+int rt_comm_get_channel(int a0, int a1) {
     int v0;
     int cond;
 

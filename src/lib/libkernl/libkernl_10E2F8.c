@@ -13,7 +13,7 @@ typedef struct { int value; int pad; } Request;
 extern void Deci2Call(int kind, Request* req);
 
 /* Sends request kind 2 carrying one value. */
-void func_0010E2F8(int value)
+void sceDeci2Close(int value)
 {
     Request req;
     req.value = value;
@@ -32,7 +32,7 @@ extern void Deci2Call(int kind, Request_0010E320* req);
 
 
 /* Sends request kind 3 with (value, sign-extended byte code). */
-void func_0010E320(int value, char code)
+void sceDeci2ReqSend(int value, char code)
 {
     Request_0010E320 req;
     req.value = value;
@@ -48,7 +48,7 @@ extern void Deci2Call(int kind, void* req);
 #endif /* merge_units */
 #define Deci2Call(a0, a1) (Deci2Call((a0), (Request *)(a1))) /* merge_units */
 
-void func_0010E350(int a) { int r[4]; r[0] = a; Deci2Call(4, r); }
+void sceDeci2Poll(int a) { int r[4]; r[0] = a; Deci2Call(4, r); }
 #undef Deci2Call /* merge_units */
 /* merge_units: end func_0010E350 */
 
@@ -63,7 +63,7 @@ extern void Deci2Call(int kind, Request_0010E378* req);
 
 
 /* Sends request kind 0x20 with (byte code, a, b). */
-void func_0010E378(unsigned char code, int a, int b)
+void sceDeci2GrpOpen(unsigned char code, int a, int b)
 {
     Request_0010E378 req;
     req.a = a;

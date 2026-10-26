@@ -59,15 +59,15 @@ typedef struct OutVec4C0 {
 } OutVec4C0;
 
 extern RangeTable4C0 D_00532A70[5];
-extern void func_00299510(OutVec4C0* v);
+extern void std_vector_deleter_tAchievementInfo_clear(OutVec4C0* v);
 extern int Loc_GetTextById(int id);
-extern int func_00339270(OutVec4C0* v, Out4C0* pos, int n, Out4C0* value);
+extern int std_vector_imp_tAchievementInfo_insert(OutVec4C0* v, Out4C0* pos, int n, Out4C0* value);
 
 void AgentData_GetAwardRows(Agent4C0* self, unsigned char type, OutVec4C0* out)
 {
     RangeRecVec4C0* recs = &self->recs[type];
     int i;
-    func_00299510(out);
+    std_vector_deleter_tAchievementInfo_clear(out);
     for (i = 0; i < recs->count; i++) {
         Out4C0 e;
         RangeDef4C0* d = &D_00532A70[type].data[i];
@@ -82,7 +82,7 @@ void AgentData_GetAwardRows(Agent4C0* self, unsigned char type, OutVec4C0* out)
         e.flag = flag;
         e.value = value;
         e.unk10 = 0;
-        func_00339270(out, &out->data[out->count], 1, &e);
+        std_vector_imp_tAchievementInfo_insert(out, &out->data[out->count], 1, &e);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -131,21 +131,21 @@ typedef struct OutVec600 {
 
 extern RatingVec600 D_00532AD0;
 #if 0 /* merge_units */
-extern void func_00299510(OutVec600* v);
+extern void std_vector_deleter_tAchievementInfo_clear(OutVec600* v);
 #endif /* merge_units */
-#define func_00299510(a0) (func_00299510((void *)(a0))) /* merge_units */
+#define std_vector_deleter_tAchievementInfo_clear(a0) (std_vector_deleter_tAchievementInfo_clear((void *)(a0))) /* merge_units */
 
-extern signed char* func_00333790(void* bits, int i);
+extern signed char* std_vector_eAchievementState_opIndex(void* bits, int i);
 #if 0 /* merge_units */
-extern int func_00339270(OutVec600* v, Out600* pos, int n, Out600* value);
+extern int std_vector_imp_tAchievementInfo_insert(OutVec600* v, Out600* pos, int n, Out600* value);
 #endif /* merge_units */
-#define func_00339270(a0, a1, a2, a3) (func_00339270((void *)(a0), (void *)(a1), (a2), (void *)(a3))) /* merge_units */
+#define std_vector_imp_tAchievementInfo_insert(a0, a1, a2, a3) (std_vector_imp_tAchievementInfo_insert((void *)(a0), (void *)(a1), (a2), (void *)(a3))) /* merge_units */
 
 
 void AgentData_GetRatings(Agent600* self, OutVec600* out)
 {
     int i;
-    func_00299510(out);
+    std_vector_deleter_tAchievementInfo_clear(out);
     for (i = 0; i < D_00532AD0.count; i++) {
         Out600 e;
         int pct;
@@ -162,18 +162,18 @@ void AgentData_GetRatings(Agent600* self, OutVec600* out)
             pct = (v - r->min) * 100 / (need - r->min);
         }
         value = r->value;
-        flag = *func_00333790(&self->stats[700], i);
+        flag = *std_vector_eAchievementState_opIndex(&self->stats[700], i);
         key = r->key;
         e.text = Loc_GetTextById(key);
         e.key = key;
         e.flag = flag;
         e.value = value;
         e.pct = pct;
-        func_00339270(out, &out->data[out->count], 1, &e);
+        std_vector_imp_tAchievementInfo_insert(out, &out->data[out->count], 1, &e);
     }
 }
-#undef func_00299510 /* merge_units */
-#undef func_00339270 /* merge_units */
+#undef std_vector_deleter_tAchievementInfo_clear /* merge_units */
+#undef std_vector_imp_tAchievementInfo_insert /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00333600(void) {}
 #pragma pop /* merge_units */

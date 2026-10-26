@@ -36,7 +36,7 @@ typedef struct { void* p; } Iter4;
 typedef struct { int unk0; int data[1]; } Seq;
 
 /* Writes an iterator pointing at the sequence's data at +4 to *out. */
-void func_00234090(Iter4* out, Seq* s)
+void std_list_cHotboxPtr_end_void_2(Iter4* out, Seq* s)
 {
     Iter4 it;
     Iter4 tmp;
@@ -60,7 +60,7 @@ static inline void merge_flush_func_00234090(void) {}
 extern SpecListPos* List_InsertBefore(SpecListPos* result, void* list, SpecListPos* pos, int* value);
 
 /* push_back on a list whose sentinel node is at +4. */
-SpecListPos* func_002340C0(void* list, int* value) {
+SpecListPos* std_list_cElementPtr_push_back_cElementPR(void* list, int* value) {
     SpecListPos end;
     SpecListPos result;
 
@@ -69,7 +69,7 @@ SpecListPos* func_002340C0(void* list, int* value) {
 }
 
 /* Assigns value to *dst; volatile mirrors the original stack temporary. */
-int* func_002340F0(int* dst, int value) {
+int* std_list_cHotboxPtr_generic_iterator_1_ctor(int* dst, int value) {
     volatile int tmp = value;
 
     *dst = tmp;

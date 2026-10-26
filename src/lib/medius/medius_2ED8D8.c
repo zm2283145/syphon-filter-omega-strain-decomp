@@ -12,7 +12,7 @@
 typedef struct LNode { struct LNode* next; struct LNode* prev; } LNode;
 
 /* Unlinks a node from a doubly-linked list. */
-void func_002ED8D8(LNode* n)
+void GridRemoveGrid(LNode* n)
 {
     n->next->prev = n->prev;
     n->prev->next = n->next;
@@ -27,7 +27,7 @@ void func_002ED8D8(LNode* n)
  */
 
 
-int func_002ED8F8(int a0) {
+int GridGetFirstPlayerRef(int a0) {
     int tmp0;
 
     tmp0 = *(int*)((char*)a0 + 84);

@@ -8,7 +8,7 @@
 #include "loose04_types.h"
 
 /* Sets the float at +0x48 of the sub-object, if present. */
-void func_003FA190(Unk3FA190* self, float value) {
+void cInfoBar_SetScrollDelay(Unk3FA190* self, float value) {
     Unk3FA190Sub* sub = self->unk50C;
 
     if (sub != 0) {

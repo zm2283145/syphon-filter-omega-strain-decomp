@@ -6,7 +6,7 @@ extern int func_002BB898(void);
 extern void func_002BC7E8(void);
 extern unsigned int strlen(const char *);
 extern void String_Copy(char *, char *);
-int func_002B56E0(int a, char *name, int c, int d, int e, int f)
+int sceMc2GetDirAsync(int a, char *name, int c, int d, int e, int f)
 {
     if (D_0048BD88 == 0) return 0x81018001;
     if (!func_002BB898()) return 0x81018002;

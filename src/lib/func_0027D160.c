@@ -3,15 +3,15 @@ extern char D_00506150[];
 extern char D_00505140[];
 extern void func_0010FBC0(int);
 extern int GetThreadId(void);
-extern void func_00110760(void *, int);
-extern void func_001107F8(void *, unsigned int, void *, void *, void *, void *, void *);
-extern void func_00110C10(void *);
-extern void func_0027D078(void);
+extern void sceSifSetRpcQueue(void *, int);
+extern void sceSifRegisterRpc(void *, unsigned int, void *, void *, void *, void *, void *);
+extern void sceSifRpcLoop(void *);
+extern void sce_callback(void);
 
-void func_0027D160(void)
+void sce_callback_function(void)
 {
     func_0010FBC0(0);
-    func_00110760(D_00506198, GetThreadId());
-    func_001107F8(D_00506150, 0x80001101, func_0027D078, D_00505140, 0, 0, D_00506198);
-    func_00110C10(D_00506198);
+    sceSifSetRpcQueue(D_00506198, GetThreadId());
+    sceSifRegisterRpc(D_00506150, 0x80001101, sce_callback, D_00505140, 0, 0, D_00506198);
+    sceSifRpcLoop(D_00506198);
 }

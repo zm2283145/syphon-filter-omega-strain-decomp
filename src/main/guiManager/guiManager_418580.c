@@ -14,12 +14,12 @@
 
 #include "types.h"
 
-Word* func_00418580(Word* dst, Word* src) {
+Word* cAssocArray_cString_cFontPtr_Iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_00418590(Iter* out, Tree* t) {
+void std_map_cString_cFontPtr_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 #pragma pop /* merge_units */
@@ -35,13 +35,13 @@ typedef struct { char pad[0x10]; int def; } O_4185A0;
 extern void String_CtorCStr_13B480(Str_4185A0* s, char* c);
 extern void String_Dtor(Str_4185A0* s, int f);
 extern void String_CopyCtor(Str_4185A0* d, Str_4185A0* s);
-extern void func_001BFF20(It_4185A0* out, Str_4185A0* s);
-extern void func_001BFEE0(It_4185A0* out, Str_4185A0* s);
-extern int func_001BFE90(It_4185A0* a, It_4185A0* b);
-extern char* func_001BFED0(It_4185A0* a);
-extern void func_001BFEB0(It_4185A0* a);
-extern void func_00418780(Pair_4185A0* out, Str_4185A0* k, int v);
-extern void func_00419D10(Res_4185A0* out, O_4185A0* o, Pair_4185A0* p);
+extern void std_basic_string_char_char_traits_char_begin(It_4185A0* out, Str_4185A0* s);
+extern void std_basic_string_char_char_traits_char_end(It_4185A0* out, Str_4185A0* s);
+extern int std_opNe_wrapiteratorR_wrapiteratorR(It_4185A0* a, It_4185A0* b);
+extern char* std_wrap_iterator_basic_string_char_charPtr_opMul(It_4185A0* a);
+extern void std_wrap_iterator_basic_string_char_charPtr_opInc(It_4185A0* a);
+extern void std_make_pair_cString_cFontP(Pair_4185A0* out, Str_4185A0* k, int v);
+extern void std_tree_pair_cString_value_compare_insert_one_pairR_5(Res_4185A0* out, O_4185A0* o, Pair_4185A0* p);
 
 unsigned char GuiFont_Register(O_4185A0* o, char* name, int w, int force)
 {
@@ -57,17 +57,17 @@ unsigned char GuiFont_Register(O_4185A0* o, char* name, int w, int force)
         Pair_4185A0 q;
         unsigned char ok;
         String_CtorCStr_13B480(&s, name);
-        func_001BFF20(&it, &s);
-        func_001BFEE0(&end, &s);
-        while (func_001BFE90(&it, &end)) {
-            if (*func_001BFED0(&it) >= 'A' && *func_001BFED0(&it) <= 'Z') *func_001BFED0(&it) += 0x20;
-            func_001BFEB0(&it);
+        std_basic_string_char_char_traits_char_begin(&it, &s);
+        std_basic_string_char_char_traits_char_end(&end, &s);
+        while (std_opNe_wrapiteratorR_wrapiteratorR(&it, &end)) {
+            if (*std_wrap_iterator_basic_string_char_charPtr_opMul(&it) >= 'A' && *std_wrap_iterator_basic_string_char_charPtr_opMul(&it) <= 'Z') *std_wrap_iterator_basic_string_char_charPtr_opMul(&it) += 0x20;
+            std_wrap_iterator_basic_string_char_charPtr_opInc(&it);
         }
         String_CopyCtor(&k, &s);
-        func_00418780(&p, &k, w);
+        std_make_pair_cString_cFontP(&p, &k, w);
         String_CopyCtor(&q.first, &p.first);
         q.second = p.second;
-        func_00419D10(&r, o, &q);
+        std_tree_pair_cString_value_compare_insert_one_pairR_5(&r, o, &q);
         ok = r.ok;
         String_Dtor(&q.first, 0);
         String_Dtor(&p.first, 0);

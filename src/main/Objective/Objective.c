@@ -674,7 +674,7 @@ extern int ObjMan_SetDisplayLabel(cObjectiveMan*, int, int, int);
 #define ObjMan_SetDisplayLabel(a0, a1, a2, a3) (ObjMan_SetDisplayLabel((void *)(a0), (void *)(a1), (void *)(a2), (a3))) /* merge_units */
 
 extern int ScriptFilter_Dispatch(int, int, int);
-extern int* func_002257A0(void);
+extern int* cObjective_SOBJ_getClassId(void);
 #if 0 /* merge_units */
 extern cObjectiveMan* ObjMan_ResolveReceiver(void*);
 #endif /* merge_units */
@@ -690,7 +690,7 @@ void ScriptType_cObjective_Init(void) {
 }
 
 /* Script value conversion; the volatile mirrors the original stack temporary. */
-int func_00225770(int value) {
+int cObjective_SOBJ_toInt(int value) {
     volatile int tmp = value;
     return tmp;
 }
@@ -700,12 +700,12 @@ void* Objective_ResolveReceiver(void* self) {
 }
 
 /* Address of the cObjective script-type key. */
-int* func_002257A0(void) {
+int* cObjective_SOBJ_getClassId(void) {
     return (int*)D_004F7668;
 }
 
 int cObjective_v0B(void) {
-    return *func_002257A0();
+    return *cObjective_SOBJ_getClassId();
 }
 
 int Objective_ScriptFilter(int a0, int a1) {
@@ -836,9 +836,9 @@ extern int cObjectiveMan_SucceedPart(cObjectiveMan*, cObjective*);
 #define cObjectiveMan_SucceedPart(a0, a1) (cObjectiveMan_SucceedPart((void *)(a0), (void *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_00225770(cObjective*);
+extern int cObjective_SOBJ_toInt(cObjective*);
 #endif /* merge_units */
-#define func_00225770(a0) (func_00225770((int)(a0))) /* merge_units */
+#define cObjective_SOBJ_toInt(a0) (cObjective_SOBJ_toInt((int)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 extern cObjectiveMan* ObjMan_ResolveReceiver(void*);
@@ -902,7 +902,7 @@ int Script_Objective_Succeed(ScriptArg* args) {
 /* GetObjective(id): null when no objective has that ID. */
 int Script_GetObjective(ScriptArg* args) {
     volatile int id = args[1].i;
-    return func_00225770(ObjMan_GetObjective(ObjMan_ResolveReceiver(args[0].p), id));
+    return cObjective_SOBJ_toInt(ObjMan_GetObjective(ObjMan_ResolveReceiver(args[0].p), id));
 }
 #undef ObjMan_GetObjective /* merge_units */
 #undef ObjMan_StartStage /* merge_units */
@@ -911,7 +911,7 @@ int Script_GetObjective(ScriptArg* args) {
 #undef Objective_Succeed /* merge_units */
 #undef cObjectiveMan_SetPartialSuccess /* merge_units */
 #undef cObjectiveMan_SucceedPart /* merge_units */
-#undef func_00225770 /* merge_units */
+#undef cObjective_SOBJ_toInt /* merge_units */
 #undef ObjMan_ResolveReceiver /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00225900(void) {}
@@ -966,8 +966,8 @@ extern char D_004F75E8[];
 extern char D_004F75F0[];
 extern char g_Game[];
 extern cObjectiveMan* Service_Lookup(int, int);
-extern cObjectiveMan* func_00225C20(cObjectiveMan*);
-extern int* func_00225C50(void);
+extern cObjectiveMan* cObjectiveMan_SOBJ_toInt(cObjectiveMan*);
+extern int* cObjectiveMan_SOBJ_getClassId(void);
 extern cObjectiveMan* ObjMan_GetService();
 
 /* Registers the cObjectiveMan script type with its parent type. */
@@ -977,7 +977,7 @@ void ScriptType_cObjectiveMan_Init(void) {
 }
 
 /* Script value conversion; the volatile mirrors the original stack temporary. */
-cObjectiveMan* func_00225C20(cObjectiveMan* value) {
+cObjectiveMan* cObjectiveMan_SOBJ_toInt(cObjectiveMan* value) {
     cObjectiveMan* volatile tmp = value;
     return tmp;
 }
@@ -988,12 +988,12 @@ void* ObjMan_ResolveReceiver(void* self) {
 }
 
 /* Address of the cObjectiveMan script-type key. */
-int* func_00225C50(void) {
+int* cObjectiveMan_SOBJ_getClassId(void) {
     return (int*)D_004F75E8;
 }
 
 int cObjectiveMan_v0B(void) {
-    return *func_00225C50();
+    return *cObjectiveMan_SOBJ_getClassId();
 }
 
 int cObjectiveMan_v0C(int a0, int a1) {
@@ -1001,7 +1001,7 @@ int cObjectiveMan_v0C(int a0, int a1) {
 }
 
 cObjectiveMan* Script_GetObjectiveManager(void) {
-    return func_00225C20(ObjMan_GetService());
+    return cObjectiveMan_SOBJ_toInt(ObjMan_GetService());
 }
 
 /* Looks up the objective manager in the global service registry. */
@@ -1028,7 +1028,7 @@ typedef struct {
     int counts[32];
     int extraCount;
 } ObjMan_227450;
-extern "C" void func_00227450(ObjMan_227450* m, ObjBase_227450* o, int f); /* gsynth: defined below */
+extern "C" void cObjectiveMan_RemoveObjective(ObjMan_227450* m, ObjBase_227450* o, int f); /* gsynth: defined below */
 #pragma pop
 typedef struct { char p[0xAC]; unsigned char bAC; } Man225CF0;
 typedef struct { char p[0x2C]; unsigned char kind; char p2D[3]; int stage; int id; } Ev225CF0;
@@ -1058,7 +1058,7 @@ unsigned char cObjectiveMan_v01(Man225CF0* self, Ev225CF0* ev)
             break;
         case 5: {
             void** o = NetMap_Lookup(ev->id);
-            if (o) func_00227450((ObjMan_227450*)self, (struct ObjBase_227450*)*o, 1);
+            if (o) cObjectiveMan_RemoveObjective((ObjMan_227450*)self, (struct ObjBase_227450*)*o, 1);
             r = 1;
             break;
         }
@@ -1078,7 +1078,7 @@ static inline void merge_flush_func_00225CF0(void) {}
 typedef struct { void* vt; } ObjEv225EA0;
 ObjEv225EA0* ObjectiveEvent_Dtor(ObjEv225EA0* self, short flag); /* gsynth: defined below */
 typedef struct { char pad[0x28]; char total; char count; } Obj00228BE0;
-void func_00228BE0(Obj00228BE0* self, int n); /* gsynth: defined below */
+void cObjective_SetPartialSuccess(Obj00228BE0* self, int n); /* gsynth: defined below */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
@@ -1094,9 +1094,9 @@ int cMessage_dtor(char **, int);
 #define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
                            
 #if 0 /* merge_units */
-int func_00228BE0(int, int);
+int cObjective_SetPartialSuccess(int, int);
 #endif /* merge_units */
-#define func_00228BE0(a0, a1) (func_00228BE0((void *)(a0), (a1))) /* merge_units */
+#define cObjective_SetPartialSuccess(a0, a1) (cObjective_SetPartialSuccess((void *)(a0), (a1))) /* merge_units */
                             
 extern void Message_GetScriptTypeKey();
 extern void ObjectiveEvent_Clone();
@@ -1124,11 +1124,11 @@ void cObjectiveMan_SetPartialSuccess(int d0, int arg1, int arg2) {
         sl.f30[0] = &(*(char*)D_004DE4F0);
         cMessage_dtor(sl.f30, 0);
     }
-    func_00228BE0(arg1, arg2);
+    cObjective_SetPartialSuccess(arg1, arg2);
 }
 #undef Event_Construct /* merge_units */
 #undef cMessage_dtor /* merge_units */
-#undef func_00228BE0 /* merge_units */
+#undef cObjective_SetPartialSuccess /* merge_units */
 #undef D_0051F0B0 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00225DF0(void) {}
@@ -1410,7 +1410,7 @@ static inline void merge_flush_func_002260F0(void) {}
 extern char g_Hud[]; /* global UI receiver */
 extern void Hud_ClosePauseMenu(int);
 
-void func_002261C0(cObjectiveMan* mgr) {
+void cObjectiveMan_DeactivateObjectiveScreen(cObjectiveMan* mgr) {
     if (mgr->unkAC != 0) {
         Hud_ClosePauseMenu(*(int*)g_Hud);
         mgr->unkAC = 0;
@@ -1972,7 +1972,7 @@ static inline void DelObj(ObjBase_227450* o, int line)
     Mem_Free(0, o, D_004A5D88, line);
 }
 
-extern "C" void func_00227450(ObjMan_227450* m, ObjBase_227450* o, int f)
+extern "C" void cObjectiveMan_RemoveObjective(ObjMan_227450* m, ObjBase_227450* o, int f)
 {
     int k = o->kind;
     int i;
@@ -2513,14 +2513,14 @@ extern int cObjectiveMan_v0B();
 
 extern int cObjectiveMan_v0C();
 extern void GObj_GetID();
-extern void func_0012ECF0();
-extern void func_0012ED00();
-extern void func_0012ED10();
-extern void func_0012ED20();
-extern void func_0012ED30();
-extern void func_0012ED40();
-extern void func_0012ED50();
-extern void func_001383D0();
+extern void cSystem_ScriptGetRealObj();
+extern void cSystem_SendCreated();
+extern void cSystem_NetActivate();
+extern void cSystem_NetDeactivate();
+extern void cSystem_NetEnable();
+extern void cSystem_NetDisable();
+extern void cSystem_IsDeliverable();
+extern void cSystem_IsNetworked();
 extern char D_004DB790[];
 #if 0 /* merge_units */
 extern void ObjMan_DeleteAll(ObjMan00227E60* self);
@@ -2889,7 +2889,7 @@ extern void Objective_Succeed(void* man, Obj00228BE0* obj, int flag);
 #endif /* merge_units */
 #define Objective_Succeed(a0, a1, a2) (Objective_Succeed((a0), (void *)(a1), (void *)(a2))) /* merge_units */
 
-void func_00228BE0(Obj00228BE0* self, int n)
+void cObjective_SetPartialSuccess(Obj00228BE0* self, int n)
 {
     self->count = n;
     if (!(self->count < self->total))
@@ -3047,9 +3047,9 @@ extern void Objective_FormatStatusText(void*);
 #define Objective_FormatStatusText(a0) (Objective_FormatStatusText((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_00228BE0(void*, int);
+extern void cObjective_SetPartialSuccess(void*, int);
 #endif /* merge_units */
-#define func_00228BE0(a0, a1) (func_00228BE0((void *)(a0), (a1))) /* merge_units */
+#define cObjective_SetPartialSuccess(a0, a1) (cObjective_SetPartialSuccess((void *)(a0), (a1))) /* merge_units */
 
 extern void* Object_LookupById(int*);
 #if 0 /* merge_units */
@@ -3110,7 +3110,7 @@ unsigned char Objective_ConsumeEvent(void* o, Ev228E10* e) {
         case 0: Objective_SetFailed(o); r = 1; break;
         case 1: Objective_SetCompleted(o); r = 1; break;
         case 2: Objective_FormatStatusText(o); r = 1; break;
-        case 3: func_00228BE0(o, e->arg); r = 1; break;
+        case 3: cObjective_SetPartialSuccess(o, e->arg); r = 1; break;
         case 6: {
             int id = e->id;
             void* p = Object_LookupById(&id);
@@ -3134,7 +3134,7 @@ unsigned char Objective_ConsumeEvent(void* o, Ev228E10* e) {
 #undef Event_GetType /* merge_units */
 #undef Objective_SetFailed /* merge_units */
 #undef Objective_FormatStatusText /* merge_units */
-#undef func_00228BE0 /* merge_units */
+#undef cObjective_SetPartialSuccess /* merge_units */
 #undef cObjective_SetMapObject /* merge_units */
 #undef cObjective_ClearMapObject /* merge_units */
 #undef cObjective_SetNameLabel /* merge_units */
@@ -3190,7 +3190,7 @@ extern int Event_Construct(ObjActMsg_e8* msg, void* name);
 #endif /* merge_units */
 #define Event_Construct(a0, a1) (Event_Construct((void *)(a0), (a1))) /* merge_units */
 
-extern void func_00428FD0(ObjActMsg_e8* msg, int id);
+extern void cActivateMsg_SendActivated(ObjActMsg_e8* msg, int id);
 #if 0 /* merge_units */
 extern int cMessage_dtor(ObjActMsg_e8* msg, int flags);
 #endif /* merge_units */
@@ -3206,7 +3206,7 @@ void Objective_Activate(ObjAct_e8* self)
         msg.b28 = 0;
         msg.target = -1;
         msg.flags = 0x40;
-        func_00428FD0(&msg, self->id);
+        cActivateMsg_SendActivated(&msg, self->id);
         msg.vtable = ((char*)D_004E0E60);
         cMessage_dtor(&msg, 0);
     }
@@ -3246,7 +3246,7 @@ extern int Event_Construct(Visitor* v, void* arg);
 #endif /* merge_units */
 #define Event_Construct(a0, a1) (Event_Construct((void *)(a0), (a1))) /* merge_units */
 
-extern void func_00429200(Visitor* v, void* target, int flags);
+extern void cDeactivateMsg_SendDeactivated(Visitor* v, void* target, int flags);
 #if 0 /* merge_units */
 extern int cMessage_dtor(Visitor* v, int flags);
 #endif /* merge_units */
@@ -3261,7 +3261,7 @@ void Objective_Deactivate(Objective_00229100* self)
         Visitor v;
         Event_Construct(&v, D_00572198);
         v.vtable = D_004E0E80;
-        func_00429200(&v, self->target, -1);
+        cDeactivateMsg_SendDeactivated(&v, self->target, -1);
         v.vtable = D_004E0E80;
         cMessage_dtor(&v, 0);
     }
@@ -3377,7 +3377,7 @@ static inline int ObjId_229900(int& tmp)
     if (ok) {
         id = NetLocalId();
     } else {
-        func_002EBBA0(D_005721A8, &tmp);
+        NetGetPeerToPeerHostClientIndex(D_005721A8, &tmp);
         id = tmp;
     }
     return id;

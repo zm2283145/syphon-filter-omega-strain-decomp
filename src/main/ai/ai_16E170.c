@@ -38,10 +38,10 @@ struct ControllerV { VPAD16(a) VPAD2(b) VPAD1(c) virtual int IsPlayer(); VPAD4(d
 extern "C" {
     SfAwarenessRecord* NpcPerception_SensedRecord(SfAiPerception*,SfGameObject*);
     SfGameObject* PlayerSlots_Get(int);
-    void func_0016B2D0(void*,void*);
-    void func_0016B300(void*,void*);
-    void func_0016B310(void*,void*);
-    void func_0016E860(void*,int);
+    void std_list_cActiveListItemPtr_end_void_2(void*,void*);
+    void cConstLListIterator_cActiveListItemPtr_ctor(void*,void*);
+    void std_list_cActiveListItemPtr_begin_void_2(void*,void*);
+    void std_list_cActiveListItemPtr_generic_iterator_1_ctor(void*,int);
     void List_Begin_16E880(void*,void*);
     extern void* g_HumanActorClassKey;
     extern char g_NpcThinkList[];
@@ -108,7 +108,7 @@ extern "C" SfGameObject* NpcPerception_NextCandidate(SfAiPerception* arg0, SfGam
     container = g_NpcThinkList;
     var_s3 = 0;
     List_Begin_16E880(&spA8, container);
-    func_0016E860(&spAC, spA8);
+    std_list_cActiveListItemPtr_generic_iterator_1_ctor(&spAC, spA8);
     spCC.p = spAC;
     if (arg1 != 0) {
         temp_a0 = (ControllerV*)arg1->controller;
@@ -127,15 +127,15 @@ extern "C" SfGameObject* NpcPerception_NextCandidate(SfAiPerception* arg0, SfGam
                 }
                 spCC.p = spCC.p->next;
             candidate_test:
-                func_0016B2D0(&spA4, container);
-                func_0016B300(&spC8, &spA4);
+                std_list_cActiveListItemPtr_end_void_2(&spA4, container);
+                cConstLListIterator_cActiveListItemPtr_ctor(&spC8, &spA4);
                 if (spCC.p != spC8) goto candidate_body;
             candidate_found:
-                func_0016B2D0(&spA0, container);
-                func_0016B300(&spC4, &spA0);
+                std_list_cActiveListItemPtr_end_void_2(&spA0, container);
+                cConstLListIterator_cActiveListItemPtr_ctor(&spC4, &spA0);
                 if (spCC.p == spC4) {
-                    func_0016B310(&sp9C, container);
-                    func_0016B300(&spC0, &sp9C);
+                    std_list_cActiveListItemPtr_begin_void_2(&sp9C, container);
+                    cConstLListIterator_cActiveListItemPtr_ctor(&spC0, &sp9C);
                     spCC = spC0;
                 } else {
                     spCC.p = spCC.p->next;
@@ -159,8 +159,8 @@ extern "C" SfGameObject* NpcPerception_NextCandidate(SfAiPerception* arg0, SfGam
         }
     }
     if (var_s3 == 0) {
-        func_0016B2D0(&sp98, container);
-        func_0016B300(&spBC, &sp98);
+        std_list_cActiveListItemPtr_end_void_2(&sp98, container);
+        cConstLListIterator_cActiveListItemPtr_ctor(&spBC, &sp98);
         if (spCC.p != spBC) {
         loop_37:
             temp_v1 = (SfWeakHandle*)spCC.p->value;
@@ -195,8 +195,8 @@ extern "C" SfGameObject* NpcPerception_NextCandidate(SfAiPerception* arg0, SfGam
             } else {
             block_56:
                 spCC.p = spCC.p->next;
-                func_0016B2D0(&sp98, container);
-                func_0016B300(&spBC, &sp98);
+                std_list_cActiveListItemPtr_end_void_2(&sp98, container);
+                cConstLListIterator_cActiveListItemPtr_ctor(&spBC, &sp98);
                 if (spCC.p == spBC) {
 
                 } else {
@@ -204,8 +204,8 @@ extern "C" SfGameObject* NpcPerception_NextCandidate(SfAiPerception* arg0, SfGam
                 }
             }
         }
-        func_0016B2D0(&sp94, container);
-        func_0016B300(&spB8, &sp94);
+        std_list_cActiveListItemPtr_end_void_2(&sp94, container);
+        cConstLListIterator_cActiveListItemPtr_ctor(&spB8, &sp94);
         if ((spCC.p == spB8) && (var_s3 == 0)) {
             if (g_IsMultiplayer != 0) {
                 var_s1_2 = 0;
@@ -233,11 +233,11 @@ extern "C" SfGameObject* NpcPerception_NextCandidate(SfAiPerception* arg0, SfGam
                 }
             }
             if (var_s3 == 0) {
-                func_0016B310(&sp90, container);
-                func_0016B300(&spB4, &sp90);
+                std_list_cActiveListItemPtr_begin_void_2(&sp90, container);
+                cConstLListIterator_cActiveListItemPtr_ctor(&spB4, &sp90);
                 sp88 = spB4;
-                func_0016B2D0(&sp8C, container);
-                func_0016B300(&spB0, &sp8C);
+                std_list_cActiveListItemPtr_end_void_2(&sp8C, container);
+                cConstLListIterator_cActiveListItemPtr_ctor(&spB0, &sp8C);
                 if (sp88.p != spB0) {
                 loop_74:
                     temp_v1_2 = (SfWeakHandle*)sp88.p->value;
@@ -272,8 +272,8 @@ extern "C" SfGameObject* NpcPerception_NextCandidate(SfAiPerception* arg0, SfGam
                     } else {
                     block_93:
                         sp88.p = sp88.p->next;
-                        func_0016B2D0(&sp8C, container);
-                        func_0016B300(&spB0, &sp8C);
+                        std_list_cActiveListItemPtr_end_void_2(&sp8C, container);
+                        cConstLListIterator_cActiveListItemPtr_ctor(&spB0, &sp8C);
                         if (sp88.p == spB0) {
 
                         } else {

@@ -16,7 +16,7 @@
 typedef struct { int used; void* owner; float time; int val; } A1_Slot;
 extern A1_Slot D_0053B560[4];
 typedef struct { char pad[0x108]; A1_Slot* slot; } A1_Ent;
-int func_0039B110(A1_Ent* e, int* out, float t) {
+int cParticleBox_RequestBlock(A1_Ent* e, int* out, float t) {
     int ret = 0;
     int val = 0;
     int i;
@@ -98,9 +98,9 @@ int operator_delete(char **);
 extern char D_004DFAD8;
 extern void WeatherEmitter_Draw();
 extern void WeatherEmitter_Update();
-extern void func_003A23F0();
-extern void func_003A6070();
-extern void func_003A6080();
+extern void cParticleBase_GetRenderMatrix();
+extern void cParticleBox_Done();
+extern void cParticleBox_Definition();
 extern void * const D_004DFAF0[];
 extern char D_004DFB50;
 #if 0 /* merge_units */
@@ -140,7 +140,7 @@ loop_2:
     }
     return arg0;
 }
-void * const D_004DFAF0[8] = { (void*)0x0, (void*)0x0, (void*)WeatherEmitter_dtor, (void*)WeatherEmitter_Draw, (void*)WeatherEmitter_Update, (void*)func_003A6080, (void*)func_003A6070, (void*)func_003A23F0 };
+void * const D_004DFAF0[8] = { (void*)0x0, (void*)0x0, (void*)WeatherEmitter_dtor, (void*)WeatherEmitter_Draw, (void*)WeatherEmitter_Update, (void*)cParticleBox_Definition, (void*)cParticleBox_Done, (void*)cParticleBase_GetRenderMatrix };
 #undef D_0053B560 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0039B2F0(void) {}

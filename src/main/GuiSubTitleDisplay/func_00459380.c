@@ -9,6 +9,6 @@
 extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
 
 /* push_back on a pointer vector. */
-int func_00459380(PtrVec* v, int value) {
+int std_vector_cLList_TextAtomPtr_push_back(PtrVec* v, int value) {
     return PtrVec_Insert(v, v->data + v->count, 1, value);
 }

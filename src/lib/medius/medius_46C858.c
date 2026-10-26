@@ -8,11 +8,11 @@
 
 extern char D_00497CF4[];
 
-void func_0046C858(void) {
+void RemoteObjectDeletionCallback(void) {
 
 }
 
-int func_0046C860(void) {
+int MediusUniqueCallbackErrorMessageHandler(void) {
     int v0;
     int cond;
 

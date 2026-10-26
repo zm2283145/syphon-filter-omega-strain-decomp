@@ -33,7 +33,7 @@ extern void EIntr(void);
 
 #define PADDR(p) ((u64)(p) & 0x0FFFFFFF)
 
-int func_003F54B0(IpuFeed* f) {
+int viBufReset(IpuFeed* f) {
     int i;
     f->unkC = 0;
     f->unk10 = 0;

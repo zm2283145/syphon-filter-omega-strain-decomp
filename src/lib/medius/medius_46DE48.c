@@ -8,7 +8,7 @@
 
 extern char D_00497E10[];
 
-int func_0046DE48(void) {
+int MediusUniqueCallbackUpdateLadderStatsResponseHandler(void) {
     int v0;
     int cond;
 
@@ -23,7 +23,7 @@ ret:
     return v0;
 }
 
-int func_0046DE78(void) {
+int MediusUniqueCallbackUpdateLadderStatsWideResponseHandler(void) {
     int v0;
     int cond;
 
@@ -38,6 +38,6 @@ ret:
     return v0;
 }
 
-int func_0046DEA8(void) {
+int MediusUniqueCallbackGetLadderStatsRequestHandler(void) {
     return 28;
 }

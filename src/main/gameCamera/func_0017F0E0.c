@@ -24,8 +24,8 @@ extern struct VI_ D_004E1D90;
 extern void* const D_004DA3B0[];
 extern char D_004DA410[];
 void Vec4_Assign(V* d, const V* s);
-void func_0017F1F0(void* p, const V* a, const V* b, float f);
-void func_0017F1E0(void* b, void* target);
+void cHermiteSplineWithScaledDuration_cVector_ctor_cVectorR_cVectorR_float(void* p, const V* a, const V* b, float f);
+void cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_cVector_cVector_ctor(void* b, void* target);
 }
 
 static inline const V& Zero() { if (!D_004E1D88) { D_004E1D90.x = 0; D_004E1D88 = 1; D_004E1D90.y = 0; D_004E1D90.z = 0; D_004E1D90.w = 0; } return *(const V*)&D_004E1D90; }
@@ -41,8 +41,8 @@ extern "C" Curve_F0E0* Curve_Construct(Curve_F0E0* p)
     Vec4_Assign(&p->v30, &z);
     Vec4_Assign(&p->v40, &u);
     p->f50 = 0;
-    func_0017F1F0(p->seg, &u, &z, 0.0f);
-    func_0017F1E0(p->bind, p->seg);
+    cHermiteSplineWithScaledDuration_cVector_ctor_cVectorR_cVectorR_float(p->seg, &u, &z, 0.0f);
+    cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_cVector_cVector_ctor(p->bind, p->seg);
     p->vt = D_004DA410;
     return p;
 }

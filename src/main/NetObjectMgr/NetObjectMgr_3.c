@@ -15,13 +15,13 @@
 #include "types.h"
 
 /* Iterator copy-assignment. */
-Word* func_0042DA10(Word* dst, Word* src) {
+Word* cAssocArray_int_tNetActivateTerrainObjectPtr_Iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
 /* end(): iterator at the tree header. */
-void func_0042DA20(Iter* out, Tree* t) {
+void std_map_int_tNetActivateTerrainObjectPtr_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 #pragma pop /* merge_units */
@@ -49,22 +49,22 @@ extern "C" void cNetTransferMsg_v02();
 extern void * const D_004E0F20[];
 extern char D_004E0E80[];
 void ObjMap_Find_42EDF0(TransferObjectIterator* result, RbTree* tree, const GobjId* id);
-void func_0042DF10(TransferObjectIterator* result, RbTree* tree);
-TransferObjectIterator* func_0042DF00(TransferObjectIterator* result,
+void std_map_int_tNetObjectPtr_end(TransferObjectIterator* result, RbTree* tree);
+TransferObjectIterator* cAssocArray_int_tNetObjectPtr_Iterator_ctor(TransferObjectIterator* result,
                                     const TransferObjectIterator* source);
-void func_00436C00(int* shared);
-void func_00436BA0(int* shared, short flags);
-int func_00434440(int* shared, const GobjId* id);
-int func_00434380(int* shared, const GobjId* id);
-void func_00434600(int* shared, const GobjId* id, int peer);
+void cNPCInfoObject_ctor(int* shared);
+void cNPCInfoObject_dtor(int* shared, short flags);
+int cNPCInfoObject_GetOwner_cObjectIdR(int* shared, const GobjId* id);
+int cNPCInfoObject_GetPrevOwner(int* shared, const GobjId* id);
+void cNPCInfoObject_SetOwner_cObjectIdR_int(int* shared, const GobjId* id, int peer);
 int NetGame_InitLocalSlot(int* id, int session);
 int PlayerSlots_Get(int peer);
 void Event_Construct(void* notice, const void* descriptor);
 void cMessage_dtor(void* notice, int flags);
 int Transport_Send(unsigned int id, const void* notice, int flags, int peer);
 void NetObjectMgr_AddTransferTimer(const GobjId* id);
-void func_0042D360(const GobjId* id, int peer);
-void func_00429200(TransferReleaseNotice* notice, unsigned int id, int peer);
+void cNetObjectMgr_TransferRequest(const GobjId* id, int peer);
+void cDeactivateMsg_SendDeactivated(TransferReleaseNotice* notice, unsigned int id, int peer);
 void NetObjectMgr_Remove(cGOBJ* object);
 void operator_delete(void* allocation);
 }
@@ -109,13 +109,13 @@ static inline void request_release(cGOBJ* object, int peer)
     TransferReleaseNotice notice;
     Event_Construct(&notice, D_00572198);
     notice.vtable = D_004E0E80;
-    func_00429200(&notice, object_id(object)->word, peer);
+    cDeactivateMsg_SendDeactivated(&notice, object_id(object)->word, peer);
     notice.vtable = D_004E0E80;
     cMessage_dtor(&notice, 0);
 }
 
 /* Route ownership changes through the current peer or the object's local callbacks. */
-extern "C" void func_0042DA30(cGOBJ* object, int previousPeer, int nextPeer)
+extern "C" void cNetObjectMgr_AddDeactivate(cGOBJ* object, int previousPeer, int nextPeer)
 {
     int shared;
     GobjId key;
@@ -125,20 +125,20 @@ extern "C" void func_0042DA30(cGOBJ* object, int previousPeer, int nextPeer)
     key.word = object_id(object)->word;
     ObjMap_Find_42EDF0(&found, &D_005826A0, &key);
     TransferObjectNode* node = found.node;
-    func_00436C00(&shared);
-    func_0042DF10(&rawEnd, &D_005826A0);
-    func_0042DF00(&end, &rawEnd);
+    cNPCInfoObject_ctor(&shared);
+    std_map_int_tNetObjectPtr_end(&rawEnd, &D_005826A0);
+    cAssocArray_int_tNetObjectPtr_Iterator_ctor(&end, &rawEnd);
     if ((node == end.node) ^ 1) {
-        int owner = func_00434440(&shared, object_id(object));
-        int previousOwner = func_00434380(&shared, object_id(object));
+        int owner = cNPCInfoObject_GetOwner_cObjectIdR(&shared, object_id(object));
+        int previousOwner = cNPCInfoObject_GetPrevOwner(&shared, object_id(object));
         if (previousPeer == owner) {
             if (nextPeer >= 0) {
                 if (is_host()) {
-                    func_00434600(&shared, object_id(object), nextPeer);
+                    cNPCInfoObject_SetOwner_cObjectIdR_int(&shared, object_id(object), nextPeer);
                     if (owner != current_peer())
                         request_transfer(object, nextPeer, owner);
                     else
-                        func_0042D360(object_id(object), (short)nextPeer);
+                        cNetObjectMgr_TransferRequest(object_id(object), (short)nextPeer);
                 }
             } else {
                 if (object->attached) {
@@ -151,13 +151,13 @@ extern "C" void func_0042DA30(cGOBJ* object, int previousPeer, int nextPeer)
             }
         } else if (owner < 0) {
             if (previousOwner >= 0 && PlayerSlots_Get(previousOwner)) {
-                func_00434600(&shared, object_id(object), nextPeer);
+                cNPCInfoObject_SetOwner_cObjectIdR_int(&shared, object_id(object), nextPeer);
                 if (previousOwner != current_peer())
                     request_transfer(object, nextPeer, previousOwner);
                 else
-                    func_0042D360(object_id(object), (short)nextPeer);
+                    cNetObjectMgr_TransferRequest(object_id(object), (short)nextPeer);
             } else {
-                func_0042D360(object_id(object), (short)nextPeer);
+                cNetObjectMgr_TransferRequest(object_id(object), (short)nextPeer);
             }
         } else {
             if (previousPeer != current_peer())
@@ -166,7 +166,7 @@ extern "C" void func_0042DA30(cGOBJ* object, int previousPeer, int nextPeer)
                 ((TransferOwnerObjectMethods*)object)->release_transfer();
         }
     }
-    func_00436BA0(&shared, -1);
+    cNPCInfoObject_dtor(&shared, -1);
 }
 
 #pragma opt_common_subs on

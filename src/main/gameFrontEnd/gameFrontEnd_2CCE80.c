@@ -29,7 +29,7 @@ static inline void SetA2CCE80(Sp2CCE80* p, V2CCE80 a) { p->c0 = a; }
 static inline void SetB2CCE80(Sp2CCE80* p, V2CCE80 b) { p->c1 = b; }
 static inline void SetC2CCE80(Sp2CCE80* p, V2CCE80 c) { p->c2 = c; }
 /* Resets the sprite's three colours to the defaults. */
-extern "C" void func_002CCE80(Sp2CCE80* sp)
+extern "C" void SetFontColors(Sp2CCE80* sp)
 {
     if (sp) {
         SetA2CCE80(sp, D_00587B50);
@@ -55,7 +55,7 @@ extern char D_004DFD80[];
 extern char D_004DE200[];
 }
 struct MsgCF30 { void* vtable; int a, b, c, d, e, f, g; char h; };
-extern "C" MsgCF30* func_002CCF30(MsgCF30* src)
+extern "C" MsgCF30* cLoadMsg_Clone(MsgCF30* src)
 {
     MsgCF30* p;
     {
@@ -96,7 +96,7 @@ struct Msg_0020E560 : ClonedMessageBase {
 extern "C" {
 char D_004AD1D8[] = "game_msg.hh";
 }
-DEFINE_MESSAGE_CLONE(func_002CD030, Msg_0020E560, 0x24, D_004AD1D8, 0x1C, CLONE_BODY)
+DEFINE_MESSAGE_CLONE(cInitMsg_Clone, Msg_0020E560, 0x24, D_004AD1D8, 0x1C, CLONE_BODY)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002CD030(void) {}
 #pragma pop /* merge_units */

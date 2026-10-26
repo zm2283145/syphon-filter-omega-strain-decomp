@@ -4,11 +4,11 @@
 #pragma optimization_level 1
 
 typedef struct { char data[0xC]; } Elem0C;
-extern void func_00209E50(Elem0C* e, void* value);
+extern void cSkaBlendSequenceItem_opAssign(Elem0C* e, void* value);
 
-/* Calls func_00209E50(e, value) on n consecutive 12-byte elements. */
-void func_0020A690(Elem0C* e, int n, void* value)
+/* Calls cSkaBlendSequenceItem_opAssign(e, value) on n consecutive 12-byte elements. */
+void std_fill_n_cSkaBlendSequenceItem_int_fill_n(Elem0C* e, int n, void* value)
 {
     for (; n != 0; e++, n--)
-        func_00209E50(e, value);
+        cSkaBlendSequenceItem_opAssign(e, value);
 }

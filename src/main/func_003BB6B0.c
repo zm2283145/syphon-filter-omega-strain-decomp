@@ -7,7 +7,7 @@
 #include "loose03_types.h"
 
 /* Attach an info header to a texture entry and mark it. */
-void func_003BB6B0(TexEntry* self, TexInfo* info) {
+void cTexture_SetReallocData(TexEntry* self, TexInfo* info) {
     self->info = info;
     self->flags = self->flags | 0x1000;
     self->unk60 = 0;

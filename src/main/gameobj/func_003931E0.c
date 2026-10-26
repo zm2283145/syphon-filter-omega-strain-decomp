@@ -4,6 +4,6 @@
 
 #include "gobj_types.h"
 
-void func_003931E0(PtrVec* v) {
+void cArray_cTreeNode_cSkaSystemPtrPtr_Clear(PtrVec* v) {
     v->count = 0;
 }

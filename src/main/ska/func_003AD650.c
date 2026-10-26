@@ -6,7 +6,7 @@
 #include "ska_types.h"
 
 /* Five-float copy assignment. */
-SkaFloat5* func_003AD650(SkaFloat5* dst, SkaFloat5* src) {
+SkaFloat5* cSkaSystem_Transition_ctor_cSkaSystemTransitionR(SkaFloat5* dst, SkaFloat5* src) {
     dst->v[0] = src->v[0];
     dst->v[1] = src->v[1];
     dst->v[2] = src->v[2];

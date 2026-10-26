@@ -8,7 +8,7 @@
 
 int D_00497DEC = 0;
 
-int func_0046E588(void) {
+int MediusUniqueCallbackGetUniverse_ExtraInfoHandler(void) {
     int v0;
     int cond;
 

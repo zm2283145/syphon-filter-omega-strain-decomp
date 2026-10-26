@@ -16,7 +16,7 @@ static inline unsigned char A_1A9210(O_1A9210* o)
     if (Idle_1A9210(o) && (NZ_1A9210((o->flags >> 4) & 1) ^ 1)) r = 1;
     return r;
 }
-unsigned char func_001A9210(O_1A9210* o)
+unsigned char cHuman_CanTeleportToResyncRemotePlayer(O_1A9210* o)
 {
     unsigned char r = 0;
     if (A_1A9210(o) && (NZ_1A9210((o->flags >> 5) & 1) ^ 1)) r = 1;

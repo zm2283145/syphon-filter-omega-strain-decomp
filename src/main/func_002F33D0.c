@@ -7,6 +7,6 @@
 #include "types.h"
 #include "loose02_types.h"
 
-int func_002F33D0(WordFields* self) {
+int GetFirstRefFromSet(WordFields* self) {
     return self->unk04;
 }

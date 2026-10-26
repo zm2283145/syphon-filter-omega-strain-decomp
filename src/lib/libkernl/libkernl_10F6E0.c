@@ -9,7 +9,7 @@ extern int DisableDmac(int a);
 extern int RemoveDmacHandler(int a, int b);
 extern int D_004E2D54;
 extern int D_004861A8;
-int func_0010F6E0(void)
+int sceSifExitCmd(void)
 {
     int r;
     DisableDmac(5);
@@ -28,7 +28,7 @@ typedef struct { char pad[0x14]; int a; int b; } State;
 extern State D_004E2D58;
 
 /* Replaces the (a, b) pair in a global state and returns the previous a. */
-int func_0010F718(int a, int b)
+int sceSifSetCmdBuffer(int a, int b)
 {
     int old = D_004E2D58.a;
     D_004E2D58.a = a;

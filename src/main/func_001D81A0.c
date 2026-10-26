@@ -63,10 +63,10 @@ void func_001D8700(void);
 void func_001B4C70(void);
 void Secondary_MotionRecordCtor(void);
 void Secondary_MotionRecordDtor(void);
-void func_001D8500(void);
-void func_001B4D50(void);
+void cIkTargetWithSplinedTransition_ctor(void);
+void cIkTargetWithSplinedTransition_dtor(void);
 void Quat_SetIdentity(V* q);
-void func_0017F820(V* v);
+void cQuaternion_GetZero(V* v);
 void CameraCurve_MakeQuaternion(CurveR* c, V* q, V* v);
 void Event_Construct(void* e, void* type);
 void UpperBodyLook_ClearRecords(LookR* l);
@@ -78,7 +78,7 @@ static inline void CurveCtor(CurveR* c0)
     V q;
     V v;
     Quat_SetIdentity(&q);
-    func_0017F820(&v);
+    cQuaternion_GetZero(&v);
     CameraCurve_MakeQuaternion(c, &q, &v);
     c->vt = D_004DA440;
     c->bC0 = 0;
@@ -125,7 +125,7 @@ static inline void SlotCtor(SlotArr* a)
 }
 static inline void SubCtor(SubArr* s)
 {
-    __construct_array(s->e, (void*)func_001D8500, (void*)func_001B4D50, 0x1C0, 2);
+    __construct_array(s->e, (void*)cIkTargetWithSplinedTransition_ctor, (void*)cIkTargetWithSplinedTransition_dtor, 0x1C0, 2);
     s->a = 0;
     s->b = 0;
 }

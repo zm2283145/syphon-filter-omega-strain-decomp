@@ -6,9 +6,9 @@ typedef struct Ring3F5 {
     int state;       /* 0xA8 */
 } Ring3F5;
 
-extern void func_003F53B0(void* ring, unsigned int* p1, int* n1, unsigned int* p2, int* n2);
-extern void func_003F5350(void* ring, int n);
-extern void func_003F4A10(void* ring);
+extern void viBufBeginPut(void* ring, unsigned int* p1, int* n1, unsigned int* p2, int* n2);
+extern void viBufEndPut(void* ring, int n);
+extern void viBufFlush(void* ring);
 extern void* memcpy(void* d, const void* s, unsigned int n);
 typedef struct { float f; } F4; extern F4 D_004939E8;
 
@@ -33,11 +33,11 @@ static inline int Ring_Write2(void* ring, char* d1, int n1, char* d2, int n2,
         }
         written = alen + blen;
     }
-    func_003F5350(ring, written);
+    viBufEndPut(ring, written);
     return written;
 }
 
-int func_003F5AE0(Ring3F5* self)
+int videoDecFlush(Ring3F5* self)
 {
     unsigned int p1;
     unsigned int p2;
@@ -48,14 +48,14 @@ int func_003F5AE0(Ring3F5* self)
     char* d2;
 
     val = D_004939E8;
-    func_003F53B0(self->ring, &p1, &n1, &p2, &n2);
+    viBufBeginPut(self->ring, &p1, &n1, &p2, &n2);
     if (n1 + n2 < 4) {
         return 0;
     }
     d1 = (char*)((p1 & 0x0FFFFFFF) | 0x20000000);
     d2 = (char*)((p2 & 0x0FFFFFFF) | 0x20000000);
     Ring_Write2(self->ring, d1, n1, d2, n2, (const char*)&val, 4, 0, 0);
-    func_003F4A10(self->ring);
+    viBufFlush(self->ring);
     if (self->state == 0) {
         self->state = 2;
     }

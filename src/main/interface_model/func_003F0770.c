@@ -2,7 +2,7 @@
 #include "types.h"
 #include "alloc_guard.h"
 
-/* func_003F0770: interface-model chunk reader for the two direction tags - a line (two points read
+/* CreateFeature: interface-model chunk reader for the two direction tags - a line (two points read
  * from the stream, second point zeroed when the segment is degenerate) or a single point. */
 
 typedef struct { signed char len; char text[0x80]; } PStr0770;
@@ -23,7 +23,7 @@ extern char D_004BE058[];
 extern int D_0055C0B8;
 extern void* Mem_Alloc(int pool, int size, char* file, int line);
 extern int strcmp(const char* a, const char* b);
-int func_003F0770(Self0770* self, char** cursor);
+int CreateFeature(Self0770* self, char** cursor);
 }
 
 static inline void Copy(PStr0770* buf, char* t, const char* s)
@@ -81,7 +81,7 @@ static inline float LenSq(V4 v)
     return ret;
 }
 
-extern "C" int func_003F0770(Self0770* self, char** cursor)
+extern "C" int CreateFeature(Self0770* self, char** cursor)
 {
     PStr0770 s;
     char* start = *cursor;

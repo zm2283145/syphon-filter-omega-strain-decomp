@@ -1,6 +1,6 @@
 #include "types.h"
-extern void func_00209F50(void);
+extern void details_compressed_pair_imp_cAllocator_cSkaBlendSequenceItem_int_1_second_void_2(void);
 #pragma optimization_level 1
-/* Forwards to func_00209F50. */
-void func_00209F30(void) { func_00209F50(); }
+/* Forwards to details_compressed_pair_imp_cAllocator_cSkaBlendSequenceItem_int_1_second_void_2. */
+void std_vector_deleter_cSkaBlendSequenceItem_cap_void_2(void) { details_compressed_pair_imp_cAllocator_cSkaBlendSequenceItem_int_1_second_void_2(); }
 #pragma optimization_level reset

@@ -1,5 +1,5 @@
 extern int Insck_Getsockopt(int, int, int, void *, int *);
-int func_0045AC00(int s, int level, int opt, unsigned char *val, int *len)
+int sceNetGlueGetsockopt(int s, int level, int opt, unsigned char *val, int *len)
 {
     unsigned char c; int n;
     if (level == 0 && (unsigned int)(opt - 10) < 2 && val && len && *len == 1) {

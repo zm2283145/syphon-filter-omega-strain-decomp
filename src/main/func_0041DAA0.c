@@ -4,16 +4,16 @@
 
 extern "C" {
 void List_Begin(ChildIterator* result, ChildList* list);
-void func_0028C0B0(ChildIterator* result, const ChildIterator* source);
-void func_0028C0A0(ChildIterator* result, ChildList* list);
-void func_0028C090(ChildIterator* result, const ChildIterator* source);
+void std_list_GuiWidgetPtr_generic_iterator_ctor(ChildIterator* result, const ChildIterator* source);
+void std_list_GuiWidgetPtr_end(ChildIterator* result, ChildList* list);
+void cLListIterator_GuiWidgetPtr_ctor_listR(ChildIterator* result, const ChildIterator* source);
 int String_AssignCStr_1C43A0(const void* string, const char* name);
 const char* String_CStr(const void* string);
 const char* strstr(const char* text, const char* pattern);
 }
 
 /* Search the widget and its descendants for the first matching numeric ID. */
-extern "C" TraversalWidget* func_0041DAA0(TraversalWidget* self, int id)
+extern "C" TraversalWidget* GuiWidget_FindChild_int(TraversalWidget* self, int id)
 {
     ChildIterator end;
     ChildIterator begin;
@@ -22,17 +22,17 @@ extern "C" TraversalWidget* func_0041DAA0(TraversalWidget* self, int id)
     if (id == self->id)
         return self;
     List_Begin(&rawBegin, &self->children);
-    func_0028C0B0(&begin, &rawBegin);
+    std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
     ChildNode* node = begin.node;
-    func_0028C0A0(&rawEnd, &self->children);
-    func_0028C090(&end, &rawEnd);
+    std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+    cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     while (node != end.node) {
-        TraversalWidget* found = func_0041DAA0(node->widget, id);
+        TraversalWidget* found = GuiWidget_FindChild_int(node->widget, id);
         if (found)
             return found;
         node = node->next;
-        func_0028C0A0(&rawEnd, &self->children);
-        func_0028C090(&end, &rawEnd);
+        std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+        cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     }
     return 0;
 }
@@ -47,17 +47,17 @@ extern "C" TraversalWidget* GuiWidget_FindChildByName(TraversalWidget* self, con
     if (!String_AssignCStr_1C43A0(self->name, name))
         return self;
     List_Begin(&rawBegin, &self->children);
-    func_0028C0B0(&begin, &rawBegin);
+    std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
     ChildNode* node = begin.node;
-    func_0028C0A0(&rawEnd, &self->children);
-    func_0028C090(&end, &rawEnd);
+    std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+    cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     while (node != end.node) {
         TraversalWidget* found = GuiWidget_FindChildByName(node->widget, name);
         if (found)
             return found;
         node = node->next;
-        func_0028C0A0(&rawEnd, &self->children);
-        func_0028C090(&end, &rawEnd);
+        std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+        cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     }
     return 0;
 }
@@ -72,17 +72,17 @@ extern "C" TraversalWidget* GuiWidget_FindChildBySubstring(TraversalWidget* self
     if (strstr(String_CStr(self->name), pattern))
         return self;
     List_Begin(&rawBegin, &self->children);
-    func_0028C0B0(&begin, &rawBegin);
+    std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
     ChildNode* node = begin.node;
-    func_0028C0A0(&rawEnd, &self->children);
-    func_0028C090(&end, &rawEnd);
+    std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+    cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     while (node != end.node) {
         TraversalWidget* found = GuiWidget_FindChildBySubstring(node->widget, pattern);
         if (found)
             return found;
         node = node->next;
-        func_0028C0A0(&rawEnd, &self->children);
-        func_0028C090(&end, &rawEnd);
+        std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+        cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     }
     return 0;
 }

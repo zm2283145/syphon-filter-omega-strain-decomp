@@ -6,15 +6,15 @@
 
 #include "types.h"
 
-void func_003E1090(Iter* out, PtrVec* v) {
+void std_vector_FuncDefPtr_end(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
 
-Word* func_003E10B0(Word* dst, Word* src) {
+Word* cArray_FuncDefPtr_Iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_003E10C0(Iter* out, PtrVec* v) {
+void std_vector_FuncDefPtr_begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }

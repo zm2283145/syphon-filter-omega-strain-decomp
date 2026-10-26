@@ -1,7 +1,7 @@
 #include "types.h"
 #include "npc_auth.h"
 typedef struct { char pad[0x30]; void* net; char pad2[0xE8]; int i11C; int i120; char pad3[0x19]; unsigned char b13D; } Npc39D0;
-void func_002D39D0(Npc39D0* o)
+void cNetNPC_ResumeAIAiming(Npc39D0* o)
 {
     if (NpcAuth_IsLocal()) {
         o->i120 = 0;

@@ -11,7 +11,7 @@
 #include "trivial_dtor.h"
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_00144930)
+DEFINE_TRIVIAL_DTOR(cSubclassId_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00144930 */
 
@@ -35,9 +35,9 @@ static inline void merge_flush_func_00144980(void) {}
 /* merge_units: begin func_001449B0 */
 #pragma push /* merge_units */
 extern char D_004D9280[];
-extern int func_003EC950(int);
+extern int cSpecFx_opDelete(int);
 
-int func_001449B0(int a0, int a1) {
+int cSpecFx_dtor(int a0, int a1) {
     int s0, v0, v1;
     int cond;
 
@@ -49,7 +49,7 @@ int func_001449B0(int a0, int a1) {
     cond = v0 <= 0;
     *(int*)((char*)s0 + 4) = v1;
     if (cond) goto L001449E8;
-    v0 = func_003EC950(a0);
+    v0 = cSpecFx_opDelete(a0);
 L001449E8:;
     v0 = s0;
     goto ret;

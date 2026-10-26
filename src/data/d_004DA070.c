@@ -30,6 +30,25 @@ extern void Object_HandleMessage();
 extern void PathObj_GetPosition();
 extern void Player_GetActiveWeapon();
 extern void PointLightComp_Start();
+extern void cCollisionModelList_Game_dtor();
+extern void cGOBJ_CheckBullet();
+extern void cGOBJ_GetBBox();
+extern void cGOBJ_GetChildList_void();
+extern void cGOBJ_GetChildList_void_2();
+extern void cGOBJ_GetFloorPlane();
+extern void cGOBJ_GetLosPosition();
+extern void cGOBJ_GetMovementState();
+extern void cGOBJ_GetNumSubTargets();
+extern void cGOBJ_GetStatus();
+extern void cGOBJ_GetSubTargetAimAdjust();
+extern void cGOBJ_GetTargetPriority();
+extern void cGOBJ_HasHeadset();
+extern void cGOBJ_InitNetwork();
+extern void cGOBJ_IsAimed();
+extern void cGOBJ_IsGeneratorCreated();
+extern void cGOBJ_IsNetworked();
+extern void cGOBJ_ScaleBBox();
+extern void cGOBJ_SetStatus();
 extern void cGOBJ_v35();
 extern void cGOBJ_v39();
 extern void cGameDirectionalLight_dtor();
@@ -37,6 +56,11 @@ extern void cGameDirectionalLight_v0B();
 extern void cGameDirectionalLight_v0C();
 extern void cGameDirectionalLight_v15();
 extern void cGameDirectionalLight_v16();
+extern void cGameLight_Init();
+extern void cGameLight_Load();
+extern void cGameLight_NextFrame();
+extern void cGameLight_TurnOff();
+extern void cGameLight_TurnOn();
 extern void cGameLight_dtor();
 extern void cGameLight_v0B();
 extern void cGameLight_v0C();
@@ -55,38 +79,14 @@ extern void cNode_v29();
 extern void cNode_v2A();
 extern void cNode_v2B();
 extern void cNode_v3A();
-extern void func_0012ED00();
-extern void func_0012ED30();
-extern void func_0012ED40();
-extern void func_0012ED50();
-extern void func_00134E00();
-extern void func_0013E060();
-extern void func_0013EE60();
+extern void cSystem_IsDeliverable();
+extern void cSystem_NetDisable();
+extern void cSystem_NetEnable();
+extern void cSystem_SendCreated();
 extern void func_00140E90();
 extern void func_001479A0();
 extern void func_00147A00();
 extern void func_00147A10();
-extern void func_00148870();
-extern void func_00153860();
-extern void func_0015BFB0();
-extern void func_0015BFC0();
-extern void func_0015BFD0();
-extern void func_0015BFE0();
-extern void func_0015BFF0();
-extern void func_0015C000();
-extern void func_0015C010();
-extern void func_0015C020();
-extern void func_0015C030();
-extern void func_0015C040();
-extern void func_0015C050();
-extern void func_0015C080();
-extern void func_0015C090();
-extern void func_0015C0A0();
-extern void func_00179A90();
-extern void func_00179B00();
-extern void func_00179BF0();
-extern void func_00179C00();
-extern void func_00179C10();
 
 void *D_004DA070[16] = {
     0, 0, &DirLight_Destruct, &PointLightComp_Start,
@@ -97,47 +97,47 @@ void *D_004DA070[16] = {
 
 void *D_004DA0B0[72] = {
     0, 0, &cGameDirectionalLight_dtor, &Object_HandleMessage,
-    &GObj_GetID, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
-    &cNode_v06, &cNode_v07, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &cGameDirectionalLight_v0B, &cGameDirectionalLight_v0C, &cNode_v0D,
-    &func_00179C10, &func_00179C00, &func_00179BF0, &Actor_BasePreLogic,
+    &GObj_GetID, &Object_GetAttachedOrSelf, &cGOBJ_IsNetworked, &cSystem_SendCreated,
+    &cNode_v06, &cNode_v07, &cSystem_NetEnable, &cSystem_NetDisable,
+    &cSystem_IsDeliverable, &cGameDirectionalLight_v0B, &cGameDirectionalLight_v0C, &cNode_v0D,
+    &cGameLight_Init, &cGameLight_Load, &cGameLight_NextFrame, &Actor_BasePreLogic,
     &Actor_BaseWorldUpdate, &Actor_VirtualNop, &cNode_v14, &cGameDirectionalLight_v15,
     &cGameDirectionalLight_v16, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
-    &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
-    &func_0015BFF0, &func_0015BFE0, &func_0013EE60, &func_0015C000,
+    &cGOBJ_HasHeadset, &cGOBJ_SetStatus, &cGOBJ_GetStatus, &cGOBJ_IsGeneratorCreated,
+    &cGOBJ_GetChildList_void_2, &cGOBJ_GetChildList_void, &cGOBJ_GetBBox, &cGOBJ_ScaleBBox,
     &Object_AttachTransform, &Player_GetActiveWeapon, &cNode_v24, &cNode_v25,
     &cNode_v26, &cNode_v27, &cNode_v28, &cNode_v29,
-    &cNode_v2A, &cNode_v2B, &func_0015C010, &func_00153860,
-    &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &cGOBJ_v35,
+    &cNode_v2A, &cNode_v2B, &cGOBJ_GetTargetPriority, &cGOBJ_GetLosPosition,
+    &Object_GetEye, &cGOBJ_GetMovementState, &func_00140E90, &cGOBJ_GetSubTargetAimAdjust,
+    &cGOBJ_GetNumSubTargets, &cGOBJ_IsAimed, &Node_GetWorldMatrix, &cGOBJ_v35,
     &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &cGOBJ_v39,
-    &cNode_v3A, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
-    &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
-    &func_00179B00, &func_00179A90, 0, 0,
+    &cNode_v3A, &GObj_GetWorldMatrix, &cGOBJ_GetFloorPlane, &cGOBJ_InitNetwork,
+    &Actor_ApplyContactDamage, &cGOBJ_CheckBullet, &GObj_GetLifeState, &Controller_DeathNotice,
+    &cGameLight_TurnOn, &cGameLight_TurnOff, 0, 0,
 };
 
 void *D_004DA1D0[72] = {
     0, 0, &cGameLight_dtor, &Object_HandleMessage,
-    &GObj_GetID, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
-    &cNode_v06, &cNode_v07, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &cGameLight_v0B, &cGameLight_v0C, &cNode_v0D,
-    &func_00179C10, &func_00179C00, &func_00179BF0, &Actor_BasePreLogic,
+    &GObj_GetID, &Object_GetAttachedOrSelf, &cGOBJ_IsNetworked, &cSystem_SendCreated,
+    &cNode_v06, &cNode_v07, &cSystem_NetEnable, &cSystem_NetDisable,
+    &cSystem_IsDeliverable, &cGameLight_v0B, &cGameLight_v0C, &cNode_v0D,
+    &cGameLight_Init, &cGameLight_Load, &cGameLight_NextFrame, &Actor_BasePreLogic,
     &Actor_BaseWorldUpdate, &Actor_VirtualNop, &cNode_v14, &cGameSceneLight_Activate,
     &cGameSceneLight_Deactivate, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
-    &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
-    &func_0015BFF0, &func_0015BFE0, &func_0013EE60, &func_0015C000,
+    &cGOBJ_HasHeadset, &cGOBJ_SetStatus, &cGOBJ_GetStatus, &cGOBJ_IsGeneratorCreated,
+    &cGOBJ_GetChildList_void_2, &cGOBJ_GetChildList_void, &cGOBJ_GetBBox, &cGOBJ_ScaleBBox,
     &Object_AttachTransform, &Player_GetActiveWeapon, &cNode_v24, &cNode_v25,
     &cNode_v26, &cNode_v27, &cNode_v28, &cNode_v29,
-    &cNode_v2A, &cNode_v2B, &func_0015C010, &func_00153860,
-    &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &cGOBJ_v35,
+    &cNode_v2A, &cNode_v2B, &cGOBJ_GetTargetPriority, &cGOBJ_GetLosPosition,
+    &Object_GetEye, &cGOBJ_GetMovementState, &func_00140E90, &cGOBJ_GetSubTargetAimAdjust,
+    &cGOBJ_GetNumSubTargets, &cGOBJ_IsAimed, &Node_GetWorldMatrix, &cGOBJ_v35,
     &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &cGOBJ_v39,
-    &cNode_v3A, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
-    &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
-    &func_00179B00, &func_00179A90, 0, 0,
+    &cNode_v3A, &GObj_GetWorldMatrix, &cGOBJ_GetFloorPlane, &cGOBJ_InitNetwork,
+    &Actor_ApplyContactDamage, &cGOBJ_CheckBullet, &GObj_GetLifeState, &Controller_DeathNotice,
+    &cGameLight_TurnOn, &cGameLight_TurnOff, 0, 0,
 };
 
 void *D_004DA2F0[8] = {
-    0, 0, &func_00134E00, &LosProvider_GetCollection,
+    0, 0, &cCollisionModelList_Game_dtor, &LosProvider_GetCollection,
     &LosProvider_Setup, &LosRequest_Update, 0, 0,
 };

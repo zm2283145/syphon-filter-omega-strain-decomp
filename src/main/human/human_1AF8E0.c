@@ -20,7 +20,7 @@
 #pragma cplusplus on
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_001AF8E0)
+DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_cSkeletonBBoxContributionPtr_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_001AF8E0 */
 
@@ -29,6 +29,6 @@ DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_001AF8E0)
 #pragma cplusplus on
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_001AF9D0, func_001AFA30)
+DEFINE_BASE_DTOR_CHAIN(cArray_cSkeletonCenterOfMassContributionPtr_dtor, std_vector_imp_cSkeletonCenterOfMassContributionPtr_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_001AF9D0 */

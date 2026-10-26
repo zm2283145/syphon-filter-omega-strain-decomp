@@ -10,14 +10,14 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int func_002EB650(void **, int);
+int NetGetObject(void **, int);
 int NetGame_InitLocalSlot(int *, int);
-int func_002EC460(int);
-int func_002EC878(int, int);
+int NetReleaseObjectPrivateOwnership(int);
+int NetStreamMediaQuitChannel(int, int);
 int lgAudStopRecording(int);
 int Net_GetClock(int);
 int func_0042BF90();
-int func_0042C1D0();
+int cNellyMoser_nmsDestroy();
 int lgAudClose(int);
 int lgAudStopPlayback(int);
 extern int D_00494178;
@@ -35,20 +35,20 @@ extern signed char D_00582D28;
 extern signed char D_00583860;
 extern int D_00583870;
 
-void func_00437BF0(void) {
+void cHeadSet_ShutdownAudio(void) {
     int sp2C;
     int var_s0;
     int var_v0;
 
     if (D_00582B88 != 0) {
-        func_002EB650(&sp2C, D_00583870);
+        NetGetObject(&sp2C, D_00583870);
         var_s0 = -1;
         if (sp2C != NULL) {
             var_s0 = F_(sp2C, 0x4, int);
         }
         LOCALID_(var_v0)
         if (var_s0 == var_v0) {
-            func_002EC460(D_00583870);
+            NetReleaseObjectPrivateOwnership(D_00583870);
             D_00582D28 = 1;
         }
         if (D_00582B88 != 0) {
@@ -67,12 +67,12 @@ void func_00437BF0(void) {
         lgAudStopPlayback(D_00497548);
         D_00582B88 = 0;
         lgAudClose(D_00497548);
-        func_002EC878((*(int*)D_00497550), *(volatile int*)&(*(int*)D_00497558));
+        NetStreamMediaQuitChannel((*(int*)D_00497550), *(volatile int*)&(*(int*)D_00497558));
         D_00582D00 = 0;
         (*(int*)D_00497550) = -1;
         (*(int*)D_00497558) = -1;
         func_0042BF90();
-        func_0042C1D0();
+        cNellyMoser_nmsDestroy();
         D_00582D18 = 0;
         D_00497548 = -1;
         D_00582D10 = 0;
@@ -129,7 +129,7 @@ static inline void Copy_7DB0(void* d0, void* s0, int n0)
 
 static inline int Samples_7DB0(int l, int b) { return l / b; }
 #pragma opt_propagation off
-int func_00437DB0(char* src, int count)
+int cHeadSet_AudioOutput(char* src, int count)
 {
     int total = 0;
     int len = 0;
@@ -191,9 +191,9 @@ extern int D_00582D38;
 extern char D_00582D50[];
 extern char D_00582E90[];
 #if 0 /* merge_units */
-void func_002EB650(P_437F90** out, void* s);
+void NetGetObject(P_437F90** out, void* s);
 #endif /* merge_units */
-#define func_002EB650(a0, a1) ((void)func_002EB650((void * *)(a0), (int)(a1))) /* merge_units */
+#define NetGetObject(a0, a1) ((void)NetGetObject((void * *)(a0), (int)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
 int Net_GetClock(int v);
@@ -201,7 +201,7 @@ int Net_GetClock(int v);
 #define Net_GetClock(a0) (Net_GetClock((a0))) /* merge_units */
 
 int lgAudRead(int h, int mode, void* buf, int* len);
-int func_0042BFD0(char* in, char* out, char* flag);
+int cNellyMoser_nmsEncode(char* in, char* out, char* flag);
 
 static inline int LocalIdX_7F90(void)
 {
@@ -254,12 +254,12 @@ static inline void Copy_7F90(void* d0, void* s0, int n0)
 static inline int Owner_437F90(void)
 {
     P_437F90* p;
-    func_002EB650(&p, D_00583870);
+    NetGetObject(&p, D_00583870);
     return p ? p->f4 : -1;
 }
 
 
-void func_00437F90(Pkt_437F90* pkt)
+void cHeadSet_AudioRecordCallback(Pkt_437F90* pkt)
 {
     char flag;
     int len;
@@ -300,7 +300,7 @@ void func_00437F90(Pkt_437F90* pkt)
                 return;
             }
             {
-                int k = func_0042BFD0(D_00582D50, D_00582E90 + D_00582D40, &flag);
+                int k = cNellyMoser_nmsEncode(D_00582D50, D_00582E90 + D_00582D40, &flag);
                 D_00582D48 = 0;
                 D_00582D40 += k;
             }
@@ -313,7 +313,7 @@ void func_00437F90(Pkt_437F90* pkt)
 }
 #undef D_00583870 /* merge_units */
 #undef D_00583860 /* merge_units */
-#undef func_002EB650 /* merge_units */
+#undef NetGetObject /* merge_units */
 #undef Net_GetClock /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00437F90 */

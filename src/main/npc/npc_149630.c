@@ -2503,26 +2503,26 @@ extern void Global_PlayerAddItem(int items, int item, int count);
 extern int Global_PlayerGetItemCount(int items, int item);
 extern void Global_PlayerRemoveItem(int items, int item, int count);
 extern int ScriptFilter_Dispatch(void* filter, int a1, int a2);
-extern int* func_0016AD70(void);
+extern int* cAI_SOBJ_getClassId(void);
 extern int Actor_SetStunImmune(NpcActor* actor, int on, int a2);
 extern int Actor_SetNotGasable(NpcActor* actor, int on, int a2);
 extern int cNetSetFlagMsg_Send(NpcActor* actor, int on, int a2);
 extern int* cGOBJTriggerEventMsg_GetScriptTypeKeyPtr(void);
 extern int ScriptType_AddAccepted(int type, int iface);
 extern void ScriptType_SetParent(int type, int base);
-extern int* func_004080E0(void);
+extern int* cDamageMsg_SOBJ_getClassId(void);
 
 /* Registers the cNPC script type: base type, then the interfaces it accepts. */
 int ScriptType_cNPC_Init(void) {
     int* base;
     int* iface;
 
-    base = func_0016AD70();
+    base = cAI_SOBJ_getClassId();
     ScriptType_SetParent(D_004EA3F8, *base);
     iface = cGOBJTriggerEventMsg_GetScriptTypeKeyPtr();
     ScriptType_AddAccepted(D_004EA3F8, *iface);
     ScriptType_AddAccepted(D_004EA3F8, D_004EA3D0);
-    iface = func_004080E0();
+    iface = cDamageMsg_SOBJ_getClassId();
     return ScriptType_AddAccepted(D_004EA3F8, *iface);
 }
 
@@ -2537,7 +2537,7 @@ void* NpcScript_GetReceiver(void* self) {
     return self;
 }
 
-int* func_0014A6A0(void) {
+int* cNPC_SOBJ_getClassId(void) {
     return &D_004EA3F0;
 }
 

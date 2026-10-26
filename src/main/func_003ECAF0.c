@@ -7,19 +7,19 @@
 #include "types.h"
 #include "loose04_types.h"
 
-extern int func_00173970(List*);
+extern int details_compressed_pair_imp_cAllocator_voidPtr_int_1_first(List*);
 
 /* Constructs an empty list (sentinel at +4). */
 List* LinkList_Ctor_3ECAF0(List* l) {
     l->count = 0;
-    func_00173970(l);
+    details_compressed_pair_imp_cAllocator_voidPtr_int_1_first(l);
     l->last = &l->first;
     l->first = &l->first;
     return l;
 }
 
 /* Initializes an empty vector header. */
-L4OwnedVec* func_003ECB30(L4OwnedVec* self) {
+L4OwnedVec* cSfxScheduler_tItem_ctor(L4OwnedVec* self) {
     self->vec.unk0 = 0;
     self->vec.count = 0;
     self->vec.data = 0;

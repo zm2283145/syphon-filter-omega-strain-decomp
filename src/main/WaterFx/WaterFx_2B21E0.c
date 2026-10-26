@@ -9,7 +9,7 @@
 
 /* merge_units: begin func_002B21E0 */
 #pragma push /* merge_units */
-int func_002B21E0(float* p) { return *p == 0.0f; }
+int cSplash_Expired(float* p) { return *p == 0.0f; }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002B21E0(void) {}
 #pragma pop /* merge_units */

@@ -24,7 +24,7 @@ extern char D_004B9F38[];
 extern char D_004B9F40[];
 extern char g_Game[];
 extern Opts_0320* D_004FFC04;
-void func_0043C810(W_0320* w);
+void GuiBitmapWidget_ClearBitmap(W_0320* w);
 void GuiBitmapWidget_SetImage(W_0320* w, char* name, int x);
 void GuiTextWidget_SetText(W_0320* w, char* s, int x);
 char* String_Copy(char* d, const char* s);
@@ -49,7 +49,7 @@ extern "C" void GuiAgentModify_ShowPatch(Self_0320* self)
     int c;
     if (self->fF0) {
         if (self->f80) {
-            func_0043C810(self->f80);
+            GuiBitmapWidget_ClearBitmap(self->f80);
             self->f80->flags &= ~2;
         }
         if (self->f84) {
@@ -58,7 +58,7 @@ extern "C" void GuiAgentModify_ShowPatch(Self_0320* self)
         }
     } else {
         if (self->f80)
-            func_0043C810(self->f80);
+            GuiBitmapWidget_ClearBitmap(self->f80);
         a = -1;
         b = a;
         c = a;

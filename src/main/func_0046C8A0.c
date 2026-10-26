@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046C8A0(void) {
+int MediusUniqueCallbackEndGameReportHandler(void) {
     return 124;
 }

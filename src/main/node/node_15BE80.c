@@ -86,33 +86,33 @@ unsigned char Node_GetFlag2C(cNode* self) {
     return self->flag2C;
 }
 
-int func_0015BFB0(void) {
+int cGOBJ_HasHeadset(void) {
     return 0;
 }
 
-void func_0015BFC0(void) {
+void cGOBJ_SetStatus(void) {
 }
 
-int func_0015BFD0(void) {
+int cGOBJ_GetStatus(void) {
     return 0;
 }
 
-int func_0015BFE0(void) {
+int cGOBJ_GetChildList_void(void) {
     return 0;
 }
 
-int func_0015BFF0(void) {
+int cGOBJ_GetChildList_void_2(void) {
     return 0;
 }
 
-void func_0015C000(void) {
+void cGOBJ_ScaleBBox(void) {
 }
 
-int func_0015C010(void) {
+int cGOBJ_GetTargetPriority(void) {
     return 0;
 }
 
-int func_0015C020(void) {
+int cGOBJ_GetMovementState(void) {
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -123,7 +123,7 @@ static inline void merge_flush_func_0015BE80(void) {}
 /* merge_units: begin func_0015C030 */
 #pragma push /* merge_units */
 /* Returns 1.0f. */
-float func_0015C030(void)
+float cGOBJ_GetSubTargetAimAdjust(void)
 {
     return 1.0f;
 }
@@ -141,11 +141,11 @@ static inline void merge_flush_func_0015C030(void) {}
  */
 
 
-int func_0015C040(void) {
+int cGOBJ_GetNumSubTargets(void) {
     return 0;
 }
 
-int func_0015C050(void) {
+int cGOBJ_IsAimed(void) {
     return 1;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -184,14 +184,14 @@ extern int ScriptFilter_Dispatch(void* filter, int a1, int a2);
 extern int* cGOBJ_GetScriptTypeKeyPtr(void); /* address of the cGObj type key */
 extern void ScriptType_SetParent(int type, int parentType);
 
-void func_0015C080(void) {
+void cGOBJ_InitNetwork(void) {
 }
 
-int func_0015C090(void) {
+int cGOBJ_IsNetworked(void) {
     return 1;
 }
 
-int func_0015C0A0(void) {
+int cGOBJ_CheckBullet(void) {
     return 0;
 }
 
@@ -217,7 +217,7 @@ void* ScriptNode_Identity(void* self) {
     return self;
 }
 
-int* func_0015C130(void) {
+int* cNode_SOBJ_getClassId(void) {
     return &D_004EA778;
 }
 

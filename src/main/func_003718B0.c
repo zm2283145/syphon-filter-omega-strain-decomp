@@ -65,7 +65,7 @@ static inline void Remove18B0(LM18B0* m, L18B0* l) {
     }
 }
 
-extern "C" L18B0* func_003718B0(L18B0* p, short flag)
+extern "C" L18B0* cSceneLight_dtor(L18B0* p, short flag)
 {
     if (p) {
         p->vt = D_004DF700;

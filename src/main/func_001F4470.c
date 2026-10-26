@@ -4,11 +4,11 @@
 #pragma push
 #pragma optimization_level 1
 
-extern void func_001F44B0(void* obj);
+extern void cLList_cSkaBlendSequenceItemPtr_ctor(void* obj);
 
-/* Runs func_001F44B0 on obj and returns obj. */
-void* func_001F4470(void* obj) {
-    func_001F44B0(obj);
+/* Runs cLList_cSkaBlendSequenceItemPtr_ctor on obj and returns obj. */
+void* cSkaInitListOfPointers_cSkaBlendSequenceItem_ctor(void* obj) {
+    cLList_cSkaBlendSequenceItemPtr_ctor(obj);
     return obj;
 }
 

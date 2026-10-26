@@ -67,7 +67,7 @@ public:
 };
 extern "C" void func_0017CA90(void*, int);
 extern "C" void* Mem_PlacementNew(int, void*);
-extern "C" void func_0017CA00(float, void*, float*, float*, float*, float*);
+extern "C" void cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_floatR_floatR_etc(float, void*, float*, float*, float*, float*);
 static inline bool b4NonZero(float x) { return !(0.0f == x); }
 extern "C" void Curve_Retarget(B4Curve* p) {
     unsigned char go = 0;
@@ -78,7 +78,7 @@ extern "C" void Curve_Retarget(B4Curve* p) {
         s[0] = p->GetSpeed();
         func_0017CA90(p->f18, -1);
         n = Mem_PlacementNew(0x18, p->f18);
-        if (n) func_0017CA00(p->f28, n, &p->f8, &p->fC, &p->f10, s);
+        if (n) cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_floatR_floatR_etc(p->f28, n, &p->f8, &p->fC, &p->f10, s);
     } else if (b4NonZero(p->f34)) {
         float s = p->GetSpeed();
         float v = s * p->f28;

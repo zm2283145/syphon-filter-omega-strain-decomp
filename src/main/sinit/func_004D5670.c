@@ -22,14 +22,14 @@ extern char D_004BCF70[];
 extern void* D_00542B60;
 extern void* D_00542B68;
 extern void __register_global_object(void* obj, void* dtor, void* link);
-extern char func_00396340[];
-void func_003BA210(void* p);
-void func_0017F820(void* p);
-void func_00132800(void* d, void* s);
+extern char cSkaAnimAnchor_dtor[];
+void cSkaAnimAnchor_TreeNode_ctor_void(void* p);
+void cQuaternion_GetZero(void* p);
+void cQuaternion_ctor_cQuaternionR(void* d, void* s);
 V4_4D5670* Vec4_GetZero(void);
 void Vec4_Assign(V4_4D5670* d, V4_4D5670* s);
-void func_003BA1B0(void* d, V4_4D5670* s);
-void func_00132840(void* p);
+void cArray_FixedSize_cVector_4_ctor_cVectorR(void* d, V4_4D5670* s);
+void cQuaternion_ctor_void(void* p);
 
 static inline float Sqrt_4D5670(float x)
 {
@@ -45,17 +45,17 @@ void StaticInit_SkaAnimMsgNames(void)
     D_004BCD60 = -1;
     D_004BCD68 = Sqrt_4D5670(Sqrt_4D5670(1.17549435e-38f));
     p = (O_4D5670*)D_005429F0;
-    func_003BA210(p);
+    cSkaAnimAnchor_TreeNode_ctor_void(p);
     D_00542AC0 = 0;
-    func_0017F820(tmp);
-    func_00132800(p->qE0, tmp);
+    cQuaternion_GetZero(tmp);
+    cQuaternion_ctor_cQuaternionR(p->qE0, tmp);
     Vec4_Assign(&p->vF0, Vec4_GetZero());
     p->x100 = 0;
-    func_003BA1B0(p->x110, Vec4_GetZero());
-    func_00132840(p->x150);
+    cArray_FixedSize_cVector_4_ctor_cVectorR(p->x110, Vec4_GetZero());
+    cQuaternion_ctor_void(p->x150);
     p->x160 = 0;
     p->x164 = 0;
-    __register_global_object(p, func_00396340, D_005429E0);
+    __register_global_object(p, cSkaAnimAnchor_dtor, D_005429E0);
     D_00542B60 = D_004BCF50;
     D_00542B68 = D_004BCF70;
 }

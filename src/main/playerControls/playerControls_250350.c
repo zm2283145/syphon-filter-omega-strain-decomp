@@ -30,11 +30,11 @@ static inline void merge_flush_func_00250350(void) {}
  */
 
 
-float func_00250380(ControlsUnk934* self) {
+float cGameCamera_GetFollowDistance(ControlsUnk934* self) {
     return -self->unk934;
 }
 
-Vec2f* func_00250390(Vec2f* dst, Vec2f* src) {
+Vec2f* cJoyXYVector_ctor_cJoyXYVectorR(Vec2f* dst, Vec2f* src) {
     dst->x = src->x;
     dst->y = src->y;
     return dst;
@@ -47,7 +47,7 @@ static inline void merge_flush_func_00250380(void) {}
 /* merge_units: begin func_002503B0 */
 #pragma push /* merge_units */
 /* Initializes a float pair from two ints. */
-Vec2f* func_002503B0(Vec2f* v, int x, int y) {
+Vec2f* cJoyXYVector_ctor_int_int(Vec2f* v, int x, int y) {
     v->x = (float)x;
     v->y = (float)y;
     return v;

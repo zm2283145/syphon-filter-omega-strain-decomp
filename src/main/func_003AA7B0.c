@@ -9,15 +9,15 @@ void SkelNode_CopyConstruct(SkelNode* d, const SkelNode* s);
 extern char D_004BCD10[];
 extern char D_004BC510[];
 extern char D_004BC4F0[];
-void func_003AACC0(SkelVec* a, SkelVec* b);
-void func_00396B80(SkelVec* v);
+void std_swap_vectordeleterR_vectordeleterR_38(SkelVec* a, SkelVec* b);
+void std_vector_deleter_cBone_clear(SkelVec* v);
 }
 static inline void SkelNode_Construct(SkelNode* p, const SkelNode* src)
 {
     if (p)
         SkelNode_Assign(p, src);
 }
-extern "C" void func_003AA7B0(SkelVec* v, SkelNode* pos, unsigned int n, const SkelNode* value)
+extern "C" void std_vector_imp_cBone_insert(SkelVec* v, SkelNode* pos, unsigned int n, const SkelNode* value)
 {
     if (n == 0)
         return;
@@ -101,8 +101,8 @@ extern "C" void func_003AA7B0(SkelVec* v, SkelNode* pos, unsigned int n, const S
             SkelNode_Construct(dst, src);
             (*tcount)++;
         }
-        func_003AACC0(&tmp, v);
-        func_00396B80(&tmp);
+        std_swap_vectordeleterR_vectordeleterR_38(&tmp, v);
+        std_vector_deleter_cBone_clear(&tmp);
         {
             SkelNode* fp_ = tmp.data;
             if (fp_) {

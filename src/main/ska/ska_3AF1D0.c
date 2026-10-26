@@ -63,22 +63,22 @@ static inline void merge_flush_func_003AF1D0(void) {}
  */
 
 
-extern int func_003B8230(int, int);
+extern int std_vector_imp_cSkaAnimAnchorListEntry_reserve(int, int);
 
-Word* func_003AF280(Word* dst, Word* src) {
+Word* cString4_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void* func_003AF290(char* self) {
+void* std_vector_deleter_cString4_data(char* self) {
     return self + 8;
 }
 
-int func_003AF2A0(int a0, int a1) {
-    return func_003B8230(a0, a1);
+int std_vector_cSkaAnimAnchorListEntry_reserve(int a0, int a1) {
+    return std_vector_imp_cSkaAnimAnchorListEntry_reserve(a0, a1);
 }
 
-Rel* func_003AF2B0(Rel* r) {
+Rel* std_vector_cSkaAnimAnchorListEntry_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

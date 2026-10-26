@@ -29,7 +29,7 @@ extern char D_004C2910[];
 extern char D_004C2930[];
 extern char D_004C2948[];
 int String_CompareNoCase(char* a, char* b);
-int func_002CAB70(void* p);
+int cGameFrontEnd_IsMessageBoxAwake_void_2(void* p);
 int GuiGameScreen_IsChooseMenuVisible(void* p);
 M_4651F0* Gui_GetScreenStack(void);
 }
@@ -48,7 +48,7 @@ extern "C" unsigned char func_004651F0(O_4651F0* o)
                     r = 1;
             } else if (!String_CompareNoCase(obj->Name(), D_004C2948)) {
                 r = NotBusy() && !g_LocalPlayer->f178;
-            } else if (!func_002CAB70(D_004FFC04)) {
+            } else if (!cGameFrontEnd_IsMessageBoxAwake_void_2(D_004FFC04)) {
                 r = g_Hud->b6A9 || g_Hud->b6A8;
             }
         } else {
@@ -71,7 +71,7 @@ extern char D_00587310[], D_005874B0[], D_00587650[], D_005877F0[], D_00587990[]
 void Game_EndLevel(void*, int);
 extern int GuiSound_Play(void*, void*);
 extern int GuiSound_Stop(void*, void*);
-extern int func_00465A50(void*, void*, unsigned short, int, int);
+extern int GuiCommonCanvas_onMessage(void*, void*, unsigned short, int, int);
 int GuiGameCanvas_OnEvent(void* self, void* b, unsigned short type, int idx, int e)
 {
     if (type == 0x1A && idx == 0x667) {
@@ -98,7 +98,7 @@ int GuiGameCanvas_OnEvent(void* self, void* b, unsigned short type, int idx, int
             return r;
         }
     }
-    return func_00465A50(self, b, type, idx, e);
+    return GuiCommonCanvas_onMessage(self, b, type, idx, e);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_004653B0 */

@@ -7,11 +7,11 @@
 /* merge_units: begin func_0010E590 */
 typedef struct { int x0; int x4; int x8; char *xC; } SubE590;
 typedef struct { int fd; volatile int x4; volatile unsigned int x8; volatile int xC; char *x10; unsigned char *x14; SubE590 *x18; } CtxE590;
-extern int func_0010F350(const char *, ...);
-extern int func_0010E3D0(int, void *, unsigned short);
-extern int func_0010E408(int, void *, unsigned short);
-extern void func_0010E510(SubE590 *);
-void func_0010E590(int cmd, int n, CtxE590 *c)
+extern int kprintf(const char *, ...);
+extern int sceDeci2ExRecv(int, void *, unsigned short);
+extern int sceDeci2ExSend(int, void *, unsigned short);
+extern void QueuePeekWriteDone(SubE590 *);
+void sceTtyHandler(int cmd, int n, CtxE590 *c)
 {
     int r;
     switch (cmd) {
@@ -19,27 +19,27 @@ void func_0010E590(int cmd, int n, CtxE590 *c)
     case 2:
         if (n != 0) {
             if (c->x8 + n > 0x140)
-                func_0010F350("TTY: packet size larger than expect\n");
+                kprintf("TTY: packet size larger than expect\n");
             {
                 unsigned int off = c->x8;
-                n = func_0010E3D0(c->fd, c->x14 + off, n);
+                n = sceDeci2ExRecv(c->fd, c->x14 + off, n);
             }
             if (n < 0)
-                func_0010F350("TTY: receive error");
+                kprintf("TTY: receive error");
             c->x8 += n;
         } else {
             unsigned short *h = (unsigned short *)c->x14;
             for (n = 12; n < *h; n++) {
                 *c->x18->xC = c->x14[n];
-                func_0010E510(c->x18);
+                QueuePeekWriteDone(c->x18);
             }
             c->x8 = 0;
         }
         break;
     case 3:
-        r = func_0010E408(c->fd, c->x10, c->x4);
+        r = sceDeci2ExSend(c->fd, c->x10, c->x4);
         if (r < 0) {
-            func_0010F350("TTY: send err %d\n", r);
+            kprintf("TTY: send err %d\n", r);
             c->xC = 0;
         } else {
             c->x10 += r;
@@ -48,7 +48,7 @@ void func_0010E590(int cmd, int n, CtxE590 *c)
         break;
     case 4:
         if (c->x4)
-            func_0010F350("TTY: err ti->wlen=%08x\n", c->x4);
+            kprintf("TTY: err ti->wlen=%08x\n", c->x4);
         c->xC = 0;
         break;
     }
@@ -62,9 +62,9 @@ extern Ctx D_004E2950;
 extern char D_004E2980[];
 extern int DIntr(void);
 extern int EIntr(void);
-extern int func_0010E320(int, char);
-extern void func_0010E350(int);
-int func_0010E728(char *s, int n)
+extern int sceDeci2ReqSend(int, char);
+extern void sceDeci2Poll(int);
+int sceTtyWrite(char *s, int n)
 {
     int cnt = 0;
     int j = 0;
@@ -92,14 +92,14 @@ int func_0010E728(char *s, int n)
     }
     D_004E2950.x4 = j + 12;
     *(short *)p = D_004E2950.x4;
-    if (func_0010E320(D_004E2950.fd, p[7]) < 0) {
+    if (sceDeci2ReqSend(D_004E2950.fd, p[7]) < 0) {
         D_004E2950.xC = 0;
         if (intr)
             EIntr();
         return -1;
     }
     while (D_004E2950.xC)
-        func_0010E350(D_004E2950.fd);
+        sceDeci2Poll(D_004E2950.fd);
     if (intr)
         EIntr();
     return cnt;
@@ -114,7 +114,7 @@ extern Ctx_0010E8A0 D_004E2950;
 #define D_004E2950 (*(Ctx_0010E8A0*)&D_004E2950) /* merge_units */
 
 extern void ByteRing_Pop(Ring *);
-int func_0010E8A0(char *buf, int n)
+int sceTtyRead(char *buf, int n)
 {
     int i;
     for (i = 0; i < n; i++) {
@@ -133,18 +133,18 @@ int func_0010E8A0(char *buf, int n)
 /* merge_units: begin func_0010E970 */
 extern char D_004E2AC0[];
 extern void FlushCache(int);
-extern int func_0010E2B0(int, void *, void (*)(int, int, Ctx *));
+extern int sceDeci2Open(int, void *, void (*)(int, int, Ctx *));
 #if 0 /* merge_units */
-extern void func_0010E590(int, int, Ctx *);
+extern void sceTtyHandler(int, int, Ctx *);
 #endif /* merge_units */
-#define func_0010E590(a0, a1, a2) (func_0010E590((a0), (a1), (CtxE590 *)(a2))) /* merge_units */
+#define sceTtyHandler(a0, a1, a2) (sceTtyHandler((a0), (a1), (CtxE590 *)(a2))) /* merge_units */
 
-extern Ring *func_0010E4E8(int);
-int func_0010E970(void)
+extern Ring *QueueInit(int);
+int sceTtyInit(void)
 {
     char *b;
     FlushCache(0);
-    D_004E2950.fd = func_0010E2B0(0x210, &D_004E2950, func_0010E590);
+    D_004E2950.fd = sceDeci2Open(0x210, &D_004E2950, sceTtyHandler);
     if (D_004E2950.fd < 0)
         return 0;
     D_004E2950.xC = 0;
@@ -158,14 +158,14 @@ int func_0010E970(void)
     b[7] = 0x48;
     *(short *)(b + 2) = 0;
     *(int *)(b + 8) = 0;
-    D_004E2950.x18 = func_0010E4E8(0x100);
+    D_004E2950.x18 = QueueInit(0x100);
     return 1;
 }
-#undef func_0010E590 /* merge_units */
+#undef sceTtyHandler /* merge_units */
 /* merge_units: end func_0010E970 */
 
 /* merge_units: begin func_0010EA30 */
-int func_0010EA30(int c)
+int kputchar(int c)
 {
     while (*(volatile int*)0x1000F130 & 0x8000)
         ;

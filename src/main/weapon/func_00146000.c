@@ -9,11 +9,11 @@
 extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int* value);
 
 /* push_back on a pointer vector. */
-int func_00146000(PtrVec* v, int* value) {
+int std_vector_charPtr_push_back_charPR(PtrVec* v, int* value) {
     return PtrVec_Insert(v, v->data + v->count, 1, value);
 }
 
-Rel* func_00146020(Rel* r) {
+Rel* std_vector_charPtr_ctor_void(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

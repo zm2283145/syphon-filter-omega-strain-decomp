@@ -1,6 +1,6 @@
 #include "types.h"
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
-float func_00373290(V4* a) {
+float cVector_GetLengthSquared(V4* a) {
     int rv0;
     float ret;
     asm {

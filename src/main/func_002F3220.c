@@ -7,6 +7,6 @@
 #include "types.h"
 #include "loose02_types.h"
 
-int func_002F3220(Obj850* self) {
+int GetPlayerStatus(Obj850* self) {
     return self->unk850;
 }

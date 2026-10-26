@@ -1,6 +1,6 @@
 extern float* D_004E1D28;
 extern float* D_004E1D24;
-void func_0031B780(float* a, int bits)
+void Unpack(float* a, int bits)
 {
     int n = 1 << bits;
     int h = n >> 1;

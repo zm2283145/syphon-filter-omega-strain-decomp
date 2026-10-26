@@ -10,7 +10,7 @@
 extern ListPos* List_InsertBefore(ListPos* result, void* list, ListPos* pos, int value);
 
 /* push_back on a list whose sentinel node is at +4. */
-ListPos* func_0013A7F0(void* list, int value) {
+ListPos* std_list_cLosRequest_cCollisionModelList_GamePtr_push_back(void* list, int value) {
     ListPos end;
     ListPos result;
 
@@ -18,16 +18,16 @@ ListPos* func_0013A7F0(void* list, int value) {
     return List_InsertBefore(&result, list, &end, value);
 }
 
-int func_0013A820(Iter* a, Iter* b) {
+int cArray_cLosRequest_cCollisionModelList_Game_Iterator_opNe(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 
 /* Advance an iterator over 0xE0-byte records. */
-ElemE0Iter* func_0013A840(ElemE0Iter* it) {
+ElemE0Iter* cArray_cLosRequest_cCollisionModelList_Game_Iterator_opInc(ElemE0Iter* it) {
     it->p = it->p + 1;
     return it;
 }
 
-ElemE0* func_0013A860(ElemE0Iter* it) {
+ElemE0* cArray_cLosRequest_cCollisionModelList_Game_Iterator_opMul(ElemE0Iter* it) {
     return it->p;
 }

@@ -19,7 +19,7 @@ void Vec4_CopyAsPoint(void*,void*);
 void World_PushObjectFromAction(void*,void*);
 void cGOBJTriggerEventMsg_ctor(void*,int,int,void*,int);
 void* Mtx_SetRotationTranslation(void*,void*,void*);
-int* func_00172990(PtrVec*,int);
+int* std_vector_cGOBJPtr_opIndex(PtrVec*,int);
 extern char D_004D9360[],D_004D9940[],D_004DAF10[],D_004DB8D0[],D_004E0880[],D_004EE698[],D_004F7930[],g_Game[],g_TeleportMsgClass[],g_cEnableMsgClass[];
 extern int D_004FFBD4;
 extern void* g_LocalPlayer;
@@ -157,7 +157,7 @@ extern "C" void Hotbox_Type2Receiver(cHotbox *arg0, SfGameObject *arg1) {
         goto done;
     case 10:
         if (arg0->unk60.count != 0) {
-            temp_s0_4 = *func_00172990(&arg0->unk60, 0);
+            temp_s0_4 = *std_vector_cGOBJPtr_opIndex(&arg0->unk60, 0);
             Event_Construct(&sp80, &D_004F7930);
             sp80.vtable = D_004DB8D0;
             sp80.object = temp_s0_4;

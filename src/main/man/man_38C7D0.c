@@ -43,30 +43,30 @@ struct Self38C820 {
 
 extern "C" {
 extern char g_AgentPartCache[];
-int func_004027E0(char* cache, __int128 name);
-void func_00403940(char* cache, int slot);
+int FindTex__7MonsterF1(char* cache, __int128 name);
+void Monster_FreeTexture(char* cache, int slot);
 int MeshCache_FindSlot(char* cache, __int128 name);
-void func_00404D90(char* cache, int slot);
-void func_0036CA70(void* p);
+void Monster_FreePart(char* cache, int slot);
+void DELAY_DELETE_ARRAY(void* p);
 }
 
-extern "C" void func_0038C820(Self38C820* self)
+extern "C" void cMan_FreeMan(Self38C820* self)
 {
     int i;
     for (i = 0; i < self->x23C0; i++) {
         int s = MeshCache_FindSlot(g_AgentPartCache, self->pairs[i].a);
         if (s != -1) {
-            func_00404D90(g_AgentPartCache, s);
+            Monster_FreePart(g_AgentPartCache, s);
         }
         if (self->x2340[i]) {
-            func_0036CA70(self->x2340[i]);
+            DELAY_DELETE_ARRAY(self->x2340[i]);
             self->x2340[i] = 0;
         }
     }
     for (i = 0; i < self->x23C0; i++) {
-        int s = func_004027E0(g_AgentPartCache, self->pairs[i].b);
+        int s = FindTex__7MonsterF1(g_AgentPartCache, self->pairs[i].b);
         if (s != -1) {
-            func_00403940(g_AgentPartCache, s);
+            Monster_FreeTexture(g_AgentPartCache, s);
         }
     }
 }

@@ -10,8 +10,8 @@
 #define NULL 0
 #pragma mpwc_relax on
 int Mem_Free(int, int, char *, int);
-int func_0012F530(char *, int);                     /* scope object dtor */
-int func_00136DA0(char *);                          /* scope object ctor */
+int cTimerDisable_dtor(char *, int);                     /* scope object dtor */
+int cTimerDisable_ctor(char *);                          /* scope object ctor */
 #include "motionManager_types.h"
 MotionManager* MotionManager_Dtor(MotionManager*, short); /* MotionManager dtor */
 extern int g_MotionManager;                              /* MotionManager* */
@@ -23,10 +23,10 @@ void MotionManager_Shutdown(void) {
 
     mgr = g_MotionManager;
     if (mgr != 0) {
-        func_00136DA0((char *)&scope);
+        cTimerDisable_ctor((char *)&scope);
         MotionManager_Dtor((MotionManager *)mgr, -1);
         Mem_Free(0, mgr, "motionManager.cc", 0x2B);
-        func_0012F530((char *)&scope, -1);
+        cTimerDisable_dtor((char *)&scope, -1);
         g_MotionManager = 0;
     }
 }

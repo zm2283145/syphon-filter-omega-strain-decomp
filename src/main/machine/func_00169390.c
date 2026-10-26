@@ -9,17 +9,17 @@
 extern void* D_004FFC04;
 extern unsigned char g_IsMultiplayer;    /* nonzero in a multiplayer game */
 extern int NetMsgThrottle_SendMsg(void);
-extern void func_002CA580(void* obj);
+extern void cGameFrontEnd_LobbyUpdate(void* obj);
 extern int DME_GetLobby(void);
 extern int DME_Update(void);
 
 /* Per-frame service: flush network messages in multiplayer, then update D_004FFC04. */
-void func_00169390(void) {
+void cMachine_NetUpdate(void) {
     if (g_IsMultiplayer != 0) {
         NetMsgThrottle_SendMsg();
         DME_Update();
     }
     if (D_004FFC04 != 0 && DME_GetLobby() != 0) {
-        func_002CA580(D_004FFC04);
+        cGameFrontEnd_LobbyUpdate(D_004FFC04);
     }
 }

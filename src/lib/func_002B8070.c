@@ -4,8 +4,8 @@ extern MC2Cache D_00512C88[];
 extern const char D_004AC1C8[];
 extern int func_002BC788(int);
 extern int func_002BAA20(int, int *);
-extern int func_002BC620(int, int);
-int func_002B8070(int idx)
+extern int _sceMcCoreBlockErase(int, int);
+int _sceMcFatUnFormat(int idx)
 {
     int info[4];
     int i, n;
@@ -19,7 +19,7 @@ int func_002B8070(int idx)
     __builtin_memcpy(D_00512C88[idx].cwd, D_004AC1C8, 2);
     n = info[2] / info[1];
     for (i = 0; i < n; i++) {
-        if (!func_002BC620(idx, i)) return 0x8101006F;
+        if (!_sceMcCoreBlockErase(idx, i)) return 0x8101006F;
     }
     return 0;
 }

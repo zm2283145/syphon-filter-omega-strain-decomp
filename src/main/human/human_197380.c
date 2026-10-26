@@ -62,9 +62,9 @@ extern void cMessage_dtor(Msg_197440* msg, int flags);
 #define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
 
 extern void Script_ReadU32(int* out);
-extern void func_00197500(Q* out);
+extern void cNetMsg_GetVector(Q* out);
 extern void* Actor_GetHumanClassKeyPtr(void);
-extern int func_00185060(void* self, void* key);
+extern int cGOBJ_CheckSubclassID(void* self, void* key);
 extern void Actor_StartStarThrow(void* self, int* id, Q* pos);
 void StarThrowMsg_CreateFromNet(void* self)
 {
@@ -77,8 +77,8 @@ void StarThrowMsg_CreateFromNet(void* self)
     *ip = -1;
     Script_ReadU32(ip);
     qp = &msg.pos;
-    func_00197500(qp);
-    if (self && func_00185060(self, Actor_GetHumanClassKeyPtr())) Actor_StartStarThrow(self, ip, qp);
+    cNetMsg_GetVector(qp);
+    if (self && cGOBJ_CheckSubclassID(self, Actor_GetHumanClassKeyPtr())) Actor_StartStarThrow(self, ip, qp);
     msg.vtable = D_004DCF10;
     cMessage_dtor(&msg, 0);
 }

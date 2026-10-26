@@ -20,7 +20,7 @@
 #pragma cplusplus on
 
 /* Destroy an object list: erase all nodes, optionally delete. */
-DEFINE_OBJ_LIST_DTOR(func_002CCD00)
+DEFINE_OBJ_LIST_DTOR(std_list_GuiWidgetPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_002CCD00 */
 
@@ -29,6 +29,6 @@ DEFINE_OBJ_LIST_DTOR(func_002CCD00)
 #pragma cplusplus on
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_002CCD80, func_00135C90)
+DEFINE_BASE_DTOR_CHAIN(cLList_GuiWidgetPtr_dtor, func_00135C90)
 #pragma pop /* merge_units */
 /* merge_units: end func_002CCD80 */

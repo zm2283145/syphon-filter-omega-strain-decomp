@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0010B208(void) {
+int sceMpegDelete(void) {
     return 1;
 }

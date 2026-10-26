@@ -7,24 +7,24 @@
 /* merge_units: begin func_00302B28 */
 typedef struct { int type; int f4; int f8; int pad[7]; } UpnpEnt;
 typedef struct { char pad[0x180]; int h180; UpnpEnt *ent; int count; int f18C; int f190; } UpnpObj;
-extern int func_00307530(int h, int a, int b);
-extern int func_00307488(int h, int a, int b);
-int func_00302B28(UpnpObj *o, int mode, int a, int b)
+extern int rt_udp_get_local_address(int h, int a, int b);
+extern int rt_udp_get_resolved_address(int h, int a, int b);
+int rt_p2p_get_my_address(UpnpObj *o, int mode, int a, int b)
 {
     int r;
     int ret = 2;
     if (o == 0) return ret;
     if (mode == 0) {
-        if (func_00307530(o->h180, a, b) != 0) return 7;
+        if (rt_udp_get_local_address(o->h180, a, b) != 0) return 7;
     } else if (mode == 1) {
-        if (func_00307488(o->h180, a, b) != 0) return 7;
+        if (rt_udp_get_resolved_address(o->h180, a, b) != 0) return 7;
     } else return 2;
     return 0;
 }
 /* merge_units: end func_00302B28 */
 
 /* merge_units: begin func_00302B88 */
-int func_00302B88(UpnpObj *o, int *out)
+int rt_p2p_get_host_index(UpnpObj *o, int *out)
 {
     int i;
     if (out == 0) return 2;
@@ -43,8 +43,8 @@ typedef struct { int h; int a; int b; } UpnpSlot;
 typedef struct {
     UpnpSlot slot[32]; void *h180; UpnpEnt_00302C00 *ent; int count; int f18C; int f190;
 } UpnpObj_00302C00;
-extern int func_003071E8(void *h, int key, int dir, int *a, int *b, int *c);
-int func_00302C00(UpnpObj_00302C00 *o, unsigned int *a, unsigned int *b, unsigned int *c, unsigned int *d)
+extern int rt_udp_get_buffer_stats(void *h, int key, int dir, int *a, int *b, int *c);
+int rt_p2p_get_buffer_stats(UpnpObj_00302C00 *o, unsigned int *a, unsigned int *b, unsigned int *c, unsigned int *d)
 {
     int x = 0;
     int y = 0;
@@ -73,21 +73,21 @@ int func_00302C00(UpnpObj_00302C00 *o, unsigned int *a, unsigned int *b, unsigne
         *c = 0;
         for (i = 0; i < o->count; i++) {
             if (o->ent[i].f4 != -1) {
-                if (func_003071E8(o->h180, o->ent[i].f4, 0, &x, &y, &z) != 0)
+                if (rt_udp_get_buffer_stats(o->h180, o->ent[i].f4, 0, &x, &y, &z) != 0)
                     { rv = 0; goto out; }
                 t3 += x;
                 t4 += y;
-                if (func_003071E8(o->h180, o->ent[i].f4, 1, &x, &y, &z) != 0)
+                if (rt_udp_get_buffer_stats(o->h180, o->ent[i].f4, 1, &x, &y, &z) != 0)
                     { rv = 0; goto out; }
                 t1 += x;
                 t1 += y;
             }
             if (o->ent[i].f8 != -1) {
-                if (func_003071E8(o->h180, o->ent[i].f8, 0, &x, &y, &z) != 0)
+                if (rt_udp_get_buffer_stats(o->h180, o->ent[i].f8, 0, &x, &y, &z) != 0)
                     { rv = 0; goto out; }
                 t3 += x;
                 t4 += y;
-                if (func_003071E8(o->h180, o->ent[i].f8, 1, &x, &y, &z) != 0)
+                if (rt_udp_get_buffer_stats(o->h180, o->ent[i].f8, 1, &x, &y, &z) != 0)
                     { rv = 0; goto out; }
                 t1 += x;
                 t1 += y;
@@ -115,7 +115,7 @@ typedef struct { int type; int f4; int f8; unsigned char bC, bD, bE, bF; unsigne
 typedef struct {
     UpnpSlot slot[32]; void *h180; UpnpEnt_00302E68 *ent; int count; int f18C; int f190;
 } UpnpObj_00302E68;
-int func_00302E68(UpnpObj_00302E68 *o, int idx, int *a, int *b, int *c, int *d)
+int rt_p2p_get_peer_buffer_stats(UpnpObj_00302E68 *o, int idx, int *a, int *b, int *c, int *d)
 {
     int x = 0;
     int y = 0;
@@ -140,18 +140,18 @@ int func_00302E68(UpnpObj_00302E68 *o, int idx, int *a, int *b, int *c, int *d)
         *d = 0;
         *c = 0;
         if (o->ent[idx].f4 != -1) {
-            if (func_003071E8(o->h180, o->ent[idx].f4, 0, &x, &y, &z) != 0) return 0;
+            if (rt_udp_get_buffer_stats(o->h180, o->ent[idx].f4, 0, &x, &y, &z) != 0) return 0;
             *b += x;
             *a += y;
-            if (func_003071E8(o->h180, o->ent[idx].f4, 1, &x, &y, &z) != 0) return 0;
+            if (rt_udp_get_buffer_stats(o->h180, o->ent[idx].f4, 1, &x, &y, &z) != 0) return 0;
             *d += x;
             *c += y;
         }
         if (o->ent[idx].f8 != -1) {
-            if (func_003071E8(o->h180, o->ent[idx].f8, 0, &x, &y, &z) != 0) return 0;
+            if (rt_udp_get_buffer_stats(o->h180, o->ent[idx].f8, 0, &x, &y, &z) != 0) return 0;
             *b += x;
             *a += y;
-            if (func_003071E8(o->h180, o->ent[idx].f8, 1, &x, &y, &z) != 0) return 0;
+            if (rt_udp_get_buffer_stats(o->h180, o->ent[idx].f8, 1, &x, &y, &z) != 0) return 0;
             *d += x;
             *c += y;
         }

@@ -86,7 +86,7 @@ char* AgentData_GetName(Agent_35BFB0* a);
 void GuiTextWidget_SetText(W_35BFB0* w, char* text, int flags);
 void GuiWidget_SendEvent(Screen_35BFB0* s, W_35BFB0* w, int a, int b, int c);
 void GuiWidget_Update(Screen_35BFB0* s, float dt);
-float func_0042B320(int i);
+float cDME_GetConnectionStatus(int i);
 #define strlen(a0) ((unsigned int)strlen((a0))) /* merge_units */
 }
 
@@ -242,7 +242,7 @@ extern "C" void GuiScoresEquip_Update(Screen_35BFB0* s, float dt)
                         } else {
                             idx = 0;
                         }
-                        GuiWidget_SendEvent(s, s->f48[m], 0xB, s->f58 + (int)((float)(s->f5C - s->f58) * (1.0f - func_0042B320(idx))), 0);
+                        GuiWidget_SendEvent(s, s->f48[m], 0xB, s->f58 + (int)((float)(s->f5C - s->f58) * (1.0f - cDME_GetConnectionStatus(idx))), 0);
                     }
                 } else {
                     s->f48[m]->flags &= ~2;
@@ -276,7 +276,7 @@ extern char Libc_Toupper(int c);
 #endif /* merge_units */
 #define Libc_Toupper(a0) (Libc_Toupper((char)(a0))) /* merge_units */
 
-char* func_0035CB30(int n)
+char* GetCodename(int n)
 {
     char buf[32];
     unsigned int i;

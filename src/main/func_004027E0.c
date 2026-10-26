@@ -9,7 +9,7 @@ static inline int ks004027E0eq(__int128 a, __int128 b) {
     }
     return r == -1;
 }
-unsigned int func_004027E0(KS004027E0* s, __int128 key) {
+unsigned int FindTex__7MonsterF1(KS004027E0* s, __int128 key) {
     unsigned int i;
     for (i = 0; i < s->count; i++) {
         if (ks004027E0eq(key, s->keys[i]))

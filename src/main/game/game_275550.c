@@ -12,7 +12,7 @@ extern char D_004FFE60[];
 extern char D_004FFEDC[];
 extern char D_004FFF75[];
 
-void func_00275550(void) {
+void cBulletManager_Reset(void) {
     int a0, a1, a2, v1;
     int cond;
 
@@ -67,15 +67,15 @@ extern E2755 D_004FFE60[50];
 #endif /* merge_units */
 #define D_004FFE60 ((E2755*)&D_004FFE60) /* merge_units */
 
-extern void func_002757A0(E2755* e);
+extern void cBullet_Render(E2755* e);
 static inline int ok_2755(E2755* p) { return p->b117 != 0 || p->w110 != 0; }
-void func_002755F0(void)
+void cBulletManager_Render(void)
 {
     int i;
     for (i = 0; i < 50; i++) {
         if (D_004FFE60[i].b115) {
             if (ok_2755(&D_004FFE60[i]))
-                func_002757A0(&D_004FFE60[i]);
+                cBullet_Render(&D_004FFE60[i]);
         }
     }
 }

@@ -5,7 +5,7 @@
 
 #include "ska_types.h"
 
-extern void func_00397840(SkaWords6* out, int a1, int a2);
+extern void std_deque_deleter_common_cSkaSystem_Request_make_iterator(SkaWords6* out, int a1, int a2);
 
 /* Push a time value if the four-slot stack is not full. */
 void AnimContext_PushTime(SkaTimeStack* s, float t) {
@@ -15,12 +15,12 @@ void AnimContext_PushTime(SkaTimeStack* s, float t) {
     }
 }
 
-/* Fill a six-word value from func_00397840 with a zero third argument. */
-void func_003AE050(SkaWords6* self, int a1) {
+/* Fill a six-word value from std_deque_deleter_common_cSkaSystem_Request_make_iterator with a zero third argument. */
+void std_deque_cSkaSystem_Request_rend(SkaWords6* self, int a1) {
     SkaWords6 tmp;
     int w;
 
-    func_00397840(&tmp, a1, 0);
+    std_deque_deleter_common_cSkaSystem_Request_make_iterator(&tmp, a1, 0);
     w = tmp.w[0];
     self->w[0] = w;
     w = tmp.w[1];
@@ -36,7 +36,7 @@ void func_003AE050(SkaWords6* self, int a1) {
 }
 
 /* Six-word copy assignment. */
-SkaWords6* func_003AE0B0(SkaWords6* dst, SkaWords6* src) {
+SkaWords6* cDequeue_cSkaSystem_Request_ReverseIterator_ctor(SkaWords6* dst, SkaWords6* src) {
     dst->w[0] = src->w[0];
     dst->w[1] = src->w[1];
     dst->w[2] = src->w[2];
@@ -46,12 +46,12 @@ SkaWords6* func_003AE0B0(SkaWords6* dst, SkaWords6* src) {
     return dst;
 }
 
-/* Fill a six-word value from func_00397840, passing src and its word +0x14. */
-void func_003AE0F0(SkaWords6* self, SkaWords6* src) {
+/* Fill a six-word value from std_deque_deleter_common_cSkaSystem_Request_make_iterator, passing src and its word +0x14. */
+void std_deque_cSkaSystem_Request_rbegin(SkaWords6* self, SkaWords6* src) {
     SkaWords6 tmp;
     int w;
 
-    func_00397840(&tmp, (int)src, src->w[5]);
+    std_deque_deleter_common_cSkaSystem_Request_make_iterator(&tmp, (int)src, src->w[5]);
     w = tmp.w[0];
     self->w[0] = w;
     w = tmp.w[1];

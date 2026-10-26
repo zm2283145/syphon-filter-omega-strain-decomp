@@ -12,7 +12,7 @@ extern void __sinit(reent_X* r);
 extern int fflush(FILE_X* fp);
 #define CHECK_INIT(fp) do { if ((fp)->_data == 0) (fp)->_data = D_00489738; if (!(fp)->_data->__sdidinit) __sinit ((fp)->_data); } while (0)
 #define HASUB(fp) ((fp)->_ub_base != 0)
-long func_001246D8(register FILE_X * fp)
+long Libc_Ftell(register FILE_X * fp)
 {
   long pos;
 
@@ -58,7 +58,7 @@ struct __siov { const void *iov_base; unsigned int iov_len; };
 struct __suio { struct __siov *uio_iov; int uio_iovcnt; int uio_resid; };
 extern int __swsetup(FILE *);
 extern void *Libc_Memmove(void *, const void *, unsigned int);
-extern void *func_00125DC0(const void *, int, unsigned int);
+extern void *Libc_Memchr(const void *, int, unsigned int);
 #if 0 /* merge_units */
 extern int fflush(FILE *);
 #endif /* merge_units */
@@ -133,7 +133,7 @@ int __sfvwrite(register FILE *fp, register struct __suio *uio)
         do {
             GETIOV(nlknown = 0);
             if (!nlknown) {
-                nl = func_00125DC0((void *)p, '\n', len);
+                nl = Libc_Memchr((void *)p, '\n', len);
                 nldist = nl ? nl + 1 - p : len + 1;
                 nlknown = 1;
             }

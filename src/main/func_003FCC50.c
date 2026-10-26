@@ -6,14 +6,14 @@
 
 #include "types.h"
 
-void* func_003FCC50(char* self) {
+void* std_tree_pair_int_value_compare_node_alloc_void(char* self) {
     return self + 4;
 }
 
-void func_003FCC60(void) {
+void cAllocator_pair_int_destroy_pairP_3(void) {
 }
 
-void* func_003FCC70(void* self) {
+void* std_tree_pair_int_value_compare_alloc_void(void* self) {
     return self;
 }
 
@@ -25,7 +25,7 @@ Map* func_003FCC80(Map* m, unsigned char* cmp) {
     return m;
 }
 
-Map* func_003FCCA0(Map* m, unsigned char* cmp) {
+Map* std_tree_pair_int_value_compare_ctor_valuecompareR_cAllocatorR_2(Map* m, unsigned char* cmp) {
     m->count = 0;
     m->head = 0;
     m->cmp = *cmp;

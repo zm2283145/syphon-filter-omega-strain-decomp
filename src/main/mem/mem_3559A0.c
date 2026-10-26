@@ -62,7 +62,7 @@ DEFINE_VECTOR_DESTROY_DTOR_FILE(func_00356350, func_00299500, D_004AA5C8)
 #pragma cplusplus on
 
 /* Destroy a vector: destroy elements, free the buffer, optionally delete. */
-DEFINE_VECTOR_DESTROY_DTOR_FILE(func_00356440, func_00299510, D_004AA5B8)
+DEFINE_VECTOR_DESTROY_DTOR_FILE(func_00356440, std_vector_deleter_tAchievementInfo_clear, D_004AA5B8)
 #pragma pop /* merge_units */
 /* merge_units: end func_00356440 */
 

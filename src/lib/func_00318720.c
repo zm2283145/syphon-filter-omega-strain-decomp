@@ -1,7 +1,7 @@
 extern float D_004B3A90[8];
 extern float D_004B3AB0[6];
 extern float D_004B3AC8[6][6];
-float func_00318720(float x)
+float powerpoly_125(float x)
 {
     float v[1];
     float *p;

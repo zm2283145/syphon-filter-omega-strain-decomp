@@ -24,7 +24,7 @@ extern int D_004EE550;
 extern int D_004ED9B8;
 extern int* Event_GetType(void* ev);
 extern int WeaponInv_GetHeldRating(void* weapons);
-extern void* func_00156F50(void* target);
+extern void* cAITarget_GetTargetGameObject(void* target);
 extern float NpcPerception_IsEnemy(void* target, void* other);
 extern unsigned char NpcAi_CoverSearch(Pt1MaSelf* self);
 extern unsigned char NpcAi_FiringPositionSearch(Pt1MaSelf* self);
@@ -41,10 +41,10 @@ static inline Pt1MaMode Pt1Ma_Mode(short state, short sub)
 static inline float Pt1Ma_TargetDist(void* target)
 {
     float d;
-    if (func_00156F50(target) == 0)
+    if (cAITarget_GetTargetGameObject(target) == 0)
         d = 0.0f;
     else
-        d = NpcPerception_IsEnemy(target, func_00156F50(target));
+        d = NpcPerception_IsEnemy(target, cAITarget_GetTargetGameObject(target));
     return d;
 }
 static inline unsigned char Pt1Ma_HasCover(Pt1MaSelf* self)

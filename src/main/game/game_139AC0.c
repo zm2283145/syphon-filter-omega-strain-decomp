@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-void func_00139AC0(PtrVec* a, PtrVec* b) {
+void std_swap_vectordeleterR_vectordeleterR(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;
         int* p;
@@ -45,11 +45,11 @@ typedef struct Shape139 {
 } Shape139;
 
 extern void Vec4_Copy(Q* dst, Q* src);
-extern void func_00139BB0(void* dst, void* src);
-extern void func_00139BA0(void* dst, void* src);
+extern void cCollisionModel_FaceProperties_opAssign(void* dst, void* src);
+extern void cCollisionModel_FaceLocator_opAssign(void* dst, void* src);
 
 /* Copy-assigns a shape; returns dst. */
-Shape139* func_00139B00(Shape139* dst, Shape139* src) {
+Shape139* cCollisionFace_ctor_cCollisionFaceR(Shape139* dst, Shape139* src) {
     dst->part40[0] = 0;
     dst->part40[2] = 0;
     dst->part60[0] = 0;
@@ -59,8 +59,8 @@ Shape139* func_00139B00(Shape139* dst, Shape139* src) {
     Vec4_Copy(&dst->rows[2], &src->rows[2]);
     Vec4_Copy(&dst->rows[3], &src->rows[3]);
     dst->flag50 = src->flag50;
-    func_00139BB0(dst->part40, src->part40);
-    func_00139BA0(dst->part60, src->part60);
+    cCollisionModel_FaceProperties_opAssign(dst->part40, src->part40);
+    cCollisionModel_FaceLocator_opAssign(dst->part60, src->part60);
     dst->flag51 = src->flag51;
     dst->flag52 = src->flag52;
     return dst;

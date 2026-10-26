@@ -1,9 +1,9 @@
 #include "types.h"
 typedef struct { void* vt; char pad[0xA8]; char mAC[0x1C]; char mC8[0x1C]; char mE4[0x20]; char m104[4]; } O2A8A60;
 extern void GuiNetJoinMission_IsType();
-extern void func_00293890();
+extern void GuiSaveAgentWidget_SaveDone();
 extern void GuiNetJoinMission_GetClassName();
-extern void func_002A8B50();
+extern void GuiMissionLobbyScreen_SelectAgentRemove();
 extern void GuiNetJoinMission_HandleEvent();
 extern void GuiNetJoinMission_Deactivate();
 extern void GuiNetJoinMission_Activate();
@@ -56,4 +56,4 @@ O2A8A60* GuiNetJoinMission_dtor(O2A8A60* self, short del)
     }
     return self;
 }
-void * const D_004DDA50[32] = { (void*)0x0, (void*)0x0, (void*)GuiNetJoinMission_dtor, (void*)GuiNetJoinMission_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiMenuScreen_Wake, (void*)GuiMenuScreen_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiMenuScreen_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiMenuScreen_Update, (void*)GuiNetJoinMission_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiNetJoinMission_GetClassName, (void*)GuiNetJoinMission_IsType, (void*)func_00293890, (void*)GuiScreen_PollLobby, (void*)GuiNetJoinMission_Activate, (void*)GuiNetJoinMission_Deactivate, (void*)GuiMenuScreen_OpenKeyboard, (void*)GuiMenuScreen_OpenAgentInfo, (void*)GuiMenuScreen_JoinGame, (void*)func_002A8B50, (void*)0x0 };
+void * const D_004DDA50[32] = { (void*)0x0, (void*)0x0, (void*)GuiNetJoinMission_dtor, (void*)GuiNetJoinMission_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiMenuScreen_Wake, (void*)GuiMenuScreen_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiMenuScreen_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiMenuScreen_Update, (void*)GuiNetJoinMission_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiNetJoinMission_GetClassName, (void*)GuiNetJoinMission_IsType, (void*)GuiSaveAgentWidget_SaveDone, (void*)GuiScreen_PollLobby, (void*)GuiNetJoinMission_Activate, (void*)GuiNetJoinMission_Deactivate, (void*)GuiMenuScreen_OpenKeyboard, (void*)GuiMenuScreen_OpenAgentInfo, (void*)GuiMenuScreen_JoinGame, (void*)GuiMissionLobbyScreen_SelectAgentRemove, (void*)0x0 };

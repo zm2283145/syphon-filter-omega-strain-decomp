@@ -10,16 +10,16 @@
 
 /* merge_units: begin func_003B1510 */
 #pragma push /* merge_units */
-Rel* func_003B1560(Rel* r); /* gsynth: defined below */typedef struct { char pad[0xC]; unsigned char flag; } S;
+Rel* std_vector_imp_cSkaPlaybackItem_ctor(Rel* r); /* gsynth: defined below */typedef struct { char pad[0xC]; unsigned char flag; } S;
 #if 0 /* merge_units */
-extern void func_003B1560(S*);
+extern void std_vector_imp_cSkaPlaybackItem_ctor(S*);
 #endif /* merge_units */
-#define func_003B1560(a0) ((void)func_003B1560((void *)(a0))) /* merge_units */
+#define std_vector_imp_cSkaPlaybackItem_ctor(a0) ((void)std_vector_imp_cSkaPlaybackItem_ctor((void *)(a0))) /* merge_units */
 
-extern void func_003B7A50(S*, int);
+extern void std_vector_imp_cSkaPlaybackItem_reserve(S*, int);
 /* Constructor: base init, sets value from *v, stores flag. */
-S* func_003B1510(S* s, int* v, unsigned char flag) { func_003B1560(s); func_003B7A50(s, *v); s->flag = flag; return s; }
-#undef func_003B1560 /* merge_units */
+S* cArray_cSkaPlaybackItem_ctor(S* s, int* v, unsigned char flag) { std_vector_imp_cSkaPlaybackItem_ctor(s); std_vector_imp_cSkaPlaybackItem_reserve(s, *v); s->flag = flag; return s; }
+#undef std_vector_imp_cSkaPlaybackItem_ctor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003B1510(void) {}
 #pragma pop /* merge_units */
@@ -33,24 +33,24 @@ static inline void merge_flush_func_003B1510(void) {}
  */
 
 
-extern int func_003B7470(SkaVec* v, char* pos, int n, int value);
+extern int std_vector_imp_cSkaPlaybackItem_insert(SkaVec* v, char* pos, int n, int value);
 
-Rel* func_003B1560(Rel* r) {
+Rel* std_vector_imp_cSkaPlaybackItem_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
     return r;
 }
 
-unsigned char func_003B1580(unsigned char* self) {
+unsigned char cSkaAnim_IsLooping(unsigned char* self) {
     return self[69];
 }
 
 /* Append one 32-byte element at the end of the array. */
-int func_003B1590(SkaVec* v, int value) {
+int cArray_cSkaPlaybackItem_PushBackActual(SkaVec* v, int value) {
     int count = v->count;
     char* data = v->data;
-    return func_003B7470(v, data + (count << 5), 1, value);
+    return std_vector_imp_cSkaPlaybackItem_insert(v, data + (count << 5), 1, value);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003B1560(void) {}

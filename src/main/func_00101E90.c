@@ -20,7 +20,7 @@ typedef struct ActionInfo {
 
 extern unsigned char *func_00100BC0(unsigned char *p, unsigned int *out);
 extern unsigned char *func_00100C70(unsigned char *p, int *out);
-extern void func_00100AB0(void);
+extern void std_terminate(void);
 extern void *func_001025D0(ThrowCtx *ctx, ActionInfo *info);
 extern void func_001021E0(void *x, ActionInfo *info);
 extern void func_00102510(ThrowCtx *ctx, ActionInfo *info);
@@ -39,7 +39,7 @@ int func_00101E90(ActionInfo *info)
         if (IsNull(p) || (p[0] & 0x80)) {
             func_001021E0(func_001025D0(ctx, info), info);
             if (info->x4 == 0)
-                func_00100AB0();
+                std_terminate();
             func_00102510(ctx, info);
             if (info->p == 0)
                 continue;
@@ -127,7 +127,7 @@ int func_00101E90(ActionInfo *info)
                 break;
             }
             default:
-                func_00100AB0();
+                std_terminate();
                 break;
             }
         }

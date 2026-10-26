@@ -9,20 +9,20 @@ extern int D_0048AB18;
 extern char D_004F5820[];
 extern void WaitSema(int);
 extern void SignalSema(int);
-extern int func_00223410(void);
+extern int SetResult(void);
 extern int sceSifCheckStatRpc(void *);
-int func_00223360(int mode, int *out)
+int sceUsbKbSync(int mode, int *out)
 {
     if (D_0048AB18 == -1) return -1;
     switch (mode) {
     case 0:
         WaitSema(D_0048AB18);
-        *out = func_00223410();
+        *out = SetResult();
         SignalSema(D_0048AB18);
         return 0;
     case 1:
         if (sceSifCheckStatRpc(D_004F5820) == 0) {
-            *out = func_00223410();
+            *out = SetResult();
             return 0;
         }
         return 1;
@@ -36,7 +36,7 @@ int func_00223360(int mode, int *out)
 
 void iSignalSema(int);
 
-void func_00223400(void)
+void rpccall_end(void)
 {
     iSignalSema(D_0048AB18);
 }
@@ -46,13 +46,13 @@ void func_00223400(void)
 typedef int (*Fn223410)(void);
 typedef struct { char pad[0x90]; int mode; int f94; int f98; } G223410;
 extern G223410 D_004F5780;
-extern void func_00223478();
-extern void func_002234D0();
-extern void func_00223A48();
-extern void func_00223A98();
-extern void func_00223AB8();
-static void * const dat_0048AB00[6] = { (void*)0x0, (void*)func_00223478, (void*)func_002234D0, (void*)func_00223A48, (void*)func_00223A98, (void*)func_00223AB8 };
-int func_00223410(void)
+extern void SetResult_GetInfo();
+extern void SetResult_Read();
+extern void SetResult_GetLocation();
+extern void SetResult_SetLEDStatus();
+extern void SetResult_SetLEDMode();
+static void * const dat_0048AB00[6] = { (void*)0x0, (void*)SetResult_GetInfo, (void*)SetResult_Read, (void*)SetResult_GetLocation, (void*)SetResult_SetLEDStatus, (void*)SetResult_SetLEDMode };
+int SetResult(void)
 {
     int r = 0;
     int m = D_004F5780.mode;

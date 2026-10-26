@@ -15,11 +15,11 @@
 #include "loose03_types.h"
 
 extern int strncpy(char* dst, const char* src, int n); /* bounded string copy */
-extern int func_003EBEF0(void*);
+extern int cFSHandle_ctor(void*);
 
 /* Constructor, kind bit 0x1; sets 0x4 when `extra` is non-zero. */
-NamedEntry36E4B0* func_0036E4B0(NamedEntry36E4B0* self, const char* name, int a2, int extra) {
-    func_003EBEF0(self->unk88);
+NamedEntry36E4B0* cFileMan_ctor_charP_cFileIOP_bool(NamedEntry36E4B0* self, const char* name, int a2, int extra) {
+    cFSHandle_ctor(self->unk88);
     self->flags = 0;
     self->flags = 0;
     strncpy(self->name, name, 128);
@@ -32,8 +32,8 @@ NamedEntry36E4B0* func_0036E4B0(NamedEntry36E4B0* self, const char* name, int a2
 }
 
 /* Constructor, kind bit 0x2; sets 0x4 when `extra` is non-zero. */
-NamedEntry36E4B0* func_0036E540(NamedEntry36E4B0* self, const char* name, int a2, int extra) {
-    func_003EBEF0(self->unk88);
+NamedEntry36E4B0* cFileMan_ctor_charP_cHogFileR_bool(NamedEntry36E4B0* self, const char* name, int a2, int extra) {
+    cFSHandle_ctor(self->unk88);
     self->flags = 0;
     self->flags = 0;
     strncpy(self->name, name, 128);
@@ -47,7 +47,7 @@ NamedEntry36E4B0* func_0036E540(NamedEntry36E4B0* self, const char* name, int a2
 
 /* Default constructor. */
 NamedEntry36E4B0* Resource_Construct(NamedEntry36E4B0* self) {
-    func_003EBEF0(self->unk88);
+    cFSHandle_ctor(self->unk88);
     self->flags = 0;
     return self;
 }
@@ -64,7 +64,7 @@ struct Obj36E600 { VPAD16(a) VPAD1(b) virtual void Clear(int f); virtual void s1
 extern "C" {
 extern char D_004DF640[];
 extern char D_004DF6A0[];
-void func_0036E6E0(void* p, int f);
+void std_vector_cXformNodePtr_dtor(void* p, int f);
 void operator_delete(void* p);
 }
 static inline void Base36E600(Obj36E600* p) { if (p) *(void**)p = D_004DF6A0; }
@@ -74,7 +74,7 @@ extern "C" Obj36E600* Xform_dtor(Obj36E600* self, short del)
         *(void**)self = D_004DF640;
         self->Clear(1);
         while (self->count) self->Remove(self->items[*(volatile int*)&self->count - 1], 1);
-        if (self->mA4) func_0036E6E0(self->mA4, -1);
+        if (self->mA4) std_vector_cXformNodePtr_dtor(self->mA4, -1);
         Base36E600(self);
         if (del > 0) operator_delete(self);
     }

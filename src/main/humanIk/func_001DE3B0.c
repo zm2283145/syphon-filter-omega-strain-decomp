@@ -1,7 +1,7 @@
 #pragma cplusplus on
 #include "types.h"
 #include "alloc_guard.h"
-/* func_001DE3B0: reorder 16-byte elements in place by an order table (same family as func_001DE5C0) */
+/* ReorderList_uint_cQuaternionP_uintP: reorder 16-byte elements in place by an order table (same family as ReorderList_uint_cJointLimitsP_uintP) */
 extern "C" {
 void* Mem_Alloc(int, int, char*, int);
 int Mem_Free(int, void*, char*, int);
@@ -21,7 +21,7 @@ struct Q1DE3B0 {
     // 128-bit lq/sq quadword copy idiom
     Q1DE3B0& operator=(const Q1DE3B0& o) { Q1DE3B0* d = this; const Q1DE3B0* s = &o; __int128 t; __asm__ volatile("lq %0, 0(%2); sq %0, 0(%1)" : "=&r"(t) : "r"(d), "r"(s) : "memory"); return *this; }
 } __attribute__((aligned(16)));
-extern "C" void func_001DE3B0(unsigned int n, Q1DE3B0* data, unsigned int* order)
+extern "C" void ReorderList_uint_cQuaternionP_uintP(unsigned int n, Q1DE3B0* data, unsigned int* order)
 {
     unsigned int* tmp;
     unsigned int i;

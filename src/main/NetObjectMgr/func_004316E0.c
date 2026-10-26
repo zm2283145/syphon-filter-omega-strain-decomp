@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_004316E0(char* self) {
+void* std_tree_pair_short_value_compare_root(char* self) {
     return self + 4;
 }

@@ -51,7 +51,7 @@ static inline void merge_flush_func_0015FFD0(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0x20]; int* ids; int pad24; int count; } Path_00A0;
 typedef struct { char pad[0x48]; int cur; char pad2[0x74 - 0x4C]; Path_00A0* path; } S_00A0;
-int func_001600A0(S_00A0* self, int id)
+int cPathNavigator_GetRelativePathPosition(S_00A0* self, int id)
 {
     Path_00A0* p = self->path;
     int r = 0;

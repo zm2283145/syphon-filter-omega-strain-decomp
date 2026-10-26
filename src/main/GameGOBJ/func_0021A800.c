@@ -6,7 +6,7 @@
 
 extern char D_004D9DE0[];
 
-Rec0C* func_0021A800(Rec0C* r) {
+Rec0C* cSafePtr_cGOBJ_ctor_void(Rec0C* r) {
     *(int*)&r->unk4 = -2;
     r->unk0 = 0;
     return r;

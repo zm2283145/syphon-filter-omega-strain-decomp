@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-int func_002D7C60(void) {
+int cNetPlayer_GetControllerType(void) {
     return 4;
 }
 
-int func_002D7C70(void) {
+int cNetPlayer_IsPlayer(void) {
     return 1;
 }

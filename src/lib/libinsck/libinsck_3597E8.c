@@ -7,9 +7,9 @@
 /* merge_units: begin func_003597E8 */
 #define F(p,o,T) (*(T *)((char *)(p)+(o)))
 extern void *Insck_GetThreadContext(int), *Insck_FindSocket(int);
-extern void func_003581C0(void);
-extern int func_00358158(void), Insck_SetErrno(void *, int), Insck_MapLibnetError(int), func_00359728(void *, void *);
-extern int func_0034AFA8(void *, int, int, void *, unsigned int, int *, int);
+extern void unblock(void);
+extern int func_00358158(void), Insck_SetErrno(void *, int), Insck_MapLibnetError(int), connect_check(void *, void *);
+extern int sceInetSend(void *, int, int, void *, unsigned int, int *, int);
 static inline int finish97E8(void *ctx, int err, int site)
 {
     int r = Insck_SetErrno(ctx, err);
@@ -30,14 +30,14 @@ long Insck_Send(int fd, char *buf, unsigned int len, int flags)
     if (F(sock,16,int) == 0 || F(sock,16,int) == 3) {
         if (F(ctx,0x58,unsigned int) < len) return finish97E8(ctx, 0x16, 0);
     }
-    r = func_00359728(ctx, sock);
+    r = connect_check(ctx, sock);
     if (r) return finish97E8(ctx, r, 0);
     if (flags & 1) opt = 2;
     else opt = 0;
     while (len) {
         chunk = F(ctx,0x58,unsigned int) < len ? F(ctx,0x58,unsigned int) : len;
-        func_003581C0();
-        r = func_0034AFA8((char *)ctx + 0x14, F(ctx,0x54,int), F(sock,12,int), buf, chunk, &opt, F(sock,0x64,int));
+        unblock();
+        r = sceInetSend((char *)ctx + 0x14, F(ctx,0x54,int), F(sock,12,int), buf, chunk, &opt, F(sock,0x64,int));
         if (func_00358158() < 0) return finish97E8(ctx, -1, 1);
         if (r < 0) return finish97E8(ctx, Insck_MapLibnetError(r), 1);
         buf += r;
@@ -52,7 +52,7 @@ long Insck_Send(int fd, char *buf, unsigned int len, int flags)
 /* merge_units: end func_003597E8 */
 
 /* merge_units: begin func_00359998 */
-extern int func_0034ADD0(void *, int, int, void *, unsigned int, int *, int);
+extern int sceInetRecv(void *, int, int, void *, unsigned int, int *, int);
 static inline int finish9998(void *ctx, int err, int site)
 {
     int r = Insck_SetErrno(ctx, err);
@@ -74,15 +74,15 @@ long Insck_Recv(int fd, char *buf, unsigned int len, int flags)
     if (F(sock,16,int) == 0 || F(sock,16,int) == 3) {
         if (F(ctx,0x58,unsigned int) < len) return finish9998(ctx, 0x16, 0);
     }
-    r = func_00359728(ctx, sock);
+    r = connect_check(ctx, sock);
     if (r) return finish9998(ctx, r, 0);
     opt = 0;
     nb = flags & 0x40;
     while (len) {
         chunk = len;
         if (F(ctx,0x58,unsigned int) < len) chunk = F(ctx,0x58,unsigned int);
-        func_003581C0();
-        r = func_0034ADD0((char *)ctx + 0x14, F(ctx,0x54,int), F(sock,12,int), buf, chunk, &opt, F(sock,0x60,int));
+        unblock();
+        r = sceInetRecv((char *)ctx + 0x14, F(ctx,0x54,int), F(sock,12,int), buf, chunk, &opt, F(sock,0x60,int));
         if (func_00358158() < 0) return finish9998(ctx, -1, 1);
         if (r < 0) return finish9998(ctx, Insck_MapLibnetError(r), 1);
         buf += r;
@@ -99,9 +99,9 @@ long Insck_Recv(int fd, char *buf, unsigned int len, int flags)
 /* merge_units: end func_00359998 */
 
 /* merge_units: begin func_00359B70 */
-extern void func_003581C0(void),func_003584B8(void *,void *);
-extern int func_00358158(void),Insck_SetErrno(void *,int),Insck_MapLibnetError(int),func_00359728(void *,void *),func_00358530(int);
-extern int func_0034B050(void *,int,int,void *,unsigned int,int *,void *,int,int);
+extern void unblock(void),conv_addr_to_inet(void *,void *);
+extern int func_00358158(void),Insck_SetErrno(void *,int),Insck_MapLibnetError(int),connect_check(void *,void *),conv_port_to_inet(int);
+extern int sceInetSendTo(void *,int,int,void *,unsigned int,int *,void *,int,int);
 static inline int error9B70(void *ctx,int err){ int r=Insck_SetErrno(ctx,err); /* Return after error publication. */ __asm__ volatile("" ::: "memory"); return r; }
 long Insck_Sendto(int fd,void *buf,unsigned int len,int flags,void *dest){
  int addr[4],out;
@@ -112,13 +112,13 @@ long Insck_Sendto(int fd,void *buf,unsigned int len,int flags,void *dest){
  if(!sock)return error9B70(ctx,9);
  if(F(sock,16,int)!=0 && F(sock,16,int)!=3)return error9B70(ctx,95);
  if(F(ctx,88,unsigned int)<len)return error9B70(ctx,22);
- r=func_00359728(ctx,sock);
+ r=connect_check(ctx,sock);
  if(r)return error9B70(ctx,r);
  out=0;
- func_003584B8(addr,(char *)dest+4);
- r=func_00358530(F(dest,2,unsigned short));
- func_003581C0();
- r=func_0034B050((char *)ctx+20,F(ctx,84,int),F(sock,12,int),buf,len,&out,addr,r,F(sock,100,int));
+ conv_addr_to_inet(addr,(char *)dest+4);
+ r=conv_port_to_inet(F(dest,2,unsigned short));
+ unblock();
+ r=sceInetSendTo((char *)ctx+20,F(ctx,84,int),F(sock,12,int),buf,len,&out,addr,r,F(sock,100,int));
  if(func_00358158()<0)return error9B70(ctx,-1);
  if(r<0)return error9B70(ctx,Insck_MapLibnetError(r));
  Insck_SetErrno(ctx,0);
@@ -127,9 +127,9 @@ long Insck_Sendto(int fd,void *buf,unsigned int len,int flags,void *dest){
 /* merge_units: end func_00359B70 */
 
 /* merge_units: begin func_00359CE0 */
-extern void func_003581C0(void),func_003584B8(void *,void *),func_00358500(void *,void *);
-extern int func_00358158(void),Insck_SetErrno(void *,int),Insck_MapLibnetError(int),func_00359728(void *,void *),func_00358530(int),func_00358558(int);
-extern int func_0034AE98(void *,int,int,void *,unsigned int,int *,void *,int *,int);
+extern void unblock(void),conv_addr_to_inet(void *,void *),conv_addr_from_inet(void *,void *);
+extern int func_00358158(void),Insck_SetErrno(void *,int),Insck_MapLibnetError(int),connect_check(void *,void *),conv_port_to_inet(int),conv_port_from_inet(int);
+extern int sceInetRecvFrom(void *,int,int,void *,unsigned int,int *,void *,int *,int);
 static inline int error9CE0(void *ctx,int err){
  int r=Insck_SetErrno(ctx,err);
  /* Return after publishing the receive error. */
@@ -146,19 +146,19 @@ long Insck_Recvfrom(int fd,void *buf,unsigned int len,int flags,void *addr,unsig
  if(!sock)return error9CE0(ctx,9);
  if(F(sock,16,int)!=0 && F(sock,16,int)!=3)return error9CE0(ctx,95);
  if(F(ctx,88,unsigned int)<len)return error9CE0(ctx,22);
- r=func_00359728(ctx,sock);
+ r=connect_check(ctx,sock);
  if(r)return error9CE0(ctx,r);
  addrdata=(char *)addr+4;
  out=0;
- func_003584B8(ip,addrdata);
- port=func_00358530(F(addr,2,unsigned short));
- func_003581C0();
- r=func_0034AE98((char *)ctx+20,F(ctx,84,int),F(sock,12,int),buf,len,&out,ip,&port,F(sock,96,int));
+ conv_addr_to_inet(ip,addrdata);
+ port=conv_port_to_inet(F(addr,2,unsigned short));
+ unblock();
+ r=sceInetRecvFrom((char *)ctx+20,F(ctx,84,int),F(sock,12,int),buf,len,&out,ip,&port,F(sock,96,int));
  if(func_00358158()<0)return error9CE0(ctx,-1);
  if(r<0)return error9CE0(ctx,Insck_MapLibnetError(r));
  F(addr,1,unsigned char)=2;
- func_00358500(addrdata,ip);
- F(addr,2,unsigned short)=func_00358558(port);
+ conv_addr_from_inet(addrdata,ip);
+ F(addr,2,unsigned short)=conv_port_from_inet(port);
  *addrlen=16;
  Insck_SetErrno(ctx,0);
  return r;

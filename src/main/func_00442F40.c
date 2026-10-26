@@ -3,17 +3,17 @@
 #define NULL 0
 #pragma mpwc_relax on
 int LobbyArray_Init(int, int, int, int);                      
-int func_00452FC0();                                  
+int SFOLobby_SetCallback();                                  
 
 #pragma push
 #pragma opt_common_subs off
 #pragma opt_propagation off
-int func_00442F40(char * arg0, int d1, int arg2) {
+int SFOLobby_ServerScreenStart(char * arg0, int d1, int arg2) {
     if (F_(arg0, 0x255C, int) != 9) {
         return 0;
     }
     F_(arg0, 0x255C, int) = 2;
-    func_00452FC0();
+    SFOLobby_SetCallback();
     F_(arg0, 0x23E0, int) = arg2;
     { int w = 0x20; LobbyArray_Init(F_(arg0, 0x23E0, int), w, w, 0x44); }
     return 1;

@@ -10,12 +10,12 @@ extern int D_00488A80[];
 extern char D_00498DA0[];
 extern char D_00498DB8[];
 extern char D_00498DD8[];
-extern void func_00118718(void);
+extern void cmd_sem_init(void);
 extern int PollSema(int);
 extern int SignalSema(int);
-extern int func_00118FA0(int);
+extern int sceCdSyncS(int);
 extern void func_0010FBC0(int);
-extern void func_0010FB10(void *, int);
+extern void sceSifWriteBackDCache(void *, int);
 extern int sceSifBindRpc(RpcCd *cd, unsigned int id, int mode);
 extern int sceSifCallRpc(RpcCd *, int, int, void *, int, void *, int, void *, void *);
 extern void scePrintf(const char *, ...);
@@ -23,13 +23,13 @@ extern void scePrintf(const char *, ...);
 /* busy-wait; the nop has no C equivalent */
 #define DELAY() { int j = 0x100000; do { j--; __asm__ volatile("nop"); } while (j != -1); }
 
-int func_00119510(int mode)
+int sceCdDiskReady_old(int mode)
 {
     int ret;
     if (D_00487890 > 0) scePrintf(D_00498DA0);
-    func_00118718();
+    cmd_sem_init();
     if (D_004878AC != PollSema(D_004878AC)) return 6;
-    if (func_00118FA0(1)) {
+    if (sceCdSyncS(1)) {
         SignalSema(D_004878AC);
         return mode != 8 ? 6 : -1;
     }
@@ -49,7 +49,7 @@ int func_00119510(int mode)
         } while (1);
     }
     D_004E9F90 = mode;
-    func_0010FB10(&D_004E9F90, 4);
+    sceSifWriteBackDCache(&D_004E9F90, 4);
     if (sceSifCallRpc(&D_004E9F50, 0, 0, &D_004E9F90, 4, D_00488A80, 4, 0, 0) < 0) {
         SignalSema(D_004878AC);
         return mode != 8 ? 6 : -1;

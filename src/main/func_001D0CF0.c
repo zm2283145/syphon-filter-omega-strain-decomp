@@ -14,7 +14,7 @@ struct Slot {
 };
 extern "C" {
 extern Slot UpperBodyNodeTable[];
-void func_001D0DF0(V4* out, V4* q, int one, void* inner);
+void nIk_OneBoneDirectionalIK(V4* out, V4* q, int one, void* inner);
 }
 static inline void Cp(void* d0, const void* s) { void* d = d0; __int128 t; __asm__ volatile("lq %0, 0x0(%1)" : "=r"(t) : "r"(s)); __asm__ volatile("sq %0, 0x0(%1)" : : "r"(t), "r"(d) : "memory"); }
 static inline void CpB(void* d, const void* s) { __int128 t; __asm__ volatile("lq %0, 0x0(%1)" : "=r"(t) : "r"(s)); __asm__ volatile("sq %0, 0x0(%1)" : : "r"(t), "r"(d) : "memory"); }
@@ -37,7 +37,7 @@ extern "C" void UpperBody_FootRotation(void* self, const V4* q, int idx, int fla
         { V4* pc = &c; Conj(pc); Cp(&d, pc); }
         QMul(&r, &d, &a);
         { void* d2 = &a; const void* s2 = &r2; void* d1 = &r2; const void* s1 = &r; CpC(d1, s1); CpE(d2, s2); }
-        func_001D0DF0(&s->fD0, &a, 1, s->f10);
+        nIk_OneBoneDirectionalIK(&s->fD0, &a, 1, s->f10);
     } else {
         Cp(&s->fD0, &s->bone->rot);
     }

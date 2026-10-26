@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046CEF0(void) {
+int MediusUniqueCallbackChatMessageHandler(void) {
     return 112;
 }

@@ -2,7 +2,7 @@
 #include "ptrvec_reserve.h"
 extern "C" { extern char D_0049CA60[]; extern char D_0049AE50[]; }
 
-extern "C" void func_001748F0(PRVec* v, unsigned int n, const int* val)
+extern "C" void std_vector_pod_int_init_uint_uintR(PRVec* v, unsigned int n, const int* val)
 {
     if (n) {
         if (n > 0x1800000) {

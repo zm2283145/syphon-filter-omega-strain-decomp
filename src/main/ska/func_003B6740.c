@@ -7,7 +7,7 @@ extern char D_004DFD80[];
 extern char D_004DFBD0[];
 }
 struct M1EEDC0 { void* vtable; int w4, w8, wC, w10, w14, w18, w1C; char b20; int w24; };
-extern "C" M1EEDC0* func_003B6740(M1EEDC0* self)
+extern "C" M1EEDC0* cSkaAnimEventMessage_Clone(M1EEDC0* self)
 {
     M1EEDC0* p;
     {

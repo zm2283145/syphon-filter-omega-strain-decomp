@@ -9,7 +9,7 @@ int D_00497DE8 = 0;
 extern int D_005988D4;
 extern int Medius_TerminateString(P *, int);
 extern int Net_SendLocked(int, int, int, int, int, int, P *);
-int func_0046BFF0(P *p, int b, int c)
+int MediusGetUniverseInformation(P *p, int b, int c)
 {
     Medius_TerminateString(p, 0x15);
     if (D_00497CC0 != 1) return -0xF;

@@ -1,4 +1,4 @@
 #pragma cplusplus on
 #include "types.h"
 #include "base_dtor_chain.h"
-DEFINE_BASE_DTOR_CHAIN(func_001C40F0, func_001C2F60)
+DEFINE_BASE_DTOR_CHAIN(cArray_cTerrainPtr_dtor, std_vector_imp_cTerrainPtr_1_dtor)

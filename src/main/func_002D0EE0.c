@@ -6,10 +6,10 @@ extern "C" {
 extern void* Mem_Alloc(int, int, char*, int);
 extern void cMessage_ctor(M2D0*, M2D0*);
 extern void Vec4_Assign(void*, void*);
-extern void func_0027FF60(void*, void*);
+extern void cEulerAngle_T_1_2_ctor_cEulerAngleTR(void*, void*);
 extern char D_004DE240[];
 }
-extern "C" M2D0* func_002D0EE0(M2D0* src) {
+extern "C" M2D0* cNetGeneratorCreateMsg_Clone(M2D0* src) {
     M2D0* m;
     {
         AllocGuard g;
@@ -19,7 +19,7 @@ extern "C" M2D0* func_002D0EE0(M2D0* src) {
         cMessage_ctor(m, src);
         m->vt = D_004DE240;
         Vec4_Assign(m->f30, src->f30);
-        func_0027FF60(m->f40, src->f40);
+        cEulerAngle_T_1_2_ctor_cEulerAngleTR(m->f40, src->f40);
         m->f50 = src->f50;
         m->f54 = src->f54;
         m->f58 = src->f58;

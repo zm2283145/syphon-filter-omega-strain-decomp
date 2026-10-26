@@ -138,7 +138,7 @@ static inline void merge_flush_func_002467A0(void) {}
 typedef struct { char pad[0x24]; float time; char sub[1]; } cNetTimerMsg;
 
 extern unsigned char* D_005061D0; /* network write cursor */
-extern void func_00281C80(void* sub);
+extern void cNetMsg_PutString(void* sub);
 
 static inline void write16(int v)
 {
@@ -154,7 +154,7 @@ void cNetTimerMsg_v04(cNetTimerMsg* self)
     int value = *(int*)&time;
     write16((unsigned short)value);
     write16(value >> 16);
-    func_00281C80(self->sub);
+    cNetMsg_PutString(self->sub);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002467D0(void) {}

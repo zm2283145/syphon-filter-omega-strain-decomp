@@ -30,9 +30,9 @@ DEFINE_VTABLE_CHAIN_DTOR1(func_0017EE30, D_004DA350)
 
 /* Deleting destructor: restore the vtable chain, optionally delete. */
 extern "C" char D_004DAD70[];
-extern "C" void func_0017F030();
-void * const D_004DA330[8] = { (void*)0x0, (void*)0x0, (void*)func_0017F030, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0 };
-extern "C" VtableChainObject* func_0017EE80(VtableChainObject* self,
+extern "C" void cCollisionRoutine_cBox_dtor_void_2();
+void * const D_004DA330[8] = { (void*)0x0, (void*)0x0, (void*)cCollisionRoutine_cBox_dtor_void_2, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0 };
+extern "C" VtableChainObject* cSplinedMotion_QuaternionLERP_1_dtor(VtableChainObject* self,
                                    short deleteFlag)
 {
     if (self) {
@@ -54,6 +54,6 @@ static inline void merge_flush_func_0017EE80(void) {}
 #pragma cplusplus on
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_0017EEE0)
+DEFINE_TRIVIAL_DTOR(cCollisionSystem_cBox_dtor_void_2)
 #pragma pop /* merge_units */
 /* merge_units: end func_0017EEE0 */

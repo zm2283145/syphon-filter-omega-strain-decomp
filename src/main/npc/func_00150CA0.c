@@ -59,7 +59,7 @@ extern int D_004EA770;
 extern char g_ActorActionMsgClass[], D_004E0840[], D_004E0140[], D_004E01A0[];
 extern unsigned char g_IsMultiplayer;
 SRec* NpcPerception_SensedRecord(Ai*, Obj*);
-V* func_00151780(M*, int);
+V* cMatrix_GetAxis(M*, int);
 void Event_Construct(void*, void*);
 void Event_Send(void*, void*, int);
 void cMessage_dtor(void*, int);
@@ -167,7 +167,7 @@ unsigned char NpcAttack_WeaponPosture(Npc* p)
                     MsgI(0x3F, 0).Send(self->owner, 0);
                 }
             } else {
-                pos = Sum(self->owner->Mtx2().T(), Scaled(*func_00151780(&self->owner->Mtx2(), 1), 20.0f));
+                pos = Sum(self->owner->Mtx2().T(), Scaled(*cMatrix_GetAxis(&self->owner->Mtx2(), 1), 20.0f));
 
 
                 pos.z += 4.5f;

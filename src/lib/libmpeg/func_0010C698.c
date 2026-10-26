@@ -6,21 +6,21 @@
 
 #include "types.h"
 
-extern int func_0010C7D8(int);
-extern int func_0010C8C0(int);
+extern int sceIpuStopDMA(int);
+extern int sceIpuRestartDMA(int);
 
-int func_0010C698(int a0) {
+int _defStopDMA(int a0) {
     int tmp0;
 
     tmp0 = *(int*)((char*)a0 + 64);
-    func_0010C7D8((tmp0 + 104));
+    sceIpuStopDMA((tmp0 + 104));
     return 1;
 }
 
-int func_0010C6C0(int a0) {
+int _defRestartDMA(int a0) {
     int tmp0;
 
     tmp0 = *(int*)((char*)a0 + 64);
-    func_0010C8C0((tmp0 + 104));
+    sceIpuRestartDMA((tmp0 + 104));
     return 1;
 }

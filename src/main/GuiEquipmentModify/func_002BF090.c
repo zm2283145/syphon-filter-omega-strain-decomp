@@ -32,7 +32,7 @@ extern char g_Game[];
 extern WpnDb_F090* g_WeaponDatabase;
 extern unsigned char D_0051EE38;
 void* Agent_GetSelected(void* mgr, int idx);
-void func_001C10A0(IntVec_F090* v);
+void std_vector_int_ctor_void(IntVec_F090* v);
 void func_0013A040(IntVec_F090* v, int flags);
 void AgentData_GetUnlockedWeapons(void* agent, IntVec_F090* v);
 Wpn_F090* WeaponDb_Get(WpnDb_F090* db, int id);
@@ -56,7 +56,7 @@ void GuiEquipmentModify_BuildCategoryList(Self_F090* self)
         IntVec_F090 list;
         int n;
         int j;
-        func_001C10A0(&list);
+        std_vector_int_ctor_void(&list);
         list.owned = 1;
         AgentData_GetUnlockedWeapons(a, &list);
         n = list.n;

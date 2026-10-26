@@ -1,17 +1,17 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-int func_0010F748(int, int *, int);                         
+int sceSifAddCmdHandler(int, int *, int);                         
 int DIntr();                                
 int EIntr();                                  
 extern int D_004878A4;
 extern int D_004878C0;
-extern int func_001188F0;
+extern int _sceCd_Poff_Intr;
 
-int func_00118948(void) {
+int PowerOffCB(void) {
     int temp_s0;
 
     D_004878A4 = 1;
     temp_s0 = DIntr();
-    func_0010F748(0x80000012, &func_001188F0, 0);
+    sceSifAddCmdHandler(0x80000012, &_sceCd_Poff_Intr, 0);
     if (temp_s0 != 0) {
         EIntr();
     }

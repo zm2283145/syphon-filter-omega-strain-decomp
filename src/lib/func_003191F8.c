@@ -9,16 +9,16 @@ extern float *D_00491438[], *D_00491450[];
 extern Pts3191 *D_004E1D00[];
 extern float D_004E1BE0;
 
-extern void func_003196B0(float *vec, int n, float *mat, float *out, int rows);
-extern void func_00319910(int *in, Cx *pos, int nA, Cx *tabA, Cx *tabB,
+extern void CompPredCoef(float *vec, int n, float *mat, float *out, int rows);
+extern void RS2StageVQ2Dec(int *in, Cx *pos, int nA, Cx *tabA, Cx *tabB,
                           int nC, Cx *ptsA, Cx *ptsB, int nList, int *list);
-extern float func_00319D08(int idx, Cx *tab, int n, Cx *out);
+extern float Dim2VectorLUT(int idx, Cx *tab, int n, Cx *out);
 extern int func_00323250(void);
-extern void func_00319718(Out3191 *out, Cx *pos, int n, int nA, Cx *tabA, Cx *tabB,
+extern void RS2StageVQ2Enc(Out3191 *out, Cx *pos, int n, int nA, Cx *tabA, Cx *tabB,
                           int nC, Cx *ptsA, Cx *ptsB, int nList, int *list);
-extern int func_00319CA0(Cx *p, Cx *pts, int n);
+extern int Dim2VectorQuantize(Cx *p, Cx *pts, int n);
 
-void func_003191F8(float *x, Out3191 *out, int n, float g)
+void NellyMSVQEncPred(float *x, Out3191 *out, int n, float g)
 {
     struct { float buf[12]; float res[4]; union { Tab3191 *t[4]; char c[16]; } tbl; } w;
     float *base;
@@ -48,19 +48,19 @@ void func_003191F8(float *x, Out3191 *out, int n, float g)
         w.buf[i] = x[i] - base[i];
     for (k = 0, i = 0, o = out, qq = tbl, p = w.buf; i < 6; i++) {
         i4 = i * 4;
-        func_003196B0(w.buf, k, pp[i], w.res, 2);
+        CompPredCoef(w.buf, k, pp[i], w.res, 2);
 
         k += 2;
         p[0] -= w.res[0];
         p[1] -= w.res[1];
         if (i < 4) {
             Tab3191 *t = *(Tab3191 **)&w.tbl.c[i4];
-            func_00319718(o, (Cx *)p, mode, t->nA, t->tabA, t->tabB, t->nC, t->ptsA, t->ptsB, t->nList, t->list);
+            RS2StageVQ2Enc(o, (Cx *)p, mode, t->nA, t->tabA, t->tabB, t->nC, t->ptsA, t->ptsB, t->nList, t->list);
         } else {
-            int r = func_00319CA0((Cx *)p, (*qq)->tab, (*qq)->n);
+            int r = Dim2VectorQuantize((Cx *)p, (*qq)->tab, (*qq)->n);
             o->b = 0;
             o->a = r;
-            func_00319D08(r, (*qq)->tab, (*qq)->n, (Cx *)p);
+            Dim2VectorLUT(r, (*qq)->tab, (*qq)->n, (Cx *)p);
         }
         o++;
         qq++;
@@ -73,7 +73,7 @@ void func_003191F8(float *x, Out3191 *out, int n, float g)
         x[i] = w.buf[i] + base[i];
 }
 
-void func_003194A0(Out3191 *in, float *out, int n, float g)
+void NellyMSVQDecPred(Out3191 *in, float *out, int n, float g)
 {
     struct { float buf[12]; float res[4]; union { Tab3191 *t[4]; char c[16]; } tbl; } w;
     float *base;
@@ -99,12 +99,12 @@ void func_003194A0(Out3191 *in, float *out, int n, float g)
         if (i < 4) {
             Tab3191 *t = *(Tab3191 **)&w.tbl.c[i4];
 
-            func_00319910(&in[i].a, (Cx *)&w.buf[i * 2], t->nA, t->tabA, t->tabB, t->nC, t->ptsA, t->ptsB, t->nList, t->list);
+            RS2StageVQ2Dec(&in[i].a, (Cx *)&w.buf[i * 2], t->nA, t->tabA, t->tabB, t->nC, t->ptsA, t->ptsB, t->nList, t->list);
         } else {
             Pts3191 *q = *(Pts3191 **)((char *)D_004E1D00 + i4);
-            func_00319D08(in[i].a, q->tab, q->n, (Cx *)&w.buf[i * 2]);
+            Dim2VectorLUT(in[i].a, q->tab, q->n, (Cx *)&w.buf[i * 2]);
         }
-        func_003196B0(w.buf, k, *pp, w.res, 2);
+        CompPredCoef(w.buf, k, *pp, w.res, 2);
         k += 2;
         pp++;
         *p++ += w.res[0];

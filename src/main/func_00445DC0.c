@@ -1,10 +1,10 @@
 #include "types.h"
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 void LobbyArray_Free(int);
-int func_00452FC0(char*, int);
+int SFOLobby_SetCallback(char*, int);
 
 #pragma opt_common_subs off
-void func_00445DC0(char* arg0) {
+void SFOLobby_AccountScreenExit(char* arg0) {
     int s = F_(arg0, 0x255C, int);
     int p;
     if (s == 9) return;
@@ -19,5 +19,5 @@ void func_00445DC0(char* arg0) {
     p = F_(arg0, 0x2400, int);
     if (p != 0) LobbyArray_Free(p);
     F_(arg0, 0x2400, int) = 0;
-    func_00452FC0(arg0, 0);
+    SFOLobby_SetCallback(arg0, 0);
 }

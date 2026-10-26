@@ -10,7 +10,7 @@ typedef void (*Hook_00322468)(void);
 extern unsigned short D_004E1D4C;
 extern Hook_00322468 D_004E1D38;
 extern void Libc_Free(void);
-int func_00322468(Hook_00322468 fn)
+int nciSetFreeFunction(Hook_00322468 fn)
 {
     if (D_004E1D4C) return 0x184C;
     if (!fn) fn = (Hook_00322468)Libc_Free;
@@ -23,7 +23,7 @@ int func_00322468(Hook_00322468 fn)
 typedef void (*Hook_00322498)(void);
 extern Hook_00322498 D_004E1D3C;
 extern void memset(void);
-int func_00322498(Hook_00322498 fn)
+int nciSetMemsetFunction(Hook_00322498 fn)
 {
     if (!fn) fn = (Hook_00322498)memset;
     D_004E1D3C = fn;
@@ -35,7 +35,7 @@ int func_00322498(Hook_00322498 fn)
 typedef void (*Hook_003224B8)(void);
 extern Hook_003224B8 D_004E1D40;
 extern void memcpy(void);
-int func_003224B8(Hook_003224B8 fn)
+int nciSetMemcpyFunction(Hook_003224B8 fn)
 {
     if (!fn) fn = (Hook_003224B8)memcpy;
     D_004E1D40 = fn;
@@ -47,7 +47,7 @@ int func_003224B8(Hook_003224B8 fn)
 typedef void (*Hook_003224D8)(void);
 extern Hook_003224D8 D_004E1D44;
 extern void Math_Cos(void);
-int func_003224D8(Hook_003224D8 fn)
+int nciSetCosFunction(Hook_003224D8 fn)
 {
     if (!fn) fn = (Hook_003224D8)Math_Cos;
     D_004E1D44 = fn;
@@ -59,7 +59,7 @@ int func_003224D8(Hook_003224D8 fn)
 typedef void (*Hook_003224F8)(void);
 extern Hook_003224F8 D_004E1D48;
 extern void Math_Sin(void);
-int func_003224F8(Hook_003224F8 fn)
+int nciSetSinFunction(Hook_003224F8 fn)
 {
     if (!fn) fn = (Hook_003224F8)Math_Sin;
     D_004E1D48 = fn;
@@ -69,7 +69,7 @@ int func_003224F8(Hook_003224F8 fn)
 
 /* merge_units: begin func_00322518 */
 extern void func_00322630(float *re, float *im, int n);
-void func_00322518(float *src, int n, int shift, float *re, float *im)
+void NellyFftCenter512(float *src, int n, int shift, float *re, float *im)
 {
     int q = n >> 2;
     int half = n >> 1;

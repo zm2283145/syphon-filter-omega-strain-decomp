@@ -36,8 +36,8 @@ struct Item { void* vt; unsigned char b4; };
 struct NMap { char pad[0x34]; int reg; };
 extern "C" int NodeNameMap_Find(NMap* m, void* name);
 extern "C" SkaClip** Registry_At(int* reg, int idx);
-extern "C" SkaClip* func_003B2E10(SkaClip* d, void* c, int a, int b, float f, int e, int g, int h, signed char s1, signed char s2);
-extern "C" SkaClip* func_003B3E40(SkaClip* self, void* name, NMap* m, int a, int b, int e, int g, int h, float f, signed char s1, signed char s2)
+extern "C" SkaClip* cSkaAnim_ctor_cSkaAnimR_bool_bool_cSkaAnimPlaybackRangeR_etc(SkaClip* d, void* c, int a, int b, float f, int e, int g, int h, signed char s1, signed char s2);
+extern "C" SkaClip* cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc(SkaClip* self, void* name, NMap* m, int a, int b, int e, int g, int h, float f, signed char s1, signed char s2)
 {
     SkaClip* c;
     Base(self, 0, Unit());
@@ -48,7 +48,7 @@ extern "C" SkaClip* func_003B3E40(SkaClip* self, void* name, NMap* m, int a, int
     c = *Registry_At(&m->reg, NodeNameMap_Find(m, name));
     if (!((Item*)c)->b4) {
         SkaClip t;
-        func_003B2E10(&t, c, a, b, f, e, g, h, s1, s2);
+        cSkaAnim_ctor_cSkaAnimR_bool_bool_cSkaAnimPlaybackRangeR_etc(&t, c, a, b, f, e, g, h, s1, s2);
         *self = t;
     }
     return self;

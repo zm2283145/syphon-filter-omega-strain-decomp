@@ -9,6 +9,6 @@ void func_00158490(char* self, int value) {
     *(int*)(self + 0x1C) = value;
 }
 
-int func_001584A0(Word* self) {
+int cObjectId_GetEncodedValue(Word* self) {
     return self->value;
 }

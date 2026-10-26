@@ -13,7 +13,7 @@
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
 #pragma push
 #pragma opt_common_subs off
-V4 func_001802D0(void) {
+V4 cSplinedMotion_QuaternionLERP_1_InitPos(void) {
     V4 l0;
     V4* q1;
     q1 = &l0;
@@ -32,7 +32,7 @@ static inline void merge_flush_func_001802D0(void) {}
 #pragma push /* merge_units */
 #pragma opt_propagation off
 #pragma opt_common_subs off
-ZERO_QUAD_STORE(func_001802F0)
+ZERO_QUAD_STORE(cSplinedMotion_QuaternionLERP_1_ZeroVel)
 #pragma opt_common_subs reset
 #pragma opt_propagation reset
 #pragma pop /* merge_units */
@@ -104,9 +104,9 @@ struct Cam310 {
 };
 
 extern "C" {
-void func_0017D7F0(void* p, int f);
+void cHermiteSplineWithScaledDuration_float_dtor(void* p, int f);
 void* Mem_PlacementNew(int size, void* p);
-void func_0017D700(void* p, V* a, V* b, V* c, V* d, float t);
+void cHermiteSplineWithScaledDuration_cQuaternion_ctor(void* p, V* a, V* b, V* c, V* d, float t);
 }
 
 extern "C" void QuatCurve_PreUpdate(Cam310* c)
@@ -119,10 +119,10 @@ extern "C" void QuatCurve_PreUpdate(Cam310* c)
                 Neg1(p);
         }
         VX z = ZeroX();
-        func_0017D7F0(&c->sp, -1);
+        cHermiteSplineWithScaledDuration_float_dtor(&c->sp, -1);
         void* p = Mem_PlacementNew(0x50, &c->sp);
         if (p)
-            func_0017D700(p, &c->p20, &c->p30, &c->p40, &z, c->sp.t);
+            cHermiteSplineWithScaledDuration_cQuaternion_ctor(p, &c->p20, &c->p30, &c->p40, &z, c->sp.t);
     } else {
         bool zf = c->fB4 == 0.0f;
         if ((zf != 0) ^ 1) {

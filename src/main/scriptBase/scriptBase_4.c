@@ -20,23 +20,23 @@ typedef struct Writer {
 } Writer;
 
 extern int strlen(const char* s); /* strlen */
-extern void func_003D6580(Writer* w, int value);
-extern int func_003D6570(Writer* w, int size);
-extern void func_003D63C0(Writer* w, int words);
+extern void ScriptFileBuff_put(Writer* w, int value);
+extern int ScriptFileBuff_charsToInts(Writer* w, int size);
+extern void ScriptFileBuff_expand(Writer* w, int words);
 extern void String_Copy(char* dst, const char* src);
 
 /* Serializes the node name (length, padded string) and its kind byte. */
-void func_003D6B40(NamedNode* node, Writer* w) {
+void ClassDef_exportNames(NamedNode* node, Writer* w) {
     int n;
     char* name;
     name = node->name;
     n = strlen(name) + 1;
-    func_003D6580(w, n);
-    n = func_003D6570(w, n);
-    func_003D63C0(w, n);
+    ScriptFileBuff_put(w, n);
+    n = ScriptFileBuff_charsToInts(w, n);
+    ScriptFileBuff_expand(w, n);
     String_Copy((char*)w->cursor, name);
     w->cursor += n;
-    func_003D6580(w, node->kind);
+    ScriptFileBuff_put(w, node->kind);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003D6B40 */
@@ -45,14 +45,14 @@ void func_003D6B40(NamedNode* node, Writer* w) {
 #pragma push /* merge_units */
 typedef struct { const char* name; } E6BE0;
 typedef struct { int m0; int m4; int m8; int* mC; } T6BE0;
-extern E6BE0** func_003D6C80(int* list, int i);
+extern E6BE0** std_vector_FieldDefPtr_opIndex_uint(int* list, int i);
 extern int String_CompareNoCase(const char* a, const char* b);
-int func_003D6BE0(T6BE0* self, const char* name)
+int ClassDef_findField(T6BE0* self, const char* name)
 {
     int n = self->m8;
     int i;
     for (i = 0; i < n; i++) {
-        if (!String_CompareNoCase((*func_003D6C80(&self->m4, i))->name, name))
+        if (!String_CompareNoCase((*std_vector_FieldDefPtr_opIndex_uint(&self->m4, i))->name, name))
             return self->mC[i];
     }
     return 0;

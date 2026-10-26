@@ -11,7 +11,7 @@ extern char D_004BFA30[]; /* "F_TO_CREATEGAME" */
 extern char D_004BF9B8[]; /* "F_TO_CONNECT" */
 int Net_ConnectGame(void);
 int Net_CreateGame(void);
-void func_002EBCE0(int* out);
+void NetGetTime(int* out);
 int Gui_GetScreenStack(void);
 void GuiWidget_SendEvent(int a, int b, int c, int d, char* msg);
 
@@ -31,7 +31,7 @@ void Net_StartSession(int join)
     }
     if (ok == 0) {
         int netTime;
-        func_002EBCE0(&netTime);
+        NetGetTime(&netTime);
         return;
     }
     if (Gui_GetScreenStack()) {

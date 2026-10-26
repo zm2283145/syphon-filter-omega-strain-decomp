@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046C8A8(void) {
+int MediusUniqueCallbackSessionBeginRequestHandler(void) {
     return 28;
 }

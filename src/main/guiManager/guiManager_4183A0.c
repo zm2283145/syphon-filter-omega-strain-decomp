@@ -9,13 +9,13 @@
 #include "types.h"
 typedef struct { char d[0x18]; } g2E180;
 typedef struct { int pad0; int size; g2E180* data; } g2Vec180;
-extern void func_004172E0(g2E180* e, int flag);
-void func_004183A0(g2Vec180* v) {
+extern void GuiAnimationTrack_dtor(g2E180* e, int flag);
+void std_vector_deleter_GuiAnimationTrack_clear(g2Vec180* v) {
     g2E180* b = v->data;
     g2E180* e = b + v->size;
     while (b < e) {
         --e;
-        func_004172E0(e, -1);
+        GuiAnimationTrack_dtor(e, -1);
     }
     v->size = 0;
 }
@@ -31,14 +31,14 @@ typedef struct { Node_418420* n; } MIt_418420;
 typedef struct { char pad[0x10]; int def; } O_418420;
 extern void String_CtorCStr_13B480(Str_418420* s, char* c);
 extern void String_Dtor(Str_418420* s, int f);
-extern void func_001BFF20(It_418420* out, Str_418420* s);
-extern void func_001BFEE0(It_418420* out, Str_418420* s);
-extern int func_001BFE90(It_418420* a, It_418420* b);
-extern char* func_001BFED0(It_418420* a);
-extern void func_001BFEB0(It_418420* a);
-extern void func_00419740(MIt_418420* out, O_418420* o, Str_418420* key);
-extern void func_00418590(MIt_418420* out, O_418420* o);
-extern void func_00418580(MIt_418420* out, MIt_418420* src);
+extern void std_basic_string_char_char_traits_char_begin(It_418420* out, Str_418420* s);
+extern void std_basic_string_char_char_traits_char_end(It_418420* out, Str_418420* s);
+extern int std_opNe_wrapiteratorR_wrapiteratorR(It_418420* a, It_418420* b);
+extern char* std_wrap_iterator_basic_string_char_charPtr_opMul(It_418420* a);
+extern void std_wrap_iterator_basic_string_char_charPtr_opInc(It_418420* a);
+extern void std_tree_pair_cString_value_compare_find_cStringR_5(MIt_418420* out, O_418420* o, Str_418420* key);
+extern void std_map_cString_cFontPtr_end(MIt_418420* out, O_418420* o);
+extern void cAssocArray_cString_cFontPtr_Iterator_ctor(MIt_418420* out, MIt_418420* src);
 
 #pragma bool off
 static inline int Ne_418420(Node_418420* a, Node_418420* b) { return (a == b) ^ 1; }
@@ -55,16 +55,16 @@ int GuiFont_Find(O_418420* o, char* name)
         MIt_418420 tmp;
         Node_418420* n;
         String_CtorCStr_13B480(&s, name);
-        func_001BFF20(&it, &s);
-        func_001BFEE0(&end, &s);
-        while (func_001BFE90(&it, &end)) {
-            if (*func_001BFED0(&it) >= 'A' && *func_001BFED0(&it) <= 'Z') *func_001BFED0(&it) += 0x20;
-            func_001BFEB0(&it);
+        std_basic_string_char_char_traits_char_begin(&it, &s);
+        std_basic_string_char_char_traits_char_end(&end, &s);
+        while (std_opNe_wrapiteratorR_wrapiteratorR(&it, &end)) {
+            if (*std_wrap_iterator_basic_string_char_charPtr_opMul(&it) >= 'A' && *std_wrap_iterator_basic_string_char_charPtr_opMul(&it) <= 'Z') *std_wrap_iterator_basic_string_char_charPtr_opMul(&it) += 0x20;
+            std_wrap_iterator_basic_string_char_charPtr_opInc(&it);
         }
-        func_00419740(&f, o, &s);
+        std_tree_pair_cString_value_compare_find_cStringR_5(&f, o, &s);
         n = f.n;
-        func_00418590(&tmp, o);
-        func_00418580(&e, &tmp);
+        std_map_cString_cFontPtr_end(&tmp, o);
+        cAssocArray_cString_cFontPtr_Iterator_ctor(&e, &tmp);
         if (Ne_418420(n, e.n)) {
             int r = n->value;
             String_Dtor(&s, 0);

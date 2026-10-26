@@ -12,7 +12,7 @@
 #include "triple_member_dtor_de8a0.h"
 
 /* Destructor: members, base, optionally delete. */
-DEFINE_TRIPLE_MEMBER_DTOR_DE8A0(func_002A9390)
+DEFINE_TRIPLE_MEMBER_DTOR_DE8A0(GuiMissionLobbyScreen_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_002A9390 */
 
@@ -23,7 +23,7 @@ DEFINE_TRIPLE_MEMBER_DTOR_DE8A0(func_002A9390)
 #include "stream_string_dtor.h"
 
 /* Destroy a string holder: free heap storage, optionally delete. */
-DEFINE_STREAM_STRING_DTOR(func_002A9430)
+DEFINE_STREAM_STRING_DTOR(std_vector_deleter_SelectElem_dtor_void)
 #pragma pop /* merge_units */
 /* merge_units: end func_002A9430 */
 

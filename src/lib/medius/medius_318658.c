@@ -15,7 +15,7 @@ typedef struct {
 } S_00318658;
 extern S_00318658* (*D_004E1D34)(int n, int size);
 extern void* (*D_004E1D3C)(void* d, int c, int n);
-int func_00318658(S_00318658** pp)
+int NellyInitEstOnset(S_00318658** pp)
 {
     S_00318658* s;
     *pp = s = D_004E1D34(1, 0x30);
@@ -36,5 +36,5 @@ int func_00318658(S_00318658** pp)
 
 /* compiler: ee-gcc 2.96 -O2 */
 /* Free a pointer through the hook and clear it. */
-DEFINE_HOOK_FREE_PTR_RET0(func_003186E0)
+DEFINE_HOOK_FREE_PTR_RET0(NellyFreeEstOnset)
 /* merge_units: end func_003186E0 */

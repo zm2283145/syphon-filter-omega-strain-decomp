@@ -19,15 +19,15 @@ static inline void W32_00331870(int v) { W16_00331870((unsigned short)v); W16_00
 static inline void WF_00331870(float f) { W32_00331870(*(int*)&f); }
 typedef struct { int v; char pad[0x1C]; } E_00331870;
 typedef struct { char pad[8]; int a[31]; int b[17]; int n; E_00331870* e; char padd0[4]; float f; char padd8[0x8AC - 0xD8]; char sub[0xB74 - 0x8AC]; unsigned char c; } S_00331870;
-extern int func_00334780(S_00331870* p);
-extern void func_00281C80(void* p);
-void func_00331870(S_00331870* p) {
+extern int cBitArray_224_NumChunks(S_00331870* p);
+extern void cNetMsg_PutString(void* p);
+void cAgentData_NetPack(S_00331870* p) {
     int i;
-    int n = func_00334780(p);
+    int n = cBitArray_224_NumChunks(p);
     for (i = 0; i < n; i++) W32_00331870(p->b[i]);
     { int j; for (j = 0; j < 31; j++) W32_00331870(p->a[j]); }
     { int j = 0; while (j < p->n) { int k = j++; W32_00331870(p->e[k].v); } }
-    func_00281C80(p->sub);
+    cNetMsg_PutString(p->sub);
     WF_00331870(p->f);
     *D_005061D0++ = p->c;
 }
@@ -42,7 +42,7 @@ typedef struct { int cap; int count; int* data; } PtrVec2500;
 typedef struct { char pad0[0xB58]; char awards[4]; int numAwards; char pad1[0xB68 - 0xB60]; unsigned char reduced; char pad2[3]; int best; } AgentData2500;
 extern int AgentData_TotalPoints(AgentData2500* a);
 extern void AgentData_AppendLockedParts(PtrVec2500* v, int pts);
-extern int* func_002888B0(void* vec, int i);
+extern int* std_vector_charPtr_opIndex_uint_2(void* vec, int i);
 extern void PtrVector_Resize(PtrVec2500* v, int n, int* fill);
 #pragma opt_strength_reduction off
 void AgentData_FilterAwards(AgentData2500* a, PtrVec2500* list) {
@@ -53,7 +53,7 @@ void AgentData_FilterAwards(AgentData2500* a, PtrVec2500* list) {
         int last;
         int* key;
         int fill;
-        key = func_002888B0(a->awards, i);
+        key = std_vector_charPtr_opIndex_uint_2(a->awards, i);
         last = list->count - 1;
         for (j = 0; last >= j; j++) {
             int* slot = &list->data[j];
@@ -111,14 +111,14 @@ typedef struct Agent332610 {
 
 extern PartDefVec D_00532B30;
 extern char D_004B9290[];
-extern void func_00332840(PartIt* out, PartVec* v);
-extern PartIt* func_00332830(PartIt* dst, PartIt* src);
-extern void func_00332820(PartIt* out, PartVec* v);
-extern void func_00332800(PartIt* out, PartVec* v);
-extern int func_003327A0(PartIt* a, PartIt* b);
-extern PartDef** func_003327F0(PartIt* it);
-extern PartIt* func_003327C0(PartIt* it);
-extern PartIt* func_003327E0(PartIt* dst, PartIt* src);
+extern void std_vector_charPtr_end(PartIt* out, PartVec* v);
+extern PartIt* cArray_charPtr_Iterator_ctor_wrapiteratorR(PartIt* dst, PartIt* src);
+extern void cArray_charPtr_Begin(PartIt* out, PartVec* v);
+extern void cArray_charPtr_End(PartIt* out, PartVec* v);
+extern int cArray_charPtr_Iterator_opNe(PartIt* a, PartIt* b);
+extern PartDef** cArray_charPtr_Iterator_opMul(PartIt* it);
+extern PartIt* cArray_charPtr_Iterator_opInc(PartIt* it);
+extern PartIt* cArray_charPtr_Iterator_ctor_IteratorR(PartIt* dst, PartIt* src);
 extern void PtrVec_PushBack_330280(PartVec* v, PartDef** value);
 
 void cAgentData_UnlockPart(Agent332610* self, const char* name)
@@ -142,19 +142,19 @@ void cAgentData_UnlockPart(Agent332610* self, const char* name)
         sprintf(buf, D_004B9290, name);
         return;
     }
-    func_00332840(&endTmp, &self->parts);
-    func_00332830(&end, &endTmp);
-    func_00332820(&first, &self->parts);
-    func_00332800(&last, &self->parts);
-    while (func_003327A0(&first, &last)) {
-        if (*func_003327F0(&first) == found) {
-            func_003327E0(&res, &first);
+    std_vector_charPtr_end(&endTmp, &self->parts);
+    cArray_charPtr_Iterator_ctor_wrapiteratorR(&end, &endTmp);
+    cArray_charPtr_Begin(&first, &self->parts);
+    cArray_charPtr_End(&last, &self->parts);
+    while (cArray_charPtr_Iterator_opNe(&first, &last)) {
+        if (*cArray_charPtr_Iterator_opMul(&first) == found) {
+            cArray_charPtr_Iterator_ctor_IteratorR(&res, &first);
             rp = &res;
             goto done;
         }
-        func_003327C0(&first);
+        cArray_charPtr_Iterator_opInc(&first);
     }
-    func_003327E0(&res, &last);
+    cArray_charPtr_Iterator_ctor_IteratorR(&res, &last);
     rp = &res;
 done:
     if (rp->p == end.p) {

@@ -19,8 +19,8 @@ extern "C" {
     char* Loc_LookupText(char*);
     void Notify_Insert(int,char*,void*,int,int=0);
     char* String_Copy(char*,char*);
-    int func_0012F5B0(void*,int);
-    void func_002426E0(int);
+    int cGameSystem_GetClientPlayerLocation(void*,int);
+    void cHud_DeactivateQuickChat(int);
     char* Loc_GetStoredKey(int);
     void GuiTextWidget_SetText(void*,char*,int);
     void GuiWidget_SendEvent(void*,void*,int,int,int=0);
@@ -47,7 +47,7 @@ static inline int B13Index(Entity* e) {
 static inline int B13Player() {
     if(g_LocalPlayer && g_LocalPlayer->unk30) {
         Entity* e=g_LocalPlayer->unk30;
-        return func_0012F5B0(g_Game,B13Index(e));
+        return cGameSystem_GetClientPlayerLocation(g_Game,B13Index(e));
     }
     return -1;
 }
@@ -165,7 +165,7 @@ extern "C" int GuiQuickChat_HandleInput(Screen* arg0, Input* arg1) {
                 }
                 GuiWidget_SendEvent(((Screen*)((var_s4<<2)+(int)arg0))->unk4C, Gui_GetScreenStack(), 0x10, 1);
                 if (g_Hud != 0) {
-                    func_002426E0(g_Hud);
+                    cHud_DeactivateQuickChat(g_Hud);
                 } else {
                     arg0->unk14 = (unsigned short) (arg0->unk14 & 0xFFFD);
                 }
@@ -175,7 +175,7 @@ extern "C" int GuiQuickChat_HandleInput(Screen* arg0, Input* arg1) {
         if (temp_v1 == 0x10) {
             GuiWidget_SendEvent(arg0, Gui_GetScreenStack(), 0x10, 1);
             if (g_Hud != 0) {
-                func_002426E0(g_Hud);
+                cHud_DeactivateQuickChat(g_Hud);
             } else {
                 arg0->unk14 = (unsigned short) (arg0->unk14 & 0xFFFD);
             }

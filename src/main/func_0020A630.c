@@ -1,9 +1,9 @@
 #include "types.h"
 #pragma optimization_level 1
 
-extern void func_0020A650(void);
+extern void details_compressed_pair_imp_cAllocator_cSkaBlendSequenceItem_int_1_swap(void);
 
-/* Forwards to func_0020A650. */
-void func_0020A630(void) {
-    func_0020A650();
+/* Forwards to details_compressed_pair_imp_cAllocator_cSkaBlendSequenceItem_int_1_swap. */
+void compressed_pair_cAllocator_cSkaBlendSequenceItem_int_swap(void) {
+    details_compressed_pair_imp_cAllocator_cSkaBlendSequenceItem_int_1_swap();
 }

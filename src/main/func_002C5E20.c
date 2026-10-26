@@ -8,7 +8,7 @@
 #include "loose02_types.h"
 
 /* Rec1C copy (assignment). */
-Rec1C* func_002C5E20(Rec1C* dst, Rec1C* src) {
+Rec1C* cPathTransfer_opAssign(Rec1C* dst, Rec1C* src) {
     Q q;
     int unk10;
     int unk14;

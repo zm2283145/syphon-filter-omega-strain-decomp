@@ -46,15 +46,15 @@ extern "C" {
 extern char D_004ED9B8[];
 extern "C" void Event_PackHeader();
 extern "C" void Message_GetScriptTypeKey();
-extern "C" void func_0015EF10();
-extern "C" void func_00164670();
-void * const D_004D9760[6] = { (void*)0x0, (void*)0x0, (void*)func_0015EF10, (void*)func_00164670, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey };
+extern "C" void cPathMessage_dtor();
+extern "C" void cPathMessage_Clone();
+void * const D_004D9760[6] = { (void*)0x0, (void*)0x0, (void*)cPathMessage_dtor, (void*)cPathMessage_Clone, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey };
 void Event_Construct(void* msg, void* name);
 void Event_Send(void* msg, void* target, int immediate);
 void cMessage_dtor(void* msg, int flags);
 Pt1NsReq* NpcRoute_IsQueued(Pt1NsRouter* r, Pt1NsActor* a, int kind);
-void func_0015EF80(Pt1NsIt* it, void* queue);
-void func_0015EF70(Pt1NsIt* it);
+void cLList_cPathSystemRequestPtr_Begin(Pt1NsIt* it, void* queue);
+void cConstLListIterator_cPathSystemRequestPtr_opMul(Pt1NsIt* it);
 Pt1NsResult* NpcRoute_NodeSearchCached(Pt1NsRouter* r, Pt1NsActor* a, int kind, Pt1NsV4* from, Pt1NsV4* to, int mask, Pt1NsArea* area);
 Pt1NsReq* NpcRouteMgr_TakeFreeRequest(Pt1NsRouter* r);
 int NpcRouteMgr_QueueRequest(Pt1NsRouter* r, Pt1NsReq* req);
@@ -74,8 +74,8 @@ extern "C" unsigned char NpcRoute_NodeSearch(Pt1NsRouter* r, Pt1NsActor* actor, 
         Pt1NsReq* req = NpcRoute_IsQueued(r, actor, 2);
         if (req) {
             Pt1NsIt it;
-            func_0015EF80(&it, r->queue);
-            func_0015EF70(&it);
+            cLList_cPathSystemRequestPtr_Begin(&it, r->queue);
+            cConstLListIterator_cPathSystemRequestPtr_opMul(&it);
         } else {
             Pt1NsResult* res = NpcRoute_NodeSearchCached(r, actor, 2, from, to, mask, area);
             if (res) {

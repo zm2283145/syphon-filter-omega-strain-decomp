@@ -3,22 +3,22 @@
 typedef struct E { int w[9]; } E;
 typedef struct V { E* data; unsigned int count; unsigned int cap; } V;
 extern char D_004A3E90[];
-extern unsigned int func_0020CC20(E* first, E* last);
-extern unsigned int func_0020B320(V* v);
-extern unsigned int* func_00209EE0(unsigned int* a, unsigned int* b);
-extern E* func_0020AEE0(V* v);
-extern void func_0020B0F0(E* d, E* s);
-extern E* func_001F34D0(V* v);
-extern void* func_0020B2F0(V* v);
-extern void func_0020C640(void* alloc, E* p);
-extern void func_0020B220(void* alloc, E* p, E* s);
-extern unsigned int func_0020B380(V* v);
-extern void func_00209950(const char* msg);
-extern void func_001F36F0(V* v);
-extern E** func_001F3510(V* v);
-extern unsigned int* func_0020AF50(V* v);
-extern void func_0020C750(void* alloc, E* p, unsigned int n);
-extern E* func_0020AF10(void* alloc, unsigned int n, int hint);
+extern unsigned int std_distance_cSkaTransBLENDP_cSkaTransBLENDP(E* first, E* last);
+extern unsigned int std_vector_imp_cSkaTransBLEND_capacity(V* v);
+extern unsigned int* std_min(unsigned int* a, unsigned int* b);
+extern E* std_vector_imp_cSkaTransBLEND_begin_void(V* v);
+extern void cSkaTransBLEND_opAssign(E* d, E* s);
+extern E* std_vector_imp_cSkaTransBLEND_end_void(V* v);
+extern void* std_vector_deleter_cSkaTransBLEND_alloc_void(V* v);
+extern void cAllocator_cSkaTransBLEND_destroy(void* alloc, E* p);
+extern void cAllocator_cSkaTransBLEND_construct(void* alloc, E* p, E* s);
+extern unsigned int std_vector_imp_cSkaTransBLEND_max_size(V* v);
+extern void std_msl_error(const char* msg);
+extern void std_vector_imp_cSkaTransBLEND_clear(V* v);
+extern E** std_vector_deleter_cSkaTransBLEND_data_void(V* v);
+extern unsigned int* std_vector_deleter_cSkaTransBLEND_cap_void(V* v);
+extern void cAllocator_cSkaTransBLEND_deallocate(void* alloc, E* p, unsigned int n);
+extern E* cAllocator_cSkaTransBLEND_allocate(void* alloc, unsigned int n, int hint);
 
 #pragma push
 #pragma optimization_level 1
@@ -27,45 +27,45 @@ void Vector_Assign_20CC80(V* v, E* first, E* last)
     unsigned int n;
     E* p;
     E* end;
-    n = func_0020CC20(first, last);
-    if (n <= func_0020B320(v)) {
-        unsigned int k = *func_00209EE0(&n, &v->count);
-        p = func_0020AEE0(v);
+    n = std_distance_cSkaTransBLENDP_cSkaTransBLENDP(first, last);
+    if (n <= std_vector_imp_cSkaTransBLEND_capacity(v)) {
+        unsigned int k = *std_min(&n, &v->count);
+        p = std_vector_imp_cSkaTransBLEND_begin_void(v);
         end = p + k;
         while (p < end) {
-            func_0020B0F0(p, first);
+            cSkaTransBLEND_opAssign(p, first);
             p++;
             first++;
         }
         if (n < v->count) {
-            end = func_001F34D0(v);
+            end = std_vector_imp_cSkaTransBLEND_end_void(v);
             while (p < end) {
-                func_0020C640(func_0020B2F0(v), p);
+                cAllocator_cSkaTransBLEND_destroy(std_vector_deleter_cSkaTransBLEND_alloc_void(v), p);
                 p++;
             }
             v->count = n;
         } else if (v->count < n) {
             while (first != last) {
-                func_0020B220(func_0020B2F0(v), p, first);
+                cAllocator_cSkaTransBLEND_construct(std_vector_deleter_cSkaTransBLEND_alloc_void(v), p, first);
                 first++;
                 p++;
                 v->count++;
             }
         }
     } else {
-        if (n > func_0020B380(v))
-            func_00209950(D_004A3E90);
-        func_001F36F0(v);
-        if (*func_001F3510(v) != 0) {
-            func_0020C750(func_0020B2F0(v), *func_001F3510(v), *func_0020AF50(v));
-            *func_001F3510(v) = 0;
-            *func_0020AF50(v) = 0;
+        if (n > std_vector_imp_cSkaTransBLEND_max_size(v))
+            std_msl_error(D_004A3E90);
+        std_vector_imp_cSkaTransBLEND_clear(v);
+        if (*std_vector_deleter_cSkaTransBLEND_data_void(v) != 0) {
+            cAllocator_cSkaTransBLEND_deallocate(std_vector_deleter_cSkaTransBLEND_alloc_void(v), *std_vector_deleter_cSkaTransBLEND_data_void(v), *std_vector_deleter_cSkaTransBLEND_cap_void(v));
+            *std_vector_deleter_cSkaTransBLEND_data_void(v) = 0;
+            *std_vector_deleter_cSkaTransBLEND_cap_void(v) = 0;
         }
-        *func_001F3510(v) = func_0020AF10(func_0020B2F0(v), n, 0);
-        *func_0020AF50(v) = n;
-        p = func_0020AEE0(v);
+        *std_vector_deleter_cSkaTransBLEND_data_void(v) = cAllocator_cSkaTransBLEND_allocate(std_vector_deleter_cSkaTransBLEND_alloc_void(v), n, 0);
+        *std_vector_deleter_cSkaTransBLEND_cap_void(v) = n;
+        p = std_vector_imp_cSkaTransBLEND_begin_void(v);
         while (first != last) {
-            func_0020B220(func_0020B2F0(v), p, first);
+            cAllocator_cSkaTransBLEND_construct(std_vector_deleter_cSkaTransBLEND_alloc_void(v), p, first);
             first++;
             p++;
             v->count++;

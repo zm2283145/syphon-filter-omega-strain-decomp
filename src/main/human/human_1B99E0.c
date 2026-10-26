@@ -20,7 +20,7 @@ static inline void write16(int v)
 }
 
 /* Writes a float to the network stream as its 32-bit pattern, little-endian. */
-void func_001B99E0(float f)
+void cNetMsg_PutFloat(float f)
 {
     int bits = *(int*)&f;
     write16((unsigned short)bits);

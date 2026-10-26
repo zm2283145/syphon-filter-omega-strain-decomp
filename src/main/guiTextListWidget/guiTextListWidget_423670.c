@@ -237,7 +237,7 @@ extern "C" int GuiArrayWidget_OnInput(GuiGridWidget* self, const GuiGridInput* i
 #include "loose04_types.h"
 
 /* Assumed to be the GuiWidget424C50 class (nearby constructor, matching offsets). */
-void func_00424410(GuiWidget424C50* self, int* outA, int* outB) {
+void GuiArrayWidget_GetSelected(GuiWidget424C50* self, int* outA, int* outB) {
     *outA = self->unk50;
     *outB = self->unk54;
 }
@@ -319,7 +319,7 @@ extern "C" void GuiArrayWidget_Scroll(GuiGridWidget* self, unsigned int column, 
 /* merge_units: begin func_00424730 */
 #pragma push /* merge_units */
 /* Assumed to be the GuiWidget424C50 class (nearby constructor, matching offsets). */
-void func_00424730(GuiWidget424C50* self, int* outA, int* outB) {
+void GuiArrayWidget_GetSize(GuiWidget424C50* self, int* outA, int* outB) {
     *outA = self->unk48;
     *outB = self->unk4C;
 }
@@ -365,7 +365,7 @@ int func_00424800(PtrVec* v, int value) {
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-extern "C" unsigned int func_004249A0(GuiGridWidget* self, unsigned int column);
+extern "C" unsigned int GuiArrayWidget_GetColumnWidth(GuiGridWidget* self, unsigned int column);
 
 /* Set the row height and recompute the number of complete visible rows. */
 extern "C" void GuiArrayWidget_RowHeight(GuiGridWidget* self, unsigned int height)
@@ -382,13 +382,13 @@ extern "C" void GuiArrayWidget_ColumnWidth(GuiGridWidget* self, unsigned int col
     if (column == self->columns - 1) {
         int remaining = (int)self->width;
         for (unsigned int previous = 0; previous < self->columns - 1; ++previous)
-            remaining -= func_004249A0(self, previous);
+            remaining -= GuiArrayWidget_GetColumnWidth(self, previous);
         self->columnWidths[column] = remaining > 0 ? remaining : width;
     }
 }
 
 /* Return a configured column width, or zero beyond the column count. */
-extern "C" unsigned int func_004249A0(GuiGridWidget* self, unsigned int column)
+extern "C" unsigned int GuiArrayWidget_GetColumnWidth(GuiGridWidget* self, unsigned int column)
 {
     if (column >= self->columns)
         return 0;

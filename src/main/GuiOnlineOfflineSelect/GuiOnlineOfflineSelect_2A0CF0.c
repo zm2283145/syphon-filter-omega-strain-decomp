@@ -1,7 +1,7 @@
 #pragma cplusplus on
 #include "types.h"
 extern "C" {
-extern "C" void func_00293890();
+extern "C" void GuiSaveAgentWidget_SaveDone();
 extern "C" void GuiMissionSetup_GetClassName();
 extern "C" void GuiMissionSetup_IsType();
 extern "C" void GuiMissionSetup_HandleEvent();
@@ -44,4 +44,4 @@ extern "C" O002A0CF0* GuiMissionSetup_dtor(O002A0CF0* self, short deleteFlag)
     }
     return self;
 }
-void * const GuiMissionSetup_vtable[28] = { (void*)0x0, (void*)0x0, (void*)GuiMissionSetup_dtor, (void*)GuiScreen_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiScreen_Wake, (void*)GuiScreen_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiMissionSetup_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiScreen_Update, (void*)GuiMissionSetup_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiMissionSetup_GetClassName, (void*)GuiMissionSetup_IsType, (void*)func_00293890, (void*)GuiScreen_PollLobby, (void*)GuiMissionSetup_Activate, (void*)GuiMissionSetup_Deactivate, (void*)0x0 };
+void * const GuiMissionSetup_vtable[28] = { (void*)0x0, (void*)0x0, (void*)GuiMissionSetup_dtor, (void*)GuiScreen_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiScreen_Wake, (void*)GuiScreen_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiMissionSetup_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiScreen_Update, (void*)GuiMissionSetup_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiMissionSetup_GetClassName, (void*)GuiMissionSetup_IsType, (void*)GuiSaveAgentWidget_SaveDone, (void*)GuiScreen_PollLobby, (void*)GuiMissionSetup_Activate, (void*)GuiMissionSetup_Deactivate, (void*)0x0 };

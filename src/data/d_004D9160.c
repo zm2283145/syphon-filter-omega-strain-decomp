@@ -2,27 +2,27 @@
 
 extern void Event_PackHeader();
 extern void Message_GetScriptTypeKey();
+extern void cLosRequestMessage_Clone();
+extern void cLosRequestMessage_dtor();
 extern void cNetAgentUpdateMsg_dtor();
 extern void cNetAgentUpdateMsg_v01();
 extern void cNetAgentUpdateMsg_v04();
 extern void cNetAgentUpdateMsg_v05();
-extern void func_00131B10();
-extern void func_00133900();
-extern void func_001385B0();
-extern void func_001386B0();
-extern void func_002823E0();
+extern void cNetMsg_Pack();
+extern void cNextFrameMsg_Clone();
+extern void cNextFrameMsg_dtor();
 
 void *D_004D9160[8] = {
-    0, 0, &func_00133900, &func_001385B0,
+    0, 0, &cNextFrameMsg_dtor, &cNextFrameMsg_Clone,
     &Event_PackHeader, &Message_GetScriptTypeKey, 0, 0,
 };
 
 void *D_004D9180[8] = {
-    0, 0, &func_00131B10, &func_001386B0,
+    0, 0, &cLosRequestMessage_dtor, &cLosRequestMessage_Clone,
     &Event_PackHeader, &Message_GetScriptTypeKey, 0, 0,
 };
 
 void *D_004D91A0[8] = {
     0, 0, &cNetAgentUpdateMsg_dtor, &cNetAgentUpdateMsg_v01,
-    &func_002823E0, &Message_GetScriptTypeKey, &cNetAgentUpdateMsg_v04, &cNetAgentUpdateMsg_v05,
+    &cNetMsg_Pack, &Message_GetScriptTypeKey, &cNetAgentUpdateMsg_v04, &cNetAgentUpdateMsg_v05,
 };

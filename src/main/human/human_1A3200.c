@@ -38,7 +38,7 @@ extern void Actor_GetBackpackDropMatrix(Buf_1A3200* b, O_1A3200* o);
 #define Actor_GetBackpackDropMatrix(a0, a1) (Actor_GetBackpackDropMatrix((void *)(a0), (void *)(a1))) /* merge_units */
 
 extern void Backpack_Place(int h, Buf_1A3200* b, int f);
-void func_001A3200(O_1A3200* o)
+void cHuman_SetWeaponPickupLoc(O_1A3200* o)
 {
     Buf_1A3200 b;
     if (o->h) {
@@ -205,8 +205,8 @@ extern "C" void cNetBackpackMsg_dtor();
 extern "C" void cNetBackpackMsg_v01();
 extern "C" void cNetBackpackMsg_v04();
 extern "C" void cNetBackpackMsg_v05();
-extern "C" void func_002823E0();
-void * const D_004DCEF0[8] = { (void*)0x0, (void*)0x0, (void*)cNetBackpackMsg_dtor, (void*)cNetBackpackMsg_v01, (void*)func_002823E0, (void*)Message_GetScriptTypeKey, (void*)cNetBackpackMsg_v04, (void*)cNetBackpackMsg_v05 };
+extern "C" void cNetMsg_Pack();
+void * const D_004DCEF0[8] = { (void*)0x0, (void*)0x0, (void*)cNetBackpackMsg_dtor, (void*)cNetBackpackMsg_v01, (void*)cNetMsg_Pack, (void*)Message_GetScriptTypeKey, (void*)cNetBackpackMsg_v04, (void*)cNetBackpackMsg_v05 };
 extern char D_004DCF10;
 extern char D_005061B0;
 }

@@ -68,11 +68,11 @@ void FrontEnd_ResumeGui(Self3D0* self);
 void FrontEnd_CreateCanvas(Self3D0* self, unsigned char flag);
 Stk3D0* Gui_GetScreenStack(void);
 int Gui_GetScreenList(void);
-void func_004158C0(Stk3D0* s, int x);
+void GuiCanvas_Activate(Stk3D0* s, int x);
 Scr3D0* GuiManager_CreateRoot(int l, char* a, char* b);
 Scr3D0* GuiManager_FindOrLoad(int l, char* a, char* b);
 int DME_GetLobby(void);
-void func_00453A50(int g);
+void SFOLobby_InitLists(int g);
 void DME_StartThread(void);
 long long Time_GetMilliseconds(void);
 void FrontEnd_SetLoadingScreen(Self3D0* self, int a, int b, int c);
@@ -89,9 +89,9 @@ void DME_StopThread(void);
 void func_002CA6F0(Self3D0* self);
 void DME_SetLobbyActive(int a);
 void FrontEnd_FlushMessages(Self3D0* self);
-void func_00453B00(int g, int a);
+void SFOLobby_Reset(int g, int a);
 W3D0* App_GetInstance(void);
-void func_003D1730(void* p);
+void cUSBKeybd_SetKeyMode(void* p);
 }
 extern "C" void FrontEnd_StartGui(Self3D0* self, unsigned char flag)
 {
@@ -103,8 +103,8 @@ extern "C" void FrontEnd_StartGui(Self3D0* self, unsigned char flag)
     }
     FrontEnd_CreateCanvas(self, flag);
     { Stk3D0* st = Gui_GetScreenStack(); st->b51 = !flag; }
-    func_004158C0(Gui_GetScreenStack(), 0);
-    func_004158C0(Gui_GetScreenStack(), 1);
+    GuiCanvas_Activate(Gui_GetScreenStack(), 0);
+    GuiCanvas_Activate(Gui_GetScreenStack(), 1);
     Gui_GetScreenStack()->x68 = 0;
     if (!flag) Gui_GetScreenStack()->x68 |= 0xF000;
     scr = GuiManager_CreateRoot(Gui_GetScreenList(), D_004ACFE8, D_004ACFF8);
@@ -130,7 +130,7 @@ extern "C" void FrontEnd_StartGui(Self3D0* self, unsigned char flag)
         }
         had = 0;
         if (DME_GetLobby()) {
-            func_00453A50(DME_GetLobby());
+            SFOLobby_InitLists(DME_GetLobby());
             DME_StartThread();
             had = 1;
         }
@@ -191,13 +191,13 @@ extern "C" void FrontEnd_StartGui(Self3D0* self, unsigned char flag)
             DME_SetLobbyActive(1);
             if (DME_GetLobby()) {
                 FrontEnd_FlushMessages(self);
-                func_00453B00(DME_GetLobby(), 1);
+                SFOLobby_Reset(DME_GetLobby(), 1);
                 DME_SetLobbyActive(0);
             }
         }
     }
     App_GetInstance()->b278 = flag;
-    if (!flag) func_003D1730(D_0055A700);
+    if (!flag) cUSBKeybd_SetKeyMode(D_0055A700);
     self->b28 = 1;
     self->b36 = flag;
 }

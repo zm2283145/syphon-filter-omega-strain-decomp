@@ -124,10 +124,10 @@ extern void cMessage_dtor(void* msg, int flags);
 extern void Actor_ShockReaction(HTarget_263080* a, int kind, int b, float f);
 extern void SoundStopMsg_Ctor(HSnd_263080* e, void* preset, void* owner);
 extern void FileMan_Release(HStr_263080* s, int flag);
-extern HHead_263080* func_00262D80(HHead_263080* p);
-extern HNode_263080* func_00262D70(int* list);
-extern void func_00262D60(HIter_263080* it, HNode_263080* n);
-extern void func_00266860(HIter_263080* res, int* list, HIter_263080* pos);
+extern HHead_263080* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_6(HHead_263080* p);
+extern HNode_263080* std_list_deleter_TaserPulse_tail(int* list);
+extern void std_list_deleter_TaserPulse_generic_iterator_ctor(HIter_263080* it, HNode_263080* n);
+extern void std_list_deleter_TaserPulse_erase_listdeleter(HIter_263080* res, int* list, HIter_263080* pos);
 extern void ParticleInst_Kill(void* p, int flag);
 extern void Mem_Free(int pool, void* p, char* file, int line);
 extern void World_PopObject(void* w);
@@ -201,9 +201,9 @@ static inline float Rand01(void) {
 
 /* Wrapper depth matters: MW allocates inline locals breadth-first by inline depth,
    so these iterator slots land below the two AllocGuard slots from Del_263080. */
-static inline HNode_263080* EndN263(int* l) { HIter_263080 e; func_00262D60(&e, func_00262D70(l)); return e.n; }
+static inline HNode_263080* EndN263(int* l) { HIter_263080 e; std_list_deleter_TaserPulse_generic_iterator_ctor(&e, std_list_deleter_TaserPulse_tail(l)); return e.n; }
 static inline HNode_263080* End2263(int* l) { return EndN263(l); }
-static inline HNode_263080* EraseN263(int* l, HNode_263080* it) { HIter_263080 res; HIter_263080 tmp; tmp.n = it; func_00266860(&res, l, &tmp); return res.n; }
+static inline HNode_263080* EraseN263(int* l, HNode_263080* it) { HIter_263080 res; HIter_263080 tmp; tmp.n = it; std_list_deleter_TaserPulse_erase_listdeleter(&res, l, &tmp); return res.n; }
 static inline HNode_263080* Erase1263(int* l, HNode_263080* it) { return EraseN263(l, it); }
 extern "C" void HeldItem_Release(HeldItem_263080* s)
 {
@@ -251,7 +251,7 @@ extern "C" void HeldItem_Release(HeldItem_263080* s)
             cMessage_dtor(&sm, 0);
         }
         {
-            HNode_263080* it = func_00262D80(&s->head)->next;
+            HNode_263080* it = details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_6(&s->head)->next;
             while (it != End2263(&s->list)) {
                 void* p = it->data;
                 Del_263080(p, 0x295);

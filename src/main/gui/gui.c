@@ -20,7 +20,7 @@ int Mem_Free(...);
 extern char D_0049AE90;
 extern unsigned char g_ProfileLockEnabled;
 }
-extern "C" void func_00414620(char * arg0, int arg1, int arg2, char *arg3, char * arg4) {
+extern "C" void opDelete_cStringP_int_bool_charP_etc(char * arg0, int arg1, int arg2, char *arg3, char * arg4) {
     char * temp_s2;
 
     {

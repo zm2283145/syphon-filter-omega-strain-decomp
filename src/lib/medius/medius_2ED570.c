@@ -10,7 +10,7 @@ extern int D_0048C458;
 extern int D_0058C138[];
 extern int D_0058C0B8[];
 extern int D_0058C0F8[];
-int func_002ED570(unsigned int i, int b, int c, int d)
+int NetIRegisterRemoteObjectCallback(unsigned int i, int b, int c, int d)
 {
     if (!D_0048C458) return 0x11;
     if (i >= 16) return 0x17;
@@ -23,17 +23,17 @@ int func_002ED570(unsigned int i, int b, int c, int d)
 
 /* merge_units: begin func_002ED5C0 */
 extern int D_0048C4E8;
-extern int func_002F5160(void);
-int func_002ED5C0(void)
+extern int GetCurrentTimeMs(void);
+int randNum(void)
 {
-    if (D_0048C4E8 == 0) D_0048C4E8 = func_002F5160();
+    if (D_0048C4E8 == 0) D_0048C4E8 = GetCurrentTimeMs();
     D_0048C4E8 = D_0048C4E8 * 0x343FD + 0x269EC3;
     return (D_0048C4E8 >> 16) & 0x7FFF;
 }
 /* merge_units: end func_002ED5C0 */
 
 /* merge_units: begin func_002ED620 */
-void func_002ED620(unsigned int* p)
+void InvalidateConnection(unsigned int* p)
 {
     p[4] = 0;
     p[2] = 0;
@@ -44,13 +44,13 @@ void func_002ED620(unsigned int* p)
 /* merge_units: end func_002ED620 */
 
 /* merge_units: begin func_002ED640 */
-extern int func_002D9E88(int, int);
-void func_002ED640(int a, int *p, int b, int c)
+extern int GetPlayerByID(int, int);
+void AudioSetConnection(int a, int *p, int b, int c)
 {
     p[2] = b;
     p[0] = c;
-    p[1] = func_002D9E88(a, c);
-    p[3] = func_002F5160();
+    p[1] = GetPlayerByID(a, c);
+    p[3] = GetCurrentTimeMs();
     p[4] = 0;
 }
 /* merge_units: end func_002ED640 */
@@ -64,14 +64,14 @@ typedef struct T2ED680 {
 typedef struct { char p[0x50]; int f50; int f54; } X2ED680;
 extern void Net_AllocZeroed(void *, unsigned long);
 extern void *memset(void *, int, unsigned int);
-T2ED680 *func_002ED680(int a, T2ED680 *list, int b, int cap)
+T2ED680 *CreateGrid(int a, T2ED680 *list, int b, int cap)
 {
     T2ED680 *p = 0;
     int now;
     int i;
     Net_AllocZeroed(&p, 0x84);
     if (p != 0) {
-    now = func_002F5160();
+    now = GetCurrentTimeMs();
     p->a = a;
     p->b = b;
     p->next = 0;
@@ -106,18 +106,18 @@ T2ED680 *func_002ED680(int a, T2ED680 *list, int b, int cap)
 
 /* merge_units: begin func_002ED838 */
 typedef struct { char pad[0x5C]; int x5C; void *x60; } S838;
-extern void func_002F3450(void *);
-extern int func_002FB3C0(void *pp);
-void func_002ED838(S838 *s)
+extern void CleanupPlayerSet(void *);
+extern int rt_memory_free(void *pp);
+void DestroyGrid(S838 *s)
 {
     if (s) {
-        func_002F3450((char *)s + 0x50);
+        CleanupPlayerSet((char *)s + 0x50);
         if (s->x60) {
-            func_002FB3C0(&s->x60);
+            rt_memory_free(&s->x60);
             s->x60 = 0;
             s->x5C = 0;
         }
-        func_002FB3C0(&s);
+        rt_memory_free(&s);
     }
 }
 /* merge_units: end func_002ED838 */

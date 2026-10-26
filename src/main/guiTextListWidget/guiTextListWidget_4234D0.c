@@ -30,7 +30,7 @@ typedef struct {
 } S;
 extern void GuiScrollBarWidget_SetRange(void* a, int b, int c, int d, int e);
 
-void func_00423500(S* s)
+void GuiArrayWidget_UpdateScrollBars(S* s)
 {
     if (s->x8C != 0) {
         S* t = s;
@@ -52,7 +52,7 @@ void func_00423500(S* s)
 
 extern int GuiWidget_SendEventUp(Unk423540*, int, int, int);
 
-void func_00423540(Unk423540* self, int* out) {
+void GuiArrayWidget_GetFixedRow(Unk423540* self, int* out) {
     *out = self->unk84;
 }
 
@@ -60,7 +60,7 @@ void GuiArrayWidget_SetA84(Unk423540* self, int value) {
     self->unk84 = value;
 }
 
-void func_00423560(Unk423540* self, int* outA, int* outB) {
+void GuiArrayWidget_GetFirstVisibleElement(Unk423540* self, int* outA, int* outB) {
     *outA = self->unk78;
     *outB = self->unk7C;
 }
@@ -70,7 +70,7 @@ void GuiArrayWidget_SetMargin(Unk423540* self, int a, int b) {
     self->unk7C = b;
 }
 
-void func_00423590(Unk423540* self, int* outA, int* outB) {
+void GuiArrayWidget_GetVisibleSize(Unk423540* self, int* outA, int* outB) {
     *outA = self->unk70;
     *outB = self->unk74;
 }

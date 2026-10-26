@@ -325,7 +325,7 @@ typedef union { double value; struct { __uint32_t lsw; __uint32_t msw; } parts; 
 #define SET_LOW_WORD(d,v) do { ieee_double_shape_type sl_u; sl_u.value = (d); sl_u.parts.lsw = (v); (d) = sl_u.value; } while (0)
 #define SET_HIGH_WORD(d,v) do { ieee_double_shape_type sh_u; sh_u.value = (d); sh_u.parts.msw = (v); (d) = sh_u.value; } while (0)
 
-extern double func_00120CE8(double);
+extern double Libc_Fabs(double);
 extern int func_0011F0A8(double*, double*, int, int, int, const __int32_t*);
 
 static const __int32_t two_over_pi[] = {
@@ -401,7 +401,7 @@ __int32_t func_0011CA20(double x, double *y)
 	    }
 	}
 	if(ix<=0x413921fb) {
-	    t  = func_00120CE8(x);
+	    t  = Libc_Fabs(x);
 	    n  = (__int32_t) (t*invpio2+half);
 	    fn = (double)n;
 	    r  = t-fn*pio2_1;

@@ -15,6 +15,8 @@ extern void GuiArrayWidget_SendEvent21();
 extern void GuiArrayWidget_SetDims();
 extern void GuiArrayWidget_Sleep();
 extern void GuiArrayWidget_dtor();
+extern void GuiArrayWidget_onColumnRender();
+extern void GuiArrayWidget_onRowRender();
 extern void GuiButtonWidget_ctor();
 extern void GuiTextListWidget_Create();
 extern void GuiTextListWidget_Draw();
@@ -36,8 +38,6 @@ extern void GuiWidget_Load();
 extern void GuiWidget_OnEvent();
 extern void GuiWidget_SetFlag4();
 extern void GuiWidget_Update();
-extern void func_00423610();
-extern void func_00423660();
 
 void *D_004E0C60[8] = {
     0, 0, &GuiButtonWidget_ctor, 0,
@@ -51,7 +51,7 @@ void *D_004E0C80[30] = {
     &GuiTextListWidget_Draw, &GuiWidget_BubbleActivate, &GuiWidget_Update, &GuiWidget_OnEvent,
     &GuiWidget_Load, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
     &GuiWidget_FocusPrev, &GuiTextListWidget_GetClassName, &GuiTextListWidget_IsType, &GuiArrayWidget_SetDims,
-    &func_00423660, &func_00423610, &GuiTextListWidget_DrawCell, &GuiArrayWidget_SendEvent20,
+    &GuiArrayWidget_onColumnRender, &GuiArrayWidget_onRowRender, &GuiTextListWidget_DrawCell, &GuiArrayWidget_SendEvent20,
     &GuiArrayWidget_SendEvent21, 0,
 };
 
@@ -68,7 +68,7 @@ void *D_004E0D20[30] = {
     &GuiArrayWidget_Draw, &GuiWidget_BubbleActivate, &GuiWidget_Update, &GuiWidget_OnEvent,
     &GuiWidget_Load, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
     &GuiWidget_FocusPrev, &GuiArrayWidget_GetClassName, &GuiArrayWidget_IsType, &GuiArrayWidget_SetDims,
-    &func_00423660, &func_00423610, &GuiArrayWidget_DrawCell, &GuiArrayWidget_SendEvent20,
+    &GuiArrayWidget_onColumnRender, &GuiArrayWidget_onRowRender, &GuiArrayWidget_DrawCell, &GuiArrayWidget_SendEvent20,
     &GuiArrayWidget_SendEvent21, 0,
 };
 

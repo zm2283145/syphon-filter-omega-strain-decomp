@@ -35,7 +35,7 @@ extern char D_004F7F48[];
 extern char ScalarCollection_Dtor_259290[];
 extern char D_004F7F38[];
 extern char* D_004F7F68;
-extern char func_00144930[];
+extern char cSubclassId_dtor[];
 extern char D_004F7F58[];
 extern char ScriptType_cBackpack_Init[];
 extern int D_004F7F78;
@@ -84,7 +84,7 @@ void StaticInit_RegisterBackpack(void)
     ScalarCollection_Init(D_004F7F48);
     __register_global_object(D_004F7F48, ScalarCollection_Dtor_259290, D_004F7F38);
     D_004F7F68 = "BPCK";
-    __register_global_object(&D_004F7F68, func_00144930, D_004F7F58);
+    __register_global_object(&D_004F7F68, cSubclassId_dtor, D_004F7F58);
     D_004F7F78 = Script_RegisterType("cBackpack", ScriptType_cBackpack_Init, 0, 1);
     D_004F7F80 = D_004F7F78;
     D_004F7F88 = Script_RegisterNative(D_004F7F78, Script_cBackpack_SetAutoPickup, D_00493880, "SetAutoPickup", 2, &D_004F7F78, D_00493878);

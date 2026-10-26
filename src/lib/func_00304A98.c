@@ -1,5 +1,5 @@
-/* func_00304A98: medius peer-connection message handler (kinds 0x70 connect/NAT records, 4, 8, 12);
- * sibling of func_00303D98 (lib/medius). */
+/* rt_p2p_process_internal_message: medius peer-connection message handler (kinds 0x70 connect/NAT records, 4, 8, 12);
+ * sibling of rt_p2p_handle_connected_event (lib/medius). */
 typedef struct {
     int type;
     int f4;
@@ -39,24 +39,24 @@ typedef struct {
 } UpnpAddr4A98;
 typedef struct { char d[64]; } UpnpBuf4A98;
 
-extern int func_00304578(UpnpObj4A98 *o, int *type, int *idx);
+extern int rt_p2p_get_my_peer_status(UpnpObj4A98 *o, int *type, int *idx);
 extern void *memset(void *d, int c, unsigned int n);
 extern char *strncpy(char *d, const char *s, unsigned int n);
-extern void func_002F9000(int a, int b, int c, int d);
-extern void func_002F9460(int a, int b);
-extern int func_002F7D68(int a);
-extern void *func_002F7ED8(int a, int b);
-extern int func_003079E0(int h, int a, int b);
-extern void func_002F84A0(int a);
-extern void func_002F84D0(int a, int b, void *c);
-extern void func_002F9728(UpnpBuf4A98 *b);
-extern int func_002F8C50(int a, int b, UpnpBuf4A98 *c);
-extern int func_003055E8(UpnpObj4A98 *o, UpnpMsg4A98 *m, UpnpEnt4A98 *e);
-extern int func_003076E0(int h, UpnpAddr4A98 *a, int *out);
-extern int func_003083E8(int h, UpnpAddr4A98 *a, int *out);
-extern void func_00305268(UpnpObj4A98 *o, int a, int b);
+extern void KM_CopyKeys(int a, int b, int c, int d);
+extern void KM_DeleteKeys(int a, int b);
+extern int GetKeyMaster(int a);
+extern void *GetKeyChain(int a, int b);
+extern int rt_udp_set_peer_id(int h, int a, int b);
+extern void KM_SetLocalClientID(int a);
+extern void KM_SetPublicKey(int a, int b, void *c);
+extern void KM_CreateRandomRCKey(UpnpBuf4A98 *b);
+extern int KM_AddSymmetricKey(int a, int b, UpnpBuf4A98 *c);
+extern int rt_p2p_find_backlog_connection(UpnpObj4A98 *o, UpnpMsg4A98 *m, UpnpEnt4A98 *e);
+extern int rt_udp_connect(int h, UpnpAddr4A98 *a, int *out);
+extern int rt_udp_pre_accept(int h, UpnpAddr4A98 *a, int *out);
+extern void rt_p2p_generic_disconnect(UpnpObj4A98 *o, int a, int b);
 
-int func_00304A98(UpnpObj4A98 *o, int idx, UpnpMsg4A98 *m, int kind)
+int rt_p2p_process_internal_message(UpnpObj4A98 *o, int idx, UpnpMsg4A98 *m, int kind)
 {
     UpnpAddr4A98 addr;
     UpnpBuf4A98 buf;
@@ -73,7 +73,7 @@ int func_00304A98(UpnpObj4A98 *o, int idx, UpnpMsg4A98 *m, int kind)
         if (m->peer < 0 || m->peer >= o->count)
             return 14;
         e = &o->ent[m->peer];
-        if ((ret = func_00304578(o, &type, &peer)) != 0)
+        if ((ret = rt_p2p_get_my_peer_status(o, &type, &peer)) != 0)
             return ret;
         if (!type || type == 5) {
             int pp = m->peer;
@@ -83,32 +83,32 @@ int func_00304A98(UpnpObj4A98 *o, int idx, UpnpMsg4A98 *m, int kind)
                 memset(e0, 0, sizeof(UpnpEnt4A98));
                 e0->f4 = -1;
                 e0->f8 = -1;
-                func_002F9000(-1, 0, -1, m->peer);
-                func_002F9460(-1, 0);
-                e->x24 = func_002F7ED8(func_002F7D68(-1), m->peer);
-                func_003079E0(o->h180, e->f4, m->peer);
-                func_003079E0(o->h180, e->f8, m->peer);
+                KM_CopyKeys(-1, 0, -1, m->peer);
+                KM_DeleteKeys(-1, 0);
+                e->x24 = GetKeyChain(GetKeyMaster(-1), m->peer);
+                rt_udp_set_peer_id(o->h180, e->f4, m->peer);
+                rt_udp_set_peer_id(o->h180, e->f8, m->peer);
                 return 0;
             }
             if (type == 0 && m->b2D) {
-                func_002F84A0(-1);
+                KM_SetLocalClientID(-1);
                 e->type = 5;
                 return 0;
             }
-            func_002F84D0(-1, pp, m->x30);
-            e->x24 = func_002F7ED8(func_002F7D68(-1), m->peer);
-            func_002F9728(&buf);
-            func_002F8C50(-1, m->peer, &buf);
-            if (func_003055E8(o, m, e) != 0)
+            KM_SetPublicKey(-1, pp, m->x30);
+            e->x24 = GetKeyChain(GetKeyMaster(-1), m->peer);
+            KM_CreateRandomRCKey(&buf);
+            KM_AddSymmetricKey(-1, m->peer, &buf);
+            if (rt_p2p_find_backlog_connection(o, m, e) != 0)
                 return 0;
             if (m->name1[0] && m->port1) {
                 strncpy(addr.ip, (char *)m->name1, 16);
                 addr.port = m->port1;
                 addr.peer = m->peer;
                 if (type == 0)
-                    r = func_003076E0(o->h180, &addr, &e->f4);
+                    r = rt_udp_connect(o->h180, &addr, &e->f4);
                 else
-                    r = func_003083E8(o->h180, &addr, &e->f4);
+                    r = rt_udp_pre_accept(o->h180, &addr, &e->f4);
                 if (r != 21) {
                     if (r != 0)
                         return 7;
@@ -121,23 +121,23 @@ int func_00304A98(UpnpObj4A98 *o, int idx, UpnpMsg4A98 *m, int kind)
             addr.port = m->port2;
             addr.peer = m->peer;
             if (type == 0)
-                r = func_003076E0(o->h180, &addr, &e->f8);
+                r = rt_udp_connect(o->h180, &addr, &e->f8);
             else
-                r = func_003083E8(o->h180, &addr, &e->f8);
+                r = rt_udp_pre_accept(o->h180, &addr, &e->f8);
         } else {
             if (type != 6)
                 goto out0;
-            func_002F84D0(-1, m->peer, m->x30);
-            e->x24 = func_002F7ED8(func_002F7D68(-1), m->peer);
-            func_002F9728(&buf);
-            func_002F8C50(-1, m->peer, &buf);
+            KM_SetPublicKey(-1, m->peer, m->x30);
+            e->x24 = GetKeyChain(GetKeyMaster(-1), m->peer);
+            KM_CreateRandomRCKey(&buf);
+            KM_AddSymmetricKey(-1, m->peer, &buf);
             addr.peer = m->peer;
-            if (func_003055E8(o, m, e) != 0)
+            if (rt_p2p_find_backlog_connection(o, m, e) != 0)
                 return 0;
             if (m->name1[0] && m->port1) {
                 strncpy(addr.ip, (char *)m->name1, 16);
                 addr.port = m->port1;
-                r = func_003083E8(o->h180, &addr, &e->f4);
+                r = rt_udp_pre_accept(o->h180, &addr, &e->f4);
                 if (r != 21) {
                     if (r != 0)
                         return 7;
@@ -148,7 +148,7 @@ int func_00304A98(UpnpObj4A98 *o, int idx, UpnpMsg4A98 *m, int kind)
                 return 0;
             strncpy(addr.ip, (char *)m->name2, 16);
             addr.port = m->port2;
-            r = func_003083E8(o->h180, &addr, &e->f8);
+            r = rt_udp_pre_accept(o->h180, &addr, &e->f8);
         }
         if (r != 21) {
             if (r != 0)
@@ -162,7 +162,7 @@ int func_00304A98(UpnpObj4A98 *o, int idx, UpnpMsg4A98 *m, int kind)
 
         type = 0;
         peer = -2;
-        if ((ret = func_00304578(o, &type, &peer)) != 0)
+        if ((ret = rt_p2p_get_my_peer_status(o, &type, &peer)) != 0)
             return ret;
         if ((unsigned int)(type - 6) < 2) {
             o->fn1A4(idx, 0);
@@ -176,11 +176,11 @@ int func_00304A98(UpnpObj4A98 *o, int idx, UpnpMsg4A98 *m, int kind)
     } else if (kind == 12) {
         int k = m->idx4;
         if (o->ent[k].f4 != -1) {
-            func_00305268(o, o->ent[k].f4, 16);
+            rt_p2p_generic_disconnect(o, o->ent[k].f4, 16);
             return 0;
         }
         if (o->ent[k].f8 != -1)
-            func_00305268(o, o->ent[k].f8, 16);
+            rt_p2p_generic_disconnect(o, o->ent[k].f8, 16);
     }
 out0:
     return 0;

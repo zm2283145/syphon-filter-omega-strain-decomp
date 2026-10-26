@@ -5,21 +5,21 @@
  */
 
 /* merge_units: begin func_002D9550 */
-extern int func_002D9E18(char *, int);
-extern char *func_002ED898(char *);
-extern char *func_002ED930(char *);
+extern int GetGrid(char *, int);
+extern char *GridGetNext(char *);
+extern char *GridGetName(char *);
 extern int strcmp(const char *, const char *);
-extern void func_002DA4E0(char *, int);
-extern char *func_002D9DD8(char *, int, int);
-extern void func_002ED900(char *, const char *);
-extern char *func_002F2FA8(int, int);
-extern void func_002EF748(char *, char *);
-extern void func_002EDC60(char *, unsigned short *);
-extern void func_002EDD08(char *, char *, int, int);
-extern void func_002F3198(char *, int);
-extern int func_002ED940(char *, int, char *, unsigned short *, int);
+extern void QuitChannel(char *, int);
+extern char *AddGrid(char *, int, int);
+extern void GridSetName(char *, const char *);
+extern char *GetPlayerFromGroup(int, int);
+extern void GridAddPlayer(char *, char *);
+extern void GridSetChannelInfo(char *, unsigned short *);
+extern void GridSetPackHeader(char *, char *, int, int);
+extern void SetPlayerCurChannel(char *, int);
+extern int GridSendPackage(char *, int, char *, unsigned short *, int);
 
-int func_002D9550(char *s, int a1, int *id, const char *name)
+int CreateChannel(char *s, int a1, int *id, const char *name)
 {
     char buf[16];
     unsigned short info[0x28];
@@ -27,24 +27,24 @@ int func_002D9550(char *s, int a1, int *id, const char *name)
     char *p, *c;
     if (id == 0 || name == 0 || *name == 0)
         return 1;
-    for (*id = 1; func_002D9E18(s, *id); (*id)++)
+    for (*id = 1; GetGrid(s, *id); (*id)++)
         ;
-    while ((n = func_002ED898(n)) != 0 && n != *(char **)(s + 0x64)) {
-        if (strcmp(func_002ED930(n), name) == 0)
+    while ((n = GridGetNext(n)) != 0 && n != *(char **)(s + 0x64)) {
+        if (strcmp(GridGetName(n), name) == 0)
             return 1;
     }
     if (*(int *)(s + 0x98) > 0) {
-        func_002DA4E0(s, *(int *)(s + 0x98));
+        QuitChannel(s, *(int *)(s + 0x98));
         *(int *)(s + 0x98) = 0;
     }
-    n = func_002D9DD8(s, *id, a1);
-    func_002ED900(n, name);
-    c = func_002F2FA8(*(int *)(s + 0x6C), *(int *)(s + 0x78));
-    func_002EF748(n, c);
-    func_002EDC60(n, info);
-    func_002EDD08(*(char **)(s + 0x64), buf, 6, 0x44);
-    func_002F3198(c, *(int *)(s + 0x98) = info[1]);
-    return func_002ED940(*(char **)(s + 0x64), *(int *)(s + 0x78), buf, info, 0x44);
+    n = AddGrid(s, *id, a1);
+    GridSetName(n, name);
+    c = GetPlayerFromGroup(*(int *)(s + 0x6C), *(int *)(s + 0x78));
+    GridAddPlayer(n, c);
+    GridSetChannelInfo(n, info);
+    GridSetPackHeader(*(char **)(s + 0x64), buf, 6, 0x44);
+    SetPlayerCurChannel(c, *(int *)(s + 0x98) = info[1]);
+    return GridSendPackage(*(char **)(s + 0x64), *(int *)(s + 0x78), buf, info, 0x44);
 }
 /* merge_units: end func_002D9550 */
 
@@ -83,35 +83,35 @@ typedef struct {
 } S;
 
 extern void *memcpy(void *, const void *, unsigned int);
-extern int func_002F5160(void);
+extern int GetCurrentTimeMs(void);
 #if 0 /* merge_units */
-extern Conn *func_002F2FA8(Conn *, int);
+extern Conn *GetPlayerFromGroup(Conn *, int);
 #endif /* merge_units */
-#define func_002F2FA8(a0, a1) ((Conn *)func_002F2FA8((int)(a0), (a1))) /* merge_units */
+#define GetPlayerFromGroup(a0, a1) ((Conn *)GetPlayerFromGroup((int)(a0), (a1))) /* merge_units */
 
-extern void func_002DB0D0(S *, int);
+extern void AudioSendPingMessage(S *, int);
 #if 0 /* merge_units */
-extern void func_002F3198(Conn *, int);
+extern void SetPlayerCurChannel(Conn *, int);
 #endif /* merge_units */
-#define func_002F3198(a0, a1) (func_002F3198((char *)(a0), (a1))) /* merge_units */
+#define SetPlayerCurChannel(a0, a1) (SetPlayerCurChannel((char *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void *func_002D9E18(S *, int);
+extern void *GetGrid(S *, int);
 #endif /* merge_units */
-#define func_002D9E18(a0, a1) ((void *)func_002D9E18((char *)(a0), (a1))) /* merge_units */
+#define GetGrid(a0, a1) ((void *)GetGrid((char *)(a0), (a1))) /* merge_units */
 
-extern int func_002F3250(Conn *, Hdr *, int);
-extern void func_002DB070(S *, int, int, int);
-extern int func_002EE1E0(void *, Hdr *, Conn *, Hdr *, unsigned int);
-extern int func_002EE4C8(void *, Hdr *, Conn *, Hdr *, unsigned int);
-extern int func_002EE798(void *, Hdr *, Conn *, Hdr *, unsigned int);
+extern int GetSetPreviousMessage(Conn *, Hdr *, int);
+extern void SendRedundancyMessage(S *, int, int, int);
+extern int GridProcessAudioPack(void *, Hdr *, Conn *, Hdr *, unsigned int);
+extern int GridProcessVideoPack(void *, Hdr *, Conn *, Hdr *, unsigned int);
+extern int GridProcessDataPack(void *, Hdr *, Conn *, Hdr *, unsigned int);
 
-int func_002D96C8(S *o, int k1, int k2, Hdr *hp, unsigned int len)
+int ProcessPackage(S *o, int k1, int k2, Hdr *hp, unsigned int len)
 {
     Hdr h;
     Conn *c, *head, *d;
     void *e;
-    int now = func_002F5160();
+    int now = GetCurrentTimeMs();
     int id34, r;
     if (len < 8)
         return -1;
@@ -119,7 +119,7 @@ int func_002D96C8(S *o, int k1, int k2, Hdr *hp, unsigned int len)
     if (h.type & 0x80) {
         h.type &= 0x7F;
         memcpy(hp, &h, 8);
-        c = func_002F2FA8(o->x6C, h.w4);
+        c = GetPlayerFromGroup(o->x6C, h.w4);
         if (c != 0 && c->xC == 0) {
             if (c->x20 == k1) {
                 c->x28 = k2;
@@ -154,7 +154,7 @@ int func_002D96C8(S *o, int k1, int k2, Hdr *hp, unsigned int len)
     c->x10 = now;
     c->x14 = 0;
     id34 = c->x34;
-    d = func_002F2FA8(o->x6C, h.w4);
+    d = GetPlayerFromGroup(o->x6C, h.w4);
     if (d == 0)
         return 0;
     switch (h.type) {
@@ -176,34 +176,34 @@ int func_002D96C8(S *o, int k1, int k2, Hdr *hp, unsigned int len)
         return 0;
     if (h.id) {
         if (h.id != d->x30 || h.id != o->x98) {
-            func_002DB0D0(o, d->x34);
+            AudioSendPingMessage(o, d->x34);
             d->x10 = now;
             d->x14++;
             if (h.id != o->x98)
                 return 0;
-            func_002F3198(d, h.id);
+            SetPlayerCurChannel(d, h.id);
         }
     }
-    e = func_002D9E18(o, h.id);
+    e = GetGrid(o, h.id);
     if (e == 0)
         return 0;
-    r = func_002F3250(d, &h, id34);
+    r = GetSetPreviousMessage(d, &h, id34);
     if (r != 0xFFFF && r != id34) {
         if (o->x74)
-            func_002DB070(o, h.id, id34, h.w4);
+            SendRedundancyMessage(o, h.id, id34, h.w4);
         return 0;
     }
     if (h.id) {
         if ((unsigned char)(h.type - 0x20) < 4 || h.type == 0x2F)
-            return func_002EE1E0(e, &h, c, hp, len);
+            return GridProcessAudioPack(e, &h, c, hp, len);
         if (h.type == 0x30)
-            return func_002EE4C8(e, &h, c, hp, len);
+            return GridProcessVideoPack(e, &h, c, hp, len);
     }
-    return func_002EE798(e, &h, c, hp, len);
+    return GridProcessDataPack(e, &h, c, hp, len);
 }
-#undef func_002F2FA8 /* merge_units */
-#undef func_002F3198 /* merge_units */
-#undef func_002D9E18 /* merge_units */
+#undef GetPlayerFromGroup /* merge_units */
+#undef SetPlayerCurChannel /* merge_units */
+#undef GetGrid /* merge_units */
 /* merge_units: end func_002D96C8 */
 
 /* merge_units: begin func_002D9A30 */
@@ -224,16 +224,16 @@ typedef struct Obj {
     int list;
 } Obj;
 #if 0 /* merge_units */
-extern Conn_002D9A30 *func_002F2FA8(int, int);
+extern Conn_002D9A30 *GetPlayerFromGroup(int, int);
 #endif /* merge_units */
-#define func_002F2FA8(a0, a1) ((Conn_002D9A30 *)func_002F2FA8((a0), (a1))) /* merge_units */
+#define GetPlayerFromGroup(a0, a1) ((Conn_002D9A30 *)GetPlayerFromGroup((a0), (a1))) /* merge_units */
 
-extern int func_002D9B68(Obj *, char *, int, int, int);
-int func_002D9A30(Obj *o, int id, Hdr_002D9A30 *hdr, void *data, unsigned int len)
+extern int AudioSendTo(Obj *, char *, int, int, int);
+int SendPackage(Obj *o, int id, Hdr_002D9A30 *hdr, void *data, unsigned int len)
 {
     char buf[0x500];
     int ret = 0;
-    Conn_002D9A30 *c = func_002F2FA8(o->list, id);
+    Conn_002D9A30 *c = GetPlayerFromGroup(o->list, id);
     int n;
     if (len + 8 > 0x500)
         return -1;
@@ -247,18 +247,18 @@ int func_002D9A30(Obj *o, int id, Hdr_002D9A30 *hdr, void *data, unsigned int le
         if (c->cb2C == 0)
             return -1;
         ret = -1;
-        if (n == func_002D9B68(o, buf, n, c->h24, c->cb2C))
+        if (n == AudioSendTo(o, buf, n, c->h24, c->cb2C))
             ret = 0;
     }
     if (c->h20 != 0) {
         if (c->state == 2 || c->state == 0) {
             if (c->cb28 == 0)
                 return -1;
-            if (n != func_002D9B68(o, buf, n, c->h20, c->cb28))
+            if (n != AudioSendTo(o, buf, n, c->h20, c->cb28))
                 ret = -1;
         }
     }
     return ret;
 }
-#undef func_002F2FA8 /* merge_units */
+#undef GetPlayerFromGroup /* merge_units */
 /* merge_units: end func_002D9A30 */

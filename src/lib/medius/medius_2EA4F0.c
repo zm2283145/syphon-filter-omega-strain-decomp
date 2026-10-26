@@ -1,7 +1,7 @@
 #include "types.h"
 
-extern int func_002DD358(void);
+extern int NetIRegisterMallocFreeCallbacks(void);
 
-int func_002EA4F0(void) {
-    return func_002DD358();
+int NetRegisterMallocFreeCallbacks(void) {
+    return NetIRegisterMallocFreeCallbacks();
 }

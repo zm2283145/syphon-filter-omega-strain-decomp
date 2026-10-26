@@ -29,16 +29,16 @@ typedef struct cPlayer {
     Item* held; /* +0x1A0 */
 } cPlayer;
 
-extern "C" void func_002504C0(int* sub, Item* item);
+extern "C" void cPlayerControls_InitializeCamera(int* sub, Item* item);
 
 /* Replaces the held item: releases the old one (virtual +0x60), attaches and activates the new one (virtual +0x5C). */
-extern "C" void func_00176F30(cPlayer* self, Item* item)
+extern "C" void cPlayer_SetCamera(cPlayer* self, Item* item)
 {
     if (self->held)
         self->held->Method60(1);
     self->held = item;
     if (item) {
-        func_002504C0(&self->sub50, item);
+        cPlayerControls_InitializeCamera(&self->sub50, item);
         item->Method5C(1);
     }
 }

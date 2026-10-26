@@ -8,15 +8,15 @@
 #include "loose01_types.h"
 
 extern void* D_004DFC50;
-extern int func_00132800(int*, int);
+extern int cQuaternion_ctor_cQuaternionR(int*, int);
 
-void* func_001F31B0(void* self) {
+void* cAllocator_cSkaSwitchItem_ctor_void(void* self) {
     return self;
 }
 
 MotionNode* MotionNode_BaseCtor(MotionNode* self, int type, int name) {
     self->vtable = &D_004DFC50;
     self->type = type;
-    func_00132800(&self->name, name);
+    cQuaternion_ctor_cQuaternionR(&self->name, name);
     return self;
 }

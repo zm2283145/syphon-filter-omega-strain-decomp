@@ -126,7 +126,7 @@ extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
 extern int* cSystem_GetScriptTypeKeyPtr(void);
 extern int ScriptType_AddAccepted(int type, int iface);
 extern void ScriptType_SetParent(int type, int base);
-extern int* func_004080E0(void);
+extern int* cDamageMsg_SOBJ_getClassId(void);
 
 /* Registers the cGOBJ script type: parent type, then one accepted interface. */
 int ScriptType_cGOBJ_Init(void) {
@@ -134,7 +134,7 @@ int ScriptType_cGOBJ_Init(void) {
 
     key = cSystem_GetScriptTypeKeyPtr();
     ScriptType_SetParent(D_005436C0, *key);
-    key = func_004080E0();
+    key = cDamageMsg_SOBJ_getClassId();
     return ScriptType_AddAccepted(D_005436C0, *key);
 }
 

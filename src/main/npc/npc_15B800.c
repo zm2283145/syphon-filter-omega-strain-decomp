@@ -18,12 +18,12 @@ void cNPC_v24(Unk001827A0* self, char value) {
 void func_0015B820(void) {
 }
 
-void func_0015B830(void) {
+void cGobjController_CleanUpAfterTeleportationOfGobj(void) {
 }
 
-int func_0015B840(void) {
+int cGobjController_GetCopyMsg(void) {
     return 0;
 }
 
-void func_0015B850(void) {
+void cGobjController_NoticeEnvironmentalDanger(void) {
 }

@@ -8,7 +8,7 @@ void func_002186A0(IntFloatVec* v) {
     v->count = v->count - 1;
 }
 
-IntFloat* func_002186B0(IntFloat* dst, IntFloat* src) {
+IntFloat* cSafePtr_cGOBJ_opAssign_cSafePtrR(IntFloat* dst, IntFloat* src) {
     dst->i = src->i;
     dst->f = src->f;
     return dst;

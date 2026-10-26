@@ -14,15 +14,15 @@
 /* Allocator release(ptr, pool, destroy, file, line): destroy the element's member at +4, then Mem_Free under the guard. */
 extern "C" {
 void Mem_Free(int pool, void* allocation, char* file, int line);
-void* func_00471FF0(void* self, short flags);
-void func_00472740(void* allocation, int pool, int destroy, char* file, int line);
+void* std_pair_int_sMsgTypeInfo_dtor(void* self, short flags);
+void opDelete_nodeP_int_bool_charP_etc_19(void* allocation, int pool, int destroy, char* file, int line);
 }
-void func_00472740(void* allocation, int pool, int destroy, char* file, int line)
+void opDelete_nodeP_int_bool_charP_etc_19(void* allocation, int pool, int destroy, char* file, int line)
 {
     AllocGuard guard;
     if (destroy) {
         if (allocation)
-            func_00471FF0((char*)allocation + 12, -1);
+            std_pair_int_sMsgTypeInfo_dtor((char*)allocation + 12, -1);
     }
     Mem_Free(pool, allocation, file, line);
 }
@@ -32,20 +32,20 @@ void func_00472740(void* allocation, int pool, int destroy, char* file, int line
 /* merge_units: begin func_00472820 */
 #pragma push /* merge_units */
 extern char D_004C3460[];
-extern void func_00136DA0(int* g);
-extern void func_0012F530(int* g, int del);
+extern void cTimerDisable_ctor(int* g);
+extern void cTimerDisable_dtor(int* g, int del);
 #if 0 /* merge_units */
 extern void Mem_Free(int heap, void* p, const char* file, int line);
 #endif /* merge_units */
 #define Mem_Free(a0, a1, a2, a3) (Mem_Free((a0), (a1), (char *)(a2), (a3))) /* merge_units */
 
-void func_00472820(void* self, void* p)
+void cAllocator_node_deallocate_nodeP_uint_19(void* self, void* p)
 {
     if (p) {
         int g[1];
-        func_00136DA0(g);
+        cTimerDisable_ctor(g);
         Mem_Free(0, p, D_004C3460, 100);
-        func_0012F530(g, -1);
+        cTimerDisable_dtor(g, -1);
     }
 }
 #undef Mem_Free /* merge_units */
@@ -60,15 +60,15 @@ void func_00472820(void* self, void* p)
  */
 
 
-extern int func_00471F90(void* obj, int arg);
+extern int cNetMsgThrottle_sMsgTypeInfo_dtor(void* obj, int arg);
 
 void* func_00472880(char* self) {
     return self + 4;
 }
 
-void func_00472890(int unused, char* obj) {
+void cAllocator_pair_int_destroy_pairP_7(int unused, char* obj) {
     if (obj != 0) {
-        func_00471F90(obj + 4, -1);
+        cNetMsgThrottle_sMsgTypeInfo_dtor(obj + 4, -1);
     }
 }
 
@@ -105,7 +105,7 @@ struct Msg;
 extern "C" {
 extern char D_004E00E0[], D_004E0840[];
 void cMessage_ctor3(Msg* d, const Msg* s);
-void func_001AD710(void* d, const void* s);
+void cInteractParams_ctor_cInteractParamsR(void* d, const void* s);
 void cMessage_dtor(void* msg, int flags);
 void Actor_SendCasAction(Msg* m, signed char action, int flag);
 void Ledge_ToObjectPlacement(void* d, int obj, Pl* pl, int z);
@@ -157,7 +157,7 @@ static inline bool Flag25(Lad* a) { return (a->flags >> 25) & 1; }
 static inline bool Flag26(Lad* a) { return (a->flags >> 26) & 1; }
 static inline float AnimCur(Lad* a) { char* an = a->anim; return AnimChannel_GetCurrent(an + 0x10, 0x15); }
 inline Msg::Msg(signed char action, int obj, Pl* pl) { Msg* s = this; Actor_SendCasAction(s, action, 0xE); Ledge_ToObjectPlacement(s->sub, obj, pl, 0); s->vt = D_004E00E0; }
-inline Msg::Msg(const Msg& o) { Msg* s = this; cMessage_ctor3(s, &o); func_001AD710(s->sub, o.sub); s->vt = D_004E00E0; }
+inline Msg::Msg(const Msg& o) { Msg* s = this; cMessage_ctor3(s, &o); cInteractParams_ctor_cInteractParamsR(s->sub, o.sub); s->vt = D_004E00E0; }
 static inline void Send(const Msg& m, Lad* t) { Event_Send((void*)&m, t, 1); }
 static inline unsigned char Open(Rung* r, int s) { return r->block[s]; }
 static inline V WithZ(const V& p, float z) { V t; QPW(&t, &p); return t.SetZ(z); }
@@ -277,8 +277,8 @@ extern char D_004C3470[]; extern char D_004C3490[]; extern char D_004C34B0[]; ex
 extern char D_004C34F0[]; extern char D_004C3510[]; extern char D_004C3530[]; extern char D_004C3550[];
 extern char D_004C3570[]; extern char D_004C3590[];
 extern float g_DefaultMotionTransition;
-void* func_0015AC90(int* p, int v);
-unsigned char func_001960A0(int* a, int* b);
+void* cObjectId_ctor_uint(int* p, int v);
+unsigned char opNe_cObjectIdR_cObjectIdR(int* a, int* b);
 void* Object_LookupById(int* id);
 void* Camera_GetNode(void* o);
 void* Transform_GetUpdated(void* p);
@@ -287,23 +287,23 @@ void* Mtx_GetIdentity(void);
 void Placement_ApplyParent(Plc_L* d, Plc_L* s, Plc_L* p);
 void VecPair_Copy(Plc_L* d, Plc_L* s);
 void Root_SetWorldPlacement(Root_L* r, Plc_L* p);
-void** func_00195DD0(void* p, int i);
-void* func_00195DC0(void* p, int i);
+void** cArray_FixedSize_cGOBJPtr_3_opIndex(void* p, int i);
+void* cArray_FixedSize_cQuatVec_3_opIndex(void* p, int i);
 unsigned char* func_00195DB0(void* p, int i);
 void Transform_SetOrientation(void* t, Plc_L* p);
 void MotionTokens_Init(void* p);
-void func_0018A8C0(void* p);
-void func_0018A890(void* p);
-void func_0018A710(void* d, void* s);
-void func_0018A700(void* p, int v);
+void cArray_cTimedEvent_ctor_void(void* p);
+void cString16N_3_ctor_void(void* p);
+void cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(void* d, void* s);
+void cSkaPlaybackGroupId_ctor_int(void* p, int v);
 void Actor_ResolveMotionSelection(Sel_L* sel, int* out, Y_L* y, void* model);
 float Model_GetFirstFloat(void* m);
 V4_L* AnimRate_Init(V4_L* p, float f);
 V4_L* Vec4_Copy_18A350(V4_L* d, V4_L* s);
 void AnimEvent_Construct(Ev_L* e);
 signed char MotionRequest_GetMode(Sel_L* s);
-void* func_0018A2E0(Sel_L* s);
-float func_0018A2D0(Sel_L* s);
+void* cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(Sel_L* s);
+float cSkaRequestStream_AnimationPacket_GetDuration(Sel_L* s);
 float func_0018A2C0(Sel_L* s);
 void AnimCtl_InstallMotion(void* ctl, int id, signed char mode, void* range, void* pair, void* m1, void* m2, void* x, float f0, float f1);
 void AnimEvent_dtor(void* p, int f);
@@ -366,7 +366,7 @@ static inline void QZero_L(void* dd) { int n = 3; void* d = dd;
 static inline void NameAssign_L(Name_L* dst, char* src) { Name_L tmp; NAME_COPY(tmp.c, src) if (dst->c[0] || tmp.c[0]) QCopyA_L(dst, &tmp); }
 
 static inline float Recip_L(float v) { return v != 0.0f ? 1.0f / v : 3.4028235e38f; }
-static inline X_L* XInit_L(X_L* x) { X_L* px = x; px->kind = 0; MotionTokens_Init(px->pairs); func_0018A8C0(px->tail); return px; }
+static inline X_L* XInit_L(X_L* x) { X_L* px = x; px->kind = 0; MotionTokens_Init(px->pairs); cArray_cTimedEvent_ctor_void(px->tail); return px; }
 static inline X_L* XSetR_L(X_L* x, int i, int id, void* a, unsigned char k) { Pair_L* p = &x->pairs[i]; p->id = id; p->a = a; x->kind = k; return x; }
 static inline void XDtor_L(X_L* x) { func_001BE5A0(x->tail, 0); __destroy_array(x->pairs, (void*)func_0018A210, 8, 7); }
 static inline void XDtorN_L(X_L* p) {
@@ -401,7 +401,7 @@ static inline void Install_L(Act_L* a, Sel_L* sel, Rate_L* r)
     a->sys.anim.v.z = r->z;
     a->sys.anim.v.w = r->w;
     a->sys.anim.b5 = 1;
-    func_0018A700(&y, -1);
+    cSkaPlaybackGroupId_ctor_int(&y, -1);
     Actor_ResolveMotionSelection(sel, &out, &y, an->model);
     if (out) {
         V4_L* p;
@@ -413,7 +413,7 @@ static inline void Install_L(Act_L* a, Sel_L* sel, Rate_L* r)
         an->b5 = 0;
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
-        AnimCtl_InstallMotion(an, out, MotionRequest_GetMode(sel), &vec, &y, &e1, &e2, func_0018A2E0(sel), func_0018A2D0(sel), func_0018A2C0(sel));
+        AnimCtl_InstallMotion(an, out, MotionRequest_GetMode(sel), &vec, &y, &e1, &e2, cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(sel), cSkaRequestStream_AnimationPacket_GetDuration(sel), func_0018A2C0(sel));
         AnimEvent_dtor(&e2, -1);
         AnimEvent_dtor(&e1, -1);
     }
@@ -433,11 +433,11 @@ static inline void Bind_L(Act_L* a, void* o, Msg_L* msg, int idx)
         void* p;
         void* m;
         Plc_L* pp = &msg->plc;
-        *func_00195DD0(s + 0x1F0, idx) = o;
-        Transform_SetOrientation(func_00195DC0(s + 0x200, idx), pp);
+        *cArray_FixedSize_cGOBJPtr_3_opIndex(s + 0x1F0, idx) = o;
+        Transform_SetOrientation(cArray_FixedSize_cQuatVec_3_opIndex(s + 0x200, idx), pp);
         p = o ? Camera_GetNode(o) : 0;
         if (p) m = Transform_GetUpdated(p); else m = Mtx_GetIdentity();
-        Transform_SetOrientation(func_00195DC0(s + 0x260, idx), Mtx_ToPlacement(&t, m));
+        Transform_SetOrientation(cArray_FixedSize_cQuatVec_3_opIndex(s + 0x260, idx), Mtx_ToPlacement(&t, m));
         *func_00195DB0(s + 0x2C0, idx) = 1;
     }
 }
@@ -449,7 +449,7 @@ static inline void GetPlc_L(Plc_L* pplc, Msg_L* msg, int* pt)
         Plc_L* src;
         Plc_L t7B0;
         Plc_L t790;
-        obj = func_001960A0(&msg->id, (int*)func_0015AC90(pt, -1)) != 0 ? Object_LookupById(&msg->id) : 0;
+        obj = opNe_cObjectIdR_cObjectIdR(&msg->id, (int*)cObjectId_ctor_uint(pt, -1)) != 0 ? Object_LookupById(&msg->id) : 0;
         parent = obj ? Camera_GetNode(obj) : 0;
         if (parent) {
             Placement_ApplyParent(&t790, &msg->plc, Mtx_ToPlacement(&t7B0, Transform_GetUpdated(parent)));
@@ -483,10 +483,10 @@ static inline void BlkB_L(Act_L* actor, int anchor, int tok)
         Sel_L sel;
         Sel_L* ps = &sel;
         ps->mode = 1;
-        func_0018A890(ps->sub);
+        cString16N_3_ctor_void(ps->sub);
         ps->f40 = anchor;
         ps->f48 = 1;
-        func_0018A710(&ps->x, px);
+        cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(&ps->x, px);
         ps->f98 = -1.0f;
         ps->f9C = 0;
         RateDef_L(&r);
@@ -505,10 +505,10 @@ static inline void BlkC_L(Act_L* actor)
         Sel_L* ps = &sel;
         int id = actor->f326C;
         ps->mode = 2;
-        func_0018A890(ps->sub);
+        cString16N_3_ctor_void(ps->sub);
         ps->f44 = id;
         ps->f48 = 0;
-        func_0018A710(&ps->x, &x);
+        cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(&ps->x, &x);
         ps->f98 = -1.0f;
         ps->f9C = 0;
         RateDef_L(&r);

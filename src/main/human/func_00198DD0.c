@@ -6,6 +6,6 @@ typedef struct IntPair {
 } IntPair;
 
 /* Compares two int pairs for equality. */
-int func_00198DD0(IntPair* x, IntPair* y) {
+int cSkaPlaybackGroupId_opEq(IntPair* x, IntPair* y) {
     return x->a == y->a && x->b == y->b;
 }

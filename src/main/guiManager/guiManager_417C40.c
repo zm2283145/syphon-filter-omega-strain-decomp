@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-Rel* func_00417C40(Rel* r) {
+Rel* std_vector_GuiAnimationTrack_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
@@ -34,10 +34,10 @@ extern "C" {
 extern char D_004BF080[];
 extern char D_004BF0B0[];
 void String_CopyCtor(void* d, const void* s);
-E7C60* func_004181C0(E7C60* first, E7C60* last, E7C60* result);
-void func_00418150(E7C60* p, unsigned int n, const E7C60* v);
-void func_00418110(V7C60* a, V7C60* b);
-void func_00418240(V7C60* v, int f);
+E7C60* std_copy_backward_GuiAnimationTrack_copy_backward(E7C60* first, E7C60* last, E7C60* result);
+void std_fill_n_GuiAnimationTrack_int_fill_n(E7C60* p, unsigned int n, const E7C60* v);
+void std_swap_vectordeleterR_vectordeleterR_49(V7C60* a, V7C60* b);
+void std_vector_deleter_GuiAnimationTrack_dtor(V7C60* v, int f);
 }
 
 static inline void construct(E7C60* p, const E7C60* s)
@@ -51,7 +51,7 @@ static inline void construct(E7C60* p, const E7C60* s)
 }
 
 #define T E7C60
-extern "C" void func_00417C60(V7C60* v, T* pos, unsigned int n, const T* value)
+extern "C" void std_vector_imp_GuiAnimationTrack_insert(V7C60* v, T* pos, unsigned int n, const T* value)
 {
     if (n == 0)
         return;
@@ -83,9 +83,9 @@ extern "C" void func_00417C60(V7C60* v, T* pos, unsigned int n, const T* value)
             }
             if (end - (after - n) <= value && value < end)
                 value += n;
-            func_004181C0(pos, pos + (after - n), end);
+            std_copy_backward_GuiAnimationTrack_copy_backward(pos, pos + (after - n), end);
         }
-        func_00418150(pos, n, value);
+        std_fill_n_GuiAnimationTrack_int_fill_n(pos, n, value);
     } else {
         V7C60 tmp;
         T* dst;
@@ -125,8 +125,8 @@ extern "C" void func_00417C60(V7C60* v, T* pos, unsigned int n, const T* value)
             construct(dst, src);
             (*tcount)++;
         }
-        func_00418110(&tmp, v);
-        func_00418240(&tmp, -1);
+        std_swap_vectordeleterR_vectordeleterR_49(&tmp, v);
+        std_vector_deleter_GuiAnimationTrack_dtor(&tmp, -1);
     }
 }
 #pragma pop /* merge_units */

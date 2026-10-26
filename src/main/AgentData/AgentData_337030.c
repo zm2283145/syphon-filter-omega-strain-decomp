@@ -34,7 +34,7 @@ static inline void merge_flush_func_00337030(void) {}
 #pragma cplusplus on
 DEFINE_RESIZE_ELEMENT(Elem4_2FF0, 2)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_00337140, Elem4_2FF0, func_0033A700, func_0033A680)
+DEFINE_VECTOR_RESIZE(std_vector_pod_eRequirementState_resize, Elem4_2FF0, std_vector_pod_eRequirementState_insert, std_vector_pod_eRequirementState_erase)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_00337140 */

@@ -5,16 +5,16 @@
 #include "gobj_types.h"
 
 /* Iterator inequality. */
-int func_003938B0(Iter* a, Iter* b) {
+int opNe_cLListIteratorR_cLListIteratorR_8(Iter* a, Iter* b) {
     return a->p != b->p;
 }
 
-void func_003938D0(Iter* out, Tree* t) {
+void cLList_cSkaTransPlaybackPtr_End(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
 /* Advances a linked-list iterator to the node's next pointer (+4). */
-Iter* func_003938E0(Iter* it) {
+Iter* cLListIterator_cSkaTransPlaybackPtr_opInc(Iter* it) {
     it->p = (int*)it->p[1];
     return it;
 }

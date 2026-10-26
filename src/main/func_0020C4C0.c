@@ -1,5 +1,5 @@
 #include "types.h"
 #include "o1_tree_dtor.h"
 #pragma optimization_level 1
-DEFINE_O1_TREE_DTOR(func_0020C4C0, func_0020C420, func_001F4150, func_00209920, func_002098B0, func_00209D30)
+DEFINE_O1_TREE_DTOR(std_vector_deleter_cSkaBlendSequenceItem_dtor, std_vector_deleter_cSkaBlendSequenceItem_clear, std_vector_deleter_cSkaBlendSequenceItem_data_void, std_vector_deleter_cSkaBlendSequenceItem_alloc_void_2, std_vector_deleter_cSkaBlendSequenceItem_cap_void, cAllocator_cSkaBlendSequenceItem_deallocate)
 #pragma optimization_level reset

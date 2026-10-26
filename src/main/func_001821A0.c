@@ -11,12 +11,12 @@ int ColTree_IsLeaf(Leaf* l, int* addr) {
     return *addr >= l->limit;
 }
 
-Word* func_001821C0(Word* dst, Word* src) {
+Word* cCollisionModel_TreeLink_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
 /* Word differs from value. */
-int func_001821D0(Word* w, int value) {
+int cCollisionModel_TreeLink_opNe(Word* w, int value) {
     return (w->value ^ value) != 0;
 }

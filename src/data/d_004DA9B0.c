@@ -5,18 +5,18 @@ extern void cNetForceHolsterMsg_dtor();
 extern void cNetForceHolsterMsg_v01();
 extern void cNetForceHolsterMsg_v04();
 extern void cNetForceHolsterMsg_v05();
+extern void cNetMsg_Pack();
 extern void cNetSetFlagMsg_dtor();
 extern void cNetSetFlagMsg_v01();
 extern void cNetSetFlagMsg_v04();
 extern void cNetSetFlagMsg_v05();
-extern void func_002823E0();
 
 void *D_004DA9B0[8] = {
     0, 0, &cNetForceHolsterMsg_dtor, &cNetForceHolsterMsg_v01,
-    &func_002823E0, &Message_GetScriptTypeKey, &cNetForceHolsterMsg_v04, &cNetForceHolsterMsg_v05,
+    &cNetMsg_Pack, &Message_GetScriptTypeKey, &cNetForceHolsterMsg_v04, &cNetForceHolsterMsg_v05,
 };
 
 void *D_004DA9D0[8] = {
     0, 0, &cNetSetFlagMsg_dtor, &cNetSetFlagMsg_v01,
-    &func_002823E0, &Message_GetScriptTypeKey, &cNetSetFlagMsg_v04, &cNetSetFlagMsg_v05,
+    &cNetMsg_Pack, &Message_GetScriptTypeKey, &cNetSetFlagMsg_v04, &cNetSetFlagMsg_v05,
 };

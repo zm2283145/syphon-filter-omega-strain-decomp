@@ -41,7 +41,7 @@ static inline void CopyQ(DqBuf* q, int* d)
         d++;
     }
 }
-extern "C" void func_003B9E70(DqBuf* self, unsigned int n)
+extern "C" void _cdeque_deleter_int_1_reserve(DqBuf* self, unsigned int n)
 {
     if ((self->cap == 0 ? 0 : self->cap - 1) < n) {
         int* nd;

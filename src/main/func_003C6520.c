@@ -1,6 +1,6 @@
 #include "types.h"
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
-V4* func_003C6520(V4* a, V4* b) {
+V4* cMatrix_LocalTransform(V4* a, V4* b) {
     asm {
         lqc2 vf4, 0x0(a)
         lqc2 vf5, 0x10(a)

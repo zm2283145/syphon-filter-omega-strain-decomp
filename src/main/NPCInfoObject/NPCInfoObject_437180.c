@@ -27,7 +27,7 @@ char D_004BFCE0[] = "tree::insert length error\n";
 extern "C" {
 char D_004BFD00[] = "allocator.hh";
 }
-DEFINE_TREE_INSERT_V8(func_00437180, TIValueIB, D_004BFCE0, D_004BFD00, 0x5C, func_0013CD40)
+DEFINE_TREE_INSERT_V8(std_tree_pair_tNPCInfoPtr_value_compare_insert_node_at, TIValueIB, D_004BFCE0, D_004BFD00, 0x5C, std_red_black_tree_1_balance_insert)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00437180(void) {}
 #pragma pop /* merge_units */
@@ -38,6 +38,6 @@ static inline void merge_flush_func_00437180(void) {}
 #pragma cplusplus on
 
 /* Free an allocation under the allocator guard. */
-DEFINE_GUARDED_RELEASE(func_004372F0)
+DEFINE_GUARDED_RELEASE(opDelete_nodeP_int_bool_charP_etc_17)
 #pragma pop /* merge_units */
 /* merge_units: end func_004372F0 */

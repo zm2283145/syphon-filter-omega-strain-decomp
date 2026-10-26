@@ -11,7 +11,7 @@
 extern void* String_AssignCStr_1C43A0(void* obj);
 
 /* Returns whether String_AssignCStr_1C43A0 yields null. */
-int func_003EEAC0(void* obj) {
+int cString_opEq(void* obj) {
     return String_AssignCStr_1C43A0(obj) == 0;
 }
 #pragma pop /* merge_units */
@@ -26,7 +26,7 @@ extern int String_AssignCStr_1C43A0(void* self);
 
 
 /* Returns 1 if String_AssignCStr_1C43A0 returns 0. */
-int func_003EEAF0(void* self)
+int std_opEq_basicstringR_charP(void* self)
 {
     return String_AssignCStr_1C43A0(self) == 0;
 }

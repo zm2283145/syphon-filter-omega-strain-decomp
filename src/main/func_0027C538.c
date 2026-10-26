@@ -1,7 +1,7 @@
 #include "types.h"
 
-extern int func_0027D438(int);
+extern int sce_sync(int);
 
-int func_0027C538(int a0) {
-    return func_0027D438(a0);
+int sceNetcnfifSync(int a0) {
+    return sce_sync(a0);
 }

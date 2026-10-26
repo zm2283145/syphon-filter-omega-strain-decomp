@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_002FA478(void) {
+int my_intc_handler(void) {
     return 0;
 }

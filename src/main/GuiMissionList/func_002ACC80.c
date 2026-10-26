@@ -7,7 +7,7 @@
 #include "types.h"
 #include "GuiMissionList_types.h"
 
-extern int func_002ACB70(GuiMissionList* self);
+extern int GuiMissionList_UpdateLobbyList(GuiMissionList* self);
 
 /* Stores a1 at +0x11C, resets three selection indices to -1 and refreshes. */
 int func_002ACC80(GuiMissionList* self, int a1) {
@@ -15,5 +15,5 @@ int func_002ACC80(GuiMissionList* self, int a1) {
     self->unkCC = -1;
     self->unkC4 = -1;
     self->unkC0 = -1;
-    return func_002ACB70(self);
+    return GuiMissionList_UpdateLobbyList(self);
 }

@@ -9,18 +9,18 @@
 #include "types.h"
 typedef struct { char pad[0xB8]; char sB8[0x40]; int aF8; char padFC[0x18]; int a114; int a118; } S361730;
 extern int String_CStr(void* p);
-extern void func_0033C9E0(S361730* o, int a, int b);
-extern void func_0033C7C0(S361730* o, int a, int b);
+extern void GuiLobbyScreen_CellInviteAgent(S361730* o, int a, int b);
+extern void GuiLobbyScreen_ContactInviteAgent(S361730* o, int a, int b);
 extern int GuiScreen_HandleEvent(S361730* o);
 int GuiAgentInfo_HandleEvent(S361730* o, int id, unsigned short type)
 {
     if (type == 2) {
         if (id == o->a118) {
-            func_0033C9E0(o, o->aF8, String_CStr(o->sB8));
+            GuiLobbyScreen_CellInviteAgent(o, o->aF8, String_CStr(o->sB8));
             return 1;
         }
         if (id == o->a114) {
-            func_0033C7C0(o, o->aF8, String_CStr(o->sB8));
+            GuiLobbyScreen_ContactInviteAgent(o, o->aF8, String_CStr(o->sB8));
             return 1;
         }
     }
@@ -52,9 +52,9 @@ L_3617C0* Gui_GetScreenList(void);
 M_3617C0* Gui_GetScreenStack(void);
 void* GuiManager_FindOrLoad(void* mgr, char* a, char* b);
 void GuiStack_SwapScreens(void* mgr, S_3617C0* o, void* w);
-void func_002A88C0(It_3617C0* out, void* list, W_3617C0** val);
-void func_002A88B0(It_3617C0* out, void* list);
-int func_002A8890(It_3617C0* a, It_3617C0* b);
+void cLList_GuiWidgetPtr_Find(It_3617C0* out, void* list, W_3617C0** val);
+void cLList_GuiWidgetPtr_End(It_3617C0* out, void* list);
+int opNe_cLListIteratorR_cLListIteratorR_6(It_3617C0* a, It_3617C0* b);
 int GuiScreen_HandleInput(S_3617C0* o);
 int GuiAgentInfo_HandleInput(S_3617C0* o, Ev_3617C0* ev);
 }
@@ -78,9 +78,9 @@ int GuiAgentInfo_HandleInput(S_3617C0* o, Ev_3617C0* ev)
                 It_3617C0 res;
                 It_3617C0 end;
                 L_3617C0* l = Gui_GetScreenList();
-                func_002A88C0(&res, l->list, &val);
-                func_002A88B0(&end, l->list);
-                if (func_002A8890(&res, &end)) w->flags |= 2;
+                cLList_GuiWidgetPtr_Find(&res, l->list, &val);
+                cLList_GuiWidgetPtr_End(&end, l->list);
+                if (opNe_cLListIteratorR_cLListIteratorR_6(&res, &end)) w->flags |= 2;
             }
             Gui_GetScreenStack()->Close(o);
         }
@@ -104,18 +104,18 @@ int GuiAgentInfo_HandleInput(S_3617C0* o, Ev_3617C0* ev)
 /*
  * Matched functions (byte-identical with the retail executable).
  * GuiAgentInfo virtual (vtable GuiAgentInfo_vtable slot 2); calls the GuiWidget
- * implementation GuiWidget_Deinit, then func_002C9C80(D_004FFC04, 0).
+ * implementation GuiWidget_Deinit, then cGameFrontEnd_CloseCharacter(D_004FFC04, 0).
  */
 
 #include "loose03_types.h"
 
 extern int D_004FFC04;
-extern int func_002C9C80(int, int);
+extern int cGameFrontEnd_CloseCharacter(int, int);
 extern int GuiWidget_Deinit(GuiAgentInfo*);
 
 int GuiAgentInfo_Deinit(GuiAgentInfo* self) {
     GuiWidget_Deinit(self);
-    return func_002C9C80(D_004FFC04, 0);
+    return cGameFrontEnd_CloseCharacter(D_004FFC04, 0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00361A70 */

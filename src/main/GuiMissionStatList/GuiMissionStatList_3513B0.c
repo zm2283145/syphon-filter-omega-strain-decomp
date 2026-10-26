@@ -12,7 +12,7 @@
 #include "vector_release_dtor.h"
 
 extern "C" { char D_004BACA8[] = "allocator.hh"; }
-DEFINE_VECTOR_RELEASE_DTOR(func_003513B0, func_00351320, func_00351430, D_004BACA8)
+DEFINE_VECTOR_RELEASE_DTOR(std_vector_deleter_MissionStats_dtor, std_vector_deleter_MissionStats_clear, opDelete_MissionStatsP_int_bool_charP_etc, D_004BACA8)
 #pragma pop /* merge_units */
 /* merge_units: end func_003513B0 */
 
@@ -24,16 +24,16 @@ DEFINE_VECTOR_RELEASE_DTOR(func_003513B0, func_00351320, func_00351430, D_004BAC
 /* Allocator release(ptr, pool, destroy, file, line): destroy the element (member at +0x4C, then base), then Mem_Free under the guard. */
 extern "C" {
 void Mem_Free(int pool, void* allocation, char* file, int line);
-void* func_0034F7A0(void* self, short flags);
+void* cArray_StatsRequirement_dtor(void* self, short flags);
 void* String_Dtor_138350(void* self, short flags);
-void func_00351430(void* allocation, int pool, int destroy, char* file, int line);
+void opDelete_MissionStatsP_int_bool_charP_etc(void* allocation, int pool, int destroy, char* file, int line);
 }
-void func_00351430(void* allocation, int pool, int destroy, char* file, int line)
+void opDelete_MissionStatsP_int_bool_charP_etc(void* allocation, int pool, int destroy, char* file, int line)
 {
     AllocGuard guard;
     if (destroy) {
         if (allocation) {
-            func_0034F7A0((char*)allocation + 0x4C, -1);
+            cArray_StatsRequirement_dtor((char*)allocation + 0x4C, -1);
             String_Dtor_138350(allocation, -1);
         }
     }

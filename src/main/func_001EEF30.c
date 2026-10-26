@@ -3,4 +3,4 @@
 #include "vector_insert_fill_obj.h"
 
 extern "C" { char D_004A04C0[] = "vector::insert length error\n"; }
-DEFINE_VECTOR_INSERT_FILL_OBJ(Vector_Insert_1EEF30, 0x10, 0x600000, 0x300000, D_004A04C0, D_004A0558, 0x5C, Mem_PlacementNew, func_001EF4F0, func_001EF480, func_001EF3B0, func_001EF370, HumanColBufA_Dtor)
+DEFINE_VECTOR_INSERT_FILL_OBJ(Vector_Insert_1EEF30, 0x10, 0x600000, 0x300000, D_004A04C0, D_004A0558, 0x5C, Mem_PlacementNew, cEdgeGroup_ctor_cEdgeGroupR, std_copy_backward_cEdgeGroup_copy_backward, std_fill_n_cEdgeGroup_int_fill_n, std_swap_vectordeleterR_vectordeleterR_12, HumanColBufA_Dtor)

@@ -8,7 +8,7 @@
 #pragma push /* merge_units */
 #include "types.h"
 typedef struct N_CF60 { struct N_CF60* left; struct N_CF60* right; unsigned int parent; } N_CF60;
-void func_0013CF60(N_CF60* x, N_CF60** root)
+void std_red_black_tree_1_rotate_left(N_CF60* x, N_CF60** root)
 {
     N_CF60* y = x->right;
     N_CF60* p;
@@ -32,7 +32,7 @@ void func_0013CF60(N_CF60* x, N_CF60** root)
 /* merge_units: begin func_0013CFF0 */
 #pragma push /* merge_units */
 typedef struct N_CFF0 { struct N_CFF0* left; struct N_CFF0* right; unsigned int parent; } N_CFF0;
-void func_0013CFF0(N_CFF0* x, N_CFF0** root)
+void std_red_black_tree_1_rotate_right(N_CFF0* x, N_CFF0** root)
 {
     N_CFF0* y = x->left;
     N_CFF0* p;
@@ -91,12 +91,12 @@ extern char *strncpy(char *, const char *, int);
 extern void printf(char *, ...);
 extern void LevelSelect_FindByName(int, char *);
 extern int String_ToLower(int);
-extern void func_003E2D80(int);
+extern void cScriptInterpreter_SetGenerateSyms(int);
 extern void ScriptFilter_SetGate(int);
-extern void *func_0013D5C0(int, int, char *, int);
-extern char *func_0013D5B0(void *);
-extern void func_0013D590(void *, char **);
-extern void func_0012F3D0(char *, char *);
+extern void *opNew_uint_int_charP_int(int, int, char *, int);
+extern char *cDME_tServer_ctor(void *);
+extern void cArray_tServerPtr_PushBackActual(void *, char **);
+extern void cGameSystem_SetPlayerFilename(char *, char *);
 extern void DME_InstallTimer(void);
 extern int App_GetInstance(void);
 extern void StringPool_Load(int);
@@ -167,7 +167,7 @@ int Game_ParseCommandLine(int argc, char **argv)
                     break;
                 case 's':
                     if (String_ToLower(val[0]) == 'g') {
-                        func_003E2D80(1);
+                        cScriptInterpreter_SetGenerateSyms(1);
                         skip = 1;
                     } else if (String_ToLower(val[0]) == 'o') {
                         ScriptFilter_SetGate(String_ToLower(val[1]) == 'n');
@@ -185,12 +185,12 @@ int Game_ParseCommandLine(int argc, char **argv)
                 case 'n':
                     if (*val) {
                         D_00494170 = 1;
-                        t = (char *)func_0013D5C0(0x14, 0, D_0049AFF8, 0xB7);
-                        if (t) t = func_0013D5B0(t);
+                        t = (char *)opNew_uint_int_charP_int(0x14, 0, D_0049AFF8, 0xB7);
+                        if (t) t = cDME_tServer_ctor(t);
                         pv = t;
                         strncpy(t, val, 0x10);
                         D_005723C0 = 1;
-                        func_0013D590(D_005724A0, &pv);
+                        cArray_tServerPtr_PushBackActual(D_005724A0, &pv);
                         Game_SetState(14);
                         strncpy(name, val, 0x10);
                         named = 1;
@@ -203,7 +203,7 @@ int Game_ParseCommandLine(int argc, char **argv)
                     D_00494190 = 0;
                     break;
                 case 'p':
-                    func_0012F3D0(g_Game, val);
+                    cGameSystem_SetPlayerFilename(g_Game, val);
                     break;
                 case 'x':
                     Game_SetState(1);

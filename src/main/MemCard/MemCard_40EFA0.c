@@ -19,8 +19,8 @@ extern char* D_00494010;
 extern char D_004BED60[];
 extern char D_00571C50[];
 extern int sprintf(char*, const char*, ...);
-extern void func_002B51E0(int, int*);
-extern void func_002B56E0(int, char*, int, int, void*, int*);
+extern void sceMc2GetInfoAsync(int, int*);
+extern void sceMc2GetDirAsync(int, char*, int, int, void*, int*);
 extern int atoi(char*);
 
 void MemCard_InfoCycle(S40E5D0* s) {
@@ -33,7 +33,7 @@ void MemCard_InfoCycle(S40E5D0* s) {
     }
     switch (s->sub) {
     case 0:
-        func_002B51E0(s->ent[0].h, &s->t0);
+        sceMc2GetInfoAsync(s->ent[0].h, &s->t0);
         s->sub = 1;
         break;
     case 1:
@@ -55,7 +55,7 @@ void MemCard_InfoCycle(S40E5D0* s) {
         } else {
             s->x5A4 = s->t2;
             sprintf(D_00571C50, D_004BED60, D_00494010, "*");
-            func_002B56E0(s->ent[0].h, D_00571C50, 0, 0x12, s->ent[0].p0, &s->p560);
+            sceMc2GetDirAsync(s->ent[0].h, D_00571C50, 0, 0x12, s->ent[0].p0, &s->p560);
             s->sub = 2;
         }
         break;
@@ -101,7 +101,7 @@ typedef struct MemCard {
     int unk5A4;
 } MemCard;
 
-extern int func_002B4F10(int* params, char* data);
+extern int sceMc2CreateSocket(int* params, char* data);
 extern void String_Copy(char* dst, const char* src); /* String_Copy */
 extern void strncpy(void* dst, const void* src, int size); /* strncpy-style copy */
 extern void MemCard_TitleToSjis(void* dst, const void* src, int size);
@@ -117,7 +117,7 @@ MemCard* MemCard_SetupIconSys(MemCard* self) {
     self->iconParams[0] = 2;
     self->iconParams[1] = 2;
     self->iconParams[2] = 0;
-    self->iconSys = func_002B4F10(self->iconParams, self->iconData);
+    self->iconSys = sceMc2CreateSocket(self->iconParams, self->iconData);
     self->unk540 = 0;
     self->unk544 = 0;
     self->unk548 = 0;

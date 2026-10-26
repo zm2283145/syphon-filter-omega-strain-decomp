@@ -1,4 +1,4 @@
 #pragma cplusplus on
 #include "guarded_buffer_dtor.h"
 
-DEFINE_GUARDED_BUFFER_CLEAR_DTOR(func_0033BBE0, D_004B9898)
+DEFINE_GUARDED_BUFFER_CLEAR_DTOR(std_vector_imp_tParTimes_dtor, D_004B9898)

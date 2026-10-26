@@ -72,7 +72,7 @@ static inline void PlayVoice_327120(Self_327120* self, char* voice)
     cMessage_dtor(&play, 0);
 }
 
-void func_00327120(Self_327120* self, char* voice)
+void GuiSlideShow_StartPlayback(Self_327120* self, char* voice)
 {
     PlayVoice_327120(self, voice);
 }

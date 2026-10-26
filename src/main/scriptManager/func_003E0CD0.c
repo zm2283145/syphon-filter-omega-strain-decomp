@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int* func_003E0CD0(PtrVec* v, int i) {
+int* std_vector_ClassDefPtr_opIndex(PtrVec* v, int i) {
     return v->data + i;
 }

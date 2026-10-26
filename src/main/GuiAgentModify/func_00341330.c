@@ -52,7 +52,7 @@ extern void GuiAgentModify_UpdateAvailability(S_1330* self);
 extern int AgentPacking_StepMeshA(void* db, int dir, __int128 key, int cur, int slot, int body, int tone, void* app, void* x);
 extern int AgentPacking_StepMeshB(void* db, int dir, __int128 key, int cur, int slot, int body, int tone, void* app, void* x);
 extern int AgentPacking_StepColour(void* db, int dir, __int128 a, __int128 b, unsigned int cur, int slot, unsigned int body, unsigned int tone, void* app, void* x);
-extern int func_00400620(void* db, int dir, __int128 a, __int128 b, unsigned int cur, int slot, unsigned int body, unsigned int tone, void* app, void* x);
+extern int FindNextAnyTexture__7MonsterFi11UiUiUiUiR3SKLR8ManParts(void* db, int dir, __int128 a, __int128 b, unsigned int cur, int slot, unsigned int body, unsigned int tone, void* app, void* x);
 extern int AgentPacking_StepTexture(void* db, int dir, __int128 a, __int128 b, unsigned int cur, int slot, unsigned int body, int tone, void* app, void* x);
 extern int AgentPartCache_FindTexture(void* db, __int128 key);
 
@@ -122,11 +122,11 @@ void GuiAgentModify_StepPart(S_1330* self, int back, int fwd)
             Skel_1330* s = &self->tbl->skel;
             if (slot < s->count) {
                 if (self->count > 1)
-                    r = func_00400620(g_AgentPartCache, dir, s->e[slot].a, s->e[slot].b, self->vE4, slot, self->row, s->tone, s->app, s->x1EC0);
+                    r = FindNextAnyTexture__7MonsterFi11UiUiUiUiR3SKLR8ManParts(g_AgentPartCache, dir, s->e[slot].a, s->e[slot].b, self->vE4, slot, self->row, s->tone, s->app, s->x1EC0);
                 else
                     r = -1;
             } else {
-                r = func_00400620(g_AgentPartCache, dir, *D_0048B460, s->e[slot].b, self->vE4, slot, self->row, s->tone, s->app, s->x1EC0);
+                r = FindNextAnyTexture__7MonsterFi11UiUiUiUiR3SKLR8ManParts(g_AgentPartCache, dir, *D_0048B460, s->e[slot].b, self->vE4, slot, self->row, s->tone, s->app, s->x1EC0);
             }
             if (r != -1)
                 self->vE4 = r;

@@ -41,7 +41,7 @@ V* func_00133EC0(M* m);
 void Vec3_Negate(V* v);
 void Mtx_TransformByTranspose(V* v, M* m);
 void Mtx_SetTranslation(M* m, V* v);
-void func_00264720(Obj* s, V* p);
+void cAirTaser_PointsToLocal(Obj* s, V* p);
 }
 static inline void LookFrame(M* m, V* dir, V* up)
 {
@@ -73,7 +73,7 @@ static inline void InvertRigid(M* m)
         Mtx_SetTranslation(m, &t);
     }
 }
-void func_00264720(Obj* s, V* p)
+void cAirTaser_PointsToLocal(Obj* s, V* p)
 {
     s->arr[0].pos = *p;
     V dir = s->arr.Back(s->n).pos - s->arr[0].pos;

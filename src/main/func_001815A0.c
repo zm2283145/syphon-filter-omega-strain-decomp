@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_001815A0(Iter* a, Iter* b) {
+int cArray_cGOBJPtr_Iterator_opNe(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 

@@ -4,8 +4,8 @@
 /*
  * Iteration over a GUI widget's child list (list object at widget +0x28)
  * through the out-of-line list iterator helpers: begin() is
- * List_Begin + const-iterator conversion func_0028C0B0, end() is
- * func_0028C0A0 + func_0028C090 and is re-evaluated every iteration.
+ * List_Begin + const-iterator conversion std_list_GuiWidgetPtr_generic_iterator_ctor, end() is
+ * std_list_GuiWidgetPtr_end + cLListIterator_GuiWidgetPtr_ctor_listR and is re-evaluated every iteration.
  * Child widgets: flags (u16) at +0x14, IsA(type) at virtual slot 20,
  * renderer at +0x44 with Show()/Hide() at virtual slots 5/6.
  *
@@ -48,9 +48,9 @@ struct ChildIter {
 
 extern "C" {
 void List_Begin(ChildIter* result, void* list);
-void func_0028C0B0(ChildIter* result, ChildIter* it);
-void func_0028C0A0(ChildIter* result, void* list);
-void func_0028C090(ChildIter* result, ChildIter* it);
+void std_list_GuiWidgetPtr_generic_iterator_ctor(ChildIter* result, ChildIter* it);
+void std_list_GuiWidgetPtr_end(ChildIter* result, void* list);
+void cLListIterator_GuiWidgetPtr_ctor_listR(ChildIter* result, ChildIter* it);
 }
 
 #define CHILD_LIST(w) ((w)->children)
@@ -60,15 +60,15 @@ static inline ChildNode* ChildList_Begin(void* l)
     ChildIter r;
     ChildIter t;
     List_Begin(&t, l);
-    func_0028C0B0(&r, &t);
+    std_list_GuiWidgetPtr_generic_iterator_ctor(&r, &t);
     return r.p;
 }
 
 static inline void ChildList_End(ChildIter* res, void* l)
 {
     ChildIter t;
-    func_0028C0A0(&t, l);
-    func_0028C090(res, &t);
+    std_list_GuiWidgetPtr_end(&t, l);
+    cLListIterator_GuiWidgetPtr_ctor_listR(res, &t);
 }
 
 #endif /* CHILD_LIST_ITER_H */

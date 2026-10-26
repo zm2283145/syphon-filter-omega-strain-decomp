@@ -26,7 +26,7 @@ HotboxH* cHotbox_ctor2(void* self, int* gid, unsigned char type, V4H* mn, V4H* m
 BoxH Hotbox_ComputeNpcBounds(void* o, int flag);
 void Hotbox_AddToGlobalList(void* list, HotboxH** h);
 void Object_Register(void* o);
-void func_00171C40(HotboxH* h, void* o);
+void cHotbox_AddTarget(HotboxH* h, void* o);
 HotboxH* Hotbox_CreateRuntime(void* unused, void* o, int flag, int big);
 }
 static inline V4H& Zero()
@@ -70,7 +70,7 @@ HotboxH* Hotbox_CreateRuntime(void* unused, void* o, int flag, int big)
         Hotbox_AddToGlobalList(g_HotboxList, &t);
     }
     Object_Register(h);
-    func_00171C40(h, o);
+    cHotbox_AddTarget(h, o);
     h->Activate(0);
     return h;
 }

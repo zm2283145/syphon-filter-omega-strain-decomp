@@ -51,8 +51,8 @@ static inline void merge_flush_func_002109F0(void) {}
 
 /* merge_units: begin func_00210A60 */
 #pragma push /* merge_units */
-extern int func_00171EB0(void*);
-extern int* func_00171EA0(void*, int);
+extern int cArray_cGameGOBJPtr_Size(void*);
+extern int* cArray_cGameGOBJPtr_opIndex(void*, int);
 
 /* Script: cInteractGOBJ.GetTarget(index) -> target handle or 0. */
 int Script_cInteractGOBJ_GetTarget(ScriptArg* args) {
@@ -64,8 +64,8 @@ int Script_cInteractGOBJ_GetTarget(ScriptArg* args) {
     index[0] = args[1].i;
     self = args[0].p;
     indexValue = *(int*)index;
-    if (func_00171EB0(self + 0x98) != 0) {
-        target = *func_00171EA0(self + 0x98, indexValue);
+    if (cArray_cGameGOBJPtr_Size(self + 0x98) != 0) {
+        target = *cArray_cGameGOBJPtr_opIndex(self + 0x98, indexValue);
     } else {
         target = 0;
     }

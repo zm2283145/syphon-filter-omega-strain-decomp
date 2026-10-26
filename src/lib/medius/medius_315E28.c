@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_00315E28(int a0, int a1) {
+int NetStreamMediaMapRTAudioError(int a0, int a1) {
     int v0;
 
     v0 = 0;

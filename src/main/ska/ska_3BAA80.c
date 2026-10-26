@@ -9,7 +9,7 @@
 #include "types.h"
 
 /* Returns whether the word at +4 is zero. */
-int func_003BAA80(int* self)
+int cArray_cXformNodePtr_Empty(int* self)
 {
     return self[1] == 0;
 }
@@ -27,7 +27,7 @@ int func_003BAA80(int* self)
 #include "loose03_types.h"
 
 /* back(): address of the last element. */
-int* func_003BAA90(PtrVec* v) {
+int* cArray_cXformNodePtr_Back(PtrVec* v) {
     return v->data + v->count - 1;
 }
 #pragma pop /* merge_units */

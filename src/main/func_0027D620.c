@@ -35,11 +35,11 @@ int Vec4_SetOrigin(int);                              /* extern */
 f32 VecCurve_SetDuration(f32, int);                /* extern */
 int VecPair_Copy(int, int);                        /* extern */
 s32 Actor_GetSkeleton(int);                         /* extern */
-int func_0017A5F0(int);                        /* extern */
-int func_0027F7A0(int);          /* extern */
+int cGameCamera_GetGlobalOffset(int);                        /* extern */
+int cSafePtr_cGOBJ_GetPtr_void_2(int);          /* extern */
 int PlayerCamera_UpdateR1Pick(int, void*, int);            /* extern */
 s32 PlayerCamera_LookAtLock(int, void*, int, int, int, int);        /* extern */
-int func_00280390(int, int, s8, int);          /* extern */
+int ModifyCameraTrackingPoint_ForHuman(int, int, s8, int);          /* extern */
 int func_00280470(int, int, int, int);    /* extern */
 int Mtx_ToEulerXYZ(int, int);                        /* extern */
 extern int D_00497F00;
@@ -791,7 +791,7 @@ void PlayerCamera_Follow(int arg0, int arg1) {
     }
     var_v1 = WRGet(arg0 + 0xCFC);
     if (var_v1 != NULL) {
-        temp_v0 = func_0027F7A0(arg0 + 0xCFC);
+        temp_v0 = cSafePtr_cGOBJ_GetPtr_void_2(arg0 + 0xCFC);
         M44 m44 = ((VCam*)temp_v0)->s57(&((int*)arg0)[0xD84/4], temp_s2);
         MtxToQuat(&m44, &sp4A0);
         QCopy(&sp4B0, &m44.r[3]);
@@ -819,7 +819,7 @@ void PlayerCamera_Follow(int arg0, int arg1) {
                     QCopy(&sp530, &sp500);
                 } else {
                     temp_s5 = ((temp_v1_3 >> 5) & 1) != 0;
-                    func_00280390(arg0 + 0xD88, var_s5, (s8) (*(int*)((char*)(arg0) + 0xD84)), temp_s5);
+                    ModifyCameraTrackingPoint_ForHuman(arg0 + 0xD88, var_s5, (s8) (*(int*)((char*)(arg0) + 0xD84)), temp_s5);
                     temp_a0_4 = (*(int*)((char*)(arg0) + 0xCF4));
                     if (((temp_a0_4 >> 0xA) & 1) || ((temp_a0_4 >> 0xB) & 1) || (temp_s5 != 0)) {
                         (*(f32*)((char*)(arg0) + 0xD88)) += 2.25f;
@@ -892,7 +892,7 @@ block_67:
         }
     }
     if ((*(int*)((char*)(arg0) + 0xCF4)) & 1) {
-        temp_s0_2 = func_0017A5F0(arg0);
+        temp_s0_2 = cGameCamera_GetGlobalOffset(arg0);
         {
             s128 sp400;
             s128 sp3F0;

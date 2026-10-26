@@ -9,15 +9,15 @@ extern void Light_GetCoronaSize();
 extern void Light_SetPosition();
 extern void Message_GetScriptTypeKey();
 extern void PointLightComp_Start();
+extern void cAISoundSystemMessage_Clone_void_2();
+extern void cAISoundSystemMessage_dtor();
 extern void cOutOfAmmoMsg_dtor();
 extern void cOutOfAmmoMsg_v01();
 extern void cOutOfAmmoMsg_v03();
-extern void func_001449B0();
+extern void cSpecFx_dtor();
 extern void func_001479A0();
 extern void func_00147A00();
 extern void func_00147A10();
-extern void func_00147A20();
-extern void func_00147B40();
 
 void *D_004D91E0[8] = {
     0, 0, &cOutOfAmmoMsg_dtor, &cOutOfAmmoMsg_v01,
@@ -39,11 +39,11 @@ void *D_004D9240[16] = {
 };
 
 void *D_004D9280[8] = {
-    0, 0, &func_001449B0, 0,
+    0, 0, &cSpecFx_dtor, 0,
     0, &func_00147A00, &func_00147A10, 0,
 };
 
 void *D_004D92A0[8] = {
-    0, 0, &func_00147B40, &func_00147A20,
+    0, 0, &cAISoundSystemMessage_dtor, &cAISoundSystemMessage_Clone_void_2,
     &Event_PackHeader, &Message_GetScriptTypeKey, 0, 0,
 };

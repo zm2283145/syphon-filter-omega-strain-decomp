@@ -15,7 +15,7 @@
 #include "types.h"
 #include "envSettings_types.h"
 
-EnvVec3* func_00178420(EnvVec3* dst, EnvVec3* src) {
+EnvVec3* tRGB_opAssign(EnvVec3* dst, EnvVec3* src) {
     dst->x = src->x;
     dst->y = src->y;
     dst->z = src->z;
@@ -27,7 +27,7 @@ EnvVec3* func_00178420(EnvVec3* dst, EnvVec3* src) {
 /* merge_units: begin func_00178440 */
 #pragma push /* merge_units */
 typedef struct { int a[4]; unsigned char active; float t; float dur; float frac; } S178;
-void func_00178440(S178* s, float dt) {
+void cEnvMan_NextFrame(S178* s, float dt) {
     if (s->active) {
         s->t += dt;
         if (s->t < s->dur) {

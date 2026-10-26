@@ -20,7 +20,7 @@
 #pragma cplusplus on
 
 /* Deleting destructor: restore the vtable chain, optionally delete. */
-DEFINE_VTABLE_CHAIN_DTOR2(func_0017EC70, D_004DA3E0, D_004DA380)
+DEFINE_VTABLE_CHAIN_DTOR2(cSplinedMotion_Scalar_dtor_void, D_004DA3E0, D_004DA380)
 #pragma pop /* merge_units */
 /* merge_units: end func_0017EC70 */
 
@@ -47,7 +47,7 @@ DEFINE_VTABLE_CHAIN_DTOR2(func_0017ED20, D_004DA410, D_004DA3B0)
 #pragma cplusplus on
 
 /* Deleting destructor: restore the vtable chain, optionally delete. */
-DEFINE_VTABLE_CHAIN_DTOR1(func_0017ED80, D_004DA3B0)
+DEFINE_VTABLE_CHAIN_DTOR1(cCollisionSystem_cBox_dtor_void, D_004DA3B0)
 #pragma pop /* merge_units */
 /* merge_units: end func_0017ED80 */
 
@@ -57,13 +57,13 @@ DEFINE_VTABLE_CHAIN_DTOR1(func_0017ED80, D_004DA3B0)
 
 /* Deleting destructor: restore the vtable chain, optionally delete. */
 extern "C" char D_004DA440[];
-extern "C" void func_0017D270();
-extern "C" void func_0017D330();
-extern "C" void func_0017D5A0();
+extern "C" void cSplinedMotion_cQuaternion_UpdateVelocity();
+extern "C" void cSplinedMotion_cQuaternion_FixUpResultOfSplineEvaluation();
+extern "C" void cSplinedMotion_cQuaternion_UpdateSplinePoints();
 extern "C" void func_0017EE30();
-extern "C" void func_00180B60();
-void * const D_004DA350[12] = { (void*)0x0, (void*)0x0, (void*)func_0017EE30, (void*)func_00180B60, (void*)0x0, (void*)0x0, (void*)func_0017D5A0, (void*)func_0017D330, (void*)func_0017D270, (void*)0x0, (void*)0x0, (void*)0x0 };
-extern "C" VtableChainObject* func_0017EDD0(VtableChainObject* self,
+extern "C" void cSplinedMotion_cQuaternion_TeleportByDelta();
+void * const D_004DA350[12] = { (void*)0x0, (void*)0x0, (void*)func_0017EE30, (void*)cSplinedMotion_cQuaternion_TeleportByDelta, (void*)0x0, (void*)0x0, (void*)cSplinedMotion_cQuaternion_UpdateSplinePoints, (void*)cSplinedMotion_cQuaternion_FixUpResultOfSplineEvaluation, (void*)cSplinedMotion_cQuaternion_UpdateVelocity, (void*)0x0, (void*)0x0, (void*)0x0 };
+extern "C" VtableChainObject* cSplinedMotion_Vector_dtor(VtableChainObject* self,
                                    short deleteFlag)
 {
     if (self) {

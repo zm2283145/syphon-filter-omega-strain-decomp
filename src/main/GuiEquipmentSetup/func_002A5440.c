@@ -8,7 +8,7 @@
 #include "GuiEquipmentSetup_types.h"
 
 extern void* D_00506550;
-extern int func_002A2590(void* p);
+extern int GuiEquipmentSetup_ManRender(void* p);
 
 void func_002A5440(EquipSetupState* self, int value) {
     EquipSlot* slot = self->slot;
@@ -18,6 +18,6 @@ void func_002A5440(EquipSetupState* self, int value) {
     }
 }
 
-int func_002A5460(void) {
-    return func_002A2590(D_00506550);
+int ES_ManRenderWrapper(void) {
+    return GuiEquipmentSetup_ManRender(D_00506550);
 }

@@ -6,6 +6,6 @@
 #include "types.h"
 #include "node_types.h"
 
-void func_0015CA10(PtrVec* v) {
+void std_vector_deleter_tNodeLink_clear(PtrVec* v) {
     v->count = 0;
 }

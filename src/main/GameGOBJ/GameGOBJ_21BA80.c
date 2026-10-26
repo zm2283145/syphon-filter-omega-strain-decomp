@@ -27,7 +27,7 @@ struct Msg_0021BA80 : ClonedMessageBase {
 extern "C" {
 char D_004A4A28[] = "gamegobj.hh";
 }
-DEFINE_MESSAGE_CLONE(func_0021BA80, Msg_0021BA80, 44, D_004A4A28, 163, CLONE_BODY)
+DEFINE_MESSAGE_CLONE(cNetLockElevatorMsg_Clone, Msg_0021BA80, 44, D_004A4A28, 163, CLONE_BODY)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0021BA80(void) {}
 #pragma pop /* merge_units */

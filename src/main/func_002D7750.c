@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_002D7750(void) {
+void GetBlock(void) {
 
 }

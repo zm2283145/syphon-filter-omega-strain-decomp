@@ -27,7 +27,7 @@ extern char D_004983E0[];
 
 extern void func_00105088(Ctx *ctx, unsigned char *src, int sfield, int dfield, int yoff, int h,
                           int bx, int by, int dx, int dy, int field, int avg);
-extern void func_00106758(Ctx *ctx, int DMV[][2], int *dmvector, int mvx, int mvy);
+extern void _dualPrimeVector(Ctx *ctx, int DMV[][2], int *dmvector, int mvx, int mvy);
 extern int func_0010BD58(void *, const char *, int);
 
 void func_00104980(Ctx *ctx, int bx, int by, int macroblock_type, int motion_type,
@@ -53,7 +53,7 @@ void func_00104980(Ctx *ctx, int bx, int by, int macroblock_type, int motion_typ
                 func_00105088(ctx, ctx->forward_reference_frame, motion_vertical_field_select[1][0], 1, 0, 8, bx, by,
                               PMV[1][0][0], PMV[1][0][1] >> 1, 1, 0);
             } else if (motion_type == 3) {
-                func_00106758(ctx, DMV, dmvector, PMV[0][0][0], PMV[0][0][1] >> 1);
+                _dualPrimeVector(ctx, DMV, dmvector, PMV[0][0][0], PMV[0][0][1] >> 1);
                 func_00105088(ctx, ctx->forward_reference_frame, 0, 0, 0, 8, bx, by,
                               PMV[0][0][0], PMV[0][0][1] >> 1, 1, 0);
                 func_00105088(ctx, ctx->forward_reference_frame, 1, 0, 0, 8, bx, by,
@@ -93,7 +93,7 @@ void func_00104980(Ctx *ctx, int bx, int by, int macroblock_type, int motion_typ
                 sel = 1;
                 if (!ctx->Second_Field)
                     sel = 0;
-                func_00106758(ctx, DMV, dmvector, PMV[0][0][0], PMV[0][0][1]);
+                _dualPrimeVector(ctx, DMV, dmvector, PMV[0][0][0], PMV[0][0][1]);
                 func_00105088(ctx, predframe[0][currentfield], 0, 0, 0, 16, bx, by,
                               PMV[0][0][0], PMV[0][0][1], 0, 0);
                 func_00105088(ctx, predframe[sel][!currentfield], 0, 0, 0, 16, bx, by,

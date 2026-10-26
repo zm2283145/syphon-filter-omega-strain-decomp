@@ -9,12 +9,12 @@ typedef struct {
 } Obj4028;
 extern short D_00491432;
 extern unsigned char D_00491430;
-extern int func_002E6088(int addr);
-extern int func_00315028(int id, Obj4028 **out);
-extern int func_002E52D8(int id, int addr, int *out);
-extern int func_002F50D8(int sock, int (*cb)(), int arg);
-extern int func_00315968();
-int func_00314028(int id, int addr, Res4028 *out)
+extern int NetIsValidClientIndex(int addr);
+extern int NetStreamMediaGetValidInfo(int id, Obj4028 **out);
+extern int NetGetClientInfo(int id, int addr, int *out);
+extern int rt_audio_enum_players(int sock, int (*cb)(), int arg);
+extern int NetStreamMediaEnumClientCallback();
+int NetIStreamMediaGetClientInfo(int id, int addr, Res4028 *out)
 {
     Obj4028 *o;
     int h;
@@ -30,15 +30,15 @@ int func_00314028(int id, int addr, Res4028 *out)
     if (D_00491432 <= 0) return 0x11;
     ok = D_00491430;
     if (ok != 1) return 0x11;
-    t = func_002E6088(addr);
+    t = NetIsValidClientIndex(addr);
     if (t != ok) return 0x17;
-    r = func_00315028(id, &o);
+    r = NetStreamMediaGetValidInfo(id, &o);
     if (r != 0) return r;
-    if (func_002E52D8(id, addr, &h) == 0) {
+    if (NetGetClientInfo(id, addr, &h) == 0) {
         if (h != 0) {
             o->state = t;
             o->res = *out;
-            if (func_002F50D8(o->sock, func_00315968, 0) == 0) {
+            if (rt_audio_enum_players(o->sock, NetStreamMediaEnumClientCallback, 0) == 0) {
                 if (o->state == 0) {
                     *out = o->res;
                 }

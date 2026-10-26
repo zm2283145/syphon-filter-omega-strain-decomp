@@ -9,7 +9,7 @@ extern char D_004BD858[];
 extern int sprintf(char*, const char*, ...);
 extern int String_CompareNoCase(char*, char*);
 
-Var3E10D0* func_003E10D0(void* self, char* name, int id)
+Var3E10D0* cScriptInterpreter_findVar(void* self, char* name, int id)
 {
     char buf[128];
     int i;

@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-float func_0031E7B8(int a0) {
+float nemAgcGetMeanEnergy(int a0) {
     float tmp0;
 
     tmp0 = *(float*)((char*)a0 + 4);

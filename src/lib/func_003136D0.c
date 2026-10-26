@@ -1,7 +1,7 @@
 typedef struct { int seq; int len; char data[248]; } E3136D0;
 typedef struct { int state; int x4; int base; unsigned int count; E3136D0 e[64]; } S3136D0;
 extern void *memcpy(void *, const void *, unsigned int);
-void func_003136D0(S3136D0 *s, int x4, int seq, void *data, unsigned int len)
+void AddSequence(S3136D0 *s, int x4, int seq, void *data, unsigned int len)
 {
     int i = seq & 63;
     int d;

@@ -16,7 +16,7 @@
 #pragma cplusplus on
 
 /* Two-level destructor: restore vtables, run base destructor, optionally delete. */
-DEFINE_VTABLE2_BASE_DTOR(func_0014ED00, D_004D9320, D_004E0840, cMessage_dtor)
+DEFINE_VTABLE2_BASE_DTOR(cCharActionMsg_Bool_dtor, D_004D9320, D_004E0840, cMessage_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0014ED00 */
 
@@ -25,7 +25,7 @@ DEFINE_VTABLE2_BASE_DTOR(func_0014ED00, D_004D9320, D_004E0840, cMessage_dtor)
 #pragma cplusplus on
 
 /* Two-level destructor: restore vtables, run base destructor, optionally delete. */
-DEFINE_VTABLE2_BASE_DTOR(func_0014ED70, D_004E01A0, D_004E0840, cMessage_dtor)
+DEFINE_VTABLE2_BASE_DTOR(cCharActionMsg_ObjectId_dtor, D_004E01A0, D_004E0840, cMessage_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0014ED70 */
 
@@ -34,6 +34,6 @@ DEFINE_VTABLE2_BASE_DTOR(func_0014ED70, D_004E01A0, D_004E0840, cMessage_dtor)
 #pragma cplusplus on
 
 /* Two-level destructor: restore vtables, run base destructor, optionally delete. */
-DEFINE_VTABLE2_BASE_DTOR(func_0014EDE0, D_004E0140, D_004E0840, cMessage_dtor)
+DEFINE_VTABLE2_BASE_DTOR(cCharActionMsg_Vector_dtor, D_004E0140, D_004E0840, cMessage_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0014EDE0 */

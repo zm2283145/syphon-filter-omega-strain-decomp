@@ -33,15 +33,15 @@ public:
 struct Holder { char pad[0x50]; Obj* p50; };
 struct PathObj { char pad[0x6C]; Holder* p6C; char pad70[0x24]; Vec v94; };
 extern "C" {
-V* func_00219050(Vec* v, int i);
+V* std_vector_cVector_opIndex(Vec* v, int i);
 int func_00219060(Vec* v);
 V* Vec4_Assign(V* d, V* s);
 V* Mtx_Multiply4(V* v, M* m);
 }
 static inline V* At(Vec* v, int i) {
     if (i < 0) i = 0;
-    if (i < func_00219060(v)) return func_00219050(v, i);
-    return func_00219050(v, func_00219060(v) - 1);
+    if (i < func_00219060(v)) return std_vector_cVector_opIndex(v, i);
+    return std_vector_cVector_opIndex(v, func_00219060(v) - 1);
 }
 /* Tf is wrapped once more (Tf2) so its temp lands below Add's result on the stack */
 static inline void Tf(V* t2, V* p, M* m) { V t; Vec4_Assign(t2, Mtx_Multiply4(Vec4_Assign(&t, p), m)); }

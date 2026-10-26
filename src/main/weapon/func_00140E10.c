@@ -9,7 +9,7 @@
 extern int Math_Cos(float);
 extern int Math_Sin(float);
 
-int func_00140E10(void) {
+int cGobjController_IsNPC(void) {
     return 0;
 }
 

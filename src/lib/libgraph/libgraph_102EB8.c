@@ -8,7 +8,7 @@
 typedef struct { char pad[6]; short x6; } GsInfo2EB8;
 extern GsInfo2EB8 *sceGsGetGParam(void);
 
-void func_00102EB8(unsigned long *db)
+void sceGsPutDispEnv(unsigned long *db)
 {
     if (sceGsGetGParam()->x6 == 1) {
         *(volatile unsigned long *)0x12000000 = db[0];
@@ -31,7 +31,7 @@ extern unsigned long long *sceGsGetGParam(void);
 #endif /* merge_units */
 #define sceGsGetGParam() ((unsigned long long *)sceGsGetGParam()) /* merge_units */
 
-int func_00102F78(short mode, short width, short height)
+int sceGszbufaddr(short mode, short width, short height)
 {
     unsigned long long *p=sceGsGetGParam();
     int x=(width+63)/64;
@@ -85,20 +85,20 @@ typedef struct {
      ((u_long)(zte) << 16) | ((u_long)(ztst) << 17))
 
 #if 0 /* merge_units */
-extern short func_00102F78(short psm, short w, short h);
+extern short sceGszbufaddr(short psm, short w, short h);
 #endif /* merge_units */
-#define func_00102F78(a0, a1, a2) ((short)func_00102F78((a0), (a1), (a2))) /* merge_units */
+#define sceGszbufaddr(a0, a1, a2) ((short)sceGszbufaddr((a0), (a1), (a2))) /* merge_units */
 
 
-int func_00103040(sceGsDrawEnv1 *draw, short psm, short w, short h, short ztest, short zpsm)
+int sceGsSetDefDrawEnv(sceGsDrawEnv1 *draw, short psm, short w, short h, short ztest, short zpsm)
 {
     draw->frame1addr = 0x4C;
     draw->frame1 = SCE_GS_SET_FRAME(0, (w + 63) >> 6 & 0x3f, psm & 0xf, 0);
     draw->zbuf1addr = 0x4E;
     if (ztest == 0)
-        draw->zbuf1 = SCE_GS_SET_ZBUF(func_00102F78(psm, w, h), zpsm & 0xf, 1);
+        draw->zbuf1 = SCE_GS_SET_ZBUF(sceGszbufaddr(psm, w, h), zpsm & 0xf, 1);
     else
-        draw->zbuf1 = SCE_GS_SET_ZBUF(func_00102F78(psm, w, h), zpsm & 0xf, 0);
+        draw->zbuf1 = SCE_GS_SET_ZBUF(sceGszbufaddr(psm, w, h), zpsm & 0xf, 0);
     draw->xyoffset1addr = 0x18;
     draw->xyoffset1 = SCE_GS_SET_XYOFFSET(((u_long)2048 - (short)(w >> 1)) << 4, ((u_long)2048 - (short)(h >> 1)) << 4);
     draw->scissor1addr = 0x40;
@@ -120,5 +120,5 @@ int func_00103040(sceGsDrawEnv1 *draw, short psm, short w, short h, short ztest,
     __asm__ __volatile__("sync");
     return sizeof(sceGsDrawEnv1) / 16;
 }
-#undef func_00102F78 /* merge_units */
+#undef sceGszbufaddr /* merge_units */
 /* merge_units: end func_00103040 */

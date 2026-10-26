@@ -16,7 +16,7 @@
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-DEFINE_VTABLE_BASE_DTOR(func_0023BC60, D_004DC2F0, cMessage_dtor)
+DEFINE_VTABLE_BASE_DTOR(cNIShuttle_dtor, D_004DC2F0, cMessage_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0023BC60 */
 

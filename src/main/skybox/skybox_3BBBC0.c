@@ -11,15 +11,15 @@
 #define NULL 0
 #pragma mpwc_relax on
 int FileMan_Release(char *, int);                            
-int func_0036E4B0(char *, char *, int, int);                    
-int func_0037B2F0(char *, int, int);                       
+int cFileMan_ctor_charP_cFileIOP_bool(char *, char *, int, int);                    
+int XLib_RequestDeleteDmaData(char *, int, int);                       
 int Fstream_ReleaseNoCallback(int, char *, int);                       
 int Fstream_GetLoader();                                
 int operator_delete(char * );                          
 int sprintf(char *, char *, char * );                        
 extern char g_Video;
 
-char * func_003BBBC0(char * arg0, short arg1) {
+char * cTexture_dtor(char * arg0, short arg1) {
     int spD0[32];
     int sp30[40];
     int temp_v1;
@@ -29,11 +29,11 @@ char * func_003BBBC0(char * arg0, short arg1) {
         if (temp_v1 & 0x1000) {
             if (temp_v1 & 0x2000) {
                 sprintf(spD0, "%s.TDX", arg0);
-                func_0036E4B0(sp30, spD0, 0, 0);
+                cFileMan_ctor_charP_cFileIOP_bool(sp30, spD0, 0, 0);
                 Fstream_ReleaseNoCallback(Fstream_GetLoader(), sp30, 1);
                 FileMan_Release(sp30, -1);
             } else {
-                func_0037B2F0(&g_Video, F_(arg0, 0x44, int), -1);
+                XLib_RequestDeleteDmaData(&g_Video, F_(arg0, 0x44, int), -1);
             }
         }
         if (arg1 > 0) {
@@ -79,7 +79,7 @@ static inline void MemClear_3BB(void* d0, int n0) { int n = n0; void* dst = d0;
     }
 }
 #pragma opt_propagation off
-void* func_003BBC90(void* d)
+void* cTexture_ctor(void* d)
 {
     MemClear_3BB(d, 0x70);
     return d;

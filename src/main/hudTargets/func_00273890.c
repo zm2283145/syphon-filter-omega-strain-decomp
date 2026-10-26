@@ -19,12 +19,12 @@ public:
 extern "C" {
 int Mem_Alloc(...);
 int String_Dtor(...);
-int func_002731A0(...);
-int func_002731B0(...);
-int func_002731C0(...);
-int func_002731D0(...);
-int func_002731E0(...);
-int func_002731F0(...);
+int cLListIterator_cHudTargetsObserverPtr_ctor(...);
+int std_list_cHudTargetsObserverPtr_end(...);
+int std_list_cHudTargetsObserverPtr_generic_iterator_ctor(...);
+int std_list_cHudTargetInfoPtr_end_void_2(...);
+int cLListIterator_cHudTargetInfoPtr_ctor_listR(...);
+int std_list_cHudTargetInfoPtr_begin_void_2(...);
 int List_Begin(...);
 int String_AssignString(...);
 int IeElement_SetColour(...);
@@ -45,10 +45,10 @@ struct MRec { int id; char* icon0; char* icon1; int pad0C; int kind; Hnd h; };
 class OObj { public: int x; virtual void v0(); virtual void OnAdd(MRec* r); };
 static inline void HSet(Hnd* h, char* o, int& def) { int* p; h->obj = o; if (o) p = (int*)(o + 0xC); else { def = -1; p = &def; } h->id = *p; }
 static inline bool IsMapKind(MRec* r) { return r->kind == 1 || r->kind == 2; }
-static inline void beg0(It* o, char* l) { It r; func_002731F0(&r, l); func_002731E0(o, &r); }
-static inline void end0(It* o, char* l) { It r; func_002731D0(&r, l); func_002731E0(o, &r); }
-static inline void end1(It* o, char* l) { It r; func_002731B0(&r, l); func_002731A0(o, &r); }
-static inline void beg2(It* o, char* l) { It r; List_Begin(&r, l); func_002731C0(o, &r); }
+static inline void beg0(It* o, char* l) { It r; std_list_cHudTargetInfoPtr_begin_void_2(&r, l); cLListIterator_cHudTargetInfoPtr_ctor_listR(o, &r); }
+static inline void end0(It* o, char* l) { It r; std_list_cHudTargetInfoPtr_end_void_2(&r, l); cLListIterator_cHudTargetInfoPtr_ctor_listR(o, &r); }
+static inline void end1(It* o, char* l) { It r; std_list_cHudTargetsObserverPtr_end(&r, l); cLListIterator_cHudTargetsObserverPtr_ctor(o, &r); }
+static inline void beg2(It* o, char* l) { It r; List_Begin(&r, l); std_list_cHudTargetsObserverPtr_generic_iterator_ctor(o, &r); }
 static inline bool ne(It* a, It* b) { return a->p != b->p; }
 static inline void adv(It* a) { a->p = F_(a->p, 4, char*); }
 static inline MRec* deref(It* a) { return F_(a->p, 8, MRec*); }

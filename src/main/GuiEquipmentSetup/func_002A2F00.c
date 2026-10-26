@@ -87,13 +87,13 @@ extern unsigned char D_00582B88;
 extern int D_00582CF0;
 int Net_GetTalkerName(int a);
 void func_002A3A10(S_2A2F00* self);
-void func_0041C0F0(void* w, int a);
+void GuiTextWidget_SetDisableWrap(void* w, int a);
 void func_0041C0D0(void* w, int a);
 Pl_2A2F00* PlayerSlots_Get(int i);
 int Appearance_GetBodyKind(void* a);
-void func_00391020(void* skel, int snd);
+void cMan_AddDisguise(void* skel, int snd);
 void SoundRequest_Ctor(SoundRequest* req, int kind, void* name, int a, int b);
-void func_0020F190(EffectMsg* msg, SoundRequest* req, void* p);
+void cPlaySoundMsg_ctor_netPlaySoundMsgR(EffectMsg* msg, SoundRequest* req, void* p);
 void Event_Send(EffectMsg* msg, void* target, int flags);
 void FileMan_Release(void* part, int flags);
 void cMessage_dtor(void* msg, int flags);
@@ -106,7 +106,7 @@ void GuiTextWidget_SetText(void* w, char* s, int a);
 char* Loc_LookupText(char* key);
 void GuiWidget_SendEvent(void* self, void* w, int a, int b, int c);
 void Player_HandleLeftGame(Pl_2A2F00* p);
-void func_001B2D20(Pl_2A2F00* p);
+void cHuman_CheckForChangedWeapons(Pl_2A2F00* p);
 int sprintf(void*, const void*, ...);
 void DME_SendPlayGameMsg(void);
 Stack_2A2F00* Gui_GetScreenStack(void);
@@ -153,7 +153,7 @@ extern "C" void GuiEquipmentSetup_Update(S_2A2F00* self, float dt)
         }
         wName = FIND(name, D_004A7520);
         if (wName) {
-            func_0041C0F0(wName, 1);
+            GuiTextWidget_SetDisableWrap(wName, 1);
             func_0041C0D0(wName, 1);
         }
         wRank = FIND(rank, D_004A7520);
@@ -170,11 +170,11 @@ extern "C" void GuiEquipmentSetup_Update(S_2A2F00* self, float dt)
                 if (self->cc) {
                     int snd = g_AgentPartCache[Appearance_GetBodyKind(p->appearance)][k + 0x3E];
                     if (snd)
-                        func_00391020(p->skel, snd);
+                        cMan_AddDisguise(p->skel, snd);
                 }
                 if (k) {
                     SoundRequest_Ctor(&req, 4, D_0048BAA0[k], 0, 0);
-                    func_0020F190(&msg, &req, p);
+                    cPlaySoundMsg_ctor_netPlaySoundMsgR(&msg, &req, p);
                     msg.flag = 1;
                     Event_Send(&msg, g_Game, 0);
                     msg.vtbl = D_004DAE10;
@@ -257,7 +257,7 @@ extern "C" void GuiEquipmentSetup_Update(S_2A2F00* self, float dt)
                 D_00506500 = i;
             else
                 Player_HandleLeftGame(p);
-            func_001B2D20(p);
+            cHuman_CheckForChangedWeapons(p);
         } else {
             self->skel[i]->b2C3A = -1;
             wIcon->flags &= ~2;

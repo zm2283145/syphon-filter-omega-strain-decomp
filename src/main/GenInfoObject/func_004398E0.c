@@ -11,10 +11,10 @@ extern "C" {
 extern char D_005838B8[];
 extern unsigned char D_005721D0;
 LIt_98E0 List_Begin(void* list);
-void func_00438E10(LIt_98E0* r, const LIt_98E0& s);
-LIt_98E0 func_00438E00(void* list);
-void func_00438DF0(LIt_98E0* r, const LIt_98E0& s);
-void func_00439C40(void* list, NetOwnEnt** p);
+void std_list_tGenInfoPtr_generic_iterator_ctor(LIt_98E0* r, const LIt_98E0& s);
+LIt_98E0 std_list_tGenInfoPtr_end(void* list);
+void cLListIterator_tGenInfoPtr_ctor(LIt_98E0* r, const LIt_98E0& s);
+void std_list_tGenInfoPtr_push_back(void* list, NetOwnEnt** p);
 }
 static inline NetOwnEnt* NetOwn_Find2(NetOwnEnt* tbl, int key)
 {
@@ -27,7 +27,7 @@ static inline NetOwnEnt* NetOwn_Find2(NetOwnEnt* tbl, int key)
     return 0;
 }
 static inline int Nib_98E0(int o) { return o >= 0 ? o : 0xF; }
-extern "C" void func_004398E0(void* self, int* key, int owner)
+extern "C" void cGenInfoObject_Add(void* self, int* key, int owner)
 {
     int k = *key;
     NetOwnEnt* tbl = D_00583888;
@@ -39,13 +39,13 @@ extern "C" void func_004398E0(void* self, int* key, int owner)
             NetOwnEnt* p;
             LIt_98E0 it;
 LNode_98E0* n;
-            func_00438E10(&it, List_Begin(D_005838B8));
+            std_list_tGenInfoPtr_generic_iterator_ctor(&it, List_Begin(D_005838B8));
             n = it.node;
-            while (func_00438DF0(&end, func_00438E00(D_005838B8)), n != end.node) {
+            while (cLListIterator_tGenInfoPtr_ctor(&end, std_list_tGenInfoPtr_end(D_005838B8)), n != end.node) {
                 if (n->data->key == *key) break;
                 n = n->next;
             }
-            func_00438DF0(&end2, func_00438E00(D_005838B8));
+            cLListIterator_tGenInfoPtr_ctor(&end2, std_list_tGenInfoPtr_end(D_005838B8));
             if (n == end2.node) {
                 NetOwnEnt* nw;
                 {
@@ -55,8 +55,8 @@ LNode_98E0* n;
                 if (nw) { nw->key = *key; nw->lo = o; nw->hi = 0; }
                 NetOwnHdl* h;
                 p = nw;
-                func_00439C40(D_005838B8, &p);
-                func_002EB650(&h, D_00497578);
+                std_list_tGenInfoPtr_push_back(D_005838B8, &p);
+                NetGetObject(&h, D_00497578);
                 if (h->owner == NetLocalId())
                     func_00439390(NetLocalId(), D_00497578, -2);
             }

@@ -14,9 +14,9 @@ extern int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, void* d, int e);
 extern void FrontEnd_ClosePopup(void* ui, int p);
 extern void FrontEnd_LeaveOnline(void* ui, int a);
 extern void GuiStack_SwapScreens(int, S_46D60*, void*);
-extern int func_00451010(void* l, int id);
-extern void func_00346FB0(S_46D60* s, int x);
-extern void func_00450F30(void* l, int id, int ok);
+extern int SFOLobby_MessageGet(void* l, int id);
+extern void GuiNetMessages_MessageSelected(S_46D60* s, int x);
+extern void SFOLobby_MessageAck(void* l, int id, int ok);
 extern void LobbyArray_SetDirty(void* l, int a);
 extern int GuiScreen_HandleEvent(S_46D60* s, void* from, unsigned short ev, int kind, int data);
 int GuiNetMessages_HandleEvent(S_46D60* self, void* from, unsigned short ev, int kind, int data)
@@ -37,20 +37,20 @@ int GuiNetMessages_HandleEvent(S_46D60* self, void* from, unsigned short ev, int
         void* l = DME_GetLobby();
         if (l) {
             self->x98 = data;
-            func_00346FB0(self, func_00451010(l, self->x98));
+            GuiNetMessages_MessageSelected(self, SFOLobby_MessageGet(l, self->x98));
         }
         return 1;
     }
     if (ev == 2) {
         void* l = DME_GetLobby();
-        if (l && func_00451010(l, self->x98)) {
+        if (l && SFOLobby_MessageGet(l, self->x98)) {
             if (from == self->x8C || from == self->x94) {
-                func_00450F30(l, self->x98, !(self->x90->flags & 2));
+                SFOLobby_MessageAck(l, self->x98, !(self->x90->flags & 2));
                 LobbyArray_SetDirty((char*)l + 0x1C, 1);
                 return 1;
             }
             if (from == self->x90) {
-                func_00450F30(l, self->x98, 1);
+                SFOLobby_MessageAck(l, self->x98, 1);
                 LobbyArray_SetDirty((char*)l + 0x1C, 1);
                 return 1;
             }

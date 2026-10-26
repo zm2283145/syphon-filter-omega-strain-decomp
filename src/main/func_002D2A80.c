@@ -6,14 +6,14 @@
 
 #include "types.h"
 
-int func_002D2A80(void) {
+int cNetNPC_GetControllerType(void) {
     return 2;
 }
 
-int func_002D2A90(void) {
+int cNetNPC_IsPlayer(void) {
     return 0;
 }
 
-int func_002D2AA0(void) {
+int cNetNPC_IsNPC(void) {
     return 0;
 }

@@ -5,13 +5,13 @@
  */
 
 /* merge_units: begin func_002F7FB0 */
-extern void func_00313A20(char *);
+extern void SHAInit(char *);
 extern void Sha1_Update(char *, int, int);
 extern void Sha1_Final(char *, int, int);
 void Sha1_Digest(int a, int b, int c, int d)
 {
     char ctx[0x60];
-    func_00313A20(ctx);
+    SHAInit(ctx);
     Sha1_Update(ctx, a, b);
     Sha1_Final(ctx, c, d);
 }
@@ -31,7 +31,7 @@ extern void Sha1_Final(char *, char *, char *);
 void Sha1_Digest2(char *a, char *b, char *c, char *d, char *e, char *f)
 {
     char ctx[0x60];
-    func_00313A20(ctx);
+    SHAInit(ctx);
     if (a && b) Sha1_Update(ctx, a, b);
     Sha1_Update(ctx, c, d);
     Sha1_Final(ctx, e, f);

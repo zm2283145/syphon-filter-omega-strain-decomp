@@ -6,7 +6,7 @@ typedef struct SubVec4 {
     float x, y, z, w;
 } SubVec4;
 
-/* Subtitle text/layout block reset by func_00412050 (at least 0xB0 bytes). */
+/* Subtitle text/layout block reset by cMovieSubtitles_ResetText (at least 0xB0 bytes). */
 typedef struct SubtitleBlock {
     char pad00[0x50];
     char unk50[0x60 - 0x50];    /* 0x50 */

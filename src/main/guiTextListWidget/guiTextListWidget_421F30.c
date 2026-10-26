@@ -16,7 +16,7 @@
 #pragma cplusplus on
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_DIRECT_BASE_DTOR(func_00421F30, func_00423000)
+DEFINE_DIRECT_BASE_DTOR(std_vector_imp_Item_dtor, std_vector_deleter_Item_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00421F30 */
 
@@ -26,7 +26,7 @@ typedef struct { char pad[0x14]; } G4_E14;
 typedef struct { int x; int size; G4_E14* data; } G4_Vec;
 extern void String_Dtor(G4_E14* e, int f);
 static inline void destroy_(G4_E14* p) { if (p) String_Dtor(p, 0); }
-void func_00421F90(G4_Vec* v)
+void std_vector_deleter_Item_clear(G4_Vec* v)
 {
     G4_E14* b = v->data;
     G4_E14* e = b + v->size;

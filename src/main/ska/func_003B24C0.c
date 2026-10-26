@@ -5,11 +5,11 @@
 
 #include "ska_types.h"
 
-void* func_003B24C0(void* self) {
+void* cQuaternion_opAdd_void(void* self) {
     return self;
 }
 
-int func_003B24D0(char* self) {
+int cSkaAnimDataFrame_ConstIterator_Quaternion(char* self) {
     return *(int*)(self + 0);
 }
 
@@ -18,7 +18,7 @@ void AnimRoot_AccumAngular(SkaAnimRoot* root, float rate, float dt) {
     root->angular = root->angular + rate * dt;
 }
 
-int func_003B2500(char* self) {
+int cSkaAnimDataFrame_ConstIterator_Scalar(char* self) {
     return *(int*)(self + 0);
 }
 
@@ -33,6 +33,6 @@ void SkelBone_GetLocalOffset(SkaVec4* out, SkaPoseSrc* src) {
     out->w = 0;
 }
 
-int func_003B2530(SkaAnimRoot* root) {
+int cBone_Properties(SkaAnimRoot* root) {
     return root->unkC0;
 }

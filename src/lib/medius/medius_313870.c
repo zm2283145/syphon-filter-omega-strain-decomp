@@ -7,7 +7,7 @@
 /* merge_units: begin func_00313870 */
 typedef struct { int n; char pad[0xFC]; } G7Slot;
 typedef struct { int a; int b; int head; int c; int d; G7Slot slot[64]; } G7Ring;
-int func_00313870(G7Ring* r)
+int GetAvailableBytes(G7Ring* r)
 {
     int sum = 0;
     int ret = 0;
@@ -45,7 +45,7 @@ typedef struct Ring {
     Entry e[64];
 } Ring;
 
-int func_003138C0(Ring* r, void** out, char* dst, u32 len)
+int GetSequenceData(Ring* r, void** out, char* dst, u32 len)
 {
     int i, start;
     int total = 0;
@@ -89,10 +89,10 @@ int func_003138C0(Ring* r, void** out, char* dst, u32 len)
 /* merge_units: begin func_00313A20 */
 typedef struct { int w[21]; int tail[3]; } Blk3A20;
 static Blk3A20 D_004913D0 = { { 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476, 0xC3D2E1F0 }, { 0, 0, 0 } };
-extern void func_00313D90(int *p);
-void func_00313A20(Blk3A20 *p)
+extern void endianTest(int *p);
+void SHAInit(Blk3A20 *p)
 {
     *p = D_004913D0;
-    func_00313D90(p->tail);
+    endianTest(p->tail);
 }
 /* merge_units: end func_00313A20 */

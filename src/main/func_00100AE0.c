@@ -3,5 +3,5 @@
 
 /* Call the installed hook. */
 #pragma tailcall off
-DEFINE_CALL_GLOBAL_HOOK(func_00100AE0)
+DEFINE_CALL_GLOBAL_HOOK(std_duhandler)
 #pragma tailcall reset

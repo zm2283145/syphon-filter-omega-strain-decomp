@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose04_types.h"
 
-Unk3CC1D0* func_003CC1D0(Unk3CC1D0* self) {
+Unk3CC1D0* cDB_ctor(Unk3CC1D0* self) {
     self->unk08 = 0;
     self->unk04 = 0;
     self->unk00 = 0;

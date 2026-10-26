@@ -253,9 +253,9 @@ DEFINE_OBJ_LIST_DTOR(ReceiverList_Dtor_3D0A90)
 /* merge_units: begin func_003D0B10 */
 #pragma push /* merge_units */
 typedef struct { int m0; int m4; int m8; } T0B10;
-extern void func_003D10B0(int* out, T0B10* self, int* first, int* last);
+extern void std_list_deleter_cText_erase(int* out, T0B10* self, int* first, int* last);
 extern void operator_delete(void* p);
-T0B10* func_003D0B10(T0B10* self, short del)
+T0B10* std_list_cText_dtor(T0B10* self, short del)
 {
     if (self) {
         if (self) {
@@ -265,7 +265,7 @@ T0B10* func_003D0B10(T0B10* self, short del)
                 int last;
                 last = (int)&self->m4;
                 first = self->m8;
-                func_003D10B0(&r, self, &first, &last);
+                std_list_deleter_cText_erase(&r, self, &first, &last);
             }
         }
         if (del > 0)

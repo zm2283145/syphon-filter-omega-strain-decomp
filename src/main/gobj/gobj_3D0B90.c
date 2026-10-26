@@ -8,7 +8,7 @@
 #pragma push /* merge_units */
 #include "types.h"
 extern void ReceiverList_Dtor_3D0A90(void* self, short del);
-extern void func_003D0B10(void* self, short del);
+extern void std_list_cText_dtor(void* self, short del);
 extern void operator_delete(void* p);
 void* TextManager_Destroy(void* self, short del)
 {
@@ -19,7 +19,7 @@ void* TextManager_Destroy(void* self, short del)
             ReceiverList_Dtor_3D0A90(a, 0);
         b = (char*)self + 4;
         if (b)
-            func_003D0B10(b, 0);
+            std_list_cText_dtor(b, 0);
         if (del > 0)
             operator_delete(self);
     }
@@ -47,16 +47,16 @@ typedef struct {
     char vec[0xC];
     unsigned char b1C;
 } Obj3D;
-extern Node3D* func_003D0DC0(void* l);
-extern Word_003D0C10* func_003D0DB0(Word_003D0C10* w, void* v);
-extern Word_003D0C10* func_003D0DA0(Word_003D0C10* w, void* v);
-extern void func_003D0D90(Word_003D0C10* w, void* v);
-extern Word_003D0C10* func_003D0D80(Word_003D0C10* d, Word_003D0C10* s);
-extern void func_003D0D70(Word_003D0C10* w, void* v);
+extern Node3D* std_list_deleter_cText_tail(void* l);
+extern Word_003D0C10* std_list_deleter_cText_generic_iterator_ctor_nodeP(Word_003D0C10* w, void* v);
+extern Word_003D0C10* std_list_deleter_cText_generic_iterator_ctor_nodebaseP(Word_003D0C10* w, void* v);
+extern void std_list_cTextAreaPtr_begin(Word_003D0C10* w, void* v);
+extern Word_003D0C10* cLListIterator_cTextAreaPtr_ctor(Word_003D0C10* d, Word_003D0C10* s);
+extern void std_list_cTextAreaPtr_end(Word_003D0C10* w, void* v);
 extern int String_CStr_189540(void* p);
 extern void Font_DrawString(int a0, int a1, void* a2, float x, float y, float z, float p, float q, float r);
 extern void TextObj_Draw(int c);
-extern void func_003D10B0(Word_003D0C10* out, int* size, Word_003D0C10* first, Word_003D0C10* last);
+extern void std_list_deleter_cText_erase(Word_003D0C10* out, int* size, Word_003D0C10* first, Word_003D0C10* last);
 static inline int ne3D(Node3D* n, Word_003D0C10* w) { return n != (Node3D*)w->value; }
 void TextManager_DrawImmediate(Obj3D* o)
 {
@@ -66,20 +66,20 @@ void TextManager_DrawImmediate(Obj3D* o)
     Word_003D0C10* pf;
     Node3D* m;
     if (o->b1C) {
-        func_003D0DB0(&it, func_003D0DC0(&o->size)->next);
+        std_list_deleter_cText_generic_iterator_ctor_nodeP(&it, std_list_deleter_cText_tail(&o->size)->next);
         n = (Node3D*)it.value;
-        func_003D0DA0(&e, func_003D0DC0(&o->size));
+        std_list_deleter_cText_generic_iterator_ctor_nodebaseP(&e, std_list_deleter_cText_tail(&o->size));
         end.value = e.value;
         pe = &end;
         for (; ne3D(n, pe); n = n->next) {
             int* s = (int*)((char*)n + 0x10);
             Font_DrawString(s[3], String_CStr_189540(s), s + 4, *(float*)(s + 8), *(float*)(s + 9), 0.001f, 0.0f, 0.0f, 0.0f);
         }
-        func_003D0D90(&a, o->vec);
-        func_003D0D80(&b, &a);
+        std_list_cTextAreaPtr_begin(&a, o->vec);
+        cLListIterator_cTextAreaPtr_ctor(&b, &a);
         m = (Node3D*)b.value;
-        func_003D0D70(&c, o->vec);
-        func_003D0D80(&d, &c);
+        std_list_cTextAreaPtr_end(&c, o->vec);
+        cLListIterator_cTextAreaPtr_ctor(&d, &c);
         end2.value = d.value;
         pf = &end2;
         for (; ne3D(m, pf); m = m->next)
@@ -87,7 +87,7 @@ void TextManager_DrawImmediate(Obj3D* o)
     }
     last.value = (int)&o->prev;
     first.value = (int)o->next;
-    func_003D10B0(&out, &o->size, &first, &last);
+    std_list_deleter_cText_erase(&out, &o->size, &first, &last);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003D0C10 */

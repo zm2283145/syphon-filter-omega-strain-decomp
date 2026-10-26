@@ -16,7 +16,7 @@
 #include "loose04_types.h"
 
 extern L4Iter* List_InsertBefore(L4Iter* out, void* list, L4Iter* pos, int value);
-extern int func_002CCE50(L4ScalarCollection* coll, GuiWidget** value);
+extern int std_list_GuiWidgetPtr_push_back_GuiWidgetPR(L4ScalarCollection* coll, GuiWidget** value);
 
 /* Adds child to the widget: sets its parent and appends it to the child collection. */
 int GuiWidget_AddChild(GuiWidget* self, GuiWidget* child) {
@@ -24,7 +24,7 @@ int GuiWidget_AddChild(GuiWidget* self, GuiWidget* child) {
 
     loc[0] = child;
     loc[0]->parent = self;
-    return func_002CCE50(&self->children, loc);
+    return std_list_GuiWidgetPtr_push_back_GuiWidgetPR(&self->children, loc);
 }
 
 /* push_back on a list whose sentinel node is at +4. */
@@ -45,9 +45,9 @@ L4Iter* func_0041DD90(void* list, int value) {
 
 extern "C" {
 void List_Begin(ChildIterator* result, ChildList* list);
-void func_0028C0B0(ChildIterator* result, const ChildIterator* source);
-void func_0028C0A0(ChildIterator* result, ChildList* list);
-void func_0028C090(ChildIterator* result, const ChildIterator* source);
+void std_list_GuiWidgetPtr_generic_iterator_ctor(ChildIterator* result, const ChildIterator* source);
+void std_list_GuiWidgetPtr_end(ChildIterator* result, ChildList* list);
+void cLListIterator_GuiWidgetPtr_ctor_listR(ChildIterator* result, const ChildIterator* source);
 }
 
 static inline unsigned char notify(TraversalWidget* receiver, TraversalWidget* sender,
@@ -59,7 +59,7 @@ static inline unsigned char notify(TraversalWidget* receiver, TraversalWidget* s
 }
 
 /* Dispatch to siblings in list order, stopping at the first handler that accepts. */
-extern "C" int func_0041DDC0(TraversalWidget* self, int message, int first, int second)
+extern "C" int GuiWidget_SendSiblingMessage(TraversalWidget* self, int message, int first, int second)
 {
     ChildIterator end;
     ChildIterator begin;
@@ -69,17 +69,17 @@ extern "C" int func_0041DDC0(TraversalWidget* self, int message, int first, int 
     if (!parent)
         return 0;
     List_Begin(&rawBegin, &parent->children);
-    func_0028C0B0(&begin, &rawBegin);
+    std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
     ChildList* children = &parent->children;
     ChildNode* node = begin.node;
-    func_0028C0A0(&rawEnd, children);
-    func_0028C090(&end, &rawEnd);
+    std_list_GuiWidgetPtr_end(&rawEnd, children);
+    cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     while (node != end.node) {
         if (node->widget != self && notify(node->widget, self, message, first, second))
             return 1;
         node = node->next;
-        func_0028C0A0(&rawEnd, children);
-        func_0028C090(&end, &rawEnd);
+        std_list_GuiWidgetPtr_end(&rawEnd, children);
+        cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     }
     return 0;
 }
@@ -92,18 +92,18 @@ extern "C" int GuiWidget_BroadcastEvent(TraversalWidget* self, int message, int 
     ChildIterator rawBegin;
     ChildIterator rawEnd;
     List_Begin(&rawBegin, &self->children);
-    func_0028C0B0(&begin, &rawBegin);
+    std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
     ChildNode* node = begin.node;
-    func_0028C0A0(&rawEnd, &self->children);
-    func_0028C090(&end, &rawEnd);
+    std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+    cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     while (node != end.node) {
         if (notify(node->widget, self, message, first, second))
             return 1;
         if (GuiWidget_BroadcastEvent(node->widget, message, first, second))
             return 1;
         node = node->next;
-        func_0028C0A0(&rawEnd, &self->children);
-        func_0028C090(&end, &rawEnd);
+        std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+        cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     }
     return 0;
 }
@@ -180,7 +180,7 @@ static inline void bubble_message(TraversalWidget* self, int message)
 }
 
 /* Change the focus-enabled flag while maintaining the manager's selection. */
-extern "C" void func_0041E130(TraversalWidget* self, int enabled)
+extern "C" void GuiWidget_Activate(TraversalWidget* self, int enabled)
 {
     if ((unsigned char)enabled != ((self->flags & 4) != 0)) {
         if (enabled) {
@@ -227,15 +227,15 @@ extern "C" void GuiWidget_Update(TraversalWidget* self, float elapsed)
     ChildIterator rawBegin;
     ChildIterator rawEnd;
     List_Begin(&rawBegin, &self->children);
-    func_0028C0B0(&begin, &rawBegin);
+    std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
     ChildNode* node = begin.node;
-    func_0028C0A0(&rawEnd, &self->children);
-    func_0028C090(&end, &rawEnd);
+    std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+    cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     while (node != end.node) {
         node->widget->handler->update(elapsed);
         node = node->next;
-        func_0028C0A0(&rawEnd, &self->children);
-        func_0028C090(&end, &rawEnd);
+        std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+        cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     }
     GuiWidget_CheckSleep(self);
 }
@@ -248,17 +248,17 @@ extern "C" void GuiWidget_Draw(TraversalWidget* self)
     ChildIterator rawBegin;
     ChildIterator rawEnd;
     List_Begin(&rawBegin, &self->children);
-    func_0028C0B0(&begin, &rawBegin);
+    std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
     ChildNode* node = begin.node;
-    func_0028C0A0(&rawEnd, &self->children);
-    func_0028C090(&end, &rawEnd);
+    std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+    cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     while (node != end.node) {
         TraversalWidget* child = node->widget;
         if (child->flags & 2)
             child->handler->draw();
         node = node->next;
-        func_0028C0A0(&rawEnd, &self->children);
-        func_0028C090(&end, &rawEnd);
+        std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+        cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     }
     if ((self->flags & 0x100) && Gui_GetScreenStack()->selected == self)
         GuiWidget_DrawFocusHighlight(self, &(*(Vec4*)D_004BF3C0));

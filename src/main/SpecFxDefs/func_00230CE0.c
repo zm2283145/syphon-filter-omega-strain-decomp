@@ -10,7 +10,7 @@ extern signed char* D_005061D0;   /* network message byte cursor */
 extern void* GObj_IdentityB(void* obj);
 extern int Global_Shatter(void* a, void* b, int c);
 extern int Global_SpawnParticle(int particle, int target, int c);
-extern void func_00282020(int handle);    /* writes an object handle to the stream */
+extern void cNetMsg_PutGOBJ(int handle);    /* writes an object handle to the stream */
 extern int NetStream_ReadObject(int* handle);    /* reads an object handle from the stream */
 
 /* Reads the message from the network stream and spawns the particle. */
@@ -28,7 +28,7 @@ int cNetSpawnParticleMsg_Receive(cNetSpawnParticleMsg* msg) {
 
 /* Writes the message to the network stream. */
 void cNetSpawnParticleMsg_v04(cNetSpawnParticleMsg* msg) {
-    func_00282020(msg->target);
+    cNetMsg_PutGOBJ(msg->target);
     *D_005061D0 = msg->particle;
     D_005061D0++;
 }

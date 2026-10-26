@@ -6,16 +6,16 @@ struct RingE960 {
 };
 struct DqItE960 { RingE960 ring; char* elem; char* bend; };
 struct DqE960 { int capacity; int count; int size; int** data; unsigned int start; };
-extern "C" void func_003979B0(RingE960* out, DqE960* arr);
-extern "C" RingE960* func_00397980(RingE960* d, RingE960* s);
-extern "C" void func_00397840(DqItE960* out, DqE960* dq, int n) {
+extern "C" void _cdeque_deleter_common_int_begin(RingE960* out, DqE960* arr);
+extern "C" RingE960* _cdeque_imp_cSkaSystem_RequestPtr_1_generic_iterator_ctor(RingE960* d, RingE960* s);
+extern "C" void std_deque_deleter_common_cSkaSystem_Request_make_iterator(DqItE960* out, DqE960* dq, int n) {
     unsigned int idx = n + dq->start;
     RingE960 q;
     RingE960 it;
     RingE960 s;
     char* blk;
-    func_003979B0(&s, dq);
-    func_00397980(&q, &s);
+    _cdeque_deleter_common_int_begin(&s, dq);
+    _cdeque_imp_cSkaSystem_RequestPtr_1_generic_iterator_ctor(&q, &s);
     it = q;
     RingE960* rp = &it;
     {

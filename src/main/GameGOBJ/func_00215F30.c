@@ -4,7 +4,7 @@
 
 #include "gobj_types.h"
 
-Rel* func_00215F30(Rel* r) {
+Rel* std_vector_cGameGOBJPtr_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

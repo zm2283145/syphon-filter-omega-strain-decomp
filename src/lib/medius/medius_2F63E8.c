@@ -7,25 +7,25 @@
 /* merge_units: begin func_002F63E8 */
 #include "types.h"
 
-extern int func_002F7C58(float);
+extern int rt_comm_platform_get_local_ip(float);
 
-int func_002F63E8(float f12) {
-    return func_002F7C58(f12);
+int rt_comm_get_local_ip(float f12) {
+    return rt_comm_platform_get_local_ip(f12);
 }
 /* merge_units: end func_002F63E8 */
 
 /* merge_units: begin func_002F6400 */
-extern int func_002F7C70(float);
+extern int rt_comm_platform_get_broadcast_ip(float);
 
-int func_002F6400(float f12) {
-    return func_002F7C70(f12);
+int rt_comm_get_broadcast_ip(float f12) {
+    return rt_comm_platform_get_broadcast_ip(f12);
 }
 /* merge_units: end func_002F6400 */
 
 /* merge_units: begin func_002F6418 */
-extern int func_002F7C88(float);
+extern int rt_comm_platform_get_host_by_name(float);
 
-int func_002F6418(float f12) {
-    return func_002F7C88(f12);
+int rt_comm_get_host_by_name(float f12) {
+    return rt_comm_platform_get_host_by_name(f12);
 }
 /* merge_units: end func_002F6418 */

@@ -5,7 +5,7 @@
 extern char *g_LosCheckService;
 extern signed char D_004EA0C8;
 
-void func_004D2680(void) {
+void StaticInit_decals(void) {
     if (D_004EA0C8 == 0) {
         g_LosCheckService = "LOS Manager";
         D_004EA0C8 = 1;

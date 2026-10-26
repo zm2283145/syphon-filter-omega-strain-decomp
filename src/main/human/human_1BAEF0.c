@@ -38,7 +38,7 @@ static inline void merge_flush_func_001BAEF0(void) {}
 #pragma cplusplus on
 
 /* Find an int key in a tree; end() when absent. */
-DEFINE_INT_TREE_FIND(func_001BB080)
+DEFINE_INT_TREE_FIND(std_tree_pair_int_value_compare_find_intR)
 #pragma pop /* merge_units */
 /* merge_units: end func_001BB080 */
 
@@ -47,6 +47,6 @@ DEFINE_INT_TREE_FIND(func_001BB080)
 #pragma cplusplus on
 
 /* Find a key in a tree; end() when absent. */
-DEFINE_TREE_FIND(func_001BB100, func_0013C310)
+DEFINE_TREE_FIND(std_tree_pair_cString_value_compare_find_cStringR_2, std_basic_string_char_char_traits_char_compare_basicstringR)
 #pragma pop /* merge_units */
 /* merge_units: end func_001BB100 */

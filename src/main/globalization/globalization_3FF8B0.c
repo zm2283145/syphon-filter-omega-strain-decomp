@@ -18,7 +18,7 @@ Obj003FF8B0** NetMap_Lookup(int);
 }
 #pragma push
 #pragma opt_propagation off
-extern "C" int func_003FF8B0(int a0, int a1, int a2, Pk003FF8B0* arg) {
+extern "C" int cEnableMsg_EnableCallback(int a0, int a1, int a2, Pk003FF8B0* arg) {
     NetRecvGuard g;
     if (D_005721D0) {
         Pk003FF8B0* p = arg;
@@ -35,7 +35,7 @@ extern "C" int func_003FF8B0(int a0, int a1, int a2, Pk003FF8B0* arg) {
 #pragma push /* merge_units */
 extern unsigned char g_IsMultiplayer;
 extern void Transport_Send(int a, int b, int c, int d);
-void func_003FF930(int a, int b)
+void cEnableMsg_SendEnabled(int a, int b)
 {
     if (g_IsMultiplayer)
         Transport_Send(b, a, -1, -1);
@@ -248,7 +248,7 @@ void Skm_ParseRecord(B090* b, char* buf, int size) {
 
 #include "loose04_types.h"
 
-void func_00400140(Unk400140* self, int a, int b, int c, int d) {
+void Parts_PartInit(Unk400140* self, int a, int b, int c, int d) {
     self->unk00 = 0;
     self->unk04 = a;
     self->unk06 = c;

@@ -8,6 +8,6 @@
 #include "taser_types.h"
 
 /* &v->data[i] */
-TaserEntry* func_00264360(TaserVec* v, int i) {
+TaserEntry* std_vector_TaserPoint_opIndex(TaserVec* v, int i) {
     return &v->data[i];
 }

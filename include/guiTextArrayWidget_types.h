@@ -26,7 +26,7 @@ typedef struct TextArrayRow {
     unsigned char owned;
 } TextArrayRow;
 
-/* Vector-like member at +0xB0 (zeroed by func_00427000) plus a flag byte. */
+/* Vector-like member at +0xB0 (zeroed by std_vector_cArray_tTextElementPtr_ctor) plus a flag byte. */
 typedef struct TextArrayStore {
     int unk00;
     int unk04;
@@ -64,11 +64,11 @@ typedef struct guiTextArrayWidget {
 } guiTextArrayWidget;
 
 #ifdef __cplusplus
-extern "C" void func_00329930(void* destination, const void* source);
+extern "C" void cString_opAssign(void* destination, const void* source);
 
 static inline void copy_text_array_cell(TextArrayCell* destination, const TextArrayCell* source)
 {
-    func_00329930(destination->string, source->string);
+    cString_opAssign(destination->string, source->string);
     destination->flags = source->flags;
     destination->attribute = *(const signed char*)&source->attribute;
     destination->text = source->text;

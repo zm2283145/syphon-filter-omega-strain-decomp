@@ -6,7 +6,7 @@
 
 /* merge_units: begin func_0031A960 */
 #include "types.h"
-void func_0031A960(float* in, float* out, int n, float x)
+void BandExpand(float* in, float* out, int n, float x)
 {
     float f = 1.0f;
     int i;
@@ -22,7 +22,7 @@ extern const float D_004E1BB8;
 
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
-void func_0031A9A0(float *x, float *y, int n, float *o1, float *o2, int *cnt, int max)
+void NellySquareLawPeaks(float *x, float *y, int n, float *o1, float *o2, int *cnt, int max)
 {
     int i, j, k, m;
 

@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_0032E130(void) {
+void gsmInit(void) {
 
 }

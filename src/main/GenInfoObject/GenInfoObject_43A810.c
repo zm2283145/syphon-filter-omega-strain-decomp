@@ -14,15 +14,15 @@ extern unsigned char D_00583890;
 extern int D_005721A8;
 extern unsigned char g_IsMultiplayer;
 extern int D_00494178;
-extern int func_002EB650(NetSessionEntry** entry, void* key);
+extern int NetGetObject(NetSessionEntry** entry, void* key);
 extern int NetGame_InitLocalSlot(int* id, int session);
-extern int func_002EC460(void* key);
+extern int NetReleaseObjectPrivateOwnership(void* key);
 
 /* Process a pending session request only when its peer ID matches. */
-void func_0043A810(void)
+void cGenInfoObject_ReleasePrivate(void)
 {
     NetSessionEntry* entry;
-    func_002EB650(&entry, D_00497578);
+    NetGetObject(&entry, D_00497578);
     if (D_00583890) {
         int session = D_005721A8;
         int peer;
@@ -34,7 +34,7 @@ void func_0043A810(void)
             peer = 0;
         }
         if (entry->id == peer)
-            func_002EC460(D_00497578);
+            NetReleaseObjectPrivateOwnership(D_00497578);
     }
     D_00583890 = 0;
 }
@@ -52,7 +52,7 @@ extern int D_00583900;
 extern unsigned char D_005838A0[4];
 
 extern unsigned int Net_GetClock(int synchronized);
-extern int func_002EC3C8(void* key);
+extern int NetRequestObjectPrivateOwnership(void* key);
 extern void func_00439390(int peer, void* key, int event);
 
 static inline int current_peer(void)
@@ -75,10 +75,10 @@ void func_0043A8B0(void)
             D_005838A0[2] || D_005838A0[3]) {
             NetSessionEntry* entry;
             int peer;
-            func_002EB650(&entry, D_00497578);
+            NetGetObject(&entry, D_00497578);
             peer = current_peer();
             if (entry->id != peer) {
-                func_002EC3C8(D_00497578);
+                NetRequestObjectPrivateOwnership(D_00497578);
             } else {
                 peer = current_peer();
                 func_00439390(peer, D_00497578, -2);

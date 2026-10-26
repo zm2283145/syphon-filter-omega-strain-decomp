@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-int func_003A96A0(char* self) {
+int cArray_cBone_Size(char* self) {
     return *(int*)(self + 4);
 }
 
-void* func_003A96B0(char* self) {
+void* cSkeleton_GetBoneList(char* self) {
     return self + 24;
 }

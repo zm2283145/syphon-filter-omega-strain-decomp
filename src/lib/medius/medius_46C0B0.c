@@ -16,7 +16,7 @@ int D_00497DF0 = 0;
 extern int D_005988E0;
 extern int Medius_TerminateString(P *, int);
 extern int Net_SendLocked(int, int, int, int, int, int, P *);
-int func_0046C0B0(P *p, int b, int c)
+int MediusGetUniverse_ExtraInfo(P *p, int b, int c)
 {
     Medius_TerminateString(p, 0x15);
     if (D_00497CC0 != 1) return -0xF;
@@ -44,7 +44,7 @@ extern int Net_SendLocked(int, int, int, int, int, int, void *);
 #endif /* merge_units */
 #define Net_SendLocked(a0, a1, a2, a3, a4, a5, a6) (Net_SendLocked((a0), (a1), (a2), (a3), (a4), (a5), (P *)(a6))) /* merge_units */
 
-int func_0046C170(char *a, int b)
+int MediusGetBuddyList_ExtraInfo(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     if (D_00497CC0 != 1) return -0xF;
@@ -69,7 +69,7 @@ extern int Net_SendLocked(int, int, int, int, int, int, void *);
 #endif /* merge_units */
 #define Net_SendLocked(a0, a1, a2, a3, a4, a5, a6) (Net_SendLocked((a0), (a1), (a2), (a3), (a4), (a5), (P *)(a6))) /* merge_units */
 
-int func_0046C200(char *a, int b)
+int MediusGetTotalRankings(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     if (D_00497CC0 != 1) return -0xF;
@@ -94,7 +94,7 @@ extern int Net_SendLocked(int, int, int, int, int, int, void *);
 #endif /* merge_units */
 #define Net_SendLocked(a0, a1, a2, a3, a4, a5, a6) (Net_SendLocked((a0), (a1), (a2), (a3), (a4), (a5), (P *)(a6))) /* merge_units */
 
-int func_0046C290(char *a, int b)
+int MediusGetLobbyPlayerNames_ExtraInfo(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     if (D_00497CC0 != 1) return -0xF;
@@ -119,7 +119,7 @@ extern int Net_SendLocked(int, int, int, int, int, int, void *);
 #endif /* merge_units */
 #define Net_SendLocked(a0, a1, a2, a3, a4, a5, a6) (Net_SendLocked((a0), (a1), (a2), (a3), (a4), (a5), (P *)(a6))) /* merge_units */
 
-int func_0046C320(char *a, int b)
+int MediusGetGames_ExtraInfo(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     if (D_00497CC0 != 1) return -0xF;
@@ -144,7 +144,7 @@ extern int Net_SendLocked(int, int, int, int, int, int, void *);
 #endif /* merge_units */
 #define Net_SendLocked(a0, a1, a2, a3, a4, a5, a6) (Net_SendLocked((a0), (a1), (a2), (a3), (a4), (a5), (P *)(a6))) /* merge_units */
 
-int func_0046C3B0(char *a, int b)
+int MediusGetChannels_ExtraInfo(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     if (D_00497CC0 != 1) return -0xF;
@@ -169,7 +169,7 @@ extern int Net_SendLocked(int, int, int, int, int, int, void *);
 #endif /* merge_units */
 #define Net_SendLocked(a0, a1, a2, a3, a4, a5, a6) (Net_SendLocked((a0), (a1), (a2), (a3), (a4), (a5), (P *)(a6))) /* merge_units */
 
-int func_0046C440(char *a, int b)
+int MediusLadderList_ExtraInfo(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     if (D_00497CC0 != 1) return -0xF;
@@ -194,7 +194,7 @@ extern int Net_SendLocked(int, int, int, int, int, int, void *);
 #endif /* merge_units */
 #define Net_SendLocked(a0, a1, a2, a3, a4, a5, a6) (Net_SendLocked((a0), (a1), (a2), (a3), (a4), (a5), (P *)(a6))) /* merge_units */
 
-int func_0046C4D0(char *a, int b)
+int MediusLadderPosition_ExtraInfo(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     if (D_00497CC0 != 1) return -0xF;
@@ -219,7 +219,7 @@ extern int Net_SendLocked(int, int, int, int, int, int, void *);
 #endif /* merge_units */
 #define Net_SendLocked(a0, a1, a2, a3, a4, a5, a6) (Net_SendLocked((a0), (a1), (a2), (a3), (a4), (a5), (P *)(a6))) /* merge_units */
 
-int func_0046C560(char *a, int b)
+int MediusUpdateLadderStats(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     if (D_00497CC0 != 1) return -0xF;

@@ -14,16 +14,16 @@
 #include "types.h"
 #include "texman_types.h"
 
-TexListIter* func_00380250(TexListIter* it, TexListNode* node) {
+TexListIter* std_list_deleter_int_generic_iterator_ctor_nodebaseP(TexListIter* it, TexListNode* node) {
     it->node = node;
     return it;
 }
 
-void* func_00380260(char* self) {
+void* std_list_deleter_int_tail(char* self) {
     return self + 4;
 }
 
-void* func_00380270(void* self) {
+void* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_10(void* self) {
     return self;
 }
 #pragma pop /* merge_units */
@@ -34,12 +34,12 @@ void* func_00380270(void* self) {
 #pragma cplusplus on
 #include "alloc_guard.h"
 extern "C" void Mem_Free(int pool, void* allocation, char* file, int line);
-extern "C" void func_003BBBC0(void* p, int flags);
+extern "C" void cTexture_dtor(void* p, int flags);
 extern "C" void Tex_DestroyRecord(void* allocation, int pool, int destroy, char* file, int line)
 {
     AllocGuard guard;
     if (destroy)
-        func_003BBBC0(allocation, -1);
+        cTexture_dtor(allocation, -1);
     Mem_Free(pool, allocation, file, line);
 }
 #pragma pop /* merge_units */
@@ -53,7 +53,7 @@ extern "C" void Tex_DestroyRecord(void* allocation, int pool, int destroy, char*
  */
 
 
-int func_00380360(TexEntry* e) {
+int cTexture_GetRefCount(TexEntry* e) {
     return e->refCount;
 }
 #pragma pop /* merge_units */
@@ -65,7 +65,7 @@ int Tdx_Relocate(void* tdx, int data, unsigned int* fl); /* gsynth: defined belo
 /* Read a TDX resource from a stream and relocate it. */
 int FileMan_GetSize(void* stream);
 void FileMan_LoadMemberSync(void* stream, int* out, int size);
-void func_0036DEC0(void* stream);
+void cFileMan_Close(void* stream);
 #if 0 /* merge_units */
 int Tdx_Relocate(void* tdx, int data, void* arg);
 #endif /* merge_units */
@@ -77,7 +77,7 @@ int Tdx_Read(void* tdx, void* stream, void* arg)
 {
     int data = 0;
     FileMan_LoadMemberSync(stream, &data, FileMan_GetSize(stream));
-    func_0036DEC0(stream);
+    cFileMan_Close(stream);
     if (data == 0)
         return 0;
     else {

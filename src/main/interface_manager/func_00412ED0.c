@@ -7,11 +7,11 @@ extern void* String_CStr(Label412* label);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern void Resource_Construct(TextObj* obj);
 extern void Hog_Register(TextObj* obj, char* text, int color, int flags);
-extern void func_003E7AD0(void* target, TextObj* obj);
+extern void cInterface_Refresh(void* target, TextObj* obj);
 extern void FileMan_Release(TextObj* obj, int flags);
 
 /* Builds and attaches a text object for each of the 20 active labels. */
-void func_00412ED0(Label412* self)
+void cInterfaceManager_Refresh(Label412* self)
 {
     Label412* p;
     int i;
@@ -24,7 +24,7 @@ void func_00412ED0(Label412* self)
             sprintf(buf, "%s.IE", String_CStr(p));
             Resource_Construct(&obj);
             Hog_Register(&obj, buf, p->color, 0);
-            func_003E7AD0(p->target, &obj);
+            cInterface_Refresh(p->target, &obj);
             FileMan_Release(&obj, -1);
         }
     }

@@ -18,7 +18,7 @@ extern void DIntr(void); /* lock */
 extern void EIntr(void); /* unlock */
 
 /* Marks the head slot ready (state 2) and advances the ring under the lock. */
-void func_003F5F70(Ring* ring) {
+void voBufIncCount(Ring* ring) {
     DIntr();
     ring->slots[ring->head].state = 2;
     ring->count++;

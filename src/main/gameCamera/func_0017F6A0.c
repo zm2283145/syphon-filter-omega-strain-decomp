@@ -1,8 +1,8 @@
 #pragma cplusplus on
 #include "types.h"
 /* CameraCurve_MakeQuaternion: set up a quaternion camera curve from q0 toward q1: vtable, the
- * from/current/target/start orientations, t = 0, the two-key spline (func_0017F760) built from
- * q0 and q1 scaled by 0 (func_0017F7F0), and its cursor reset to the first key. */
+ * from/current/target/start orientations, t = 0, the two-key spline (cHermiteSpline_cQuaternion_ctor_cQuaternionR_cQuaternionR) built from
+ * q0 and q1 scaled by 0 (cQuaternion_opMul_float), and its cursor reset to the first key. */
 struct V4 { float x, y, z, w; V4() {} } __attribute__((aligned(16)));
 struct Keys_F6A0 { V4 e[4]; };
 struct KeySet_F6A0 { Keys_F6A0 keys; int count; int cur; };
@@ -21,8 +21,8 @@ struct CamCurve_F6A0 {
 };
 extern "C" {
 extern char D_004DA350[];
-V4 func_0017F7F0(const V4* b, float s);
-Keys_F6A0* func_0017F760(Keys_F6A0* m, const V4* a, const V4* b);
+V4 cQuaternion_opMul_float(const V4* b, float s);
+Keys_F6A0* cHermiteSpline_cQuaternion_ctor_cQuaternionR_cQuaternionR(Keys_F6A0* m, const V4* a, const V4* b);
 CamCurve_F6A0* CameraCurve_MakeQuaternion(CamCurve_F6A0* c, const V4* q0, const V4* q1);
 }
 /* 16-byte lq/sq copy macro */
@@ -37,8 +37,8 @@ CamCurve_F6A0* CameraCurve_MakeQuaternion(CamCurve_F6A0* c, const V4* q0, const 
     c->t = 0.0f;
     {
         KeySet_F6A0* k = &c->set;
-        V4 z = func_0017F7F0(q1, 0.0f);
-        func_0017F760(&k->keys, q0, &z);
+        V4 z = cQuaternion_opMul_float(q1, 0.0f);
+        cHermiteSpline_cQuaternion_ctor_cQuaternionR_cQuaternionR(&k->keys, q0, &z);
         k->count = 0;
         k->cur = 0;
     }

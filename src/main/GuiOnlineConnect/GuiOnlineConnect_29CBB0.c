@@ -30,7 +30,7 @@ Ent_0029CBB0* LobbyArray_At(NameList_0029CBB0* l, int i);
 void LobbyArray_RemoveAt(NameList_0029CBB0* l, int i);
 void LobbyArray_Clear(NameList_0029CBB0* l);
 void String_CtorCStr_13B480(Str_0029CBB0* s, const char* c);
-void func_00209620(Str_0029CBB0* d, Str_0029CBB0* s);
+void std_basic_string_char_char_traits_char_append_basicstringR(Str_0029CBB0* d, Str_0029CBB0* s);
 void func_003FD740(Str_0029CBB0* s);
 char* String_CStr(Str_0029CBB0* s);
 int String_Length(Str_0029CBB0* s);
@@ -89,7 +89,7 @@ extern "C" void GuiOnlineConnect_ShowGroup(S_0029CBB0* self, unsigned char sel)
                     if (e && e->name) {
                         Str_0029CBB0 s;
                         String_CtorCStr_13B480(&s, (char*)e);
-                        func_00209620(&list1, &s);
+                        std_basic_string_char_char_traits_char_append_basicstringR(&list1, &s);
                         String_Dtor(&s, 0);
                     }
                 }
@@ -117,7 +117,7 @@ extern "C" void GuiOnlineConnect_ShowGroup(S_0029CBB0* self, unsigned char sel)
                             if (e->id == id) {
                                 Str_0029CBB0 s;
                                 String_CtorCStr_13B480(&s, e->name);
-                                func_00209620(&list2, &s);
+                                std_basic_string_char_char_traits_char_append_basicstringR(&list2, &s);
                                 String_Dtor(&s, 0);
                             }
                         }

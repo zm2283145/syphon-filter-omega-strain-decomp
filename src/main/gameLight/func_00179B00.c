@@ -27,7 +27,7 @@ static inline bool IsLive(SceneLight* o)
 }
 
 /* One-shot: marks the light triggered and, while the object is live, calls the light's virtual +0x2C. */
-extern "C" void func_00179B00(SceneLight* self)
+extern "C" void cGameLight_TurnOn(SceneLight* self)
 {
     if (self->triggered)
         return;

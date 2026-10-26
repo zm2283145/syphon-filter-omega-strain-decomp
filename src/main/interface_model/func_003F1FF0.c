@@ -8,7 +8,7 @@
 #include "interface_model_types.h"
 
 /* Reads two floats from a stream cursor. */
-Vec2f* func_003F1FF0(Vec2f* dst, float** cursor) {
+Vec2f* cKeyframe_float_ctor(Vec2f* dst, float** cursor) {
     dst->x = *(*cursor)++;
     dst->y = *(*cursor)++;
     return dst;

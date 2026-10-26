@@ -6,7 +6,7 @@
 #include "types.h"
 
 /* volatile mirrors the original stack temporary. */
-Word* func_0016E860(Word* self, int value) {
+Word* std_list_cActiveListItemPtr_generic_iterator_1_ctor(Word* self, int value) {
     volatile int tmp = value;
     self->value = tmp;
     return self;

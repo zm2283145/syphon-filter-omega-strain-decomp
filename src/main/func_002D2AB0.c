@@ -5,7 +5,7 @@ typedef struct { char p0[0x1E8]; B2D2AB0* b; } A2D2AB0;
 #pragma push
 #pragma optimization_level 1
 #pragma schedule on
-unsigned char func_002D2AB0(A2D2AB0* a)
+unsigned char cNetNPC_IsNodeInActiveTerrain(A2D2AB0* a)
 {
     B2D2AB0* b = a->b;
     if (b) {

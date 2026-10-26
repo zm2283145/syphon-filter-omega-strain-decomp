@@ -17,13 +17,13 @@ int atol(int a0) {
 /* merge_units: begin func_00121C10 */
 extern int Libc_Memmove(int, int, int);
 
-int func_00121C10(int a0, int a1, int a2) {
+int Libc_Bcopy(int a0, int a1, int a2) {
     return Libc_Memmove(a1, a0, a2);
 }
 /* merge_units: end func_00121C10 */
 
 /* merge_units: begin func_00121C30 */
-void* func_00121C30(const void* key, const void* base, unsigned int nmemb, unsigned int size, int (*compar)(const void*, const void*))
+void* Libc_Bsearch(const void* key, const void* base, unsigned int nmemb, unsigned int size, int (*compar)(const void*, const void*))
 {
     void* current;
     unsigned int lower = 0;

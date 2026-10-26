@@ -9,21 +9,21 @@ struct It { Item** p; };
 struct Ft { Func** p; };
 extern "C" {
 void Script_PrintWarning(char*,char*);
-It func_003E1F20(void*);
-It func_003E1EF0(void*);
-void func_003E1F10(It*,const It*);
-Ft func_003E10C0(void*);
-Ft func_003E1090(void*);
-void func_003E10B0(Ft*,const Ft*);
+It std_vector_VarDefPtr_begin(void*);
+It std_vector_VarDefPtr_end(void*);
+void cArray_VarDefPtr_Iterator_ctor(It*,const It*);
+Ft std_vector_FuncDefPtr_begin(void*);
+Ft std_vector_FuncDefPtr_end(void*);
+void cArray_FuncDefPtr_Iterator_ctor(Ft*,const Ft*);
 extern void* D_00554F18;
 extern void* D_00554F20;
 }
-struct IE:It { IE(const It& i) { func_003E1F10(this,&i); } };
-struct FE:Ft { FE(const Ft& i) { func_003E10B0(this,&i); } };
-static inline IE beginI() { return IE(func_003E1F20(D_00554F18)); }
-static inline IE endI() { return IE(func_003E1EF0(D_00554F18)); }
-static inline FE beginF() { return FE(func_003E10C0(D_00554F20)); }
-static inline FE endF() { return FE(func_003E1090(D_00554F20)); }
+struct IE:It { IE(const It& i) { cArray_VarDefPtr_Iterator_ctor(this,&i); } };
+struct FE:Ft { FE(const Ft& i) { cArray_FuncDefPtr_Iterator_ctor(this,&i); } };
+static inline IE beginI() { return IE(std_vector_VarDefPtr_begin(D_00554F18)); }
+static inline IE endI() { return IE(std_vector_VarDefPtr_end(D_00554F18)); }
+static inline FE beginF() { return FE(std_vector_FuncDefPtr_begin(D_00554F20)); }
+static inline FE endF() { return FE(std_vector_FuncDefPtr_end(D_00554F20)); }
 static inline int neqI(const It& a,const It& b) { return (a.p == b.p)^1; }
 static inline int neqF(const Ft& a,const Ft& b) { return (a.p == b.p)^1; }
 static inline FE beginF0() { return beginF(); }

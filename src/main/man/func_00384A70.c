@@ -63,7 +63,7 @@ extern "C" {
 extern float D_00493340;
 void ActorRender_GetAttachPoint(Weapon* w, M* out, int i);
 void* Skeleton_NodeAt(void* nodes, int i);
-void* func_0019F420(void* n);
+void* cBone_Xform(void* n);
 M* Transform_GetUpdated(void* x);
 void Actor_ShotFrameNodeWorld(M* out, M* a, M* b);
 void Mtx_Copy(M* d, M* s);
@@ -272,7 +272,7 @@ extern "C" void Weapon_MuzzleFlash(Weapon* w, int i)
         V up;
         V vel;
         if (s->shot) {
-            M* t = Transform_GetUpdated(func_0019F420(Skeleton_NodeAt(s->nodes, 0)));
+            M* t = Transform_GetUpdated(cBone_Xform(Skeleton_NodeAt(s->nodes, 0)));
             Actor_ShotFrameNodeWorld(&m, t, Transform_GetUpdated(s->xform));
         } else {
             Mtx_Copy(&m, Transform_GetUpdated(s->xform));

@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046D810(void) {
+int MediusUniqueCallbackGetWorldSecurityLevelRequestHandler(void) {
     return 48;
 }

@@ -4,11 +4,11 @@
 #pragma push
 #pragma optimization_level 1
 
-extern void func_0020B1B0(void* obj);
+extern void std_copy_backward_cSkaTransBLEND_copy_backward(void* obj);
 
-/* Thin wrapper around func_0020B1B0. */
-void func_0020B190(void* obj) {
-    func_0020B1B0(obj);
+/* Thin wrapper around std_copy_backward_cSkaTransBLEND_copy_backward. */
+void std_copy_backward_cSkaTransBLENDP_cSkaTransBLENDP_cSkaTransBLENDP(void* obj) {
+    std_copy_backward_cSkaTransBLEND_copy_backward(obj);
 }
 
 #pragma pop

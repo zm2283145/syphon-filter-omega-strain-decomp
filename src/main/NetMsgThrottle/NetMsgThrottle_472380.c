@@ -13,7 +13,7 @@
 
 #include "types.h"
 
-Map* func_00472380(Map* m, unsigned char* cmp) {
+Map* std_tree_pair_int_value_compare_ctor_valuecompareR_cAllocatorR_6(Map* m, unsigned char* cmp) {
     m->count = 0;
     m->head = 0;
     m->cmp = *cmp;
@@ -26,15 +26,15 @@ Map* func_00472380(Map* m, unsigned char* cmp) {
 /* merge_units: begin func_004723A0 */
 #pragma push /* merge_units */
 typedef struct { int m0; void* m4; } TB5C0;
-extern void func_00472410(TB5C0* t, void* n);
+extern void std_tree_pair_int_value_compare_destroy_nodeP_6(TB5C0* t, void* n);
 extern void operator_delete(void* p);
-TB5C0* func_004723A0(TB5C0* t, short del)
+TB5C0* cAssocArray_int_sMsgTypeInfo_dtor(TB5C0* t, short del)
 {
     if (t) {
         if (t) {
             if (t) {
                 if (t->m4)
-                    func_00472410(t, t->m4);
+                    std_tree_pair_int_value_compare_destroy_nodeP_6(t, t->m4);
             }
         }
         if (del > 0)

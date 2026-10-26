@@ -10,16 +10,16 @@ unsigned char D_0048C4AC = 0;
 extern int D_0048C4B0;
 extern unsigned short D_0058C0B0;
 extern P2DDFF8 D_0051F0D8;
-extern int func_002DF708(void);
+extern int NetIEnableUDP(void);
 extern void *memcpy(void *, const void *, unsigned int);
 extern int Net_IpToString(char *, int);
-extern int func_00303930(int, char *, unsigned short, P2DDFF8 *, unsigned short);
-int func_002DDFF8(int a, int b, unsigned int c, unsigned int d, int len, void *data)
+extern int rt_p2p_send_to(int, char *, unsigned short, P2DDFF8 *, unsigned short);
+int NetISendMessageByUDPToIP(int a, int b, unsigned int c, unsigned int d, int len, void *data)
 {
     char buf[16];
     int r;
     if (!D_0048C4AC) {
-        r = func_002DF708();
+        r = NetIEnableUDP();
         if (r) return r;
     }
     if (c >= 6) return 0x17;
@@ -32,7 +32,7 @@ int func_002DDFF8(int a, int b, unsigned int c, unsigned int d, int len, void *d
     D_0051F0D8.d = d;
     memcpy(D_0051F0D8.data, data, len);
     Net_IpToString(buf, b);
-    return func_00303930(D_0048C4B0, buf, D_0058C0B0, &D_0051F0D8, len + 2) ? 0x25 : 0;
+    return rt_p2p_send_to(D_0048C4B0, buf, D_0058C0B0, &D_0051F0D8, len + 2) ? 0x25 : 0;
 }
 /* merge_units: end func_002DDFF8 */
 
@@ -40,12 +40,12 @@ int func_002DDFF8(int a, int b, unsigned int c, unsigned int d, int len, void *d
 typedef struct { unsigned char c, d; char data[0x1FE]; } P2DE100;
 extern P2DE100 D_0051F2D8;
 extern int Net_TranslateSendFlags(signed char, unsigned char *);
-extern int func_002E51B8(unsigned int, char **);
-extern int func_002E54A0(unsigned int);
+extern int NetGetConnInfo(unsigned int, char **);
+extern int NetGetServerIpAddress(unsigned int);
 #if 0 /* merge_units */
-extern int func_00303930(int, int, unsigned short, P2DE100 *, unsigned short);
+extern int rt_p2p_send_to(int, int, unsigned short, P2DE100 *, unsigned short);
 #endif /* merge_units */
-#define func_00303930(a0, a1, a2, a3, a4) (func_00303930((a0), (char *)(a1), (a2), (P2DDFF8 *)(a3), (a4))) /* merge_units */
+#define rt_p2p_send_to(a0, a1, a2, a3, a4) (rt_p2p_send_to((a0), (char *)(a1), (a2), (P2DDFF8 *)(a3), (a4))) /* merge_units */
 
 extern int RtUdp_SendToPeers(int, int, unsigned char, P2DE100 *, unsigned short);
 
@@ -66,9 +66,9 @@ int Net_SendPrefixedA(signed char type, unsigned int idx, int port, unsigned int
     D_0051F2D8.d = d;
     memcpy(D_0051F2D8.data, data, len);
     if (port == 0xFFFF) {
-        if (func_00303930(D_0048C4B0, func_002E54A0(idx), D_0058C0B0, &D_0051F2D8, len + 2)) return 0x25;
+        if (rt_p2p_send_to(D_0048C4B0, NetGetServerIpAddress(idx), D_0058C0B0, &D_0051F2D8, len + 2)) return 0x25;
     } else {
-        r = func_002E51B8(idx, &p);
+        r = NetGetConnInfo(idx, &p);
         if (r) return r;
         if (p == 0) return r;
         if (port != *(int *)(p + 0x400)) {
@@ -77,7 +77,7 @@ int Net_SendPrefixedA(signed char type, unsigned int idx, int port, unsigned int
     }
     return r;
 }
-#undef func_00303930 /* merge_units */
+#undef rt_p2p_send_to /* merge_units */
 /* merge_units: end func_002DE100 */
 
 /* merge_units: begin func_002DE280 */
@@ -94,7 +94,7 @@ int Net_SendPrefixedB(signed char a, unsigned int idx, int c, unsigned int d, un
     if (len <= 0) return 0x17;
     if (len >= 0x1FF) return 0x1F;
     if (data == 0) return 0x17;
-    r = func_002E51B8(idx, &p);
+    r = NetGetConnInfo(idx, &p);
     if (r) return r;
     if (p == 0) return r;
     if (c == *(int *)(p + 0x400)) return r;
@@ -125,11 +125,11 @@ typedef struct NetConn {
 
 extern int D_005983EC;
 #if 0 /* merge_units */
-extern int func_002E51B8(int, NetConn **);
+extern int NetGetConnInfo(int, NetConn **);
 #endif /* merge_units */
-#define func_002E51B8(a0, a1) (func_002E51B8((unsigned int)(a0), (char * *)(a1))) /* merge_units */
+#define NetGetConnInfo(a0, a1) (NetGetConnInfo((unsigned int)(a0), (char * *)(a1))) /* merge_units */
 
-extern unsigned char func_00301F40();
+extern unsigned char randomMT();
 #if 0 /* merge_units */
 extern int Net_SendPrefixedA(char, int, int, unsigned int, unsigned int, int, void *);
 #endif /* merge_units */
@@ -167,7 +167,7 @@ int Net_SendTyped(char type, int dest, int port, unsigned int chan, unsigned int
         return 0x17;
     if (data == 0)
         return 0x17;
-    r = func_002E51B8(dest, &conn);
+    r = NetGetConnInfo(dest, &conn);
     if (r != 0 || conn == 0)
         return r;
     if (conn->state == 4)
@@ -179,7 +179,7 @@ int Net_SendTyped(char type, int dest, int port, unsigned int chan, unsigned int
         tag = D_005983EC;
         flags = 0;
         ptype = type | 0x50;
-        h.seq = func_00301F40();
+        h.seq = randomMT();
     } else {
         plen = len;
         ptype = type;
@@ -218,7 +218,7 @@ int Net_SendTyped(char type, int dest, int port, unsigned int chan, unsigned int
     }
     return 0;
 }
-#undef func_002E51B8 /* merge_units */
+#undef NetGetConnInfo /* merge_units */
 #undef Net_SendPrefixedA /* merge_units */
 #undef Net_SendPrefixedB /* merge_units */
 /* merge_units: end func_002DE398 */
@@ -227,18 +227,18 @@ int Net_SendTyped(char type, int dest, int port, unsigned int chan, unsigned int
 typedef struct { signed char bits[0x24]; int lo; int hi; } Set;
 typedef struct { char p[0x400]; int self; char p2[0x48]; int state; } Conn;
 #if 0 /* merge_units */
-extern int func_002E51B8(unsigned int, Conn **);
+extern int NetGetConnInfo(unsigned int, Conn **);
 #endif /* merge_units */
-#define func_002E51B8(a0, a1) (func_002E51B8((a0), (char * *)(a1))) /* merge_units */
+#define NetGetConnInfo(a0, a1) (NetGetConnInfo((a0), (char * *)(a1))) /* merge_units */
 
-extern int func_002DB188(int *, unsigned int, int);
+extern int NetIGetClient(int *, unsigned int, int);
 #if 0 /* merge_units */
 extern int Net_SendTyped(char, int, int, unsigned int, unsigned int, int, void *);
 #endif /* merge_units */
 #define Net_SendTyped(a0, a1, a2, a3, a4, a5, a6) (Net_SendTyped((a0), (a1), (a2), (a3), (a4), (a5), (a6))) /* merge_units */
 
 
-int func_002DE5E8(signed char type, unsigned int idx, unsigned int chan, unsigned int sub, int len, void *data, Set *s)
+int NetSendTargetClientBitmask(signed char type, unsigned int idx, unsigned int chan, unsigned int sub, int len, void *data, Set *s)
 {
     Conn *conn = 0;
     int ok = 0;
@@ -249,13 +249,13 @@ int func_002DE5E8(signed char type, unsigned int idx, unsigned int chan, unsigne
     if (len <= 0) return 0x17;
     if (data == 0) return 0x17;
     if (s == 0) return 0x17;
-    r = func_002E51B8(idx, &conn);
+    r = NetGetConnInfo(idx, &conn);
     if (r) return r;
     if (conn == 0) return r;
     if (conn->state == 4) return 0xF;
     if (s->hi >= 0) for (i = s->lo; i <= s->hi; i++) {
         if (i == conn->self) continue;
-        func_002DB188(&ok, idx, i);
+        NetIGetClient(&ok, idx, i);
         if (ok && ((s->bits[i >> 3] >> (i & 7)) & 1)) {
             if (Net_SendTyped(type, idx, i, chan, sub, len, data)) r = 0xD;
         }
@@ -264,28 +264,28 @@ int func_002DE5E8(signed char type, unsigned int idx, unsigned int chan, unsigne
 }
 
 /* score: 3 insn diff (sra v0/v1 scheduling in bit test) */
-#undef func_002E51B8 /* merge_units */
+#undef NetGetConnInfo /* merge_units */
 #undef Net_SendTyped /* merge_units */
 /* merge_units: end func_002DE5E8 */
 
 /* merge_units: begin func_002DE770 */
-extern void func_002DDE30(char *, int, int);
+extern void FilterTargetClientBitmask(char *, int, int);
 #if 0 /* merge_units */
-extern int func_002DE5E8(signed char, int, unsigned int, unsigned int, int, int, char *);
+extern int NetSendTargetClientBitmask(signed char, int, unsigned int, unsigned int, int, int, char *);
 #endif /* merge_units */
-#define func_002DE5E8(a0, a1, a2, a3, a4, a5, a6) (func_002DE5E8((a0), (unsigned int)(a1), (a2), (a3), (a4), (void *)(a5), (Set *)(a6))) /* merge_units */
+#define NetSendTargetClientBitmask(a0, a1, a2, a3, a4, a5, a6) (NetSendTargetClientBitmask((a0), (unsigned int)(a1), (a2), (a3), (a4), (void *)(a5), (Set *)(a6))) /* merge_units */
 
-int func_002DE770(signed char a, int b, unsigned int c, unsigned int d, int e, int f, int g)
+int NetISendFilteredMessage(signed char a, int b, unsigned int c, unsigned int d, int e, int f, int g)
 {
     char buf[0x30];
     if (c >= 6) return 0x17;
     if (d >= 0x100) return 0x17;
     if (e <= 0) return 0x17;
     if (f == 0) return 0x17;
-    func_002DDE30(buf, b, g);
-    return func_002DE5E8(a, b, c, d, e, f, buf);
+    FilterTargetClientBitmask(buf, b, g);
+    return NetSendTargetClientBitmask(a, b, c, d, e, f, buf);
 }
-#undef func_002DE5E8 /* merge_units */
+#undef NetSendTargetClientBitmask /* merge_units */
 /* merge_units: end func_002DE770 */
 
 /* merge_units: begin func_002DE828 */
@@ -294,7 +294,7 @@ extern int Net_SendTyped(signed char, int, int, int, unsigned int, int, int);
 #endif /* merge_units */
 #define Net_SendTyped(a0, a1, a2, a3, a4, a5, a6) (Net_SendTyped((char)(a0), (a1), (a2), (unsigned int)(a3), (a4), (a5), (void *)(a6))) /* merge_units */
 
-int func_002DE828(signed char a, int b, int c, unsigned int d, int e, int f)
+int NetISendApplicationMessage(signed char a, int b, int c, unsigned int d, int e, int f)
 {
     if (d >= 0x100) return 0x17;
     if (e <= 0) return 0x17;
@@ -310,7 +310,7 @@ extern int Net_SendTyped(signed char, int, int, int, unsigned int, int, int);
 #endif /* merge_units */
 #define Net_SendTyped(a0, a1, a2, a3, a4, a5, a6) (Net_SendTyped((char)(a0), (a1), (a2), (unsigned int)(a3), (a4), (a5), (void *)(a6))) /* merge_units */
 
-int func_002DE880(signed char a, int b, int c, unsigned int d, int e, int f)
+int NetSendDmeMessage(signed char a, int b, int c, unsigned int d, int e, int f)
 {
     if (d >= 0x100) return 0x17;
     if (e <= 0) return 0x17;
@@ -321,14 +321,14 @@ int func_002DE880(signed char a, int b, int c, unsigned int d, int e, int f)
 /* merge_units: end func_002DE880 */
 
 /* merge_units: begin func_002DE8D8 */
-extern int func_002DD968(unsigned char **, unsigned int);
+extern int NetIGetObject(unsigned char **, unsigned int);
 extern void (*D_0058C0B8[])(unsigned int, unsigned int);
-void func_002DE8D8(unsigned int a, unsigned int b)
+void RemoteObjectCreation(unsigned int a, unsigned int b)
 {
     unsigned char *p;
     void (*f)(unsigned int, unsigned int);
     if (a < 0x100 && b < 0x1000) {
-        func_002DD968(&p, b);
+        NetIGetObject(&p, b);
         if (p) {
             f = D_0058C0B8[*p];
             if (f) f(a, b);
@@ -339,13 +339,13 @@ void func_002DE8D8(unsigned int a, unsigned int b)
 
 /* merge_units: begin func_002DE950 */
 extern void (*D_0058C0F8[])(int, unsigned int, unsigned int);
-void func_002DE950(int a, unsigned int b, unsigned int c)
+void RemoteObjectUpdate(int a, unsigned int b, unsigned int c)
 {
     unsigned char *p;
     void (*f)(int, unsigned int, unsigned int);
     if (b >= 0x1000) return;
     if (c < 0x40 || c == -2 || c == -1) {
-        func_002DD968(&p, b);
+        NetIGetObject(&p, b);
         if (p) {
             f = D_0058C0F8[*p];
             if (f) f(a, b, c);
@@ -356,12 +356,12 @@ void func_002DE950(int a, unsigned int b, unsigned int c)
 
 /* merge_units: begin func_002DE9F0 */
 extern void (*D_0058C138[])(unsigned int, unsigned int);
-void func_002DE9F0(unsigned int a, unsigned int b)
+void RemoteObjectDelete(unsigned int a, unsigned int b)
 {
     unsigned char *p;
     void (*f)(unsigned int, unsigned int);
     if (a < 0x100 && b < 0x1000) {
-        func_002DD968(&p, b);
+        NetIGetObject(&p, b);
         if (p) {
             f = D_0058C138[*p];
             if (f) f(a, b);

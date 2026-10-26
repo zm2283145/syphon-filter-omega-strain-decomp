@@ -11,7 +11,7 @@ extern int D_00598670;
 extern int D_0059842C;
 extern int Medius_TerminateString(char *, int);
 extern int Net_SendLocked(int, int, int, int, int, int, void *);
-int func_00466A28(char *a, int b)
+int MediusCreateClan(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -28,7 +28,7 @@ extern int D_00497CC0;
 extern int D_00497CC4;
 extern int D_00598678;
 extern int D_00598430;
-int func_00466AD0(char *a, int b)
+int MediusDisbandClan(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -42,7 +42,7 @@ int func_00466AD0(char *a, int b)
 /* merge_units: begin func_00466B70 */
 extern int D_00598688;
 extern int D_00598434;
-int func_00466B70(char *a, int b)
+int MediusGetClanByName(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -57,7 +57,7 @@ int func_00466B70(char *a, int b)
 /* merge_units: begin func_00466C18 */
 extern int D_00598680;
 extern int D_00598438;
-int func_00466C18(char *a, int b)
+int MediusGetClanByID(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -71,7 +71,7 @@ int func_00466C18(char *a, int b)
 /* merge_units: begin func_00466CB8 */
 extern int D_00598690;
 extern int D_0059843C;
-int func_00466CB8(char *a, int b)
+int MediusTransferClanLeadership(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -86,7 +86,7 @@ int func_00466CB8(char *a, int b)
 /* merge_units: begin func_00466D60 */
 extern int D_00598698;
 extern int D_00598440;
-int func_00466D60(char *a, int b)
+int MediusAddPlayerToClan(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -101,7 +101,7 @@ int func_00466D60(char *a, int b)
 /* merge_units: begin func_00466E08 */
 extern int D_005986A0;
 extern int D_00598444;
-int func_00466E08(char *a, int b)
+int MediusRemovePlayerFromClan(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -115,7 +115,7 @@ int func_00466E08(char *a, int b)
 /* merge_units: begin func_00466EA8 */
 extern int D_005986A8;
 extern int D_00598448;
-int func_00466EA8(char *a, int b)
+int MediusInvitePlayerToClan(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -130,7 +130,7 @@ int func_00466EA8(char *a, int b)
 /* merge_units: begin func_00466F50 */
 extern int D_005986B0;
 extern int D_0059844C;
-int func_00466F50(char *a, int b)
+int MediusCheckMyClanInvitations(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -144,7 +144,7 @@ int func_00466F50(char *a, int b)
 /* merge_units: begin func_00466FF0 */
 extern int D_005986B8;
 extern int D_00598450;
-int func_00466FF0(char *a, int b)
+int MediusGetClanInvitationsSent(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -158,7 +158,7 @@ int func_00466FF0(char *a, int b)
 /* merge_units: begin func_00467090 */
 extern int D_005986C0;
 extern int D_00598454;
-int func_00467090(char *a, int b)
+int MediusRespondToClanInvitation(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -173,7 +173,7 @@ int func_00467090(char *a, int b)
 /* merge_units: begin func_00467138 */
 extern int D_005986C8;
 extern int D_00598458;
-int func_00467138(char *a, int b)
+int MediusRevokeClanInvitation(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -187,7 +187,7 @@ int func_00467138(char *a, int b)
 /* merge_units: begin func_004671D8 */
 extern int D_005986D8;
 extern int D_0059845C;
-int func_004671D8(char *a, int b)
+int MediusGetMyClanMessages(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -201,7 +201,7 @@ int func_004671D8(char *a, int b)
 /* merge_units: begin func_00467278 */
 extern int D_005986E0;
 extern int D_00598460;
-int func_00467278(char *a, int b)
+int MediusSendClanMessage(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -216,7 +216,7 @@ int func_00467278(char *a, int b)
 /* merge_units: begin func_00467320 */
 extern int D_005986E8;
 extern int D_00598464;
-int func_00467320(char *a, int b)
+int MediusModifyClanMessage(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -231,7 +231,7 @@ int func_00467320(char *a, int b)
 /* merge_units: begin func_004673C8 */
 extern int D_005986F0;
 extern int D_00598468;
-int func_004673C8(char *a, int b)
+int MediusDeleteClanMessage(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -245,7 +245,7 @@ int func_004673C8(char *a, int b)
 /* merge_units: begin func_00467468 */
 extern int D_005986D0;
 extern int D_0059846C;
-int func_00467468(char *a, int b)
+int MediusRequestClanTeamChallenge(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -260,7 +260,7 @@ int func_00467468(char *a, int b)
 /* merge_units: begin func_00467510 */
 extern int D_005986F8;
 extern int D_00598470;
-int func_00467510(char *a, int b)
+int MediusRespondToClanTeamChallenge(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -275,7 +275,7 @@ int func_00467510(char *a, int b)
 /* merge_units: begin func_004675B8 */
 extern int D_00598700;
 extern int D_00598474;
-int func_004675B8(char *a, int b)
+int MediusRevokeClanTeamChallenge(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -289,7 +289,7 @@ int func_004675B8(char *a, int b)
 /* merge_units: begin func_00467658 */
 extern int D_00598710;
 extern int D_00598478;
-int func_00467658(char *a, int b)
+int MediusGetClanTeamChallenges(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -303,7 +303,7 @@ int func_00467658(char *a, int b)
 /* merge_units: begin func_004676F8 */
 extern int D_00598708;
 extern int D_0059847C;
-int func_004676F8(char *a, int b)
+int MediusGetMyClans(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -317,7 +317,7 @@ int func_004676F8(char *a, int b)
 /* merge_units: begin func_00467798 */
 extern int D_00598718;
 extern int D_00598480;
-int func_00467798(char *a, int b)
+int MediusConfirmClanTeamChallenge(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -331,7 +331,7 @@ int func_00467798(char *a, int b)
 /* merge_units: begin func_00467838 */
 extern int D_00598720;
 extern int D_00598484;
-int func_00467838(char *a, int b)
+int MediusGetAllClanMessages(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -345,7 +345,7 @@ int func_00467838(char *a, int b)
 /* merge_units: begin func_004678D8 */
 extern int D_00598728;
 extern int D_00598488;
-int func_004678D8(char *a, int b)
+int MediusGetClanTeamChallengeHistory(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -359,7 +359,7 @@ int func_004678D8(char *a, int b)
 /* merge_units: begin func_00467978 */
 extern int D_00598730;
 extern int D_0059848C;
-int func_00467978(char *a, int b)
+int MediusUpdateClanStats(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -374,7 +374,7 @@ int func_00467978(char *a, int b)
 /* merge_units: begin func_00467A20 */
 extern int D_00598758;
 extern int D_00598490;
-int func_00467A20(char *a, int b)
+int MediusGetClanMemberList(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -388,7 +388,7 @@ int func_00467A20(char *a, int b)
 /* merge_units: begin func_00467AC0 */
 extern int D_005987BC;
 extern int D_00598494;
-int func_00467AC0(char *a, int b)
+int MediusClanLadderList(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     if (D_00497CC0 != 1) return -0xF;
@@ -401,7 +401,7 @@ int func_00467AC0(char *a, int b)
 /* merge_units: begin func_00467B50 */
 extern int D_005987C4;
 extern int D_00598498;
-int func_00467B50(char *a, int b)
+int MediusClanLadderPosition(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     if (D_00497CC0 != 1) return -0xF;
@@ -414,7 +414,7 @@ int func_00467B50(char *a, int b)
 /* merge_units: begin func_00467BE0 */
 extern int D_005987E4;
 extern int D_0059849C;
-int func_00467BE0(char *a, int b)
+int MediusGetClanMemberList_ExtraInfo(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     if (D_00497CC0 != 1) return -0xF;
@@ -426,7 +426,7 @@ int func_00467BE0(char *a, int b)
 
 /* merge_units: begin func_00467C70 */
 extern int D_00598808;
-int func_00467C70(char *a, int b)
+int MediusInvitePlayerToClan_ByName(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x35, 0xC8);
@@ -441,5 +441,5 @@ int func_00467C70(char *a, int b)
 /* merge_units: begin func_00467D18 */
 typedef struct { unsigned char b[24]; } B467D18;
 extern B467D18 D_00587DC0;
-void func_00467D18(B467D18 x) { D_00587DC0 = x; }
+void MediusSetNatServiceAddress(B467D18 x) { D_00587DC0 = x; }
 /* merge_units: end func_00467D18 */

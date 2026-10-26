@@ -8,7 +8,7 @@
 extern void NetMsg_RegisterTypeInner(void* msg, int kind, void* arg);
 
 /* Registers a message type with kind 2. */
-void func_002ED550(void* msg, void* arg) {
+void NetIRegisterApplicationMessage(void* msg, void* arg) {
     NetMsg_RegisterTypeInner(msg, 2, arg);
 }
 

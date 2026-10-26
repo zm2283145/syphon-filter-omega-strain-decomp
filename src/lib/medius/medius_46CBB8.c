@@ -9,7 +9,7 @@
 extern char D_00497D30[];
 extern char D_00497D34[];
 
-int func_0046CBB8(void) {
+int MediusUniqueCallbackCreateGameResponseHandler(void) {
     int v0;
     int cond;
 
@@ -24,11 +24,11 @@ ret:
     return v0;
 }
 
-int func_0046CBE8(void) {
+int MediusUniqueCallbackCreateGameOnSelfRequestHandler(void) {
     return 236;
 }
 
-int func_0046CBF0(void) {
+int MediusUniqueCallbackCreateGameOnSelfResponseHandler(void) {
     int v0;
     int cond;
 

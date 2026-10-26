@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-extern int func_002715D0(int, int, int, int, int, int);
+extern int sceSifMBindRpcParam(int, int, int, int, int, int);
 
-int func_002715A8(int a0, int a1, int a2) {
+int sceSifMBindRpc(int a0, int a1, int a2) {
     int tmp0;
 
-    tmp0 = func_002715D0(a0, a1, a2, 2048, 8192, 32);
+    tmp0 = sceSifMBindRpcParam(a0, a1, a2, 2048, 8192, 32);
     return tmp0;
 }

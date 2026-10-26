@@ -129,7 +129,7 @@ void Notify_Insert(C4Note3FA* n, const char* name, float* v, unsigned char kind,
 #include "trivial_dtor.h"
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_003FA4B0)
+DEFINE_TRIVIAL_DTOR(cInfoBar_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003FA4B0 */
 
@@ -217,10 +217,10 @@ struct It_A5D0 { O_A5D0** p; };
 struct Vec_A5D0;
 extern "C" {
 void* World_GetActorArray(void);
-Vec_A5D0* func_001339A0(void* arr);
+Vec_A5D0* cObjList_cGOBJPtr_GetList(void* arr);
 void PtrVec_Begin(It_A5D0* out, Vec_A5D0* v);
 void PtrVec_End(It_A5D0* out, Vec_A5D0* v);
-void func_00133980(It_A5D0* out, It_A5D0* in);
+void cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(It_A5D0* out, It_A5D0* in);
 void printf(char* fmt, int i);
 extern char D_004BE240[];
 extern unsigned char D_0055C780[];
@@ -241,9 +241,9 @@ extern "C" void NetObj_LoadNetworkData(void)
                 It_A5D0 tb;
                 It_A5D0 te;
                 arr = World_GetActorArray();
-                PtrVec_Begin(&tb, func_001339A0(arr));
-                func_00133980(&it, &tb);
-                for (PtrVec_End(&te, func_001339A0(arr)), func_00133980(&end, &te); Ne_A5D0(&it, &end); PtrVec_End(&te, func_001339A0(arr)), func_00133980(&end, &te)) {
+                PtrVec_Begin(&tb, cObjList_cGOBJPtr_GetList(arr));
+                cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(&it, &tb);
+                for (PtrVec_End(&te, cObjList_cGOBJPtr_GetList(arr)), cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(&end, &te); Ne_A5D0(&it, &end); PtrVec_End(&te, cObjList_cGOBJPtr_GetList(arr)), cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(&end, &te)) {
                     if (Ok_A5D0(*it.p)) {
                         O_A5D0* o = *it.p;
                         if (o->b14) {
@@ -268,16 +268,16 @@ extern "C" void NetObj_LoadNetworkData(void)
 typedef struct Node3FA780 { char pad[0x14]; int a; unsigned char flag; char pad19[3]; int b; } Node3FA780;
 extern "C" {
 extern char D_0055C7A0[];
-extern void func_003FA8B0(Node3FA780** out, void* map);
-extern void func_0021D360(void* out, void* map);
-extern void func_0021D350(Node3FA780** out, void* in);
+extern void std_tree_pair_int_value_compare_begin_void_2(Node3FA780** out, void* map);
+extern void std_map_int_netSystemField_end(void* out, void* map);
+extern void cAssocArray_int_netSystemField_Iterator_ctor(Node3FA780** out, void* in);
 extern void Tree_Successor(Node3FA780** it);
 }
 static inline int Eq3FA780(Node3FA780* a, Node3FA780* b) { return a == b; }
 static inline int Has3FA780(Node3FA780* n) { return n->b != 0; }
 #pragma push
 #pragma opt_propagation off
-extern "C" bool func_003FA780(int* outA, unsigned char* outFlag, int* outB)
+extern "C" bool cNetObj_GetDelayedMsgs(int* outA, unsigned char* outFlag, int* outB)
 {
     bool found = false;
     if (D_005724B0 != 7) {
@@ -285,9 +285,9 @@ extern "C" bool func_003FA780(int* outA, unsigned char* outFlag, int* outB)
         Node3FA780* end[1];
         Node3FA780* b[1];
         int tmp[1];
-        func_003FA8B0(b, D_0055C7A0);
+        std_tree_pair_int_value_compare_begin_void_2(b, D_0055C7A0);
         it[0] = b[0];
-        for (func_0021D360(tmp, D_0055C7A0), func_0021D350(end, tmp); Eq3FA780(it[0], end[0]) ^ 1; func_0021D360(tmp, D_0055C7A0), func_0021D350(end, tmp)) {
+        for (std_map_int_netSystemField_end(tmp, D_0055C7A0), cAssocArray_int_netSystemField_Iterator_ctor(end, tmp); Eq3FA780(it[0], end[0]) ^ 1; std_map_int_netSystemField_end(tmp, D_0055C7A0), cAssocArray_int_netSystemField_Iterator_ctor(end, tmp)) {
             if (!(Has3FA780(it[0]) ^ 1)) {
                 found = true;
                 *outFlag = it[0]->flag;

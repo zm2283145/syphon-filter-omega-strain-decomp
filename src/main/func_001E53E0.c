@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-float func_001E53E0(char* self) {
+float cPlane_C(char* self) {
     return *(float*)(self + 8);
 }

@@ -14,16 +14,16 @@
 
 #include "types.h"
 
-Word* func_003D2600(Word* dst, Word* src) {
+Word* cLListIterator_cAnimTexturePtr_ctor_listR(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_003D2610(Iter* out, Tree* t) {
+void std_list_cAnimTexturePtr_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-Word* func_003D2620(Word* dst, Word* src) {
+Word* std_list_cAnimTexturePtr_generic_iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
@@ -36,17 +36,17 @@ Word* func_003D2620(Word* dst, Word* src) {
 #define NULL 0
 #pragma mpwc_relax on
 int List_Erase(char *, int, char *);                     
-int func_0015AF40(char *, int *);                        
-int func_003D2110(char *, int);                          
-int func_003D2180(char *, int);                          
-int func_003D2710(int *, char *);                        
-int func_003D2720(char *, char *);                        
-int func_003D2740(char *);                               
-int *func_003D2760(char *);                            
-int func_003D2770(char *, char *);                          
-int func_003D2780(char *);                               
+int std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(char *, int *);                        
+int cLList_cAnimTexturePtr_End(char *, int);                          
+int cLList_cAnimTexturePtr_Begin(char *, int);                          
+int cLListIterator_cAnimTexturePtr_ctor_cLListIteratorR(int *, char *);                        
+int opNe_cLListIteratorR_cLListIteratorR_10(char *, char *);                        
+int cLListIterator_cAnimTexturePtr_opInc(char *);                               
+int *cLListIterator_cAnimTexturePtr_opMul(char *);                            
+int cLListIterator_cAnimTexturePtr_opAssign(char *, char *);                          
+int cLListIterator_cAnimTexturePtr_ctor_void(char *);                               
 
-void func_003D2630(int arg0, int arg1) {
+void cAnimTexMan_Remove(int arg0, int arg1) {
     int sp4C;
     int sp48;
     int sp44;
@@ -55,18 +55,18 @@ void func_003D2630(int arg0, int arg1) {
     int sp38;
     int sp34;
 
-    func_003D2780(&sp3C);
-    func_003D2180(&sp38, arg0);
-    func_003D2770(&sp3C, &sp38);
-    func_003D2110(&sp34, arg0);
-    while (func_003D2720(&sp3C, &sp34) != 0) {
-        { int v = *func_003D2760(&sp3C); if (v == arg1) break; }
-        func_003D2740(&sp3C);
-        func_003D2110(&sp34, arg0);
+    cLListIterator_cAnimTexturePtr_ctor_void(&sp3C);
+    cLList_cAnimTexturePtr_Begin(&sp38, arg0);
+    cLListIterator_cAnimTexturePtr_opAssign(&sp3C, &sp38);
+    cLList_cAnimTexturePtr_End(&sp34, arg0);
+    while (opNe_cLListIteratorR_cLListIteratorR_10(&sp3C, &sp34) != 0) {
+        { int v = *cLListIterator_cAnimTexturePtr_opMul(&sp3C); if (v == arg1) break; }
+        cLListIterator_cAnimTexturePtr_opInc(&sp3C);
+        cLList_cAnimTexturePtr_End(&sp34, arg0);
     }
-    func_003D2710(&sp4C, &sp3C);
+    cLListIterator_cAnimTexturePtr_ctor_cLListIteratorR(&sp4C, &sp3C);
     sp48 = sp4C;
-    func_0015AF40(&sp40, &sp48);
+    std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&sp40, &sp48);
     List_Erase(&sp44, arg0, &sp40);
 }
 #pragma pop /* merge_units */

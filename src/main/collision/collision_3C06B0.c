@@ -14,14 +14,14 @@
 int Alloc_Lock(int);                                    
 int Alloc_Unlock(int);                                  
 int Mem_Alloc(int, int, int *, int);                      
-int func_001361D0(int *);                           
-int func_00219DF0(int );                            
+int cArrayCapacity_Int(int *);                           
+int std_vector_cVector_ctor(int );                            
 int Vector_Reserve_25DBD0_Thunk(int , int);                       
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
 extern int D_00542D00;
 
-void func_003C06B0(int arg0) {
+void cCollisionProbe_SphereSweptRay_InitStatics(int arg0) {
     int sp3C;
     int temp_s1;
 
@@ -37,8 +37,8 @@ void func_003C06B0(int arg0) {
         g_ProfileLockDepth -= 1;
         if (temp_s1 != NULL) {
             sp3C = arg0;
-            func_00219DF0(temp_s1);
-            Vector_Reserve_25DBD0_Thunk(temp_s1, func_001361D0(&sp3C));
+            std_vector_cVector_ctor(temp_s1);
+            Vector_Reserve_25DBD0_Thunk(temp_s1, cArrayCapacity_Int(&sp3C));
             F_(temp_s1, 0xC, signed char) = 1;
         }
         D_00542D00 = temp_s1;
@@ -76,8 +76,8 @@ extern "C" void Col_GatherTriangleEdges(GObj* obj, GVec* vec, GTri* tri); /* gsy
 #pragma pop
 typedef struct { char data[0x70]; } TriC0790;
 typedef struct { TriC0790* data; int count; } VecC0790;
-extern void func_001EFA30(void* a);
-extern TriC0790** func_001EEBA0(VecC0790* v);
+extern void std_vector_deleter_cCollisionEdge_clear(void* a);
+extern TriC0790** std_vector_deleter_cCollisionFace_data_void(VecC0790* v);
 #if 0 /* merge_units */
 extern void Col_GatherTriangleEdges(void* ctx, void* a, TriC0790* t);
 #endif /* merge_units */
@@ -87,9 +87,9 @@ static inline int NeC0790(TriC0790* a, TriC0790* b) { return (a == b) ^ 1; }
 void Col_GatherEdges(void* ctx, void* a, VecC0790* v) {
     TriC0790* it;
     TriC0790* end;
-    func_001EFA30(a);
-    it = *func_001EEBA0(v);
-    end = *func_001EEBA0(v) + v->count;
+    std_vector_deleter_cCollisionEdge_clear(a);
+    it = *std_vector_deleter_cCollisionFace_data_void(v);
+    end = *std_vector_deleter_cCollisionFace_data_void(v) + v->count;
     while (NeC0790(it, end)) {
         Col_GatherTriangleEdges(ctx, a, it);
         it++;
@@ -117,24 +117,24 @@ struct GObj;
 struct GImg { int a; };
 
 extern "C" {
-void* func_003C1010(GTri*);
-void* func_003C0F70(void*);
+void* cCollisionFace_FaceLocator(GTri*);
+void* cCollisionModel_FaceLocator_Face(void*);
 unsigned char* ColTri_GetEdgeFlags(void*);
-GElem** func_003C0F50(GVec*);
+GElem** std_vector_deleter_cCollisionEdge_data(GVec*);
 int ColEdge_IsDuplicate(EdgeRef*, GKey*, void*);
-int func_003C0DF0(GVec*);
+int std_vector_cCollisionEdge_capacity(GVec*);
 void Vector_Reserve_1EF6C0(GVec*, int);
-void func_003C3190(GVec*, int, GElem*);
+void std_vector_imp_cCollisionEdge_resize(GVec*, int, GElem*);
 void ColTri_GetVertices(void*, GV4**, GV4**, GV4**, GKey*);
 void Vec4_Copy(GV4*, GV4*);
-void* func_001E1D60(void*);
+void* cCollisionModel_GetXform(void*);
 GV4* Transform_GetUpdated(void*);
 void Mtx_Multiply4(GV4*, GV4*);
-void func_003C0B50(GImg*, void*, GKey*);
-void func_003C0B40(unsigned char*, GImg*);
+void cCollisionModel_GetEdgeFlags(GImg*, void*, GKey*);
+void tEdgeFlags_opAssign(unsigned char*, GImg*);
 void Sphere_FromCenter(GV4*, GV4*, GV4*);
 GV4* Vec4_NormalizeXYZ_1D10C0(GV4*, float*);
-void func_003C0B30(EdgeRef*, GKey*, void*);
+void cCollisionModel_EdgeLocator_Set(EdgeRef*, GKey*, void*);
 }
 
 struct GIt {
@@ -150,7 +150,7 @@ extern "C" void Col_GatherTriangleEdges(GObj* obj, GVec* vec, GTri* tri)
     GV4* m;
     GElem* e;
     void* mesh = tri->mesh;
-    unsigned char* fp = ColTri_GetEdgeFlags(func_003C0F70(func_003C1010(tri))) + 2;
+    unsigned char* fp = ColTri_GetEdgeFlags(cCollisionModel_FaceLocator_Face(cCollisionFace_FaceLocator(tri))) + 2;
     for (i = 2; i >= 0; i--, fp--) {
         if ((*fp & ~0x80) == 0)
             continue;
@@ -160,8 +160,8 @@ extern "C" void Col_GatherTriangleEdges(GObj* obj, GVec* vec, GTri* tri)
         if (!obj->filter(&key, tri))
             continue;
         dup = false;
-        GIt it(*func_003C0F50(vec));
-        GIt end(*func_003C0F50(vec) + vec->n);
+        GIt it(*std_vector_deleter_cCollisionEdge_data(vec));
+        GIt end(*std_vector_deleter_cCollisionEdge_data(vec) + vec->n);
         for (; it != end; it.p++) {
             if (!!ColEdge_IsDuplicate(&it.p->ref, &key, mesh)) {
                 dup = true;
@@ -171,9 +171,9 @@ extern "C" void Col_GatherTriangleEdges(GObj* obj, GVec* vec, GTri* tri)
         if (dup)
             continue;
         if (vec->n >= vec->cap)
-            Vector_Reserve_1EF6C0(vec, func_003C0DF0(vec) * 3 / 2);
+            Vector_Reserve_1EF6C0(vec, std_vector_cCollisionEdge_capacity(vec) * 3 / 2);
         GElem def;
-        func_003C3190(vec, vec->n + 1, &def);
+        std_vector_imp_cCollisionEdge_resize(vec, vec->n + 1, &def);
         e = vec->data + vec->n - 1;
         GV4* a;
         GV4* b;
@@ -182,7 +182,7 @@ extern "C" void Col_GatherTriangleEdges(GObj* obj, GVec* vec, GTri* tri)
         Vec4_Copy(&e->v0, a);
         Vec4_Copy(&e->v1, b);
         Vec4_Copy(&e->v2, c);
-        void* x = func_001E1D60(mesh);
+        void* x = cCollisionModel_GetXform(mesh);
         if (x) {
             m = Transform_GetUpdated(x);
             Mtx_Multiply4(&e->v0, m);
@@ -190,12 +190,12 @@ extern "C" void Col_GatherTriangleEdges(GObj* obj, GVec* vec, GTri* tri)
             Mtx_Multiply4(&e->v2, m);
         }
         GImg GImg;
-        func_003C0B50(&GImg, mesh, &key);
-        func_003C0B40(&e->b30, &GImg);
+        cCollisionModel_GetEdgeFlags(&GImg, mesh, &key);
+        tEdgeFlags_opAssign(&e->b30, &GImg);
         GV4 d;
         Sphere_FromCenter(&d, &e->v1, &e->v0);
         Vec4_Copy(&e->n, Vec4_NormalizeXYZ_1D10C0(&d, &e->len));
-        func_003C0B30(&e->ref, &key, mesh);
+        cCollisionModel_EdgeLocator_Set(&e->ref, &key, mesh);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

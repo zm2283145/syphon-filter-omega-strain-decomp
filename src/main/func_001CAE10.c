@@ -8,6 +8,6 @@
 #include "loose00_types.h"
 
 /* Copy byte +0x313 into +0x312. */
-void func_001CAE10(Unk001CAE10* self) {
+void cHumanIkRoutine_StopUpperBodyAnimation(Unk001CAE10* self) {
     self->unk312 = self->unk313;
 }

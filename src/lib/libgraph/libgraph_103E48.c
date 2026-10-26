@@ -22,7 +22,7 @@ extern sceDmaEnv D_004E1DB8;
 #define D_RBSR ((volatile unsigned int *)0x1000E040)
 #define D_RBOR ((volatile unsigned int *)0x1000E050)
 
-int func_00103E48(sceDmaEnv *env)
+int sceDmaPutEnv(sceDmaEnv *env)
 {
     unsigned int ctrl = *D_CTRL;
     unsigned int pcr = *D_PCR;

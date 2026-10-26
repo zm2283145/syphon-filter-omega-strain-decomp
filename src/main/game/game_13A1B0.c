@@ -12,7 +12,7 @@
 
 extern "C" void Mem_Free(int pool, void* allocation, char* file, int line);
 struct Elem_A1B0 { char pad[0x20]; char live; };
-extern "C" void func_0013A1B0(Elem_A1B0* allocation, int pool, int destroy, char* file, int line)
+extern "C" void opDelete_cLosRequestP_int_bool_charP_etc(Elem_A1B0* allocation, int pool, int destroy, char* file, int line)
 {
     AllocGuard guard;
     if (destroy) {
@@ -71,10 +71,10 @@ void Mem_Free(int pool, void* p, const char* file, int line);
 #define Mem_Free(a0, a1, a2, a3) ((void)Mem_Free((a0), (a1), (char *)(a2), (a3))) /* merge_units */
 
 }
-extern "C" void func_0013A320(void* t, N_0013C030* n)
+extern "C" void std_tree_pair_cString_value_compare_destroy_nodeP(void* t, N_0013C030* n)
 {
-    if (n->left) func_0013A320(t, n->left);
-    if (n->right) func_0013A320(t, n->right);
+    if (n->left) std_tree_pair_cString_value_compare_destroy_nodeP(t, n->left);
+    if (n->right) std_tree_pair_cString_value_compare_destroy_nodeP(t, n->right);
     if (n->val) { if (n->val) String_Dtor(n->val, 0); }
     if (n) {
         AllocGuard g;

@@ -1,5 +1,5 @@
 /*
- * func_002C5590: member-wise copy-assignment of the 0x2E0-byte message payload
+ * cNetworkTransferNpc_ctor_cNetworkTransferNpcR: member-wise copy-assignment of the 0x2E0-byte message payload
  * copied by cNetCopyMsg_Clone (field types follow the retail loads).
  */
 #include "types.h"
@@ -8,8 +8,8 @@
 static inline void V4CopyG(void* d0, const void* s0) { void* d = d0; __int128 q; const void* s = s0; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
 typedef struct V4 { float x, y, z, w; } __attribute__((aligned(16))) V4;
 typedef struct Q16 { int w[4]; } __attribute__((aligned(16))) Q16;
-extern Mat3Words* func_002C5A80(Mat3Words* dst, Mat3Words* src);
-extern Word* func_002C5A70(Word* dst, Word* src);
+extern Mat3Words* cBitArray_256_ctor(Mat3Words* dst, Mat3Words* src);
+extern Word* cNpcTransfer_cStateID_ctor(Word* dst, Word* src);
 extern V4* Vec4_Assign(V4* dst, V4* src);
 typedef struct Payload2C5590 {
     float f000;
@@ -173,7 +173,7 @@ typedef struct Payload2C5590 {
     unsigned char b2DC;
     char pad2DD[0x3];
 } Payload2C5590;
-Payload2C5590* func_002C5590(Payload2C5590* d, Payload2C5590* s) {
+Payload2C5590* cNetworkTransferNpc_ctor_cNetworkTransferNpcR(Payload2C5590* d, Payload2C5590* s) {
     d->f000 = s->f000;
     d->i004 = s->i004;
     d->i008 = s->i008;
@@ -197,7 +197,7 @@ Payload2C5590* func_002C5590(Payload2C5590* d, Payload2C5590* s) {
     d->i050 = s->i050;
     d->i054 = s->i054;
     d->f058 = s->f058;
-    func_002C5A80(&d->o05C, &s->o05C);
+    cBitArray_256_ctor(&d->o05C, &s->o05C);
     d->i080 = s->i080;
     d->i084 = s->i084;
     d->i088 = s->i088;
@@ -205,7 +205,7 @@ Payload2C5590* func_002C5590(Payload2C5590* d, Payload2C5590* s) {
     d->i090 = s->i090;
     d->i094 = s->i094;
     Vec4_Assign(&d->o0A0, &s->o0A0);
-    func_002C5A70(&d->o0B0, &s->o0B0);
+    cNpcTransfer_cStateID_ctor(&d->o0B0, &s->o0B0);
     d->i0B4 = s->i0B4;
     d->i0B8 = s->i0B8;
     d->i0BC = s->i0BC;

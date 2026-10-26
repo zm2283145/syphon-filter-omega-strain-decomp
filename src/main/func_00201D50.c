@@ -1,18 +1,18 @@
 #include "types.h"
 
-extern int func_00201E80(void* src);
-extern void func_00201DC0(void* self, int value);
-extern int func_00201C10(void* src);
-extern int func_00201BC0(void* src);
-extern void func_00209680(void* self, int first, int last, char alloc);
+extern int std_vector_deleter_cSkaBlendSequenceItem_alloc_void(void* src);
+extern void std_vector_deleter_cSkaBlendSequenceItem_ctor_cAllocatorR(void* self, int value);
+extern int std_vector_imp_cSkaBlendSequenceItem_begin_void(void* src);
+extern int std_vector_imp_cSkaBlendSequenceItem_end_void_2(void* src);
+extern void std_vector_imp_cSkaBlendSequenceItem_init(void* self, int first, int last, char alloc);
 
 /* Copy-constructs self from src: header, then the range [begin, end) of src. */
-void* func_00201D50(void* self, void* src) {
+void* std_vector_imp_cSkaBlendSequenceItem_ctor_vectorimpR(void* self, void* src) {
     volatile char alloc[4];
     int first, last;
-    func_00201DC0(self, func_00201E80(src));
-    first = func_00201C10(src);
-    last = func_00201BC0(src);
-    func_00209680(self, first, last, alloc[0]);
+    std_vector_deleter_cSkaBlendSequenceItem_ctor_cAllocatorR(self, std_vector_deleter_cSkaBlendSequenceItem_alloc_void(src));
+    first = std_vector_imp_cSkaBlendSequenceItem_begin_void(src);
+    last = std_vector_imp_cSkaBlendSequenceItem_end_void_2(src);
+    std_vector_imp_cSkaBlendSequenceItem_init(self, first, last, alloc[0]);
     return self;
 }

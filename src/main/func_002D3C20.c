@@ -4,7 +4,7 @@ extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
 extern void cNPC_v71(B5eObj* o, float x);
 extern void NetEvent_Send(void* owner, int id, int size, unsigned int v, int a, int b, int c);
-void func_002D3C20(B5eObj* o, float x) {
+void cNetNPC_ActivateByRadius(B5eObj* o, float x) {
     if (g_IsMultiplayer ? D_005721C0 : 1) {
         cNPC_v71(o, x);
     }

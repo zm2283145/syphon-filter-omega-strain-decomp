@@ -8,7 +8,7 @@ typedef struct {
 } Dec;
 
 /* Switches the decoder to state 2 (copying +0x130 to +0xC4 on entry) and sets the +0x838 flag. */
-void func_00109128(Dec* d)
+void _markOutput(Dec* d)
 {
     if (d->state != 2) {
         d->state = 2;

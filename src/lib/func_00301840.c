@@ -1,5 +1,5 @@
 /* Busy-wait delay; asm nops are the delay padding (gcc 2.96 emits one extra nop per group). */
-int func_00301840(void)
+int DorkFunk(void)
 {
     int i;
     int c;

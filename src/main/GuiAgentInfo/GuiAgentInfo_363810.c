@@ -56,7 +56,7 @@ DEFINE_TRIVIAL_DTOR(func_003638E0)
 #include "base_dtor_chain.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_00363930, func_001AF8E0)
+DEFINE_BASE_DTOR_CHAIN(func_00363930, std_vector_imp_cSkeletonBBoxContributionPtr_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00363930 */
 

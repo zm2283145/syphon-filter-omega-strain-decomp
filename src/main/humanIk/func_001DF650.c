@@ -12,7 +12,7 @@ static inline bool K1DF650_less(const K1DF650& x, const K1DF650& y)
 {
     return x.a < y.a || (x.a == y.a && x.b < y.b);
 }
-extern "C" void func_001DF650(R1DF650* out, T1DF650* t, const K1DF650* k)
+extern "C" void std_tree_pair_cWeaponSlotPair_value_compare_insert_one(R1DF650* out, T1DF650* t, const K1DF650* k)
 {
     bool left = true;
     N1DF650* j = 0;

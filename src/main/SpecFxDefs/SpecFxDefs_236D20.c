@@ -85,7 +85,7 @@ public:
 struct Raw00236EA0 { int id; void* vt; };
 extern "C" char D_004DBE90[];
 extern "C" char D_004D9280[];
-extern "C" void func_003EC950(void* p);
+extern "C" void cSpecFx_opDelete(void* p);
 extern "C" Obj00236EA0* ParticleEffectComp_Destroy(Obj00236EA0* self, short deleteFlag)
 {
     if (self) {
@@ -95,7 +95,7 @@ extern "C" Obj00236EA0* ParticleEffectComp_Destroy(Obj00236EA0* self, short dele
         if (self)
             r->vt = D_004D9280;
         if (deleteFlag > 0)
-            func_003EC950(self);
+            cSpecFx_opDelete(self);
     }
     return self;
 }
@@ -134,7 +134,7 @@ extern G236F SpecFxTable;
 
 extern int g_TextureMgr;
 extern void Tex_Release(int a, int b, int c);
-void func_00236F80(void)
+void nSfxLoader_UnloadEffects(void)
 {
     int i;
     for (i = 0; i < 15; i++) {

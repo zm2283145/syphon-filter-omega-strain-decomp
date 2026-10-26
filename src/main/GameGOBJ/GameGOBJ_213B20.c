@@ -82,10 +82,10 @@ typedef struct { void* vt; char base[0x1C]; unsigned char action; char pad21[3];
 typedef struct { char pad[0x10]; int transport; char pad14[0xF8]; int nfloors; int* locks; } Lift_f4;
 extern char D_004F54C8[];
 extern void Message_GetScriptTypeKey();
-extern void func_00211680();
-extern void func_00213D60();
-extern void func_0021BA80();
-void * const D_004DAEF0[8] = { (void*)0x0, (void*)0x0, (void*)func_00213D60, (void*)func_0021BA80, (void*)func_00211680, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
+extern void cNetLockElevatorMsg_Pack();
+extern void cNetLockElevatorMsg_dtor();
+extern void cNetLockElevatorMsg_Clone();
+void * const D_004DAEF0[8] = { (void*)0x0, (void*)0x0, (void*)cNetLockElevatorMsg_dtor, (void*)cNetLockElevatorMsg_Clone, (void*)cNetLockElevatorMsg_Pack, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 #if 0 /* merge_units */
 extern void Event_Construct(LiftMsg_f4*, void*);
 #endif /* merge_units */

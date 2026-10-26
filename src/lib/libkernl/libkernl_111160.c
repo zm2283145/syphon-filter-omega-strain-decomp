@@ -1,7 +1,7 @@
 typedef struct { int currentCount; int maxCount; int initCount; int numWaitThreads; unsigned int attr; unsigned int option; } SemaParam1160;
 extern int CreateSema(SemaParam1160 *);
 int D_00486244 = -1;
-void func_00111160(void)
+void _sceFsSemInit(void)
 {
     SemaParam1160 p;
     if (D_00486244 == -1) {

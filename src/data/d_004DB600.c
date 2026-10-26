@@ -5,20 +5,20 @@ extern void cDespawnedNPCMsg_v01();
 extern void cDespawnedNPCMsg_v02();
 extern void cDespawnedNPCMsg_v03();
 extern void cGeneratorMessageBase_dtor();
+extern void cGeneratorMessageBase_getSOBJClassId();
 extern void cGeneratorMessageBase_v01();
 extern void cGeneratorMessageBase_v02();
+extern void cGeneratorMessage_Clone();
+extern void cGeneratorMessage_Pack();
 extern void cSpawnedNPCMsg_dtor();
 extern void cSpawnedNPCMsg_v01();
 extern void cSpawnedNPCMsg_v02();
 extern void cSpawnedNPCMsg_v03();
 extern void func_00157D20();
-extern void func_0021D100();
-extern void func_0021D370();
-extern void func_00222410();
 
 void *D_004DB600[8] = {
-    0, 0, &func_00157D20, &func_00222410,
-    &func_0021D370, &func_0021D100, 0, 0,
+    0, 0, &func_00157D20, &cGeneratorMessage_Clone,
+    &cGeneratorMessage_Pack, &cGeneratorMessageBase_getSOBJClassId, 0, 0,
 };
 
 void *D_004DB620[8] = {
@@ -33,5 +33,5 @@ void *D_004DB640[8] = {
 
 void *D_004DB660[8] = {
     0, 0, &cGeneratorMessageBase_dtor, &cGeneratorMessageBase_v01,
-    &cGeneratorMessageBase_v02, &func_0021D100, 0, 0,
+    &cGeneratorMessageBase_v02, &cGeneratorMessageBase_getSOBJClassId, 0, 0,
 };

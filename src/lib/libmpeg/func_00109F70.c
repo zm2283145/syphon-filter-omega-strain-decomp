@@ -9,7 +9,7 @@ typedef struct {
     unsigned char *end;
 } BitStream9f70;
 
-void func_00109F70(BitStream9f70 *s, int n)
+void _sysbitFlush(BitStream9f70 *s, int n)
 {
     s->buf <<= n;
     s->bits -= n;

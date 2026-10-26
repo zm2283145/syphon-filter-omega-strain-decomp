@@ -7,7 +7,7 @@
 /* merge_units: begin func_00319E00 */
 extern float D_004E1BCC;
 extern float Math_Cos(float x);
-void func_00319E00(float *buf, int n, float a, float b)
+void WindowKernel(float *buf, int n, float a, float b)
 {
     int half = n >> 1;
     float *lo = buf;
@@ -59,7 +59,7 @@ void func_00319E00(float *buf, int n, float a, float b)
 /* merge_units: begin func_0031A018 */
 typedef struct { int n; int x4; void *buf; } ObjA018;
 extern void *(*D_004E1D34)(int n, int size);
-int func_0031A018(int n, ObjA018 **out)
+int InitSpCBM(int n, ObjA018 **out)
 {
     ObjA018 *o = D_004E1D34(1, 0xC);
     if (o == 0) return 1;
@@ -74,7 +74,7 @@ int func_0031A018(int n, ObjA018 **out)
 /* merge_units: begin func_0031A090 */
 typedef struct { char pad[8]; void *buf; } ObjA090;
 extern void (*D_004E1D38)(void *p);
-void func_0031A090(ObjA090 **pp)
+void FreeSpCBM(ObjA090 **pp)
 {
     if (*pp == 0) return;
     if ((*pp)->buf) {
@@ -91,13 +91,13 @@ void func_0031A090(ObjA090 **pp)
 /* merge_units: begin func_0031A0F0 */
 typedef struct { int pos; int size; float *buf; } RingA0F0;
 extern int (*D_004E1D40)(void *d, const void *s, int n);
-extern int func_0031A2A8(int a, int size, int pos);
-void func_0031A0F0(RingA0F0 *r, int off, int n, float *in)
+extern int CalcCircBufPosition(int a, int size, int pos);
+void PutFrameSpCBM(RingA0F0 *r, int off, int n, float *in)
 {
     int pos = r->pos;
     int size = r->size;
     float *buf = r->buf;
-    int i = func_0031A2A8(off, size, pos);
+    int i = CalcCircBufPosition(off, size, pos);
     int rem = pos - i;
     if (rem >= n) {
         D_004E1D40(buf + i, in, n * 4);
@@ -105,18 +105,18 @@ void func_0031A0F0(RingA0F0 *r, int off, int n, float *in)
         D_004E1D40(buf + i, in, rem * 4);
         D_004E1D40(buf, in + rem, (n - rem) * 4);
     }
-    r->size = func_0031A2A8(n, size, pos);
+    r->size = CalcCircBufPosition(n, size, pos);
 }
 /* merge_units: end func_0031A0F0 */
 
 /* merge_units: begin func_0031A1E0 */
 typedef struct { int pos; int size; float *buf; } RingA1E0;
-void func_0031A1E0(RingA1E0 *r, int off, int n, float *out)
+void GetFrameSpCBM(RingA1E0 *r, int off, int n, float *out)
 {
     int pos = r->pos;
     int size = r->size;
     float *buf = r->buf;
-    int i = func_0031A2A8(-(off + ((n + 1) >> 1)), size, pos);
+    int i = CalcCircBufPosition(-(off + ((n + 1) >> 1)), size, pos);
     int rem = pos - i;
     if (rem >= n) {
         D_004E1D40(out, buf + i, n * 4);

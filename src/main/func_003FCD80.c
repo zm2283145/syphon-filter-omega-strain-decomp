@@ -1,6 +1,6 @@
 #include "types.h"
 
-int func_003FCD80(int a0) {
+int cNetObj_tPingInfo_ctor(int a0) {
     int a1, v0, v1;
     int cond;
 

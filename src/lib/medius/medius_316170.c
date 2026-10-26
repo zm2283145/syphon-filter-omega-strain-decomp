@@ -10,8 +10,8 @@ typedef struct {
     Slot6170 slots[64];
 } Q6170;
 extern void *memcpy(void *d, const void *s, unsigned int n);
-unsigned int func_00315FC8(Q6170 *q);
-unsigned int func_00316170(Q6170 *q, unsigned char *out, unsigned int size)
+unsigned int GetVDataBytes(Q6170 *q);
+unsigned int GetVSequenceData(Q6170 *q, unsigned char *out, unsigned int size)
 {
     unsigned int need;
     unsigned int seq;
@@ -20,7 +20,7 @@ unsigned int func_00316170(Q6170 *q, unsigned char *out, unsigned int size)
     unsigned int n;
     Slot6170 *s;
 
-    got = func_00315FC8(q);
+    got = GetVDataBytes(q);
     if (got == 0)
         return got;
     if (size < got)

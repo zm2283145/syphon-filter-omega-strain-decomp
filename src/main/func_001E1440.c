@@ -6,14 +6,14 @@
 
 #include "types.h"
 
-int* func_001E1440(PtrVec* v) {
+int* std_vector_imp_cCollisionEdgePtr_1_end(PtrVec* v) {
     return v->data + v->count;
 }
 
-void func_001E1460(Iter* out, void* self, Iter* src) {
+void std_vector_cCollisionEdgePtr_pointer2iterator(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }
 
-int* func_001E1470(PtrVec* v) {
+int* std_vector_imp_cCollisionEdgePtr_1_begin(PtrVec* v) {
     return v->data;
 }

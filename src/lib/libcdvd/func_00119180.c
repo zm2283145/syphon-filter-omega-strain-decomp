@@ -6,7 +6,7 @@ extern char D_00488A50[];
 extern char D_00488A80[];
 extern char D_00488EC0[];
 extern char D_00489400[];
-int func_00119180(int cmd,int *out){
+int _sceCdSC(int cmd,int *out){
  int v;
  if(cmd!=0x8001){
   if(cmd!=0x8003){

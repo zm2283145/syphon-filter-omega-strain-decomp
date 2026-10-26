@@ -42,7 +42,7 @@ extern float D_005392E4;
 extern float D_005392E8;
 extern float D_005392EC;
 float Math_Atan2f(float y, float x);
-void func_001D3E20(TM* m);
+void cMatrix_ctor_void(TM* m);
 void Mtx_MakeAxisRotation(TM* m, float x, float y, float z, float a);
 void Mtx_Multiply(M* a, TM* b);
 void Model_Draw(void* model, int mode, M* m);
@@ -56,7 +56,7 @@ static inline void CpV(V* dst, const V* src) { V* p = dst; __int128 q; __asm__ v
 static inline void Rot2(M* m, const V& ax, float a)
 {
     TM t;
-    func_001D3E20(&t);
+    cMatrix_ctor_void(&t);
     Mtx_MakeAxisRotation(&t, ax.x, ax.y, ax.z, a);
     Mtx_Multiply(m, &t);
 }

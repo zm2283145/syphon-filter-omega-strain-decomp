@@ -22,10 +22,10 @@
 extern "C" {
 static const unsigned int dat_00497590[2] = { 0x1, 0x0 };
 static const unsigned int dat_00497598[2] = { 0x0, 0x0 };
-TUNode* func_0043B6F0(TUTree* t, TUNode* parent, bool left, bool first,
+TUNode* std_tree_pair_tGenInfoPtr_value_compare_insert_node_at(TUTree* t, TUNode* parent, bool left, bool first,
                  const unsigned int* v);
 }
-extern "C" void func_0043B340(TUPair* ret, TUTree* t, const unsigned int* v)
+extern "C" void std_tree_pair_tGenInfoPtr_value_compare_insert_one(TUPair* ret, TUTree* t, const unsigned int* v)
 {
     bool left = true;
     bool first = left;
@@ -45,7 +45,7 @@ extern "C" void func_0043B340(TUPair* ret, TUTree* t, const unsigned int* v)
         }
     }
     if (!y || y->key < *v) {
-        ret->it = func_0043B6F0(t, parent, left, first, v);
+        ret->it = std_tree_pair_tGenInfoPtr_value_compare_insert_node_at(t, parent, left, first, v);
         ret->ok = (*(bool*)dat_00497590);
     } else {
         ret->it = y;
@@ -61,6 +61,6 @@ static inline void merge_flush_func_0043B340(void) {}
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-DEFINE_TREE_ERASE3(func_0043B410, 0xC, func_0043B9D0, func_0043B9B0, func_0043B9C0, func_0043B910, func_0043B860, D_004BFDB0, 0x64)
+DEFINE_TREE_ERASE3(std_tree_pair_tGenInfoPtr_value_compare_destroy, 0xC, std_tree_pair_tGenInfoPtr_value_compare_alloc, std_tree_pair_tGenInfoPtr_value_compare_node_alloc, cAllocator_pair_tGenInfoPtr_destroy, cAllocator_node_deallocate_nodeP_uint_18, opDelete_nodeP_int_bool_charP_etc_18, D_004BFDB0, 0x64)
 #pragma pop /* merge_units */
 /* merge_units: end func_0043B410 */

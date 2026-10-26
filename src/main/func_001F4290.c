@@ -1,10 +1,10 @@
 #include "types.h"
-extern void func_001F42D0(int* out);
-extern void func_001F41C0(void* obj, int* value);
-/* Fetch a value with func_001F42D0 and pass it to func_001F41C0. */
-void func_001F4290(void* obj)
+extern void std_list_cSkaBlendSequenceItemPtr_begin(int* out);
+extern void cConstLListIterator_cSkaBlendSequenceItemPtr_ctor(void* obj, int* value);
+/* Fetch a value with std_list_cSkaBlendSequenceItemPtr_begin and pass it to cConstLListIterator_cSkaBlendSequenceItemPtr_ctor. */
+void cLList_cSkaBlendSequenceItemPtr_Begin(void* obj)
 {
     int value;
-    func_001F42D0(&value);
-    func_001F41C0(obj, &value);
+    std_list_cSkaBlendSequenceItemPtr_begin(&value);
+    cConstLListIterator_cSkaBlendSequenceItemPtr_ctor(obj, &value);
 }

@@ -51,29 +51,29 @@ int ReferThreadStatus(int tid, EeThreadParam* st);
 int ChangeThreadPriority(int tid, int prio);
 int iWakeupThread(int tid);
 int DelayThread(int prio);
-void func_002EABF0(NetHostCfg_A1B0* cfg);
-int func_002EAC88(NetHostCfg_A1B0* cfg, NetHostOut_A1B0* out);
-int func_002EBC48(int* t);
+void NetSetDefaultJoinParams(NetHostCfg_A1B0* cfg);
+int NetJoin(NetHostCfg_A1B0* cfg, NetHostOut_A1B0* out);
+int NetGetLocalTime(int* t);
 int DME_Update(void);
 void DME_OnJoinResult(void);
 void Net_OnRemoteClientJoined(void);
-int func_00437BF0(void);
-int func_002EC6A0(int);
-int func_002EC738(int);
+int cHeadSet_ShutdownAudio(void);
+int NetLeave(int);
+int NetDisconnect(int);
 void Net_ResetSession(void);
 char* strncpy(char* d, const char* s, unsigned int n);
 int sprintf(char* d, const char* f, ...);
 }
-static inline int NetTimeMs(void) { int t; return func_002EBC48(&t) == 0 ? t : -1; }
+static inline int NetTimeMs(void) { int t; return NetGetLocalTime(&t) == 0 ? t : -1; }
 enum NetRole_A1B0 { ROLE_CLIENT_A1B0, ROLE_HOST_A1B0 };
 static inline int IsHost(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 /* leaves the game and records "F_TO_JOINGAME" as the disconnect reason */
 static inline void AbortJoin(void)
 {
     D_00497540 = 1;
-    func_00437BF0();
-    func_002EC6A0(0);
-    func_002EC738(0);
+    cHeadSet_ShutdownAudio();
+    NetLeave(0);
+    NetDisconnect(0);
     Net_ResetSession();
     D_005721D8 = 1;
     sprintf(D_005721E0, D_004BFA18);
@@ -112,7 +112,7 @@ extern "C" void DME_JoinGame(void)
     if (D_005724B0 != DME_STATE_JOINED && D_005724B0 != DME_STATE_DISCONNECTED) {
     D_005724B0 = DME_STATE_JOINING;
     name = D_004BFA10;
-    func_002EABF0(&cfg);
+    NetSetDefaultJoinParams(&cfg);
     cfg.handle = D_005721A8;
     strncpy(cfg.name, name, 0xC);
     cfg.unk14 = 0x1F4;
@@ -122,7 +122,7 @@ extern "C" void DME_JoinGame(void)
     cfg.unk24 = 0;
     cfg.onClientJoined = Net_OnRemoteClientJoined;
     cfg.unk2C = 0;
-    err = func_002EAC88(&cfg, &out);
+    err = NetJoin(&cfg, &out);
     if (err == 0) {
     deadline = NetTimeMs() + 15000;
     if (IsHost()) {

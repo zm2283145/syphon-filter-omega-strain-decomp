@@ -1,6 +1,6 @@
 typedef struct { unsigned int hdr; int len; char data[504]; } E315FC8;
 typedef struct { unsigned int cur; int x4; int count; E315FC8 e[64]; } S315FC8;
-int func_00315FC8(S315FC8 *s)
+int GetVDataBytes(S315FC8 *s)
 {
     unsigned int first = 0;
     int total = 0;

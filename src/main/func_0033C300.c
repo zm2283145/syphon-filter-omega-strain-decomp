@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-Rel* func_0033C300(Rel* r) {
+Rel* std_vector_Record_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

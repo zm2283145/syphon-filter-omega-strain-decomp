@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046D180(void) {
+int MediusUniqueCallbackSetGameListFilterRequestHandler(void) {
     return 52;
 }

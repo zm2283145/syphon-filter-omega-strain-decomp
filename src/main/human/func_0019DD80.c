@@ -39,7 +39,7 @@ extern void AnimChannel_SetTarget(void* a, int idx, unsigned int n, float target
 extern void AnimChannel_Approach(void* a, int idx, unsigned int n, float target, float rate);
 extern float AnimChannel_GetCurrentValue(void* a, int idx);
 extern float AnimChannel_GetTarget(void* a, int idx);
-extern void func_0019D6C0(void* a, int idx, int n);
+extern void cSkaParams_SetSwitchNextGoalState(void* a, int idx, int n);
 
 }
 typedef unsigned char u8;
@@ -110,7 +110,7 @@ extern "C" void Actor_PrepareNeutralChannels(Actor* self, int b, int c, int d, i
         Q4_Zero(&((ActorB*)self)->v3040);
     }
     if (!c) {
-        func_0019D6C0(blk->anim, 3, 0);
+        cSkaParams_SetSwitchNextGoalState(blk->anim, 3, 0);
     }
 }
 

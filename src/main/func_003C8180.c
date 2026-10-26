@@ -22,10 +22,10 @@ void Libc_Abort(void);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void Mem_Free(int pool, void* p, char* file, int line);
 void Vec4_Copy(Q8180* d, Q8180* s);
-void func_00139BB0(void* d, void* s);
-void func_00139BA0(void* d, void* s);
+void cCollisionModel_FaceProperties_opAssign(void* d, void* s);
+void cCollisionModel_FaceLocator_opAssign(void* d, void* s);
 void* Mem_PlacementNew(int size, void* p);
-void func_00139B00(void* d, void* s);
+void cCollisionFace_ctor_cCollisionFaceR(void* d, void* s);
 }
 struct CandVec8180 { unsigned int cap; unsigned int count; Cand8180* data; };
 static inline void Assign8180(Cand8180* d, Cand8180* s) {
@@ -34,14 +34,14 @@ static inline void Assign8180(Cand8180* d, Cand8180* s) {
     Vec4_Copy(&d->rows[2], &s->rows[2]);
     Vec4_Copy(&d->rows[3], &s->rows[3]);
     d->flag50 = s->flag50;
-    func_00139BB0(d->part40, s->part40);
-    func_00139BA0(d->part60, s->part60);
+    cCollisionModel_FaceProperties_opAssign(d->part40, s->part40);
+    cCollisionModel_FaceLocator_opAssign(d->part60, s->part60);
     d->flag51 = s->flag51;
     d->flag52 = s->flag52;
 }
 static inline void Construct8180(Cand8180* d, Cand8180* s) {
     void* p = Mem_PlacementNew(0x70, d);
-    if (p) func_00139B00(p, s);
+    if (p) cCollisionFace_ctor_cCollisionFaceR(p, s);
 }
 static inline const unsigned int& Min8180(const unsigned int& a, const unsigned int& b) {
     return b < a ? b : a;

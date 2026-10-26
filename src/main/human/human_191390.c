@@ -16,19 +16,19 @@
  */
 
 
-int func_00191390(char* self) {
+int cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opMul(char* self) {
     return *(int*)(self + 0);
 }
 
-void func_001913A0(Iter* out, PtrVec* v) {
+void cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_End(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
 
-void func_001913C0(Iter* out, PtrVec* v) {
+void cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 
-void* func_001913D0(char* self) {
+void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(char* self) {
     return self + 180;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -41,7 +41,7 @@ static inline void merge_flush_func_00191390(void) {}
 typedef struct { char pad[0xB8]; void* unkB8; } ObjB8;
 
 /* Returns whether the pointer field at +0xB8 is set. */
-int func_001913E0(ObjB8* o)
+int cTreeNode_cSkaAnimAnchor_TreeNodeData_HasChildren(ObjB8* o)
 {
     return (o->unkB8 == 0) ^ 1;
 }

@@ -13,7 +13,7 @@
 typedef struct { char pad[0x24]; void* tank; int value; } cNetCreateTankMsg;
 
 extern unsigned char* D_005061D0; /* network write cursor */
-extern void func_00284750(void* tank);
+extern void cTank_NetPack(void* tank);
 
 static inline void write16(int v)
 {
@@ -28,7 +28,7 @@ void cNetCreateTankMsg_v04(cNetCreateTankMsg* self)
     int value = self->value;
     write16((unsigned short)value);
     write16(value >> 16);
-    func_00284750(self->tank);
+    cTank_NetPack(self->tank);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00284020(void) {}

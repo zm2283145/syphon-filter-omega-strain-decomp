@@ -8,7 +8,7 @@
 
 extern char D_00497D40[];
 
-int func_0046CCA8(void) {
+int MediusUniqueCallbackJoinChannelResponseHandler(void) {
     int v0;
     int cond;
 
@@ -23,6 +23,6 @@ ret:
     return v0;
 }
 
-int func_0046CCD8(void) {
+int MediusUniqueCallbackJoinChannelFwdRequestHandler(void) {
     return 38;
 }

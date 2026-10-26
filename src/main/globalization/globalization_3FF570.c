@@ -41,7 +41,7 @@ Obj003FF5D0** NetMap_Lookup(int);
 }
 #pragma push
 #pragma opt_propagation off
-extern "C" int func_003FF5D0(int a0, int a1, int a2, Pk003FF5D0* arg) {
+extern "C" int cDisableMsg_DisableCallback(int a0, int a1, int a2, Pk003FF5D0* arg) {
     NetRecvGuard g;
     if (D_005721D0) {
         Pk003FF5D0* p = arg;
@@ -127,18 +127,18 @@ int cEnableMsg_v03(void) {
 
 /* merge_units: begin func_003FF7D0 */
 #pragma push /* merge_units */
-extern int func_002E9A10(void);
+extern int NetRegisterMessageStart(void);
 extern int Event_UnpackHeader(void* p);
-extern int func_002E9A98(void* a, void* b, int c, int d);
-extern int func_002E9F08(void* t, void* fn);
+extern int NetMessageField(void* a, void* b, int c, int d);
+extern int NetRegisterApplicationMessage(void* t, void* fn);
 extern int D_0055D4C0;
-extern int func_003FF8B0();
-unsigned char func_003FF7D0(void) {
+extern int cEnableMsg_EnableCallback();
+unsigned char cEnableMsg_InitNet(void) {
     int ok[2];
     int buf[2];
     unsigned char r = 0;
-    if (func_002E9A10() == 0 && Event_UnpackHeader(buf) != 0 && func_002E9A98(buf, ok, 4, 1) == 0 &&
-        func_002E9F08(&D_0055D4C0, func_003FF8B0) == 0) {
+    if (NetRegisterMessageStart() == 0 && Event_UnpackHeader(buf) != 0 && NetMessageField(buf, ok, 4, 1) == 0 &&
+        NetRegisterApplicationMessage(&D_0055D4C0, cEnableMsg_EnableCallback) == 0) {
         r = 1;
     }
     return r;

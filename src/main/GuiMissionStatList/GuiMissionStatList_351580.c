@@ -29,6 +29,6 @@ void func_00351580(SsoString* self, const char* first, const char* last)
 #include "vector_erase_destroy.h"
 
 DEFINE_ERASE_ELEMENT(Elem3515D0, 0x5C)
-DEFINE_VECTOR_ERASE_DESTROY(func_003515D0, Elem3515D0, func_00351710, func_0034F720)
+DEFINE_VECTOR_ERASE_DESTROY(std_vector_imp_MissionStats_erase, Elem3515D0, std_msl_copy_MissionStats_copy, MissionStats_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003515D0 */

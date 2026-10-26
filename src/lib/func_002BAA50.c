@@ -1,7 +1,7 @@
 #include "types.h"
 
-extern int func_002BBD00(int);
+extern int _sceMcCoreCheckNewCard(int);
 
 int func_002BAA50(int a0) {
-    return func_002BBD00(a0);
+    return _sceMcCoreCheckNewCard(a0);
 }

@@ -36,12 +36,12 @@ typedef struct { Node_41F890* p; } It_41F890;
 typedef struct { int w[1]; } Raw_41F890;
 extern "C" {
 void List_Begin(Raw_41F890* out, void* list);
-void func_0028C0B0(It_41F890* out, Raw_41F890* raw);
-void func_0028C0A0(Raw_41F890* out, void* list);
-void func_0028C090(It_41F890* out, Raw_41F890* raw);
+void std_list_GuiWidgetPtr_generic_iterator_ctor(It_41F890* out, Raw_41F890* raw);
+void std_list_GuiWidgetPtr_end(Raw_41F890* out, void* list);
+void cLListIterator_GuiWidgetPtr_ctor_listR(It_41F890* out, Raw_41F890* raw);
 int String_AssignCStr_1C43A0(void* s, const char* key);
 }
-extern "C" Data_41F890* func_0041F890(void* o, const char* key)
+extern "C" Data_41F890* GuiWidgetList_FindByName(void* o, const char* key)
 {
     It_41F890 last;
     It_41F890 first;
@@ -49,8 +49,8 @@ extern "C" Data_41F890* func_0041F890(void* o, const char* key)
     Raw_41F890 rawEnd;
     Node_41F890* n;
     List_Begin(&rawFirst, o);
-    func_0028C0B0(&first, &rawFirst);
-    for (n = first.p; (func_0028C0A0(&rawEnd, o), func_0028C090(&last, &rawEnd), n != last.p); n = n->next) {
+    std_list_GuiWidgetPtr_generic_iterator_ctor(&first, &rawFirst);
+    for (n = first.p; (std_list_GuiWidgetPtr_end(&rawEnd, o), cLListIterator_GuiWidgetPtr_ctor_listR(&last, &rawEnd), n != last.p); n = n->next) {
         if (!String_AssignCStr_1C43A0(n->data->name, key))
             return n->data;
     }

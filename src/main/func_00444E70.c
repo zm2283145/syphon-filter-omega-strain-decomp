@@ -3,7 +3,7 @@
 int Medius_CloseReportLib();                                
 extern unsigned char D_00584518;
 
-int func_00444E70(void) {
+int SFOMGCL_Close_API(void) {
     int temp_v0;
 
     if (D_00584518 == 0) {

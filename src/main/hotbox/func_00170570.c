@@ -11,7 +11,7 @@ extern M_0570* g_HotboxTracker;
 void ActiveList_EraseMatching(void* list, Pred_0570 p);
 int* func_00170650(void* v, int i);
 }
-extern "C" void func_00170570(void)
+extern "C" void ResetInteractBoxes(void)
 {
     int key;
     Eq_0570 e1;

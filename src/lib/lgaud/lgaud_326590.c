@@ -8,7 +8,7 @@
 typedef struct { char days[12]; } MonthTable;
 typedef struct { char pad[5]; unsigned char day; unsigned char month; unsigned char year; } Date;
 extern const unsigned int D_004B8620[4];
-void func_00326590(Date* d)
+void subdate(Date* d)
 {
     MonthTable t = (*(MonthTable*)D_004B8620);
     d->day--;
@@ -29,12 +29,12 @@ void func_00326590(Date* d)
 
 /* merge_units: begin func_00326638 */
 typedef struct { unsigned char a, b, min, hour; } T326638;
-extern void func_003264D8(T326638* t);
-void func_00326638(T326638* t)
+extern void adddate(T326638* t);
+void addhour(T326638* t)
 {
     if (++t->hour == 24) {
         t->hour = 0;
-        func_003264D8(t);
+        adddate(t);
     }
 }
 /* merge_units: end func_00326638 */
@@ -42,49 +42,49 @@ void func_00326638(T326638* t)
 /* merge_units: begin func_00326668 */
 typedef struct { unsigned char a, b, min, hour; } T326668;
 #if 0 /* merge_units */
-extern void func_00326590(T326668* t);
+extern void subdate(T326668* t);
 #endif /* merge_units */
-#define func_00326590(a0) (func_00326590((Date *)(a0))) /* merge_units */
+#define subdate(a0) (subdate((Date *)(a0))) /* merge_units */
 
-void func_00326668(T326668* t)
+void subhour(T326668* t)
 {
     if (t->hour == 0) {
         t->hour = 23;
-        func_00326590(t);
+        subdate(t);
     } else {
         t->hour--;
     }
 }
-#undef func_00326590 /* merge_units */
+#undef subdate /* merge_units */
 /* merge_units: end func_00326668 */
 
 /* merge_units: begin func_00326690 */
 typedef struct { unsigned char a, b, min, d; } T326690;
-extern void func_00326408(T326690* t);
+extern void convertfrombcd(T326690* t);
 #if 0 /* merge_units */
-extern void func_00326638(T326690* t);
+extern void addhour(T326690* t);
 #endif /* merge_units */
-#define func_00326638(a0) (func_00326638((T326638 *)(a0))) /* merge_units */
+#define addhour(a0) (addhour((T326638 *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_00326668(T326690* t);
+extern void subhour(T326690* t);
 #endif /* merge_units */
-#define func_00326668(a0) (func_00326668((T326668 *)(a0))) /* merge_units */
+#define subhour(a0) (subhour((T326668 *)(a0))) /* merge_units */
 
-extern void func_00326470(T326690* t);
-void func_00326690(T326690* t, int delta)
+extern void converttobcd(T326690* t);
+void AdjustTime(T326690* t, int delta)
 {
     int d;
-    func_00326408(t);
+    convertfrombcd(t);
     d = t->min + delta;
     if (d >= 0) {
-        while (d >= 60) { func_00326638(t); d -= 60; }
+        while (d >= 60) { addhour(t); d -= 60; }
     } else {
-        while (d < 0) { d += 60; func_00326668(t); }
+        while (d < 0) { d += 60; subhour(t); }
     }
     t->min = d;
-    func_00326470(t);
+    converttobcd(t);
 }
-#undef func_00326638 /* merge_units */
-#undef func_00326668 /* merge_units */
+#undef addhour /* merge_units */
+#undef subhour /* merge_units */
 /* merge_units: end func_00326690 */

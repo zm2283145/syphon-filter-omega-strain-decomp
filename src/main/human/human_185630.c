@@ -52,8 +52,8 @@ extern "C" {}
 struct Ctl_56D0 { VPAD16(a) VPAD2(b) VPAD1(c) virtual int isNet(); };
 typedef struct { char pad[0xC]; int idC; int id10; char pad14[0x18]; unsigned char b2C; unsigned char b2D; unsigned char b2E; char pad2F[0x29]; Ctl_56D0* ctl; } Obj_56D0;
 extern "C" {
-int func_003FBC40(int id);
-void func_002D1FF0(void* key, int id);
+int cNetObj_IsOwner(int id);
+void cNetHuman_CreateNetHuman(void* key, int id);
 int NetMap_BindReceiver(int id, int owner, Obj_56D0* o);
 }
 static inline unsigned char IsNet_56D0(Obj_56D0* o)
@@ -63,15 +63,15 @@ static inline unsigned char IsNet_56D0(Obj_56D0* o)
     if (c && c->isNet()) ok = 1;
     return ok;
 }
-extern "C" void func_001856D0(Obj_56D0* o)
+extern "C" void cHuman_InitNetwork(Obj_56D0* o)
 {
     if (IsNet_56D0(o)) o->id10 = o->idC;
     else { int v = o->idC; if (v == -1) o->id10 = v; else { o->id10 = v; asm { .set reorder } /* barrier: keeps the identical arms from merging */ } }
-    if (IsNet_56D0(o) || func_003FBC40(o->id10)) {
+    if (IsNet_56D0(o) || cNetObj_IsOwner(o->id10)) {
         int ok = o->b2D != 0;
         ok = ok ? o->b2C != 0 : ok;
         ok = ok ? (o->b2E != 0) ^ 1 : ok;
-        if (ok) func_002D1FF0(&o->idC, o->id10);
+        if (ok) cNetHuman_CreateNetHuman(&o->idC, o->id10);
     }
     {
         int t = o->id10;
@@ -87,18 +87,18 @@ static inline void merge_flush_func_001856D0(void) {}
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" {
-int func_003FA780(int* a, unsigned char* flag, void** p);
+int cNetObj_GetDelayedMsgs(int* a, unsigned char* flag, void** p);
 void Coop_CreatePartnerActor(void* p, int a);
-void func_002C6690(void* p, int a);
+void netCreateNPC_HandleNetNPCCreate(void* p, int a);
 }
-extern "C" void func_00185840(void)
+extern "C" void cHuman_LoadNetworkData(void)
 {
     unsigned char flag;
     void* p;
     int a;
-    while (func_003FA780(&a, &flag, &p)) {
+    while (cNetObj_GetDelayedMsgs(&a, &flag, &p)) {
         if (flag) Coop_CreatePartnerActor(p, a);
-        else func_002C6690(p, a);
+        else netCreateNPC_HandleNetNPCCreate(p, a);
         {
             void* q = p;
             AllocGuard guard;
@@ -113,7 +113,7 @@ static inline void merge_flush_func_00185840(void) {}
 
 /* merge_units: begin func_00185940 */
 #pragma push /* merge_units */
-void func_00185940(int a0, int a1) {
+void cHuman_SetNetworkID(int a0, int a1) {
     int v1;
     int cond;
 
@@ -140,7 +140,7 @@ static inline void merge_flush_func_00185940(void) {}
 class C_185970 { public: VPAD32(a) virtual unsigned char Mode(); char pad4[0x40]; void* t44; void* t48; char pad4C[0x1E0 - 0x4C]; void* t1E0; void* t1E4; };
 struct R_185970 { char pad[0x10]; char* target; };
 struct O_185970 { char pad[0x58]; C_185970* ctl; char pad5C[0x3584 - 0x5C]; char* target; };
-extern "C" void func_00185970(O_185970* o, R_185970* r)
+extern "C" void cHuman_SetupNetworkFields(O_185970* o, R_185970* r)
 {
     if (r->target) {
         o->target = r->target;

@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_00201E90(void* self) {
+void* details_compressed_pair_imp_cAllocator_cSkaBlendSequenceItem_int_1_first_void(void* self) {
     return self;
 }

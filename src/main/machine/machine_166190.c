@@ -29,7 +29,7 @@ int Archive_GetMemberName(char *, int);
 int FileMan_FindMember(char *);
 int FileMan_Release(char *, int);
 int Resource_Construct(char *);
-int func_003816F0(int, char *);
+int cTexMan_RemoveTextureFromFile(int, char *);
 int ArchiveList_CloseNamed(char *, char *);
 extern int D_0048A030;
 extern int D_0048A038;
@@ -100,7 +100,7 @@ void App_Teardown(PS0_00166190 *arg0) {
                 M270_00166190 *m = arg0->f270;
                 Hog_Register((char *)sp50, Archive_GetMemberName((char *)m, i), (char *)m, 0);
                 FileMan_FindMember((char *)sp50);
-                func_003816F0(g_TextureMgr, (char *)sp50);
+                cTexMan_RemoveTextureFromFile(g_TextureMgr, (char *)sp50);
             }
             ArchiveList_CloseNamed(&D_004FFB8C, (char *)arg0->f270);
             FileMan_Release((char *)sp50, -1);
@@ -125,9 +125,9 @@ int LoadingScreen_StartThread(char *);
 int LoadingScreen_SetProgress(int, float);                            
 int LoadingScreen_Setup(int);                               
 int LoadingScreen_ctor(int, int, char *);                            
-int func_0036E4B0(char *, int, int, int);                    
+int cFileMan_ctor_charP_cFileIOP_bool(char *, int, int, int);                    
 signed char *GameIni_GetString(char *);                             
-int func_003F9600(char *, int);
+int cHogList_Get(char *, int);
 extern int D_004EE4C8;
 extern int D_004EE4D0;
 extern signed char D_004EE4D8;
@@ -144,10 +144,10 @@ void LoadingScreen_Start(PS0_00166430 *arg0, int d1, int arg2) {
     signed char *temp_v0;
 
     if (arg2 != 0) {
-        func_0036E4B0(spC0, arg2, 0, 0);
+        cFileMan_ctor_charP_cFileIOP_bool(spC0, arg2, 0, 0);
         if (!(FileMan_FindMember(spC0) & 0xFF)) {
             Archive_Open(&D_004FFB8C, arg2, 0, 1);
-            arg0->f270 = func_003F9600(&D_004FFB8C, arg2);
+            arg0->f270 = cHogList_Get(&D_004FFB8C, arg2);
             if (g_ProfileLockEnabled != 0) {
                 Alloc_Lock(9);
             }

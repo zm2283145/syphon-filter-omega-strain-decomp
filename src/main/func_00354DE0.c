@@ -4,4 +4,4 @@
 #include "direct_base_dtor.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_DIRECT_BASE_DTOR(func_00354DE0, func_00299270)
+DEFINE_DIRECT_BASE_DTOR(func_00354DE0, std_vector_deleter_tRequirementInfo_dtor)

@@ -13,7 +13,7 @@ typedef struct ParticleListPos {
 extern ParticleListPos* List_InsertBefore(ParticleListPos* result, void* list, ParticleListPos* pos, int* value);
 
 /* push_back on a list whose sentinel node is at +4. */
-ParticleListPos* func_003A5C20(void* list, int* value) {
+ParticleListPos* std_list_cParticleDefinitionPtr_push_back(void* list, int* value) {
     ParticleListPos end;
     ParticleListPos result;
 

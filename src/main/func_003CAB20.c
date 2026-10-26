@@ -6,16 +6,16 @@
 
 #include "types.h"
 
-Word* func_003CAB20(Word* dst, Word* src) {
+Word* cLListIterator_cSystemPtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_003CAB30(Iter* out, PtrVec* v) {
+void std_list_cSystemPtr_begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 
-Word* func_003CAB40(Word* dst, Word* src) {
+Word* std_list_cSystemPtr_generic_iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }

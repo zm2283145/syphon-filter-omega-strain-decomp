@@ -10,20 +10,20 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int func_002EC878(int, int);                        
+int NetStreamMediaQuitChannel(int, int);                        
 extern int D_00497550;
 extern int D_00497558;
 extern signed char D_00582D00;
 
 #pragma push
 #pragma opt_propagation off
-unsigned char func_00438A10(void) {
+unsigned char cHeadSet_LeaveChannel(void) {
     unsigned char var_s0;
     int b; int a;
 
     var_s0 = 0;
     b = D_00497558; a = D_00497550;
-    if (func_002EC878(a, b) == 0) {
+    if (NetStreamMediaQuitChannel(a, b) == 0) {
         var_s0 = 1;
     }
     D_00582D00 = 0;
@@ -52,13 +52,13 @@ extern void* D_00497558;
 #endif /* merge_units */
 #define D_00497558 (*(void **)&D_00497558) /* merge_units */
 
-extern int func_002EC7D0(void* a, void* b);
+extern int NetStreamMediaJoinChannel(void* a, void* b);
 
-/* Registers (a, b) as the active pair if func_002EC7D0 accepts them; returns 1 on success. */
-unsigned char func_00438A70(void* a, void* b)
+/* Registers (a, b) as the active pair if NetStreamMediaJoinChannel accepts them; returns 1 on success. */
+unsigned char cHeadSet_JoinChannel(void* a, void* b)
 {
     unsigned char ok = 0;
-    if (func_002EC7D0(a, b) == 0) {
+    if (NetStreamMediaJoinChannel(a, b) == 0) {
         D_00497550 = a;
         ok = 1;
         D_00582D00 = 1;

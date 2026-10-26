@@ -57,7 +57,7 @@ typedef struct GuiWidget4160A0 {
     int unk68;                     /* 0x68: 0xF000 after construction */
 } GuiWidget4160A0;
 
-/* Vector header plus owns-storage flag; initialized by func_001C10A0 and func_003EBEF0. */
+/* Vector header plus owns-storage flag; initialized by std_vector_int_ctor_void and cFSHandle_ctor. */
 typedef struct L4OwnedVec {
     PtrVec vec;                    /* 0x00 */
     char owned;                    /* 0x0C */
@@ -91,7 +91,7 @@ typedef struct GuiWidget424C50 {
 /*
  * Object built by MoviePlayer_ctor (>= 0x237 bytes). Two sub-objects at 0x6C and
  * 0x190 are initialized by Resource_Construct; the one at 0x190 is then filled from
- * the constructor's source record by func_0036DFB0.
+ * the constructor's source record by cFileMan_EncodeFilename_charP_cFileManR.
  */
 typedef struct Unk3F9380 {
     int unk00[20];                 /* 0x00 */
@@ -110,7 +110,7 @@ typedef struct Unk3F9380 {
     char unk236;                   /* 0x236 */
 } Unk3F9380;
 
-/* 0x110-byte entry of Unk3D3670 (set up by func_003D3620). */
+/* 0x110-byte entry of Unk3D3670 (set up by cXViewport_SetWindow). */
 typedef struct L4Entry110 {
     Vec4 unk00;                    /* 0x00 */
     char pad10[0xF5];
@@ -130,7 +130,7 @@ typedef struct Unk3D3670 {
     float unkF94;                  /* 0xF94 */
 } Unk3D3670;
 
-/* Small record read by the func_003D36D0..func_003D36F0 accessors. */
+/* Small record read by the cUserFrameEnv_HasZBuffer..cUserFrameEnv_GetPSM accessors. */
 typedef struct Unk3D36D0 {
     char pad00[8];
     int unk08;                     /* 0x08 */
@@ -138,7 +138,7 @@ typedef struct Unk3D36D0 {
     unsigned char unk10;           /* 0x10 */
 } Unk3D36D0;
 
-/* Small record built by func_003D5C30 (>= 0x0E bytes). */
+/* Small record built by cShadowMan_tShadow_ctor (>= 0x0E bytes). */
 typedef struct Unk3D5C30 {
     int unk00;                     /* 0x00 */
     int unk04;                     /* 0x04 */
@@ -146,7 +146,7 @@ typedef struct Unk3D5C30 {
     short unk0C;                   /* 0x0C: -1 after construction */
 } Unk3D5C30;
 
-/* Record built by func_003D5C50 (>= 0x80 bytes); 0x70 holds an identity quaternion. */
+/* Record built by cShadowMan_tReceiver_ctor (>= 0x80 bytes); 0x70 holds an identity quaternion. */
 typedef struct Unk3D5C50 {
     int unk00;                     /* 0x00 */
     char pad04[0x60];
@@ -155,7 +155,7 @@ typedef struct Unk3D5C50 {
     float unk70[4];                /* 0x70: (0, 0, 0, 1) after construction */
 } Unk3D5C50;
 
-/* 0x30-byte element built by func_003D5CD0 and destroyed by func_003D5AA0. */
+/* 0x30-byte element built by cShadowMan_tSource_ctor and destroyed by cShadowMan_tSource_dtor. */
 typedef struct L4Elem30 {
     char unk00;                    /* 0x00 */
     char pad01[3];
@@ -165,7 +165,7 @@ typedef struct L4Elem30 {
     float unk20[4];                /* 0x20: zero after construction */
 } L4Elem30;
 
-/* Record built by func_003D5C80: two words plus six L4Elem30 (0x130 bytes). */
+/* Record built by cShadowMan_tCaster_ctor: two words plus six L4Elem30 (0x130 bytes). */
 typedef struct Unk3D5C80 {
     int unk00;                     /* 0x00 */
     int unk04;                     /* 0x04 */
@@ -208,7 +208,7 @@ typedef struct Unk409750 {
     char unk34;                    /* 0x34 */
 } Unk409750;
 
-/* Object with the getters/setters at func_00423540..GuiArrayWidget_SetTable. */
+/* Object with the getters/setters at GuiArrayWidget_GetFixedRow..GuiArrayWidget_SetTable. */
 typedef struct Unk423540 {
     char pad00[0x70];
     int unk70;                     /* 0x70 */
@@ -244,7 +244,7 @@ typedef struct L4Iter {
     L4Node* node;
 } L4Iter;
 
-/* Message built by func_003E43D0 / func_003E4940 (vtable D_004E0840, >= 0x29 bytes). */
+/* Message built by cCharActionMsg_ctor_netcharactionreqR / cCharActionMsg_ctor_messagebaseR_int_eParamType (vtable D_004E0840, >= 0x29 bytes). */
 typedef struct Msg3E43D0 {
     void* vtable;                  /* 0x00 */
     char pad04[0x20];
@@ -252,7 +252,7 @@ typedef struct Msg3E43D0 {
     char unk28;                    /* 0x28 */
 } Msg3E43D0;
 
-/* Source record for func_003E43D0. */
+/* Source record for cCharActionMsg_ctor_netcharactionreqR. */
 typedef struct Msg3E43D0Src {
     char pad00[8];
     unsigned char unk08;           /* 0x08 */
@@ -273,13 +273,13 @@ typedef struct Unk41ADC0 {
     int unk8C;                     /* 0x8C */
 } Unk41ADC0;
 
-/* Root of the GUI object hierarchy: vtable plus one word (func_00416A90). */
+/* Root of the GUI object hierarchy: vtable plus one word (GuiDecorator_ctor). */
 typedef struct GuiObject {
     void* vtable;                  /* 0x00 */
     int unk04;                     /* 0x04 */
 } GuiObject;
 
-/* 16-byte record filled by func_00400140. */
+/* 16-byte record filled by Parts_PartInit. */
 typedef struct Unk400140 {
     int unk00;                     /* 0x00 */
     short unk04;                   /* 0x04 */
@@ -289,7 +289,7 @@ typedef struct Unk400140 {
     int unk0C;                     /* 0x0C */
 } Unk400140;
 
-/* Small flag record initialized by func_003E7CD0. */
+/* Small flag record initialized by cConsole_Deactivate. */
 typedef struct Unk3E7CD0 {
     char unk00;                    /* 0x00 */
     char unk01;                    /* 0x01 */
@@ -298,7 +298,7 @@ typedef struct Unk3E7CD0 {
     int unk04;                     /* 0x04: -7 after initialization */
 } Unk3E7CD0;
 
-/* Two words and a flag byte (func_00409580). */
+/* Two words and a flag byte (cMaterialPropertiesTable_ctor). */
 typedef struct Unk409580 {
     int unk00;                     /* 0x00 */
     int unk04;                     /* 0x04 */
@@ -317,7 +317,7 @@ typedef struct L4EventBuf {
     int unk08;                     /* 0x08: first payload word */
 } L4EventBuf;
 
-/* Object reset by func_003F6CD0 (>= 0x60 bytes). */
+/* Object reset by audioDecReset (>= 0x60 bytes). */
 typedef struct Unk3F6CD0 {
     int unk00;                     /* 0x00 */
     char pad04[0x2C];
@@ -340,7 +340,7 @@ typedef struct Unk3EE5E0 {
     Vec4 unkA0;                    /* 0xA0 */
 } Unk3EE5E0;
 
-/* 0x124-byte vector element (func_00408E00). */
+/* 0x124-byte vector element (std_vector_imp_cMaterialProperties_end). */
 typedef struct L4Elem124 {
     char pad00[0x124];
 } L4Elem124;
@@ -373,7 +373,7 @@ typedef struct Unk3CB4F0 {
     L4Tagged* unk0C;               /* 0x0C */
 } Unk3CB4F0;
 
-/* Object with a byte flag at +2 (func_003D1700 / func_003D1730). */
+/* Object with a byte flag at +2 (cUSBKeybd_SetAsciiMode / cUSBKeybd_SetKeyMode). */
 typedef struct Unk3D1700 {
     char pad00[2];
     char unk02;                    /* 0x02 */
@@ -397,19 +397,19 @@ typedef struct Unk3CAC40 {
     char unk20[0xC];               /* 0x20: list with its sentinel at +4 */
 } Unk3CAC40;
 
-/* Object with a sub-object at +0x48 (func_003F5D40 / func_003F5D50). */
+/* Object with a sub-object at +0x48 (videoDecEndPut / videoDecBeginPut). */
 typedef struct Unk3F5D40 {
     char pad00[0x48];
     char unk48[4];                 /* 0x48 */
 } Unk3F5D40;
 
-/* Object with a state word at +0xA8 (func_003F5CD0..func_003F5CF0). */
+/* Object with a state word at +0xA8 (videoDecSetState..videoDecAbort). */
 typedef struct Unk3F5CD0 {
     char pad00[0xA8];
     int unkA8;                     /* 0xA8 */
 } Unk3F5CD0;
 
-/* Object with an optional sub-object pointer at +0x50C (func_003FA190). */
+/* Object with an optional sub-object pointer at +0x50C (cInfoBar_SetScrollDelay). */
 typedef struct Unk3FA190 {
     char pad00[0x50C];
     struct Unk3FA190Sub* unk50C;   /* 0x50C */
@@ -420,7 +420,7 @@ typedef struct Unk3FA190Sub {
     float unk48;                   /* 0x48 */
 } Unk3FA190Sub;
 
-/* Object compared/reset by func_003F6000 / func_003F6020. */
+/* Object compared/reset by voBufIsFull / voBufReset. */
 typedef struct Unk3F6000 {
     char pad00[8];
     int unk08;                     /* 0x08 */
@@ -470,7 +470,7 @@ typedef struct Unk3ED240 {
     char unk106;                   /* 0x106 */
 } Unk3ED240;
 
-/* Object with a count at +0x8C (func_003EE500). */
+/* Object with a count at +0x8C (cInterfaceModel_IsInstanced). */
 typedef struct Unk3EE500 {
     char pad00[0x8C];
     int unk8C;                     /* 0x8C */
@@ -479,16 +479,16 @@ typedef struct Unk3EE500 {
 /* Archive handle returned by Archive_Open (only the byte at +0x168 is known). */
 typedef struct L4Archive {
     char pad00[0x168];
-    char unk168;                   /* 0x168: set to 1 by func_003F96B0 */
+    char unk168;                   /* 0x168: set to 1 by cHogList_OpenProtected */
 } L4Archive;
 
-/* Byte-flag variant of L4Elem124Vec used by func_004089B0. */
+/* Byte-flag variant of L4Elem124Vec used by std_make_pair_cString_uchar. */
 typedef struct L4FlagVec {
     PtrVec vec;                    /* 0x00 */
     char unk0C;                    /* 0x0C */
 } L4FlagVec;
 
-/* Word-tagged variant used by func_00418780. */
+/* Word-tagged variant used by std_make_pair_cString_cFontP. */
 typedef struct L4WordVec {
     PtrVec vec;                    /* 0x00 */
     int unk0C;                     /* 0x0C */

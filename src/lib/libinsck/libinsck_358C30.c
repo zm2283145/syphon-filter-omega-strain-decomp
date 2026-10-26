@@ -10,25 +10,25 @@ extern N81E0 *D_00492CD0;
 extern N81E0 *D_00492CD4;
 extern int D_00492CCC;
 extern int D_00492CC8;
-extern void func_0034B7E8(void *);
-extern void func_00357D88(void *);
-extern int func_003581C0(void);
+extern void sceLibnetTerminate(void *);
+extern void my_free(void *);
+extern int unblock(void);
 extern int func_00358158(void);
 extern int GetThreadId(void);
 extern int DeleteSema(int);
-extern void func_00358BB0(N81E0 *);
+extern void thread_terminate(N81E0 *);
 
-int func_00358C30(int tid)
+int sceInsockTerminate(int tid)
 {
     N81E0 *n;
     if (tid == 0) tid = GetThreadId();
     if (func_00358158() < 0) return -1;
     if (tid == -1) {
-        while ((n = D_00492CD0) != 0) func_00358BB0(n);
+        while ((n = D_00492CD0) != 0) thread_terminate(n);
     } else {
         for (n = D_00492CD0; n; n = n->next) {
             if (tid == n->tid) {
-                func_00358BB0(n);
+                thread_terminate(n);
                 break;
             }
         }
@@ -38,7 +38,7 @@ int func_00358C30(int tid)
         D_00492CC8 = -1;
         return 0;
     }
-    func_003581C0();
+    unblock();
     return 0;
 }
 /* merge_units: end func_00358C30 */
@@ -47,8 +47,8 @@ int func_00358C30(int tid)
 typedef struct S8D18 { struct S8D18 *next; struct S8D18 *prev; int id; int xC; int type; char pad[0x4C]; int x60; int x64; int x68; } S8D18;
 extern void *Insck_GetThreadContext(int);
 extern int Insck_SetErrno(void *, int);
-extern int func_00358678(void);
-extern void *func_00357D50(int);
+extern int unused_socket_id(void);
+extern void *my_malloc(int);
 extern void *memset(void *, int, unsigned int);
 extern S8D18 *D_00492CD8;
 S8D18 *D_00492CDC = 0;
@@ -60,7 +60,7 @@ int Insck_Socket(int domain, int type)
     S8D18 *s;
     if (!lk) return -1;
     if (domain != 2) return Insck_SetErrno(lk, 0x60);
-    id = func_00358678();
+    id = unused_socket_id();
     switch (type) {
     case 2:
         type = 0;
@@ -71,7 +71,7 @@ int Insck_Socket(int domain, int type)
     default:
         return Insck_SetErrno(lk, 0x6B);
     }
-    s = func_00357D50(0x6C);
+    s = my_malloc(0x6C);
     if (!s) return Insck_SetErrno(lk, 0xC);
     memset(s, 0, 0x6C);
     s->type = type;
@@ -93,7 +93,7 @@ int Insck_Socket(int domain, int type)
 typedef struct N8E60 { struct N8E60 *next; int x4; int x8; int xC; int x10; int port; } N8E60;
 typedef struct { unsigned char len; unsigned char family; unsigned short port; } Addr8E60;
 extern N8E60 *Insck_FindSocket(int);
-extern int func_00358530(int);
+extern int conv_port_to_inet(int);
 #if 0 /* merge_units */
 extern N8E60 *D_00492CD8;
 #endif /* merge_units */
@@ -110,7 +110,7 @@ int Insck_Bind(int s, Addr8E60 *a, int len)
     if (!n) return Insck_SetErrno(lk, 9);
     if (len != 16) return Insck_SetErrno(lk, 0x16);
     if (a->family != 2) return Insck_SetErrno(lk, 0x6A);
-    port = func_00358530(a->port);
+    port = conv_port_to_inet(a->port);
     for (p = D_00492CD8; p; p = p->next) {
         if (port == p->port) return Insck_SetErrno(lk, 0x70);
     }

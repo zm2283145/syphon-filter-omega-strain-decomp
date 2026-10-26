@@ -9,10 +9,10 @@
 typedef struct Alarm { struct Alarm *next; struct Alarm *prev; int pad8; int padC; unsigned long long x10; unsigned long long x18; unsigned long long x20; } Alarm;
 typedef struct { unsigned long long a; int id; int pad; int cnt; void *buf; Alarm *head; int x1C; } TimCtl;
 extern TimCtl D_00487848;
-extern void func_00116A80(unsigned int);
-extern void func_00116A90(unsigned int);
+extern void SetT2_MODE(unsigned int);
+extern void SetT2_COMP(unsigned int);
 
-void func_00116DF0(unsigned long long now)
+void SetNextComp(unsigned long long now)
 {
     Alarm *p;
     unsigned int mode;
@@ -23,8 +23,8 @@ void func_00116DF0(unsigned long long now)
     if (D_00487848.x1C >= 0) return;
     mode = *(volatile unsigned int *)0x10001010;
     if (p == 0) {
-        func_00116A90(0);
-        func_00116A80(mode & ~0x800);
+        SetT2_COMP(0);
+        SetT2_MODE(mode & ~0x800);
         return;
     }
     t = p->x20 + p->x10 - p->x18;
@@ -34,18 +34,18 @@ void func_00116DF0(unsigned long long now)
     }
     pre = mode & 3;
     if ((long long)(t - now) < 0x7333) {
-        func_00116A90(*(volatile unsigned int *)0x10001000 + (int)(0x7333ULL >> (pre * 4)));
-        func_00116A80(mode & ~0x800);
+        SetT2_COMP(*(volatile unsigned int *)0x10001000 + (int)(0x7333ULL >> (pre * 4)));
+        SetT2_MODE(mode & ~0x800);
         return;
     }
-    func_00116A80(mode & ~0x800);
-    func_00116A90((int)(t >> (pre * 4)));
+    SetT2_MODE(mode & ~0x800);
+    SetT2_COMP((int)(t >> (pre * 4)));
     return;
 }
 /* merge_units: end func_00116DF0 */
 
 /* merge_units: begin func_00116F80 */
-void func_00116F80(Alarm *a)
+void InsertAlarm(Alarm *a)
 {
     Alarm *prev = 0;
     Alarm *p = D_00487848.head;

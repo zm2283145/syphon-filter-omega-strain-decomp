@@ -19,7 +19,7 @@ int strlen(const char *);
 #pragma cplusplus on
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_00145540)
+DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_charPtr_1_dtor_void)
 #pragma pop /* merge_units */
 /* merge_units: end func_00145540 */
 

@@ -16,7 +16,7 @@ static inline int kca70eq(__int128 m, __int128 a, __int128 b) {
     return (long)r == -1;
 }
 static inline __int128 kca70q(__int128 v) { __int128 r; asm { pcpyld r, $zero, v } return r; }
-void func_0028CA70(ObjCA70* self) {
+void GuiAgentCreate_findFacePart(ObjCA70* self) {
     __int128 mask = kca70q(0xFFFFFFFF00);
     KeyCA70 key;
     int i;

@@ -7,6 +7,6 @@
 #include "types.h"
 #include "loose02_types.h"
 
-int func_002DC290(WordFields* self) {
+int GetCodecMode(WordFields* self) {
     return self->unk04;
 }

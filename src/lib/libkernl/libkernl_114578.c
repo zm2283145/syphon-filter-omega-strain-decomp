@@ -3,7 +3,7 @@ extern int D_00486258, D_004E6040;
 extern char D_004E6000[];
 extern Path4578 D_004E60C0;
 extern int sceSifCallRpc(void *,unsigned int,int,void *,int,void *,int,void *,void *);
-int func_00114578(unsigned char *name,int mode)
+int sceSifLoadIopHeap(unsigned char *name,int mode)
 {
  int n,r;
  if(D_00486258<0)return 0;

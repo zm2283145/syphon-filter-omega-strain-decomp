@@ -2,7 +2,7 @@
 extern int Deci2Call(int kind, void *req);
 extern char D_004E2810[];
 
-int func_0010E2B0(unsigned short protocol, void *opt, void (*handler)(int, int, void *))
+int sceDeci2Open(unsigned short protocol, void *opt, void (*handler)(int, int, void *))
 {
     unsigned int args[4];
     args[0] = protocol;

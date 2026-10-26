@@ -56,7 +56,7 @@ int Pop_FindTag(E3PopReader* r, int tag) {
 #include "loose00_types.h"
 
 /* Subtract from the word at +0x0C. */
-void func_00178C50(Unk0013BDE0* self, int amount) {
+void cPopulation_Rewind(Unk0013BDE0* self, int amount) {
     self->unk0C = self->unk0C - amount;
 }
 #pragma pop /* merge_units */
@@ -95,15 +95,15 @@ extern "C" Population* Population_Dtor(Population* self, short flag)
 typedef struct { int a[0x28]; } H178;
 extern "C" {
 extern int sprintf(char*, const char*, ...);
-extern void func_0036E540(H178*, char*, void*, int);
+extern void cFileMan_ctor_charP_cHogFileR_bool(H178*, char*, void*, int);
 extern int FileMan_FindMember(H178*);
-extern void func_0036E140(H178*, char*, int, int);
+extern void cFileMan_EncodeFilename_charP_cFileIOP_bool(H178*, char*, int, int);
 extern int FileMan_GetSize(H178*);
 extern void* Mem_Alloc(int, int, char*, int);
 extern char D_0049CDA0[];
 extern char D_0048B2F8[];
 extern void FileMan_LoadMemberSync(H178*, void**, int);
-extern void func_0036DEC0(H178*);
+extern void cFileMan_Close(H178*);
 extern void* FileMan_ReadData(H178*);
 extern void FileMan_Release(H178*, int);
 }
@@ -111,11 +111,11 @@ extern "C" Population* Population_Load(Population* p, char* name, void* arg) {
     char buf[0x90];
     H178 h;
     sprintf(buf, "%s.pop", name);
-    func_0036E540(&h, buf, arg, 0);
+    cFileMan_ctor_charP_cHogFileR_bool(&h, buf, arg, 0);
     if ((unsigned char)FileMan_FindMember(&h)) {
         void* m;
         sprintf(buf, "%s\\%s\\DATA.POP", D_0048B2F8, name, name);
-        func_0036E140(&h, buf, 0, 0);
+        cFileMan_EncodeFilename_charP_cFileIOP_bool(&h, buf, 0, 0);
         FileMan_FindMember(&h);
         p->size = FileMan_GetSize(&h);
         p->ownsData = 1;
@@ -129,7 +129,7 @@ extern "C" Population* Population_Load(Population* p, char* name, void* arg) {
         g_ProfileLockDepth--;
         p->data = m;
         FileMan_LoadMemberSync(&h, &p->data, p->size);
-        func_0036DEC0(&h);
+        cFileMan_Close(&h);
     } else {
         p->ownsData = 0;
         p->data = FileMan_ReadData(&h);

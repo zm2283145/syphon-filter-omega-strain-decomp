@@ -3,7 +3,7 @@
 #define NULL 0
 #pragma mpwc_relax on
 int __register_global_object(int *, char *, char *);        
-int func_003D18D0(char *);                               
+int cUSBKeybd_ctor(char *);                               
 extern char D_0055A340;
 extern char D_0055A6C0;
 extern char D_0055A700;
@@ -14,7 +14,7 @@ extern int g_CardWaitPollFn;
 extern signed char D_0055A83C;
 extern char MemCard_dtor;
 
-void func_004D68C0(void) {
+void StaticInit_devices(void) {
     char *var_v1;
 
     var_v1 = &D_0055A340;
@@ -29,7 +29,7 @@ void func_004D68C0(void) {
         F_(var_v1, 0x148, int) = 0;
         var_v1 += 0x1C0;
     } while (var_v1 != &D_0055A6C0);
-    func_003D18D0(&D_0055A700);
+    cUSBKeybd_ctor(&D_0055A700);
     D_0055A834 = 0;
     D_0055A83C = 0;
     g_MemCard = 0;

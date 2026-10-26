@@ -8,11 +8,11 @@
 
 extern char D_00497D78[];
 
-int func_0046D058(void) {
+int MediusUniqueCallbackGetIgnoreListRequestHandler(void) {
     return 38;
 }
 
-int func_0046D060(void) {
+int MediusUniqueCallbackGetIgnoreListResponseHandler(void) {
     int v0;
     int cond;
 

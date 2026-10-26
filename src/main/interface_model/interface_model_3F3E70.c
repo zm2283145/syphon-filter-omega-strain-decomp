@@ -73,7 +73,7 @@ static inline void merge_flush_func_003F3E70(void) {}
 #pragma push /* merge_units */
 typedef struct { float t; float pad; } Key3F3FC0;
 typedef struct { char pad[0x24]; int count; Key3F3FC0* keys; } List3F3FC0;
-float func_003F3FC0(List3F3FC0* l)
+float cKeyframeAnimation_float_NumFrames(List3F3FC0* l)
 {
     int n = l->count;
     unsigned int off = n * sizeof(Key3F3FC0);

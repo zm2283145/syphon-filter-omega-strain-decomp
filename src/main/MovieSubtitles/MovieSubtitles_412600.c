@@ -76,7 +76,7 @@ void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 void FlushCache(int);
 void Font_ctor(VBig*);
 void Font_LoadFnt(VBig*, int*, const char*);
-void func_00382910(IdList*);
+void cTexMan_EndBatch(IdList*);
 void Video_BeginFrame(void*);
 void MovieSubtitles_ParseFeed(Subs* self, void* file, int lang);
 }
@@ -186,7 +186,7 @@ extern "C" void MovieSubtitles_Load(Self* self, void* file, int lang)
             Font_LoadFnt(self->p54, &D_0055C5D0, name);
             { IdList* l = g_TextureMgr; l->n = 0; l->f16 = 0; }
             AddId(g_TextureMgr, *(int*)self->p54);
-            func_00382910(g_TextureMgr);
+            cTexMan_EndBatch(g_TextureMgr);
             Video_BeginFrame(&g_Video);
             Video_BeginFrame(&g_Video);
         }
@@ -225,7 +225,7 @@ static inline void merge_flush_func_00412600(void) {}
 extern void operator_delete(void* allocation);
 
 /* Empty deleting destructor; the object's concrete type is not yet known. */
-void* func_00412BF0(void* self, short deleteFlag) {
+void* cMovieSubtitles_dtor(void* self, short deleteFlag) {
     if (self != 0 && deleteFlag > 0) {
         operator_delete(self);
     }
@@ -243,7 +243,7 @@ static inline void merge_flush_func_00412BF0(void) {}
 #pragma mpwc_relax on
 int String_CtorCStr_13B480(char *, int);                 
 int String_Dtor(char *, int);                            
-int func_003CBF70(int, char *, int);                     
+int std_basic_string_char_char_traits_char_find_basicstringR_uint(int, char *, int);                     
 extern char D_004BEDF8[];
 extern char D_004BEE08[];
 extern char D_004BEE10[];
@@ -254,7 +254,7 @@ extern char D_004BEE30[];
 extern char D_004BEE40[];
 static void * const dat_004BEE50[16] = { (void*)D_004BEDF8, (void*)0x0, (void*)D_004BEE08, (void*)0x1, (void*)D_004BEE10, (void*)0x2, (void*)D_004BEE18, (void*)0x3, (void*)D_004BEE20, (void*)0x4, (void*)D_004BEE28, (void*)0x5, (void*)D_004BEE30, (void*)0x6, (void*)D_004BEE40, (void*)0x7 };
 
-int func_00412C40(int arg0) {
+int nSubtitles_GetLanguageId(int arg0) {
     int var_s4;
     int var_s3;
     int temp_s2;
@@ -266,7 +266,7 @@ int func_00412C40(int arg0) {
     var_s1 = &(*(char*)dat_004BEE50);
 loop_1:
     String_CtorCStr_13B480(sp60, F_(var_s1, 0x0, int));
-    temp_s2 = ~func_003CBF70(arg0, sp60, 0) != 0;
+    temp_s2 = ~std_basic_string_char_char_traits_char_find_basicstringR_uint(arg0, sp60, 0) != 0;
     String_Dtor(sp60, 0);
     if (temp_s2 != 0) {
         var_s4 = F_(var_s1, 0x4, int);

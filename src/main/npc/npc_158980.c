@@ -40,7 +40,7 @@ extern int D_004EA1B4;
 extern int D_004EA1B8;
 
 /* Registers three static (key, value, ref) triples via ObjectList_EraseRange. */
-void func_001589D0(void) {
+void cNPC_SystemClear(void) {
     int* ref3;
     int value3;
     int out3;

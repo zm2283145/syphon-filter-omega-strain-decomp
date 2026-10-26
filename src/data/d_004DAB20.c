@@ -26,6 +26,24 @@ extern void SkyboxGob_dtor();
 extern void Skybox_Draw();
 extern void Skybox_LoadLayers();
 extern void Skybox_Update();
+extern void cGOBJ_CheckBullet();
+extern void cGOBJ_GetBBox();
+extern void cGOBJ_GetChildList_void();
+extern void cGOBJ_GetChildList_void_2();
+extern void cGOBJ_GetFloorPlane();
+extern void cGOBJ_GetLosPosition();
+extern void cGOBJ_GetMovementState();
+extern void cGOBJ_GetNumSubTargets();
+extern void cGOBJ_GetStatus();
+extern void cGOBJ_GetSubTargetAimAdjust();
+extern void cGOBJ_GetTargetPriority();
+extern void cGOBJ_HasHeadset();
+extern void cGOBJ_InitNetwork();
+extern void cGOBJ_IsAimed();
+extern void cGOBJ_IsGeneratorCreated();
+extern void cGOBJ_IsNetworked();
+extern void cGOBJ_ScaleBBox();
+extern void cGOBJ_SetStatus();
 extern void cGOBJ_v35();
 extern void cGOBJ_v39();
 extern void cNode_v06();
@@ -40,49 +58,31 @@ extern void cNode_v29();
 extern void cNode_v2A();
 extern void cNode_v2B();
 extern void cNode_v3A();
+extern void cSKYBOX_GOBJ_Init();
 extern void cSKYBOX_GOBJ_v0B();
 extern void cSKYBOX_GOBJ_v0C();
-extern void func_0012ED00();
-extern void func_0012ED30();
-extern void func_0012ED40();
-extern void func_0012ED50();
-extern void func_0013E060();
-extern void func_0013EE60();
+extern void cSystem_IsDeliverable();
+extern void cSystem_NetDisable();
+extern void cSystem_NetEnable();
+extern void cSystem_SendCreated();
 extern void func_00140E90();
-extern void func_00148870();
-extern void func_00153860();
-extern void func_0015BFB0();
-extern void func_0015BFC0();
-extern void func_0015BFD0();
-extern void func_0015BFE0();
-extern void func_0015BFF0();
-extern void func_0015C000();
-extern void func_0015C010();
-extern void func_0015C020();
-extern void func_0015C030();
-extern void func_0015C040();
-extern void func_0015C050();
-extern void func_0015C080();
-extern void func_0015C090();
-extern void func_0015C0A0();
-extern void func_003BC270();
 
 void *D_004DAB20[68] = {
     0, 0, &SkyboxGob_dtor, &Object_HandleMessage,
-    &GObj_GetID, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
-    &cNode_v06, &cNode_v07, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &cSKYBOX_GOBJ_v0B, &cSKYBOX_GOBJ_v0C, &cNode_v0D,
-    &func_003BC270, &Skybox_LoadLayers, &Skybox_Update, &Actor_BasePreLogic,
+    &GObj_GetID, &Object_GetAttachedOrSelf, &cGOBJ_IsNetworked, &cSystem_SendCreated,
+    &cNode_v06, &cNode_v07, &cSystem_NetEnable, &cSystem_NetDisable,
+    &cSystem_IsDeliverable, &cSKYBOX_GOBJ_v0B, &cSKYBOX_GOBJ_v0C, &cNode_v0D,
+    &cSKYBOX_GOBJ_Init, &Skybox_LoadLayers, &Skybox_Update, &Actor_BasePreLogic,
     &Actor_BaseWorldUpdate, &Actor_VirtualNop, &Skybox_Draw, &Object_Activate,
     &Object_Deactivate, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
-    &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
-    &func_0015BFF0, &func_0015BFE0, &func_0013EE60, &func_0015C000,
+    &cGOBJ_HasHeadset, &cGOBJ_SetStatus, &cGOBJ_GetStatus, &cGOBJ_IsGeneratorCreated,
+    &cGOBJ_GetChildList_void_2, &cGOBJ_GetChildList_void, &cGOBJ_GetBBox, &cGOBJ_ScaleBBox,
     &Object_AttachTransform, &Player_GetActiveWeapon, &cNode_v24, &cNode_v25,
     &cNode_v26, &cNode_v27, &cNode_v28, &cNode_v29,
-    &cNode_v2A, &cNode_v2B, &func_0015C010, &func_00153860,
-    &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &cGOBJ_v35,
+    &cNode_v2A, &cNode_v2B, &cGOBJ_GetTargetPriority, &cGOBJ_GetLosPosition,
+    &Object_GetEye, &cGOBJ_GetMovementState, &func_00140E90, &cGOBJ_GetSubTargetAimAdjust,
+    &cGOBJ_GetNumSubTargets, &cGOBJ_IsAimed, &Node_GetWorldMatrix, &cGOBJ_v35,
     &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &cGOBJ_v39,
-    &cNode_v3A, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
-    &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
+    &cNode_v3A, &GObj_GetWorldMatrix, &cGOBJ_GetFloorPlane, &cGOBJ_InitNetwork,
+    &Actor_ApplyContactDamage, &cGOBJ_CheckBullet, &GObj_GetLifeState, &Controller_DeathNotice,
 };

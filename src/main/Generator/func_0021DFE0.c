@@ -6,16 +6,16 @@
 
 #include "types.h"
 
-int* func_0021DFE0(int* self, int value) {
+int* std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(int* self, int value) {
     *self = value;
     return self;
 }
 
-int* func_0021DFF0(int* self, int value) {
+int* std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodeP(int* self, int value) {
     *self = value;
     return self;
 }
 
-void* func_0021E000(char* self) {
+void* std_list_deleter_cSafePtr_cGOBJ_tail(char* self) {
     return self + 4;
 }

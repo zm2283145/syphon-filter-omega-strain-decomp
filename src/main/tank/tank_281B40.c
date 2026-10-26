@@ -8,11 +8,11 @@ static inline int R32_00281B40(void) { unsigned short lo = R16_00281B40(); retur
 static inline float RF_00281B40(void) { int i = R32_00281B40(); return *(float*)&i; }
 typedef struct { char pad[0xC]; int id; } O_00281B40;
 typedef struct { char pad[0x1C]; int flags; char p20[4]; unsigned char type; char p25[3]; O_00281B40* obj; int owner; } M_00281B40;
-extern void func_002539B0(O_00281B40* o);
+extern void cBackpack_Pack(O_00281B40* o);
 void cNetBackpackMsg_v04(M_00281B40* m) {
     *D_005061D0++ = m->type;
     *D_005061D0++ = m->owner;
     W32_00281B40(m->obj->id);
-    if (m->type == 3 || m->type == 0) func_002539B0(m->obj);
+    if (m->type == 3 || m->type == 0) cBackpack_Pack(m->obj);
     m->flags = 0x40;
 }

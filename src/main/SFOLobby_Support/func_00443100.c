@@ -8,8 +8,8 @@ extern "C" {
 void* memset(void*, int, unsigned int);
 void String_Copy(char*, const char*);
 int Lobby_GetTime(void);
-int func_00469990(void*, void*);
-void func_00446D60(void);
+int MediusTextFilter(void*, void*);
+void SFOLobby_Callback_TextFilter(void);
 void SFOLobby_CallUpdateHook(char*, int, int);
 int SFOLobby_Poll(char*, int, int, int);
 void SFOLobby_SetError(char*, int, char*, int);
@@ -36,7 +36,7 @@ extern "C" int SFOLobby_CheckText(char* self, char* name, int port) {
     String_Copy(req.name, name);
     F_(self, 0x1D0, int) = 0;
     F_(self, 0x2410, int) = Lobby_GetTime();
-    F_(self, 0x24C, int) = func_00469990(&req, (void*)func_00446D60);
+    F_(self, 0x24C, int) = MediusTextFilter(&req, (void*)SFOLobby_Callback_TextFilter);
     if (F_(self, 0x24C, int) != 0) return 0;
     while (F_(self, 0x1D0, int) == 0) {
         SFOLobby_CallUpdateHook(self, 0, 0);

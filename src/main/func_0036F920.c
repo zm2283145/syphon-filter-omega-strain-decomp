@@ -29,12 +29,12 @@ void Vec4_Assign(V_F920* d, V_F920* s);
 void Vec3_Negate(V_F920* v);
 void Mtx_TransformByTranspose(V_F920* v, M_F920* m);
 void Mtx_SetTranslation(M_F920* m, V_F920* v);
-void func_001CF100(It_F920* it, void* c);
-void func_001CF0E0(It_F920* it, void* c);
-int func_001CEF10(It_F920* a, It_F920* b);
-void** func_001CF0D0(It_F920* it);
-void func_001CEF50(void* p);
-void func_001CEF30(It_F920* it);
+void cArray_cXformNodePtr_Begin(It_F920* it, void* c);
+void cArray_cXformNodePtr_End(It_F920* it, void* c);
+int cArray_cXformNodePtr_ConstIterator_opNe(It_F920* a, It_F920* b);
+void** cArray_cXformNodePtr_ConstIterator_opMul(It_F920* it);
+void cXformNode_SetNeedsUpdate(void* p);
+void cArray_cXformNodePtr_ConstIterator_opInc(It_F920* it);
 }
 
 #pragma opt_rotateloops off
@@ -74,12 +74,12 @@ extern "C" void Xform_SetWorld(Xform_F920* x, M_F920* w)
     if (!x->dirty) {
         It_F920* pe;
         x->dirty = 1;
-        func_001CF100(&b, x->lA4);
-        func_001CF0E0(&e, x->lA4);
+        cArray_cXformNodePtr_Begin(&b, x->lA4);
+        cArray_cXformNodePtr_End(&e, x->lA4);
         pe = &e;
-        while (func_001CEF10(&b, pe)) {
-            func_001CEF50(*func_001CF0D0(&b));
-            func_001CEF30(&b);
+        while (cArray_cXformNodePtr_ConstIterator_opNe(&b, pe)) {
+            cXformNode_SetNeedsUpdate(*cArray_cXformNodePtr_ConstIterator_opMul(&b));
+            cArray_cXformNodePtr_ConstIterator_opInc(&b);
         }
     }
 }

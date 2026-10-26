@@ -19,8 +19,8 @@ typedef struct { char pad[0xC]; Map_1C3E90* second; } Val_1C3E90;
 typedef struct { char pad[0xC]; Val_1C3E90 v; } Node_1C3E90;
 typedef struct { Node_1C3E90* n; } It_1C3E90;
 extern char D_004FFBC0[];
-extern void func_00130B00(It_1C3E90* out, void* tree);
-extern void func_001C00C0(It_1C3E90* out, int tree);
+extern void std_tree_pair_cString_value_compare_begin(It_1C3E90* out, void* tree);
+extern void std_tree_pair_cString_value_compare_end(It_1C3E90* out, int tree);
 extern void Tree_Successor(It_1C3E90* it);
 extern void ModelCtx_FindNodeById(It_1C3E90* out, int* tree, Key_1C3E90* key);
 extern void NodeMap_End(It_1C3E90* out, int* tree);
@@ -42,9 +42,9 @@ unsigned char SkaRegistry_AllModelsHaveKey(void* mgr, char* name)
     It_1C3E90 g;
     Key_1C3E90 key;
     unsigned char ok = 1;
-    func_00130B00(&b, D_004FFBC0);
+    std_tree_pair_cString_value_compare_begin(&b, D_004FFBC0);
     it.n = b.n;
-    func_001C00C0(&e, (int)D_004FFBC0);
+    std_tree_pair_cString_value_compare_end(&e, (int)D_004FFBC0);
     end.n = e.n;
     while ((Eq_1C3E90(it.n, end.n) != 0) ^ 1) {
         Val_1C3E90* v = &it.n->v;
@@ -71,13 +71,13 @@ typedef struct { int* p; } It_1C4000;
 typedef struct { int cap; int count; int* data; } Vec_1C4000;
 typedef struct { char pad[0xC]; Vec_1C4000* vec; } Obj_1C4000;
 extern char D_0049EE88[];
-extern int* func_001C4180(Vec_1C4000* v);
-extern int* func_001C4150(Vec_1C4000* v);
-extern void func_001C4170(It_1C4000* out, Vec_1C4000* v, int** src);
+extern int* std_vector_imp_cTerrainPtr_1_begin(Vec_1C4000* v);
+extern int* std_vector_imp_cTerrainPtr_1_end(Vec_1C4000* v);
+extern void std_vector_cTerrainPtr_pointer2iterator(It_1C4000* out, Vec_1C4000* v, int** src);
 extern void Terrain_ResolveIdList(int id);
-extern void func_00136DA0(int* g);
-extern void func_0012F530(int* g, int f);
-extern void func_001C40F0(Vec_1C4000* v, int f);
+extern void cTimerDisable_ctor(int* g);
+extern void cTimerDisable_dtor(int* g, int f);
+extern void cArray_cTerrainPtr_dtor(Vec_1C4000* v, int f);
 void Pop_FinalizeTerrainList(Obj_1C4000* o)
 {
     It_1C4000 it;
@@ -89,12 +89,12 @@ void Pop_FinalizeTerrainList(Obj_1C4000* o)
     int* p;
     int* e;
     v = o->vec;
-    tb = func_001C4180(v);
-    func_001C4170(&it, v, &tb);
+    tb = std_vector_imp_cTerrainPtr_1_begin(v);
+    std_vector_cTerrainPtr_pointer2iterator(&it, v, &tb);
     v = o->vec;
     p = it.p;
-    te = func_001C4150(v);
-    func_001C4170(&end, v, &te);
+    te = std_vector_imp_cTerrainPtr_1_end(v);
+    std_vector_cTerrainPtr_pointer2iterator(&end, v, &te);
     e = end.p;
     if ((p == *(int* volatile*)&end.p) ^ 1) {
         do {
@@ -102,10 +102,10 @@ void Pop_FinalizeTerrainList(Obj_1C4000* o)
         } while ((p == e) ^ 1);
     }
     v = o->vec;
-    func_00136DA0(g);
-    func_001C40F0(v, -1);
+    cTimerDisable_ctor(g);
+    cArray_cTerrainPtr_dtor(v, -1);
     Mem_Free(0, v, D_0049EE88, 0xAC);
-    func_0012F530(g, -1);
+    cTimerDisable_dtor(g, -1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C4000(void) {}

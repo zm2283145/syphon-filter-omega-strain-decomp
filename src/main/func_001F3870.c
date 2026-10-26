@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_001F3870(void* self) {
+void* cAllocator_cSkaTransBLEND_ctor_void(void* self) {
     return self;
 }

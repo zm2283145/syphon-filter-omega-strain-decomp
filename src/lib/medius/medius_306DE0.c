@@ -6,14 +6,14 @@
 
 #include "types.h"
 
-extern int func_00301F40(void);
+extern int randomMT(void);
 
-void func_00306DE0(void) {
+void randomNoneZero(void) {
     int v0;
     int cond;
 
 L00306DE8:;
-    v0 = func_00301F40();
+    v0 = randomMT();
     cond = v0 == 0;
     if (cond) goto L00306DE8;
     goto ret;

@@ -9,8 +9,8 @@ extern Vec4* Quat_Assign(Vec4* d, Vec4* s);
 extern Vec4* Vec4_Copy(Vec4* d, Vec4* s);
 extern void* Placement_GetQuat(F8Plc* p);
 extern void* Placement_GetPosition(F8Plc* p);
-extern void func_00132530(F8RootW* w, void* q);
-extern void func_00132510(F8RootW* w, void* pos);
+extern void cQuatVec_Rotate(F8RootW* w, void* q);
+extern void cQuatVec_Translate(F8RootW* w, void* pos);
 static inline void F8PlcCopy(F8Plc* d, F8Plc* s)
 {
     Quat_Assign(&d->q, &s->q);
@@ -33,8 +33,8 @@ F8RootW* Root_GetWorldPlacement_3629D0(F8Root* r)
             }
             F8PlcCopy(&Root_Identity(r)->world, &Root_Identity(r)->local);
             w = Root_Identity(r);
-            func_00132530(w, Placement_GetQuat(pp));
-            func_00132510(w, Placement_GetPosition(pp));
+            cQuatVec_Rotate(w, Placement_GetQuat(pp));
+            cQuatVec_Translate(w, Placement_GetPosition(pp));
             r->dirty = 0;
         }
         return (F8RootW*)r;

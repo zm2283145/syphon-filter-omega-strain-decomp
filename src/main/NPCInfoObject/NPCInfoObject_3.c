@@ -20,7 +20,7 @@ extern int D_00582A90;
 extern int D_00582A98;
 
 static inline int Eq_61C0(int* a, int* b) { return *a == *b; }
-NpcInfoRec* func_004361C0(int* key, int* out)
+NpcInfoRec* cNPCInfoObject_Find(int* key, int* out)
 {
     int i;
     for (i = 0; i != 29; i++) {
@@ -53,8 +53,8 @@ NpcInfoRec* func_004361C0(int* key, int* out)
 
 /* merge_units: begin func_00436380 */
 #pragma push /* merge_units */
-/* func_00436380: teardown of five object lists and one tree (free every element, erase/clear),
- * then reset of the module globals. Shape follows the matched func_0043ACE0 (GenInfoObject). */
+/* cNPCInfoObject_Clear: teardown of five object lists and one tree (free every element, erase/clear),
+ * then reset of the module globals. Shape follows the matched cGenInfoObject_Clear (GenInfoObject). */
 #pragma cplusplus on
 #include "alloc_guard.h"
 
@@ -71,16 +71,16 @@ extern "C" {
 void Mem_Free(int pool, void* p, char* file, int line);
 void ObjectList_EraseRange(int* out, void* list, LNode** first, LNode** last);
 LIt List_Begin(void* list);
-void func_00432740(LIt* out, const LIt& in);
-LIt func_00432730(void* list);
-void func_00432720(LIt* out, const LIt& in);
-LIt func_00436B90(void* list);
-void func_00432F40(TIt* out, void* tree);
-TIt func_00432F30(void* tree);
-void func_00432F20(TIt* out, const TIt& in);
+void std_list_tNPCInfoPtr_generic_iterator_ctor(LIt* out, const LIt& in);
+LIt std_list_tNPCInfoPtr_end(void* list);
+void cLListIterator_tNPCInfoPtr_ctor(LIt* out, const LIt& in);
+LIt std_list_tNPCInfoPtr_begin(void* list);
+void std_tree_pair_tNPCInfoPtr_value_compare_begin(TIt* out, void* tree);
+TIt std_map_tNPCInfoPtr_bool_end(void* tree);
+void cAssocArray_tNPCInfoPtr_bool_Iterator_ctor(TIt* out, const TIt& in);
 void Tree_Successor(TIt* it);
-void func_00436C50(void* tree);
-void func_00433760(void* self);
+void std_tree_pair_tNPCInfoPtr_value_compare_clear(void* tree);
+void cNPCInfoObject_DestroyNPCInfoStruct(void* self);
 extern char D_004BFCA0[];
 extern char D_00582AB0[];
 extern char D_00582AB4[];
@@ -135,10 +135,10 @@ extern int D_00582B78;
 extern int D_00582B80;
 }
 
-static inline void LB1(LIt* o, void* L) { func_00432740(o, List_Begin(L)); }
-static inline void LB2(LIt* o, void* L) { func_00432720(o, func_00436B90(L)); }
-static inline void LE(LIt* o, void* L) { func_00432720(o, func_00432730(L)); }
-static inline void TE(TIt* o, void* T) { func_00432F20(o, func_00432F30(T)); }
+static inline void LB1(LIt* o, void* L) { std_list_tNPCInfoPtr_generic_iterator_ctor(o, List_Begin(L)); }
+static inline void LB2(LIt* o, void* L) { cLListIterator_tNPCInfoPtr_ctor(o, std_list_tNPCInfoPtr_begin(L)); }
+static inline void LE(LIt* o, void* L) { cLListIterator_tNPCInfoPtr_ctor(o, std_list_tNPCInfoPtr_end(L)); }
+static inline void TE(TIt* o, void* T) { cAssocArray_tNPCInfoPtr_bool_Iterator_ctor(o, std_map_tNPCInfoPtr_bool_end(T)); }
 static inline void LB1x(LIt* o, void* L) { LB1(o, L); }
 static inline void LB2x(LIt* o, void* L) { LB2(o, L); }
 static inline void LEx(LIt* o, void* L) { LE(o, L); }
@@ -146,7 +146,7 @@ static inline void TEx(TIt* o, void* T) { TE(o, T); }
 static inline void Erase(void* L, void* LH, LNode* LF) { int res; LNode* first; LNode* last; last = (LNode*)LH; first = LF; ObjectList_EraseRange(&res, L, &first, &last); }
 static inline unsigned char Ne(TIt* a, TIt* b) { return !(a->node == b->node); }
 
-extern "C" void func_00436380(void* self)
+extern "C" void cNPCInfoObject_Clear(void* self)
 {
     LItU itx;
     TIt it;
@@ -194,7 +194,7 @@ extern "C" void func_00436380(void* self)
     }
     Erase(D_00582AF0, D_00582AF4, D_00582AF8);
     TIt tb;
-    func_00432F40(&tb, D_00582B50);
+    std_tree_pair_tNPCInfoPtr_value_compare_begin(&tb, D_00582B50);
     it = tb;
     while (TEx(&tend, D_00582B50), Ne(&it, &tend)) {
         void* e = it.node->data;
@@ -204,7 +204,7 @@ extern "C" void func_00436380(void* self)
         }
         Tree_Successor(&it);
     }
-    func_00436C50(D_00582B50);
+    std_tree_pair_tNPCInfoPtr_value_compare_clear(D_00582B50);
     LB2x((LIt*)&bE, D_00582B30);
     {
         itx = *(LItU*)&bE;
@@ -238,7 +238,7 @@ extern "C" void func_00436380(void* self)
         D_00582808 = 0;
         D_00582810 = 0;
     } else {
-        func_00433760(self);
+        cNPCInfoObject_DestroyNPCInfoStruct(self);
     }
     D_00582778 = 0;
     D_00582780 = 0;

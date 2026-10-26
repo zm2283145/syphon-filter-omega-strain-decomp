@@ -54,7 +54,7 @@ static inline int ks4022E0meqB(__int128 b, __int128 a, __int128 m) {
     __int128 x = ks4022E0and(m, a);
     return ks4022E0eq(x, y);
 }
-void func_004022E0(KS4022E0* s, __int128 key, KO4022E0* out, short* pa, short* pb, int mode, char c)
+void Monster_FindTheTexture(KS4022E0* s, __int128 key, KO4022E0* out, short* pa, short* pb, int mode, char c)
 {
     __int128 k2;
     __int128 mask1;

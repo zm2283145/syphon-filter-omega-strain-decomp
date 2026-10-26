@@ -15,11 +15,11 @@
 
 extern int D_004976D8;
 
-int func_004452D0(void) {
+int SFOMGCL_Get_MediusWorldID(void) {
     return D_004976D8;
 }
 
-void func_004452E0(int value) {
+void SFOMGCL_Set_MediusWorldID(int value) {
     D_004976D8 = value;
 }
 #pragma pop /* merge_units */
@@ -29,8 +29,8 @@ void func_004452E0(int value) {
 #pragma push /* merge_units */
 extern char D_004C0B50[], D_004C0B60[];
 extern int D_00497890;
-extern void func_004474C0(void);
-extern int func_00469318(void*, void*);
+extern void SFOLobby_Callback_AccountLogout(void);
+extern int MediusAccountLogout(void*, void*);
 typedef struct {
     char a[0x15];
     char b[0x11];
@@ -44,7 +44,7 @@ int SFOLobby_AccountLogout(char* s)
     String_Copy(m.b, s + 0x2418);
     *(int*)(s + 0x190) = 0;
     *(int*)(s + 0x2410) = Lobby_GetTime();
-    *(int*)(s + 0x24C) = func_00469318(&m, func_004474C0);
+    *(int*)(s + 0x24C) = MediusAccountLogout(&m, SFOLobby_Callback_AccountLogout);
     if (*(int*)(s + 0x24C)) {
         SFOLobby_SetError(s, 9, D_004C0B60, 0x2F9);
         return 0;
@@ -68,7 +68,7 @@ int SFOLobby_AccountLogout(char* s)
 /* merge_units: begin func_00445420 */
 #pragma push /* merge_units */
 extern void SFOLobby_OnAccountLogin(void);
-extern int func_00469260(void*, void*);
+extern int MediusAccountLogin(void*, void*);
 typedef struct {
     char a[0x15];
     char b[0x11];
@@ -86,7 +86,7 @@ int SFOLobby_AccountLogin(char* s)
     String_Copy(m.d, s + 0x245D);
     *(int*)(s + 0x18C) = 0;
     *(int*)(s + 0x2410) = Lobby_GetTime();
-    *(int*)(s + 0x24C) = func_00469260(&m, SFOLobby_OnAccountLogin);
+    *(int*)(s + 0x24C) = MediusAccountLogin(&m, SFOLobby_OnAccountLogin);
     if (*(int*)(s + 0x24C)) {
         SFOLobby_SetError(s, 10, D_004C0B60, 0x2B0);
         return 0;
@@ -109,9 +109,9 @@ int SFOLobby_AccountLogin(char* s)
 
 /* merge_units: begin func_00445570 */
 #pragma push /* merge_units */
-extern int func_00476998(void);
+extern int KM_GetSoftwareID(void);
 extern void SFOLobby_OnSettings(void);
-extern int func_0046AB38(void*, void*);
+extern int MediusGetAnnouncements(void*, void*);
 typedef struct {
     char a[0x15];
     char b[0x11];
@@ -125,10 +125,10 @@ int SFOLobby_RequestSettings(char* s)
     memset(s + 0x5A4, 0, 0x40C);
     String_Copy(m.a, D_004C0B50);
     String_Copy(m.b, s + 0x2418);
-    m.t = func_00476998();
+    m.t = KM_GetSoftwareID();
     *(int*)(s + 0x1BC) = 0;
     *(int*)(s + 0x2410) = Lobby_GetTime();
-    *(int*)(s + 0x24C) = func_0046AB38(&m, SFOLobby_OnSettings);
+    *(int*)(s + 0x24C) = MediusGetAnnouncements(&m, SFOLobby_OnSettings);
     while (*(signed char*)(s + 0x9AC) != 1) {
         SFOLobby_CallUpdateHook(s, 0, 0);
         if (*(int*)(s + 0x24C) != 0) {
@@ -181,7 +181,7 @@ int SFOLobby_GetUsagePolicy(void* self) {
 #pragma push /* merge_units */
 typedef struct { char name[0x15]; char id[0x13]; int mode; } R445;
 
-extern int func_0046A8F8(R445*, void*);
+extern int MediusGetPolicy(R445*, void*);
 extern void SFOLobby_OnGetPolicy();
 extern char D_004C0B60[];
 int SFOLobby_GetPolicy(O445* o, int mode) {
@@ -197,7 +197,7 @@ int SFOLobby_GetPolicy(O445* o, int mode) {
     rec.mode = mode;
     o->f1b8 = 0;
     o->f2410 = Lobby_GetTime();
-    o->f24c = func_0046A8F8(&rec, SFOLobby_OnGetPolicy);
+    o->f24c = MediusGetPolicy(&rec, SFOLobby_OnGetPolicy);
     while (o->c5a0 != 1) {
         SFOLobby_CallUpdateHook(o, 0, 0);
         if (o->f24c != 0) {
@@ -217,15 +217,15 @@ int SFOLobby_GetPolicy(O445* o, int mode) {
 
 /* merge_units: begin func_00445850 */
 #pragma push /* merge_units */
-extern void func_00447470(void);
-extern int func_004690A0(void*, void*);
+extern void SFOLobby_Callback_SessionEnd(void);
+extern int MediusSessionEnd(void*, void*);
 extern int SFOLobby_DisconnectLobbyServer(void*);
-extern void func_004537D0(void*);
+extern void SFOLobby_ResetConnectionFlags(void*);
 typedef struct {
     char a[0x15];
     char b[0x11];
 } Msg_445850;
-int func_00445850(char* s)
+int SFOLobby_AccountLogOut(char* s)
 {
     Msg_445850 m;
     SFOLobby_CallUpdateHook(s, 2, 1);
@@ -234,7 +234,7 @@ int func_00445850(char* s)
         String_Copy(m.a, D_004C0B50);
         String_Copy(m.b, s + 0x2418);
         *(int*)(s + 0x2410) = Lobby_GetTime();
-        *(int*)(s + 0x24C) = func_004690A0(&m, func_00447470);
+        *(int*)(s + 0x24C) = MediusSessionEnd(&m, SFOLobby_Callback_SessionEnd);
         if (*(int*)(s + 0x24C) != 0) {
             SFOLobby_SetError(s, 9, D_004C0B60, 0x1E8);
             return 0;
@@ -252,7 +252,7 @@ int func_00445850(char* s)
         }
     }
     if (!SFOLobby_DisconnectLobbyServer(s)) return 0;
-    func_004537D0(s);
+    SFOLobby_ResetConnectionFlags(s);
     SFOLobby_SetError(s, 0, D_004C0B60, 0x208);
     return 1;
 }
@@ -344,9 +344,9 @@ int func_00445A40(char* s, const char* a, const char* b)
 #pragma push /* merge_units */
 typedef struct { char p0[0x198]; int done; char p19C[0xB0]; int f24C; char p250[0xDC]; int f32C; char p330[0x20E0]; int f2410; char p2414[4]; char name[0x14C]; } S445B90;
 extern int SFOLobby_CheckText(S445B90*, char*, int);
-extern int func_00469458(void*, void*);
+extern int MediusAccountRegistration(void*, void*);
 extern char D_004C0B50[];
-extern char func_00447270[];
+extern char SFOLobby_Callback_AccountRegistration[];
 int SFOLobby_CreateAccount(S445B90* s, char* arg1, char* arg2)
 {
     struct { char f40[0x15]; char f55[0x13]; int f68; char f6C[0x20]; char f8C[0x20]; } req;
@@ -368,7 +368,7 @@ int SFOLobby_CreateAccount(S445B90* s, char* arg1, char* arg2)
     strncpy(req.f8C, arg2, 0x20);
     s->done = 0;
     s->f2410 = Lobby_GetTime();
-    s->f24C = func_00469458(&req, func_00447270);
+    s->f24C = MediusAccountRegistration(&req, SFOLobby_Callback_AccountRegistration);
     while (s->done == 0) {
         SFOLobby_CallUpdateHook(s, 0, 0);
         if (s->f24C != 0) {

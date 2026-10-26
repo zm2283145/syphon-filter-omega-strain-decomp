@@ -32,7 +32,7 @@ extern char D_004AB9D0[];
 void GuiArrayWidget_ColumnWidth(void* w, int i, char* s);
 void GuiTextArrayWidget_SetCellText(void* w, int i, int a, char* s);
 }
-extern "C" void func_002ABF40(S_002ABF40* self, unsigned char idx)
+extern "C" void GuiMissionList_SetDisplayMode(S_002ABF40* self, unsigned char idx)
 {
     int n;
     int i;
@@ -64,13 +64,13 @@ typedef struct {
     int id; char name[0x20]; int f24; char pad28[0x30 - 0x28]; int f30; int f34; int f38; char pad3C[0x40 - 0x3C];
     int f40; int f44;
 } E_002AC470;
-int func_002AC470(S_002AC470* self, E_002AC470* e); /* gsynth: defined below */
+int GuiMissionList_CanSelectAgent(S_002AC470* self, E_002AC470* e); /* gsynth: defined below */
 typedef struct { int id; int idx; int fl; } It_002AC6F0;
 typedef struct {
     char pad0[0xAC]; unsigned char bAC; char padAD[0xBC - 0xAD]; unsigned char bBC; char padBD[0x110 - 0xBD];
     int count; It_002AC6F0* data; int f118; void* p11C;
 } S_002AC6F0;
-void func_002AC6F0(S_002AC6F0* self); /* gsynth: defined below */
+void GuiMissionList_SortSelectList(S_002AC6F0* self); /* gsynth: defined below */
 #pragma cplusplus on
 struct W_002AC070 {
     virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
@@ -90,19 +90,19 @@ struct S_002AC070 : W_002AC070 {
 };
 extern "C" {
 static int D_0048BCB0 = -1;
-void func_002AD770(Vec_002AC070* v);
+void std_vector_deleter_SelectElem_clear(Vec_002AC070* v);
 void* DME_GetLobby(void);
 #define LobbyArray_At(a0, a1) ((E_002AC070 *)LobbyArray_At((a0), (a1))) /* merge_units */
 #if 0 /* merge_units */
-int func_002AC470(S_002AC070* self, E_002AC070* e);
+int GuiMissionList_CanSelectAgent(S_002AC070* self, E_002AC070* e);
 #endif /* merge_units */
-#define func_002AC470(a0, a1) (func_002AC470((S_002AC470 *)(a0), (E_002AC470 *)(a1))) /* merge_units */
+#define GuiMissionList_CanSelectAgent(a0, a1) (GuiMissionList_CanSelectAgent((S_002AC470 *)(a0), (E_002AC470 *)(a1))) /* merge_units */
 
 void Vector_Insert_2AD1F0(Vec_002AC070* v, It_002AC070* pos, int n, It_002AC070* it);
 #if 0 /* merge_units */
-void func_002AC6F0(S_002AC070* self);
+void GuiMissionList_SortSelectList(S_002AC070* self);
 #endif /* merge_units */
-#define func_002AC6F0(a0) (func_002AC6F0((S_002AC6F0 *)(a0))) /* merge_units */
+#define GuiMissionList_SortSelectList(a0) (GuiMissionList_SortSelectList((S_002AC6F0 *)(a0))) /* merge_units */
 
 }
 static inline int Size_002AC070(Vec_002AC070* v) { return v->count; }
@@ -110,13 +110,13 @@ static inline It_002AC070* At_002AC070(Vec_002AC070* v, int i) { return &v->data
 static inline void Upd_(S_002AC070* s, int n) { s->SetCount(s->f48, n); }
 #pragma opt_strength_reduction off
 #pragma opt_dead_assignments off
-extern "C" void func_002AC070(S_002AC070* self)
+extern "C" void GuiMissionList_UpdateSelectList(S_002AC070* self)
 {
     void* g;
     int n;
     int i;
     int sel;
-    func_002AD770(&self->list);
+    std_vector_deleter_SelectElem_clear(&self->list);
     g = DME_GetLobby();
     if (!self->p11C || !g)
         return;
@@ -124,7 +124,7 @@ extern "C" void func_002AC070(S_002AC070* self)
     for (i = 0; i < n; i++) {
         E_002AC070* e = LobbyArray_At(self->p11C, i);
         if (e) {
-            int fl = func_002AC470(self, e);
+            int fl = GuiMissionList_CanSelectAgent(self, e);
             if (fl & 2) {
                 It_002AC070 it;
                 if ((fl & 4) && e->id == 0) {
@@ -138,7 +138,7 @@ extern "C" void func_002AC070(S_002AC070* self)
             }
         }
     }
-    func_002AC6F0(self);
+    GuiMissionList_SortSelectList(self);
     sel = -1;
     if (self->fC0 != -1) {
         int j;
@@ -175,8 +175,8 @@ extern "C" void func_002AC070(S_002AC070* self)
         self->fCC = 0;
 }
 #undef LobbyArray_At /* merge_units */
-#undef func_002AC470 /* merge_units */
-#undef func_002AC6F0 /* merge_units */
+#undef GuiMissionList_CanSelectAgent /* merge_units */
+#undef GuiMissionList_SortSelectList /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002AC070(void) {}
 #pragma pop /* merge_units */
@@ -239,7 +239,7 @@ static inline void merge_flush_func_002AC300(void) {}
 typedef struct { int x0; int x4; int x8; } I2AC400;
 typedef struct { char pad[0x110]; int count; I2AC400* items; int pad118; void* w; } S2AC400;
 #define LobbyArray_At(a0, a1) ((int)LobbyArray_At((a0), (a1))) /* merge_units */
-int func_002AC400(S2AC400* s, int i)
+int GuiMissionList_GetAgentElemFromIndex(S2AC400* s, int i)
 {
     if (!s->w || i < 0 || !(i < s->count))
         return 0;
@@ -262,9 +262,9 @@ extern const char* D_0048C160[];
 extern void* Agent_GetSelected(void* list, int idx);
 extern __int128 StringPool_MakeKey(const char* s);
 extern int AgentData_IsLevelDone(void* agent, __int128 key);
-extern unsigned char func_0044A0D0(void* g, int id, int a);
-extern unsigned char func_0044D670(void* g, int id, int a);
-int func_002AC470(S_002AC470* self, E_002AC470* e)
+extern unsigned char SFOLobby_CellContainsAgent(void* g, int id, int a);
+extern unsigned char SFOLobby_ContactListContainsAgent(void* g, int id, int a);
+int GuiMissionList_CanSelectAgent(S_002AC470* self, E_002AC470* e)
 {
     void* g;
     unsigned char ok;
@@ -301,9 +301,9 @@ int func_002AC470(S_002AC470* self, E_002AC470* e)
                     }
                     if (e->f34 && e->f34 < e->f38) {
                         if (e->f44 == 2)
-                            ok = func_0044A0D0(g, e->id, 0);
+                            ok = SFOLobby_CellContainsAgent(g, e->id, 0);
                         else if (e->f44 == 1)
-                            ok = func_0044D670(g, e->id, 0);
+                            ok = SFOLobby_ContactListContainsAgent(g, e->id, 0);
                         else
                             ok = 1;
                     }
@@ -326,13 +326,13 @@ static inline void merge_flush_func_002AC470(void) {}
 #pragma push /* merge_units */
 typedef int (*Cmp_002AC6F0)(const void*, const void*);
 extern S_002AC6F0* D_005065C0;
-extern int func_002ACA00(const void* a, const void* b);
-extern int func_002AC980(const void* a, const void* b);
-extern int func_002AC900(const void* a, const void* b);
-extern int func_002AC7E0(const void* a, const void* b);
+extern int GuiMissionList_Sort_DisplayGames(const void* a, const void* b);
+extern int GuiMissionList_Sort_Agents(const void* a, const void* b);
+extern int GuiMissionList_Sort_AgentNames(const void* a, const void* b);
+extern int GuiMissionList_Sort_AgentGames(const void* a, const void* b);
 extern void qsort(void* base, int n, int size, Cmp_002AC6F0 cmp);
 #pragma opt_dead_assignments off
-void func_002AC6F0(S_002AC6F0* self)
+void GuiMissionList_SortSelectList(S_002AC6F0* self)
 {
     Cmp_002AC6F0 cmp;
     if (!self->count || !self->p11C)
@@ -340,16 +340,16 @@ void func_002AC6F0(S_002AC6F0* self)
     cmp = 0;
     switch (self->bAC) {
     case 0:
-        cmp = self->bBC ? 0 : func_002ACA00;
+        cmp = self->bBC ? 0 : GuiMissionList_Sort_DisplayGames;
         break;
     case 1:
-        cmp = func_002AC980;
+        cmp = GuiMissionList_Sort_Agents;
         break;
     case 2:
-        cmp = func_002AC900;
+        cmp = GuiMissionList_Sort_AgentNames;
         break;
     case 3:
-        cmp = func_002AC7E0;
+        cmp = GuiMissionList_Sort_AgentGames;
         break;
     case 4:
         break;
@@ -380,7 +380,7 @@ extern S_002AC7E0* D_005065C0;
 #define D_005065C0 (*(S_002AC7E0 **)&D_005065C0) /* merge_units */
 
 #define LobbyArray_At(a0, a1) ((E_002AC7E0 *)LobbyArray_At((a0), (a1))) /* merge_units */
-int func_002AC7E0(const void* a, const void* b)
+int GuiMissionList_Sort_AgentGames(const void* a, const void* b)
 {
     E_002AC7E0* e1 = LobbyArray_At(D_005065C0->p11C, ((It_002AC7E0*)a)->idx);
     E_002AC7E0* e2 = LobbyArray_At(D_005065C0->p11C, ((It_002AC7E0*)b)->idx);

@@ -5,7 +5,7 @@
 extern int D_0048C408;
 
 /* Copies a global word into *out. */
-void func_002CEAC8(int* out)
+void MGCLGetQueuedRequestType(int* out)
 {
     *out = D_0048C408;
 }

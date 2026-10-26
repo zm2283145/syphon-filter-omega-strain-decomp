@@ -15,11 +15,11 @@
 #include "loose03_types.h"
 
 /* Inserts count copies of *value at pos (vector insert). */
-extern int func_00337F90(Vec28* v, Elem28* pos, int count, Elem28* value);
+extern int std_vector_imp_tRequirementInfo_insert(Vec28* v, Elem28* pos, int count, Elem28* value);
 
 /* push_back: insert one element at the end. */
-int func_0032E230(Vec28* v, Elem28* value) {
-    return func_00337F90(v, &v->data[v->count], 1, value);
+int cArray_tRequirementInfo_PushBackActual(Vec28* v, Elem28* value) {
+    return std_vector_imp_tRequirementInfo_insert(v, &v->data[v->count], 1, value);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0032E230 */
@@ -33,9 +33,9 @@ struct E_32E260 { int id; int pad[4]; int val; };
 struct O_32E260 { int text; int id; char flag; int a; int b; int c; int val; };
 extern "C" {
 extern char g_UnlockRows[];
-E_32E260* func_0032E3F0(void* t);
-E_32E260* func_0032E3C0(void* t);
-void func_0032E3E0(E_32E260** out, void* t, E_32E260** raw);
+E_32E260* std_vector_imp_Record_begin(void* t);
+E_32E260* std_vector_imp_Record_end(void* t);
+void std_vector_Record_pointer2iterator(E_32E260** out, void* t, E_32E260** raw);
 int Loc_FindKeyThunk(const char* key);
 int Loc_LookupText(int id);
 }
@@ -49,11 +49,11 @@ static inline int Find_32E260(const char* key)
         E_32E260* t1;
         E_32E260* t2;
         E_32E260* first;
-        t1 = func_0032E3F0(g_UnlockRows);
-        func_0032E3E0(&b, g_UnlockRows, &t1);
+        t1 = std_vector_imp_Record_begin(g_UnlockRows);
+        std_vector_Record_pointer2iterator(&b, g_UnlockRows, &t1);
         first = b;
-        t2 = func_0032E3C0(g_UnlockRows);
-        func_0032E3E0(&e, g_UnlockRows, &t2);
+        t2 = std_vector_imp_Record_end(g_UnlockRows);
+        std_vector_Record_pointer2iterator(&e, g_UnlockRows, &t2);
         for (E_32E260* last = e; Neq_32E260(first, last); first++) {
             if (k == first->id) return first->val;
         }

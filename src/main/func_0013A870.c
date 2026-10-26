@@ -13,7 +13,7 @@ typedef struct S_A870 {
     int dc;
 } S_A870;
 #pragma peephole off
-void func_0013A870(S_A870* self, Q_A870* a, Q_A870* b, int id, void* buf, int d0, int d4, int d8, int dc)
+void cLosRequest_cCollisionModelList_Game_Reset(S_A870* self, Q_A870* a, Q_A870* b, int id, void* buf, int d0, int d4, int d8, int dc)
 {
     self->a = *a;
     self->b = *b;

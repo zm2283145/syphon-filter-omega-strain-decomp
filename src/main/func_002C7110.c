@@ -21,7 +21,7 @@ extern char D_004DE158[];
 extern int D_0051EE78;
 extern void Mtx_ToEuler(V4* out, M4* m);
 extern bool NetObj_SendMessage(int a, int b, void* c, int target, int type);
-bool func_002C7110(int idx, int a1, int a2, M4* m, const char* str, short* sh, unsigned char b1, unsigned char b2, int sv);
+bool netCreateNPC_SendCreated(int idx, int a1, int a2, M4* m, const char* str, short* sh, unsigned char b1, unsigned char b2, int sv);
 void* memset(void* d, int c, unsigned int n);
 unsigned int strlen(const char* s);
 char* strncpy(char* d, const char* s, unsigned int n);
@@ -40,7 +40,7 @@ static inline bool IsConnected(int idx)
 #pragma opt_unroll_loops off
 #pragma opt_rotateloops off
 
-bool func_002C7110(int idx, int a1, int a2, M4* m, const char* str, short* sh, unsigned char b1, unsigned char b2, int sv)
+bool netCreateNPC_SendCreated(int idx, int a1, int a2, M4* m, const char* str, short* sh, unsigned char b1, unsigned char b2, int sv)
 {
     Msg7110 msg;
     V4 e;

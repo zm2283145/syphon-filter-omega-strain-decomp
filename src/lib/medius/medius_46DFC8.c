@@ -8,11 +8,11 @@
 
 static const unsigned int dat_00497CB0[1] = { 0x0 };
 
-int func_0046DFC8(void) {
+int MediusUniqueCallbackTicketTranslationRequestHandler(void) {
     return 141;
 }
 
-int func_0046DFD0(void) {
+int MediusUniqueCallbackTicketTranslationResponseHandler(void) {
     int v0;
     int cond;
 

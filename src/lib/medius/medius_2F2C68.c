@@ -40,7 +40,7 @@ extern void Md5_Update(unsigned int *, unsigned char *, unsigned int);
 #endif /* merge_units */
 #define Md5_Update(a0, a1, a2) (Md5_Update((C2F2C68 *)(a0), (const unsigned char *)(a1), (a2))) /* merge_units */
 
-extern void func_004AEF70(void *, void *, int);
+extern void md5Encode(void *, void *, int);
 void Md5_Final(unsigned char *digest, unsigned int *ctx)
 {
     unsigned char bits[8];
@@ -55,9 +55,9 @@ void Md5_Final(unsigned char *digest, unsigned int *ctx)
     t1 = cnt[1];
     cnt[0] = t0 << 3;
     cnt[1] = (t1 << 3) + (t0 >> 29);
-    func_004AEF70(bits, cnt, 8);
+    md5Encode(bits, cnt, 8);
     Md5_Update(ctx, bits, 8);
-    func_004AEF70(digest, ctx, 0x10);
+    md5Encode(digest, ctx, 0x10);
     memset(ctx, 0, 0x58);
 }
 #undef Md5_Update /* merge_units */
@@ -66,7 +66,7 @@ void Md5_Final(unsigned char *digest, unsigned int *ctx)
 /* merge_units: begin func_002F2E90 */
 typedef struct N2F2E90 { struct N2F2E90 *prev, *next; int key; int arr[4]; } N2F2E90;
 extern void Net_AllocZeroed(N2F2E90 **, int);
-N2F2E90 *func_002F2E90(int key)
+N2F2E90 *CreatePlayerRef(int key)
 {
     N2F2E90 *n = 0;
     unsigned int i;

@@ -21,7 +21,7 @@ struct Msg_00222410 : ClonedMessageBase {
 #define CLONE_BODY(p, s) p->vtable = D_004DB660; p->a24 = s->a24; p->vtable = D_004DB600; p->b28 = s->b28;
 
 extern "C" { char D_004A4C88[] = "generator.hh"; }
-DEFINE_MESSAGE_CLONE(func_00222410, Msg_00222410, 44, D_004A4C88, 227, CLONE_BODY)
+DEFINE_MESSAGE_CLONE(cGeneratorMessage_Clone, Msg_00222410, 44, D_004A4C88, 227, CLONE_BODY)
 #pragma pop /* merge_units */
 /* merge_units: end func_00222410 */
 

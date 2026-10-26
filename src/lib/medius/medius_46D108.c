@@ -8,7 +8,7 @@
 
 extern char D_00497D84[];
 
-int func_0046D108(void) {
+int MediusUniqueCallbackGetPolicyResponseHandler(void) {
     int v0;
     int cond;
 
@@ -23,6 +23,6 @@ ret:
     return v0;
 }
 
-int func_0046D138(void) {
+int MediusUniqueCallbackUpdateUserStateHandler(void) {
     return 24;
 }

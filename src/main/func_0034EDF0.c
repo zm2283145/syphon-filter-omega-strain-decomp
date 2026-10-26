@@ -17,7 +17,7 @@ typedef struct { char pad0[0x48]; void* tbl; } OEDF0;
 
 extern "C" char g_Game[];
 extern "C" void func_00296F20(LEDF0* l);
-extern "C" void func_00299270(LEDF0* l, int flags);
+extern "C" void std_vector_deleter_tRequirementInfo_dtor(LEDF0* l, int flags);
 extern "C" void* Agent_GetSelected(void* list, int idx);
 extern "C" void AgentData_GetAwardItems(void* ag, int a, int b, LEDF0* l);
 extern "C" int Loc_LookupText(const char* key);
@@ -45,5 +45,5 @@ extern "C" void GuiOmegaStrain_Fill(OEDF0* self)
         }
         GuiTextListWidget_AddItem(self->tbl, id, i, mode);
     }
-    func_00299270(&l, 0);
+    std_vector_deleter_tRequirementInfo_dtor(&l, 0);
 }

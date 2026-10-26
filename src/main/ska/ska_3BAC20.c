@@ -110,7 +110,7 @@ extern Table_3BAED0* g_TextureMgr;
 #define g_TextureMgr (*(Table_3BAED0 **)&g_TextureMgr) /* merge_units */
 
 
-unsigned int func_003BAED0(Ref_3BAED0* r)
+unsigned int cUserFrameEnv_GetVramZAddr(Ref_3BAED0* r)
 {
     if (r->index != -1)
         return (unsigned int)(int)(g_TextureMgr->entries[r->index]->tex0 & 0x3FFF) >> 5;
@@ -132,7 +132,7 @@ extern EntryTable* g_TextureMgr;
 
 
 /* Returns bits 5..13 of the 64-bit field at +0x50 of the indexed table entry. */
-unsigned int func_003BAF20(int* index)
+unsigned int cUserFrameEnv_GetVramAddr(int* index)
 {
     return (unsigned int)(int)(g_TextureMgr->entries[*index]->bits & 0x3FFF) >> 5;
 }
@@ -156,11 +156,11 @@ extern TexRegistry* g_TextureMgr;
 #define g_TextureMgr (*(TexRegistry **)&g_TextureMgr) /* merge_units */
 
 
-int func_003BAF60(int* handle) {
+int cUserFrameEnv_GetHeight(int* handle) {
     return g_TextureMgr->entries[*handle]->info->unk06;
 }
 
-int func_003BAF90(int* handle) {
+int cUserFrameEnv_GetWidth(int* handle) {
     return g_TextureMgr->entries[*handle]->info->unk04;
 }
 #undef g_TextureMgr /* merge_units */

@@ -1,10 +1,10 @@
 #include "types.h"
 #pragma optimization_level 1
 
-extern void func_001F3240(void*, int*);
+extern void cLList_cSkaSwitchItemPtr_PushBackActual(void*, int*);
 
-/* Calls func_001F3240(self, &value) and returns self. */
-void* func_001F3200(void* self, int value) {
-    func_001F3240(self, &value);
+/* Calls cLList_cSkaSwitchItemPtr_PushBackActual(self, &value) and returns self. */
+void* cSkaInitListOfPointers_cSkaSwitchItem_opShl(void* self, int value) {
+    cLList_cSkaSwitchItemPtr_PushBackActual(self, &value);
     return self;
 }

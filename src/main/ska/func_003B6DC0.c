@@ -15,10 +15,10 @@ struct S6DC0 {
     int i164;
     V& Get(int i) { return ((V*)((char*)this + 0x110))[i]; }
 };
-extern "C" void func_003B6E90(S6DC0* d, S6DC0* s);
-extern "C" S6DC0* func_003B6DC0(S6DC0* d, S6DC0* s)
+extern "C" void cTreeNode_cSkaAnimAnchor_TreeNodeData_opAssign(S6DC0* d, S6DC0* s);
+extern "C" S6DC0* cSkaAnimAnchor_opAssign(S6DC0* d, S6DC0* s)
 {
-    func_003B6E90(d, s);
+    cTreeNode_cSkaAnimAnchor_TreeNodeData_opAssign(d, s);
     d->fD0 = s->fD0;
     { V* p = &d->vE0; *p = s->vE0; }
     d->vF0 = s->vF0;

@@ -9,18 +9,18 @@
 
 extern "C" {
 int Mem_Free(...);                     
-int func_0036D5D0(...);                         
+int cHogFile_dtor(...);                         
 extern char D_0049AE60;
 extern unsigned char g_ProfileLockEnabled;
 }
-extern "C" void func_003F9A30(void ***arg0, int *arg1, void ***arg2) {
+extern "C" void std_list_deleter_cHogFile_erase_listdeleter(void ***arg0, int *arg1, void ***arg2) {
     void **temp_s0;
 
     temp_s0 = *arg2;
     *arg2 = (void **)(F_(temp_s0, 0x4, int));
     F_(F_(temp_s0, 0x0, int), 0x4, int) = (int)(F_(temp_s0, 0x4, int));
     *(int *)F_(temp_s0, 0x4, int) = F_(temp_s0, 0x0, int);
-    func_0036D5D0((char *)temp_s0 + 8, -1);
+    cHogFile_dtor((char *)temp_s0 + 8, -1);
     if (temp_s0 != NULL) {
         {
             AllocGuard g;

@@ -9,8 +9,8 @@
 
 extern "C" {
 int Mem_Free(...);                      
-int func_003EC130(...);                            
-int func_003EC8E0(...);                         
+int cSfxScheduler_ClearItemList(...);                            
+int cSfxScheduler_dtor(...);                         
 extern int D_004BE020;
 extern "C" void Effect_Draw();
 extern "C" void Effect_Update();
@@ -20,8 +20,8 @@ extern unsigned char g_ProfileLockEnabled;
 extern "C" int SpecFx_dtor(int arg0, long long arg1) {
     if (arg0 != NULL) {
         F_(arg0, 0x14, int) = (int)(&(*(int*)D_004E0760));
-        func_003EC130(arg0, arg0);
-        func_003EC8E0(arg0, 0);
+        cSfxScheduler_ClearItemList(arg0, arg0);
+        cSfxScheduler_dtor(arg0, 0);
         if (((long long) (arg1 << 0x30) >> 0x30) > 0) {
             {
                 AllocGuard g;

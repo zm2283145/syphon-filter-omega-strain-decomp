@@ -1,6 +1,6 @@
 #include "types.h"
-extern void func_0035AA20(void);
-/* Wrapper around func_0035AA20. */
+extern void sceInsockGetsockname(void);
+/* Wrapper around sceInsockGetsockname. */
 #pragma tailcall off
-void func_0045ABE0(void) { func_0035AA20(); }
+void sceNetGlueGetsockname(void) { sceInsockGetsockname(); }
 #pragma tailcall reset

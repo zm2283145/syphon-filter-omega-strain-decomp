@@ -17,7 +17,7 @@ extern char D_00582790;
 extern char D_00582798;
 
 /* Resets the five NPC info slots (word and flag of each). */
-void func_004321D0(void) {
+void cNPCInfoObject_NPCInfoDeleteCallback(void) {
     D_005827F0 = 0;
     D_005827F8 = 0;
     D_00582800 = 0;

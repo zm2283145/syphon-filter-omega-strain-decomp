@@ -18,7 +18,7 @@ static inline Vec4 CopyAsPoint_(Vec4* src) {
     p->w = 1.0f;
     return *p;
 }
-Obj290860* func_00290860(Obj290860* o, Vec4* v, float f) {
+Obj290860* cBone_SkeletonBBoxContribution_ctor(Obj290860* o, Vec4* v, float f) {
     int k, fl; unsigned char r;
     o->on = 1;
     asm {

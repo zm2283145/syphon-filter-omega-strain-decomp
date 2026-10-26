@@ -2,7 +2,7 @@
 #include "types.h"
 struct Ent_250EE0 { unsigned char a; float b; };
 struct Vec_250EE0 { int cap; int count; Ent_250EE0* data; };
-extern "C" Ent_250EE0* func_00250EE0(Vec_250EE0* v, Ent_250EE0* first, Ent_250EE0* last)
+extern "C" Ent_250EE0* std_vector_imp_cTargetZRotationStackSlot_erase(Vec_250EE0* v, Ent_250EE0* first, Ent_250EE0* last)
 {
     Ent_250EE0* end;
     Ent_250EE0* s;

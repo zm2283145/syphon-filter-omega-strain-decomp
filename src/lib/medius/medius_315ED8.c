@@ -1,7 +1,7 @@
 typedef struct { unsigned int x; unsigned int y; char data[0x1F8]; } G4Ent;
 typedef struct { int a; unsigned int b; int c; G4Ent e[64]; } G4Tbl;
 extern void *memcpy(void *, const void *, unsigned int);
-void func_00315ED8(G4Tbl *t, unsigned int seq, void *data, unsigned int len)
+void AddVSequence(G4Tbl *t, unsigned int seq, void *data, unsigned int len)
 {
     unsigned int i = seq & 0x3F;
     unsigned int s = seq & 0x1FFFFFFF;

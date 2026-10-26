@@ -4,7 +4,7 @@ extern int D_0048C098;
 extern int D_00518A00[];
 extern E2BB690 D_00518A08[];
 extern int CreateSema(P2BB690 *);
-int func_002BB690(void)
+int _sceMcCoreInit(void)
 {
     P2BB690 p;
     int i;

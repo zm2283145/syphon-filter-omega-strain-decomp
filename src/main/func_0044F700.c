@@ -8,7 +8,7 @@ int memcpy(int, int, int);
 extern int D_00585E58;
 
 typedef struct { int f0; int f4; int f8; char pC[4]; int f10; int f14; } PS0_0044F700;
-void func_0044F700(PS0_0044F700 *arg0) {
+void SFOLobbyList_CompactList(PS0_0044F700 *arg0) {
     int temp_v0;
     int var_s1;
     int temp_s0;

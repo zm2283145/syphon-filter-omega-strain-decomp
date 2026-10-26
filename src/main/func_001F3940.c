@@ -4,11 +4,11 @@
 #pragma push
 #pragma optimization_level 1
 
-extern void func_001F3980(void* obj);
+extern void std_list_cSkaTransBLENDPtr_ctor(void* obj);
 
-/* Runs func_001F3980 on obj and returns obj. */
-void* func_001F3940(void* obj) {
-    func_001F3980(obj);
+/* Runs std_list_cSkaTransBLENDPtr_ctor on obj and returns obj. */
+void* cLList_cSkaTransBLENDPtr_ctor(void* obj) {
+    std_list_cSkaTransBLENDPtr_ctor(obj);
     return obj;
 }
 

@@ -15,10 +15,10 @@ extern unsigned short D_004E1D4C;
 extern int func_00322E60(int);
 extern void printf(char *);
 extern int func_00323248(void);
-extern int func_003179A8(int *sub, int v);
-extern void func_0031C668(Ctx_c530 **out);
+extern int NellyInitEncodeSC3(int *sub, int v);
+extern void nciFreeEncodeSase3200(Ctx_c530 **out);
 
-int func_0031C530(Ctx_c530 **out)
+int nciInitEncodeSase3200(Ctx_c530 **out)
 {
     Ctx_c530 *s;
     int r;
@@ -47,8 +47,8 @@ int func_0031C530(Ctx_c530 **out)
         s->buf34 = D_004E1D34(0x1000, 1);
         if (s->buf34 == 0) return 0x1770;
     }
-    if (func_003179A8(s->sub, s->a24) != 0) {
-        func_0031C668(out);
+    if (NellyInitEncodeSC3(s->sub, s->a24) != 0) {
+        nciFreeEncodeSase3200(out);
         return 0x1770;
     }
     D_004E1D4C++;

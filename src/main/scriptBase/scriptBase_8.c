@@ -16,22 +16,22 @@
 
 extern int PtrVec_Reserve(int, int);
 
-int func_003D8340(int a0, int a1) {
+int std_vector_VarDefPtr_reserve(int a0, int a1) {
     return PtrVec_Reserve(a0, a1);
 }
 
-Rel* func_003D8350(Rel* r) {
+Rel* std_vector_VarDefPtr_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
     return r;
 }
 
-int func_003D8370(int a0, int a1) {
+int std_vector_FuncDefPtr_reserve(int a0, int a1) {
     return PtrVec_Reserve(a0, a1);
 }
 
-Rel* func_003D8380(Rel* r) {
+Rel* std_vector_FuncDefPtr_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
@@ -47,28 +47,28 @@ Rel* func_003D8380(Rel* r) {
 #include "buf_holder_dtor.h"
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_003D83A0)
+DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_FuncDefPtr_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003D83A0 */
 
 /* merge_units: begin func_003D8490 */
 #pragma push /* merge_units */
-int func_003D8490(int a0, int a1) {
+int std_vector_EnumDefPtr_reserve(int a0, int a1) {
     return PtrVec_Reserve(a0, a1);
 }
 
-Rel* func_003D84A0(Rel* r) {
+Rel* std_vector_EnumDefPtr_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
     return r;
 }
 
-int func_003D84C0(int a0, int a1) {
+int std_vector_ClassDefPtr_reserve(int a0, int a1) {
     return PtrVec_Reserve(a0, a1);
 }
 
-Rel* func_003D84D0(Rel* r) {
+Rel* std_vector_ClassDefPtr_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
@@ -91,9 +91,9 @@ extern ScrMgr* D_00554F28;
 void Alloc_Lock(int id);
 void Alloc_Unlock(int id);
 void* Mem_Alloc(int a, int size, char* file, int line);
-void* func_003D7380(void* p, int a3, int a1, int a2, int count, int* args);
-void func_003D8720(char* list, void** item);
-void func_003D76D0(int a3, int a1, int a2, int count, int* args, int flag);
+void* MemberFunc_ctor(void* p, int a3, int a1, int a2, int count, int* args);
+void std_vector_MemberFuncPtr_push_back(char* list, void** item);
+void cScriptBase_addGameFunc(int a3, int a1, int a2, int count, int* args, int flag);
 
 int Script_RegisterNative(int id, int a1, int a2, int a3, int count, ...)
 {
@@ -114,10 +114,10 @@ int Script_RegisterNative(int id, int a1, int a2, int a3, int count, ...)
     p = Mem_Alloc(0, 0x1C, D_004BD3B0, 0xCA);
     if (g_ProfileLockEnabled) Alloc_Unlock(9);
     g_ProfileLockDepth--;
-    if (p) p = func_003D7380(p, a3, a1, a2, count, args);
+    if (p) p = MemberFunc_ctor(p, a3, a1, a2, count, args);
     item = p;
-    func_003D8720(o + 0x14, &item);
-    func_003D76D0(a3, a1, a2, count, args, 1);
+    std_vector_MemberFuncPtr_push_back(o + 0x14, &item);
+    cScriptBase_addGameFunc(a3, a1, a2, count, args, 1);
     return 0;
 }
 #pragma pop /* merge_units */

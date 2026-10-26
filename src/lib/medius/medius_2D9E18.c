@@ -7,20 +7,20 @@
 /* merge_units: begin func_002D9E18 */
 #include "types.h"
 
-extern int func_002ED8A0(int, int);
+extern int GridGetByChannel(int, int);
 
-int func_002D9E18(int a0, int a1) {
+int GetGrid(int a0, int a1) {
     int tmp0;
 
     tmp0 = *(int*)((char*)a0 + 100);
-    return func_002ED8A0(tmp0, a1);
+    return GridGetByChannel(tmp0, a1);
 }
 /* merge_units: end func_002D9E18 */
 
 /* merge_units: begin func_002D9E30 */
-extern int func_002ED8D8(int);
+extern int GridRemoveGrid(int);
 
-int func_002D9E30(int a0, int a1) {
+int RemoveGrid(int a0, int a1) {
     int s0, v0;
     int cond;
 
@@ -34,7 +34,7 @@ int func_002D9E30(int a0, int a1) {
     goto L002D9E60;
 L002D9E58:;
     a0 = s0;
-    v0 = func_002ED8D8(a0);
+    v0 = GridRemoveGrid(a0);
 L002D9E60:;
     v0 = s0;
     goto ret;

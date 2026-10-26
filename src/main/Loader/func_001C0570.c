@@ -1,4 +1,4 @@
 #pragma cplusplus on
 #include "types.h"
 #include "tree_node_free.h"
-DEFINE_TREE_ROOT_DTOR(func_001C0570, func_001C4670)
+DEFINE_TREE_ROOT_DTOR(std_map_cString16N_2_cSkaAnimationBlendPtr_cAllocator_pair_dtor, std_tree_pair_cString16N_value_compare_cAllocator_pair_destroy_nodeP_2)

@@ -4,11 +4,11 @@
 #pragma push
 #pragma optimization_level 1
 
-extern void func_001F43B0(void* obj, int* value);
+extern void cLList_cSkaBlendSequenceItemPtr_PushBackActual(void* obj, int* value);
 
-/* Passes value by reference to func_001F43B0; returns obj. */
-void* func_001F4370(void* obj, int value) {
-    func_001F43B0(obj, &value);
+/* Passes value by reference to cLList_cSkaBlendSequenceItemPtr_PushBackActual; returns obj. */
+void* cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(void* obj, int value) {
+    cLList_cSkaBlendSequenceItemPtr_PushBackActual(obj, &value);
     return obj;
 }
 

@@ -26,7 +26,7 @@ void GuiScreen_Wake(O* o);
 void String_CtorCStr_13B480(String* s, const char* text);
 void String_AssignString(void* list, String* s);
 void String_Dtor(String* s, int flags);
-void func_0033D8E0(O* o, unsigned char mode);
+void GuiMissionLobbyScreen_SetDisplayMode(O* o, unsigned char mode);
 W* GuiWidget_FindChildByName(void* o, char* name);
 void* Agent_GetSelected(void* p, int i);
 char* AgentData_GetName(void* a);
@@ -49,7 +49,7 @@ void GuiMenuScreen_Wake(O* o)
         String_Dtor(&s, 0);
     }
     if (o->f88) {
-        func_0033D8E0(o, 1);
+        GuiMissionLobbyScreen_SetDisplayMode(o, 1);
         o->f88->fB8 = o->f84;
         o->f88->b80 = 1;
     }

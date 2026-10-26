@@ -1,14 +1,14 @@
 #include "types.h"
 
 extern int GetMemorySize(void);
-extern void func_00115C10(void);
-extern void func_0010D5D0(void);
+extern void InitTLB32MB(void);
+extern void _InitTLB(void);
 
 /* Dispatches on GetMemorySize() == 0x2000000. */
-void func_00115BD0(void) {
+void InitTLB(void) {
     if (GetMemorySize() == 0x2000000) {
-        func_00115C10();
+        InitTLB32MB();
     } else {
-        func_0010D5D0();
+        _InitTLB();
     }
 }

@@ -8,45 +8,45 @@
 #include "loose00_types.h"
 
 /* Iterator dereference (returns *it). */
-extern char* func_00183B10(TableOwner* owner, char** it);
+extern char* cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_4(TableOwner* owner, char** it);
 
-float func_001E1D10(Unk001E1D10* self) {
+float cCollisionFace_NormalScale(Unk001E1D10* self) {
     return self->unk3C;
 }
 
-void func_001E1D20(IntPair* self, int a, int b) {
+void cCollisionModel_FaceLocator_Set(IntPair* self, int a, int b) {
     self->a = a;
     self->b = b;
 }
 
 /* Bit 7 of byte +0x0C. */
-int func_001E1D30(unsigned char* flags) {
+int cCollisionModel_Face_IsReceiveReflection(unsigned char* flags) {
     return (flags[12] & 128) != 0;
 }
 
 /* Bit 7 of byte +0x0B. */
-int func_001E1D40(unsigned char* flags) {
+int cCollisionModel_Face_IsReceiveShadow(unsigned char* flags) {
     return (flags[11] & 128) != 0;
 }
 
-int func_001E1D50(void) {
+int cCollisionModel_Face_IsCamPassThru(void) {
     return 0;
 }
 
-int func_001E1D60(Unk001E1D60** self) {
+int cCollisionModel_GetXform(Unk001E1D60** self) {
     return (*self)->unk50;
 }
 
-void* func_001E1D70(char* self) {
+void* cVector_W(char* self) {
     return self + 12;
 }
 
 /* Address of 16-byte entry index of the owner's table. */
-char* func_001E1D80(TableOwnerRef* self, int index) {
+char* cCollisionModel_GetVertex(TableOwnerRef* self, int index) {
     char* it[1];
     TableOwner* owner;
 
     owner = *self->owner;
     it[0] = owner->table;
-    return func_00183B10(owner, it) + (index << 4);
+    return cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_4(owner, it) + (index << 4);
 }

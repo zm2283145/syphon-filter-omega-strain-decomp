@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-void* func_00132840(void* self) {
+void* cQuaternion_ctor_void(void* self) {
     return self;
 }
 

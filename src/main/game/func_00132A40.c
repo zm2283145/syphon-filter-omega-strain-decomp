@@ -10,8 +10,8 @@ void Mem_Free(int pool, void* p, const char* file, int line);
 void Object_Unregister(void*);
 void TargetVis_Unregister(void*, void*);
 void Object_DeleteLater(void*, float);
-void* func_0013D9F0(void);
-void func_00132B80(void*);
+void* GetSceneManager(void);
+void cLList_cScenePtr_Clear(void*);
 extern void ActiveList_EraseMatching(int* list, AlPred_c pred);
 extern char D_0049A890[];
 extern char g_TargetVisMgr[];
@@ -27,7 +27,7 @@ struct World132A40 {
 };
 
 static inline void Erase_c(int* l, void** r) { AlEq_c eq; ActiveList_EraseMatching(l, AlPred_c(eq, r)); }
-extern "C" void func_00132A40(World132A40* w)
+extern "C" void cGameSystem_DestroyPlayerCameraAndScene(World132A40* w)
 {
     void* p;
     Erase_c(&w->list, &w->c0);
@@ -48,6 +48,6 @@ extern "C" void func_00132A40(World132A40* w)
             AllocGuard g;
             Mem_Free(0, p, D_0049A890, 0x563);
         }
-        func_00132B80(func_0013D9F0());
+        cLList_cScenePtr_Clear(GetSceneManager());
     }
 }

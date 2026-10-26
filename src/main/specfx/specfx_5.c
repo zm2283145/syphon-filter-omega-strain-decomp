@@ -23,10 +23,10 @@ struct HC710 { char pad[0x10]; float f10; };
 extern int D_0055C090;
 extern "C" {
 void List_Begin(int* out, void* list);
-void func_003EC6B0(NC710** out, int* in);
-void func_003EC6A0(int* out, void* list);
-void func_003EC690(NC710** out, int* in);
-void func_0015AF40(int* out, NC710** in);
+void std_list_tItemPtr_generic_iterator_ctor(NC710** out, int* in);
+void std_list_tItemPtr_end(int* out, void* list);
+void cLListIterator_tItemPtr_ctor(NC710** out, int* in);
+void std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(int* out, NC710** in);
 void List_Erase(int* out, void* list, int* in);
 }
 extern "C" void Effect_UpdateSlots(HC710* self, void* list, float dt)
@@ -41,8 +41,8 @@ extern "C" void Effect_UpdateSlots(HC710* self, void* list, float dt)
     SC710* s;
     NC710* n;
     List_Begin(&t1, list);
-    func_003EC6B0(&it, &t1);
-    for (n = it; func_003EC6A0(&t2, list), func_003EC690(&e, &t2), n != e; ) {
+    std_list_tItemPtr_generic_iterator_ctor(&it, &t1);
+    for (n = it; std_list_tItemPtr_end(&t2, list), cLListIterator_tItemPtr_ctor(&e, &t2), n != e; ) {
         s = n->data;
         if (!s->fC && !(self->f10 < s->f4)) {
             s->fC = 1;
@@ -60,7 +60,7 @@ extern "C" void Effect_UpdateSlots(HC710* self, void* list, float dt)
             s->fC = 0;
             old = cur;
             D_0055C090--;
-            func_0015AF40(&t3, &old);
+            std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&t3, &old);
             List_Erase(&t4, list, &t3);
         } else {
             n = n->next;
@@ -76,7 +76,7 @@ typedef struct { char pad[0x14]; void* vt; } TC8E0;
 extern char D_004E0780[];
 extern void ReceiverList_Dtor_3EC220(void* self, short del);
 extern void operator_delete(void* p);
-TC8E0* func_003EC8E0(TC8E0* self, short del)
+TC8E0* cSfxScheduler_dtor(TC8E0* self, short del)
 {
     if (self) {
         self->vt = D_004E0780;
@@ -95,7 +95,7 @@ TC8E0* func_003EC8E0(TC8E0* self, short del)
 #pragma cplusplus on
 #include "alloc_guard.h"
 extern "C" { extern char D_004BE020[]; void Mem_Free(int pool, void* p, char* file, int line); }
-extern "C" void func_003EC950(void* node)
+extern "C" void cSpecFx_opDelete(void* node)
 {
     AllocGuard guard;
     Mem_Free(0, node, D_004BE020, 0x18);
@@ -121,6 +121,6 @@ extern "C" void* EffectComponent_Alloc(int size)
 #include "base_dtor_chain.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_003ECA90, func_00135C90)
+DEFINE_BASE_DTOR_CHAIN(cLList_cSfxSchedulerPtr_dtor, func_00135C90)
 #pragma pop /* merge_units */
 /* merge_units: end specfx_3ECA90 */

@@ -8,10 +8,10 @@ extern "C" {
 void Mem_Free(int, void*, char*, int);
 void List_Erase(int*, char*, int*);
 Raw_EE70 List_Begin(void*);
-Raw_EE70 func_003ED850(void*);
-void func_003EF000(char**, const Raw_EE70&);
-void func_003ED860(char**, const Raw_EE70&);
-void func_0015AF40(int*, char**);
+Raw_EE70 std_list_cInterfaceElementPtr_end(void*);
+void std_list_cInterfaceElementPtr_generic_iterator_ctor(char**, const Raw_EE70&);
+void cLListIterator_cInterfaceElementPtr_ctor(char**, const Raw_EE70&);
+void std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(int*, char**);
 }
 extern "C" void IeScreen_RemoveElement(char* self, VC_EE70* obj) {
     char* end;
@@ -20,9 +20,9 @@ extern "C" void IeScreen_RemoveElement(char* self, VC_EE70* obj) {
         char* n;
         char* cur;
         char* it;
-        func_003EF000(&it, List_Begin(self + 0x8C));
+        std_list_cInterfaceElementPtr_generic_iterator_ctor(&it, List_Begin(self + 0x8C));
         n = it;
-        while ((func_003ED860(&end, func_003ED850(self + 0x8C)), n != end)) {
+        while ((cLListIterator_cInterfaceElementPtr_ctor(&end, std_list_cInterfaceElementPtr_end(self + 0x8C)), n != end)) {
             e = F_(n, 0x8, VC_EE70*);
             if (e == obj) {
                 cur = n;
@@ -37,7 +37,7 @@ extern "C" void IeScreen_RemoveElement(char* self, VC_EE70* obj) {
                     int res;
                     int pos;
                     c = cur;
-                    func_0015AF40(&pos, &c);
+                    std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&pos, &c);
                     List_Erase(&res, self + 0x8C, &pos);
                 }
             } else {

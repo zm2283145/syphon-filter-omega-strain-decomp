@@ -17,8 +17,8 @@ typedef struct HumanColDesc {
 } HumanColDesc;
 
 extern float Math_Cos(float);
-extern int* func_001EB390(int* dst, int* src);
-extern int* func_001EB380(int* dst, int* src);
+extern int* cBitArray_19_ctor_cBitArrayR(int* dst, int* src);
+extern int* cBitArray_5_ctor_cBitArrayR(int* dst, int* src);
 extern HumanColPresetCfg* HumanColPreset_Copy(HumanColPresetCfg* dst, HumanColPresetCfg* src);
 extern HumanColPresetMgr* HumanCol_AppendPreset(HumanColPresetMgr* mgr, HumanColDesc* desc);
 extern HumanColPreset* HumanColPreset_SetConfig(HumanColPreset* p, int selector, int* mask0, int* mask1,
@@ -39,8 +39,8 @@ static inline void Range_Set(float* r, float lo, float hi) {
      Range_Set(&(c)->range2Min, Math_Cos(angLo), Math_Cos(angHi)), (c)->enabled = (en))
 
 static inline void Desc_Tail(HumanColDesc* d, int* m2, int* m3, HumanColPresetCfg* cfg, int flag) {
-    func_001EB380(&d->masks[2], m2);
-    func_001EB380(&d->masks[3], m3);
+    cBitArray_5_ctor_cBitArrayR(&d->masks[2], m2);
+    cBitArray_5_ctor_cBitArrayR(&d->masks[3], m3);
     HumanColPreset_Copy(&d->cfg, cfg);
     d->descFlag = flag;
 }
@@ -48,8 +48,8 @@ static inline void Desc_Tail(HumanColDesc* d, int* m2, int* m3, HumanColPresetCf
 static inline void Desc_Head(HumanColDesc* d, int kind, int sel, int* m0, int* m1) {
     d->selector = sel;
     d->kind = kind;
-    func_001EB390(&d->masks[0], m0);
-    func_001EB390(&d->masks[1], m1);
+    cBitArray_19_ctor_cBitArrayR(&d->masks[0], m0);
+    cBitArray_19_ctor_cBitArrayR(&d->masks[1], m1);
 }
 
 #pragma push

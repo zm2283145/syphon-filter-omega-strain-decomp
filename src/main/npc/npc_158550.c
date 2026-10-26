@@ -139,18 +139,18 @@ extern "C" void cNPC_v73();
 extern "C" void cNPC_v7B();
 extern "C" void cNPC_v7C();
 extern "C" void cNPC_v7D();
-extern "C" void func_0012ECF0();
-extern "C" void func_0012ED00();
-extern "C" void func_0012ED10();
-extern "C" void func_0012ED20();
-extern "C" void func_0012ED30();
-extern "C" void func_0012ED40();
-extern "C" void func_0012ED50();
+extern "C" void cSystem_ScriptGetRealObj();
+extern "C" void cSystem_SendCreated();
+extern "C" void cSystem_NetActivate();
+extern "C" void cSystem_NetDeactivate();
+extern "C" void cSystem_NetEnable();
+extern "C" void cSystem_NetDisable();
+extern "C" void cSystem_IsDeliverable();
 extern "C" void NpcAi_IsPlayer();
-extern "C" void func_001383D0();
+extern "C" void cSystem_IsNetworked();
 extern "C" void cNPC_v0B();
 extern "C" void AiComponent_ScriptFilter();
-extern "C" void func_001535D0();
+extern "C" void cGobjController_IsNetNPC();
 extern "C" void cNPC_v2F();
 extern "C" void NpcAi_ActivateMultiplayer();
 extern "C" void NpcAi_IsAliveOrEligible();
@@ -158,9 +158,9 @@ extern "C" void cNPC_v22();
 extern "C" void NpcAi_GetTeam();
 extern "C" void cNPC_v24();
 extern "C" void func_0015B820();
-extern "C" void func_0015B830();
-extern "C" void func_0015B840();
-extern "C" void func_0015B850();
+extern "C" void cGobjController_CleanUpAfterTeleportationOfGobj();
+extern "C" void cGobjController_GetCopyMsg();
+extern "C" void cGobjController_NoticeEnvironmentalDanger();
 extern "C" void NpcAi_SetTeam();
 extern "C" void Component_GetOwnerId();
 extern void * const D_004D9380[];
@@ -206,7 +206,7 @@ extern "C" char *cNPC_dtor(PS0_00158550 *arg0, long long arg1) {
     }
     return (char *)arg0;
 }
-void * const D_004D9380[140] = { (void*)0x0, (void*)0x0, (void*)cNPC_dtor, (void*)cNPC_v01, (void*)Component_GetOwnerId, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)cNPC_v0B, (void*)AiComponent_ScriptFilter, (void*)cNPC_CriticalNextFrame, (void*)cNPC_v0E, (void*)NpcAi_IsAliveOrEligible, (void*)cNPC_v10, (void*)cNPC_v11, (void*)func_0015B820, (void*)NpcAi_IsPlayer, (void*)cNPC_v14, (void*)func_001535D0, (void*)Controller_ToHit, (void*)cNPC_v17, (void*)NpcAi_GetTeam, (void*)Controller_IsEnemyTeam, (void*)Controller_IsEnemy, (void*)Controller_GetShooterMotion, (void*)cNPC_v1C, (void*)cNPC_v1D, (void*)func_0015B830, (void*)cNPC_v1F, (void*)cNPC_v20, (void*)Component_AttachOwner, (void*)cNPC_v22, (void*)func_0015B840, (void*)cNPC_v24, (void*)func_0015B850, (void*)NpcAi_SetTeam, (void*)cNPC_v27, (void*)cNPC_v28, (void*)cNPC_v29, (void*)cNPC_v2A, (void*)cNPC_v2B, (void*)cNPC_v2C, (void*)NpcAi_RequestWeaponDraw, (void*)NpcAi_DeactivateAnon, (void*)cNPC_v2F, (void*)NpcAi_ActivateMultiplayer, (void*)NpcAttack_FireNotice, (void*)cNPC_v32, (void*)cNPC_v33, (void*)cNPC_v34, (void*)cNPC_v35, (void*)cNPC_v36, (void*)cNPC_AddAwareness, (void*)cNPC_RemoveAwareness, (void*)cNPC_v39, (void*)cNPC_GetClosestPlayer, (void*)cNPC_ResendNewAwarenessMessage, (void*)cNPC_v3C, (void*)cNPC_v3D, (void*)cNPC_MoveToNode, (void*)cNPC_MoveToGobj, (void*)cNPC_v40, (void*)cNPC_v41, (void*)cNPC_SetAggressiveness, (void*)cNPC_v43, (void*)cNPC_SetAimSubtarget, (void*)cNPC_ResumeAIAiming, (void*)cNPC_v46, (void*)cNPC_v47, (void*)cNPC_v48, (void*)cNPC_v49, (void*)cNPC_v4A, (void*)cNPC_v4B, (void*)cNPC_StopAndLookAround, (void*)cNPC_v4D, (void*)cNPC_v4E, (void*)cNPC_ResumeAITravelSpeed, (void*)cNPC_v50, (void*)cNPC_v51, (void*)cNPC_RequestAction, (void*)cNPC_StopMovement, (void*)cNPC_v54, (void*)cNPC_v55, (void*)cNPC_v56, (void*)Npc_IsCorpseRemovable, (void*)cNPC_Kill, (void*)cNPC_SetFiringThreshold, (void*)cNPC_v5A, (void*)cNPC_v5B, (void*)cNPC_v5C, (void*)cNPC_SetOnFire, (void*)cNPC_SetViewConeRadius, (void*)cNPC_SetViewConeAngle, (void*)cNPC_InViewCone, (void*)cNPC_v61, (void*)cNPC_v62, (void*)cNPC_v63, (void*)cNPC_ForceWeaponFire, (void*)cNPC_v65, (void*)cNPC_SetGrenadeThrowAngle, (void*)cNPC_GetActiveWeapon, (void*)cNPC_v68, (void*)cNPC_v69, (void*)cNPC_v6A, (void*)cNPC_v6B, (void*)cNPC_AddWeapon, (void*)cNPC_RemoveWeapon, (void*)cNPC_GetWeapon, (void*)cNPC_SetWeaponPreference, (void*)cNPC_SetWeaponPreferenceDistance, (void*)cNPC_v71, (void*)cNPC_v72, (void*)cNPC_v73, (void*)cNPC_SetHasDisguise, (void*)cNPC_SetDarkness, (void*)cNPC_GetDarkness, (void*)cNPC_GetAimPercent, (void*)cNPC_SetInvulnerable, (void*)cNPC_RequestDeathAnimation, (void*)cNPC_EquipGoggles, (void*)cNPC_v7B, (void*)cNPC_v7C, (void*)cNPC_v7D, (void*)cNPC_DontDropWeapons, (void*)cNPC_SetFireInvulnerability, (void*)cNPC_SetUnconscious, (void*)cNPC_SetNotTaserable, (void*)cNPC_SetNotGasable, (void*)cNPC_SetNotTargetable, (void*)cNPC_AddItem, (void*)cNPC_RemoveItem, (void*)cNPC_GetItemCount, (void*)0x0, (void*)0x0, (void*)0x0 };
+void * const D_004D9380[140] = { (void*)0x0, (void*)0x0, (void*)cNPC_dtor, (void*)cNPC_v01, (void*)Component_GetOwnerId, (void*)cSystem_ScriptGetRealObj, (void*)cSystem_IsNetworked, (void*)cSystem_SendCreated, (void*)cSystem_NetActivate, (void*)cSystem_NetDeactivate, (void*)cSystem_NetEnable, (void*)cSystem_NetDisable, (void*)cSystem_IsDeliverable, (void*)cNPC_v0B, (void*)AiComponent_ScriptFilter, (void*)cNPC_CriticalNextFrame, (void*)cNPC_v0E, (void*)NpcAi_IsAliveOrEligible, (void*)cNPC_v10, (void*)cNPC_v11, (void*)func_0015B820, (void*)NpcAi_IsPlayer, (void*)cNPC_v14, (void*)cGobjController_IsNetNPC, (void*)Controller_ToHit, (void*)cNPC_v17, (void*)NpcAi_GetTeam, (void*)Controller_IsEnemyTeam, (void*)Controller_IsEnemy, (void*)Controller_GetShooterMotion, (void*)cNPC_v1C, (void*)cNPC_v1D, (void*)cGobjController_CleanUpAfterTeleportationOfGobj, (void*)cNPC_v1F, (void*)cNPC_v20, (void*)Component_AttachOwner, (void*)cNPC_v22, (void*)cGobjController_GetCopyMsg, (void*)cNPC_v24, (void*)cGobjController_NoticeEnvironmentalDanger, (void*)NpcAi_SetTeam, (void*)cNPC_v27, (void*)cNPC_v28, (void*)cNPC_v29, (void*)cNPC_v2A, (void*)cNPC_v2B, (void*)cNPC_v2C, (void*)NpcAi_RequestWeaponDraw, (void*)NpcAi_DeactivateAnon, (void*)cNPC_v2F, (void*)NpcAi_ActivateMultiplayer, (void*)NpcAttack_FireNotice, (void*)cNPC_v32, (void*)cNPC_v33, (void*)cNPC_v34, (void*)cNPC_v35, (void*)cNPC_v36, (void*)cNPC_AddAwareness, (void*)cNPC_RemoveAwareness, (void*)cNPC_v39, (void*)cNPC_GetClosestPlayer, (void*)cNPC_ResendNewAwarenessMessage, (void*)cNPC_v3C, (void*)cNPC_v3D, (void*)cNPC_MoveToNode, (void*)cNPC_MoveToGobj, (void*)cNPC_v40, (void*)cNPC_v41, (void*)cNPC_SetAggressiveness, (void*)cNPC_v43, (void*)cNPC_SetAimSubtarget, (void*)cNPC_ResumeAIAiming, (void*)cNPC_v46, (void*)cNPC_v47, (void*)cNPC_v48, (void*)cNPC_v49, (void*)cNPC_v4A, (void*)cNPC_v4B, (void*)cNPC_StopAndLookAround, (void*)cNPC_v4D, (void*)cNPC_v4E, (void*)cNPC_ResumeAITravelSpeed, (void*)cNPC_v50, (void*)cNPC_v51, (void*)cNPC_RequestAction, (void*)cNPC_StopMovement, (void*)cNPC_v54, (void*)cNPC_v55, (void*)cNPC_v56, (void*)Npc_IsCorpseRemovable, (void*)cNPC_Kill, (void*)cNPC_SetFiringThreshold, (void*)cNPC_v5A, (void*)cNPC_v5B, (void*)cNPC_v5C, (void*)cNPC_SetOnFire, (void*)cNPC_SetViewConeRadius, (void*)cNPC_SetViewConeAngle, (void*)cNPC_InViewCone, (void*)cNPC_v61, (void*)cNPC_v62, (void*)cNPC_v63, (void*)cNPC_ForceWeaponFire, (void*)cNPC_v65, (void*)cNPC_SetGrenadeThrowAngle, (void*)cNPC_GetActiveWeapon, (void*)cNPC_v68, (void*)cNPC_v69, (void*)cNPC_v6A, (void*)cNPC_v6B, (void*)cNPC_AddWeapon, (void*)cNPC_RemoveWeapon, (void*)cNPC_GetWeapon, (void*)cNPC_SetWeaponPreference, (void*)cNPC_SetWeaponPreferenceDistance, (void*)cNPC_v71, (void*)cNPC_v72, (void*)cNPC_v73, (void*)cNPC_SetHasDisguise, (void*)cNPC_SetDarkness, (void*)cNPC_GetDarkness, (void*)cNPC_GetAimPercent, (void*)cNPC_SetInvulnerable, (void*)cNPC_RequestDeathAnimation, (void*)cNPC_EquipGoggles, (void*)cNPC_v7B, (void*)cNPC_v7C, (void*)cNPC_v7D, (void*)cNPC_DontDropWeapons, (void*)cNPC_SetFireInvulnerability, (void*)cNPC_SetUnconscious, (void*)cNPC_SetNotTaserable, (void*)cNPC_SetNotGasable, (void*)cNPC_SetNotTargetable, (void*)cNPC_AddItem, (void*)cNPC_RemoveItem, (void*)cNPC_GetItemCount, (void*)0x0, (void*)0x0, (void*)0x0 };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00158550(void) {}
 #pragma pop /* merge_units */

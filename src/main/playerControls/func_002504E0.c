@@ -8,7 +8,7 @@ extern V4 D_004E1D90;
 extern float D_004A7570[2];
 void PrioritySet_Init(void* p, int v);
 void Selector_Init(void* p, int v);
-void func_00222B60(void* l);
+void std_list_deleter_cSafePtr_cGOBJ_ctor(void* l);
 }
 static inline V4* Vec4_Zero(void) {
     if (!D_004E1D88) {
@@ -93,7 +93,7 @@ extern "C" InputState* InputState_Ctor(InputState* self)
     self->hC0.serial = -1; self->hC0.Set(0);
     self->hC8.serial = -1; self->hC8.Set(0);
     self->hE4.serial = -1; self->hE4.p = 0;
-    func_00222B60(&self->lEC);
+    std_list_deleter_cSafePtr_cGOBJ_ctor(&self->lEC);
     self->wF8 = 0; self->wFC = 0; self->w100 = 0;
     self->b108 = 0; self->w10C = 0;
     self->b110 = 0; self->w114 = 0;

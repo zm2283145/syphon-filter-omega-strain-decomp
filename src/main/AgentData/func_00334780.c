@@ -5,6 +5,6 @@
 
 #include "types.h"
 
-int func_00334780(void) {
+int cBitArray_224_NumChunks(void) {
     return 8;
 }

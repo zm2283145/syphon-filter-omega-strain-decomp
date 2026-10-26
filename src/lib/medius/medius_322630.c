@@ -16,5 +16,5 @@ DEFINE_SPLIT_HALF_PAIR(func_00322630)
 /* merge_units: begin func_00322688 */
 /* compiler: ee-gcc 2.96 -O2 */
 /* Process both halves. */
-DEFINE_SPLIT_HALF_PAIR(func_00322688)
+DEFINE_SPLIT_HALF_PAIR(realFft)
 /* merge_units: end func_00322688 */

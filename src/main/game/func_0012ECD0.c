@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_0012ECD0(void) {
+int cGameSystem_IsNetworked(void) {
     return 1;
 }
 
@@ -14,26 +14,26 @@ void* GObj_GetID(char* self) {
     return self + 12;
 }
 
-void* func_0012ECF0(void* self) {
+void* cSystem_ScriptGetRealObj(void* self) {
     return self;
 }
 
-int func_0012ED00(void) {
+int cSystem_SendCreated(void) {
     return 1;
 }
 
-void func_0012ED10(void) {
+void cSystem_NetActivate(void) {
 }
 
-void func_0012ED20(void) {
+void cSystem_NetDeactivate(void) {
 }
 
-void func_0012ED30(void) {
+void cSystem_NetEnable(void) {
 }
 
-void func_0012ED40(void) {
+void cSystem_NetDisable(void) {
 }
 
-int func_0012ED50(void) {
+int cSystem_IsDeliverable(void) {
     return 1;
 }

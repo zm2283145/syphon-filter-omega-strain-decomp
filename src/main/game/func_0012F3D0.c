@@ -14,7 +14,7 @@ int String_Copy(int, int);
 int strlen(int);                                    
 extern unsigned char g_ProfileLockEnabled;
 }
-extern "C" void func_0012F3D0(char * arg0, int arg1) {
+extern "C" void cGameSystem_SetPlayerFilename(char * arg0, int arg1) {
     int temp_s2;
     int temp_s2_2;
     int temp_s2_3;

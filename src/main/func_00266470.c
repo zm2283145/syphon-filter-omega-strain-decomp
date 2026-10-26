@@ -14,16 +14,16 @@ extern "C" {
 extern Vec266 D_004F8350; extern int D_004F8354; extern int* D_004F8358;
 void PtrVector_Resize(Vec266* v, int n, int* fill);
 void HeldItem_Release(Obj266* self);
-void func_00266710(void* p);
-void func_002665B0(void* p, short flag);
-void func_00267270(void* p, short flag);
+void std_vector_deleter_TaserPoint_clear(void* p);
+void std_list_TaserPulse_dtor(void* p, short flag);
+void std_vector_deleter_TaserPoint_dtor(void* p, short flag);
 }
 #pragma opt_strength_reduction off
-extern "C" Obj266* func_00266470(Obj266* self, short deleteFlag) {
+extern "C" Obj266* cAirTaser_dtor(Obj266* self, short deleteFlag) {
     if (self) {
         self->f8 = 0;
         HeldItem_Release(self);
-        func_00266710(self->m10);
+        std_vector_deleter_TaserPoint_clear(self->m10);
         {
             VObj266* m = self->fC;
             if (m) {
@@ -47,11 +47,11 @@ extern "C" Obj266* func_00266470(Obj266* self, short deleteFlag) {
         }
         {
             void* a = self->m20;
-            if (a) func_002665B0(a, 0);
+            if (a) std_list_TaserPulse_dtor(a, 0);
         }
         {
             void* b = self->m10;
-            if (b) { if (b) { if (b) func_00267270(b, 0); } }
+            if (b) { if (b) { if (b) std_vector_deleter_TaserPoint_dtor(b, 0); } }
         }
         if (deleteFlag > 0) operator_delete(self);
     }

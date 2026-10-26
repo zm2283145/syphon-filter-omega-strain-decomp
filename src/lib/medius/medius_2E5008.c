@@ -1,4 +1,4 @@
-int func_002E5008(int code, int r)
+int NetMapMsgClientError(int code, int r)
 {
     switch (code) {
     case 0: r = 0; break;

@@ -14,7 +14,7 @@ typedef struct {
 } Stream;
 
 /* Advances the stream position by delta (handling a negative wrap) and tracks the maximum position. */
-void func_00108678(Stream* s, int delta)
+void _updateTempTackData(Stream* s, int delta)
 {
     int wrap = 0;
     int applied = 0;

@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-float func_001D10B0(float f12) {
+float SQUARE(float f12) {
     return (f12 * f12);
 }

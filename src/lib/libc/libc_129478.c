@@ -1,4 +1,4 @@
-unsigned int func_00129478(const char *s1, const char *s2)
+unsigned int Libc_Strcspn(const char *s1, const char *s2)
 {
     const char *s = s1;
     const char *c;

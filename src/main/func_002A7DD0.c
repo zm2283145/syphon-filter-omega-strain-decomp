@@ -8,7 +8,7 @@
 #include "loose02_types.h"
 
 /* Sets the screen id of the referenced screen, if any. */
-void func_002A7DD0(ScreenRefHolder* self, int screenId) {
+void GuiMessageBox_SetEditBufferSize(ScreenRefHolder* self, int screenId) {
     GuiScreen* screen = self->screen;
 
     if (screen != 0) {

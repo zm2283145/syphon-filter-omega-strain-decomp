@@ -6,7 +6,7 @@ int LobbyArray_SetDirty(char * , int);
 char * LobbyArray_At(char * , int);                   
 
 typedef struct { int f0; int f4; int f8; char pC[4]; int f10; char p14[4]; int f18; int f1C; char p20[4]; int f24; } PS0_0044EFF0;
-void func_0044EFF0(int d0, char * arg1, PS0_0044EFF0 *arg2) {
+void SFOLobby_RefreshGameInfo(int d0, char * arg1, PS0_0044EFF0 *arg2) {
     int temp_s1;
     int var_s0;
     char * temp_v0;

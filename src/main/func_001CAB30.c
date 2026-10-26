@@ -8,11 +8,11 @@
 #include "loose00_types.h"
 
 /* Address of element index (0x20-byte records). */
-Elem20* func_001CAB30(Elem20* base, int index) {
+Elem20* cHermiteSpline_cQuaternion_ControlPoint(Elem20* base, int index) {
     return base + index;
 }
 
 /* Address of element index (0x1C0-byte records). */
-Elem1C0* func_001CAB40(Elem1C0* base, int index) {
+Elem1C0* cArray_FixedSize_cIkTargetWithSplinedTransition_2_opIndex(Elem1C0* base, int index) {
     return base + index;
 }

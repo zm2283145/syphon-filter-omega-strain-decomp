@@ -2,7 +2,7 @@
 extern "C" {
 extern char g_Game[];
 int String_CompareNoCase(const char* a, const char* b); void Game_CreateHud(void* p); void String_Copy(char* d, const char* s); }
-extern "C" int func_00130770(int n, char** args, char* out)
+extern "C" int confunc_RELOADSYS(int n, char** args, char* out)
 {
     if (n == 1) {
         if (!String_CompareNoCase("INTERFACE", args[0])) {

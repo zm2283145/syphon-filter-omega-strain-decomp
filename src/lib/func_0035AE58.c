@@ -2,10 +2,10 @@
 
 /* compiler: ee-gcc 2.95 -O2 (check.py --gcc) */
 
-extern void func_0035ADE0(int arg);
+extern void sceInsockAbortGethostbyname(int arg);
 
-/* Calls func_0035ADE0(0). */
-void func_0035AE58(void)
+/* Calls sceInsockAbortGethostbyname(0). */
+void sceInsockAbortGethostbyaddr(void)
 {
-    func_0035ADE0(0);
+    sceInsockAbortGethostbyname(0);
 }

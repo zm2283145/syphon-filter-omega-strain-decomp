@@ -141,10 +141,10 @@ int Pop_FindTag(PopReader_1C2CB0* r, int tag);
 #define Pop_FindTag(a0, a1) (Pop_FindTag((PopReader_1C2A10 *)(a0), (a1))) /* merge_units */
 
 int Archive_Open(void* a, char* name, int b, int c);
-void func_001C2F40(TerList_1C2CB0* l);
+void std_vector_cTerrainPtr_ctor(TerList_1C2CB0* l);
 Ter_1C2CB0* Terrain_Construct(void* p, PopReader_1C2CB0* r, void* a1, int h);
 void ObjRegistry_AppendRecursive(void* reg, Ter_1C2CB0* t);
-void func_001C2F20(TerList_1C2CB0* l, Ter_1C2CB0** item);
+void std_vector_cTerrainPtr_push_back(TerList_1C2CB0* l, Ter_1C2CB0** item);
 }
 extern "C" void Pop_LoadTER(Level_1C2CB0* l, void* a1, PopReader_1C2CB0* r, void* arc)
 {
@@ -166,7 +166,7 @@ extern "C" void Pop_LoadTER(Level_1C2CB0* l, void* a1, PopReader_1C2CB0* r, void
             list = (TerList_1C2CB0*)Mem_Alloc(0, 0x10, D_0049EE88, 0x230);
         }
         if (list) {
-            func_001C2F40(list);
+            std_vector_cTerrainPtr_ctor(list);
             list->d = 1;
         }
         l->ters = list;
@@ -182,7 +182,7 @@ extern "C" void Pop_LoadTER(Level_1C2CB0* l, void* a1, PopReader_1C2CB0* r, void
             void* reg = D_004FFD48;
             t->reg = reg;
             ObjRegistry_AppendRecursive(reg, t);
-            func_001C2F20(l->ters, item);
+            std_vector_cTerrainPtr_push_back(l->ters, item);
         }
         mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
         if (mis)

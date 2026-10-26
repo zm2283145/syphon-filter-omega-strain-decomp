@@ -16,15 +16,15 @@ extern void cEndLevelMsg_v02();
 extern void cEndLevelMsg_v03();
 extern void cFoundLedgeMsg_Clone();
 extern void cFoundLedgeMsg_dtor();
+extern void cGameCameraCollisionRoutine_dtor();
+extern void cSplinedMotion_QuaternionLERP_1_dtor();
 extern void cStartLevelMsg_dtor();
 extern void cStartLevelMsg_v01();
 extern void cStartLevelMsg_v03();
-extern void func_001432E0();
-extern void func_0017EE80();
-extern void func_0017EF30();
+extern void cStopSoundMsg_Pack();
+extern void cStopSoundMsg_dtor();
 extern void func_0018C940();
 extern void func_0020E660();
-extern void func_0020EA20();
 extern void func_0020EF50();
 extern void func_0020FCA0();
 
@@ -39,12 +39,12 @@ void *D_004DAD58[6] __attribute__((aligned(8))) = {
 };
 
 void *D_004DAD70[8] = {
-    0, 0, &func_0017EE80, &Camera_ZoomBounds,
+    0, 0, &cSplinedMotion_QuaternionLERP_1_dtor, &Camera_ZoomBounds,
     &Camera_ZoomSweep, 0, 0, 0,
 };
 
 void *D_004DAD90[8] = {
-    0, 0, &func_0017EF30, &CameraCol_ComputeBounds,
+    0, 0, &cGameCameraCollisionRoutine_dtor, &CameraCol_ComputeBounds,
     &CameraCol_SetCollection, 0, 0, 0,
 };
 
@@ -59,8 +59,8 @@ void *D_004DADD0[8] = {
 };
 
 void *D_004DADF0[8] = {
-    0, 0, &func_001432E0, &func_0020E660,
-    &func_0020EA20, &Message_GetScriptTypeKey, 0, 0,
+    0, 0, &cStopSoundMsg_dtor, &func_0020E660,
+    &cStopSoundMsg_Pack, &Message_GetScriptTypeKey, 0, 0,
 };
 
 void *D_004DAE10[8] = {

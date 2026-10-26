@@ -8,7 +8,7 @@
 extern const float D_004E1C90;
 extern const float D_004E1C98;
 
-void func_0031CF58(float *x, int v, int *list, int *n, int *best)
+void AddBackTrackCand(float *x, int v, int *list, int *n, int *best)
 {
     int cnt = *n;
     int i = 0;
@@ -43,9 +43,9 @@ void func_0031CF58(float *x, int v, int *list, int *n, int *best)
 
 /* merge_units: begin func_0031D088 */
 extern float D_004B3968[];
-extern float func_00316ED8(int a, int b, float f, int c, int d, float g);
+extern float CalcCostFunc(int a, int b, float f, int c, int d, float g);
 
-float func_0031D088(int k, int a, int b, int c, int d, float *best, float g)
+float RefineLDPitch(int k, int a, int b, int c, int d, float *best, float g)
 {
     float cand[2];
     float res = D_004B3968[k];
@@ -57,7 +57,7 @@ float func_0031D088(int k, int a, int b, int c, int d, float *best, float g)
     if (k < 74) cand[n++] = (res + D_004B3968[k]) * 0.5f;
     for (i = 0; i < n; i++) {
         x = cand[i];
-        v = func_00316ED8(a, b, x, c, d, g);
+        v = CalcCostFunc(a, b, x, c, d, g);
         if (*best < v) {
             *best = v;
             res = x;
@@ -69,29 +69,29 @@ float func_0031D088(int k, int a, int b, int c, int d, float *best, float g)
 
 /* merge_units: begin func_0031D1D8 */
 #include "types.h"
-extern float func_00121B00(float);
+extern float Libc_Logf(float);
 extern float D_004E1BE8;
-extern float D_004E1CF4;int func_0031D1D8(float x)
+extern float D_004E1CF4;int NellyQuanPitchSC3(float x)
 {
     float t;
     float y;
     if (!(x > 8.0f)) x = 8.0f;
     if (x > 160.0f) y = 160.0f; else y = x;
-    t = (D_004E1BE8 - func_00121B00(y)) * D_004E1CF4;
+    t = (D_004E1BE8 - Libc_Logf(y)) * D_004E1CF4;
     return (int)(t > 0.0f ? t + 0.5f : t - 0.5f);
 }
 /* merge_units: end func_0031D1D8 */
 
 /* merge_units: begin func_0031D260 */
 extern float D_004E1BE4, D_004E1BE8;
-extern float func_00121AD0(float x);
-float func_0031D260(int n) { return func_00121AD0(D_004E1BE8 - (float)n * D_004E1BE4); }
+extern float Libc_Expf(float x);
+float NellyUnQuanPitchSC3(int n) { return Libc_Expf(D_004E1BE8 - (float)n * D_004E1BE4); }
 /* merge_units: end func_0031D260 */
 
 /* merge_units: begin func_0031D290 */
-extern float func_0031BDB8(float, float, float, float);
+extern float MidEstPitch(float, float, float, float);
 
-float func_0031D290(float f12, float f13, float f14, float f15) {
-    return func_0031BDB8(f12, f13, f14, f15);
+float UnQuanMidPitchSC3(float f12, float f13, float f14, float f15) {
+    return MidEstPitch(f12, f13, f14, f15);
 }
 /* merge_units: end func_0031D290 */

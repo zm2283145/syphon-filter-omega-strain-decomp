@@ -8,7 +8,7 @@
 #include "types.h"
 typedef struct { float* buf; int pad4; short count; } g2Scl;
 extern float D_004E1C70;
-void func_0031E7C0(g2Scl* s) {
+void nemAgcUpdateCounter(g2Scl* s) {
     short i;
     float* p;
     if (s->count < 0x55) {
@@ -27,7 +27,7 @@ void func_0031E7C0(g2Scl* s) {
 /* merge_units: begin func_0031E828 */
 typedef struct { float* hist; float mean; short flag; } H_0031E828;
 extern void* (*D_004E1D34)(int n, int size);
-int func_0031E828(H_0031E828** pp)
+int nemAgcInit(H_0031E828** pp)
 {
     H_0031E828* p;
     if (!pp) return 1;
@@ -46,7 +46,7 @@ int func_0031E828(H_0031E828** pp)
 /* merge_units: begin func_0031E8B0 */
 extern void (*D_004E1D38)(void*);
 typedef struct { void* buf; } S_0031E8B0;
-int func_0031E8B0(S_0031E8B0** pp) { S_0031E8B0* p = *pp; if (!p) return 1; if (p->buf) { D_004E1D38(p->buf); p->buf = 0; p = *pp; } if (p) { D_004E1D38(p); *pp = 0; } return 0; }
+int nemAgcFree(S_0031E8B0** pp) { S_0031E8B0* p = *pp; if (!p) return 1; if (p->buf) { D_004E1D38(p->buf); p->buf = 0; p = *pp; } if (p) { D_004E1D38(p); *pp = 0; } return 0; }
 /* merge_units: end func_0031E8B0 */
 
 /* merge_units: begin func_0031E920 */
@@ -56,7 +56,7 @@ typedef struct {
     char pad8[0x13 - 8];
     unsigned char flag;
 } S_0031E920;
-void func_0031E920(S_0031E920* s, float lim)
+void nemVadBlockDec(S_0031E920* s, float lim)
 {
     float x = s->x;
     float y;
@@ -69,7 +69,7 @@ void func_0031E920(S_0031E920* s, float lim)
 /* merge_units: begin func_0031E988 */
 typedef struct { char pad[0xE]; short cnt; char pad2[3]; char on; char flag; } G1S;
 extern float D_004E1C1C;
-void func_0031E988(short a, G1S* p, float lim, float v)
+void nemVadSpkrDec(short a, G1S* p, float lim, float v)
 {
     if (p->on) {
         float x = (float)a - 42.5f;

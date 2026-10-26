@@ -4,16 +4,16 @@
 #pragma optimization_level 1
 
 typedef struct { int head; int mid; int tail; } Triple;
-extern void func_0020BAE0(Triple* dst, Triple* src);
-extern void func_0020BAC0(int* dst, int* src);
-extern void func_0020A5D0(int* dst, int* src);
+extern void Metrowerks_swap_compressedpairR_compressedpairR_3(Triple* dst, Triple* src);
+extern void std_swap_cSkaSwitchItemPR_cSkaSwitchItemPR(int* dst, int* src);
+extern void std_swap_uintR_uintR(int* dst, int* src);
 
 /* Assignment: copies the three parts unless dst == src. */
-void func_0020BA50(Triple* dst, Triple* src)
+void std_swap_vectordeleterR_vectordeleterR_16(Triple* dst, Triple* src)
 {
     if (dst != src) {
-        func_0020BAE0(dst, src);
-        func_0020BAC0(&dst->tail, &src->tail);
-        func_0020A5D0(&dst->mid, &src->mid);
+        Metrowerks_swap_compressedpairR_compressedpairR_3(dst, src);
+        std_swap_cSkaSwitchItemPR_cSkaSwitchItemPR(&dst->tail, &src->tail);
+        std_swap_uintR_uintR(&dst->mid, &src->mid);
     }
 }

@@ -12,19 +12,19 @@ extern char D_004AC1B0[];
 extern char D_004AC1B8[];
 extern char D_004AC1C8[];
 extern int func_002BC788(int);
-extern int func_002B6808(int, char *, char *);
+extern int _make_path(int, char *, char *);
 extern int strcmp(const char *, const char *);
 extern unsigned int strlen(const char *);
 extern char *strrchr(const char *, int);
 extern char *String_Copy(char *, const char *);
-extern int func_002B84E0(int, char *, MCDirInfo *, int *, int *);
-extern int func_002B70C8(int, MCEnt *, int, int);
+extern int _sceMcFatSearchFile(int, char *, MCDirInfo *, int *, int *);
+extern int _GetEntryByPos(int, MCEnt *, int, int);
 extern int func_002BB2D0(int, void *, int, int);
-extern int func_002B6518(char *, char *);
-extern int func_002B6D20(int, int, int *);
+extern int isWildFit(char *, char *);
+extern int _sceMcFatGetNextClust(int, int, int *);
 
 /* getdir: list the entries of a memory card directory matching a name pattern */
-int func_002BA220(int dev, char *path, int start, int max, MCDirOut *out, int *count)
+int _sceMcFatGetDir(int dev, char *path, int start, int max, MCDirOut *out, int *count)
 {
     char buf[0x80];
     char dir[0x80];
@@ -37,26 +37,26 @@ int func_002BA220(int dev, char *path, int start, int max, MCDirOut *out, int *c
 
     if (!func_002BC788(dev)) return 0x81010013;
     if (D_00513514[dev].x == 0) return 0x8101006F;
-    if (!func_002B6808(dev, path, buf) || !strcmp(buf, D_004AC1C8)) return 0x81010016;
+    if (!_make_path(dev, path, buf) || !strcmp(buf, D_004AC1C8)) return 0x81010016;
     String_Copy(dir, buf);
     *strrchr(dir, '/') = 0;
     String_Copy(pat, dir + strlen(dir) + 1);
     if (strlen(dir) == 0) {
-        err = func_002B84E0(dev, D_004AC1C8, &st, 0, 0);
+        err = _sceMcFatSearchFile(dev, D_004AC1C8, &st, 0, 0);
         if (err != 0x81010011) return err;
     } else {
-        err = func_002B84E0(dev, dir, &st, 0, 0);
+        err = _sceMcFatSearchFile(dev, dir, &st, 0, 0);
         if (err != 0x81010011) return err;
     }
     if (!(st.mode & 0x20)) return 0x81010014;
-    err = func_002B70C8(dev, &ent, st.f10, 0);
+    err = _GetEntryByPos(dev, &ent, st.f10, 0);
     if (err) {
         if (err == 0x81010002) err = 0x81019002;
         return err;
     }
     if (!(ent.mode & 0x8000)) return 0x81019002;
     if (strcmp(ent.name, D_004AC1B0)) return 0x81019002;
-    err = func_002B70C8(dev, &ent, st.f10, 1);
+    err = _GetEntryByPos(dev, &ent, st.f10, 1);
     if (err) {
         if (err == 0x81010002) err = 0x81019002;
         return err;
@@ -78,7 +78,7 @@ int func_002BA220(int dev, char *path, int start, int max, MCDirOut *out, int *c
                 ent.name[0x1F] = 0;
                 if (!(ent.mode & 0x8000)) continue;
                 if (ent.mode & 0x2000) continue;
-                if (!func_002B6518(ent.name, pat)) continue;
+                if (!isWildFit(ent.name, pat)) continue;
                 if (out && max > 0) {
                     out->created = ent.created;
                     out->modified = ent.modified;
@@ -96,7 +96,7 @@ int func_002BA220(int dev, char *path, int start, int max, MCDirOut *out, int *c
             start = 0;
         }
         if (done == 1) break;
-        cl = func_002B6D20(dev, cl, &err);
+        cl = _sceMcFatGetNextClust(dev, cl, &err);
         if (err) return err;
         if (cl == -1) break;
         if (start) start -= 2;

@@ -17,7 +17,7 @@ typedef struct { char* n[3]; } SkNames_c7;
 extern SkNames_c7 D_0048A310;
 extern char D_0048B2F8[];
 extern char D_0053BB70[];
-extern int func_003F96B0(void* a, char* path, int b);
+extern int cHogList_OpenProtected(void* a, char* path, int b);
 extern int Skel_Load(int* out, void* skel, char* name, int hog);
 void Skel_LoadCommonModels(void* self, void* fs) {
     char path[128];
@@ -27,7 +27,7 @@ void Skel_LoadCommonModels(void* self, void* fs) {
     char** p;
     names = D_0048A310;
     sprintf(path, "%s\\COMMON\\SKEL.HOG", D_0048B2F8);
-    hog = func_003F96B0(fs, path, 0);
+    hog = cHogList_OpenProtected(fs, path, 0);
     for (p = names.n; **p != 0; p++) {
         Skel_Load(&out, D_0053BB70, *p, hog);
     }
@@ -254,8 +254,8 @@ extern int Pop_FindTag(PopReader_1C0EE0* r, int tag);
 
 extern void Loader_UpdateLoadingScreen(void* a, char* name, int x);
 extern void* App_GetInstance(void);
-extern void func_001C10A0(Inner_1C0EE0* t);
-extern void func_001C4410(VV_1C0EE0* v, int n, Inner_1C0EE0* fill);
+extern void std_vector_int_ctor_void(Inner_1C0EE0* t);
+extern void std_vector_imp_cArray_int_resize(VV_1C0EE0* v, int n, Inner_1C0EE0* fill);
 extern void func_0013A040(Inner_1C0EE0* t, int flags);
 extern void PtrVec_Reserve(void* v, int n);
 extern void PtrVec_PushBack_1C1080(void* v, int* x);
@@ -280,9 +280,9 @@ void Loader_InitNodeGroups(void* a0, PopReader_1C0EE0* r)
                 int i;
                 D_004FFBE4 = n;
                 vv = D_004FFBE8;
-                func_001C10A0(&tmp);
+                std_vector_int_ctor_void(&tmp);
                 tmp.f = 1;
-                func_001C4410(vv, n, &tmp);
+                std_vector_imp_cArray_int_resize(vv, n, &tmp);
                 func_0013A040(&tmp, -1);
                 for (i = 0; i < n; i++) {
                     int j;

@@ -51,8 +51,8 @@ extern int D_00506508;
 void GuiWidget_Init(void);
 char* Loc_LookupText(char* key);
 void GuiTextWidget_SetText(void* w, char* s, int a);
-char* func_0035CB30(int n);
-int func_002A5460(void);
+char* GetCodename(int n);
+int ES_ManRenderWrapper(void);
 void func_002A5470(W_002A3BF0* w, Vec2 off);
 }
 static inline W_002A3BF0* FindAs(void* self, char* n, char* t)
@@ -75,7 +75,7 @@ extern "C" void GuiEquipmentSetup_Init(S_002A3BF0* self0)
     W_002A3BF0* w0 = FIND(D_004AB1B0, D_004A9BF0);
     if (w0) {
         D_00506550 = self;
-        w0->f48 = (void*)func_002A5460;
+        w0->f48 = (void*)ES_ManRenderWrapper;
     }
     }
     w = FIND(D_004AB0B0, D_004A9870);
@@ -112,7 +112,7 @@ extern "C" void GuiEquipmentSetup_Init(S_002A3BF0* self0)
         char buf[16] = "1value_codename";
         buf[0] = '1' + i;
         W_002A3BF0* w2 = FIND(buf, D_004A7520);
-        GuiTextWidget_SetText(w2, func_0035CB30(i), 0);
+        GuiTextWidget_SetText(w2, GetCodename(i), 0);
     }
     {
     W_002A3BF0* slots[4];

@@ -27,21 +27,21 @@ typedef struct {
 extern "C" {
 void* memset(void*, int, unsigned int);
 void String_Copy(char*, const char*);
-void func_002D0D70(Conn9C0*);
+void MGCLSetDefaultConnectParams(Conn9C0*);
 int atoi(char*);
-void func_002D0DB0(Conn9C0*, int, int, int, void*);
-void func_00352C30(char*);
+void MGCLSetAuthConnectParams(Conn9C0*, int, int, int, void*);
+void KM_GetMediusPublicKey(char*);
 int Medius_ConnectServer(Conn9C0*, int*);
-int func_002CF1C8(Req9C0A*, void*);
-int func_002CF078(Req9C0B*, void*);
-int func_00476998(void);
+int MGCLSessionBegin(Req9C0A*, void*);
+int MGCLAuthenticationSend(Req9C0B*, void*);
+int KM_GetSoftwareID(void);
 int Medius_DisconnectServer(void);
-void func_002EBC48(int*);
-int func_004446E0(int);
+void NetGetLocalTime(int*);
+int SFOMGCL_Update(int);
 void SFOLobby_CallUpdateHook(char*, int, int);
 void func_00444DD0(void);
-void func_00445260(void);
-void func_00444E10(void);
+void Callback_MGCLServerSessionBegin(void);
+void Callback_MGCLServerAuthentication(void);
 extern unsigned char D_00584232;
 extern unsigned char D_00584233;
 extern unsigned char D_00584235;
@@ -51,12 +51,12 @@ extern unsigned char D_0058423A;
 extern int D_00584528;
 extern char* D_00585E60;
 extern char D_004C0B38[];
-int func_004449C0(int a, char* b);
+int SFOMGCL_Connect_MAS(int a, char* b);
 }
 
 static inline bool Poll(void) {
     int now = 0;
-    func_002EBC48(&now);
+    NetGetLocalTime(&now);
     if (now - D_00584528 > 30000) return false;
     SFOLobby_CallUpdateHook(D_00585E60, 0, 0);
     return true;
@@ -68,7 +68,7 @@ static inline int Busy(void) {
     return 0;
 }
 
-int func_004449C0(int a, char* b) {
+int SFOMGCL_Connect_MAS(int a, char* b) {
     Conn9C0 conn;
     int x;
     Req9C0A req;
@@ -78,48 +78,48 @@ int func_004449C0(int a, char* b) {
     memset(&x, 0, sizeof(x));
     memset(&req, 0, sizeof(req));
     memset(&join, 0, sizeof(join));
-    func_002D0D70(&conn);
-    func_002D0DB0(&conn, a, atoi(b), 1, (void*)func_00444DD0);
+    MGCLSetDefaultConnectParams(&conn);
+    MGCLSetAuthConnectParams(&conn, a, atoi(b), 1, (void*)func_00444DD0);
     if (((unsigned char*)D_00585E60)[0x23D6] == 0)
-        func_00352C30(conn.sub);
+        KM_GetMediusPublicKey(conn.sub);
     else
         memset(conn.sub, 0, sizeof(conn.sub));
     r = Medius_ConnectServer(&conn, &x);
     if (r) return r;
     if (conn.wait) {
         D_00584528 = 0;
-        func_002EBC48(&D_00584528);
+        NetGetLocalTime(&D_00584528);
         SFOLobby_CallUpdateHook(D_00585E60, 2, 1);
         while (D_00584232 == 0) {
             if (!Poll()) return -1000;
-            if (func_004446E0(0)) return -12;
+            if (SFOMGCL_Update(0)) return -12;
         }
         if (!D_00584233) return -12;
     }
     String_Copy(req.kind, D_004C0B38);
     req.id = *(int*)(D_00585E60 + 0x1F38);
-    req.ver = func_00476998();
+    req.ver = KM_GetSoftwareID();
     req.mode = 2;
-    r = func_002CF1C8(&req, (void*)func_00445260);
+    r = MGCLSessionBegin(&req, (void*)Callback_MGCLServerSessionBegin);
     if (r) return r;
     D_00584528 = 0;
-    func_002EBC48(&D_00584528);
+    NetGetLocalTime(&D_00584528);
     SFOLobby_CallUpdateHook(D_00585E60, 2, 1);
     while (D_00584235 == 0) {
         if (!Poll()) return -1000;
-        if (func_004446E0(0)) return -12;
+        if (SFOMGCL_Update(0)) return -12;
     }
     if (!D_00584236) return -12;
     String_Copy(join.kind, D_004C0B38);
     join.one = 1;
-    r = func_002CF078(&join, (void*)func_00444E10);
+    r = MGCLAuthenticationSend(&join, (void*)Callback_MGCLServerAuthentication);
     if (r) return r;
     D_00584528 = 0;
-    func_002EBC48(&D_00584528);
+    NetGetLocalTime(&D_00584528);
     SFOLobby_CallUpdateHook(D_00585E60, 2, 1);
     while (D_00584239 == 0) {
         if (!Poll()) return -1000;
-        if (func_004446E0(0)) return -12;
+        if (SFOMGCL_Update(0)) return -12;
     }
     if (!D_0058423A) return -12;
     return Busy();

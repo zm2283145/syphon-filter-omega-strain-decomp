@@ -5,19 +5,19 @@
 
 #include "ska_types.h"
 
-float func_003ADEB0(char* self) {
+float cSkaPlaybackItem_GetSummedWeight(char* self) {
     return *(float*)(self + 4);
 }
 
-int func_003ADEC0(char* self) {
+int cArray_cSkaPlaybackItem_Iterator_opArrow(char* self) {
     return *(int*)(self + 0);
 }
 
 /* End iterator of an array of 32-byte elements. */
-void func_003ADED0(Iter16* out, SkaVec* v) {
+void cArray_cSkaPlaybackItem_End(Iter16* out, SkaVec* v) {
     out->p = v->data + (v->count << 5);
 }
 
-void func_003ADEF0(Iter* out, PtrVec* v) {
+void cArray_cSkaPlaybackItem_Begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }

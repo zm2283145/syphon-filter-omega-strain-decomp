@@ -9,7 +9,7 @@
 extern int FileHal_CtorDefault(void*);
 
 /* Constructor: builds the sub-object at +0x80 and clears the remaining state. */
-Obj36D630* func_0036D630(Obj36D630* self) {
+Obj36D630* cHogFile_ctor(Obj36D630* self) {
     FileHal_CtorDefault(self->unk80);
     self->unk148 = 0;
     self->unk158 = 0;

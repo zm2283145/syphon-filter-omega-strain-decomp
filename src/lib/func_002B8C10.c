@@ -17,12 +17,12 @@ extern char D_004AC1B0[];
 extern int strcmp(const char*,const char*);
 extern int func_002BB2D0(int,void*,int,int);
 extern int func_002BB2E8(int,void*,int,int);
-extern int func_002B6D20(int,int,int*);
-extern int func_002B6D60(int,int,int,int*);
-extern int func_002B6EA8(int,int*);
-extern int func_002B70C8(int,MCEnt*,int,int);
-extern int func_002B8928(int,MCEnt*,int,int);
-int func_002B8C10(int dev, MCEnt *entry, int cl, int skip, int *err)
+extern int _sceMcFatGetNextClust(int,int,int*);
+extern int _sceMcFatWriteFatData(int,int,int,int*);
+extern int _sceMcFatGetFreeClust(int,int*);
+extern int _GetEntryByPos(int,MCEnt*,int,int);
+extern int _SetEntryByPos(int,MCEnt*,int,int);
+int _CreateEntry(int dev, MCEnt *entry, int cl, int skip, int *err)
 {
     MCEnt buf;
     MCEnt parent;
@@ -52,14 +52,14 @@ int func_002B8C10(int dev, MCEnt *entry, int cl, int skip, int *err)
         }
         if (!root && count>=20) { *err=0x81010017; return -1; }
         old=cl;
-        cl=func_002B6D20(dev,old,err);
+        cl=_sceMcFatGetNextClust(dev,old,err);
         if (*err) return -1;
         if (cl == -1) {
-            cl=func_002B6EA8(dev,err);
+            cl=_sceMcFatGetFreeClust(dev,err);
             if (*err) return -1;
-            func_002B6D60(dev,old,cl|0x80000000,err);
+            _sceMcFatWriteFatData(dev,old,cl|0x80000000,err);
             if (*err) return -1;
-            func_002B6D60(dev,cl,-1,err);
+            _sceMcFatWriteFatData(dev,cl,-1,err);
             if (*err) return -1;
             p=D_00513DC0;
             *p=*entry;
@@ -68,10 +68,10 @@ int func_002B8C10(int dev, MCEnt *entry, int cl, int skip, int *err)
             if (parent.cl == -1) return 0x81019002;
             pcl = parent.cl;
         update:
-            r = func_002B70C8(dev, &buf, pcl, parent.index);
+            r = _GetEntryByPos(dev, &buf, pcl, parent.index);
             if (r) goto fail;
             buf.size++;
-            r = func_002B8928(dev, &buf, parent.cl, parent.index);
+            r = _SetEntryByPos(dev, &buf, parent.cl, parent.index);
             if (r == 0) { *err = 0; goto success; }
         fail:
             *err = r;

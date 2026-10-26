@@ -3,12 +3,12 @@ typedef struct { int x0; int x4; int x8; int xC; char name[0x100]; char name2[0x
 extern RpcCd D_00504080;
 extern McArg D_005040C0;
 extern int D_0048B370;
-extern int func_0027C3D0(void);
-extern int func_0027D3A8(RpcCd *, McArg *, int);
-int func_0027CFE8(int x)
+extern int sceNetcnfifInit(void);
+extern int sce_call_rpc(RpcCd *, McArg *, int);
+int sceNetcnfifSetEnv(int x)
 {
-    func_0027C3D0();
+    sceNetcnfifInit();
     D_005040C0.x8 = x;
     D_005040C0.x4 = D_0048B370;
-    return func_0027D3A8(&D_00504080, &D_005040C0, 0x67);
+    return sce_call_rpc(&D_00504080, &D_005040C0, 0x67);
 }

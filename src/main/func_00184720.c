@@ -3,9 +3,9 @@ typedef struct { void* vtable; char pad[0x20]; unsigned char kind; char pad2[0xB
 extern char D_0055D4D8[];
 extern char D_004D9DA0[];
 extern void Event_Construct(Msg* m, void* type);
-extern int func_00184470(Msg* m);
+extern int cMoveMsg_Template_HasDeltaPosition(Msg* m);
 extern void* Mtx_GetIdentity(void);
-extern void func_0015A400(Vec4* out, void* v);
+extern void cVector_Copy_WSet0(Vec4* out, void* v);
 extern void Vec4_CopyAsPoint(Vec4* out, void* v);
 extern void Mtx_SetRotationTranslation(void* data, void* obj, Vec4* v);
 extern void Event_Send(Msg* m, void* target, int immediate);
@@ -21,8 +21,8 @@ void Npc_v28(void* target, void* pos)
     Event_Construct(m, D_0055D4D8);
     msg.vtable = D_004D9DA0;
     msg.kind = 3;
-    if (func_00184470(m)) {
-        func_0015A400(&a, pos);
+    if (cMoveMsg_Template_HasDeltaPosition(m)) {
+        cVector_Copy_WSet0(&a, pos);
         v = &a;
     } else {
         Vec4_CopyAsPoint(&b, pos);

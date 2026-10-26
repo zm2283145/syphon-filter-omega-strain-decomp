@@ -7,32 +7,32 @@
 #include "types.h"
 #include "loose00_types.h"
 
-int* func_001CF090(PtrVec* v) {
+int* std_vector_imp_cXformNodePtr_1_end(PtrVec* v) {
     return v->data + v->count;
 }
 
-void func_001CF0B0(Iter* out, void* self, Iter* src) {
+void std_vector_cXformNodePtr_pointer2iterator(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }
 
-int* func_001CF0C0(PtrVec* v) {
+int* std_vector_imp_cXformNodePtr_1_begin(PtrVec* v) {
     return v->data;
 }
 
-int func_001CF0D0(Word* w) {
+int cArray_cXformNodePtr_ConstIterator_opMul(Word* w) {
     return w->value;
 }
 
-void func_001CF0E0(Iter* out, PtrVec* v) {
+void cArray_cXformNodePtr_End(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
 
-void func_001CF100(Iter* out, PtrVec* v) {
+void cArray_cXformNodePtr_Begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 
 /* End iterator of an array of 0x1D0-byte records. */
-void func_001CF110(Elem1D0Iter* out, Vec1D0Array* v) {
+void std_vector_cBone_end(Elem1D0Iter* out, Vec1D0Array* v) {
     int count;
     Elem1D0* data;
 
@@ -41,11 +41,11 @@ void func_001CF110(Elem1D0Iter* out, Vec1D0Array* v) {
     out->p = data + count;
 }
 
-Word* func_001CF140(Word* dst, Word* src) {
+Word* cArray_cBone_Iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_001CF150(Iter* out, PtrVec* v) {
+void std_vector_cBone_begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }

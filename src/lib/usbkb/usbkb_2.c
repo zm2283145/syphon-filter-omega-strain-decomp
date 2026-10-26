@@ -13,7 +13,7 @@ extern char D_004F58C0[];
 extern KbState D_004F5780;
 extern int WaitSema(int);
 extern int scePrintf(const char *, ...);
-extern void func_00223400(void *);
+extern void rpccall_end(void *);
 extern int sceSifCallRpc(void *cd, int fno, int mode, void *send, int ssize, void *recv, int rsize, void *endf, void *endp);
 
 int sceUsbKbGetInfo(void *info)
@@ -21,7 +21,7 @@ int sceUsbKbGetInfo(void *info)
     int r;
     if (D_0048AB18 == -1) return -1;
     WaitSema(D_0048AB18);
-    r = sceSifCallRpc(D_004F5820, 1, 1, D_004F5880, 0x10, D_004F58C0, 0x90, func_00223400, 0);
+    r = sceSifCallRpc(D_004F5820, 1, 1, D_004F5880, 0x10, D_004F58C0, 0x90, rpccall_end, 0);
     if (r != 0) {
         scePrintf("sceUsbKbGetInfo: sceSifCallRpc -> %d
 ", r);
@@ -55,7 +55,7 @@ int sceUsbKbRead(unsigned int port, void *data)
     if (port >= (unsigned int)st->max) return -0xB;
     D_004F5880[0] = port;
     WaitSema(D_0048AB18);
-    r = sceSifCallRpc(D_004F5820, 2, 1, D_004F5880, 0x10, D_004F58C0, 0x50, func_00223400, 0);
+    r = sceSifCallRpc(D_004F5820, 2, 1, D_004F5880, 0x10, D_004F58C0, 0x50, rpccall_end, 0);
     if (r != 0) {
         scePrintf("sceUsbKbRead: sceSifCallRpc -> %d
 ", r);

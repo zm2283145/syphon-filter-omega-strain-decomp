@@ -11,7 +11,7 @@
 #include "buf_holder_dtor.h"
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_002673C0)
+DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_cAirTaserPtr_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_002673C0 */
 
@@ -31,7 +31,7 @@ int PtrVec_Reserve_Thunk_2674B0(int a0, int a1) {
     return PtrVec_Reserve(a0, a1);
 }
 
-Rel* func_002674C0(Rel* r) {
+Rel* std_vector_cAirTaserPtr_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

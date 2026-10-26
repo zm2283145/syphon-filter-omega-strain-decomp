@@ -50,7 +50,7 @@ typedef struct { int pad0; char path[0x9C]; } B3814D0;
 extern void Resource_Construct(void*);
 extern void FileMan_Release(void*, int);
 extern int Archive_GetMemberName(void*, int);
-extern void func_0036DFB0(void*, int, void*);
+extern void cFileMan_EncodeFilename_charP_cFileManR(void*, int, void*);
 extern void FileMan_FindMember(void*);
 extern int String_CompareNoCase(char*, char*);
 #if 0 /* merge_units */
@@ -60,7 +60,7 @@ extern void Tdx_Clone(void*, void*, int);
 
 extern char D_004BC2C8[];
 
-void func_003814D0(S3814D0* self, A3814D0* arg1)
+void cTexMan_RemoveTextureHOG(S3814D0* self, A3814D0* arg1)
 {
     B3814D0 buf;
     char name[0x50];
@@ -71,7 +71,7 @@ void func_003814D0(S3814D0* self, A3814D0* arg1)
     n = f->list->count;
     for (i = 0; i < n; i++) {
         char* path = buf.path;
-        func_0036DFB0(&buf, Archive_GetMemberName(f, i), arg1);
+        cFileMan_EncodeFilename_charP_cFileManR(&buf, Archive_GetMemberName(f, i), arg1);
         FileMan_FindMember(&buf);
         if (String_CompareNoCase(path + strlen(path) - 3, D_004BC2C8) == 0) {
             char* s = path;
@@ -131,7 +131,7 @@ extern void Tdx_Clone(TdxMgr* m, TdxEnt* e, int idx);
 #define Tdx_Clone(a0, a1, a2) (Tdx_Clone((void *)(a0), (void *)(a1), (a2))) /* merge_units */
 
 
-void func_003816F0(TdxMgr* m, TdxEnt* e)
+void cTexMan_RemoveTextureFromFile(TdxMgr* m, TdxEnt* e)
 {
     char* s = e->name;
     char buf[80];
@@ -195,11 +195,11 @@ void Tdx_Unrelocate(void* fr, char* base, int n1, int n2, int x, int y);
 #define Tdx_Unrelocate(a0, a1, a2, a3, a4, a5) (Tdx_Unrelocate((T_00381B90 *)(a0), (int)(a1), (a2), (a3), (a4), (a5))) /* merge_units */
 
 void Tdx_RelocateFrames(void* fr, char* base, int n1, int n2, int x, int y);
-int func_00380360(void* t);
+int cTexture_GetRefCount(void* t);
 void Tex_DestroyRecord(void* t, int a, int b, char* file, int line);
-void func_003801A0(Obj_381870* o, int v);
-void func_00380170(void* list, int* value);
-void func_003BB6B0(Tex_381870* t, TdxHdr_381870* h);
+void cTexMan_EraseDeletedTID(Obj_381870* o, int v);
+void cLList_int_PushBackActual(void* list, int* value);
+void cTexture_SetReallocData(Tex_381870* t, TdxHdr_381870* h);
 }
 
 static inline void Copy_381870(void* d0, void* s0, int n0)
@@ -242,11 +242,11 @@ static inline void Copy_381870(void* d0, void* s0, int n0)
 
 static inline void Release_381870(Obj_381870* o, int idx)
 {
-    if (o->tex[idx] && func_00380360(o->tex[idx]) <= 0) {
+    if (o->tex[idx] && cTexture_GetRefCount(o->tex[idx]) <= 0) {
         Tex_DestroyRecord(o->tex[idx], 0, 1, D_004BC300, 0x39E);
         o->tex[idx] = 0;
-        func_003801A0(o, idx);
-        func_00380170(o->freeA, &idx);
+        cTexMan_EraseDeletedTID(o, idx);
+        cLList_int_PushBackActual(o->freeA, &idx);
     }
 }
 
@@ -293,7 +293,7 @@ extern "C" void Tdx_Clone(Obj_381870* o, int* file, int idx)
             }
             n->relocated = 1;
         }
-        func_003BB6B0(t, n);
+        cTexture_SetReallocData(t, n);
     } else {
         Release_381870(o, idx);
     }
@@ -369,7 +369,7 @@ extern int D_00539328;
 extern int D_00539330;
 extern unsigned int D_00539340[][1024];
 
-int func_00381FB0(void)
+int cTexMan_VIF1InterruptCB(void)
 {
     R(0x1000E010) = 2;
     while (R(0x1000A000) & 0x100) {
@@ -402,7 +402,7 @@ extern char D_00539330[];
 #define D_00539330 ((char*)&D_00539330) /* merge_units */
 
 
-void func_00382060(int a0) {
+void cTexMan_TermTextureStream(int a0) {
     int a1, v1;
     int cond;
 

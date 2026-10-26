@@ -3,9 +3,9 @@
 
 typedef struct { char a; int b; } Proto_0020E420;
 extern char D_004F53A0[];
-extern void func_0020E350(void);
+extern void cEndLevelMsg_NetEndLevelCallback(void);
 
-NETREG_BEGIN(func_0020E420, Proto_0020E420)
+NETREG_BEGIN(cEndLevelMsg_InitNet, Proto_0020E420)
 NETREG_FIELD(a, 1, 1)
 NETREG_FIELD(b, 4, 1)
-NETREG_END(D_004F53A0, func_0020E350)
+NETREG_END(D_004F53A0, cEndLevelMsg_NetEndLevelCallback)

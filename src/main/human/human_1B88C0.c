@@ -28,7 +28,7 @@ extern float D_0048A1B0;
 extern char D_0048A1A8;
 extern void func_0017CA90(void*, int);
 extern void* Mem_PlacementNew(int, void*);
-extern void func_0017CA00(void*, float*, float*, float*, void*, float);
+extern void cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_floatR_floatR_etc(void*, float*, float*, float*, void*, float);
 }
 static inline bool Gt(float a, float b) { return a > b; }
 static inline bool Eq(float a, float b) { return a == b; }
@@ -52,7 +52,7 @@ extern "C" void AngleCurve_PreUpdate(AC* c)
         c->f10 = c->f8 + WrapPi(c->f10 - c->f8);
         func_0017CA90(c->a18, -1);
         v = Mem_PlacementNew(0x18, c->a18);
-        if (v) func_0017CA00(v, &c->f8, &c->fC, &c->f10, &D_0048A1A8, c->f28);
+        if (v) cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_floatR_floatR_etc(v, &c->f8, &c->fC, &c->f10, &D_0048A1A8, c->f28);
     } else {
         bool ne = !Eq(0.0f, c->f34);
         if (ne) {
@@ -71,7 +71,7 @@ extern "C" void AngleCurve_PreUpdate(AC* c)
 #pragma push /* merge_units */
 typedef struct { int a, b; float ang; } S1B8;
 static inline int Gt1B8(float a, float b) { return a > b; }
-void func_001B8AC0(S1B8* s) {
+void cSplinedMotion_Angle_FixUpResultOfSplineEvaluation(S1B8* s) {
     float a = s->ang;
     for (;;) {
         if (Gt1B8(a, 3.1415927f)) { a += -6.2831855f; continue; }
@@ -168,7 +168,7 @@ extern "C" void Physical_RejectMotionAxis(Phys* p, V4* v) {
 #include "vtable_chain_dtor.h"
 
 /* Deleting destructor: restore the vtable chain, optionally delete. */
-DEFINE_VTABLE_CHAIN_DTOR2(func_001B8C80, D_004DA800, D_004DA810)
+DEFINE_VTABLE_CHAIN_DTOR2(cHumanCollision_DeltaPosModificationFunction_Floor_dtor, D_004DA800, D_004DA810)
 #pragma pop /* merge_units */
 /* merge_units: end func_001B8C80 */
 
@@ -177,7 +177,7 @@ DEFINE_VTABLE_CHAIN_DTOR2(func_001B8C80, D_004DA800, D_004DA810)
 #pragma cplusplus on
 
 /* Deleting destructor: restore the vtable chain, optionally delete. */
-DEFINE_VTABLE_CHAIN_DTOR1(func_001B8CE0, D_004DA810)
+DEFINE_VTABLE_CHAIN_DTOR1(cSkaAnimAnchor_cDeltaPosModificationFunction_dtor, D_004DA810)
 #pragma pop /* merge_units */
 /* merge_units: end func_001B8CE0 */
 
@@ -234,7 +234,7 @@ void Physical_RetainMotionAxis(Phys_001B8D30* p, V* b)
 #pragma cplusplus on
 
 /* Deleting destructor: restore the vtable chain, optionally delete. */
-DEFINE_VTABLE_CHAIN_DTOR2(func_001B8D90, D_004DA820, D_004DA810)
+DEFINE_VTABLE_CHAIN_DTOR2(cHumanCollision_DeltaPosModificationFunction_Ledge_dtor, D_004DA820, D_004DA810)
 #pragma pop /* merge_units */
 /* merge_units: end func_001B8D90 */
 
@@ -243,7 +243,7 @@ DEFINE_VTABLE_CHAIN_DTOR2(func_001B8D90, D_004DA820, D_004DA810)
 #pragma cplusplus on
 
 /* Deleting destructor: restore the vtable chain, optionally delete. */
-DEFINE_VTABLE_CHAIN_DTOR1(func_001B8DF0, D_004DA830)
+DEFINE_VTABLE_CHAIN_DTOR1(cIkRoutine_dtor_void, D_004DA830)
 #pragma pop /* merge_units */
 /* merge_units: end func_001B8DF0 */
 
@@ -312,7 +312,7 @@ void AnimChannel_AddOffset(Ch* c, float* dt)
     c->f10 = c->f8 + Wrap(c, c->f10 - c->f8);
     func_0017CA90(&c->f18, -1);
     v = Mem_PlacementNew(0x18, &c->f18);
-    if (v) func_0017CA00(v, &c->f8, &c->fC, &c->f10, &D_0048A190, c->f28);
+    if (v) cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_floatR_floatR_etc(v, &c->f8, &c->fC, &c->f10, &D_0048A190, c->f28);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_001B8E40 */

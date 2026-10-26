@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_0046C838(void) {
+void RemoteClientJoinsCallback(void) {
 
 }

@@ -6,6 +6,6 @@
 #include "types.h"
 
 /* begin() iterator of a pointer vector. */
-void func_003EB950(Iter* out, PtrVec* v) {
+void std_list_cFSDataPtr_begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }

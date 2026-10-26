@@ -36,7 +36,7 @@ struct Obj {
 #pragma push
 #pragma opt_rotateloops off
 #pragma opt_strength_reduction off
-extern "C" void func_0023E5D0(Obj* o)
+extern "C" void cNIEventBase_SetEndState(Obj* o)
 {
     o->b130 = 1;
     if (o->iBC == -1) o->v73(o->b[o->b.size() - 1].f - o->fC0);

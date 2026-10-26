@@ -18,7 +18,7 @@ typedef struct { char pad0[0x48]; void* tbl; char pad4C[0x84 - 0x4C]; unsigned c
 extern "C" char g_Game[];
 extern "C" const char* D_0048C160[];
 extern "C" void func_00296F20(L4B50* l);
-extern "C" void func_00299270(L4B50* l, int flags);
+extern "C" void std_vector_deleter_tRequirementInfo_dtor(L4B50* l, int flags);
 extern "C" void* Agent_GetSelected(void* list, int idx);
 extern "C" void AgentData_GetAwardItems(void* ag, int a, int b, L4B50* l);
 extern "C" void* AgentData_GetLevelShortName(void* ag, const char* name);
@@ -41,12 +41,12 @@ extern "C" void GuiPersonnelMenu_Fill(O4B50* self)
         if (self->arg >= 0 && self->arg < 17)
             name = D_0048C160[self->arg];
         if (!name) {
-            func_00299270(&l, 0);
+            std_vector_deleter_tRequirementInfo_dtor(&l, 0);
             return;
         }
         x = AgentData_GetLevelShortName(ag, name);
         if (!x) {
-            func_00299270(&l, 0);
+            std_vector_deleter_tRequirementInfo_dtor(&l, 0);
             return;
         }
         AgentData_GetLevelObjectives(ag, x, &l);
@@ -66,6 +66,6 @@ extern "C" void GuiPersonnelMenu_Fill(O4B50* self)
         }
         GuiTextListWidget_AddItem(self->tbl, id, i, mode);
     }
-    func_00299270(&l, 0);
+    std_vector_deleter_tRequirementInfo_dtor(&l, 0);
 }
 

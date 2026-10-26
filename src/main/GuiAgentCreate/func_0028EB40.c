@@ -9,7 +9,7 @@ typedef struct {
 
 #pragma push
 #pragma opt_propagation off
-void func_0028EB40(Obj *o, float dt)
+void GuiAgentCreate_UserInterfaceRotate(Obj *o, float dt)
 {
     int flags = g_Pad0HeldMask;
     float step = 3.1415927f * (dt / 30.0f);

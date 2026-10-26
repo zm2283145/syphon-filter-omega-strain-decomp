@@ -121,8 +121,8 @@ void GuiWidget_ctor(void*);
 #define GuiWidget_ctor(a0) (GuiWidget_ctor((a0))) /* merge_units */
 
 void Resource_Construct(void*);
-int* func_0012F2B0(void*);
-int* func_0015AC90(int*, int);
+int* cSystem_GetObjectID_void(void*);
+int* cObjectId_ctor_uint(int*, int);
 extern char D_004C1CE0[];
 extern void* const D_004E1290[];
 }
@@ -157,7 +157,7 @@ static inline void SndReq_Ctor(SndReq* p, void* voice) {
     p->type = -1;
     p->name = -1;
     p->voice = voice;
-    int* r = voice ? func_0012F2B0(voice) : func_0015AC90(&tmp, -1);
+    int* r = voice ? cSystem_GetObjectID_void(voice) : cObjectId_ctor_uint(&tmp, -1);
     p->voiceId = *r;
     p->x30 = 0;
     p->x34 = 0;
@@ -192,6 +192,6 @@ extern "C" W57900* GuiRadioLog_Create(void) {
 #include "two_member_dtor.h"
 
 /* Destructor: destroy two members, optionally delete. */
-DEFINE_TWO_MEMBER_DTOR(func_00457A30, FileMan_Release, 0x48, 0xE4)
+DEFINE_TWO_MEMBER_DTOR(cSndFx_dtor, FileMan_Release, 0x48, 0xE4)
 #pragma pop /* merge_units */
 /* merge_units: end func_00457A30 */

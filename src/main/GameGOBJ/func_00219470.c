@@ -20,24 +20,24 @@ extern "C" void cPathedGOBJ_v15();
 extern "C" void cPathedGOBJ_v16();
 extern "C" void cPathedGOBJ_v3D();
 extern "C" void GObj_GetID();
-extern "C" void func_0012ED00();
-extern "C" void func_0012ED50();
-extern "C" void func_0013E060();
+extern "C" void cSystem_SendCreated();
+extern "C" void cSystem_IsDeliverable();
+extern "C" void cGOBJ_GetFloorPlane();
 extern "C" void func_00140E90();
 extern "C" void GObj_GetLifeState();
-extern "C" void func_00148870();
+extern "C" void cGOBJ_IsGeneratorCreated();
 extern "C" void Object_GetEye();
-extern "C" void func_00153860();
-extern "C" void func_0015BFB0();
-extern "C" void func_0015BFC0();
-extern "C" void func_0015BFD0();
-extern "C" void func_0015BFE0();
-extern "C" void func_0015BFF0();
-extern "C" void func_0015C000();
-extern "C" void func_0015C030();
-extern "C" void func_0015C040();
-extern "C" void func_0015C050();
-extern "C" void func_0015C0A0();
+extern "C" void cGOBJ_GetLosPosition();
+extern "C" void cGOBJ_HasHeadset();
+extern "C" void cGOBJ_SetStatus();
+extern "C" void cGOBJ_GetStatus();
+extern "C" void cGOBJ_GetChildList_void();
+extern "C" void cGOBJ_GetChildList_void_2();
+extern "C" void cGOBJ_ScaleBBox();
+extern "C" void cGOBJ_GetSubTargetAimAdjust();
+extern "C" void cGOBJ_GetNumSubTargets();
+extern "C" void cGOBJ_IsAimed();
+extern "C" void cGOBJ_CheckBullet();
 extern "C" void cGameGOBJ_GetBounds();
 extern "C" void cGameGOBJ_v2F();
 extern "C" void cGameGOBJ_v42();
@@ -66,18 +66,18 @@ extern "C" void cNode_v26();
 extern "C" void cNode_v25();
 extern "C" void cNode_v24();
 extern "C" void Player_GetActiveWeapon();
-extern "C" void func_003CE9E0();
-extern "C" void func_003CE9F0();
+extern "C" void cGOBJ_Load();
+extern "C" void cGOBJ_Init();
 extern "C" void cNode_v0D();
 extern void * const D_004DB280[];
 extern unsigned char g_IsMultiplayer;
 void Mem_Free(int heap, void* p, char* file, int line);
 void cGameGOBJ_dtor(void* p, int flag);
-void func_001810D0(void* p, int flag);
+void std_vector_deleter_cVector_dtor(void* p, int flag);
 int func_00211DA0(void);
-void func_00219730(void* p, int flag);
-void func_0021C090(void* p, int flag);
-void func_002EC2A8(int a);
+void std_vector_float_dtor(void* p, int flag);
+void std_vector_deleter_cQuaternion_dtor(void* p, int flag);
+void NetFreeObject(int a);
 void FileMan_Release(void* p, int flag);
 void operator_delete(void* p);
 }
@@ -85,8 +85,8 @@ struct E_00219470 { char pad[0x48]; char m48[0xE4 - 0x48]; char mE4[4]; };
 struct D_00219470s { char pad[0xC]; unsigned char c; };
 struct S_00219470 { void* vt; char pad4[0x90]; char m94[0x10]; char mA4[0x10]; char mB4[0x1C]; D_00219470s* pD0; char padd4[0x10]; E_00219470* pE4; };
 static inline void Free_00219470(void* p, int line) { AllocGuard g; Mem_Free(0, p, D_004A4550, line); }
-static inline void M3_0021C090(void* m) { if (m) { if (m) { if (m) func_0021C090(m, 0); } } }
-static inline void M3_001810D0(void* m) { if (m) { if (m) { if (m) func_001810D0(m, 0); } } }
+static inline void M3_0021C090(void* m) { if (m) { if (m) { if (m) std_vector_deleter_cQuaternion_dtor(m, 0); } } }
+static inline void M3_001810D0(void* m) { if (m) { if (m) { if (m) std_vector_deleter_cVector_dtor(m, 0); } } }
 extern "C" S_00219470* cPathedGOBJ_dtor(S_00219470* self, short flag)
 {
     if (self) {
@@ -106,7 +106,7 @@ extern "C" S_00219470* cPathedGOBJ_dtor(S_00219470* self, short flag)
         if (g_IsMultiplayer) {
             d = self->pD0;
             if (d) {
-                if (d->c) func_002EC2A8(func_00211DA0());
+                if (d->c) NetFreeObject(func_00211DA0());
                 else Free_00219470(d, 0xB83);
                 self->pD0 = 0;
             }
@@ -117,7 +117,7 @@ extern "C" S_00219470* cPathedGOBJ_dtor(S_00219470* self, short flag)
                 self->pD0 = 0;
             }
         }
-        m = self->mB4; if (m) func_00219730(m, -1);
+        m = self->mB4; if (m) std_vector_float_dtor(m, -1);
         M3_0021C090(self->mA4);
         M3_001810D0(self->m94);
         cGameGOBJ_dtor(self, 0);
@@ -126,4 +126,4 @@ extern "C" S_00219470* cPathedGOBJ_dtor(S_00219470* self, short flag)
     }
     return self;
 }
-void * const D_004DB280[72] = { (void*)0x0, (void*)0x0, (void*)cPathedGOBJ_dtor, (void*)PathObj_Receive, (void*)GObj_GetID, (void*)Object_GetAttachedOrSelf, (void*)cGameGOBJ_v04, (void*)func_0012ED00, (void*)cPathedGOBJ_v06, (void*)cPathedGOBJ_v07, (void*)cGameGOBJ_v08, (void*)cGameGOBJ_v09, (void*)func_0012ED50, (void*)cPathedGOBJ_v0B, (void*)PathObj_ScriptFilter, (void*)cNode_v0D, (void*)func_003CE9F0, (void*)func_003CE9E0, (void*)PathObj_Update, (void*)GObj_Tick, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)cGameGOBJ_Draw, (void*)cPathedGOBJ_v15, (void*)cPathedGOBJ_v16, (void*)cGameGOBJ_Enable, (void*)cGameGOBJ_Disable, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0015BFF0, (void*)func_0015BFE0, (void*)cGameGOBJ_GetBounds, (void*)func_0015C000, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)cNode_v24, (void*)cNode_v25, (void*)cNode_v26, (void*)cNode_v27, (void*)cNode_v28, (void*)cNode_v29, (void*)cNode_v2A, (void*)cNode_v2B, (void*)cGameGOBJ_GetModelCol, (void*)func_00153860, (void*)Object_GetEye, (void*)cGameGOBJ_v2F, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)Node_GetWorldMatrix, (void*)cGOBJ_v35, (void*)Node_GetLightRefPoint, (void*)PathObj_GetPosition, (void*)Node_GetComponentMatrix, (void*)cGOBJ_v39, (void*)cNode_v3A, (void*)GObj_GetWorldMatrix, (void*)func_0013E060, (void*)cPathedGOBJ_v3D, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)GObj_GetLifeState, (void*)Controller_DeathNotice, (void*)cGameGOBJ_v42, (void*)0x0, (void*)0x0, (void*)0x0 };
+void * const D_004DB280[72] = { (void*)0x0, (void*)0x0, (void*)cPathedGOBJ_dtor, (void*)PathObj_Receive, (void*)GObj_GetID, (void*)Object_GetAttachedOrSelf, (void*)cGameGOBJ_v04, (void*)cSystem_SendCreated, (void*)cPathedGOBJ_v06, (void*)cPathedGOBJ_v07, (void*)cGameGOBJ_v08, (void*)cGameGOBJ_v09, (void*)cSystem_IsDeliverable, (void*)cPathedGOBJ_v0B, (void*)PathObj_ScriptFilter, (void*)cNode_v0D, (void*)cGOBJ_Init, (void*)cGOBJ_Load, (void*)PathObj_Update, (void*)GObj_Tick, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)cGameGOBJ_Draw, (void*)cPathedGOBJ_v15, (void*)cPathedGOBJ_v16, (void*)cGameGOBJ_Enable, (void*)cGameGOBJ_Disable, (void*)Node_GetFlag2C, (void*)cGOBJ_HasHeadset, (void*)cGOBJ_SetStatus, (void*)cGOBJ_GetStatus, (void*)cGOBJ_IsGeneratorCreated, (void*)cGOBJ_GetChildList_void_2, (void*)cGOBJ_GetChildList_void, (void*)cGameGOBJ_GetBounds, (void*)cGOBJ_ScaleBBox, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)cNode_v24, (void*)cNode_v25, (void*)cNode_v26, (void*)cNode_v27, (void*)cNode_v28, (void*)cNode_v29, (void*)cNode_v2A, (void*)cNode_v2B, (void*)cGameGOBJ_GetModelCol, (void*)cGOBJ_GetLosPosition, (void*)Object_GetEye, (void*)cGameGOBJ_v2F, (void*)func_00140E90, (void*)cGOBJ_GetSubTargetAimAdjust, (void*)cGOBJ_GetNumSubTargets, (void*)cGOBJ_IsAimed, (void*)Node_GetWorldMatrix, (void*)cGOBJ_v35, (void*)Node_GetLightRefPoint, (void*)PathObj_GetPosition, (void*)Node_GetComponentMatrix, (void*)cGOBJ_v39, (void*)cNode_v3A, (void*)GObj_GetWorldMatrix, (void*)cGOBJ_GetFloorPlane, (void*)cPathedGOBJ_v3D, (void*)Actor_ApplyContactDamage, (void*)cGOBJ_CheckBullet, (void*)GObj_GetLifeState, (void*)Controller_DeathNotice, (void*)cGameGOBJ_v42, (void*)0x0, (void*)0x0, (void*)0x0 };

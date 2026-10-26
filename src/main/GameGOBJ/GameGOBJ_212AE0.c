@@ -452,14 +452,14 @@ extern char D_004DAE30[];
 #define D_004DAE30 ((char*)&D_004DAE30) /* merge_units */
 
 int Net_GetClock(int a);
-int func_002EAF28(int* h, int a, int b, int c, int d, int e, int f, void* buf, char* name, int size);
-int func_002EB650(LuSeg** o, int h);
+int NetCreateObject(int* h, int a, int b, int c, int d, int e, int f, void* buf, char* name, int size);
+int NetGetObject(LuSeg** o, int h);
 void printf(char* s, int h, int n);
-void func_002EC460(int h);
+void NetReleaseObjectPrivateOwnership(int h);
 void* World_GetActorArray(void);
-LuVec* func_001339A0(void* arr);
+LuVec* cObjList_cGOBJPtr_GetList(void* arr);
 void PtrVec_End(LuIt* out, LuVec* v);
-void func_00133980(LuIt* out, LuIt* in);
+void cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(LuIt* out, LuIt* in);
 void PathObj_Update(Lift* l, float dt);
 int cElevatorGOBJ_DoorsOpen(Lift* l);
 int cElevatorGOBJ_DoorsClosed(Lift* l);
@@ -490,8 +490,8 @@ static inline LuShm* LuCreate(void)
     LuShm* r = 0;
     if (!LuIsHost() || !D_005721D0) return 0;
     {
-        if (!func_002EAF28(&h, 2, 3, 0, 0, 0, 0, 0, D_004A44D0, D_0048AAE8)) {
-            if (!func_002EB650(&seg, h)) {
+        if (!NetCreateObject(&h, 2, 3, 0, 0, 0, 0, 0, D_004A44D0, D_0048AAE8)) {
+            if (!NetGetObject(&seg, h)) {
                 r = seg->p1C;
                 r->f4 = h;
                 printf(D_004A44F0, h, 8);
@@ -500,7 +500,7 @@ static inline LuShm* LuCreate(void)
     }
     return r;
 }
-static inline void LuGetEnd(LuIt* o, LuVec* v) { LuIt te; PtrVec_End(&te, v); func_00133980(o, &te); }
+static inline void LuGetEnd(LuIt* o, LuVec* v) { LuIt te; PtrVec_End(&te, v); cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(o, &te); }
 extern "C" void Lift_Update(Lift* l, float dt)
 {
     LuIt it;
@@ -510,12 +510,12 @@ extern "C" void Lift_Update(Lift* l, float dt)
             if (l->shm) {
                 int id = l->fC;
                 l->shm->f0 = id;
-                func_002EC460(l->shm->f4);
+                NetReleaseObjectPrivateOwnership(l->shm->f4);
             }
             D_004F54A0 = Net_GetClock(1) + 500;
         }
     }
-    LuGetEnd(&it, func_001339A0(World_GetActorArray()));
+    LuGetEnd(&it, cObjList_cGOBJPtr_GetList(World_GetActorArray()));
     LuSub* s = l->sub;
     if (s->f50) s->Sync();
     LuQ p = s->pos;

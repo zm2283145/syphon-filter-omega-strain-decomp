@@ -43,7 +43,7 @@ static inline void merge_flush_func_00425BC0(void) {}
 extern TextArrayCell* GuiTextArrayWidget_GetCell(guiTextArrayWidget* self, int row, int col);
 
 /* Clears flag bit 2 of the addressed cell. */
-void func_00425BF0(guiTextArrayWidget* self, int row, int col) {
+void GuiTextArrayWidget_ClearElementTextColor(guiTextArrayWidget* self, int row, int col) {
     TextArrayCell* cell = GuiTextArrayWidget_GetCell(self, row, col);
 
     if (cell != 0) {
@@ -91,7 +91,7 @@ static inline void merge_flush_func_00425C30(void) {}
 /* merge_units: begin func_00425C90 */
 #pragma push /* merge_units */
 /* Clears flag bit 0 of the addressed cell. */
-void func_00425C90(guiTextArrayWidget* self, int row, int col) {
+void GuiTextArrayWidget_ClearElementTextFormat(guiTextArrayWidget* self, int row, int col) {
     TextArrayCell* cell = GuiTextArrayWidget_GetCell(self, row, col);
 
     if (cell != 0) {
@@ -130,7 +130,7 @@ extern void* Gui_GetScreenList(void);
 extern int GuiFont_Find(void* strings, int id);
 
 /* Clears flag bit 1 of the addressed cell. */
-void func_00425D10(guiTextArrayWidget* self, int row, int col) {
+void GuiTextArrayWidget_ClearElementFont(guiTextArrayWidget* self, int row, int col) {
     TextArrayCell* cell = GuiTextArrayWidget_GetCell(self, row, col);
 
     if (cell != 0) {
@@ -139,7 +139,7 @@ void func_00425D10(guiTextArrayWidget* self, int row, int col) {
 }
 
 /* Sets the text of the addressed cell from string id and marks it as having text. */
-void func_00425D50(guiTextArrayWidget* self, int row, int col, int id) {
+void GuiTextArrayWidget_SetElementFont(guiTextArrayWidget* self, int row, int col, int id) {
     TextArrayCell* cell = GuiTextArrayWidget_GetCell(self, row, col);
 
     if (cell != 0) {

@@ -6,20 +6,20 @@
 
 /* merge_units: begin func_00323270 */
 extern int D_004E1D50;
-extern void func_003232E0(void);
-int func_00323270(void)
+extern void nvuInitVuFft4CFG(void);
+int updateVuFft(void)
 {
     int ret = 0;
     switch (D_004E1D50) {
     case 0:
         break;
     case 1:
-        func_003232E0();
+        nvuInitVuFft4CFG();
         break;
     case 2:
         break;
     case 3:
-        func_003232E0();
+        nvuInitVuFft4CFG();
         break;
     default:
         D_004E1D50 = 0;
@@ -36,7 +36,7 @@ extern CopyFn3232E0 D_004E1D40;
 extern char D_00476B00[];
 extern char D_00477AE8[];
 extern char D_004B6F90[];
-void func_003232E0(void)
+void nvuInitVuFft4CFG(void)
 {
     D_004E1D40((void*)0x11000000, D_00476B00, D_00477AE8 - D_00476B00);
     D_004E1D40((void*)0x11004800, D_004B6F90, 0x7E0);
@@ -44,9 +44,9 @@ void func_003232E0(void)
 /* merge_units: end func_003232E0 */
 
 /* merge_units: begin func_00323330 */
-extern void func_00322FC0(float *re, float *im, int n);
+extern void rFft_vu4(float *re, float *im, int n);
 
-void func_00323330(float *in, int n, int bits, float *re, float *im)
+void nvuFftCenter512(float *in, int n, int bits, float *re, float *im)
 {
     int q = n >> 2;
     int h = n >> 1;
@@ -75,6 +75,6 @@ void func_00323330(float *in, int n, int bits, float *re, float *im)
         *pr++ = 0;
         *pi++ = 0;
     }
-    func_00322FC0(re, im, size / 2);
+    rFft_vu4(re, im, size / 2);
 }
 /* merge_units: end func_00323330 */

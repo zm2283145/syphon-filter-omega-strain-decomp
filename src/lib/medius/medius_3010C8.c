@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_003010C8(int a0) {
+int rt_msg_client_map_comm_error(int a0) {
     int v0;
 
     v0 = 0 + 6;

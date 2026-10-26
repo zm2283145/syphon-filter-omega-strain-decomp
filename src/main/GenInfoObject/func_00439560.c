@@ -5,7 +5,7 @@
 int Alloc_Lock(int);                                    
 int Alloc_Unlock(int);                                  
 int Mem_Free(int, int, char *, int);                         
-int func_002EB650(void **, int);                    
+int NetGetObject(void **, int);                    
 unsigned int D_00497578[2] = { 0xFFFFFFFF, 0x0 };
 extern char D_004BFD60;
 extern unsigned char g_ProfileLockEnabled;
@@ -14,14 +14,14 @@ extern unsigned char D_005723C8;
 extern signed char D_00583880;
 extern int D_00583888;
 
-void func_00439560(int d0, int arg1) {
+void cGenInfoObject_GenInfoCreationCallback(int d0, int arg1) {
     char * sp38[2];
     int temp_s1;
 
     if (D_005723C8 == 0) {
         D_005723C8 = 1;
     }
-    if (func_002EB650((void **)sp38, arg1) == 0) {
+    if (NetGetObject((void **)sp38, arg1) == 0) {
         temp_s1 = D_00583888;
         if (temp_s1 != 0) {
             if (g_ProfileLockEnabled != 0) {

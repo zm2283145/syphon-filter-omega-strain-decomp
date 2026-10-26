@@ -135,15 +135,15 @@ struct Light_7F80 {
 extern "C" {
 extern char D_004F7C98[];
 extern char D_004DBED0[];
-void func_0023F350(Light_7F80* self, int kind, void* info);
-void func_00238940(OwnedVec_7F80* v);
+void cNIEventBase_ctor(Light_7F80* self, int kind, void* info);
+void cArray_FloatKey_ctor(OwnedVec_7F80* v);
 void NetMap_BindReceiver(int id, int owner, Light_7F80* o);
 void NiEvent_ReadKeyedTrack4(Track_7F80* t, Reader_7F80* r);
 void NiEvent_ReadFloatTrack(Track_7F80* t, float v);
-void func_002401C0(V64_7F80* v, int n, const E64_7F80& fill);
-static inline void Assign64_7F80(V64_7F80* v, int n, const E64_7F80& fill) { E64_7F80 t; func_002401C0(v, 0, t); func_002401C0(v, n, fill); }
-void func_00240230(V8_7F80* v, int n, const E8_7F80& fill);
-static inline void Resize8_7F80(V8_7F80* v, int n, const E8_7F80& f = E8_7F80()) { func_00240230(v, n, f); }
+void std_vector_imp_VectorKey_resize(V64_7F80* v, int n, const E64_7F80& fill);
+static inline void Assign64_7F80(V64_7F80* v, int n, const E64_7F80& fill) { E64_7F80 t; std_vector_imp_VectorKey_resize(v, 0, t); std_vector_imp_VectorKey_resize(v, n, fill); }
+void std_vector_imp_VisKey_resize(V8_7F80* v, int n, const E8_7F80& fill);
+static inline void Resize8_7F80(V8_7F80* v, int n, const E8_7F80& f = E8_7F80()) { std_vector_imp_VisKey_resize(v, n, f); }
 static inline void Assign8_7F80(V8_7F80* v, int n, const E8_7F80& fill) { Resize8_7F80(v, 0); Resize8_7F80(v, n, fill); }
 int IdMgr_FindCollision(int region, int id);
 void ZoneMgr_Associate(int found, Light_7F80* o, int a, int b);
@@ -165,7 +165,7 @@ static inline void Align_7F80(Reader_7F80* r)
     rem = (int)((unsigned long long)(unsigned int)ptr & 3);
     if (rem) r->cur = ptr + (4 - rem);
 }
-inline void Track_7F80::Init() { Track_7F80* t = this; func_00238940(&t->vec); }
+inline void Track_7F80::Init() { Track_7F80* t = this; cArray_FloatKey_ctor(&t->vec); }
 static inline void VCX_7F80(void* d0, const void* s0) { const void* s = s0; void* d = d0; __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(t) : "r"(d), "r"(s) : "memory"); }
 static inline E8_7F80* Fl_7F80(V8_7F80* v) { E8_7F80** pd = &v->data; return *pd; }
 static inline void MC2_7F80(void* d, const void* s) {
@@ -177,7 +177,7 @@ extern "C" Light_7F80* cNIEventLight_ctor(Light_7F80* self, Reader_7F80* r)
     volatile int id;
     int n;
     int i;
-    func_0023F350(self, 0x11, D_004F7C98);
+    cNIEventBase_ctor(self, 0x11, D_004F7C98);
     *(void**)self = D_004DBED0;
     self->t170.Init();
     self->t190.Init();
@@ -308,9 +308,9 @@ static inline void merge_flush_func_00237F80(void) {}
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
 int cGOBJ_dtor(char **, int);                              
-int func_00238850(char * , int);                         
-int func_00240390(char * , int);                         
-int func_00240480(int, int);                            
+int std_vector_cNIEventBasePtr_dtor(char * , int);                         
+int std_vector_deleter_VectorKey_dtor(char * , int);                         
+int std_vector_deleter_VisKey_dtor(int, int);                            
 int operator_delete(char **);                            
 extern void Actor_ApplyContactDamage();
 extern void Actor_BaseWorldUpdate();
@@ -325,44 +325,44 @@ extern void Object_GetAttachedOrSelf();
 extern void cGOBJ_v0B();
 extern void cGOBJ_v0C();
 extern void GObj_GetID();
-extern void func_0012ED00();
-extern void func_0012ED30();
-extern void func_0012ED40();
-extern void func_0012ED50();
-extern void func_0013E060();
-extern void func_0013EE60();
+extern void cSystem_SendCreated();
+extern void cSystem_NetEnable();
+extern void cSystem_NetDisable();
+extern void cSystem_IsDeliverable();
+extern void cGOBJ_GetFloorPlane();
+extern void cGOBJ_GetBBox();
 extern void func_00140E90();
 extern void GObj_GetLifeState();
-extern void func_00148870();
+extern void cGOBJ_IsGeneratorCreated();
 extern void Object_GetEye();
-extern void func_00153860();
-extern void func_0015BFB0();
-extern void func_0015BFC0();
-extern void func_0015BFD0();
-extern void func_0015C000();
-extern void func_0015C010();
-extern void func_0015C020();
-extern void func_0015C030();
-extern void func_0015C040();
-extern void func_0015C050();
-extern void func_0015C080();
-extern void func_0015C0A0();
+extern void cGOBJ_GetLosPosition();
+extern void cGOBJ_HasHeadset();
+extern void cGOBJ_SetStatus();
+extern void cGOBJ_GetStatus();
+extern void cGOBJ_ScaleBBox();
+extern void cGOBJ_GetTargetPriority();
+extern void cGOBJ_GetMovementState();
+extern void cGOBJ_GetSubTargetAimAdjust();
+extern void cGOBJ_GetNumSubTargets();
+extern void cGOBJ_IsAimed();
+extern void cGOBJ_InitNetwork();
+extern void cGOBJ_CheckBullet();
 extern void NiEventLight_Step();
 extern void NiPositionTrack_Update();
 extern void NiSwitchTrack_Update();
 extern void NiEvent_UpdateNode();
-extern void func_0023E5D0();
+extern void cNIEventBase_SetEndState();
 extern void NiEvent_Reset();
 extern void NiEvent_Stop();
 extern void NiEvent_Play();
 extern void NiEvent_HandlePlayMsg();
 extern void NiEvent_PreLogic();
-extern void func_0023EA10();
-extern void func_0023EA50();
-extern void func_0023EE90();
-extern void func_0023FCD0();
-extern void func_0023FCE0();
-extern void func_0023FCF0();
+extern void cNIEventBase_NextFrame();
+extern void cNIEventBase_ProcessNextFrame();
+extern void cNIEventBase_GetVUM();
+extern void cNIEventBase_GetChildList_void();
+extern void cNIEventBase_GetChildList_void_2();
+extern void cNIEventBase_IsNetworked();
 extern void GObj_GetWorldMatrix();
 extern void cNode_v3A();
 extern void cGOBJ_v39();
@@ -384,12 +384,12 @@ extern void Object_Deactivate();
 extern void cNode_v07();
 extern void cNode_v06();
 extern void cNode_v14();
-extern void func_003CE9E0();
-extern void func_003CE9F0();
+extern void cGOBJ_Load();
+extern void cGOBJ_Init();
 extern void cNode_v0D();
 extern void * const D_004DC190[];
 
-char **func_00238780(char **arg0, long long arg1) {
+char **cNIEventBase_dtor(char **arg0, long long arg1) {
     int temp_a0;
     char * temp_a0_2;
     char * temp_a0_3;
@@ -398,15 +398,15 @@ char **func_00238780(char **arg0, long long arg1) {
         temp_a0 = (int)((char *)arg0 + 0xC4);
         *arg0 = &(*(char*)D_004DC190);
         if ((temp_a0 != 0) && (temp_a0 != 0) && (temp_a0 != 0)) {
-            func_00240480(temp_a0, 0);
+            std_vector_deleter_VisKey_dtor(temp_a0, 0);
         }
         temp_a0_2 = (char *)arg0 + 0xAC;
         if ((temp_a0_2 != NULL) && (temp_a0_2 != NULL) && (temp_a0_2 != NULL)) {
-            func_00240390(temp_a0_2, 0);
+            std_vector_deleter_VectorKey_dtor(temp_a0_2, 0);
         }
         temp_a0_3 = (char *)arg0 + 0x9C;
         if (temp_a0_3 != NULL) {
-            func_00238850(temp_a0_3, -1);
+            std_vector_cNIEventBasePtr_dtor(temp_a0_3, -1);
         }
         cGOBJ_dtor(arg0, 0);
         if (((long long) (arg1 << 0x30) >> 0x30) > 0) {
@@ -415,7 +415,7 @@ char **func_00238780(char **arg0, long long arg1) {
     }
     return arg0;
 }
-void * const D_004DC190[80] = { (void*)0x0, (void*)0x0, (void*)func_00238780, (void*)NiEvent_HandlePlayMsg, (void*)GObj_GetID, (void*)Object_GetAttachedOrSelf, (void*)func_0023FCF0, (void*)func_0012ED00, (void*)cNode_v06, (void*)cNode_v07, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)cGOBJ_v0B, (void*)cGOBJ_v0C, (void*)cNode_v0D, (void*)func_003CE9F0, (void*)func_003CE9E0, (void*)func_0023EA10, (void*)NiEvent_PreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)cNode_v14, (void*)Object_Activate, (void*)Object_Deactivate, (void*)Node_SetFlag2C, (void*)Node_ClearFlag2C, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0023FCE0, (void*)func_0023FCD0, (void*)func_0013EE60, (void*)func_0015C000, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)cNode_v24, (void*)cNode_v25, (void*)cNode_v26, (void*)cNode_v27, (void*)cNode_v28, (void*)cNode_v29, (void*)cNode_v2A, (void*)cNode_v2B, (void*)func_0015C010, (void*)func_00153860, (void*)Object_GetEye, (void*)func_0015C020, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)Node_GetWorldMatrix, (void*)cGOBJ_v35, (void*)Node_GetLightRefPoint, (void*)PathObj_GetPosition, (void*)Node_GetComponentMatrix, (void*)cGOBJ_v39, (void*)cNode_v3A, (void*)GObj_GetWorldMatrix, (void*)func_0013E060, (void*)func_0015C080, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)GObj_GetLifeState, (void*)Controller_DeathNotice, (void*)func_0023EA50, (void*)NiEvent_Play, (void*)NiEvent_Stop, (void*)NiEvent_Reset, (void*)NiEvent_UpdateNode, (void*)func_0023EE90, (void*)func_0023E5D0, (void*)NiPositionTrack_Update, (void*)NiSwitchTrack_Update, (void*)NiEventLight_Step, (void*)0x0, (void*)0x0 };
+void * const D_004DC190[80] = { (void*)0x0, (void*)0x0, (void*)cNIEventBase_dtor, (void*)NiEvent_HandlePlayMsg, (void*)GObj_GetID, (void*)Object_GetAttachedOrSelf, (void*)cNIEventBase_IsNetworked, (void*)cSystem_SendCreated, (void*)cNode_v06, (void*)cNode_v07, (void*)cSystem_NetEnable, (void*)cSystem_NetDisable, (void*)cSystem_IsDeliverable, (void*)cGOBJ_v0B, (void*)cGOBJ_v0C, (void*)cNode_v0D, (void*)cGOBJ_Init, (void*)cGOBJ_Load, (void*)cNIEventBase_NextFrame, (void*)NiEvent_PreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)cNode_v14, (void*)Object_Activate, (void*)Object_Deactivate, (void*)Node_SetFlag2C, (void*)Node_ClearFlag2C, (void*)Node_GetFlag2C, (void*)cGOBJ_HasHeadset, (void*)cGOBJ_SetStatus, (void*)cGOBJ_GetStatus, (void*)cGOBJ_IsGeneratorCreated, (void*)cNIEventBase_GetChildList_void_2, (void*)cNIEventBase_GetChildList_void, (void*)cGOBJ_GetBBox, (void*)cGOBJ_ScaleBBox, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)cNode_v24, (void*)cNode_v25, (void*)cNode_v26, (void*)cNode_v27, (void*)cNode_v28, (void*)cNode_v29, (void*)cNode_v2A, (void*)cNode_v2B, (void*)cGOBJ_GetTargetPriority, (void*)cGOBJ_GetLosPosition, (void*)Object_GetEye, (void*)cGOBJ_GetMovementState, (void*)func_00140E90, (void*)cGOBJ_GetSubTargetAimAdjust, (void*)cGOBJ_GetNumSubTargets, (void*)cGOBJ_IsAimed, (void*)Node_GetWorldMatrix, (void*)cGOBJ_v35, (void*)Node_GetLightRefPoint, (void*)PathObj_GetPosition, (void*)Node_GetComponentMatrix, (void*)cGOBJ_v39, (void*)cNode_v3A, (void*)GObj_GetWorldMatrix, (void*)cGOBJ_GetFloorPlane, (void*)cGOBJ_InitNetwork, (void*)Actor_ApplyContactDamage, (void*)cGOBJ_CheckBullet, (void*)GObj_GetLifeState, (void*)Controller_DeathNotice, (void*)cNIEventBase_ProcessNextFrame, (void*)NiEvent_Play, (void*)NiEvent_Stop, (void*)NiEvent_Reset, (void*)NiEvent_UpdateNode, (void*)cNIEventBase_GetVUM, (void*)cNIEventBase_SetEndState, (void*)NiPositionTrack_Update, (void*)NiSwitchTrack_Update, (void*)NiEventLight_Step, (void*)0x0, (void*)0x0 };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00238780(void) {}
 #pragma pop /* merge_units */

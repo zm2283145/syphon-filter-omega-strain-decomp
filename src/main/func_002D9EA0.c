@@ -8,6 +8,6 @@
 #include "loose02_types.h"
 
 /* Sets flag bits; returns the new flags. */
-unsigned int func_002D9EA0(Obj2D9* self, unsigned int bits) {
+unsigned int SetAudioStatus(Obj2D9* self, unsigned int bits) {
     return self->flags |= bits;
 }

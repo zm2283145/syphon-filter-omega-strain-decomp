@@ -83,12 +83,12 @@ int cMessage_dtor(void* msg, int flags);
 unsigned char NetObj_SendMessage(int a, int b, void* c, int target, int type);
 int Transport_Send(int id, void* msg, int flags, int peer);
 void Mtx_ToEuler(GvV4* out, GvMtx* m);
-GvNodeL* func_0021E000(void* l);
-GvIt* func_0021DFE0(GvIt* it, GvNodeL* n);
-GvIt* func_0021DFF0(GvIt* it, GvNodeL* n);
+GvNodeL* std_list_deleter_cSafePtr_cGOBJ_tail(void* l);
+GvIt* std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(GvIt* it, GvNodeL* n);
+GvIt* std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodeP(GvIt* it, GvNodeL* n);
 int cGenerator_v05(GvGen* self, int peer);
 int cEnableMsg_v02(GvEnMsg* m, int id, int* len, int a, int b, int max, char* buf);
-int func_002D1100(GvSpMsg* m, int id, int* len, int a, int b, int max, char* buf);
+int cNetGeneratorCreateMsg_Pack(GvSpMsg* m, int id, int* len, int a, int b, int max, char* buf);
 }
 static inline void Q4(void* d0, const void* s0) { void* d = d0; __int128 qa, qb; const void* s = s0; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(s) : "memory"); }
 static inline void QZ(void* d0, const void* s0) { void* d = d0; __int128 q = 0; const void* s = s0; __asm__ volatile("lq %0, 0x0(%1)" : "+r"(q) : "r"(s) : "memory"); __asm__ volatile("sq %0, 0x0(%1)" : : "r"(q), "r"(d) : "memory"); }
@@ -104,8 +104,8 @@ static inline GvObj* HGet(GvHnd* h) {
     unsigned char k = ok;
     return k ? h->p : 0;
 }
-static inline GvIt Begin(void* l) { GvIt t; func_0021DFF0(&t, func_0021E000(l)->next); return t; }
-static inline GvIt End(void* l) { GvIt t; func_0021DFE0(&t, func_0021E000(l)); return t; }
+static inline GvIt Begin(void* l) { GvIt t; std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodeP(&t, std_list_deleter_cSafePtr_cGOBJ_tail(l)->next); return t; }
+static inline GvIt End(void* l) { GvIt t; std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(&t, std_list_deleter_cSafePtr_cGOBJ_tail(l)); return t; }
 
 int cGenerator_v05(GvGen* self, int peer)
 {
@@ -189,7 +189,7 @@ int cGenerator_v05(GvGen* self, int peer)
                     m->route = route;
                     m->x1C = 0x40;
                     msg.x20 = 4;
-                    r = func_002D1100(&msg, self->id, &len, 0, 0, 0x400, buf);
+                    r = cNetGeneratorCreateMsg_Pack(&msg, self->id, &len, 0, 0, 0x400, buf);
                     if (r > -1)
                         NetObj_SendMessage(D_0051F060, r, buf, peer, 0);
                     msg.vt = D_004DE240;

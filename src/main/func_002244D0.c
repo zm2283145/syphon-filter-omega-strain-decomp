@@ -1,6 +1,6 @@
 #include "types.h"
 
-extern int func_0023EB70(int);
+extern int cNIEventBase_GetVUMInTree(int);
 
 int ZoneMgr_GetMemberModel(int a0) {
     int a1, v0, v1;
@@ -23,7 +23,7 @@ L00224508:;
     v1 = 0 + 16;
     cond = a1 != v1;
     if (cond) goto L00224520;
-    v0 = func_0023EB70(a0);
+    v0 = cNIEventBase_GetVUMInTree(a0);
 L00224520:;
     goto ret;
 ret:

@@ -194,9 +194,9 @@ extern V4 D_004BC5A0;
 extern V4 D_004BC5B0;
 extern V4 D_004BC5C0;
 void Renderer_BindTexture(void* m, int idx);
-void func_0025CD10(void* s);
-void func_0025CA40(void* s);
-void func_00371170(void* s);
+void XLib_NewStrip(void* s);
+void XLib_NextBatchVert(void* s);
+void XLib_DrawSprites(void* s);
 void Renderer_FlushBatch(void* s);
 void Vec4_Copy(V4* d, const V4* s);
 void GuiBatch_AddVertexColor(V4* d, const V4* s);
@@ -234,19 +234,19 @@ static inline void Begin(void)
     e->c2C += D_00539224;
     e->c30 += D_00539224;
     e->c34 += D_00539224;
-    func_0025CD10(g_Video);
+    XLib_NewStrip(g_Video);
     D_00539224 = 0;
 }
 static inline void Flush(int& n)
 {
-    func_00371170(g_Video);
+    XLib_DrawSprites(g_Video);
     Begin();
     n = 0;
 }
 static inline void EmitC(const V4& pos, const V4& col)
 {
     Ent_00399080* e;
-    func_0025CA40(g_Video);
+    XLib_NextBatchVert(g_Video);
     e = &RS->ents[D_00539210.f10];
     Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
     GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], &col);
@@ -263,7 +263,7 @@ static inline V4* UVW1(const V4& uv) { return UVW0(uv); }
 static inline void Emit(V4 pos, const V4& col, const V4& uv)
 {
     Ent_00399080* e;
-    func_0025CA40(g_Video);
+    XLib_NextBatchVert(g_Video);
     e = &RS->ents[D_00539210.f10];
     Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
     GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], &col);
@@ -361,7 +361,7 @@ extern "C" void WeatherEmitter_Draw(Self* self)
                 }
             }
         }
-        if (n > 0) func_00371170(g_Video);
+        if (n > 0) XLib_DrawSprites(g_Video);
     } else {
         if (!D_0053BB40) {
             D_0053BB40 = 1;

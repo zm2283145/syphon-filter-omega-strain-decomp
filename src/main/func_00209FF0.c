@@ -1,10 +1,10 @@
 #include "types.h"
 #pragma optimization_level 1
 
-extern void func_0020A010(void);
+extern void details_compressed_pair_imp_rep_s_2_second(void);
 
-/* Wrapper: calls func_0020A010. */
-void func_00209FF0(void)
+/* Wrapper: calls details_compressed_pair_imp_rep_s_2_second. */
+void std_basic_string_char_char_traits_char_alloc(void)
 {
-    func_0020A010();
+    details_compressed_pair_imp_rep_s_2_second();
 }

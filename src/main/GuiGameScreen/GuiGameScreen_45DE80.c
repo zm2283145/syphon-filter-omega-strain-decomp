@@ -102,7 +102,7 @@ void* Gui_GetScreenList(void);
 void* GuiFont_Find(void* mgr, char* name);
 T_45DFD0* TextObj_Construct(void* p, int a, int b, int c, int d, void* e, char* f);
 W_45DFD0* GuiWidget_FindChildByName(void* o, char* name);
-void func_0041C0F0(W_45DFD0* w, int v);
+void GuiTextWidget_SetDisableWrap(W_45DFD0* w, int v);
 char* Game_GetPlayerNameSlot(void* p, int id);
 void GuiTextWidget_SetText(W_45DFD0* w, char* s, int f);
 void GuiGameScreen_InitWeaponSelect(O_45DFD0* o);
@@ -128,7 +128,7 @@ void GuiGameScreen_Init(O_45DFD0* o)
     o->fE0 = GuiWidget_FindChildByName(o, "choosemenu");
     if (o->fE0) {
         o->fE4 = Cast_45DFD0(GuiWidget_FindChildByName(o->fE0, "title"), D_004A7520);
-        func_0041C0F0(o->fE4, 1);
+        GuiTextWidget_SetDisableWrap(o->fE4, 1);
         o->fE8 = Cast_45DFD0(GuiWidget_FindChildByName(o->fE0, "choices"), D_004AA640);
         SetB0_45DFD0(o->fE8, D_00587CA0);
         SetE0_45DFD0(o->fE8, D_00587CB0);

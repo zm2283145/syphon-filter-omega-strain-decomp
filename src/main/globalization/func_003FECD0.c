@@ -15,7 +15,7 @@ void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 void Mem_Free(int pool, void* p, char* file, int line);
 void Libc_Abort(void);
 void Libc_Fprintf(void* s, char* msg);
-void func_003FEC90(Vec_3FECD0* a, Vec_3FECD0* b);
+void std_swap_vectordeleterR_vectordeleterR_46(Vec_3FECD0* a, Vec_3FECD0* b);
 void func_003F4390(Vec_3FECD0* a);
 }
 
@@ -23,7 +23,7 @@ static inline E_3FECD0* Alloc_3FECD0(unsigned int n) { AllocGuard g; return (E_3
 #pragma push
 #pragma peephole off
 #pragma opt_propagation off
-extern "C" void func_003FECD0(Vec_3FECD0* v0, unsigned int n0)
+extern "C" void std_vector_imp_1_reserve(Vec_3FECD0* v0, unsigned int n0)
 {
     Vec_3FECD0* v = v0;
     unsigned int n = n0;
@@ -46,7 +46,7 @@ extern "C" void func_003FECD0(Vec_3FECD0* v0, unsigned int n0)
                 new (d) E_3FECD0(*s);
                 tmp.count++;
             }
-            func_003FEC90(&tmp, v);
+            std_swap_vectordeleterR_vectordeleterR_46(&tmp, v);
             tmp.count = 0;
             {
                 E_3FECD0* p = tmp.data;

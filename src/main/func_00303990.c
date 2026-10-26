@@ -8,7 +8,7 @@
 #include "loose02_types.h"
 
 /* Sets unk188 (at most 256); returns 2 on a bad argument. */
-int func_00303990(RtObj188* obj, unsigned int value) {
+int rt_p2p_set_max_peers(RtObj188* obj, unsigned int value) {
     int inRange = value < 257;
     int result = 2;
 

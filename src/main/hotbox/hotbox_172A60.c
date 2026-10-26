@@ -32,26 +32,26 @@ extern "C" void Object_GetAttachedOrSelf();
 extern "C" void cHotbox_v01();
 extern "C" void cHotbox_v43();
 extern "C" void GObj_GetID();
-extern "C" void func_0012ED00();
-extern "C" void func_0013E060();
+extern "C" void cSystem_SendCreated();
+extern "C" void cGOBJ_GetFloorPlane();
 extern "C" void func_00140E90();
 extern "C" void GObj_GetLifeState();
-extern "C" void func_00148870();
+extern "C" void cGOBJ_IsGeneratorCreated();
 extern "C" void Object_GetEye();
-extern "C" void func_00153860();
-extern "C" void func_0015BFB0();
-extern "C" void func_0015BFC0();
-extern "C" void func_0015BFD0();
-extern "C" void func_0015BFE0();
-extern "C" void func_0015BFF0();
-extern "C" void func_0015C000();
-extern "C" void func_0015C010();
-extern "C" void func_0015C020();
-extern "C" void func_0015C030();
-extern "C" void func_0015C040();
-extern "C" void func_0015C050();
-extern "C" void func_0015C080();
-extern "C" void func_0015C0A0();
+extern "C" void cGOBJ_GetLosPosition();
+extern "C" void cGOBJ_HasHeadset();
+extern "C" void cGOBJ_SetStatus();
+extern "C" void cGOBJ_GetStatus();
+extern "C" void cGOBJ_GetChildList_void();
+extern "C" void cGOBJ_GetChildList_void_2();
+extern "C" void cGOBJ_ScaleBBox();
+extern "C" void cGOBJ_GetTargetPriority();
+extern "C" void cGOBJ_GetMovementState();
+extern "C" void cGOBJ_GetSubTargetAimAdjust();
+extern "C" void cGOBJ_GetNumSubTargets();
+extern "C" void cGOBJ_IsAimed();
+extern "C" void cGOBJ_InitNetwork();
+extern "C" void cGOBJ_CheckBullet();
 extern "C" void Hotbox_Disable();
 extern "C" void Hotbox_Enable();
 extern "C" void cHotbox_v0B();
@@ -86,7 +86,7 @@ extern "C" void Player_GetActiveWeapon();
 extern "C" void Object_Deactivate();
 extern "C" void cNode_v0D();
 extern void * const D_004D9AC0[];
-void* func_001363C0(void* self, short deleteFlag);
+void* std_vector_cGOBJPtr_dtor(void* self, short deleteFlag);
 void* cGOBJ_dtor(void* self, short deleteFlag);
 }
 extern "C" VtableMemberObject* cHotbox_dtor(VtableMemberObject* self,
@@ -96,14 +96,14 @@ extern "C" VtableMemberObject* cHotbox_dtor(VtableMemberObject* self,
         self->vtable = ((char*)D_004D9AC0);
         char* member = (char*)self + (0x60);
         if (member)
-            func_001363C0(member, -1);
+            std_vector_cGOBJPtr_dtor(member, -1);
         cGOBJ_dtor(self, 0);
         if (deleteFlag > 0)
             operator_delete(self);
     }
     return self;
 }
-void * const D_004D9AC0[72] = { (void*)0x0, (void*)0x0, (void*)cHotbox_dtor, (void*)cHotbox_v01, (void*)GObj_GetID, (void*)Object_GetAttachedOrSelf, (void*)cHotbox_v04, (void*)func_0012ED00, (void*)cHotbox_v06, (void*)cHotbox_v07, (void*)Hotbox_Enable_173670, (void*)cHotbox_v09, (void*)cHotbox_v0A, (void*)cHotbox_v0B, (void*)Hotbox_ScriptFilter, (void*)cNode_v0D, (void*)cHotbox_v0E, (void*)cHotbox_v0F, (void*)Actor_BaseLogicUpdate, (void*)Actor_BasePreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)cHotbox_v14, (void*)Object_Activate, (void*)Object_Deactivate, (void*)Hotbox_Enable, (void*)Hotbox_Disable, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0015BFF0, (void*)func_0015BFE0, (void*)Hotbox_GetBounds, (void*)func_0015C000, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)cNode_v24, (void*)cNode_v25, (void*)cNode_v26, (void*)cNode_v27, (void*)cNode_v28, (void*)cNode_v29, (void*)cNode_v2A, (void*)cNode_v2B, (void*)func_0015C010, (void*)func_00153860, (void*)Object_GetEye, (void*)func_0015C020, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)Node_GetWorldMatrix, (void*)cGOBJ_v35, (void*)Node_GetLightRefPoint, (void*)PathObj_GetPosition, (void*)Node_GetComponentMatrix, (void*)cGOBJ_v39, (void*)cNode_v3A, (void*)GObj_GetWorldMatrix, (void*)func_0013E060, (void*)func_0015C080, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)GObj_GetLifeState, (void*)Controller_DeathNotice, (void*)Hotbox_Contains, (void*)cHotbox_v43, (void*)0x0, (void*)0x0 };
+void * const D_004D9AC0[72] = { (void*)0x0, (void*)0x0, (void*)cHotbox_dtor, (void*)cHotbox_v01, (void*)GObj_GetID, (void*)Object_GetAttachedOrSelf, (void*)cHotbox_v04, (void*)cSystem_SendCreated, (void*)cHotbox_v06, (void*)cHotbox_v07, (void*)Hotbox_Enable_173670, (void*)cHotbox_v09, (void*)cHotbox_v0A, (void*)cHotbox_v0B, (void*)Hotbox_ScriptFilter, (void*)cNode_v0D, (void*)cHotbox_v0E, (void*)cHotbox_v0F, (void*)Actor_BaseLogicUpdate, (void*)Actor_BasePreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)cHotbox_v14, (void*)Object_Activate, (void*)Object_Deactivate, (void*)Hotbox_Enable, (void*)Hotbox_Disable, (void*)Node_GetFlag2C, (void*)cGOBJ_HasHeadset, (void*)cGOBJ_SetStatus, (void*)cGOBJ_GetStatus, (void*)cGOBJ_IsGeneratorCreated, (void*)cGOBJ_GetChildList_void_2, (void*)cGOBJ_GetChildList_void, (void*)Hotbox_GetBounds, (void*)cGOBJ_ScaleBBox, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)cNode_v24, (void*)cNode_v25, (void*)cNode_v26, (void*)cNode_v27, (void*)cNode_v28, (void*)cNode_v29, (void*)cNode_v2A, (void*)cNode_v2B, (void*)cGOBJ_GetTargetPriority, (void*)cGOBJ_GetLosPosition, (void*)Object_GetEye, (void*)cGOBJ_GetMovementState, (void*)func_00140E90, (void*)cGOBJ_GetSubTargetAimAdjust, (void*)cGOBJ_GetNumSubTargets, (void*)cGOBJ_IsAimed, (void*)Node_GetWorldMatrix, (void*)cGOBJ_v35, (void*)Node_GetLightRefPoint, (void*)PathObj_GetPosition, (void*)Node_GetComponentMatrix, (void*)cGOBJ_v39, (void*)cNode_v3A, (void*)GObj_GetWorldMatrix, (void*)cGOBJ_GetFloorPlane, (void*)cGOBJ_InitNetwork, (void*)Actor_ApplyContactDamage, (void*)cGOBJ_CheckBullet, (void*)GObj_GetLifeState, (void*)Controller_DeathNotice, (void*)Hotbox_Contains, (void*)cHotbox_v43, (void*)0x0, (void*)0x0 };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00172A60(void) {}
 #pragma pop /* merge_units */
@@ -156,13 +156,13 @@ void PtrVec_PushBack_171C70(Items_172AE0*, int*);
 void Event_Construct(void*, char*);
 void Event_Send(void*, int, int);
 void cMessage_dtor(void*, int);
-int* func_00171EA0(PtrVec* v, int i);
-int func_00171EB0(PtrVec* v);
-Item_172AE0*** func_00171EC0(Items_172AE0* v);
-int func_001734D0(PtrVec* v, Hotbox** value);
+int* cArray_cGameGOBJPtr_opIndex(PtrVec* v, int i);
+int cArray_cGameGOBJPtr_Size(PtrVec* v);
+Item_172AE0*** std_vector_pod_int_data(Items_172AE0* v);
+int cArray_cHotboxPtr_PushBackActual(PtrVec* v, Hotbox** value);
 int NetMap_BindReceiver(int, int, Hotbox*);
 int NetGame_InitLocalSlot(int*, int);
-int func_002EBBA0(int, int*);
+int NetGetPeerToPeerHostClientIndex(int, int*);
 }
 static inline int Read(Reader* r) { int v = *(int*)r->cur; r->cur += 4; return v; }
 static inline void ReadInt(Reader* r, int* out) { *out = *(int*)r->cur; r->cur += 4; }
@@ -183,7 +183,7 @@ static inline bool IsIdent(float* m) {
            m[8] == 0.0f && m[9] == 0.0f && m[10] == 1.0f && m[11] == 0.0f &&
            m[12] == 0.0f && m[13] == 0.0f && m[14] == 0.0f && m[15] == 1.0f;
 }
-static inline Leaf_172AE0* First(PtrVec* v) { return func_00171EB0(v) ? (Leaf_172AE0*)*func_00171EA0(v, 0) : 0; }
+static inline Leaf_172AE0* First(PtrVec* v) { return cArray_cGameGOBJPtr_Size(v) ? (Leaf_172AE0*)*cArray_cGameGOBJPtr_opIndex(v, 0) : 0; }
 static inline unsigned char IsLocal(void) { unsigned char v; if (g_IsMultiplayer) v = D_005721C0; else v = 1; return v; }
 #pragma inline_depth(10)
 static inline int LocalId() { int r=0;int a=D_005721A8;if(g_IsMultiplayer) { if(D_00494178==-1)NetGame_InitLocalSlot(&D_00494178,a);r=D_00494178; }else { /* Keep the default-id branch. */ asm { .set reorder } }return r; }
@@ -277,13 +277,13 @@ extern "C" Hotbox* cHotbox_ctor(Hotbox* self, Reader* r, int type)
     if (self->type == 8) {
         for (i = 0; i < self->items.count; i++) {
             if (self->items.data[i]->f49 == 0xE) {
-                Item_172AE0* it = (*func_00171EC0(&self->items))[i];
+                Item_172AE0* it = (*std_vector_pod_int_data(&self->items))[i];
                 if (First(&it->f98)) {
                     Item_172AE0* it2 = self->items.data[i];
                     Leaf_172AE0* lf = First(&it2->f98);
                     if (lf->f68 == 3) {
                         Hotbox* s = self;
-                        func_001734D0(&lf->f118, &s);
+                        cArray_cHotboxPtr_PushBackActual(&lf->f118, &s);
                     }
                 }
             }
@@ -294,7 +294,7 @@ extern "C" Hotbox* cHotbox_ctor(Hotbox* self, Reader* r, int type)
     if (g_IsMultiplayer) {
         int t = self->h10.v;
         int nid;
-        if (IsLocal()) nid = LocalId(); else { func_002EBBA0(D_005721A8, &tmp); nid = tmp; }
+        if (IsLocal()) nid = LocalId(); else { NetGetPeerToPeerHostClientIndex(D_005721A8, &tmp); nid = tmp; }
         NetMap_BindReceiver(t, nid, self);
     }
     return self;

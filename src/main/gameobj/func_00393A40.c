@@ -8,24 +8,24 @@ typedef struct RgObj {
 typedef struct RgT1 { char p[0x48]; } RgT1;
 typedef struct RgT2 { char p[0x8]; } RgT2;
 static const float dat_00493470[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
-extern void func_00393F10(void*);
+extern void cSkaCrossFadeDuration_ctor_void(void*);
 extern void func_00393CE0(void*);
 extern void ScalarCollection_Init(void*);
-extern void func_00393C90(void*);
-extern void func_00393C70(void*);
-extern void func_003AF2D0(void*);
+extern void cArray_cSkaSliderValue_ctor(void*);
+extern void std_vector_cSkaSwitchValue_ctor(void*);
+extern void cSkaAnimAnchorList_ctor_void(void*);
 extern void func_00393C60(void*, void*);
-extern void* func_00393C50(void*);
+extern void* cSkaAnimationSet_AnimAnchorNameList(void*);
 extern void RootCollection_InitFromModel(void*, void*);
-extern void func_00393BD0(RgT1*, float);
-extern void* func_00393BC0(void*);
-extern void func_00393BB0(void*, void*, RgT1*);
-extern void func_001AEF70(RgT1*, int);
-extern void func_00393BA0(RgT2*);
-extern void* func_00393B90(void*);
-extern void func_00393B80(void*, void*, RgT2*);
-extern void func_001AEF20(RgT2*, int);
-RgObj* func_00393A40(RgObj* o, int arg, void* model)
+extern void cSkaSliderValue_ctor_float(RgT1*, float);
+extern void* cSkaAnimationSet_SliderParamCount(void*);
+extern void cArray_cSkaSliderValue_ResizeActual(void*, void*, RgT1*);
+extern void cSkaSliderValue_dtor(RgT1*, int);
+extern void cSkaSwitchValue_ctor(RgT2*);
+extern void* cSkaAnimationSet_SwitchParamCount(void*);
+extern void cArray_cSkaSwitchValue_ResizeActual(void*, void*, RgT2*);
+extern void cSkaSwitchValue_dtor(RgT2*, int);
+RgObj* cSkaParams_ctor(RgObj* o, int arg, void* model)
 {
     RgSub* sub;
     RgFlag* fl;
@@ -38,29 +38,29 @@ RgObj* func_00393A40(RgObj* o, int arg, void* model)
     o->model = model;
     o->b28 = 0;
     o->b29 = 0;
-    func_00393F10(sub->a);
+    cSkaCrossFadeDuration_ctor_void(sub->a);
     func_00393CE0(sub->b);
     func_00393CE0(sub->c);
     ScalarCollection_Init(o->col6c);
-    func_00393C90(o->col78);
+    cArray_cSkaSliderValue_ctor(o->col78);
     fl = (RgFlag*)o->p88;
-    func_00393C70(fl);
+    std_vector_cSkaSwitchValue_ctor(fl);
     fl->on = 1;
-    func_003AF2D0(o->rootA0);
+    cSkaAnimAnchorList_ctor_void(o->rootA0);
     if (model) {
         func_00393C60(&o->model, model);
-        RootCollection_InitFromModel(o->rootA0, func_00393C50(model));
+        RootCollection_InitFromModel(o->rootA0, cSkaAnimationSet_AnimAnchorNameList(model));
         {
             RgT1 t1;
-            func_00393BD0(&t1, 0.0f);
-            func_00393BB0(o->col78, func_00393BC0(model), &t1);
-            func_001AEF70(&t1, -1);
+            cSkaSliderValue_ctor_float(&t1, 0.0f);
+            cArray_cSkaSliderValue_ResizeActual(o->col78, cSkaAnimationSet_SliderParamCount(model), &t1);
+            cSkaSliderValue_dtor(&t1, -1);
         }
         {
             RgT2 t2;
-            func_00393BA0(&t2);
-            func_00393B80(o->p88, func_00393B90(model), &t2);
-            func_001AEF20(&t2, -1);
+            cSkaSwitchValue_ctor(&t2);
+            cArray_cSkaSwitchValue_ResizeActual(o->p88, cSkaAnimationSet_SwitchParamCount(model), &t2);
+            cSkaSwitchValue_dtor(&t2, -1);
         }
     }
     return o;

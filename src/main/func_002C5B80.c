@@ -17,7 +17,7 @@ extern unsigned char D_005721D0;
 extern char D_004DE110[];
 void cNetCopyMsg_Apply(Msg5B80* m, Src5B80* src);
 Obj5B80* Object_LookupById(int* id);
-void func_002D5EE0(Ctl5B80* c, void* payload);
+void cNetNPC_ConvertToNpc(Ctl5B80* c, void* payload);
 void func_0042CE10(int* id);
 void cMessage_dtor(void* self, int flags);
 }
@@ -33,7 +33,7 @@ extern "C" int cNetCopyMsg_NetReceive(int a, int b, int c, Src5B80* src)
         cNetCopyMsg_Apply(&m, src);
         o = Object_LookupById(id);
         if (o && o->ctl && o->ctl->isActive() && o->ctl->kind() == 2)
-            func_002D5EE0(o->ctl, m.payload);
+            cNetNPC_ConvertToNpc(o->ctl, m.payload);
         func_0042CE10(id);
         m.vtable = D_004DE110;
         cMessage_dtor(&m, 0);

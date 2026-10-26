@@ -39,7 +39,7 @@ static inline void merge_flush_func_0023C100(void) {}
 
 /* merge_units: begin func_0023C140 */
 #pragma push /* merge_units */
-int func_0023C140(int a0) {
+int cNIEventOBJ_GetPAR(int a0) {
     int v0, v1;
     int cond;
 
@@ -230,10 +230,10 @@ void Resource_Construct(Obj_23C3C0* o);
 void FileMan_Release(Obj_23C3C0* o, int f);
 void Hog_Register(Obj_23C3C0* o, char* path, int a, int b);
 int FileMan_FindMember(Obj_23C3C0* o);
-void func_0036DEC0(Obj_23C3C0* o);
-int func_00131010(char* mgr, char* name, char* buf, int* out);
+void cFileMan_Close(Obj_23C3C0* o);
+int cGameSystem_FindVUMGOBJ_charP_charP_cVUMGOBJPP(char* mgr, char* name, char* buf, int* out);
 void Game_FindNamedResource(char* mgr, char* buf, int* out);
-void func_00130D10(char* mgr, Tgt_23C3C0* t, char* name, char* buf);
+void cGameSystem_AddVUMGOBJ(char* mgr, Tgt_23C3C0* t, char* name, char* buf);
 void* cVUM_GOBJ_ctor2(void* p, const D_23C3C0& d);
 }
 static inline Tgt_23C3C0* NewTgt_23C3C0() { void* m = Tgt_23C3C0::operator new(0x1F4, D_004A6FA8, 0x350); if (m) m = cVUM_GOBJ_ctor2(m, D_23C3C0(0)); return (Tgt_23C3C0*)m; }
@@ -252,18 +252,18 @@ extern "C" void NiEvent_LoadModelAsset(Self_23C3C0* self, int mode, Pop_23C3C0* 
         unsigned char found;
         a = 0;
         b = 0;
-        found = func_00131010(g_Game, name, buf, &a);
+        found = cGameSystem_FindVUMGOBJ_charP_charP_cVUMGOBJPP(g_Game, name, buf, &a);
         Game_FindNamedResource(g_Game, buf, &b);
         self->tgt = NewTgt_23C3C0();
         self->tgt->owner = self;
         if (!found) {
-            func_00130D10(g_Game, self->tgt, name, buf);
+            cGameSystem_AddVUMGOBJ(g_Game, self->tgt, name, buf);
             a = 0;
         }
         self->tgt->Set40(0);
         self->tgt->Set44(Info_23C3C0(&obj, a, b, name));
         self->b2F = 1;
-        func_0036DEC0(&obj);
+        cFileMan_Close(&obj);
     } else {
         self->tgt = 0;
     }
@@ -350,9 +350,9 @@ extern "C" {
 extern int D_004F7C60;
 extern int D_004F7C98;
 extern char cNIEventOBJ_vtable[];
-void func_0023F350(Self_C610* self, int kind, void* info);
-void func_00238940(OwnedVec_C610* v);
-void func_0023D180(EvSub_C610* v);
+void cNIEventBase_ctor(Self_C610* self, int kind, void* info);
+void cArray_FloatKey_ctor(OwnedVec_C610* v);
+void cArray_cFXKeyPtr_ctor(EvSub_C610* v);
 void NetMap_BindReceiver(int id, int owner, Self_C610* o);
 #if 0 /* merge_units */
 void NiEvent_LoadModelAsset(Self_C610* self, int mode, Reader_C610* r, char* name);
@@ -366,23 +366,23 @@ void NiEvent_LoadParticleAsset(Self_C610* self, Reader_C610* r);
 
 Cam_C610* Camera_ConstructFov(void* p, float fov, const Zero_C610& z, Self_C610* owner);
 void NiEvent_ReadKeyedTrack4(Track_C610* t, Reader_C610* r);
-void func_002401C0(V64_C610* v, int n, const E64_C610& fill);
-static inline void Assign64_C610(V64_C610* v, int n, const E64_C610& fill) { E64_C610 t; func_002401C0(v, 0, t); func_002401C0(v, n, fill); }
-void func_00240230(V8_C610* v, int n, const E8_C610& fill);
-static inline void Assign8_C610(V8_C610* v, int n, const E8_C610& fill) { func_00240230(v, 0, E8_C610()); func_00240230(v, n, fill); }
+void std_vector_imp_VectorKey_resize(V64_C610* v, int n, const E64_C610& fill);
+static inline void Assign64_C610(V64_C610* v, int n, const E64_C610& fill) { E64_C610 t; std_vector_imp_VectorKey_resize(v, 0, t); std_vector_imp_VectorKey_resize(v, n, fill); }
+void std_vector_imp_VisKey_resize(V8_C610* v, int n, const E8_C610& fill);
+static inline void Assign8_C610(V8_C610* v, int n, const E8_C610& fill) { std_vector_imp_VisKey_resize(v, 0, E8_C610()); std_vector_imp_VisKey_resize(v, n, fill); }
 void NiEvent_ReadEvents(Events_C610* e, Self_C610* self, Reader_C610* r);
 int IdMgr_FindCollision(int region, int id);
 void ZoneMgr_Associate(int found, Self_C610* o, int a, int b);
 void PtrVector_Resize(ChildVec_C610* v, int n, Child_C610* const& value);
 static inline void AssignP_C610(ChildVec_C610* v, int n, Child_C610* const& fill) { Child_C610* z = 0; PtrVector_Resize(v, 0, z); PtrVector_Resize(v, n, fill); }
 void Node_ClearLocalMatrix(Self_C610* o);
-void func_003CD5C0(Self_C610* o);
-void func_0023B120(Self_C610* o);
+void cGOBJ_CreateMovementInfo_void(Self_C610* o);
+void cNIEventOBJ_UpdateChildren(Self_C610* o);
 float Vec4_GetX(V4_C610* v);
 float Vec4_GetY(V4_C610* v);
 float Vec4_GetZ(V4_C610* v);
 void Mtx_MakeAxisRotation(Mat_C610* m, float x, float y, float z, float a);
-void func_001D3E20(Mat_C610* m);
+void cMatrix_ctor_void(Mat_C610* m);
 void Mtx_Multiply(Mat_C610* a, Mat_C610* b);
 }
 static inline int RdI_C610(Reader_C610* r) { int t = *(int*)r->cur; r->cur += 4; return t; }
@@ -430,7 +430,7 @@ static inline void MakeRot_C610(Mat_C610* m, const V4_C610& ax, float ang)
 static inline void RotMul_C610(Mat_C610* a, const V4_C610& ax, float ang)
 {
     Mat_C610 rot;
-    func_001D3E20(&rot);
+    cMatrix_ctor_void(&rot);
     Mtx_MakeAxisRotation(&rot, ax.x, ax.y, ax.z, ang);
     Mtx_Multiply(a, &rot);
 }
@@ -440,12 +440,12 @@ extern "C" Self_C610* cNIEventOBJ_ctor(Self_C610* self, int mode, Reader_C610* r
     char* name;
     int n;
     int i;
-    func_0023F350(self, 0x10, &D_004F7C60);
+    cNIEventBase_ctor(self, 0x10, &D_004F7C60);
     *(void**)self = cNIEventOBJ_vtable;
-    { Track_C610* t = &self->t144; func_00238940(&t->vec); }
-    { Track_C610* t = &self->t164; func_00238940(&t->vec); }
-    { Track_C610* t = &self->t184; func_00238940(&t->vec); }
-    { Events_C610* t = &self->ev; func_0023D180(&t->sub); }
+    { Track_C610* t = &self->t144; cArray_FloatKey_ctor(&t->vec); }
+    { Track_C610* t = &self->t164; cArray_FloatKey_ctor(&t->vec); }
+    { Track_C610* t = &self->t184; cArray_FloatKey_ctor(&t->vec); }
+    { Events_C610* t = &self->ev; cArray_cFXKeyPtr_ctor(&t->sub); }
     if (r->version >= 0x3F) {
         name = ReadStr_C610(r);
         String_Copy(self->name, name);
@@ -572,7 +572,7 @@ extern "C" Self_C610* cNIEventOBJ_ctor(Self_C610* self, int mode, Reader_C610* r
         { Mat_C610* dst = &self->mF0; Mat_C610* src = &m; MCopy_C610(dst, src); }
         self->SetFrame(&m, 0);
         if (self->f60 == 1) {
-            func_003CD5C0(self);
+            cGOBJ_CreateMovementInfo_void(self);
             self->f30 = 0;
         }
         if (*(Cam_C610* volatile*)&self->f140) {
@@ -592,7 +592,7 @@ extern "C" Self_C610* cNIEventOBJ_ctor(Self_C610* self, int mode, Reader_C610* r
         self->v114();
     self->fC0 = 0;
     self->fD8 = 0;
-    func_0023B120(self);
+    cNIEventOBJ_UpdateChildren(self);
     return self;
 }
 #undef NiEvent_LoadModelAsset /* merge_units */

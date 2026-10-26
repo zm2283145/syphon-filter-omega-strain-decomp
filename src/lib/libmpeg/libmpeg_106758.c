@@ -7,7 +7,7 @@
 /* merge_units: begin func_00106758 */
 typedef struct { char pad[0x18C]; int picture_structure; int top_field_first; } Ctx;
 
-void func_00106758(Ctx *ctx, int DMV[][2], int *dmvector, int mvx, int mvy)
+void _dualPrimeVector(Ctx *ctx, int DMV[][2], int *dmvector, int mvx, int mvy)
 {
     if (ctx->picture_structure == 3) {
         if (ctx->top_field_first) {
@@ -34,21 +34,21 @@ void func_00106758(Ctx *ctx, int DMV[][2], int *dmvector, int mvx, int mvy)
 
 /* merge_units: begin func_001068E0 */
 #define FIELD(p,o) (*(int *)((char *)(p)+(o)))
-extern unsigned int func_00107A38(void *,int);
-extern int func_00107CA8(void *,int),func_00107DC8(void *,int);
+extern unsigned int _ipuVdec(void *,int);
+extern int _peepBit(void *,int),_flushBuf(void *,int);
 extern int func_0010BD58(void *,const char *,int);
-int func_001068E0(void *ctx)
+int _mbAddressIncrement(void *ctx)
 {
  int sum=0, again;
  unsigned int code;
  do {
-  code=func_00107A38(ctx,0);
+  code=_ipuVdec(ctx,0);
   switch(code){
    case 0x23:again=1;sum+=0x21;break;
    case 0x22:again=1;break;
    case 0:
-    {int v=func_00107CA8(ctx,11);
-     if(FIELD(ctx,0x860) && v==15){func_00107DC8(ctx,11);again=1;}
+    {int v=_peepBit(ctx,11);
+     if(FIELD(ctx,0x860) && v==15){_flushBuf(ctx,11);again=1;}
      else{func_0010BD58(ctx,"Invalid macroblock_address_increment code(0x%08x)",code);FIELD(ctx,0x134)=1;return 1;}}
     break;
    default:sum+=code;again=0;break;
@@ -60,13 +60,13 @@ int func_001068E0(void *ctx)
 
 /* merge_units: begin func_001069F0 */
 #define F(p, o, T) (*(T *)((char *)(p) + (o)))
-extern int func_00106C38(void *, int);
-extern void func_00107748(void *);
-extern int func_001064A0(void *);
+extern int _slice0(void *, int);
+extern void _waitIpuIdle(void *);
+extern int _waitBdecOut(void *);
 extern void func_001054A8(void *, int);
 extern void func_0010BD90(void *, const char *);
 
-int func_001069F0(void *ctx)
+int _pictureData0(void *ctx)
 {
     int r;
     int n;
@@ -77,10 +77,10 @@ int func_001069F0(void *ctx)
     if (F(ctx, 0x18C, int) != 3)
         n = n >> 1;
     do {
-        r = func_00106C38(ctx, n);
+        r = _slice0(ctx, n);
     } while (r == 1 || r == 3);
-    func_00107748(ctx);
-    if (!func_001064A0(ctx)) {
+    _waitIpuIdle(ctx);
+    if (!_waitBdecOut(ctx)) {
         if (F(ctx, 0x10A0, int))
             return 4;
         r = 2;

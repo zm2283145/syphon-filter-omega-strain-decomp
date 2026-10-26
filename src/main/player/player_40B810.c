@@ -30,10 +30,10 @@ typedef struct { int pad; int count; void** data; } Vec40B830;
 typedef struct { void* vt; char m4[0x10]; char m14[0xC]; } Obj40B830;
 extern Vec40B830* GobjScope_GetList(void);
 extern void PtrVector_Resize(Vec40B830* v, int n, int* fill);
-extern void func_00175240(void* p, int f);
-extern void func_0040B920(void* p, int f);
+extern void std_vector_deleter_cObjectId_dtor(void* p, int f);
+extern void std_vector_cSystemPtr_dtor(void* p, int f);
 extern void operator_delete(void* p);
-static inline void D1_40B830(void* p) { if (p) func_00175240(p, 0); }
+static inline void D1_40B830(void* p) { if (p) std_vector_deleter_cObjectId_dtor(p, 0); }
 static inline void D2_40B830(void* p) { if (p) D1_40B830(p); }
 static inline void D3_40B830(void* p) { if (p) D2_40B830(p); }
 #pragma push
@@ -55,7 +55,7 @@ Obj40B830* GobjScopeBase_Dtor(Obj40B830* self, short del)
         zero = 0;
         PtrVector_Resize(v, last + 1, &zero);
         D3_40B830(self->m14);
-        if (self->m4) func_0040B920(self->m4, -1);
+        if (self->m4) std_vector_cSystemPtr_dtor(self->m4, -1);
         if (del > 0) operator_delete(self);
     }
     return self;

@@ -8,7 +8,7 @@ extern int sprintf(char* buf, const char* fmt, ...);
 extern char* Loc_LookupText(char* key);
 extern void GuiTextWidget_SetText(void* w, char* text, int flags);
 /* Resets the selection and relabels the four value buttons from the table row. */
-void func_002B1970(S2B1970* s)
+void GuiQuickChat_Reset(S2B1970* s)
 {
     int i;
     s->sel = 0;

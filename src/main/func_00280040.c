@@ -6,14 +6,14 @@
 
 #include "types.h"
 
-float func_00280040(char* self) {
+float cEulerAngle_T_1_2_X_void(char* self) {
     return *(float*)(self + 0);
 }
 
-void* func_00280050(void* self) {
+void* cEulerAngle_T_1_2_X_void_2(void* self) {
     return self;
 }
 
-void* func_00280060(void* self) {
+void* cEulerAngle_T_1_2_ctor_void(void* self) {
     return self;
 }

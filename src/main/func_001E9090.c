@@ -5,10 +5,10 @@ typedef struct { RNode** data; int count; } RVec;
 typedef struct { RNode** p; } RIt;
 struct RNode { int f0; RNode* parent; RVec children; };
 extern int RelNode_HasChildren(RNode* n);
-extern int func_001E8FF0(RIt* a, RIt* b);
+extern int cArray_cTreeNode_cSkaSystemPtrPtr_ConstIterator_opNe(RIt* a, RIt* b);
 extern RIt* func_001E9010(RIt* it);
 extern RNode** func_001E9030(RIt* w);
-extern void func_001E9040(RIt* out, RVec* v);
+extern void cArray_cTreeNode_cSkaSystemPtrPtr_End_void_2(RIt* out, RVec* v);
 extern void func_001E9060(RIt* out, RVec* v);
 extern RNode** func_001E9250(RVec* v);
 extern void func_001E9270(RIt* out, RVec* self, RIt* src);
@@ -22,8 +22,8 @@ static inline bool Check(RNode* n, RNode* t) {
         bool found = 0;
         RIt it, end;
         func_001E9060(&it, &n->children);
-        func_001E9040(&end, &n->children);
-        while (func_001E8FF0(&it, &end)) {
+        cArray_cTreeNode_cSkaSystemPtrPtr_End_void_2(&end, &n->children);
+        while (cArray_cTreeNode_cSkaSystemPtrPtr_ConstIterator_opNe(&it, &end)) {
             if (Relation_FindDescendant(*func_001E9030(&it), t)) { found = 1; break; }
             func_001E9010(&it);
         }

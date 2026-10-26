@@ -8,29 +8,29 @@
 #include "interface_model_types.h"
 
 extern int PtrVec_Reserve(int a0, int a1);
-extern OwnedVec* func_003F1BF0(OwnedVec* v);
+extern OwnedVec* std_vector_imp_cAnimatorPtr_1_ctor(OwnedVec* v);
 
 /* Clears the three vector words. */
-OwnedVec* func_003F1A80(OwnedVec* v) {
+OwnedVec* std_vector_cKeyframe_cXyz_ctor(OwnedVec* v) {
     v->unk0 = 0;
     v->count = 0;
     v->data = 0;
     return v;
 }
 
-int func_003F1AA0(int a0, int a1) {
+int cArray_cAnimatorPtr_ReserveActual(int a0, int a1) {
     return PtrVec_Reserve(a0, a1);
 }
 
 /* Reads one word from a stream cursor. */
-int** func_003F1AB0(int** cursor, int* out) {
+int** cStreamingBuffer_opShr(int** cursor, int* out) {
     *out = **cursor;
     *cursor = *cursor + 1;
     return cursor;
 }
 
-OwnedVec* func_003F1AD0(OwnedVec* v) {
-    func_003F1BF0(v);
+OwnedVec* cArray_cAnimatorPtr_ctor(OwnedVec* v) {
+    std_vector_imp_cAnimatorPtr_1_ctor(v);
     v->unk0C = 1;
     return v;
 }

@@ -6,10 +6,10 @@ typedef struct Tag {
     signed char unused;
 } Tag;
 
-extern void func_0020CC50(int, int, Tag);
+extern void std_distance_cSkaTransBLENDP_cSkaTransBLENDP_randomaccessiteratortag(int, int, Tag);
 
-/* Forwards to func_0020CC50 with a default tag. */
-void func_0020CC20(int a, int b) {
+/* Forwards to std_distance_cSkaTransBLENDP_cSkaTransBLENDP_randomaccessiteratortag with a default tag. */
+void std_distance_cSkaTransBLENDP_cSkaTransBLENDP(int a, int b) {
     Tag tag;
-    func_0020CC50(a, b, tag);
+    std_distance_cSkaTransBLENDP_cSkaTransBLENDP_randomaccessiteratortag(a, b, tag);
 }

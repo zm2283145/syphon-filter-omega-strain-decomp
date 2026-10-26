@@ -15,7 +15,7 @@ int strcmp(const void *, const void *);
 #pragma push /* merge_units */
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4_D4E0;
 typedef struct { char pad[0x130]; V4_D4E0 v; } O_D4E0;
-void func_0028D4E0(O_D4E0* o, float z); /* gsynth: defined below */
+void cBone_SetScaleZ(O_D4E0* o, float z); /* gsynth: defined below */
 typedef struct { char name[16]; } P_Name;
 typedef struct { float x, y, z, w; } P_Sc;
 typedef struct { unsigned int count; P_Name e[24]; P_Sc* sc[1]; } P_Tbl;
@@ -23,17 +23,17 @@ typedef struct { char pad0[4]; char bones[0x10]; unsigned char hasMorph; char pa
 typedef struct { char pad0[0xA0]; char name[0x2BC4]; P_Skl* skel; } P_App;
 typedef struct { char pad0[0x70]; P_App* app; } P_Obj;
 extern P_Tbl D_00571300;
-extern float* func_0028D5F0(void*, int);
+extern float* cArray_cBoneScale_opIndex(void*, int);
 extern void* SkelNodes_GetAt(void*, int);
-extern void func_0028D580(void*, float);
-extern void func_0028D530(void*, float);
+extern void cBone_SetScaleX(void*, float);
+extern void cBone_SetScaleY(void*, float);
 #if 0 /* merge_units */
-extern void func_0028D4E0(void*, float);
+extern void cBone_SetScaleZ(void*, float);
 #endif /* merge_units */
-#define func_0028D4E0(a0, a1) (func_0028D4E0((void *)(a0), (a1))) /* merge_units */
+#define cBone_SetScaleZ(a0, a1) (cBone_SetScaleZ((void *)(a0), (a1))) /* merge_units */
 
 
-void func_0028D300(P_Obj* o) {
+void GuiAgentCreate_NextBoneSet(P_Obj* o) {
     unsigned int preset;
     int i;
     for (preset = 0; preset < D_00571300.count; preset++) {
@@ -46,17 +46,17 @@ void func_0028D300(P_Obj* o) {
         P_Skl* k;
         float v;
         v = D_00571300.sc[preset][i].x; k = o->app->skel;
-        func_0028D5F0(k->bones, i)[0] = v;
-        if (k->hasMorph) func_0028D580(SkelNodes_GetAt(k->morph, i), v);
+        cArray_cBoneScale_opIndex(k->bones, i)[0] = v;
+        if (k->hasMorph) cBone_SetScaleX(SkelNodes_GetAt(k->morph, i), v);
         v = D_00571300.sc[preset][i].y; k = o->app->skel;
-        func_0028D5F0(k->bones, i)[1] = v;
-        if (k->hasMorph) func_0028D530(SkelNodes_GetAt(k->morph, i), v);
+        cArray_cBoneScale_opIndex(k->bones, i)[1] = v;
+        if (k->hasMorph) cBone_SetScaleY(SkelNodes_GetAt(k->morph, i), v);
         v = D_00571300.sc[preset][i].z; k = o->app->skel;
-        func_0028D5F0(k->bones, i)[2] = v;
-        if (k->hasMorph) func_0028D4E0(SkelNodes_GetAt(k->morph, i), v);
+        cArray_cBoneScale_opIndex(k->bones, i)[2] = v;
+        if (k->hasMorph) cBone_SetScaleZ(SkelNodes_GetAt(k->morph, i), v);
     }
 }
-#undef func_0028D4E0 /* merge_units */
+#undef cBone_SetScaleZ /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0028D300(void) {}
 #pragma pop /* merge_units */
@@ -68,7 +68,7 @@ static inline void merge_flush_func_0028D300(void) {}
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-void func_0028D4E0(O_D4E0* o, float z) {
+void cBone_SetScaleZ(O_D4E0* o, float z) {
     V4_D4E0 r; V4_D4E0 t;
     V4_D4E0* d2;
     V4_D4E0* d3;

@@ -14,7 +14,7 @@ int sprintf(void *, const void *, ...);
 extern char D_004BA3B8[];
 extern char D_004BA338[];
 extern char* Loc_LookupText(char* key);
-char* func_003488E0(void* self, int n)
+char* GuiNetMessageArray_GetMessageDescription(void* self, int n)
 {
     char buf[16];
     char* t;
@@ -32,7 +32,7 @@ static inline void merge_flush_func_003488E0(void) {}
 /* merge_units: begin func_00348950 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x94]; int a94; int a98; int a9C; } S348950;
-int func_00348950(S348950* o, int k)
+int GuiNetMessageArray_GetMessageIcon(S348950* o, int k)
 {
     switch (k) {
     case 9:
@@ -54,7 +54,7 @@ static inline void merge_flush_func_00348950(void) {}
 extern char D_00587BF0[];
 extern char D_00587C00[];
 extern char D_00587C10[];
-char* func_003489A0(void* self, int k)
+char* GuiNetMessageArray_GetMessageColor(void* self, int k)
 {
     switch (k) {
     case 9:
@@ -84,7 +84,7 @@ public:
 };
 extern "C" {
 extern void GuiWidget_Update(S348A00*);
-extern void func_00424410(S348A00*, int*, unsigned int*);
+extern void GuiArrayWidget_GetSelected(S348A00*, int*, unsigned int*);
 extern void GuiArrayWidget_Select(S348A00*, int, unsigned int);
 extern void LobbyArray_SetDirty(C348A00*, int);
 void GuiNetMessageArray_Update(S348A00* o);
@@ -94,7 +94,7 @@ static inline void inl_348A00(S348A00* o)
     int a;
     unsigned int b;
     if (o->aA4) o->f5C(4, o->aA4->a4);
-    func_00424410(o, &a, &b);
+    GuiArrayWidget_GetSelected(o, &a, &b);
     if (b >= o->a4C && o->a4C != 0) b = o->a4C - 1;
     else if (b >= o->a4C) b = 0;
     o->a54 = 100000;
@@ -169,9 +169,9 @@ extern int GuiFont_Find(int, char*);
 extern C48B90* TextObj_Construct(void*, int, int, int, int, int, char*);
 extern char* DME_GetLobby(void);
 #if 0 /* merge_units */
-extern void func_00424410(W48B90*, int*, unsigned int*);
+extern void GuiArrayWidget_GetSelected(W48B90*, int*, unsigned int*);
 #endif /* merge_units */
-#define func_00424410(a0, a1, a2) (func_00424410((S348A00 *)(a0), (a1), (a2))) /* merge_units */
+#define GuiArrayWidget_GetSelected(a0, a1, a2) (GuiArrayWidget_GetSelected((S348A00 *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void GuiArrayWidget_Select(W48B90*, int, unsigned int);
@@ -201,7 +201,7 @@ extern "C" void GuiNetMessageArray_Wake(W48B90* w) {
     {
         int top[1];
 unsigned int sel[1];
-        func_00424410(w, top, sel);
+        GuiArrayWidget_GetSelected(w, top, sel);
         if (sel[0] >= w->f4C && w->f4C != 0) sel[0] = w->f4C - 1;
         else if (sel[0] >= w->f4C) sel[0] = 0;
         w->f54 = 100000;
@@ -213,7 +213,7 @@ unsigned int sel[1];
         x->b58 = 1;
     }
 }
-#undef func_00424410 /* merge_units */
+#undef GuiArrayWidget_GetSelected /* merge_units */
 #undef GuiArrayWidget_Select /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00348B90(void) {}

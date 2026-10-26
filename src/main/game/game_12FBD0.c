@@ -28,7 +28,7 @@ void FrontEnd_TeardownGui(void* p);
 void MsgQueue_ClearPending(void);
 void Archive_ReleaseAll(void* p);
 }
-extern "C" void func_0012FC30(Obj_0012FC30* o)
+extern "C" void cGameSystem_ShutdownFrontEnd(Obj_0012FC30* o)
 {
     EventQueue_ClearAll();
     if (o->b62) FrontEnd_TeardownGui(o->pB4);
@@ -48,7 +48,7 @@ extern "C" {
 void FrontEnd_UpdateGui(void* p);
 void FrontEnd_DrawGui(void* p);
 }
-extern "C" void func_0012FC80(Obj_0012FC80* o)
+extern "C" void cGameSystem_UpdateFrontEnd(Obj_0012FC80* o)
 {
     if (o->b62 || o->b64) {
         FrontEnd_UpdateGui(o->pB4);
@@ -69,7 +69,7 @@ extern "C" {
 void Awards_Init(void);
 void FrontEnd_FirstEntry(void* p);
 }
-extern "C" void func_0012FCD0(Obj_0012FCD0* o)
+extern "C" void cGameSystem_InitFrontEnd(Obj_0012FCD0* o)
 {
     Awards_Init();
     if (o->b64) {

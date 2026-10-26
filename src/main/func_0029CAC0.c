@@ -2,10 +2,10 @@
 #include "types.h"
 extern "C" {
 extern "C" void GuiOnlineConnect_GetClassName();
-extern "C" void func_00293890();
+extern "C" void GuiSaveAgentWidget_SaveDone();
 extern "C" void GuiOnlineConnect_IsType();
-extern "C" void func_0029CB90();
-extern "C" void func_0029CBA0();
+extern "C" void GuiLobbyScreen_StartLobbyScreen();
+extern "C" void GuiLobbyScreen_ExitLobbyScreen();
 extern "C" void GuiOnlineConnect_Update();
 extern "C" void GuiOnlineConnect_HandleEvent();
 extern "C" void GuiOnlineConnect_HandleInput();
@@ -44,4 +44,4 @@ extern "C" O0029CAC0* GuiOnlineConnect_dtor(O0029CAC0* self, short deleteFlag)
     }
     return self;
 }
-void * const GuiOnlineConnect_vtable[28] = { (void*)0x0, (void*)0x0, (void*)GuiOnlineConnect_dtor, (void*)GuiOnlineConnect_Init, (void*)GuiOnlineConnect_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiOnlineConnect_Wake, (void*)GuiOnlineConnect_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiOnlineConnect_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiOnlineConnect_Update, (void*)GuiOnlineConnect_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiOnlineConnect_GetClassName, (void*)GuiOnlineConnect_IsType, (void*)func_00293890, (void*)GuiScreen_PollLobby, (void*)func_0029CB90, (void*)func_0029CBA0, (void*)0x0 };
+void * const GuiOnlineConnect_vtable[28] = { (void*)0x0, (void*)0x0, (void*)GuiOnlineConnect_dtor, (void*)GuiOnlineConnect_Init, (void*)GuiOnlineConnect_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiOnlineConnect_Wake, (void*)GuiOnlineConnect_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiOnlineConnect_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiOnlineConnect_Update, (void*)GuiOnlineConnect_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiOnlineConnect_GetClassName, (void*)GuiOnlineConnect_IsType, (void*)GuiSaveAgentWidget_SaveDone, (void*)GuiScreen_PollLobby, (void*)GuiLobbyScreen_StartLobbyScreen, (void*)GuiLobbyScreen_ExitLobbyScreen, (void*)0x0 };

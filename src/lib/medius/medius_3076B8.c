@@ -6,9 +6,9 @@
 
 #include "types.h"
 
-extern int func_0030EBC8(int);
+extern int rt_upnp_disable_natservice_heartbeat(int);
 
-int func_003076B8(int a0) {
+int rt_udp_disable_nat_service_heartbeat(int a0) {
     int v0;
     int cond;
 
@@ -16,7 +16,7 @@ int func_003076B8(int a0) {
     cond = a0 == 0;
     if (cond) goto L003076D4;
     a0 = *(int*)((char*)a0 + 8);
-    v0 = func_0030EBC8(a0);
+    v0 = rt_upnp_disable_natservice_heartbeat(a0);
     v0 = 0;
 L003076D4:;
     goto ret;

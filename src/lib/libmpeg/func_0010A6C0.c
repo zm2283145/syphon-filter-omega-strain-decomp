@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-extern int func_0010A3B0(int, int, int, int, int);
+extern int sceMpegDemuxPssRing(int, int, int, int, int);
 
-int func_0010A6C0(int a0, int a1, int a2) {
+int sceMpegDemuxPss(int a0, int a1, int a2) {
     int tmp0;
 
-    tmp0 = func_0010A3B0(a0, a1, a2, 0, -1);
+    tmp0 = sceMpegDemuxPssRing(a0, a1, a2, 0, -1);
     return tmp0;
 }

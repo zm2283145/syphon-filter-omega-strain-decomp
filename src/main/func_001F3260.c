@@ -1,11 +1,11 @@
 #include "types.h"
 
-extern void func_001F3280(void);
+extern void std_list_imp_voidPtr_push_back(void);
 
-/* Calls func_001F3280. */
+/* Calls std_list_imp_voidPtr_push_back. */
 #pragma optimization_level 1
-void func_001F3260(void)
+void std_list_cSkaSwitchItemPtr_push_back(void)
 {
-    func_001F3280();
+    std_list_imp_voidPtr_push_back();
 }
 #pragma optimization_level reset

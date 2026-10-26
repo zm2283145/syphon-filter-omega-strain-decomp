@@ -66,7 +66,7 @@ static inline void GsCtx_SetBufferRegs(GsCtx37E0D0* c, unsigned int w, unsigned 
     c->xyoffset = GS_XYOFFSET(ofx, ofy);
     c->dirty = 1;
 }
-void func_0037E0D0(GsCtx37E0D0* c)
+void XLib_RestoreFrameEnv(GsCtx37E0D0* c)
 {
     GsCtx_SetBufferRegs(c, c->w, c->h, c->psm, c->fbp[c->buf], c->fbmsk, c->zpsm, c->zbp, c->zmsk, c->field);
     ((unsigned char*)c)[c->slot * 0x110 + 0x2F6] = 1;

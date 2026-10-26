@@ -23,14 +23,14 @@ struct Flag_3F9B30 {
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~Flag_3F9B30() {}
 };
 struct Holder_3F9B30;
-extern "C" void func_003F9E20(Holder_3F9B30* h);
+extern "C" void details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_10(Holder_3F9B30* h);
 struct Holder_3F9B30 {
     int* alloc;
     Node_3F9B30* node;
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~Holder_3F9B30()
     {
         if (node) {
-            func_003F9E20(this);
+            details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_10(this);
             Node_3F9B30* p = node;
             if (p) {
                 AllocGuard guard;
@@ -42,7 +42,7 @@ struct Holder_3F9B30 {
 
 #pragma push
 #pragma opt_propagation off
-extern "C" int func_003F9B30(Node_3F9B30** result, List_3F9B30* list, Node_3F9B30** pos, const Val_3F9B30* value)
+extern "C" int std_list_deleter_cHogFile_insert(Node_3F9B30** result, List_3F9B30* list, Node_3F9B30** pos, const Val_3F9B30* value)
 {
     Node_3F9B30* n;
     int* alloc = &list->alloc;

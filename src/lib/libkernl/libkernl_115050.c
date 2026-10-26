@@ -6,9 +6,9 @@
 
 /* merge_units: begin func_00115050 */
 #include "types.h"
-extern int func_00114A80(int a, int b, int c, void* sp);
-/* Calls func_00114A80 passing the current stack pointer. */
-int func_00115050(int a, int b, int c) { int dummy; return func_00114A80(a, b, c, &dummy); }
+extern int _sceSifLoadModuleBuffer(int a, int b, int c, void* sp);
+/* Calls _sceSifLoadModuleBuffer passing the current stack pointer. */
+int sceSifLoadModuleBuffer(int a, int b, int c) { int dummy; return _sceSifLoadModuleBuffer(a, b, c, &dummy); }
 /* merge_units: end func_00115050 */
 
 /* merge_units: begin func_00115070 */
@@ -20,16 +20,16 @@ int func_00115050(int a, int b, int c) { int dummy; return func_00114A80(a, b, c
 
 
 #if 0 /* merge_units */
-extern int func_00114A80(int, int, int, int);
+extern int _sceSifLoadModuleBuffer(int, int, int, int);
 #endif /* merge_units */
-#define func_00114A80(a0, a1, a2, a3) (func_00114A80((a0), (a1), (a2), (void *)(a3))) /* merge_units */
+#define _sceSifLoadModuleBuffer(a0, a1, a2, a3) (_sceSifLoadModuleBuffer((a0), (a1), (a2), (void *)(a3))) /* merge_units */
 
 
-int func_00115070(int a0, int a1, int a2, int a3) {
+int sceSifLoadStartModuleBuffer(int a0, int a1, int a2, int a3) {
     int tmp0;
 
-    tmp0 = func_00114A80(a0, a1, a2, a3);
+    tmp0 = _sceSifLoadModuleBuffer(a0, a1, a2, a3);
     return tmp0;
 }
-#undef func_00114A80 /* merge_units */
+#undef _sceSifLoadModuleBuffer /* merge_units */
 /* merge_units: end func_00115070 */

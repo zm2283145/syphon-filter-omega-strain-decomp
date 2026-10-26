@@ -34,7 +34,7 @@ static inline void merge_flush_func_00191480(void) {}
  */
 
 
-int func_001914A0(unsigned char* self, unsigned char value) {
+int cSkaNode_CheckType(unsigned char* self, unsigned char value) {
     return value == self[4];
 }
 /* merge_units: generate this block's code under its own pragmas */

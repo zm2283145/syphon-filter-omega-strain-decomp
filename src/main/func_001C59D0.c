@@ -35,7 +35,7 @@ int IdMgr_FindCollision(int, int);
 void ZoneMgr_Associate(int, Part_59D0*, int, int);
 int NetMap_BindReceiver(int, int, Part_59D0*);
 int NetGame_InitLocalSlot(int*, int);
-int func_002EBBA0(int, int*);
+int NetGetPeerToPeerHostClientIndex(int, int*);
 }
 static inline void FromRows(Mtx* m, const V4& a, const V4& b, const V4& c, const V4& t) { const V4* pa = &a; Mtx_FromRowsAndTranslation(m, *pa, b, c, t); }
 static inline void XfSet(Xf* d, const V4* p, const Mtx* m) { d->pos = *p; d->m = *m; }
@@ -130,7 +130,7 @@ extern "C" Part_59D0* Loader_ReadParticleRecord(Part_59D0* self, Reader* r)
         {
             int h = self->h10.v;
             int nid;
-            if (IsLocal()) nid = LocalId(); else { func_002EBBA0(D_005721A8, &tmp); nid = tmp; }
+            if (IsLocal()) nid = LocalId(); else { NetGetPeerToPeerHostClientIndex(D_005721A8, &tmp); nid = tmp; }
             NetMap_BindReceiver(h, nid, self);
         }
     }

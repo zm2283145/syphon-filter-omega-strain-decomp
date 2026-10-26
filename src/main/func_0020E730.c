@@ -42,7 +42,7 @@ struct Outer {
     unsigned char m186;
 };
 #pragma inline_depth(8)
-extern "C" Outer* func_0020E730(Outer* d, const Outer* s)
+extern "C" Outer* cSndFx_ctor_cSndFxR(Outer* d, const Outer* s)
 {
     *d = *s;
     return d;

@@ -10,12 +10,12 @@ extern "C" {
 char D_004BFBB8[] = "allocator.hh";
 extern unsigned char D_00494210;
 extern unsigned char D_00494218;
-TransferObjectNode* func_004304F0(RbTree* tree, TransferTreeNode* parent,
+TransferObjectNode* std_tree_pair_int_value_compare_insert_node_at_nodeP_bool_bool_pairR_3(RbTree* tree, TransferTreeNode* parent,
                                  bool left, bool leftmost, const TransferObjectValue* value);
 }
 
 /* Unlink an owned-object node and advance the minimum iterator when needed. */
-extern "C" void func_0042F030(RbTree* tree, TransferObjectIterator* position)
+extern "C" void std_tree_pair_int_value_compare_erase_tree_3(RbTree* tree, TransferObjectIterator* position)
 {
     transfer_tree_erase<D_004BFBB8>(tree, &position->node);
 }
@@ -24,9 +24,9 @@ extern "C" void func_0042F030(RbTree* tree, TransferObjectIterator* position)
 #pragma peephole on
 
 /* Insert an owned-object ID or return its existing map entry. */
-extern "C" void func_0042F170(TransferObjectInsertResult* result, RbTree* tree,
+extern "C" void std_tree_pair_int_value_compare_insert_one_pairR_2(TransferObjectInsertResult* result, RbTree* tree,
                              const TransferObjectValue* value)
 {
     TransferTreeInsert<TransferObjectNode, TransferObjectValue, TransferObjectInsertResult,
-                       func_004304F0, &D_00494210, &D_00494218>::insert(result, tree, value);
+                       std_tree_pair_int_value_compare_insert_node_at_nodeP_bool_bool_pairR_3, &D_00494210, &D_00494218>::insert(result, tree, value);
 }

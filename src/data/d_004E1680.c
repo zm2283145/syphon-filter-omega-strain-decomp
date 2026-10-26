@@ -5,9 +5,9 @@ extern void cDisplayClientInteractMsg_dtor();
 extern void cDisplayClientInteractMsg_v01();
 extern void cDisplayClientInteractMsg_v04();
 extern void cDisplayClientInteractMsg_v05();
-extern void func_002823E0();
+extern void cNetMsg_Pack();
 
 void *D_004E1680[8] = {
     0, 0, &cDisplayClientInteractMsg_dtor, &cDisplayClientInteractMsg_v01,
-    &func_002823E0, &Message_GetScriptTypeKey, &cDisplayClientInteractMsg_v04, &cDisplayClientInteractMsg_v05,
+    &cNetMsg_Pack, &Message_GetScriptTypeKey, &cDisplayClientInteractMsg_v04, &cDisplayClientInteractMsg_v05,
 };

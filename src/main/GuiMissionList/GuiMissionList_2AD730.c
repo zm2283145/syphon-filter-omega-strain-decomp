@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-void func_002AD730(PtrVec* a, PtrVec* b) {
+void std_swap_vectordeleterR_vectordeleterR_25(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;
         int* p;
@@ -31,7 +31,7 @@ void func_002AD730(PtrVec* a, PtrVec* b) {
 }
 
 /* Vector clear (count = 0). */
-void func_002AD770(PtrVec* v) {
+void std_vector_deleter_SelectElem_clear(PtrVec* v) {
     v->count = 0;
 }
 #pragma pop /* merge_units */
@@ -43,7 +43,7 @@ void func_002AD770(PtrVec* v) {
 #include "clear_buffer_dtor.h"
 
 /* Clear and free a vector, optionally delete. */
-DEFINE_CLEAR_BUFFER_DTOR(func_002AD780, D_004ABA60)
+DEFINE_CLEAR_BUFFER_DTOR(std_vector_deleter_SelectElem_dtor_void_2, D_004ABA60)
 #pragma pop /* merge_units */
 /* merge_units: end func_002AD780 */
 

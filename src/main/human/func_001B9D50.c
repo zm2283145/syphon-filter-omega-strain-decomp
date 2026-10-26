@@ -46,4 +46,4 @@ static inline void QCopy_1B9D50(void* d0, void* s0) { int n = 3; void* s = s0; v
 
 
 extern "C" { char D_0049EDC8[] = "character.hh"; }
-DEFINE_NET_MSG_CLONE1(func_001B9D50, 0x70, D_0049EDC8, 0x356, D_004DA910, NMC_W(0x2C); QCopy_1B9D50((char*)p + 0x30, (char*)self + 0x30); NMC_F(0x60); NMC_UB(0x64))
+DEFINE_NET_MSG_CLONE1(cCharActionMsg_ObjectId_AnimName_Scalar_Bool_Clone, 0x70, D_0049EDC8, 0x356, D_004DA910, NMC_W(0x2C); QCopy_1B9D50((char*)p + 0x30, (char*)self + 0x30); NMC_F(0x60); NMC_UB(0x64))

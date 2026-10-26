@@ -8,15 +8,15 @@
 #include "scriptBase_types.h"
 
 extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
-extern OwnedVec* func_003D9240(OwnedVec* v);
+extern OwnedVec* std_vector_imp_EnumField_ctor(OwnedVec* v);
 
 /* push_back: inserts one value at the end. */
-int func_003D91F0(PtrVec* v, int value) {
+int std_vector_EnumDefPtr_push_back(PtrVec* v, int value) {
     return PtrVec_Insert(v, v->data + v->count, 1, value);
 }
 
-OwnedVec* func_003D9210(OwnedVec* v) {
-    func_003D9240(v);
+OwnedVec* cArray_EnumField_ctor(OwnedVec* v) {
+    std_vector_imp_EnumField_ctor(v);
     v->unk0C = 1;
     return v;
 }

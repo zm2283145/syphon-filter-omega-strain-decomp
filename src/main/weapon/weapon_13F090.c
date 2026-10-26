@@ -8,15 +8,15 @@
 #pragma push /* merge_units */
 #include "types.h"
 typedef struct { int m0; void* m4; } TB5C0;
-extern void func_0013F310(TB5C0* t, void* n);
+extern void std_tree_pair_float_value_compare_destroy(TB5C0* t, void* n);
 extern void operator_delete(void* p);
-TB5C0* func_0013F090(TB5C0* t, short del)
+TB5C0* cAssocMultiArray_float_cGOBJPtr_dtor(TB5C0* t, short del)
 {
     if (t) {
         if (t) {
             if (t) {
                 if (t->m4)
-                    func_0013F310(t, t->m4);
+                    std_tree_pair_float_value_compare_destroy(t, t->m4);
             }
         }
         if (del > 0)
@@ -39,11 +39,11 @@ TB5C0* func_0013F090(TB5C0* t, short del)
 
 extern void Tree_Successor(Iter* it);
 
-int func_0013F100(Iter* a, Iter* b) {
+int cAssocMultiArray_float_cGOBJPtr_Iterator_opNe(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 
-void func_0013F120(Iter* out, Tree* t) {
+void cAssocMultiArray_float_cGOBJPtr_End(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
@@ -54,16 +54,16 @@ Iter* TreeIter_Increment(Iter* it) {
 }
 
 /* Value part of the current tree node (+0x10). */
-char* func_0013F160(Iter16* it) {
+char* cAssocMultiArray_float_cGOBJPtr_Iterator_opMul(Iter16* it) {
     return it->p + 16;
 }
 
-void func_0013F170(Iter* out, Tree* t) {
+void cAssocMultiArray_float_cGOBJPtr_Begin(Iter* out, Tree* t) {
     out->p = t->leftmost;
 }
 
 /* Build a (float, int) pair from pointers. */
-FloatIntPair* func_0013F180(FloatIntPair* p, float* f, int* i) {
+FloatIntPair* std_pair_float_cGOBJPtr_ctor(FloatIntPair* p, float* f, int* i) {
     p->f = *f;
     p->i = *i;
     return p;

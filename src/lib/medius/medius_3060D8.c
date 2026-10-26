@@ -7,24 +7,24 @@
 /* merge_units: begin func_003060D8 */
 #include "types.h"
 
-extern int func_003065D8(int);
+extern int rt_time_platform_get_time_stamp(int);
 
-int func_003060D8(int a0) {
-    return func_003065D8(a0);
+int rt_time_get_time_stamp(int a0) {
+    return rt_time_platform_get_time_stamp(a0);
 }
 /* merge_units: end func_003060D8 */
 
 /* merge_units: begin func_003060F0 */
-extern int func_00306158(int, int);
+extern int rt_time_elapsed_msecs(int, int);
 
-int func_003060F0(int a0, int a1) {
-    return func_00306158(a0, a1);
+int rt_time_elapsed(int a0, int a1) {
+    return rt_time_elapsed_msecs(a0, a1);
 }
 /* merge_units: end func_003060F0 */
 
 /* merge_units: begin func_00306108 */
 typedef struct { int sec; int usec; } ScfTime;
-extern int func_003064E0(void *in, ScfTime *tv);
-#define SCF_TIME_CONV(name, conv) extern int conv(ScfTime *tv, void *out); int name(void *in, void *out) { ScfTime tv; int ret = 2; if (in == 0) return ret; if (out == 0) return ret; ret = func_003064E0(in, &tv); if (ret != 0) return ret; return conv(&tv, out); }
-SCF_TIME_CONV(func_00306108, TimeVal_ToSeconds)
+extern int rt_time_elapsed_timestamp(void *in, ScfTime *tv);
+#define SCF_TIME_CONV(name, conv) extern int conv(ScfTime *tv, void *out); int name(void *in, void *out) { ScfTime tv; int ret = 2; if (in == 0) return ret; if (out == 0) return ret; ret = rt_time_elapsed_timestamp(in, &tv); if (ret != 0) return ret; return conv(&tv, out); }
+SCF_TIME_CONV(rt_time_elapsed_secs, TimeVal_ToSeconds)
 /* merge_units: end func_00306108 */

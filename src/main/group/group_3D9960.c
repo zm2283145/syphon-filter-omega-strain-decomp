@@ -16,7 +16,7 @@
 
 extern char D_0055A120[];
 
-void func_003D9960(void) {
+void cGroup_SOBJ_init(void) {
 }
 
 void* Group_FromHandle(void* self) {
@@ -86,7 +86,7 @@ void Group_RemoveAll(void* self) {
 /* Group_RemoveObject */
 typedef struct { int pad0; int count; int* ids; } Pt2_Group;
 extern int Script_ObjectToId(void*);
-extern void func_003E2FF0(Pt2_Group*, int, int*);
+extern void std_vector_imp_cObjectId_resize(Pt2_Group*, int, int*);
 
 #pragma opt_strength_reduction off
 void Group_RemoveObject(Pt2_Group* g, void* obj) {
@@ -102,7 +102,7 @@ void Group_RemoveObject(Pt2_Group* g, void* obj) {
                 g->ids[k] = g->ids[j];
             }
             fill[0] = -1;
-            func_003E2FF0(g, n - 1, fill);
+            std_vector_imp_cObjectId_resize(g, n - 1, fill);
             return;
         }
     }

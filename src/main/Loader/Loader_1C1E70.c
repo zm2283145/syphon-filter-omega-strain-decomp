@@ -73,9 +73,9 @@ NpcObj* Npc_Construct(void* p, PopReader* r, int kind, NpcColor* color, int x);
 void World_RegisterActor(void* w, int id);
 void Player_SetLocal(NpcObj* o);
 int Appearance_GetBodyKind(void* a);
-void func_00391020(void* a, int b);
+void cMan_AddDisguise(void* a, int b);
 void ObjRegistry_AppendRecursive(void* reg, NpcObj* o);
-void func_00403FC0(void* a);
+void Monster_MonsterPartMemory(void* a);
 }
 
 static inline void SkipStr(PopReader* r)
@@ -154,7 +154,7 @@ extern "C" void Pop_LoadNPC(void* unused, PopReader* r, void* arc)
                         idx = 0;
                     int v = g_AgentPartCache.tbl[kind][idx];
                     if (v)
-                        func_00391020(p->sub60, v);
+                        cMan_AddDisguise(p->sub60, v);
                 }
             } else {
                 {
@@ -198,7 +198,7 @@ extern "C" void Pop_LoadNPC(void* unused, PopReader* r, void* arc)
             Align(r);
         }
     }
-    func_00403FC0(&g_AgentPartCache);
+    Monster_MonsterPartMemory(&g_AgentPartCache);
     FileMan_Release(&e, -1);
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -236,9 +236,9 @@ void Terrain_ReadActRecord(void*, PopReader*);
 void Terrain_ApplyInl(void*, PopReader*, LoaderOwnedVec*);
 void KeyVector_Reserve(void*, int);
 void KeyVector_PushBack(void*, int*, int, int*);
-void func_001C29F0(void*);
+void std_vector_cObjectId_ctor_void(void*);
 void Actor_VirtualLeaf175230(void*);
-void func_00175240(void*, int);
+void std_vector_deleter_cObjectId_dtor(void*, int);
 extern char D_0049EE88[], D_0049F0D0[];
 extern int D_004EE780;
 }
@@ -259,7 +259,7 @@ static inline LoaderOwnedVec* NewVec()
         p = (LoaderOwnedVec*)Mem_Alloc(0, 0x10, D_0049EE88, 0x2b0);
     }
     if (p) {
-        func_001C29F0(p);
+        std_vector_cObjectId_ctor_void(p);
         p->owns = 1;
     }
     return p;
@@ -324,7 +324,7 @@ extern "C" void Loader_InitActivationMap(void* unused, PopReader* r)
                 if (p) {
                     if (p) {
                         if (p)
-                            func_00175240(p, 0);
+                            std_vector_deleter_cObjectId_dtor(p, 0);
                     }
                 }
                 Mem_Free(0, p, D_0049EE88, 0x2e1);

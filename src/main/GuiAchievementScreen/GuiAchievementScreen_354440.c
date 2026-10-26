@@ -47,7 +47,7 @@ extern "C" {
 extern char D_004DEF90[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void GuiPersonnelScreen_ctor(void* self);
-void func_00354710(void* m);
+void cArray_tAchievementInfo_ctor(void* m);
 void String_CtorEmpty(void* str);
 }
 struct O354490 { void* vtable; char pad4[0x68]; char m6C[0x14]; char s80[0xC]; };
@@ -61,7 +61,7 @@ extern "C" O354490* GuiAchievementScreen_Create(void)
     if (p) {
         GuiPersonnelScreen_ctor(p);
         p->vtable = D_004DEF90;
-        func_00354710(p->m6C);
+        cArray_tAchievementInfo_ctor(p->m6C);
         String_CtorEmpty(p->s80);
     }
     return p;

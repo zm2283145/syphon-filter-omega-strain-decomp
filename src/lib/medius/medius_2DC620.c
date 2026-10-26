@@ -15,11 +15,11 @@ typedef struct Codec {
 
 extern void *memcpy(void *, const void *, unsigned int);
 extern void *Libc_Memmove(void *, const void *, int);
-extern void func_002D8678(void);
-extern int func_002D86A0(void);
-extern void func_002D86E8(int, int, int);
+extern void StartTime(void);
+extern int MeasureTime(void);
+extern void UpdateAudioDecodePerformance(int, int, int);
 
-int func_002DC620(Codec *s, char *in, int inlen, char *out, int outcap)
+int DecodeData(Codec *s, char *in, int inlen, char *out, int outcap)
 {
     int total = 0;
     int n;
@@ -70,20 +70,20 @@ int func_002DC620(Codec *s, char *in, int inlen, char *out, int outcap)
     }
     while (s->outLen >= ob) {
         if (outcap >= ib) {
-            func_002D8678();
+            StartTime();
             s->fn2(s->ctx, s->out, out);
             out += ib;
             outcap -= ib;
-            n = func_002D86A0();
+            n = MeasureTime();
             total += ib;
-            func_002D86E8(s->stats, ib, n);
+            UpdateAudioDecodePerformance(s->stats, ib, n);
             s->outLen -= ob;
             if (s->outLen > 0) Libc_Memmove(s->out, s->out + ob, s->outLen);
         } else {
             if (s->inLen + ib > 0x800) break;
-            func_002D8678();
+            StartTime();
             s->fn2(s->ctx, s->out, s->in + s->inLen);
-            func_002D86E8(s->stats, ib, func_002D86A0());
+            UpdateAudioDecodePerformance(s->stats, ib, MeasureTime());
             s->inLen += ib;
             s->outLen -= ob;
             if (s->outLen > 0) Libc_Memmove(s->out, s->out + ob, s->outLen);
@@ -91,20 +91,20 @@ int func_002DC620(Codec *s, char *in, int inlen, char *out, int outcap)
     }
     while (inlen > 0) {
         if (outcap >= ib) {
-            func_002D8678();
+            StartTime();
             inlen -= ob;
             s->fn2(s->ctx, in, out);
             out += ib;
             outcap -= ib;
-            func_002D86E8(s->stats, ib, func_002D86A0());
+            UpdateAudioDecodePerformance(s->stats, ib, MeasureTime());
             in += ob;
             total += ib;
         } else if (s->inLen + ib <= 0x800) {
-            func_002D8678();
+            StartTime();
             inlen -= ob;
             s->fn2(s->ctx, in, s->in + s->inLen);
             in += ob;
-            func_002D86E8(s->stats, ib, func_002D86A0());
+            UpdateAudioDecodePerformance(s->stats, ib, MeasureTime());
             s->inLen += ib;
         } else {
             if (s->outLen + ob > 0x1E0) break;

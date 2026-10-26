@@ -12,7 +12,7 @@ int PtrVec_Reserve_Thunk_257450(int a0, int a1) {
     return PtrVec_Reserve(a0, a1);
 }
 
-Rel* func_00257460(Rel* r) {
+Rel* std_vector_cBackpackPtr_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

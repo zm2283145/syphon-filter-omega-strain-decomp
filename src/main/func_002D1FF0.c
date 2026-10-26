@@ -20,11 +20,11 @@ extern unsigned char D_005721D0;
 extern unsigned char D_0051F080;
 extern int D_0051F088;
 extern int D_0051F078;
-extern int func_002EAF28(int* key, int a, int b, int c, int d, int e, int f, NetHuman1FF0* g, char* h, int i);
-extern void func_002EC3C8(int);
-extern void func_00316A00(NetHuman1FF0*);
-extern void func_00316A30(NetHuman1FF0*, int);
-void func_002D1FF0(void* recv, int id)
+extern int NetCreateObject(int* key, int a, int b, int c, int d, int e, int f, NetHuman1FF0* g, char* h, int i);
+extern void NetRequestObjectPrivateOwnership(int);
+extern void cTargetInfo_Init(NetHuman1FF0*);
+extern void cTargetInfo_dtor(NetHuman1FF0*, int);
+void cNetHuman_CreateNetHuman(void* recv, int id)
 {
     if (D_005721D0) {
         NetHuman1FF0 o;
@@ -49,15 +49,15 @@ void func_002D1FF0(void* recv, int id)
         o.f21 = 0;
         o.f1C = 0;
         o.f20 = 0;
-        func_00316A00(&o);
+        cTargetInfo_Init(&o);
         o.f2C = id;
         o.f29 = 1;
-        if (func_002EAF28(&h, 2, 4, 0, 0, 0, 0, &o, "cNetHuman", D_0051F078) == 0) {
+        if (NetCreateObject(&h, 2, 4, 0, 0, 0, 0, &o, "cNetHuman", D_0051F078) == 0) {
             D_0051F080 = 1;
-            func_002EC3C8(h);
+            NetRequestObjectPrivateOwnership(h);
             D_0051F088++;
         }
-        func_00316A30(&o, 0);
+        cTargetInfo_dtor(&o, 0);
     }
 }
 

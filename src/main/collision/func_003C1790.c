@@ -7,7 +7,7 @@
 #include "types.h"
 #include "collision_types.h"
 
-void func_003C1790(ColRef* self) {
+void cCollisionModelMaster_UnLoad(ColRef* self) {
     self->unk0 = 0;
     self->unk4 = 1;
 }

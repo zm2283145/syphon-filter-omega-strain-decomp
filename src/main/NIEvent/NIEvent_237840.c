@@ -249,7 +249,7 @@ void* cNIEventOBJ_Identity(void* self) {
     return self;
 }
 
-int* func_002379E0(void) {
+int* cNIEventOBJ_SOBJ_getClassId(void) {
     return &D_004F7CA0;
 }
 

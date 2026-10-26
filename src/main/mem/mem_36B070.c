@@ -16,11 +16,11 @@
 
 unsigned int D_00492F68[2] = { 0x1, 0x0 };
 
-void func_0036B070(void) {
+void cMemMan_DisallowConsolidation(void) {
     (*(unsigned char*)D_00492F68) = 0;
 }
 
-void func_0036B080(void) {
+void cMemMan_AllowConsolidation(void) {
     (*(unsigned char*)D_00492F68) = 1;
 }
 #pragma pop /* merge_units */
@@ -31,13 +31,13 @@ void func_0036B080(void) {
 #include "types.h"
 typedef struct { char pad[0x814]; int handle; } H36B090;
 extern H36B090 D_00533CB0[4];
-extern int func_0036C880(H36B090* h, void* a, void* b);
-int func_0036B090(void* a, void* b)
+extern int cMemBin_HaveAllocationInRange(H36B090* h, void* a, void* b);
+int cMemMan_HaveAllocationInRange(void* a, void* b)
 {
     int i;
     H36B090* h = D_00533CB0;
     for (i = 0; i < 4; i++, h++) {
-        if (h->handle != -1 && func_0036C880(h, a, b)) return 1;
+        if (h->handle != -1 && cMemBin_HaveAllocationInRange(h, a, b)) return 1;
     }
     return 0;
 }

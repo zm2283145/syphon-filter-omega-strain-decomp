@@ -11,7 +11,7 @@
 #include "buf_holder_dtor.h"
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_0013B340)
+DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_int_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0013B340 */
 
@@ -20,7 +20,7 @@ DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_0013B340)
 #include "types.h"
 typedef struct { char pad[0x20]; char flag; char pad2[0xBF]; } G6E13;
 typedef struct { int x; int count; G6E13* arr; } G6C13;
-void func_0013B430(G6C13* c)
+void std_vector_deleter_cLosRequest_cCollisionModelList_Game_clear(G6C13* c)
 {
     G6E13* arr = c->arr;
     G6E13* e = arr + c->count;

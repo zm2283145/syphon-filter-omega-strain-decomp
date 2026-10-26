@@ -8,11 +8,11 @@
 
 extern char D_00497D88[];
 
-int func_0046D148(void) {
+int MediusUniqueCallbackGetAllAnnouncementsRequestHandler(void) {
     return 44;
 }
 
-int func_0046D150(void) {
+int MediusUniqueCallbackGetAnnouncementsResponseHandler(void) {
     int v0;
     int cond;
 

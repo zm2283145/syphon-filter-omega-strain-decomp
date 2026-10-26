@@ -203,74 +203,74 @@ void cMessage_ctor(void* e, char* m);
 void cMessage_ctor3(void* e, char* m);
 void cMessage_dtor(void* e, int f);
 int printf(const char* f, ...);
-void func_00131B70(void* p, int f);
-void func_0013AAE0(void* p);
+void cCollisionFace_dtor(void* p, int f);
+void cCollisionFace_ctor_void(void* p);
 void cCharActionMsg_dtor(void* p, int f);
 void Mtx_SetRotationTranslation(void* d, void* m, void* p);
 int func_0014D410(int v);
 int func_0014D450(int v);
 int func_0014D460(char* a);
-void func_0016F7E0(void* d, void* s);
-void func_00189F40(void* p, int f);
+void cObjectId_ctor_cObjectIdR(void* d, void* s);
+void cSkaAnimCheckpoints_dtor(void* p, int f);
 void func_00189FD0(void* p, int f);
-void func_0018A040(void* p, int f);
+void cArray_FixedSize_cSkaAnimEvent_7_dtor(void* p, int f);
 void AnimEvent_dtor(void* p, int f);
 int MotionRequest_GetMode(void* s);
-void* func_0018A2E0(void* s);
-float func_0018A2D0(void* s);
+void* cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(void* s);
+float cSkaRequestStream_AnimationPacket_GetDuration(void* s);
 float func_0018A2C0(void* s);
-void func_0018A700(void* p, int v);
-void func_0018A710(void* d, void* s);
-void func_0018A890(void* p);
-void func_0018A8C0(void* p);
+void cSkaPlaybackGroupId_ctor_int(void* p, int v);
+void cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(void* d, void* s);
+void cString16N_3_ctor_void(void* p);
+void cArray_cTimedEvent_ctor_void(void* p);
 void MotionTokens_Init(void* p);
-void func_0018C620(void* y, int m);
+void nSka_GetPlaybackGroupId(void* y, int m);
 void* func_0018C6A0(void* s);
-void* func_00190F90(void* x, void* r, int a, char* b);
-void* func_00192750(void* r, float a, float b, int k);
+void* cSkaAnimCheckpoints_ScheduleEvent(void* x, void* r, int a, char* b);
+void* cSkaTimeSpan_Normalized_ctor_float_float_bool(void* r, float a, float b, int k);
 char* RootCollection_FindByKey_Thunk(char* r, char* n);
-void func_001A1500(void* p);
-int func_001A6D00(void* a, void* b);
-void func_001A6D20(void* a);
-char** func_001A7790(void* a);
-void func_001A77A0(void* d, int v);
-void func_001A77C0(void* d, int v);
-int func_001A77D0(char* p);
-int func_001A9210(char* a);
-void func_001AD710(void* d, char* s);
-void func_001AD750(void* d, float f, float g);
-char* func_001AD8B0(char* p);
+void cSkaAnimCheckpoints_ctor_void(void* p);
+int cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opNe(void* a, void* b);
+void cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opInc(void* a);
+char** cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opMul(void* a);
+void cArray_cTreeNode_cSkaSystemPtrPtr_End_void(void* d, int v);
+void cArray_cTreeNode_cSkaSystemPtrPtr_Begin_void(void* d, int v);
+int cMatrix_GetYAxis(char* p);
+int cHuman_CanTeleportToResyncRemotePlayer(char* a);
+void cInteractParams_ctor_cInteractParamsR(void* d, char* s);
+void cSkaCrossFadeDuration_ctor_float_float(void* d, float f, float g);
+char* cGobjController_Gobj(char* p);
 void ActorRelation_AddChild(char* a, char* b);
 void RootAttachments_Attach(char* r, void* p);
-void func_001ADA90(void* d, void* s);
+void cVector_VU0Negate(void* d, void* s);
 void Actor_LinkBody(char* a, char* b);
-void func_001ADB90(void* p, int f);
-void func_001ADBE0(void* p, int f);
-void* func_001ADC50(void* p);
-void* func_001ADC60(void* p);
-void* func_001ADC70(void* p);
-void func_001ADC80(void* d, void* s);
-void* func_001ADD40(void* p);
-int func_001ADD50(int v);
+void cPointer_cSkaNode_dtor(void* p, int f);
+void cSkaSystem_RequestTransition_dtor(void* p, int f);
+void* cSkaSystem_RequestTransition_CrossFadeDuration(void* p);
+void* cSkaSystem_RequestTransition_CrossFadeOutDuration(void* p);
+void* cSkaSystem_RequestTransition_EndOfTransitionCallback(void* p);
+void cSkaSystem_RequestTransition_GetPlaybackGroupId(void* d, void* s);
+void* cSkaSystem_RequestTransition_CrossFadeInDuration(void* p);
+int cPointer_cSkaNode_opMul(int v);
 int func_001ADD60(void* p);
 void* func_001ADD70(void* p);
-int func_001ADD80(void* p);
-void func_001ADFE0(void* p, int v);
+int cSkaSystem_RequestTransition_HasAnim(void* p);
+void cPointer_cSkaNode_ctor_cSkaNodeP(void* p, int v);
 void* Actor_SetMotionOverride(void* d, void* s);
-void* func_001AE020(void* d, int k, float f);
+void* cSkaTimeSpan_Normalized_ctor_float_bool(void* d, int k, float f);
 void* func_001AE050(void* x, int i, int id, char* a);
 int func_001AE0B0(char* p, int v);
-int func_001AE0D0(char* a, int v);
+int cHuman_CheckState(char* a, int v);
 char* func_001AE140(char* a);
-void func_001AE170(void* d, void* s, int n);
-int func_001AE190(void* k);
+void MEMCPY16(void* d, void* s, int n);
+int cString16N_3_Empty(void* k);
 void* func_001AE260(int v);
 int func_001AE270(int v);
-void func_001AE280(void* k, int n);
+void MEMCLEAR16(void* k, int n);
 void LosProvider_SeedRegion(int s, int v);
 int func_001AE360(char* s);
-void func_001AE370(void* e);
-void func_001AE3B0(char* p, char* v, float x, float y);
+void cLosRequestMessage_MakeSureWValuesAreCorrect(void* e);
+void cHumanMotionParams_RequestMotion_cVectorR_float_float(char* p, char* v, float x, float y);
 void Backpack_Hide(char* p);
 int Net_GetClock(int v);
 }
@@ -297,8 +297,8 @@ static inline void QCp(void* d, const void* s) { const void* ss = s; void* dd = 
         (dst)[ckc_i] = 0; \
     }
 typedef struct { unsigned char kind; char pad[3]; char pairs[0x38]; char tail[0x10]; } XS;
-static inline void XInit(XS* x) { x->kind = 0; MotionTokens_Init(x->pairs); func_0018A8C0(x->tail); }
-static inline void XDtor(XS* x) { func_00189FD0(x->tail, -1); func_0018A040(x->pairs, -1); }
+static inline void XInit(XS* x) { x->kind = 0; MotionTokens_Init(x->pairs); cArray_cTimedEvent_ctor_void(x->tail); }
+static inline void XDtor(XS* x) { func_00189FD0(x->tail, -1); cArray_FixedSize_cSkaAnimEvent_7_dtor(x->pairs, -1); }
 #define FwdMsg(a, m, f) { \
     Ev30 c; \
     char* ep = c.c; \
@@ -358,7 +358,7 @@ static inline void PlayNamed(char* a, void* x, void* name, V4* r, int mode)
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
         c = (char*)func_0018C6A0(c);
-        func_0018C620(&y, id);
+        nSka_GetPlaybackGroupId(&y, id);
         AnimCtl_InstallMotion(c, id, mode, r, &y, &e1, &e2, x, -1.0f, 0.0f);
         AnimEvent_dtor(&e2, -1);
         AnimEvent_dtor(&e1, -1);
@@ -375,7 +375,7 @@ static inline void PlayNamedL(char* a, void* x, void* name, V4* r, int mode)
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
         a = (char*)func_0018C6A0(c);
-        func_0018C620(&y, id);
+        nSka_GetPlaybackGroupId(&y, id);
         AnimCtl_InstallMotion(a, id, mode, r, &y, &e1, &e2, x, -1.0f, 0.0f);
         AnimEvent_dtor(&e2, -1);
         AnimEvent_dtor(&e1, -1);
@@ -426,7 +426,7 @@ struct FailEv {
 struct CtlS { void Sel(Buf_A0* selp, V4* rtp); void Sel2(Buf_A0* rsel, Buf_A0* selp, V4* rtp); void Lnk(CtlS* o) { char* oc = (char*)o; char* ctl = (char*)this; ActorRelation_AddChild(oc + 0x100, ctl + 0x100); } float Cur(int ch) { char* ctl = (char*)this; return AnimChannel_GetCurrent(ctl + 0x10, ch); } };
 #define LATCH(i) Physical_LatchEdgeRequest(Physical_GetLatchSlot(AP(0x3310) + 0x3E0, (i)), 0)
 #define KEYFILL(k, s) \
-    { Key30 kf; CanonicalKey_Construct(&kf, (s)); if (!func_001AE190(&(k)) || !func_001AE190(&kf)) func_001AE170(&(k), &kf, 3); }
+    { Key30 kf; CanonicalKey_Construct(&kf, (s)); if (!cString16N_3_Empty(&(k)) || !cString16N_3_Empty(&kf)) MEMCPY16(&(k), &kf, 3); }
 
 static inline void PlaySlotBI(char* a, XS* xp, V4* rp, int mode)
 {
@@ -448,10 +448,10 @@ static inline void PlaySlotBI(char* a, XS* xp, V4* rp, int mode)
 static inline void SelCtor(char* p, int id, unsigned char f, void* xp)
 {
     PB(p, 0) = 2;
-    func_0018A890(p + 0x10);
+    cString16N_3_ctor_void(p + 0x10);
     PI(p, 0x44) = id;
     PB(p, 0x48) = f;
-    func_0018A710(p + 0x4C, xp);
+    cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(p + 0x4C, xp);
     PF(p, 0x98) = -1.0f;
     PI(p, 0x9C) = 0;
 }
@@ -463,7 +463,7 @@ inline void CtlS::Sel(Buf_A0* selp, V4* rtp)
     Y2 y;
     char* q = ctl + 0x34;
     s = (unsigned char*)Actor_SetMotionOverride(q, AnimRate_Init(rtp, g_DefaultMotionTransition));
-    func_0018A700(&y, -1);
+    cSkaPlaybackGroupId_ctor_int(&y, -1);
     Actor_ResolveMotionSelection(selp, &out, &y, *(void**)s);
     if (out) {
         V4 t, rr;
@@ -477,8 +477,8 @@ inline void CtlS::Sel(Buf_A0* selp, V4* rtp)
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
         md = MotionRequest_GetMode(selp);
-        pp = func_0018A2E0(selp);
-        g0 = func_0018A2D0(selp);
+        pp = cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(selp);
+        g0 = cSkaRequestStream_AnimationPacket_GetDuration(selp);
         AnimCtl_InstallMotion(s, out, md, &rr, &y, &e1, &e2, pp, g0, func_0018A2C0(selp));
         AnimEvent_dtor(&e2, -1);
         AnimEvent_dtor(&e1, -1);
@@ -492,7 +492,7 @@ inline void CtlS::Sel2(Buf_A0* rsel, Buf_A0* selp, V4* rtp)
     Y2 y;
     char* q = ctl + 0x34;
     s = (unsigned char*)Actor_SetMotionOverride(q, AnimRate_Init(rtp, g_DefaultMotionTransition));
-    func_0018A700(&y, -1);
+    cSkaPlaybackGroupId_ctor_int(&y, -1);
     Actor_ResolveMotionSelection(rsel, &out, &y, *(void**)s);
     if (out) {
         V4 t, rr;
@@ -506,8 +506,8 @@ inline void CtlS::Sel2(Buf_A0* rsel, Buf_A0* selp, V4* rtp)
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
         md = MotionRequest_GetMode(selp);
-        pp = func_0018A2E0(selp);
-        g0 = func_0018A2D0(selp);
+        pp = cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(selp);
+        g0 = cSkaRequestStream_AnimationPacket_GetDuration(selp);
         AnimCtl_InstallMotion(s, out, md, &rr, &y, &e1, &e2, pp, g0, func_0018A2C0(selp));
         AnimEvent_dtor(&e2, -1);
         AnimEvent_dtor(&e1, -1);
@@ -518,14 +518,14 @@ struct SelT {
     SelT(int id, unsigned char fl, void* xp) {
         char* p = c;
         PB(p, 0) = 2;
-        func_0018A890(p + 0x10);
+        cString16N_3_ctor_void(p + 0x10);
         PI(p, 0x44) = id;
         PB(p, 0x48) = fl;
-        func_0018A710(p + 0x4C, xp);
+        cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(p + 0x4C, xp);
         PF(p, 0x98) = -1.0f;
         PI(p, 0x9C) = 0;
     }
-    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~SelT() { func_00189F40(c + 0x4C, -1); }
+    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~SelT() { cSkaAnimCheckpoints_dtor(c + 0x4C, -1); }
 } __attribute__((aligned(16)));
 #define PlaySel(a, xp, id, fl) { \
     V4 rt; \
@@ -533,14 +533,14 @@ struct SelT {
     int idv = (id); \
     char* p = sel.c; \
     PB(p, 0) = 2; \
-    func_0018A890(p + 0x10); \
+    cString16N_3_ctor_void(p + 0x10); \
     PI(p, 0x44) = idv; \
     PB(p, 0x48) = (fl); \
-    func_0018A710(p + 0x4C, (xp)); \
+    cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(p + 0x4C, (xp)); \
     PF(p, 0x98) = -1.0f; \
     PI(p, 0x9C) = 0; \
     ((CtlS*)(a + 0x2EC0))->Sel(&sel, &rt); \
-    func_00189F40(sel.c + 0x4C, -1); \
+    cSkaAnimCheckpoints_dtor(sel.c + 0x4C, -1); \
 }
 #define PlaySelP(a, xp, id, fl) { \
     V4 rt; \
@@ -548,14 +548,14 @@ struct SelT {
     int idv = (id); \
     char* p = sel.c; \
     PB(p, 0) = 2; \
-    func_0018A890(p + 0x10); \
+    cString16N_3_ctor_void(p + 0x10); \
     PI(p, 0x44) = idv; \
     PB(p, 0x48) = (fl); \
-    func_0018A710(p + 0x4C, (xp)); \
+    cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(p + 0x4C, (xp)); \
     PF(p, 0x98) = -1.0f; \
     PI(p, 0x9C) = 0; \
     ((CtlS*)(a + 0x2EC0))->Sel((Buf_A0*)p, &rt); \
-    func_00189F40(sel.c + 0x4C, -1); \
+    cSkaAnimCheckpoints_dtor(sel.c + 0x4C, -1); \
 }
 #define PlaySelP2(a, xp, id, fl) { \
     V4 rt; \
@@ -563,26 +563,26 @@ struct SelT {
     int idv = (id); \
     char* p = sel.c; \
     PB(p, 0) = 2; \
-    func_0018A890(p + 0x10); \
+    cString16N_3_ctor_void(p + 0x10); \
     PI(p, 0x44) = idv; \
     PB(p, 0x48) = (fl); \
-    func_0018A710(p + 0x4C, (xp)); \
+    cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(p + 0x4C, (xp)); \
     PF(p, 0x98) = -1.0f; \
     PI(p, 0x9C) = 0; \
     ((CtlS*)(a + 0x2EC0))->Sel2((Buf_A0*)p, &sel, &rt); \
-    func_00189F40(sel.c + 0x4C, -1); \
+    cSkaAnimCheckpoints_dtor(sel.c + 0x4C, -1); \
 }
 static inline void AttachAll(char* a)
 {
     char* b = a + 0x2EC0;
     int it, end;
     char* r;
-    func_001A77C0(&it, func_001A77D0(b + 0x100));
-    func_001A77A0(&end, func_001A77D0(b + 0x100));
+    cArray_cTreeNode_cSkaSystemPtrPtr_Begin_void(&it, cMatrix_GetYAxis(b + 0x100));
+    cArray_cTreeNode_cSkaSystemPtrPtr_End_void(&end, cMatrix_GetYAxis(b + 0x100));
     r = RootCollection_FindByKey_Thunk(b, D_0049D048);
-    while (func_001A6D00(&it, &end)) {
-        Root_Attach(r, RootCollection_FindByKey_Thunk(*Ptr_IdentityCast(*func_001A7790(&it)), D_0049D048), 1);
-        func_001A6D20(&it);
+    while (cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opNe(&it, &end)) {
+        Root_Attach(r, RootCollection_FindByKey_Thunk(*Ptr_IdentityCast(*cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opMul(&it)), D_0049D048), 1);
+        cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opInc(&it);
     }
 }
 inline bool BTn(void* p, int i) { return !(BitSet_Test(p, i) != 0); }
@@ -598,7 +598,7 @@ static inline void PlayMR(char* a, const MRT& mr)
     s5 = a + 0x2EC0;
     MotionRequest_Copy(&mc, (void*)&mr);
     MotionRequest_ResolveName(&mc, *(char**)s5);
-    if (func_001ADD80(&mc)) {
+    if (cSkaSystem_RequestTransition_HasAnim(&mc)) {
         Ev40 e1;
         Ev50 e2;
         void* c;
@@ -606,13 +606,13 @@ static inline void PlayMR(char* a, const MRT& mr)
         void* rg;
         Y2 y;
         AnimEvent_Construct(&e1);
-        func_001A1500(&e2);
+        cSkaAnimCheckpoints_ctor_void(&e2);
         c = func_001ADD70(s5 + 0x10);
-        id = func_001ADD50(func_001ADD60(&mc));
-        rg = func_001ADD40(&mc);
-        func_001ADC80(&y, &mc);
-        AnimCtl_InstallMotion(c, id, 1, rg, &y, func_001ADC70(&mc), &e1, &e2, -1.0f, 0.0f);
-        func_00189F40(&e2, -1);
+        id = cPointer_cSkaNode_opMul(func_001ADD60(&mc));
+        rg = cSkaSystem_RequestTransition_CrossFadeInDuration(&mc);
+        cSkaSystem_RequestTransition_GetPlaybackGroupId(&y, &mc);
+        AnimCtl_InstallMotion(c, id, 1, rg, &y, cSkaSystem_RequestTransition_EndOfTransitionCallback(&mc), &e1, &e2, -1.0f, 0.0f);
+        cSkaAnimCheckpoints_dtor(&e2, -1);
         AnimEvent_dtor(&e1, -1);
     }
     {
@@ -626,24 +626,24 @@ static inline void PlayMR(char* a, const MRT& mr)
         int id;
         AnimEvent_Construct(&e3);
         got = 0;
-        func_001A1500(&e4);
-        if (func_001ADD80(&mc)) {
+        cSkaAnimCheckpoints_ctor_void(&e4);
+        if (cSkaSystem_RequestTransition_HasAnim(&mc)) {
             AnimEvent_Construct(&e5);
             got = 1;
             m2 = &e5;
         } else {
-            m2 = func_001ADC70(&mc);
+            m2 = cSkaSystem_RequestTransition_EndOfTransitionCallback(&mc);
         }
-        if (func_001ADD80(&mc)) rg = func_001ADC60(&mc); else rg = func_001ADC50(&mc);
-        if (func_001ADD80(&mc)) md = 0; else md = 1;
+        if (cSkaSystem_RequestTransition_HasAnim(&mc)) rg = cSkaSystem_RequestTransition_CrossFadeOutDuration(&mc); else rg = cSkaSystem_RequestTransition_CrossFadeDuration(&mc);
+        if (cSkaSystem_RequestTransition_HasAnim(&mc)) md = 0; else md = 1;
         s5 = (char*)func_001ADD70(s5 + 0x10);
         id = func_001AE270(s4);
         AnimCtl_InstallMotion(s5, id, md, rg, func_001AE260(s4), &e3, m2, &e4, -1.0f, 0.0f);
-        func_00189F40(&e4, -1);
+        cSkaAnimCheckpoints_dtor(&e4, -1);
         if (got) AnimEvent_dtor(&e5, -1);
         AnimEvent_dtor(&e3, -1);
     }
-    func_001ADBE0(&mc, -1);
+    cSkaSystem_RequestTransition_dtor(&mc, -1);
 }
 static inline void SubTo(V4* d, V4* x, V4* y)
 {
@@ -671,12 +671,12 @@ static inline void SetLook(char* a, int slot, void* src)
 
 struct XT {
     unsigned char kind; char pad[3]; char pairs[0x38]; char tail[0x10];
-    XT() { XT* q = this; q->kind = 0; MotionTokens_Init(q->pairs); func_0018A8C0(q->tail); }
-    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~XT() { func_00189FD0(tail, -1); func_0018A040(pairs, -1); }
+    XT() { XT* q = this; q->kind = 0; MotionTokens_Init(q->pairs); cArray_cTimedEvent_ctor_void(q->tail); }
+    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~XT() { func_00189FD0(tail, -1); cArray_FixedSize_cSkaAnimEvent_7_dtor(pairs, -1); }
     XT* p() { return this; }
 };
 struct RT { float x, y, z, w; RT(float f) { AnimRate_Init(this, f); } } __attribute__((aligned(16)));
-struct RT2 { float x, y, z, w; RT2(float f) { func_001AD750(this, f, 0.0f); } } __attribute__((aligned(16)));
+struct RT2 { float x, y, z, w; RT2(float f) { cSkaCrossFadeDuration_ctor_float_float(this, f, 0.0f); } } __attribute__((aligned(16)));
 struct KT { char c[0x30]; KT(char* s) { CanonicalKey_Construct(this, s); } } __attribute__((aligned(16)));
 static inline void PNT(char* a, const KT& name, const RT& r, void* x, int mode)
 {
@@ -689,7 +689,7 @@ static inline void PNT(char* a, const KT& name, const RT& r, void* x, int mode)
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
         c = (char*)func_0018C6A0(c);
-        func_0018C620(&y, id);
+        nSka_GetPlaybackGroupId(&y, id);
         AnimCtl_InstallMotion(c, id, mode, (V4*)&r, &y, &e1, &e2, x, -1.0f, 0.0f);
         AnimEvent_dtor(&e2, -1);
         AnimEvent_dtor(&e1, -1);
@@ -706,7 +706,7 @@ static inline void PNLT(char* a, const KT& name, const RT& r, void* x, int mode)
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
         a = (char*)func_0018C6A0(c);
-        func_0018C620(&y, id);
+        nSka_GetPlaybackGroupId(&y, id);
         AnimCtl_InstallMotion(a, id, mode, (V4*)&r, &y, &e1, &e2, x, -1.0f, 0.0f);
         AnimEvent_dtor(&e2, -1);
         AnimEvent_dtor(&e1, -1);
@@ -723,7 +723,7 @@ static inline void PNLTr(char* a, char*& c, const KT& name, const RT& r, void* x
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
         a = (char*)func_0018C6A0(c);
-        func_0018C620(&y, id);
+        nSka_GetPlaybackGroupId(&y, id);
         AnimCtl_InstallMotion(a, id, mode, (V4*)&r, &y, &e1, &e2, x, -1.0f, 0.0f);
         AnimEvent_dtor(&e2, -1);
         AnimEvent_dtor(&e1, -1);
@@ -740,7 +740,7 @@ static inline void PNLT2(char* a, const KT& name, const RT2& r, void* x, int mod
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
         a = (char*)func_0018C6A0(c);
-        func_0018C620(&y, id);
+        nSka_GetPlaybackGroupId(&y, id);
         AnimCtl_InstallMotion(a, id, mode, (V4*)&r, &y, &e1, &e2, x, -1.0f, 0.0f);
         AnimEvent_dtor(&e2, -1);
         AnimEvent_dtor(&e1, -1);
@@ -757,7 +757,7 @@ static inline void PNLT3(char* a, const KT& name, const RT& r, const XT& x, int 
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
         a = (char*)func_0018C6A0(c);
-        func_0018C620(&y, id);
+        nSka_GetPlaybackGroupId(&y, id);
         AnimCtl_InstallMotion(a, id, mode, (V4*)&r, &y, &e1, &e2, (void*)&x, -1.0f, 0.0f);
         AnimEvent_dtor(&e2, -1);
         AnimEvent_dtor(&e1, -1);
@@ -774,7 +774,7 @@ static inline void PNLT4(char* a, const KT& name, const RT2& r, const XT& x, int
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
         a = (char*)func_0018C6A0(c);
-        func_0018C620(&y, id);
+        nSka_GetPlaybackGroupId(&y, id);
         AnimCtl_InstallMotion(a, id, mode, (V4*)&r, &y, &e1, &e2, (void*)&x, -1.0f, 0.0f);
         AnimEvent_dtor(&e2, -1);
         AnimEvent_dtor(&e1, -1);
@@ -818,34 +818,34 @@ struct ST {
     ST(char*& p, int id, unsigned char fl, void* xp) {
         p = c;
         PB(p, 0) = 2;
-        func_0018A890(p + 0x10);
+        cString16N_3_ctor_void(p + 0x10);
         PI(p, 0x44) = id;
         PB(p, 0x48) = fl;
-        func_0018A710(p + 0x4C, xp);
+        cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(p + 0x4C, xp);
         PF(p, 0x98) = -1.0f;
         PI(p, 0x9C) = 0;
     }
     ST(int id, unsigned char fl, void* xp) {
         char* p = c;
         PB(p, 0) = 2;
-        func_0018A890(p + 0x10);
+        cString16N_3_ctor_void(p + 0x10);
         PI(p, 0x44) = id;
         PB(p, 0x48) = fl;
-        func_0018A710(p + 0x4C, xp);
+        cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(p + 0x4C, xp);
         PF(p, 0x98) = -1.0f;
         PI(p, 0x9C) = 0;
     }
     ST(int id, unsigned char fl, const XT& x) {
         char* p = c;
         PB(p, 0) = 2;
-        func_0018A890(p + 0x10);
+        cString16N_3_ctor_void(p + 0x10);
         PI(p, 0x44) = id;
         PB(p, 0x48) = fl;
-        func_0018A710(p + 0x4C, (void*)&x);
+        cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(p + 0x4C, (void*)&x);
         PF(p, 0x98) = -1.0f;
         PI(p, 0x9C) = 0;
     }
-    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~ST() { func_00189F40(c + 0x4C, -1); }
+    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~ST() { cSkaAnimCheckpoints_dtor(c + 0x4C, -1); }
 } __attribute__((aligned(16)));
 struct CtlT { void SelX(const RTU& rtr, const ST& sr); void SelX2(const RTU& rtr, const ST& sr); };
 #define PlaySelT(a, x, id, fl) ((CtlT*)((a) + 0x2EC0))->SelX(RTU(), ST((id), (fl), x))
@@ -861,7 +861,7 @@ inline void CtlT::SelX(const RTU& rtr, const ST& sr)
     Y2 y;
     char* q = ctl + 0x34;
     s = (unsigned char*)Actor_SetMotionOverride(q, AnimRate_Init(rtp, g_DefaultMotionTransition));
-    func_0018A700(&y, -1);
+    cSkaPlaybackGroupId_ctor_int(&y, -1);
     Actor_ResolveMotionSelection(selp, &out, &y, *(void**)s);
     if (out) {
         V4 rr, t;
@@ -875,8 +875,8 @@ inline void CtlT::SelX(const RTU& rtr, const ST& sr)
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
         md = MotionRequest_GetMode(selp);
-        pp = func_0018A2E0(selp);
-        g0 = func_0018A2D0(selp);
+        pp = cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(selp);
+        g0 = cSkaRequestStream_AnimationPacket_GetDuration(selp);
         AnimCtl_InstallMotion(s, out, md, &rr, &y, &e1, &e2, pp, g0, func_0018A2C0(selp));
         AnimEvent_dtor(&e2, -1);
         AnimEvent_dtor(&e1, -1);
@@ -893,7 +893,7 @@ inline void CtlT::SelX2(const RTU& rtr, const ST& sr)
     Y2 y;
     char* q = ctl + 0x34;
     s = (unsigned char*)Actor_SetMotionOverride(q, AnimRate_Init(rtp, g_DefaultMotionTransition));
-    func_0018A700(&y, -1);
+    cSkaPlaybackGroupId_ctor_int(&y, -1);
     Actor_ResolveMotionSelection(rsel, &out, &y, *(void**)s);
     if (out) {
         V4 rr, t;
@@ -907,8 +907,8 @@ inline void CtlT::SelX2(const RTU& rtr, const ST& sr)
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
         md = MotionRequest_GetMode(selp);
-        pp = func_0018A2E0(selp);
-        g0 = func_0018A2D0(selp);
+        pp = cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(selp);
+        g0 = cSkaRequestStream_AnimationPacket_GetDuration(selp);
         AnimCtl_InstallMotion(s, out, md, &rr, &y, &e1, &e2, pp, g0, func_0018A2C0(selp));
         AnimEvent_dtor(&e2, -1);
         AnimEvent_dtor(&e1, -1);
@@ -921,14 +921,14 @@ struct OSE0 { char c[0x40];
     OSE0(char* a) { char* ep = c; Event_Construct(ep, D_00542B60); PP(ep, 0) = D_004DA930; PI(ep, 0x24) = 0; PB(ep, 0x28) = 0; PP(ep, 0x2C) = a; PB(ep, 0x30) = 0; PI(ep, 0x34) = 0; }
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~OSE0() { PP(this, 0) = D_004DA930; cMessage_dtor(this, 0); } } __attribute__((aligned(16)));
 struct MRT { char c[0xA0];
-    MRT(Key30* k, const RT& r2, const RT& r1, const OSE0& ev) { char* mp = c; MotionRequest_Construct(mp, k); func_001ADFE0(mp + 0x30, 0); func_0018A700(mp + 0x34, -1); Vec4_Copy_18A350(mp + 0x3C, (void*)&r2); Vec4_Copy_18A350(mp + 0x4C, (void*)&r1); AnimEvent_Copy(mp + 0x5C, (void*)&ev); }
-    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~MRT() { AnimEvent_dtor(c + 0x5C, -1); func_001ADB90(c + 0x30, -1); }
+    MRT(Key30* k, const RT& r2, const RT& r1, const OSE0& ev) { char* mp = c; MotionRequest_Construct(mp, k); cPointer_cSkaNode_ctor_cSkaNodeP(mp + 0x30, 0); cSkaPlaybackGroupId_ctor_int(mp + 0x34, -1); Vec4_Copy_18A350(mp + 0x3C, (void*)&r2); Vec4_Copy_18A350(mp + 0x4C, (void*)&r1); AnimEvent_Copy(mp + 0x5C, (void*)&ev); }
+    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~MRT() { AnimEvent_dtor(c + 0x5C, -1); cPointer_cSkaNode_dtor(c + 0x30, -1); }
     char* q() { return c; } } __attribute__((aligned(16)));
 struct V4T { float x, y, z, w; V4T(float a, float b, float c, float d) { x = a; y = b; z = c; w = d; } } __attribute__((aligned(16)));
 static inline void QCpT(void* d, const V4T& s) { QCp(d, (void*)&s); }
 struct VP { float x, y, z, w; VP(const float* s) { Vec4_Assign(this, (void*)s); } } __attribute__((aligned(16)));
 struct VC { float x, y, z, w; VC() { Ptr_Identity(this); } VC(const VC& o) { Vec4_Assign(this, (void*)&o); } } __attribute__((aligned(16)));
-static inline VC DirOf(V4* v) { VC t; func_001ADA90(&t, v); return t; }
+static inline VC DirOf(V4* v) { VC t; cVector_VU0Negate(&t, v); return t; }
 static inline float Yaw(const VC& d) { return Math_Atan2f(-d.x, d.y); }
 struct AA { float x, y, z, w; AA(V4* ax, float f) { Vec4_SetXYZ_W(this, ax, f); } } __attribute__((aligned(16)));
 static inline void QAA(V4* q, const AA& w) { float hf = 0.5f * w.w; float c = Math_CosThunk(hf); float sn = Math_SinThunk(hf); q->w = c; q->x = sn * w.x; q->y = sn * w.y; q->z = sn * w.z; }
@@ -943,10 +943,10 @@ struct OSE { char c[0x40];
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~OSE() { PP(this, 0) = D_004DA930; cMessage_dtor(this, 0); }
     void* p() { return this; } } __attribute__((aligned(16)));
 static inline unsigned char ROS(char* s, Key30* k, int f, const OSE& e) { return Secondary_RequestOneShot(s, k, f, (void*)&e); }
-struct FireT { char c[0x30]; FireT(char* p) { func_0016F7E0(this, p); PI(this, 4) = PI(p, 4); PB(this, 8) = PB(p, 8); Vec4_Assign(c + 0x10, p + 0x10); PF(this, 0x20) = PF(p, 0x20); } } __attribute__((aligned(16)));
+struct FireT { char c[0x30]; FireT(char* p) { cObjectId_ctor_cObjectIdR(this, p); PI(this, 4) = PI(p, 4); PB(this, 8) = PB(p, 8); Vec4_Assign(c + 0x10, p + 0x10); PF(this, 0x20) = PF(p, 0x20); } } __attribute__((aligned(16)));
 static inline void HFire(char* a, const FireT& f) { Actor_HandleFire(a, (void*)&f); }
 #undef KEYFILL
-static inline void KF(Key30* k, const KT& kf) { if (!func_001AE190(k) || !func_001AE190((void*)&kf)) func_001AE170(k, (void*)&kf, 3); }
+static inline void KF(Key30* k, const KT& kf) { if (!cString16N_3_Empty(k) || !cString16N_3_Empty((void*)&kf)) MEMCPY16(k, (void*)&kf, 3); }
 #define KEYFILL(k, s) KF(&(k), KT(s));
 
 
@@ -986,7 +986,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
             if (MB(0x48) != 2) {
                 { float y = MF(0x44); unsigned char b = MB(0x48) == 1; float x = MF(0x40); Actor_ApplyControlInput(a + 0x3030, m + 0x30, b, x, y); }
             } else {
-                { char* v = m + 0x30; float y = MF(0x44); float x = MF(0x40); func_001AE3B0(a + 0x3030, v, x, y); }
+                { char* v = m + 0x30; float y = MF(0x44); float x = MF(0x40); cHumanMotionParams_RequestMotion_cVectorR_float_float(a + 0x3030, v, x, y); }
             }
             AB(0x30AC) = 0;
             AB(0x30AD) = 0;
@@ -998,7 +998,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
                         printf(D_0049E4A0, MU(0xC), AU(0x3594));
                     } else {
                         int t = Net_GetClock(0);
-                        if (t - AI(0x3580) >= 150 && func_001A9210(a) && IsLoc(a)) {
+                        if (t - AI(0x3580) >= 150 && cHuman_CanTeleportToResyncRemotePlayer(a) && IsLoc(a)) {
                             if (!AtFlY(m, FlPos(a))) {
                                 V4 p1, p2, f1, f2, d1, d2;
                                 Buf_A0 h1, h2;
@@ -1017,8 +1017,8 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
                                 SubTo(&d2, &p2, &f2);
                                 d1.w = 0.0f;
                                 d2.w = 0.0f;
-                                { char* hp = h1.c; Ptr_Identity(hp + 0x10); func_0013AAE0(hp + 0x20); }
-                                { char* hp = h2.c; Ptr_Identity(hp + 0x10); func_0013AAE0(hp + 0x20); }
+                                { char* hp = h1.c; Ptr_Identity(hp + 0x10); cCollisionFace_ctor_void(hp + 0x20); }
+                                { char* hp = h2.c; Ptr_Identity(hp + 0x10); cCollisionFace_ctor_void(hp + 0x20); }
                                 {
                                 char* ep = ev1.c;
                                 Event_Construct(ep, g_LosRequestMsgClass);
@@ -1032,7 +1032,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
                                 PI(ep, 0x54) = 0;
                                 PI(ep, 0x58) = 4;
                                 PB(ep, 0x5C) = 0;
-                                func_001AE370(ep);
+                                cLosRequestMessage_MakeSureWValuesAreCorrect(ep);
                                 }
                                 {
                                 char* ep = ev2.c;
@@ -1047,7 +1047,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
                                 PI(ep, 0x54) = 0;
                                 PI(ep, 0x58) = 4;
                                 PB(ep, 0x5C) = 0;
-                                func_001AE370(ep);
+                                cLosRequestMessage_MakeSureWValuesAreCorrect(ep);
                                 }
                                 svc = Service_Lookup(g_Game, g_LosCheckService);
                                 v = func_0014D410(func_0014D450(func_0014D460(a)));
@@ -1072,8 +1072,8 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
                                 cMessage_dtor(&ev2, 0);
                                 PP(&ev1, 0) = D_004D9180;
                                 cMessage_dtor(&ev1, 0);
-                                func_00131B70(h2.c + 0x20, -1);
-                                func_00131B70(h1.c + 0x20, -1);
+                                cCollisionFace_dtor(h2.c + 0x20, -1);
+                                cCollisionFace_dtor(h1.c + 0x20, -1);
                             }
                         }
                         {
@@ -1214,7 +1214,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
             !((AI(0x3210) >> 7) & 1) && !((AI(0x3210) >> 16) & 1) && WeaponInv_AllowsAction(AP(0x3524))) {
             Key30 k;
             unsigned char ok = 1;
-            func_001AE280(&k, 3);
+            MEMCLEAR16(&k, 3);
             if (Inventory_GetEquipMode(AP(0x3524)) == 1 || Inventory_GetEquipMode(AP(0x3524)) == 3) {
                 KEYFILL(k, D_0049E4D0)
             } else if (Inventory_GetEquipMode(AP(0x3524)) == 2 || Inventory_GetEquipMode(AP(0x3524)) == 4) {
@@ -1282,7 +1282,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
             if (ok) {
                 unsigned char h = 0;
                 unsigned char g = 0;
-                if (func_001AE0D0(a, 4) && AP(0x3310)) g = 1;
+                if (cHuman_CheckState(a, 4) && AP(0x3310)) g = 1;
                 if (g && func_001AE0B0(AP(0x3310), 0)) h = 1;
                 if (!h) {
                     float cur = ((CtlS*)(a + 0x2EC0))->Cur(0xF);
@@ -1316,7 +1316,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
                     {
                         V4u b1, b2;
                         char* pv;
-                        PlaySelT2R(a, func_00190F90(func_00190F90(func_001AE050(func_001AE050(func_001AE050(func_001AE050(func_001AE050(XT().p(), 0, 1, a), 1, 2, a), 3, 5, a), 5, 6, a), 6, 7, a), func_001AE020(&b1, 0, f21), 3, a), func_001AE020(&b2, 0, f20), 4, a), ((int*)(a + 0x326C))[(unsigned char)kind], 1, pv);
+                        PlaySelT2R(a, cSkaAnimCheckpoints_ScheduleEvent(cSkaAnimCheckpoints_ScheduleEvent(func_001AE050(func_001AE050(func_001AE050(func_001AE050(func_001AE050(XT().p(), 0, 1, a), 1, 2, a), 3, 5, a), 5, 6, a), 6, 7, a), cSkaTimeSpan_Normalized_ctor_float_bool(&b1, 0, f21), 3, a), cSkaTimeSpan_Normalized_ctor_float_bool(&b2, 0, f20), 4, a), ((int*)(a + 0x326C))[(unsigned char)kind], 1, pv);
                     }
                     {
                         PlaySelT(a, XT(), AI(0x326C), 0);
@@ -1348,7 +1348,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
         if (AI(0x320C) == 0) {
             Key30 k;
             float f21, f20;
-            func_001AE280(&k, 3);
+            MEMCLEAR16(&k, 3);
             if (BitSet_Test(a + 0x3200, 4)) {
                 KEYFILL(k, D_0049E500)
                 f21 = 0.2f;
@@ -1517,7 +1517,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
                 if (IsLoc(a) && AB(0x14)) {
                     Ev30 e;
                     char* ep = e.c;
-                    cAIGOBJMsg_ctor(ep, D_004FF2B0, func_001AD8B0(AP(0x58)));
+                    cAIGOBJMsg_ctor(ep, D_004FF2B0, cGobjController_Gobj(AP(0x58)));
                     PP(ep, 0) = D_004DCC70;
                     PB(ep, 0x28) = 1;
                     PB(&e, 0x20) = 2;
@@ -1527,7 +1527,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
                 }
                 {
                     V4u rr;
-                    PNT(a, KT(D_0049E558), RT(g_DefaultMotionTransition), func_00190F90(func_001AE050(func_001AE050(func_001AE050(func_001AE050(func_001AE050(XT().p(), 0, 0x71, a), 1, 0x72, a), 3, 0x74, a), 5, 0x75, a), 6, 0x76, a), func_00192750(&rr, 0.12f, 0.12f, 0), 0x73, a), 1);
+                    PNT(a, KT(D_0049E558), RT(g_DefaultMotionTransition), cSkaAnimCheckpoints_ScheduleEvent(func_001AE050(func_001AE050(func_001AE050(func_001AE050(func_001AE050(XT().p(), 0, 0x71, a), 1, 0x72, a), 3, 0x74, a), 5, 0x75, a), 6, 0x76, a), cSkaTimeSpan_Normalized_ctor_float_float_bool(&rr, 0.12f, 0.12f, 0), 0x73, a), 1);
                 }
                 {
                     PNT(a, KT(D_0049E570), RT(g_DefaultMotionTransition), func_001AE050(func_001AE050(func_001AE050(func_001AE050(func_001AE050(XT().p(), 0, 0x77, a), 1, 0x78, a), 3, 0x79, a), 5, 0x7A, a), 6, 0x7B, a), 0);
@@ -1537,7 +1537,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
                     char* ep = c.c;
                     cMessage_ctor3(ep, m);
                     PP(ep, 0) = D_004E01A0;
-                    func_0016F7E0(ep + 0x2C, m + 0x2C);
+                    cObjectId_ctor_cObjectIdR(ep + 0x2C, m + 0x2C);
                     PB(&c, 0x20) = 4;
                     PI(&c, 0x1C) = 0x40;
                     Event_Send(ep, a, 1);
@@ -1569,7 +1569,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
                         PI(r, 0x160) = 0;
                     }
                     AttachAll(a);
-                    func_001AE280(&k, 3);
+                    MEMCLEAR16(&k, 3);
                     switch (MI(0x24)) {
                     case 0x2C:
                         ev = 0x2F;
@@ -1618,8 +1618,8 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
     case 0x30:
         if (!((AI(0x324C) >> 7) & 1)) {
             Key30 k1, k2;
-            func_001AE280(&k1, 3);
-            func_001AE280(&k2, 3);
+            MEMCLEAR16(&k1, 3);
+            MEMCLEAR16(&k2, 3);
             switch (MI(0x24)) {
             case 0x2F:
                 KEYFILL(k1, D_0049E600)
@@ -1683,7 +1683,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
                 struct { char c[0x60]; } __attribute__((aligned(16))) c;
                 char* ep = c.c;
                 cMessage_ctor3(ep, m);
-                func_001AD710(ep + 0x30, m + 0x30);
+                cInteractParams_ctor_cInteractParamsR(ep + 0x30, m + 0x30);
                 PP(ep, 0) = D_004E00E0;
                 PB(&c, 0x20) = 4;
                 PI(&c, 0x1C) = 0x40;

@@ -19,7 +19,7 @@
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-DEFINE_VTABLE_BASE_DTOR(func_0021BE60, D_004DB3A0, cGameGOBJ_dtor)
+DEFINE_VTABLE_BASE_DTOR(cFacingGOBJ_dtor, D_004DB3A0, cGameGOBJ_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0021BE60 */
 
@@ -29,7 +29,7 @@ DEFINE_VTABLE_BASE_DTOR(func_0021BE60, D_004DB3A0, cGameGOBJ_dtor)
 
 DEFINE_RESIZE_ELEMENT(Elem16, 16)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_0021BEC0, Elem16, VecRecordList_Insert, func_0021C190)
+DEFINE_VECTOR_RESIZE(std_vector_imp_cVector_resize, Elem16, VecRecordList_Insert, std_vector_imp_cVector_erase)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_0021BEC0 */

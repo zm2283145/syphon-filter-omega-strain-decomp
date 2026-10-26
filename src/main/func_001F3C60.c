@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_001F3C60(void* self) {
+void* cAllocator_cSkaBlendSequenceItem_ctor_void(void* self) {
     return self;
 }

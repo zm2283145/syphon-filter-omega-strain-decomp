@@ -13,7 +13,7 @@ static inline unsigned char Live_1ADC80(N_1ADC80* n)
     if (n->state != 0 && n->state != 1) ok = 0;
     return ok;
 }
-void func_001ADC80(H_1ADC80* out, R_1ADC80* r)
+void cSkaSystem_RequestTransition_GetPlaybackGroupId(H_1ADC80* out, R_1ADC80* r)
 {
     H_1ADC80 a;
     H_1ADC80 b;

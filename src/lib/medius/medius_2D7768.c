@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_002D7768(void) {
+void DestroyRGBArray(void) {
 
 }

@@ -6,13 +6,13 @@
 
 #include "types.h"
 
-void* func_00430D10(char* self) {
+void* std_tree_pair_short_value_compare_node_alloc(char* self) {
     return self + 4;
 }
 
-void func_00430D20(void) {
+void std_allocator_pair_short_destroy(void) {
 }
 
-void* func_00430D30(void* self) {
+void* std_tree_pair_short_value_compare_alloc(void* self) {
     return self;
 }

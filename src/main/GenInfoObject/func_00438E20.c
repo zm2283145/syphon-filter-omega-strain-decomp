@@ -8,17 +8,17 @@ extern "C" {
 void Mem_Free(int, void*, char*, int);
 void List_Erase(int*, char*, int*);
 Raw_8E20 List_Begin(void*);
-Raw_8E20 func_00438E00(void*);
-void func_00438E10(char**, const Raw_8E20&);
-void func_00438DF0(char**, const Raw_8E20&);
-void func_0015AF40(int*, char**);
-void func_0043B190(int*);
+Raw_8E20 std_list_tGenInfoPtr_end(void*);
+void std_list_tGenInfoPtr_generic_iterator_ctor(char**, const Raw_8E20&);
+void cLListIterator_tGenInfoPtr_ctor(char**, const Raw_8E20&);
+void std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(int*, char**);
+void cGenInfoObject_ctor(int*);
 extern char D_005838B8;
 extern char D_004BFD60[];
 }
-#define Begin_8E20(o) func_00438E10(o, List_Begin(&D_005838B8))
-#define End_8E20(o) func_00438DF0(o, func_00438E00(&D_005838B8))
-extern "C" void func_00438E20(Ent_8E20* tbl) {
+#define Begin_8E20(o) std_list_tGenInfoPtr_generic_iterator_ctor(o, List_Begin(&D_005838B8))
+#define End_8E20(o) cLListIterator_tGenInfoPtr_ctor(o, std_list_tGenInfoPtr_end(&D_005838B8))
+extern "C" void cGenInfoObject_DoPendingAdds(Ent_8E20* tbl) {
     int ctx;
     char* end;
     {
@@ -34,7 +34,7 @@ extern "C" void func_00438E20(Ent_8E20* tbl) {
                 /* t is not reset per entry: retail keeps the previous entry's match when the key is absent */
                 { i = 0; do { if (tbl[i].key == F_(e, 0x0, int)) { t = &tbl[i]; break; } } while (++i != 55); }
                 if (!t) {
-                    func_0043B190(&ctx);
+                    cGenInfoObject_ctor(&ctx);
                     {
                         int key = ((Ent_8E20*)e)->key;
                         unsigned char lo = ((Ent_8E20*)e)->lo;
@@ -53,7 +53,7 @@ extern "C" void func_00438E20(Ent_8E20* tbl) {
                 int res;
                 int pos;
                 c = cur;
-                func_0015AF40(&pos, &c);
+                std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&pos, &c);
                 List_Erase(&res, &D_005838B8, &pos);
             }
         }

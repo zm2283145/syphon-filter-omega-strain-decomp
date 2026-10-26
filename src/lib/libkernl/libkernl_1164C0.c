@@ -2,7 +2,7 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int func_001164C0(int *arg0, int *arg1, unsigned int arg2) {
+int kCopy_void_3(int *arg0, int *arg1, unsigned int arg2) {
     unsigned int var_a3;
     int *var_a1;
     unsigned int temp_a2;

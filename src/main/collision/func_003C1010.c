@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_003C1010(char* self) {
+void* cCollisionFace_FaceLocator(char* self) {
     return self + 96;
 }

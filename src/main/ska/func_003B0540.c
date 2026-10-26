@@ -8,22 +8,22 @@ typedef struct {
     int cur; int nxt; float t;
 } TTrans;
 
-void* func_003B0180(void* v, int i);
-TElem* func_003B0740(void* t, int i);
+void* cArray_cSkaSwitchItem_opIndex(void* v, int i);
+TElem* cSkaSwitchItem_GetTrans(void* t, int i);
 float AnimChannel_GetCurrent(TCtx* c, int i);
-void* func_003B0730(TCtx* c, int i);
-int func_003B0130(void* p);
+void* cSkaParams_GetSwitchValue(TCtx* c, int i);
+int cSkaSwitchValue_CurrGoalState(void* p);
 void AnimTransition_GetProgress(TTrans* t, TElem* e, float w);
 
 /* Last frame delta: ctx->dt[n-1]; the byte-offset form keeps retail's addiu -1 / lwc1 4(..) */
 #define DT(c) (*(float*)((char*)(c) + 4 + ((c)->n - 1) * 4))
-int func_003B0540(TTrans* self, TCtx* ctx)
+int cSkaTransPlayback_NextFrame(TTrans* self, TCtx* ctx)
 {
     TElem* e;
     int more;
     float w;
     do {
-        e = func_003B0740(func_003B0180(&self->sel->vec, self->cur), self->nxt);
+        e = cSkaSwitchItem_GetTrans(cArray_cSkaSwitchItem_opIndex(&self->sel->vec, self->cur), self->nxt);
         more = e->next != -1;
         if (more) self->nxt = e->next;
     } while (more);
@@ -34,7 +34,7 @@ int func_003B0540(TTrans* self, TCtx* ctx)
         float r = AnimChannel_GetCurrent(ctx, e->chan); w = e->from + r * (e->to - e->from);
     }
     if (w != 0.0f) {
-        int target = func_003B0130(func_003B0730(ctx, self->sel->idx));
+        int target = cSkaSwitchValue_CurrGoalState(cSkaParams_GetSwitchValue(ctx, self->sel->idx));
         unsigned char done = 0;
         if (e->sync) {
             if (self->rev == 0) {

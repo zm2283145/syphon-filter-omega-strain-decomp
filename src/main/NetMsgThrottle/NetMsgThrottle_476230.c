@@ -19,7 +19,7 @@ extern Vec4* Placement_GetPosition(void* placement);
 static inline void h1_cp(Vec4* d, const Vec4* s) { *d = *s; }
 #pragma peephole off
 #pragma opt_propagation off
-float func_00476230(H1Actor* self) {
+float cHuman_GetDistanceAlongLadderFromEntryPointInTermsOfNumberOfGraspableRungs(H1Actor* self) {
     H1Actor* s = self;
     if (self->phys != 0) {
         float z = Placement_GetPosition(Root_GetWorldPlacement(s->laddRoot))->z;

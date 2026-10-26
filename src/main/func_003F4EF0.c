@@ -32,7 +32,7 @@ extern void EIntr(void);
 extern void WaitSema(int sema);
 extern void SignalSema(int sema);
 
-int func_003F4EF0(IpuState* s)
+int viBufStopDMA(IpuState* s)
 {
     WaitSema(s->sema);
     s->active = 0;

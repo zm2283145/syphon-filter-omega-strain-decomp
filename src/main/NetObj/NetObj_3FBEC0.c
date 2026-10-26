@@ -18,13 +18,13 @@
 #define NULL 0
 #pragma mpwc_relax on
 int Net_GetClock(int);                               
-int func_0042EB20();                                  
-int func_004355D0(char *);                               
-int func_00436BA0(char *, int);                            
-int func_00436C00(char *);                               
-int func_00438770(int);                                 
+int cNetObjectMgr_NextFrame();                                  
+int cNPCInfoObject_Setup(char *);                               
+int cNPCInfoObject_dtor(char *, int);                            
+int cNPCInfoObject_ctor(char *);                               
+int cHeadSet_NextFrame(int);                                 
 int func_0043AA30(char *);                               
-int func_0043B190(char *);                               
+int cGenInfoObject_ctor(char *);                               
 static unsigned int dat_00493A18[2] = { 0x1, 0x0 };
 extern int D_0055C7B8;
 extern signed char D_005724D0;
@@ -37,14 +37,14 @@ void Net_Pump(void) {
     if ((*(unsigned char*)dat_00493A18) != 0) {
         (*(unsigned char*)dat_00493A18) = 0;
     }
-    func_00436C00(&sp1C);
-    func_004355D0(&sp1C);
-    func_0043B190(&sp18);
+    cNPCInfoObject_ctor(&sp1C);
+    cNPCInfoObject_Setup(&sp1C);
+    cGenInfoObject_ctor(&sp18);
     func_0043AA30(&sp18);
     D_0055C7B8 = Net_GetClock(0) + 0x64;
-    func_0042EB20();
-    func_00438770(0);
-    func_00436BA0(&sp1C, -1);
+    cNetObjectMgr_NextFrame();
+    cHeadSet_NextFrame(0);
+    cNPCInfoObject_dtor(&sp1C, -1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003FBEC0(void) {}
@@ -55,7 +55,7 @@ static inline void merge_flush_func_003FBEC0(void) {}
 #pragma push /* merge_units */
 /* map<int, {int, int}>::operator[] with value {0, -2} */
 typedef struct { int key; int a; int b; } PBF40;
-DEFINE_INT_MAP_SUBSCRIPT(func_003FBF40, PBF40, FrameTree_Insert_3FC520, (v.a = 0, v.b = -2))
+DEFINE_INT_MAP_SUBSCRIPT(std_tree_pair_int_value_compare_cAllocator_pair_find_or_insert_intR_2, PBF40, FrameTree_Insert_3FC520, (v.a = 0, v.b = -2))
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003FBF40(void) {}
 #pragma pop /* merge_units */
@@ -66,6 +66,6 @@ static inline void merge_flush_func_003FBF40(void) {}
 #pragma cplusplus on
 
 /* Find an int key in a tree; end() when absent. */
-DEFINE_INT_TREE_FIND(func_003FC000)
+DEFINE_INT_TREE_FIND(std_tree_pair_int_value_compare_cAllocator_pair_find_intR_2)
 #pragma pop /* merge_units */
 /* merge_units: end func_003FC000 */

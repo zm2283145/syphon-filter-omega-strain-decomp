@@ -9,13 +9,13 @@
 
 extern unsigned char D_0048B308;
 extern MarkerList* ScalarCollection_Init(MarkerList* list);
-extern void* func_00222B60(void* p);
+extern void* std_list_deleter_cSafePtr_cGOBJ_ctor(void* p);
 
 /* Objective marker manager constructor. */
 ObjMarkerMgr* ObjMarkerMgr_ctor(ObjMarkerMgr* self) {
     ScalarCollection_Init(&self->unk00);
     ScalarCollection_Init(&self->records);
-    func_00222B60(self->unk18);
+    std_list_deleter_cSafePtr_cGOBJ_ctor(self->unk18);
     ScalarCollection_Init(&self->secondary);
     self->unk30 = 1.0f;
     self->unk38 = -2;

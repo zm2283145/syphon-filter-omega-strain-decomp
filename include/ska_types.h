@@ -30,12 +30,12 @@ typedef struct SkaTransitionReq {
     int key;          /* 0x10, compared by TransitionReq_SameKey */
 } SkaTransitionReq;   /* size 0x14 */
 
-/* Five-float record copied by func_003AD650. */
+/* Five-float record copied by cSkaSystem_Transition_ctor_cSkaSystemTransitionR. */
 typedef struct SkaFloat5 {
     float v[5];
 } SkaFloat5;
 
-/* Six-word value returned through a hidden pointer by func_00397840. */
+/* Six-word value returned through a hidden pointer by std_deque_deleter_common_cSkaSystem_Request_make_iterator. */
 typedef struct SkaWords6 {
     int w[6];
 } SkaWords6;
@@ -93,15 +93,15 @@ typedef struct SkaNotifyTable {
     int words[14];
 } SkaNotifyTable;
 
-/* Array header (three words) followed by a flag byte; copied by func_003B4E70/NotifyRange_CopyConstruct/func_003B6C70. */
+/* Array header (three words) followed by a flag byte; copied by cArray_cSkaSwitchItem_ctor_cArrayR/NotifyRange_CopyConstruct/cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_ctor_cArrayR. */
 typedef struct SkaFlaggedVec {
     SkaVec vec;           /* 0x00 */
     unsigned char flag;   /* 0x0C */
 } SkaFlaggedVec;          /* size 0x10 */
 
-/* Record copied by func_003B6C20: base part, a word at +0xB0 and a flagged array at +0xB4. */
+/* Record copied by cSkaAnimAnchor_TreeNode_ctor_cSkaAnimAnchorTreeNodeR: base part, a word at +0xB0 and a flagged array at +0xB4. */
 typedef struct SkaRecordB0 {
-    char base[0xB0];      /* 0x00, copied by func_003B6CB0 */
+    char base[0xB0];      /* 0x00, copied by cSkaAnimAnchor_TreeNodeData_ctor_cSkaAnimAnchorTreeNodeDataR */
     int unkB0;            /* 0xB0 */
     SkaFlaggedVec unkB4;  /* 0xB4 */
 } SkaRecordB0;
@@ -120,12 +120,12 @@ typedef struct SkaHandle {
     int index;            /* 0x04, -1 when unset */
 } SkaHandle;
 
-/* Four zeroed words followed by a call (func_003B9170). */
+/* Four zeroed words followed by a call (_cdeque_imp_cSkaSystem_RequestPtr_1_ctor). */
 typedef struct SkaQuadWords {
     int w[4];
 } SkaQuadWords;
 
-/* Three-word header plus a flag byte at +0x0C set by func_003BA260. */
+/* Three-word header plus a flag byte at +0x0C set by cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_ctor_void. */
 typedef struct SkaRelFlag {
     Rel rel;              /* 0x00 */
     unsigned char flag;   /* 0x0C */

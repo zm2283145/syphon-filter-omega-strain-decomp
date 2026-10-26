@@ -1,7 +1,7 @@
 #pragma cplusplus on
 #include "types.h"
 #pragma inline_depth(8)
-/* func_0025AA20: does the segment a-b pass within radius r of point c */
+/* SegmentIntersectsSphere: does the segment a-b pass within radius r of point c */
 struct V;
 // VU0 macro-mode vector op (COP2), not expressible in C
 static inline void ScaleV(V* rp, const V* tp, float k) { __int128 t = 0; __asm__ volatile(".set noreorder; lqc2 $vf1, 0x0(%2); mfc1 %0, %3; qmtc2.ni %0, $vf2; vmulx.xyzw $vf1, $vf1, $vf2x; sqc2 $vf1, 0x0(%1); .set reorder" : "+r"(t) : "r"(rp), "r"(tp), "f"(k) : "memory"); }
@@ -39,10 +39,10 @@ static inline float Dot3(const V* a, const V* b)
     }
     return ret;
 }
-extern "C" int func_0025AA20(V* a, V* b, V* c, float r);
+extern "C" int SegmentIntersectsSphere(V* a, V* b, V* c, float r);
 static inline float LenSq0(const V* a) { return LenSq(a); }
 static inline float LenSqV(V v) { return LenSq0(&v); }
-int func_0025AA20(V* a, V* b, V* c, float r)
+int SegmentIntersectsSphere(V* a, V* b, V* c, float r)
 {
     
     V ac = *c - *a;

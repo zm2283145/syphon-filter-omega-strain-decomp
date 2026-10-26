@@ -9,7 +9,7 @@
 extern char D_00497D7C[];
 extern char D_00497D80[];
 
-int func_0046D098(void) {
+int MediusUniqueCallbackAddToIgnoreListResponseHandler(void) {
     int v0;
     int cond;
 
@@ -24,11 +24,11 @@ ret:
     return v0;
 }
 
-int func_0046D0C8(void) {
+int MediusUniqueCallbackRemoveFromIgnoreListRequestHandler(void) {
     return 44;
 }
 
-int func_0046D0D0(void) {
+int MediusUniqueCallbackRemoveFromIgnoreListResponseHandler(void) {
     int v0;
     int cond;
 

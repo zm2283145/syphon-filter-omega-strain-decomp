@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_001D0770(char* self) {
+void* std_vector_deleter_cBone_data_void(char* self) {
     return self + 8;
 }

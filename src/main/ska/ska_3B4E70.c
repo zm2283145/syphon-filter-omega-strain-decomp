@@ -13,7 +13,7 @@
 typedef struct { char b[20]; } Elem20;
 typedef struct { int unk0; int count; Elem20* data; } Vec20;
 typedef struct { void* begin; void* end; void* cap; } VecImpl;
-VecImpl* func_003B4EB0(VecImpl* self, Vec20* src); /* gsynth: defined below */
+VecImpl* std_vector_imp_cSkaSwitchItem_ctor_vectorimpR(VecImpl* self, Vec20* src); /* gsynth: defined below */
 /*
  * Matched functions (byte-identical with the retail executable).
  * Part of ska.cc (skeletal animation).
@@ -21,18 +21,18 @@ VecImpl* func_003B4EB0(VecImpl* self, Vec20* src); /* gsynth: defined below */
 
 
 #if 0 /* merge_units */
-extern SkaFlaggedVec* func_003B4EB0(SkaFlaggedVec* dst, SkaFlaggedVec* src);
+extern SkaFlaggedVec* std_vector_imp_cSkaSwitchItem_ctor_vectorimpR(SkaFlaggedVec* dst, SkaFlaggedVec* src);
 #endif /* merge_units */
-#define func_003B4EB0(a0, a1) ((SkaFlaggedVec *)func_003B4EB0((void *)(a0), (void *)(a1))) /* merge_units */
+#define std_vector_imp_cSkaSwitchItem_ctor_vectorimpR(a0, a1) ((SkaFlaggedVec *)std_vector_imp_cSkaSwitchItem_ctor_vectorimpR((void *)(a0), (void *)(a1))) /* merge_units */
 
 
 /* Copy-construct: copy the array part, then the flag byte. */
-SkaFlaggedVec* func_003B4E70(SkaFlaggedVec* dst, SkaFlaggedVec* src) {
-    func_003B4EB0(dst, src);
+SkaFlaggedVec* cArray_cSkaSwitchItem_ctor_cArrayR(SkaFlaggedVec* dst, SkaFlaggedVec* src) {
+    std_vector_imp_cSkaSwitchItem_ctor_vectorimpR(dst, src);
     dst->flag = src->flag;
     return dst;
 }
-#undef func_003B4EB0 /* merge_units */
+#undef std_vector_imp_cSkaSwitchItem_ctor_vectorimpR /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003B4E70(void) {}
 #pragma pop /* merge_units */
@@ -41,16 +41,16 @@ static inline void merge_flush_func_003B4E70(void) {}
 /* merge_units: begin func_003B4EB0 */
 #pragma push /* merge_units */
 typedef struct { char unused; } Allocator;
-extern void func_003B6F80(VecImpl* self, Elem20* first, Elem20* last, Allocator alloc);
+extern void std_vector_imp_cSkaSwitchItem_init(VecImpl* self, Elem20* first, Elem20* last, Allocator alloc);
 
 /* Copy-constructs the vector from the range of src. */
-VecImpl* func_003B4EB0(VecImpl* self, Vec20* src)
+VecImpl* std_vector_imp_cSkaSwitchItem_ctor_vectorimpR(VecImpl* self, Vec20* src)
 {
     Allocator alloc;
     self->begin = 0;
     self->end = 0;
     self->cap = 0;
-    func_003B6F80(self, src->data, src->data + src->count, alloc);
+    std_vector_imp_cSkaSwitchItem_init(self, src->data, src->data + src->count, alloc);
     return self;
 }
 /* merge_units: generate this block's code under its own pragmas */

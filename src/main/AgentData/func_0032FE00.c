@@ -5,9 +5,9 @@ struct E_32FE00 { int id; int pad[4]; int val; };
 struct O_32FE00 { int key; int id; char flag; int a; int b; int val; };
 extern "C" {
 extern char g_UnlockRows[];
-E_32FE00* func_0032E3F0(void* t);
-E_32FE00* func_0032E3C0(void* t);
-void func_0032E3E0(E_32FE00** out, void* t, E_32FE00** raw);
+E_32FE00* std_vector_imp_Record_begin(void* t);
+E_32FE00* std_vector_imp_Record_end(void* t);
+void std_vector_Record_pointer2iterator(E_32FE00** out, void* t, E_32FE00** raw);
 int Loc_FindKeyThunk(const char* key);
 int Loc_LookupText(int id);
 }
@@ -21,11 +21,11 @@ static inline int Find_32FE00(const char* key)
         E_32FE00* t1;
         E_32FE00* t2;
         E_32FE00* first;
-        t1 = func_0032E3F0(g_UnlockRows);
-        func_0032E3E0(&b, g_UnlockRows, &t1);
+        t1 = std_vector_imp_Record_begin(g_UnlockRows);
+        std_vector_Record_pointer2iterator(&b, g_UnlockRows, &t1);
         first = b;
-        t2 = func_0032E3C0(g_UnlockRows);
-        func_0032E3E0(&e, g_UnlockRows, &t2);
+        t2 = std_vector_imp_Record_end(g_UnlockRows);
+        std_vector_Record_pointer2iterator(&e, g_UnlockRows, &t2);
         for (E_32FE00* last = e; Neq_32FE00(first, last); first++) {
             if (k == first->id) return first->val;
         }

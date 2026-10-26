@@ -1,7 +1,7 @@
 typedef struct { int x; int y; char pad[0x1F8]; } G4Ent;
 typedef struct { int a, b, c; G4Ent e[64]; } G4Tbl;
 extern void Net_AllocZeroed(void* out, int size);
-G4Tbl* func_00315E38(void)
+G4Tbl* CreateVSequence(void)
 {
     G4Tbl* p = 0;
     unsigned int i;

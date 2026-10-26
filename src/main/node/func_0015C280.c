@@ -6,19 +6,19 @@
 #include "types.h"
 #include "node_types.h"
 
-float func_0015C280(Vec4* v) {
+float cAxisAngle_Angle(Vec4* v) {
     return v->w;
 }
 
-float func_0015C290(Vec4* v) {
+float cAxisAngle_Z(Vec4* v) {
     return v->z;
 }
 
-float func_0015C2A0(Vec4* v) {
+float cAxisAngle_Y(Vec4* v) {
     return v->y;
 }
 
-float func_0015C2B0(Vec4* v) {
+float cAxisAngle_X(Vec4* v) {
     return v->x;
 }
 

@@ -9,7 +9,7 @@
 extern SpecListPos* List_InsertBefore(SpecListPos* result, void* list, SpecListPos* pos, int* value);
 
 /* push_back on a list whose sentinel node is at +4. */
-SpecListPos* func_002320F0(void* list, int* value) {
+SpecListPos* std_list_tItemPtr_push_back(void* list, int* value) {
     SpecListPos end;
     SpecListPos result;
 

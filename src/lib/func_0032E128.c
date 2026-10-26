@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_0032E128(void) {
+void gsmDestroy(void) {
 
 }

@@ -19,7 +19,7 @@
 extern int String_CopyCtor(LoaderObj* obj, int a1);
 
 /* Initialise via String_CopyCtor, then store a2 in unk0C. */
-int func_001C0500(LoaderObj* obj, int a1, int a2) {
+int std_make_pair_cString_cSkaAnimationSetP(LoaderObj* obj, int a1, int a2) {
     int result;
 
     result = String_CopyCtor(obj, a1);
@@ -33,14 +33,14 @@ static inline void merge_flush_func_001C0500(void) {}
 
 /* merge_units: begin func_001C0540 */
 #pragma push /* merge_units */
-extern void func_001C4750(void* self, int* a, int* b);
+extern void std_tree_pair_cString16N_value_compare_cAllocator_pair_ctor_valuecompareR_cAllocatorR_2(void* self, int* a, int* b);
 
-/* Calls func_001C4750 with two scratch outputs; returns self. */
-void* func_001C0540(void* self)
+/* Calls std_tree_pair_cString16N_value_compare_cAllocator_pair_ctor_valuecompareR_cAllocatorR_2 with two scratch outputs; returns self. */
+void* cAssocArray_cString16N_2_cSkaAnimationBlendPtr_ctor(void* self)
 {
     int b;
     int a;
-    func_001C4750(self, &a, &b);
+    std_tree_pair_cString16N_value_compare_cAllocator_pair_ctor_valuecompareR_cAllocatorR_2(self, &a, &b);
     return self;
 }
 /* merge_units: generate this block's code under its own pragmas */

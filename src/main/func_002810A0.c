@@ -14,7 +14,7 @@ struct M { __int128 q[4];
 struct Flag { int v; };
 extern "C" {
 void Camera_ConstructFov(void*, int*, int, float);
-Flag* func_00281070(Flag*, int);
+Flag* cBitArray_9_ctor(Flag*, int);
 V* Vec4_GetZero(void);
 void Vec4_Assign(V*, V*);
 extern char D_004DCDE0[];
@@ -29,7 +29,7 @@ static inline const int* Id(const R* p) {
     else { t = -1; r = &t; }
     return r;
 }
-struct Flags { Flag f[3]; void Init() { Flags* t = this; func_00281070(&t->f[0], 0); func_00281070(&t->f[1], 0); func_00281070(&t->f[2], 0); } };
+struct Flags { Flag f[3]; void Init() { Flags* t = this; cBitArray_9_ctor(&t->f[0], 0); cBitArray_9_ctor(&t->f[1], 0); cBitArray_9_ctor(&t->f[2], 0); } };
 struct Handle { int a; int id; void Init() { id = -1; a = 0; id = *Id(0); } };
 static inline V VZero() { V t; __asm__ volatile("sqc2 $vf0, 0x0(%0)" : : "r"(&t) : "memory"); return t; }
 struct PlayerCamera {

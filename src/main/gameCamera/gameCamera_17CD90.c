@@ -51,7 +51,7 @@ typedef struct VecRecordList {
 extern int VecRecordList_Insert(VecRecordList* list, char* pos, int n, int value);
 
 /* Appends one record at the end of the list. */
-int func_0017CDB0(VecRecordList* list, int value) {
+int cArray_cVector_PushBackActual(VecRecordList* list, int value) {
     return VecRecordList_Insert(list, list->data + (list->count << 4), 1, value);
 }
 /* merge_units: generate this block's code under its own pragmas */

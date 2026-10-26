@@ -38,7 +38,7 @@ extern "C" {
 extern char D_004A8220[];
 extern char D_004A8250[];
 extern char D_004A8260[];
-void func_00267230(V_00266BA0* a, V_00266BA0* b);
+void std_swap_vectordeleterR_vectordeleterR_24(V_00266BA0* a, V_00266BA0* b);
 }
 extern "C" void Vector_Insert_266BA0(V_00266BA0* v, E_00266BA0* pos, unsigned int n, const E_00266BA0* value)
 {
@@ -127,7 +127,7 @@ extern "C" void Vector_Insert_266BA0(V_00266BA0* v, E_00266BA0* pos, unsigned in
             Construct_266BA0(dst, src);
             tmp.count++;
         }
-        func_00267230(&tmp, v);
+        std_swap_vectordeleterR_vectordeleterR_24(&tmp, v);
         {
             E_00266BA0* e;
             E_00266BA0* b = tmp.data;

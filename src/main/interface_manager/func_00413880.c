@@ -5,7 +5,7 @@
 /*fc*/
 int String_CtorCStr_13B480();                      
 int String_Dtor();                            
-int func_00413FB0();               
+int std_vector_imp_cString_insert();               
 
 #pragma opt_common_subs off
 void func_00413880(char * arg0) {
@@ -15,7 +15,7 @@ void func_00413880(char * arg0) {
     if (F_(arg0, 0x1E4, int) != NULL) {
         String_CtorCStr_13B480(sp20);
         temp_a0 = (char *)(F_(arg0, 0x1E4, int));
-        func_00413FB0(temp_a0, F_(temp_a0, 0x8, int) + (F_(temp_a0, 0x4, int) * 0xC), 1, sp20);
+        std_vector_imp_cString_insert(temp_a0, F_(temp_a0, 0x8, int) + (F_(temp_a0, 0x4, int) * 0xC), 1, sp20);
         String_Dtor(sp20, 0);
     }
 }

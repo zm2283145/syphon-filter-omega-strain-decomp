@@ -72,7 +72,7 @@ extern void GuiWidget_BroadcastEvent(W43BD50* w, int kind, int pos, int z);
 #pragma push
 static inline float Mul43BD50(float a, float b) { return a * b; }
 static inline int Lerp43BD50(int a, int b, float t) { return a + (int)Mul43BD50(t, (float)(b - a)); }
-void func_0043BD50(W43BD50* w, int horiz)
+void GuiScrollBarWidget_UpdateScrollBar(W43BD50* w, int horiz)
 {
     if (w->vis) {
         int lo = w->lo;

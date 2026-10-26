@@ -12,7 +12,7 @@ struct Msg_BBB0 { void* vtable; int a, b, c, d, e, f, g; char h; char p1[3]; cha
 /* clone a message: copy fields, swap vtable, 64-byte matrix via the Q4Copy idiom */
 #pragma push
 #pragma peephole off
-extern "C" Msg_BBB0* func_0015BBB0(Msg_BBB0* src)
+extern "C" Msg_BBB0* cMoveMsg_Template_Clone(Msg_BBB0* src)
 {
     Msg_BBB0* p;
     {

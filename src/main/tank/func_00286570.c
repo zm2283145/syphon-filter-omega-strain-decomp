@@ -41,12 +41,12 @@ struct Own_286570 { Obj_286570* obj; };
 static inline bool Null_286570(void* p) { return !p; }
 static inline int Flag_286570(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 
-extern "C" int func_00286570(Own_286570* self)
+extern "C" int cTurret_Stop(Own_286570* self)
 {
     return self->obj->Set(1);
 }
 
-extern "C" void func_00286590(Turret_286570* t, float dt)
+extern "C" void cTurret_NextFrame(Turret_286570* t, float dt)
 {
     Target_286570* tgt;
     unsigned char r;

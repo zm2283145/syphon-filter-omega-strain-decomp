@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_001D29E0(char* self) {
+void* cJointInfo_JointSpaceToBoneSpaceTransform(char* self) {
     return self + 16;
 }

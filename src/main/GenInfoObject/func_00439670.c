@@ -13,23 +13,23 @@ extern T_439670* D_00583888;
 extern char D_004BFD60[];
 extern int D_00497570;
 extern int D_00497578;
-int func_002EAF28(int* key, int a, int b, int c, int d, int e, int f, T_439670* g, char* h, int i);
-int func_002EB650(P_439670** out, int key);
+int NetCreateObject(int* key, int a, int b, int c, int d, int e, int f, T_439670* g, char* h, int i);
+int NetGetObject(P_439670** out, int key);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void Mem_Free(int pool, void* p, char* file, int line);
-void func_00439670(void);
+void cGenInfoObject_Setup(void);
 }
 static inline void Reg_439670(int* key, T_439670** out)
 {
     P_439670* p;
-    if (!func_002EAF28(key, 2, 4, 0, 0, 0, 0, *out, "cGenInfoObject", D_00497570) && !func_002EB650(&p, *key)) *out = p->f1C;
+    if (!NetCreateObject(key, 2, 4, 0, 0, 0, 0, *out, "cGenInfoObject", D_00497570) && !NetGetObject(&p, *key)) *out = p->f1C;
 }
 static inline int NetOk_439670(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 static inline void RegAll_439670(void) { if (D_005721D0 && NetOk_439670()) Reg_439670(&D_00497578, &D_00583888); }
 
 #pragma push
 #pragma opt_unroll_loops off
-void func_00439670(void)
+void cGenInfoObject_Setup(void)
 {
     if (g_IsMultiplayer && !D_005721B8) {
     if (D_005721D0) {

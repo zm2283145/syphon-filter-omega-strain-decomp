@@ -14,8 +14,8 @@ typedef struct {
     float x, y, z;
 } cNetTaserMsg;
 extern unsigned char* D_005061D0; /* network write cursor */
-extern void func_00282020(void* target);
-extern void func_001B99E0(float f);
+extern void cNetMsg_PutGOBJ(void* target);
+extern void cNetMsg_PutFloat(float f);
 
 static inline void WriteU8(unsigned char v)
 {
@@ -28,10 +28,10 @@ void cNetTaserMsg_v04(cNetTaserMsg* self)
 {
     WriteU8(self->mode);
     if (self->mode != 2) {
-        func_00282020(self->target);
-        func_001B99E0(self->x);
-        func_001B99E0(self->y);
-        func_001B99E0(self->z);
+        cNetMsg_PutGOBJ(self->target);
+        cNetMsg_PutFloat(self->x);
+        cNetMsg_PutFloat(self->y);
+        cNetMsg_PutFloat(self->z);
         WriteU8(self->a);
         WriteU8(self->b);
         WriteU8(self->c);

@@ -15,11 +15,11 @@
 #include "loose03_types.h"
 
 /* Inserts count copies of *value at pos (vector insert). */
-extern int func_00338B60(Vec36* v, Elem36* pos, int count, Elem36* value);
+extern int std_vector_imp_tRankInfo_insert(Vec36* v, Elem36* pos, int count, Elem36* value);
 
 /* push_back: insert one element at the end. */
-int func_0032EAD0(Vec36* v, Elem36* value) {
-    return func_00338B60(v, &v->data[v->count], 1, value);
+int cArray_tRankInfo_PushBackActual(Vec36* v, Elem36* value) {
+    return std_vector_imp_tRankInfo_insert(v, &v->data[v->count], 1, value);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0032EAD0 */
@@ -58,7 +58,7 @@ R2EB00* Awards_FormatRankTitle(R2EB00* r, int a, int b, int c, int index, const 
 
 #include "types.h"
 
-int func_0032EB80(char* self) {
+int cArray_tRankInfo_Size(char* self) {
     return *(int*)(self + 4);
 }
 #pragma pop /* merge_units */

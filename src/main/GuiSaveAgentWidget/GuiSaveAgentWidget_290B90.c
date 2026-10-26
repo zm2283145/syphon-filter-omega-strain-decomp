@@ -18,19 +18,19 @@
 extern int D_00506390;
 extern int GuiAgentCreate_DrawModelCallback(int);
 
-Rel* func_00290B90(Rel* r) {
+Rel* std_vector_imp_cSkeletonBBoxContributionPtr_1_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
     return r;
 }
 
-Word* func_00290BB0(Word* self, int value) {
+Word* cArrayCapacity_ctor(Word* self, int value) {
     self->value = value;
     return self;
 }
 
-int func_00290BC0(void) {
+int ManRenderWrapper(void) {
     return GuiAgentCreate_DrawModelCallback(D_00506390);
 }
 #pragma pop /* merge_units */
@@ -38,7 +38,7 @@ int func_00290BC0(void) {
 
 /* merge_units: begin func_00290BD0 */
 #pragma push /* merge_units */
-int func_00290BD0(char* a, char* b) {
+int PartCompare(char* a, char* b) {
     int i;
     for (i = 0; i < 4; i++) {
         if (*++a != *++b) return 0;

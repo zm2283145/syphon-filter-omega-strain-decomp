@@ -12,9 +12,9 @@
 typedef struct N1F30 { int m0; struct N1F30* next; void* data; } N1F30;
 typedef struct { char pad[0xC]; int list; } T1F30;
 extern void List_Begin(int* out, void* list);
-extern void func_003E13D0(N1F30** out, int* in);
-extern void func_003E13C0(int* out, void* list);
-extern void func_003E13B0(N1F30** out, int* in);
+extern void std_list_SymbolTablePtr_generic_iterator_ctor(N1F30** out, int* in);
+extern void std_list_SymbolTablePtr_end(int* out, void* list);
+extern void cLListIterator_SymbolTablePtr_ctor(N1F30** out, int* in);
 extern void Script_RunVarInitializers(void* s);
 void cScriptInterpreter_ExecuteInitCode(T1F30* self)
 {
@@ -24,8 +24,8 @@ void cScriptInterpreter_ExecuteInitCode(T1F30* self)
     int t2;
     N1F30* n;
     List_Begin(&t1, &self->list);
-    func_003E13D0(&it, &t1);
-    for (n = it; func_003E13C0(&t2, &self->list), func_003E13B0(&e, &t2), n != e; n = n->next)
+    std_list_SymbolTablePtr_generic_iterator_ctor(&it, &t1);
+    for (n = it; std_list_SymbolTablePtr_end(&t2, &self->list), cLListIterator_SymbolTablePtr_ctor(&e, &t2), n != e; n = n->next)
         Script_RunVarInitializers(n->data);
 }
 /* merge_units: generate this block's code under its own pragmas */

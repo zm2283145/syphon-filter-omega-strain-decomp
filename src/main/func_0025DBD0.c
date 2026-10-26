@@ -12,7 +12,7 @@ extern "C" {
 extern char D_004A7D10[];
 extern char D_0049CEB8[];
 extern char D_0049CEA8[];
-void func_00181080(V25DBD0* a, V25DBD0* b);
+void std_swap_vectordeleterR_vectordeleterR_6(V25DBD0* a, V25DBD0* b);
 }
 static inline void Construct25DBD0(E25DBD0* p, const E25DBD0* s) { if (p) *p = *s; }
 extern "C" void Vector_Reserve_25DBD0(V25DBD0* v, unsigned int n)
@@ -36,7 +36,7 @@ extern "C" void Vector_Reserve_25DBD0(V25DBD0* v, unsigned int n)
             Construct25DBD0(d, s);
             tmp.count++;
         }
-        func_00181080(&tmp, v);
+        std_swap_vectordeleterR_vectordeleterR_6(&tmp, v);
         {
             E25DBD0* b_ = tmp.data;
             E25DBD0* e_ = b_ + tmp.count;

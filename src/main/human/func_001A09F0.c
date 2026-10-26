@@ -6,12 +6,12 @@
 
 #include "types.h"
 
-int func_001A09F0(Iter* a, Iter* b) {
+int cArray_cSkaAnimAnchorListEntry_Iterator_opNe(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 
 /* Iterator ++ over 384-byte elements. */
-Iter16* func_001A0A10(Iter16* it) {
+Iter16* cArray_cSkaAnimAnchorListEntry_Iterator_opInc(Iter16* it) {
     it->p = it->p + 384;
     return it;
 }

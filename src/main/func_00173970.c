@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_00173970(void* self) {
+void* details_compressed_pair_imp_cAllocator_voidPtr_int_1_first(void* self) {
     return self;
 }

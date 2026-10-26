@@ -8,16 +8,16 @@
 #pragma push /* merge_units */
 #include "types.h"
 extern char D_004BD328[];
-extern void func_00136DA0(int* g);
-extern void func_0012F530(int* g, int del);
+extern void cTimerDisable_ctor(int* g);
+extern void cTimerDisable_dtor(int* g, int del);
 extern void Mem_Free(int heap, void* p, const char* file, int line);
-void func_003D1400(void* self, void* p)
+void cAllocator_node_deallocate_nodeP_uint_6(void* self, void* p)
 {
     if (p) {
         int g[1];
-        func_00136DA0(g);
+        cTimerDisable_ctor(g);
         Mem_Free(0, p, D_004BD328, 100);
-        func_0012F530(g, -1);
+        cTimerDisable_dtor(g, -1);
     }
 }
 #pragma pop /* merge_units */
@@ -32,15 +32,15 @@ void func_003D1400(void* self, void* p)
  */
 
 
-int func_003D1460(void) {
+int alloc_ptr_node_cAllocator_node_capacity_void_2(void) {
     return 1;
 }
 
-int func_003D1470(Word* self) {
+int alloc_ptr_node_cAllocator_node_allocator_void_2(Word* self) {
     return self[0].value;
 }
 
-int func_003D1480(Word* self) {
+int alloc_ptr_node_cAllocator_node_get_void_2(Word* self) {
     return self[1].value;
 }
 #pragma pop /* merge_units */
@@ -51,7 +51,7 @@ int func_003D1480(Word* self) {
 #pragma cplusplus on
 #include "string_int_pair_copy_ctor.h"
 struct SF6_3D1490 { ShortStr first; int second; float a, b, c, d, e, f; };
-extern "C" SF6_3D1490* func_003D1490(SF6_3D1490* self, const SF6_3D1490* src)
+extern "C" SF6_3D1490* cText_ctor(SF6_3D1490* self, const SF6_3D1490* src)
 {
     if (!ShortStr_IsLong(&src->first)) {
         self->first = src->first;
@@ -125,21 +125,21 @@ unsigned char UsbKbd_GetCode(T1610* p)
 #pragma push /* merge_units */
 typedef struct { unsigned char m0; unsigned char m1; char pad[0x8E]; char data[8]; int m98; } T1660;
 extern int sceUsbKbRead(unsigned int no, void* data);
-extern int func_00223360(int mode, int* result);
-extern void func_003D1770(T1660* kb);
+extern int sceUsbKbSync(int mode, int* result);
+extern void cUSBKeybd_Init(T1660* kb);
 int UsbKbd_Poll(T1660* kb, int flag)
 {
     int v;
     if (kb->m1) {
         int r = sceUsbKbRead(0, kb->data);
-        func_00223360(0, &r);
+        sceUsbKbSync(0, &r);
         if (r) {
             kb->m1 = 0;
             if (flag)
-                func_003D1770(kb);
+                cUSBKeybd_Init(kb);
         }
     } else if (flag) {
-        func_003D1770(kb);
+        cUSBKeybd_Init(kb);
     }
     v = kb->m1 ? kb->m98 : 0;
     return v != 0;
@@ -151,17 +151,17 @@ int UsbKbd_Poll(T1660* kb, int flag)
 #pragma push /* merge_units */
 #include "loose04_types.h"
 
-extern int func_002232C0(int, int);
+extern int sceUsbKbSetCodeType(int, int);
 
-int func_003D1700(Unk3D1700* self) {
-    int ret = func_002232C0(0, 1);
+int cUSBKeybd_SetAsciiMode(Unk3D1700* self) {
+    int ret = sceUsbKbSetCodeType(0, 1);
 
     self->unk02 = 0;
     return ret;
 }
 
-int func_003D1730(Unk3D1700* self) {
-    int ret = func_002232C0(0, 0);
+int cUSBKeybd_SetKeyMode(Unk3D1700* self) {
+    int ret = sceUsbKbSetCodeType(0, 0);
 
     self->unk02 = 1;
     return ret;

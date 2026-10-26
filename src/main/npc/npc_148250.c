@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-void func_00148250(PtrVec* a, PtrVec* b) {
+void std_swap_vectordeleterR_vectordeleterR_2(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;
         int* p;
@@ -67,6 +67,6 @@ extern "C" void LosMgr_TraceBullet(void* unused, void* a, void* b, void* c, void
 #include "guarded_buffer_dtor.h"
 
 extern "C" { char D_0049B3F8[] = "allocator.hh"; }
-DEFINE_GUARDED_BUFFER_CALL_DTOR(func_00148380, func_00148470, D_0049B3F8)
+DEFINE_GUARDED_BUFFER_CALL_DTOR(std_vector_deleter_Record_dtor, std_vector_deleter_Record_clear, D_0049B3F8)
 #pragma pop /* merge_units */
 /* merge_units: end func_00148380 */

@@ -20,7 +20,7 @@ typedef struct S00139D30 {
 } S00139D30;
 
 extern int Vec4_Assign(Vec4*, Vec4*);
-extern int func_00139B00(LosHitInfo*, LosHitInfo*);
+extern int cCollisionFace_ctor_cCollisionFaceR(LosHitInfo*, LosHitInfo*);
 
 /* GCC-style volatile lq/sq quad copy (c57da idiom) */
 static inline void V4_Copy(void* d, const void* s) { __int128 q; __asm__ volatile("lq %0, 0(%2); sq %0, 0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
@@ -28,10 +28,10 @@ static inline void R_Copy(LosResult* dst0, const LosResult* src) {
     LosResult* dst = dst0;
     dst->status = src->status;
     Vec4_Assign(&dst->point, (Vec4*)&src->point);
-    func_00139B00(&dst->hit, (LosHitInfo*)&src->hit);
+    cCollisionFace_ctor_cCollisionFaceR(&dst->hit, (LosHitInfo*)&src->hit);
     dst->unk90 = src->unk90;
 }
-S00139D30* func_00139D30(S00139D30* d, S00139D30* s) {
+S00139D30* cLosRequest_cCollisionModelList_Game_ctor(S00139D30* d, S00139D30* s) {
     V4_Copy(&d->a, &s->a);
     V4_Copy(&d->b, &s->b);
     d->c = s->c;
@@ -54,6 +54,6 @@ S00139D30* func_00139D30(S00139D30* d, S00139D30* s) {
 
 /* Destroy a vector: destroy elements, free the buffer, optionally delete. */
 extern "C" { char D_0049AE20[] = "allocator.hh"; }
-DEFINE_VECTOR_DESTROY_DTOR_FILE(func_00139DF0, func_0013B260, D_0049AE20)
+DEFINE_VECTOR_DESTROY_DTOR_FILE(func_00139DF0, std_vector_deleter_cCollisionFace_clear, D_0049AE20)
 #pragma pop /* merge_units */
 /* merge_units: end func_00139DF0 */

@@ -9,33 +9,33 @@
 
 extern int Global_RemoveArray(ScriptArray* array);
 extern int ScriptArray_Create(int arg);
-extern int func_00269090(int value);
+extern int Array_SOBJ_toInt(int value);
 extern ScriptArray* ScriptArray_Cast(void* obj);
 
-Word* func_00268680(Word* dst, Word* src) {
+Word* cLListIterator_ArrayPtr_ctor_listR(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_00268690(Iter* out, Tree* t) {
+void std_list_ArrayPtr_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-Word* func_002686A0(Word* dst, Word* src) {
+Word* std_list_ArrayPtr_generic_iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-Word* func_002686B0(Word* dst, Word* src) {
+Word* cLListIterator_cNodeListPtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_002686C0(Iter* out, Tree* t) {
+void std_list_cNodeListPtr_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-Word* func_002686D0(Word* dst, Word* src) {
+Word* std_list_cNodeListPtr_generic_iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
@@ -49,5 +49,5 @@ int Script_RemoveArray(ScriptArg* args) {
 /* Script native: CreateArray(args[0]). volatile mirrors the original stack temporary. */
 int Script_CreateArray(ScriptArg* args) {
     volatile int arg = args[0].i;
-    return func_00269090(ScriptArray_Create(arg));
+    return Array_SOBJ_toInt(ScriptArray_Create(arg));
 }

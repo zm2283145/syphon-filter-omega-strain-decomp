@@ -7,6 +7,6 @@
 #include "types.h"
 #include "loose02_types.h"
 
-void func_0031FC20(FloatSettings* self, float value) {
+void NellySetEFactorSase3200(FloatSettings* self, float value) {
     self->unk2C = value;
 }

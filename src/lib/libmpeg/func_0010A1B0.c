@@ -5,7 +5,7 @@ typedef struct {
 
 extern VlcEnt D_00485FB0[];
 
-int func_0010A1B0(int *idx, int *val, unsigned long x)
+int _id2type(int *idx, int *val, unsigned long x)
 {
     VlcEnt *e = D_00485FB0;
     int found = 0;

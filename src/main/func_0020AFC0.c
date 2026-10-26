@@ -3,11 +3,11 @@
 /* Built at a lower optimization level (unscheduled call sequence). */
 #pragma optimization_level 1
 
-extern void func_0020B000(void* self);
+extern void details_compressed_pair_imp_cAllocator_cSkaTransBLEND_int_1_ctor_cAllocatorR_uint(void* self);
 
-/* Runs func_0020B000 on self and returns self. */
-void* func_0020AFC0(void* self)
+/* Runs details_compressed_pair_imp_cAllocator_cSkaTransBLEND_int_1_ctor_cAllocatorR_uint on self and returns self. */
+void* compressed_pair_cAllocator_cSkaTransBLEND_int_ctor_cAllocatorR_uint(void* self)
 {
-    func_0020B000(self);
+    details_compressed_pair_imp_cAllocator_cSkaTransBLEND_int_1_ctor_cAllocatorR_uint(self);
     return self;
 }

@@ -6,7 +6,7 @@
 
 /* merge_units: begin func_002DD968 */
 extern int D_005880B0[];
-int func_002DD968(int *out, unsigned int idx)
+int NetIGetObject(int *out, unsigned int idx)
 {
     if (out == 0) return 0x17;
     if (idx < 0x1000) {
@@ -19,11 +19,11 @@ int func_002DD968(int *out, unsigned int idx)
 /* merge_units: end func_002DD968 */
 
 /* merge_units: begin func_002DD9B0 */
-extern int func_002DD9F8(int, int *);
-int func_002DD9B0(int *out, int a)
+extern int NetGetStreamChannel(int, int *);
+int NetIGetDataStream(int *out, int a)
 {
     int t = 0;
-    int r = func_002DD9F8(a, &t);
+    int r = NetGetStreamChannel(a, &t);
     if (r) return r;
     if (t) *out = t;
     return 0;

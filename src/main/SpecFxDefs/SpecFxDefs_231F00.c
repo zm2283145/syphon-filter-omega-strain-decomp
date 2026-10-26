@@ -47,10 +47,10 @@ void EffectService_Schedule(void* list, void* owner, float x, float y); /* gsynt
 
 
 typedef struct { int pad0; void* vt; } LObj_f4;
-extern void func_002371F0();
+extern void cLightBundle_dtor();
 extern void Effect_Draw();
 extern void Effect_Update();
-void * const D_004DBB20[8] = { (void*)0x0, (void*)0x0, (void*)func_002371F0, (void*)Effect_Update, (void*)Effect_Draw, (void*)0x0, (void*)0x0, (void*)0x0 };
+void * const D_004DBB20[8] = { (void*)0x0, (void*)0x0, (void*)cLightBundle_dtor, (void*)Effect_Update, (void*)Effect_Draw, (void*)0x0, (void*)0x0, (void*)0x0 };
 extern char g_LightMgr[];
 extern char D_004D9200[];
 extern void SpecFx_Construct(LFx_f4*);
@@ -102,7 +102,7 @@ typedef struct {
 
 extern FxSlot232050 D_0055A890[384];
 extern int D_0055C090;
-extern void* func_002320F0(void* list, FxSlot232050** value);
+extern void* std_list_tItemPtr_push_back(void* list, FxSlot232050** value);
 
 void EffectService_Schedule(void* list, void* owner, float x, float y) {
     FxSlot232050* found = 0;
@@ -124,7 +124,7 @@ void EffectService_Schedule(void* list, void* owner, float x, float y) {
     }
     tmp = found;
     if (found != 0) {
-        func_002320F0(list, &tmp);
+        std_list_tItemPtr_push_back(list, &tmp);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

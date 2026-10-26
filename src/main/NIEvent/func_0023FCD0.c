@@ -6,14 +6,14 @@
 
 #include "types.h"
 
-void* func_0023FCD0(char* self) {
+void* cNIEventBase_GetChildList_void(char* self) {
     return self + 156;
 }
 
-void* func_0023FCE0(char* self) {
+void* cNIEventBase_GetChildList_void_2(char* self) {
     return self + 156;
 }
 
-int func_0023FCF0(void) {
+int cNIEventBase_IsNetworked(void) {
     return 1;
 }

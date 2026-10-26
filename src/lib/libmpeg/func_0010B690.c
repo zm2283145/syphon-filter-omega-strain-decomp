@@ -2,14 +2,14 @@
 
 extern void func_0010BD58(void *, const char *, ...);
 extern void scePrintf(const char *);
-extern int func_00108130(void *);
-extern int func_0010BB28(void *);
-extern int func_0010B968(void *, int, int);
+extern int _nextHeader(void *);
+extern int _sceMpegFlush(void *);
+extern int _decodeOrSkip(void *, int, int);
 extern char D_004986E8[];
 extern char D_00498728[];
 extern char D_00498768[];
 
-int func_0010B690(char *mp)
+int _getpic(char *mp)
 {
     char *p;
     int ret;
@@ -31,7 +31,7 @@ int func_0010B690(char *mp)
     do {
         if (ret != -1) {
             do {
-                code = func_00108130(p);
+                code = _nextHeader(p);
                 if (code < 0)
                     return -1;
                 if (code == 0)
@@ -42,23 +42,23 @@ int func_0010B690(char *mp)
         }
         switch (code) {
         case 0:
-            func_0010BB28(mp);
+            _sceMpegFlush(mp);
             F_(p, 0x0, int) = 1;
             break;
         case 1:
             F_(p, 0xC0, int) = 0;
             F_(p, 0xBC, int) = 0;
             F_(p, 0xB8, int) = 0;
-            ret = func_0010B968(mp, 0, F_(p, 0xAC, int));
+            ret = _decodeOrSkip(mp, 0, F_(p, 0xAC, int));
             F_(p, 0xB8, int)++;
             break;
         case 2:
-            ret = func_0010B968(mp, F_(p, 0xBC, int), F_(p, 0xB0, int));
+            ret = _decodeOrSkip(mp, F_(p, 0xBC, int), F_(p, 0xB0, int));
             F_(p, 0xBC, int)++;
             break;
         case 3:
         case 4:
-            ret = func_0010B968(mp, F_(p, 0xC0, int), F_(p, 0xB4, int));
+            ret = _decodeOrSkip(mp, F_(p, 0xC0, int), F_(p, 0xB4, int));
             F_(p, 0xC0, int)++;
             break;
         }

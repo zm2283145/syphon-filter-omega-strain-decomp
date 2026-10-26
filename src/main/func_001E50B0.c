@@ -2,7 +2,7 @@
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
 #pragma push
 #pragma opt_common_subs off
-V4 func_001E50B0(V4* b) {
+V4 cQuaternion_opSub(V4* b) {
     V4 l0;
     V4* q1 = &l0;
     asm {

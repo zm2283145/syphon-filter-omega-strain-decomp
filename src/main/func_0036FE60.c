@@ -61,7 +61,7 @@ static inline void MulRot_36FE60(M_36FE60* s, M_36FE60* d, M_36FE60* r)
     }
 }
 #pragma opt_common_subs off
-void func_0036FE60(V4_36FE60* a, V4_36FE60* q)
+void cXform_Rotate_cQuaternionR(V4_36FE60* a, V4_36FE60* q)
 {
     M_36FE60 rot;
     QuatToMtx_36FE60(&rot, q);

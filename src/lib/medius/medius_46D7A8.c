@@ -9,7 +9,7 @@
 extern char D_00497D98[];
 extern char D_00497D9C[];
 
-int func_0046D7A8(void) {
+int MediusUniqueCallbackGetMyIPResponseHandler(void) {
     int v0;
     int cond;
 
@@ -24,11 +24,11 @@ ret:
     return v0;
 }
 
-int func_0046D7D8(void) {
+int MediusUniqueCallbackVersionServerRequestHandler(void) {
     return 38;
 }
 
-int func_0046D7E0(void) {
+int MediusUniqueCallbackVersionServerResponseHandler(void) {
     int v0;
     int cond;
 

@@ -50,7 +50,7 @@ extern int g_WeaponDatabase;
 extern int g_HotboxTracker;
 int WeaponInv_SlotOfItem(int id);
 void* WeaponDb_Get(int db, int item);
-int func_001A3730(Owner_00254990* o);
+int cHuman_CanPackBeDeleted(Owner_00254990* o);
 void Hotbox_RemoveObjectBox(int, void*);
 int Object_Unregister(void*);
 int Object_DeleteLater(void*, float);
@@ -59,7 +59,7 @@ void Backpack_Destroy(BP* bp);
 
 static inline bool HolderReady(BP* bp) {
     bool r = true;
-    if (!bp->NoHolder() && !func_001A3730(bp->Holder())) r = false;
+    if (!bp->NoHolder() && !cHuman_CanPackBeDeleted(bp->Holder())) r = false;
     return r;
 }
 

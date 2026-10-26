@@ -26,13 +26,13 @@ typedef struct Lobby44 {
 void String_Copy(char *, char *);
 int Lobby_GetTime(void);
 Ent44 *LobbyArray_At(List44 *, int);
-Obj44 *func_00450A00(Lobby44 *, int);
-void func_0046A0E8(char *, void *);
+Obj44 *SFOLobby_FindAgentData(Lobby44 *, int);
+void MediusGetGameInfo(char *, void *);
 extern int D_00497860;
 extern int D_00497878;
 extern char D_004C0EF0;
 extern int D_00585E50;
-extern void func_00446AE0(void);
+extern void SFOLobby_Callback_RefreshGameInfo(void);
 
 typedef struct {
     char a[0x15];
@@ -53,7 +53,7 @@ inline Ent44 *Find44(Lobby44 *l, int id) {
     return NULL;
 }
 
-void func_0044EBD0(Lobby44 *arg0, List44 *arg1) {
+void SFOLobby_CollectGameInfo(Lobby44 *arg0, List44 *arg1) {
     Msg44EBD0 msg;
     int now;
     int i;
@@ -85,7 +85,7 @@ void func_0044EBD0(Lobby44 *arg0, List44 *arg1) {
         if (st == 2) {
             continue;
         }
-        obj = func_00450A00(arg0, eid);
+        obj = SFOLobby_FindAgentData(arg0, eid);
         if (obj == NULL || obj->active == 0) {
             continue;
         }
@@ -105,7 +105,7 @@ void func_0044EBD0(Lobby44 *arg0, List44 *arg1) {
                 String_Copy(msg.a, &D_004C0EF0);
                 String_Copy(msg.b, arg0->name);
                 msg.id = id;
-                func_0046A0E8(msg.a, func_00446AE0);
+                MediusGetGameInfo(msg.a, SFOLobby_Callback_RefreshGameInfo);
             }
         }
     }

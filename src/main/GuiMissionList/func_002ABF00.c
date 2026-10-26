@@ -10,15 +10,15 @@ typedef struct ObjAD {
     int unkCC;
 } ObjAD;
 
-extern void func_002AC070(ObjAD*);
+extern void GuiMissionList_UpdateSelectList(ObjAD*);
 
 /* Changes the mode byte; on change resets three cached indices and refreshes. */
-void func_002ABF00(ObjAD* o, unsigned char mode) {
+void GuiMissionList_SetSelectMode(ObjAD* o, unsigned char mode) {
     if (o->mode != mode) {
         o->mode = mode;
         o->unkCC = -1;
         o->unkC4 = -1;
         o->unkC0 = -1;
-        func_002AC070(o);
+        GuiMissionList_UpdateSelectList(o);
     }
 }

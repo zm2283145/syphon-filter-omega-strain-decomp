@@ -14,20 +14,20 @@
  */
 
 
-extern Rel* func_00393FD0(Rel* r);
-extern int func_00395EB0(Rel* r, int a1, int a2);
+extern Rel* std_vector_imp_cBoneScale_ctor(Rel* r);
+extern int std_vector_imp_cBone_init(Rel* r, int a1, int a2);
 
-/* Clears the record, then calls func_00395EB0 with the incoming a1/a2 unchanged. */
-Rel* func_00393F60(Rel* r, int a1, int a2) {
+/* Clears the record, then calls std_vector_imp_cBone_init with the incoming a1/a2 unchanged. */
+Rel* std_vector_imp_cBone_ctor(Rel* r, int a1, int a2) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
-    func_00395EB0(r, a1, a2);
+    std_vector_imp_cBone_init(r, a1, a2);
     return r;
 }
 
-RelFlag* func_00393FA0(RelFlag* r) {
-    func_00393FD0(&r->rel);
+RelFlag* cArray_cBoneScale_ctor(RelFlag* r) {
+    std_vector_imp_cBoneScale_ctor(&r->rel);
     r->flag = 1;
     return r;
 }
@@ -38,7 +38,7 @@ static inline void merge_flush_func_00393F60(void) {}
 
 /* merge_units: begin func_00393FD0 */
 #pragma push /* merge_units */
-Rel* func_00393FD0(Rel* r) {
+Rel* std_vector_imp_cBoneScale_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

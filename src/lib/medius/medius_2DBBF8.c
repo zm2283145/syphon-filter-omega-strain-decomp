@@ -20,11 +20,11 @@ typedef struct {
 
 extern void (*D_0048C488)(Msg *);
 extern int D_0048C48C;
-extern int func_002E6088(int);
-extern int func_002E52D8(unsigned int, int, Player **);
-extern int func_002E5550(unsigned int, int);
+extern int NetIsValidClientIndex(int);
+extern int NetGetClientInfo(unsigned int, int, Player **);
+extern int NetSetSessionMasterClientIndex(unsigned int, int);
 
-int func_002DBBF8(unsigned int slot, int self, int *out)
+int NetFindNextSessionMaster(unsigned int slot, int self, int *out)
 {
     Msg m;
     Player *pl = 0;
@@ -33,7 +33,7 @@ int func_002DBBF8(unsigned int slot, int self, int *out)
     int r, t;
     if (slot >= 4)
         return 0x17;
-    if (func_002E6088(self) != 1)
+    if (NetIsValidClientIndex(self) != 1)
         return 0x17;
     if (out == 0)
         return 0x17;
@@ -41,7 +41,7 @@ int func_002DBBF8(unsigned int slot, int self, int *out)
     for (i = 0; i < 0x100; i++) {
         if (self == i)
             continue;
-        r = func_002E52D8(slot, i, &pl);
+        r = NetGetClientInfo(slot, i, &pl);
         if (r)
             return r;
         if (pl && pl->state == 4 && (t = pl->f24) > 0 && t < best) {
@@ -50,13 +50,13 @@ int func_002DBBF8(unsigned int slot, int self, int *out)
         }
     }
     if (*out != 0x100) {
-        r = func_002E52D8(slot, *out, &pl);
+        r = NetGetClientInfo(slot, *out, &pl);
         if (r)
             return r;
         if (pl == 0)
             return 0;
         pl->state = 5;
-        func_002E5550(slot, *out);
+        NetSetSessionMasterClientIndex(slot, *out);
         if (D_0048C488) {
             m.slot = slot;
             m.id = *out;
@@ -88,78 +88,78 @@ typedef struct Codec {
 } Codec;
 
 extern int Net_AllocZeroed(void *, int);
-extern void func_002DC1F0(Codec *);
-extern int func_002DCA38(void);
-extern void func_002DCA50(void);
-extern void func_002DCA58(void);
-extern int func_002DCA60(void);
-extern int func_002DCA68(void);
-extern int func_0032E120(void);
-extern void func_0032E128(void);
-extern void func_0032E130(void);
-extern int func_0032E138(void);
-extern int func_0032E140(void);
-extern int func_00357128(void);
-extern void func_00357130(void);
-extern int func_00357138(void);
-extern int func_00357140(void);
-extern void func_00357148(void);
-extern int func_00316688(void);
-extern void func_00316690(void);
-extern int func_00316698(void);
-extern int func_003166A0(void);
-extern void func_003166A8(void);
+extern void DestroyCodec(Codec *);
+extern int stubCreate(void);
+extern void stubDestroy(void);
+extern void stubInit(void);
+extern int stubEncode(void);
+extern int stubDecode(void);
+extern int gsmCreate(void);
+extern void gsmDestroy(void);
+extern void gsmInit(void);
+extern int gsmEncode(void);
+extern int gsmDecode(void);
+extern int lpc10Create(void);
+extern void lpc10Init(void);
+extern int lpc10Encode(void);
+extern int lpc10Decode(void);
+extern void lpc10Destroy(void);
+extern int lpcCreate(void);
+extern void lpcInit(void);
+extern int lpcEncode(void);
+extern int lpcDecode(void);
+extern void lpcDestroy(void);
 
 #define SET_22() \
-        p->ctx = func_0032E120(); \
-        p->x20 = func_0032E130; \
-        p->x24 = func_0032E128; \
+        p->ctx = gsmCreate(); \
+        p->x20 = gsmInit; \
+        p->x24 = gsmDestroy; \
         p->inBlk = 0x140; \
         p->outBlk = 0x21; \
         p->x10 = 0x140; \
         p->x14 = 0x140; \
         p->x18 = 0x140; \
         p->x1C = 0x140; \
-        p->fn = func_0032E138; \
-        p->fn2 = func_0032E140
+        p->fn = gsmEncode; \
+        p->fn2 = gsmDecode
 #define SET_23() \
-        p->ctx = func_00357128(); \
-        p->x20 = func_00357130; \
-        p->x24 = func_00357148; \
+        p->ctx = lpc10Create(); \
+        p->x20 = lpc10Init; \
+        p->x24 = lpc10Destroy; \
         p->inBlk = 0x168; \
         p->outBlk = 7; \
         p->x10 = 0x168; \
         p->x14 = 0x168; \
         p->x18 = 0x168; \
         p->x1C = 0x168; \
-        p->fn = func_00357138; \
-        p->fn2 = func_00357140
+        p->fn = lpc10Encode; \
+        p->fn2 = lpc10Decode
 #define SET_24() \
-        p->ctx = func_00316688(); \
-        p->x20 = func_00316690; \
-        p->x24 = func_003166A8; \
+        p->ctx = lpcCreate(); \
+        p->x20 = lpcInit; \
+        p->x24 = lpcDestroy; \
         p->inBlk = 0x140; \
         p->outBlk = 8; \
         p->x10 = 0x140; \
         p->x14 = 0x140; \
         p->x18 = 0x140; \
         p->x1C = 0x140; \
-        p->fn = func_00316698; \
-        p->fn2 = func_003166A0
+        p->fn = lpcEncode; \
+        p->fn2 = lpcDecode
 #define SET_21() \
-        p->ctx = func_002DCA38(); \
-        p->x20 = func_002DCA58; \
-        p->x24 = func_002DCA50; \
+        p->ctx = stubCreate(); \
+        p->x20 = stubInit; \
+        p->x24 = stubDestroy; \
         p->inBlk = 0; \
         p->outBlk = 0; \
         p->x10 = 0; \
         p->x14 = 0; \
         p->x18 = 0; \
         p->x1C = 0; \
-        p->fn = func_002DCA60; \
-        p->fn2 = func_002DCA68
+        p->fn = stubEncode; \
+        p->fn2 = stubDecode
 
-Codec *func_002DBD58(int owner, int type, int mode)
+Codec *CreateCodec(int owner, int type, int mode)
 {
     Codec *p = 0;
 
@@ -185,11 +185,11 @@ Codec *func_002DBD58(int owner, int type, int mode)
         case 0x3F: SET_21(); break;
         }
     } else {
-        func_002DC1F0(p);
+        DestroyCodec(p);
         p = 0;
     }
     if (p != 0 && p->ctx == 0) {
-        func_002DC1F0(p);
+        DestroyCodec(p);
         p = 0;
     }
     return p;

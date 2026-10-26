@@ -3,18 +3,18 @@ typedef struct TimBlk { struct TimBlk *next; char pad[0x3C]; } TimBlk;
 unsigned int D_00487848[2] = { 0x0, 0x0 };
 extern TimBlk D_004E76C0[];
 extern void *memset(void *, int, unsigned int);
-extern void func_00117D68(void);
-extern void func_00117040(void);
+extern void _InitAlarm(void);
+extern void cbTimerHandler(void);
 extern int AddIntcHandler2(int, void *, int, int);
 extern int RemoveIntcHandler(int, int);
 extern int DIntr(void);
 extern void EIntr(void);
-extern void func_00116A70(int);
-extern void func_00116A80(unsigned int);
-extern void func_00116A90(int);
+extern void SetT2_COUNT(int);
+extern void SetT2_MODE(unsigned int);
+extern void SetT2_COMP(int);
 extern int Alloc_Lock(int);
 extern int Alloc_Unlock(int);
-int func_00116AA0(unsigned int mode)
+int InitTimer(unsigned int mode)
 {
     int i, id, s;
     unsigned int v;
@@ -25,8 +25,8 @@ int func_00116AA0(unsigned int mode)
     (*(TimCtl*)D_00487848).buf = D_004E76C0;
     for (i = 0x7F; i >= 0; i--) D_004E76C0[i].next = &D_004E76C0[i + 1];
     D_004E76C0[0x7F].next = 0;
-    func_00117D68();
-    id = AddIntcHandler2(11, func_00117040, 0, 0);
+    _InitAlarm();
+    id = AddIntcHandler2(11, cbTimerHandler, 0, 0);
     if (id < 0) return 0x80009021;
     (*(TimCtl*)D_00487848).id = id;
     s = DIntr();
@@ -34,11 +34,11 @@ int func_00116AA0(unsigned int mode)
     v = (v & ~3) | mode;
     v |= 0x300;
     if (!(v & 0x80)) {
-        func_00116A70(0);
+        SetT2_COUNT(0);
         v |= 0xC80;
-        func_00116A90(0xFFFF);
+        SetT2_COMP(0xFFFF);
     }
-    func_00116A80(v);
+    SetT2_MODE(v);
     Alloc_Unlock(11);
     if (s) EIntr();
     return 0;

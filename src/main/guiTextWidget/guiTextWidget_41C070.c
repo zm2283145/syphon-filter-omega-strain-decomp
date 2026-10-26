@@ -51,7 +51,7 @@ static inline void merge_flush_func_0041C0D0(void) {}
 /* merge_units: begin func_0041C0F0 */
 #pragma push /* merge_units */
 /* Copy the state byte to the optional child widget. */
-void func_0041C0F0(GuiTextStateOwnerF0* self, unsigned char state)
+void GuiTextWidget_SetDisableWrap(GuiTextStateOwnerF0* self, unsigned char state)
 {
     self->state = state;
     if (self->child)

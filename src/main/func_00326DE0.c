@@ -15,7 +15,7 @@ int Loc_LookupText(char*);
 void String_Copy(char*, char*);
 int GuiSlideShow_AddSlide(Menu6DE0*, int, char*, int, char*);
 void GuiSlideShow_AddCategory(Menu6DE0*, int);
-void func_0032A280(void*);
+void std_vector_deleter_Section_clear(void*);
 int AgentData_HasZeus(int, int, int, int);
 int Hog_FindFileNoCase(int, char*, int);
 int sprintf(char*, const char*, ...);
@@ -30,7 +30,7 @@ void GuiSlideShow_Load(Menu6DE0* self, int cat, int selIdx, int selVal, int flag
     int r;
     char buf[32];
     char buf2[16];
-    func_0032A280(self->list);
+    std_vector_deleter_Section_clear(self->list);
     self->sel = -1;
     if (cat <= 0 || cat > 18) return;
     db = D_004FFC04->db;

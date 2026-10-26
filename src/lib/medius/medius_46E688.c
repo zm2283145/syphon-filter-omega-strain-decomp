@@ -9,7 +9,7 @@
 int D_00497E40 = 0;
 int D_00497E44 = 0;
 
-int func_0046E688(void) {
+int MediusUtilAddGameWorldResponseHandler(void) {
     int v0;
     int cond;
 
@@ -24,11 +24,11 @@ ret:
     return v0;
 }
 
-int func_0046E6B8(void) {
+int MediusUtilUpdateLobbyWorldRequestHandler(void) {
     return 32;
 }
 
-int func_0046E6C0(void) {
+int MediusUtilUpdateLobbyWorldResponseHandler(void) {
     int v0;
     int cond;
 

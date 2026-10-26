@@ -20,7 +20,7 @@
 #pragma cplusplus on
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR(func_00137580)
+DEFINE_BUF_HOLDER_DTOR(std_vector_tVUMNamePairPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00137580 */
 
@@ -29,6 +29,6 @@ DEFINE_BUF_HOLDER_DTOR(func_00137580)
 #pragma cplusplus on
 
 /* Deleting destructor around an out-of-line base destructor. */
-DEFINE_NESTED_NULL_DTOR2(func_00137670, func_001376D0)
+DEFINE_NESTED_NULL_DTOR2(cLList_cHogFile_dtor, std_list_imp_cHogFile_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00137670 */

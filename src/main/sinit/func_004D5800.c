@@ -1,7 +1,7 @@
 #include "types.h"
 extern char D_00542D10[];
-extern void func_003C8550();
-void func_004D5800(void)
+extern void cVU0Man_ctor();
+void StaticInit_vu0man(void)
 {
-    func_003C8550((int)D_00542D10);
+    cVU0Man_ctor((int)D_00542D10);
 }

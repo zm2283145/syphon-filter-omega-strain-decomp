@@ -6,8 +6,8 @@ extern "C" {
 extern char D_004D9DE0[];
 extern "C" void ScriptEvent_Destruct();
 extern "C" void ScriptEvent_Execute();
-extern "C" void func_00177E20();
-void * const D_004E00C0[8] = { (void*)0x0, (void*)0x0, (void*)ScriptEvent_Destruct, (void*)func_00177E20, (void*)ScriptEvent_Execute, (void*)0x0, (void*)0x0, (void*)0x0 };
+extern "C" void cCBData_IsReferencing();
+void * const D_004E00C0[8] = { (void*)0x0, (void*)0x0, (void*)ScriptEvent_Destruct, (void*)cCBData_IsReferencing, (void*)ScriptEvent_Execute, (void*)0x0, (void*)0x0, (void*)0x0 };
 extern char D_004BD4C0[];
 void* Mem_Alloc(int, int, char*, int);
 void* memcpy(void*, const void*, unsigned int);

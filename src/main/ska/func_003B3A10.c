@@ -20,8 +20,8 @@ struct T {
     int f20, f24; unsigned char f28, f29; char pad2a[2];
     float f2c, f30, f34, f38, f3c; int f40; unsigned char f44, f45, f46;
 };
-extern "C" T* func_003B3A10(T* d, T* s, int a2, unsigned char a3);
-T* func_003B3A10(T* d, T* s, int a2, unsigned char a3)
+extern "C" T* cSkaAnim_ctor_cSkaAnimR_int_eAxisOfMotion(T* d, T* s, int a2, unsigned char a3);
+T* cSkaAnim_ctor_cSkaAnimR_int_eAxisOfMotion(T* d, T* s, int a2, unsigned char a3)
 {
     Qt b(Ident());
     d->vt = D_004DFC50;

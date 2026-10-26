@@ -8,21 +8,21 @@ extern "C" {
 extern "C" {
 static const unsigned int dat_00497580[2] = { 0x1, 0x0 };
 }
-extern "C" void func_0043A420(void* self, int* key)
+extern "C" void cGenInfoObject_Activate(void* self, int* key)
 {
     NetOwnEnt* e = NetOwn_Find(*key);
     if (e && NET_OWN_LACKS(e->hi, 1 << NetLocalId())) {
         NetOwnIt it; NetOwnIt end; NetOwnIt end2; NetOwnIt t;
         NetOwnHdl* h;
-        func_00439380(&t, D_00583900);
+        std_tree_pair_tGenInfoPtr_value_compare_begin(&t, D_00583900);
         it = t;
-        while (func_00439360(&end, func_00439370(D_00583900)),
+        while (cAssocArray_tGenInfoPtr_bool_Iterator_ctor(&end, std_map_tGenInfoPtr_bool_end(D_00583900)),
                NetOwn_Ne(&it, &end)) {
             NetOwnVal* v = &it.node->v;
             if (v->first->key == *key) { v->second = (1); break; }
             Tree_Successor(&it);
         }
-        func_00439360(&end2, func_00439370(D_00583900));
+        cAssocArray_tGenInfoPtr_bool_Iterator_ctor(&end2, std_map_tGenInfoPtr_bool_end(D_00583900));
         if (it.node == end2.node) {
             NetOwnEnt* n; char res[8]; NetOwnVal pv;
             NET_OWN_SET(e->hi, 1 << NetLocalId());
@@ -33,8 +33,8 @@ extern "C" void func_0043A420(void* self, int* key)
             if (n) { n->key = *key; n->lo = 0xF; n->hi = 0; }
             pv.first = n;
             pv.second = (*(unsigned char*)dat_00497580);
-            func_0043B340(res, D_00583900, &pv);
-            func_002EB650(&h, D_00497578);
+            std_tree_pair_tGenInfoPtr_value_compare_insert_one(res, D_00583900, &pv);
+            NetGetObject(&h, D_00497578);
             if (h->owner == NetLocalId())
                 func_00439390(NetLocalId(), D_00497578, -2);
         }

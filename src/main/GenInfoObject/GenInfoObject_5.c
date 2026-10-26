@@ -10,7 +10,7 @@
 #include "types.h"
 #include "alloc_guard.h"
 extern "C" { extern char D_004BFDB0[]; void Mem_Free(int pool, void* p, char* file, int line); }
-extern "C" void func_0043B910(void* tree, void* node)
+extern "C" void cAllocator_node_deallocate_nodeP_uint_18(void* tree, void* node)
 {
     if (node) {
         AllocGuard guard;
@@ -29,18 +29,18 @@ extern "C" void func_0043B910(void* tree, void* node)
  */
 
 
-void* func_0043B9B0(char* self) {
+void* std_tree_pair_tGenInfoPtr_value_compare_node_alloc(char* self) {
     return self + 4;
 }
 
-void func_0043B9C0(void) {
+void cAllocator_pair_tGenInfoPtr_destroy(void) {
 }
 
-void* func_0043B9D0(void* self) {
+void* std_tree_pair_tGenInfoPtr_value_compare_alloc(void* self) {
     return self;
 }
 
-Map* func_0043B9E0(Map* m, unsigned char* cmp) {
+Map* std_tree_pair_tGenInfoPtr_value_compare_ctor(Map* m, unsigned char* cmp) {
     m->count = 0;
     m->head = 0;
     m->cmp = *cmp;
@@ -53,13 +53,13 @@ Map* func_0043B9E0(Map* m, unsigned char* cmp) {
 /* merge_units: begin func_0043BA00 */
 #pragma push /* merge_units */
 typedef struct { int m0; void* m4; } R1Tree_0043BA00;
-extern void func_0043B410(R1Tree_0043BA00* t, void* n);
+extern void std_tree_pair_tGenInfoPtr_value_compare_destroy(R1Tree_0043BA00* t, void* n);
 extern void operator_delete(void* p);
-R1Tree_0043BA00* func_0043BA00(R1Tree_0043BA00* t, short del)
+R1Tree_0043BA00* std_tree_pair_tGenInfoPtr_value_compare_dtor(R1Tree_0043BA00* t, short del)
 {
     if (t) {
         if (t->m4)
-            func_0043B410(t, t->m4);
+            std_tree_pair_tGenInfoPtr_value_compare_destroy(t, t->m4);
         if (del > 0)
             operator_delete(t);
     }
@@ -73,22 +73,22 @@ R1Tree_0043BA00* func_0043BA00(R1Tree_0043BA00* t, short del)
 typedef struct { int m0; void* m4; } R1Tree_0043BA60;
 typedef struct { R1Tree_0043BA60 tree; } R1Own_0043BA60;
 #if 0 /* merge_units */
-extern void func_0043BA00(R1Tree_0043BA60* t, short del);
+extern void std_tree_pair_tGenInfoPtr_value_compare_dtor(R1Tree_0043BA60* t, short del);
 #endif /* merge_units */
-#define func_0043BA00(a0, a1) ((void)func_0043BA00((R1Tree_0043BA00 *)(a0), (a1))) /* merge_units */
+#define std_tree_pair_tGenInfoPtr_value_compare_dtor(a0, a1) ((void)std_tree_pair_tGenInfoPtr_value_compare_dtor((R1Tree_0043BA00 *)(a0), (a1))) /* merge_units */
 
-R1Own_0043BA60* func_0043BA60(R1Own_0043BA60* o, short del)
+R1Own_0043BA60* cAssocArray_tGenInfoPtr_bool_dtor(R1Own_0043BA60* o, short del)
 {
     if (o) {
         R1Tree_0043BA60* t = &o->tree;
         if (t)
-            func_0043BA00(t, -1);
+            std_tree_pair_tGenInfoPtr_value_compare_dtor(t, -1);
         if (del > 0)
             operator_delete(o);
     }
     return o;
 }
-#undef func_0043BA00 /* merge_units */
+#undef std_tree_pair_tGenInfoPtr_value_compare_dtor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0043BA60 */
 
@@ -98,7 +98,7 @@ R1Own_0043BA60* func_0043BA60(R1Own_0043BA60* o, short del)
 #include "base_dtor_chain.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_0043BAC0, func_00135C90)
+DEFINE_BASE_DTOR_CHAIN(cLList_tGenInfoPtr_dtor, func_00135C90)
 #pragma pop /* merge_units */
 /* merge_units: end func_0043BAC0 */
 
@@ -108,7 +108,7 @@ DEFINE_BASE_DTOR_CHAIN(func_0043BAC0, func_00135C90)
 #include "vtable_base_dtor.h"
 
 extern "C" {
-extern "C" void func_00293950();
+extern "C" void GuiWidget_onInput();
 extern "C" void GuiWidget_FocusPrev();
 extern "C" void GuiWidget_FocusNext();
 extern "C" void GuiWidget_FocusLast();
@@ -141,6 +141,6 @@ extern "C" VtableObject* GuiScrollBarWidget_dtor(VtableObject* self, short delet
     }
     return self;
 }
-void * const D_004E0F40[24] = { (void*)0x0, (void*)0x0, (void*)GuiScrollBarWidget_dtor, (void*)GuiScrollBarWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiScrollBarWidget_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_00293950, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiScrollBarWidget_GetClassName, (void*)GuiScrollBarWidget_IsType, (void*)0x0 };
+void * const D_004E0F40[24] = { (void*)0x0, (void*)0x0, (void*)GuiScrollBarWidget_dtor, (void*)GuiScrollBarWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiScrollBarWidget_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiWidget_onInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiScrollBarWidget_GetClassName, (void*)GuiScrollBarWidget_IsType, (void*)0x0 };
 #pragma pop /* merge_units */
 /* merge_units: end func_0043BB20 */

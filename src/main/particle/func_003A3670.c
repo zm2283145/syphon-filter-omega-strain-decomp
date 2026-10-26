@@ -2,7 +2,7 @@
 #pragma inline_depth(8)
 #include "types.h"
 #include "alloc_guard.h"
-/* func_003A3670: destroy every loaded particle definition (releasing its texture), empty the list, free the four shared buffers */
+/* cParticleSystem_Clear: destroy every loaded particle definition (releasing its texture), empty the list, free the four shared buffers */
 struct PDef { virtual void Destroy(int flags); char pad4[0x74 - 4]; int tex; };
 typedef struct PNode { struct PNode* prev; struct PNode* next; PDef* d; } PNode;
 union PItU { PNode* n; };
@@ -14,17 +14,17 @@ extern "C" {
 extern int g_TextureMgr;
 extern PBuf D_0053B560[4];
 extern char D_004BC5D0[];
-void func_003A3900(PIt* out, PList* l);
-PIt* func_003A38F0(PIt* dst, PIt* src);
-void func_003A3890(PIt* out, PList* l);
+void std_list_cParticleDefinitionPtr_begin_void_2(PIt* out, PList* l);
+PIt* cLListIterator_cParticleDefinitionPtr_ctor(PIt* dst, PIt* src);
+void std_list_cParticleDefinitionPtr_end_void_2(PIt* out, PList* l);
 void ObjectList_EraseRange(PIt* out, PList* l, PIt* first, PIt* last);
 void Tex_Release(int a, int b, int c);
 void Mem_Free(int pool, void* p, char* file, int line);
-void func_003A3670(PLib* lib);
+void cParticleSystem_Clear(PLib* lib);
 }
-static inline void Begin_(PIt* out, PList* l) { PIt t; func_003A3900(&t, l); func_003A38F0(out, &t); }
-static inline void End_(PIt* out, PList* l) { PIt t; func_003A3890(&t, l); func_003A38F0(out, &t); }
-void func_003A3670(PLib* lib)
+static inline void Begin_(PIt* out, PList* l) { PIt t; std_list_cParticleDefinitionPtr_begin_void_2(&t, l); cLListIterator_cParticleDefinitionPtr_ctor(out, &t); }
+static inline void End_(PIt* out, PList* l) { PIt t; std_list_cParticleDefinitionPtr_end_void_2(&t, l); cLListIterator_cParticleDefinitionPtr_ctor(out, &t); }
+void cParticleSystem_Clear(PLib* lib)
 {
     PItU it;
     PIt b;

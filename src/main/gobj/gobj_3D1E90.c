@@ -52,7 +52,7 @@ extern "C" Obj* UvScrollAnim_Construct(Obj* self, float* pos, int a2, int a3, in
 #pragma push /* merge_units */
 typedef struct { char pad[0x10]; void* vt; } T1F00;
 extern void operator_delete(void* p);
-T1F00* func_003D1F00(T1F00* self, short del)
+T1F00* cAnimTexture_dtor(T1F00* self, short del)
 {
     if (self) {
         self->vt = D_004E0080;
@@ -71,15 +71,15 @@ T1F00* func_003D1F00(T1F00* self, short del)
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
 int Tex_GetRecord(int, int);                        
-int func_003797D0(char *);                             
-int func_003D20F0(char *, int);                        
-int func_003D2110(char *, int);                          
-int func_003D2120(char *);                               
-int func_003D2140(int);                             
-int func_003D2150(char * );                          
-void **func_003D2160(char *);                          
-int func_003D2170(char *, char *);                        
-int func_003D2180(char *, int);                          
+int XLib_GetTexMan(char *);                             
+int opNe_cConstLListIteratorR_cConstLListIteratorR_5(char *, int);                        
+int cLList_cAnimTexturePtr_End(char *, int);                          
+int cConstLListIterator_cAnimTexturePtr_opInc(char *);                               
+int cTexture_GetName(int);                             
+int cAnimTexture_GetTextureId(char * );                          
+void **cConstLListIterator_cAnimTexturePtr_opMul(char *);                          
+int cConstLListIterator_cAnimTexturePtr_ctor(char *, char *);                        
+int cLList_cAnimTexturePtr_Begin(char *, int);                          
 int strcmp(int, int);                                 
 extern char g_Video;
 extern char * g_TextureMgr;
@@ -97,19 +97,19 @@ void Global_SetTexture(int arg0, int arg1, unsigned int arg2) {
     int temp_s2;
 
     var_s0 = NULL;
-    func_003D2180(&sp78, arg0);
-    func_003D2170(&sp7C, &sp78);
-    func_003D2110(&sp70, arg0);
-    if (func_003D20F0(&sp7C, func_003D2170(&sp74, &sp70)) != 0) {
+    cLList_cAnimTexturePtr_Begin(&sp78, arg0);
+    cConstLListIterator_cAnimTexturePtr_ctor(&sp7C, &sp78);
+    cLList_cAnimTexturePtr_End(&sp70, arg0);
+    if (opNe_cConstLListIteratorR_cConstLListIteratorR_5(&sp7C, cConstLListIterator_cAnimTexturePtr_ctor(&sp74, &sp70)) != 0) {
 loop_2:
-        temp_s3 = *func_003D2160(&sp7C);
-        temp_s2 = func_003797D0(&g_Video);
-        if (strcmp(func_003D2140(Tex_GetRecord(temp_s2, func_003D2150(temp_s3))), arg1) == 0) {
+        temp_s3 = *cConstLListIterator_cAnimTexturePtr_opMul(&sp7C);
+        temp_s2 = XLib_GetTexMan(&g_Video);
+        if (strcmp(cTexture_GetName(Tex_GetRecord(temp_s2, cAnimTexture_GetTextureId(temp_s3))), arg1) == 0) {
             var_s0 = temp_s3;
         } else {
-            func_003D2120(&sp7C);
-            func_003D2110(&sp70, arg0);
-            if (func_003D20F0(&sp7C, func_003D2170(&sp74, &sp70)) == 0) {
+            cConstLListIterator_cAnimTexturePtr_opInc(&sp7C);
+            cLList_cAnimTexturePtr_End(&sp70, arg0);
+            if (opNe_cConstLListIteratorR_cConstLListIteratorR_5(&sp7C, cConstLListIterator_cAnimTexturePtr_ctor(&sp74, &sp70)) == 0) {
 
             } else {
                 goto loop_2;

@@ -13,7 +13,7 @@ Rel* func_004588C0(Rel* r) {
     return r;
 }
 
-Rel* func_004588E0(Rel* r) {
+Rel* std_vector_cLList_TextAtomPtr_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

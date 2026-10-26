@@ -14,10 +14,10 @@ typedef struct {
     unsigned char flag;     /* +0xC0 */
 } RecC0;
 extern void AnimRoot_CopyRegion_3B6F10(Part50* dst, Part50* src);
-extern void func_001C50A0(void* dst, void* src);
+extern void std_vector_pod_int_opAssign(void* dst, void* src);
 
 /* Copy: both parts, three bytes, a word, the sub-object and the flag; returns dst. */
-RecC0* func_003B6E90(RecC0* dst, RecC0* src)
+RecC0* cTreeNode_cSkaAnimAnchor_TreeNodeData_opAssign(RecC0* dst, RecC0* src)
 {
     unsigned char c0, c1, c2;
     AnimRoot_CopyRegion_3B6F10(&dst->a, &src->a);
@@ -29,7 +29,7 @@ RecC0* func_003B6E90(RecC0* dst, RecC0* src)
     dst->c[1] = c1;
     dst->c[2] = c2;
     dst->value = src->value;
-    func_001C50A0(dst->sub, src->sub);
+    std_vector_pod_int_opAssign(dst->sub, src->sub);
     dst->flag = src->flag;
     return dst;
 }

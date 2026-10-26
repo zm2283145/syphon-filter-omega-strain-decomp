@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-Map* func_001DF780(Map* m, unsigned char* cmp) {
+Map* std_tree_pair_cWeaponSlotPair_value_compare_ctor(Map* m, unsigned char* cmp) {
     m->count = 0;
     m->head = 0;
     m->cmp = *cmp;

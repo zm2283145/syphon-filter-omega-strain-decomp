@@ -2,7 +2,7 @@
 #include "types.h"
 #pragma always_inline on
 #pragma inline_depth(8)
-/* func_003747A0: the LightMgr constructor (g_LightMgr, func_004D5140.c): bounds set to the
+/* cLightMan_ctor: the LightMgr constructor (g_LightMgr, StaticInit_lights.c): bounds set to the
  * inverted extreme box, the scratchpad light table at 0x70000000, everything else cleared,
  * then the per-frame Reset. Returns the object as a constructor does (retail's move v0,a0). */
 static inline void Q1(void* d, const void* s) { __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(t) : "r"(d), "r"(s) : "memory"); }
@@ -46,7 +46,7 @@ struct LightMgr {
     V x2240;
     void Reset();
 };
-extern "C" LightMgr* func_003747A0(LightMgr* m);
+extern "C" LightMgr* cLightMan_ctor(LightMgr* m);
 
 inline void LightMgr::Reset()
 {
@@ -67,7 +67,7 @@ inline void LightMgr::Reset()
     x2240 = V(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
-extern "C" LightMgr* func_003747A0(LightMgr* m)
+extern "C" LightMgr* cLightMan_ctor(LightMgr* m)
 {
     int i;
     int j;

@@ -3,23 +3,23 @@
 #include "guiTextListWidget_types.h"
 
 extern "C" {
-int func_00421280(TextListEntryVec* entries);
-TextListEntry* func_00421260(TextListEntryVec* entries, int index);
-TextListEntry* func_00421210(TextListEntry* destination, TextListEntry* source);
-void func_004211C0(TextListEntryVec* entries);
+int cArray_Item_Size(TextListEntryVec* entries);
+TextListEntry* std_vector_Item_opIndex(TextListEntryVec* entries, int index);
+TextListEntry* GuiTextListWidget_Item_opAssign(TextListEntry* destination, TextListEntry* source);
+void cArray_Item_PopBack(TextListEntryVec* entries);
 void GuiArrayWidget_Select(TextRenderWidget* self, int first, int second);
 }
 
 static inline void erase_entry(TextListEntryVec* entries, int index)
 {
-    int count = func_00421280(entries);
+    int count = cArray_Item_Size(entries);
     if (index >= 0 && index < count) {
         for (int next = index + 1; next < count; ++next) {
-            TextListEntry* destination = func_00421260(entries, next - 1);
-            TextListEntry* source = func_00421260(entries, next);
-            func_00421210(destination, source);
+            TextListEntry* destination = std_vector_Item_opIndex(entries, next - 1);
+            TextListEntry* source = std_vector_Item_opIndex(entries, next);
+            GuiTextListWidget_Item_opAssign(destination, source);
         }
-        func_004211C0(entries);
+        cArray_Item_PopBack(entries);
     }
 }
 

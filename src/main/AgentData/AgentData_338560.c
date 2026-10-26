@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-void func_00338560(PtrVec* a, PtrVec* b) {
+void std_swap_vectordeleterR_vectordeleterR_30(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;
         int* p;
@@ -41,6 +41,6 @@ void func_00338560(PtrVec* a, PtrVec* b) {
 
 struct E_003385A0 { int m0; int m1; char m2; int m3; int m4; int m5; };
 static char D_004B9938[] = "allocator.hh";
-DEFINE_VECTOR_INSERT_FILL_CNT(func_003385A0, E_003385A0, 0x400000, 0x200000, D_004B9320, D_004B9938, 0x5C, func_00338B20, void func_0033B590(func_003385A0_V* v, int flags);, func_0033B590(&tmp, -1), VIFC_ASSIGN, VIFC_COPY)
+DEFINE_VECTOR_INSERT_FILL_CNT(std_vector_imp_RatingRecord_insert, E_003385A0, 0x400000, 0x200000, D_004B9320, D_004B9938, 0x5C, std_swap_vectordeleterR_vectordeleterR_31, void std_vector_deleter_RatingRecord_dtor(std_vector_imp_RatingRecord_insert_V* v, int flags);, std_vector_deleter_RatingRecord_dtor(&tmp, -1), VIFC_ASSIGN, VIFC_COPY)
 #pragma pop /* merge_units */
 /* merge_units: end func_003385A0 */

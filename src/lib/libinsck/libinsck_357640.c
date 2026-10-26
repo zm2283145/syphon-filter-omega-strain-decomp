@@ -7,7 +7,7 @@
 /* merge_units: begin func_00357640 */
 extern unsigned int func_00357150(void);
 
-unsigned int func_00357640(void)
+unsigned int sceInsockInetNetof(void)
 {
     unsigned int v = func_00357150();
     if ((v & 0x80000000) == 0) return v >> 24;
@@ -35,7 +35,7 @@ static inline int is_xdigit(char c)
     return r;
 }
 
-unsigned int func_00357680(char *cp)
+unsigned int sceInsockInetNetwork(char *cp)
 {
     int val; unsigned int base;
     unsigned int n, i;
@@ -90,12 +90,12 @@ again:
 /* merge_units: begin func_00357840 */
 typedef struct { unsigned long long a,b; unsigned short c; } S7840;
 extern S7840 D_005335C0;
-extern int func_003578A0(int,int*,S7840*,int);
-S7840 *func_00357840(int x) {
+extern int sceInsockInetNtop(int,int*,S7840*,int);
+S7840 *sceInsockInetNtoa(int x) {
  int v[1];
  __builtin_memcpy(&D_005335C0,((S7840*)"[inet_ntoa error]"),18);
  v[0]=x;
- func_003578A0(2,v,&D_005335C0,0x12);
+ sceInsockInetNtop(2,v,&D_005335C0,0x12);
  return &D_005335C0;
 }
 /* merge_units: end func_00357840 */

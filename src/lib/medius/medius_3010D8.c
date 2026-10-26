@@ -5,7 +5,7 @@
  */
 
 /* merge_units: begin func_003010D8 */
-int func_003010D8(int *out, unsigned char v)
+int rt_msg_client_map_reject_reason(int *out, unsigned char v)
 {
     if (out == 0) return 2;
     switch (v) {
@@ -23,7 +23,7 @@ int func_003010D8(int *out, unsigned char v)
 /* merge_units: end func_003010D8 */
 
 /* merge_units: begin func_00301190 */
-int func_00301190(int *out, unsigned char v)
+int rt_msg_client_map_fdisconnect_reason(int *out, unsigned char v)
 {
     if (out == 0) return 2;
     switch (v) {

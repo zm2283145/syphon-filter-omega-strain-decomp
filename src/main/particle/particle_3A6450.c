@@ -27,19 +27,19 @@ void func_003A6450(void) {
 /* Fatal path: reset the IOP, wait until it is back, then hang. */
 extern int D_004934C8;
 extern void WaitSema(void);
-extern void func_0010D0D0(int a);
-extern int func_00113D88(const char* path, int mode, int a2, int a3, int t0, int t1);
-extern int func_00119CD8(int* status);
+extern void SuspendThread_2(int a);
+extern int sceDevctl(const char* path, int mode, int a2, int a3, int t0, int t1);
+extern int sceCdPowerOff(int* status);
 
-void func_003A6460(void)
+void SFOPowerOffThread(void)
 {
     int status;
     WaitSema();
-    func_0010D0D0(D_004934C8);
-    while (func_00113D88("dev9x:", 0x4402, 0, 0, 0, 0) < 0)
+    SuspendThread_2(D_004934C8);
+    while (sceDevctl("dev9x:", 0x4402, 0, 0, 0, 0) < 0)
         ;
     do {
-        while (!func_00119CD8(&status))
+        while (!sceCdPowerOff(&status))
             ;
     } while (status != 0);
     for (;;)
@@ -51,14 +51,14 @@ void func_003A6460(void)
 /* merge_units: begin func_003A64F0 */
 #pragma push /* merge_units */
 extern void LibInit_LoadIrxModule(void* a, int b, void* c, int d);
-extern void func_002B4D08(int a);
-extern void func_002B5070(int a);
+extern void sceMc2Init(int a);
+extern void sceMc2ChangeThreadPriority(int a);
 /* Startup sequence. */
 void Iop_LoadMcUsbModules(void)
 {
     LibInit_LoadIrxModule("MC2_S1.IRX", 0, 0, 1);
-    func_002B4D08(0);
-    func_002B5070(1);
+    sceMc2Init(0);
+    sceMc2ChangeThreadPriority(1);
     LibInit_LoadIrxModule("USBD.IRX", 0, 0, 1);
     LibInit_LoadIrxModule("USBKB.IRX", 0x10, "keybd=1\0debug=0", 1);
 }
@@ -69,17 +69,17 @@ void Iop_LoadMcUsbModules(void)
 #pragma push /* merge_units */
 extern void LibInit_LoadIrxModule(void* obj, int a, void* b, int c);
 extern void sceDbcInit(void);
-extern void func_003A8A90(int flag);
+extern void snd_StartSoundSystemEx(int flag);
 extern const unsigned int D_004BC700[];
 
-/* Initializes four subsystems in order, then calls func_003A8A90(1). */
+/* Initializes four subsystems in order, then calls snd_StartSoundSystemEx(1). */
 void Iop_LoadPadSoundModules(void) {
     LibInit_LoadIrxModule("DS2U_S1.IRX", 0, 0, 1);
     sceDbcInit();
     LibInit_LoadIrxModule("LIBSD.IRX", 0, 0, 1);
     LibInit_LoadIrxModule("SDRDRV.IRX", 0, 0, 1);
     LibInit_LoadIrxModule("989NOMID.IRX", 0x23, ((char*)D_004BC700), 1);
-    func_003A8A90(1);
+    snd_StartSoundSystemEx(1);
 }
 const unsigned int D_004BC700[10] = { 0x65727473, 0x705F6D61, 0x726F6972, 0x3D797469, 0x72003931, 0x705F6370, 0x726F6972, 0x3D797469, 0x3731, 0x0 };
 #pragma pop /* merge_units */
@@ -100,17 +100,17 @@ extern unsigned char D_0053BBB0;
 extern int LibInitModules(int);
 extern int Overlay_Load(int);
 extern int Mem_Init(void);
-extern int func_00375E50(void* mgr, int a1, int a2, int a3);
+extern int cDmaMan_Init(void* mgr, int a1, int a2, int a3);
 
-int func_003A65F0(int a0) {
+int SFOLibInit(int a0) {
     Mem_Init();
     LibInitModules(a0);
-    func_00375E50(D_00537F80, 13312, 1075200, 204800);
+    cDmaMan_Init(D_00537F80, 13312, 1075200, 204800);
     return Overlay_Load(1);
 }
 
 /* Set the byte flag D_0053BBB0 and return its previous value. */
-int func_003A6650(int value) {
+int SFOLibInit_RequestCancel(int value) {
     unsigned char old;
 
     old = D_0053BBB0;
@@ -118,7 +118,7 @@ int func_003A6650(int value) {
     return old;
 }
 
-int func_003A6670(int overlay) {
+int SFOLibInit_RequestOverlay(int overlay) {
     return Overlay_Load(overlay);
 }
 #pragma pop /* merge_units */

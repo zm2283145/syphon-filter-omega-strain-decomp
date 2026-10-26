@@ -1,7 +1,7 @@
-float func_00323660(float);
+float NellyLog2(float);
 
 
-void func_00317D08(float* out, int count, float step)
+void NellyLinearInterpolate(float* out, int count, float step)
 {
     float buf[328];
     float* vals;
@@ -20,12 +20,12 @@ void func_00317D08(float* out, int count, float step)
     t = 0.0f;
     for (i = 0; i < n; i++) {
         int k = (int)(t + 0.5f);
-        vals[i] = func_00323660(out[k]);
+        vals[i] = NellyLog2(out[k]);
         idx[i] = k;
         pos[i] = t;
         t += step;
     }
-    vals[n] = func_00323660(out[count - 1]);
+    vals[n] = NellyLog2(out[count - 1]);
     idx[n] = count;
     pos[n] = (float)(count - 1);
     for (i = 1; i < n + 1; i++) {

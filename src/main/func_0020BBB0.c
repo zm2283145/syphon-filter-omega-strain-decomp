@@ -4,11 +4,11 @@
 #pragma push
 #pragma optimization_level 1
 
-extern void func_0020BBD0(void* obj);
+extern void details_compressed_pair_imp_cAllocator_cSkaSwitchItem_int_1_second_void(void* obj);
 
-/* Thin wrapper around func_0020BBD0. */
-void func_0020BBB0(void* obj) {
-    func_0020BBD0(obj);
+/* Thin wrapper around details_compressed_pair_imp_cAllocator_cSkaSwitchItem_int_1_second_void. */
+void std_vector_deleter_cSkaSwitchItem_cap_void(void* obj) {
+    details_compressed_pair_imp_cAllocator_cSkaSwitchItem_int_1_second_void(obj);
 }
 
 #pragma pop

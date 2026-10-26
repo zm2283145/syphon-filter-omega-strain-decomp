@@ -6,11 +6,11 @@ extern char D_004FFB00[];
 extern int scePrintf(const char *, ...);
 extern void WaitSema(int);
 extern void DeleteSema(int);
-extern E1780 *func_002713C0(void *);
+extern E1780 *_sceRpcGetPacket_void_2(void *);
 extern int CreateSema(SemaParam1780 *);
-extern void func_00271468(E1780 *);
-extern int func_0010F948(unsigned int, void *, int, int, int, int);
-int func_00271780(C1780 *c, int a1)
+extern void _sceRpcFreePacket_void_2(E1780 *);
+extern int sceSifSendCmd(unsigned int, void *, int, int, int, int);
+int sceSifMUnBindRpc(C1780 *c, int a1)
 {
     SemaParam1780 sp;
     E1780 *e;
@@ -20,7 +20,7 @@ int func_00271780(C1780 *c, int a1)
         return -1;
     }
     WaitSema(c->x28);
-    e = func_002713C0(D_004FFB00);
+    e = _sceRpcGetPacket_void_2(D_004FFB00);
     if (e == 0) return -1;
     c->x4 = e->x18;
     c->x0 = (int)e;
@@ -34,11 +34,11 @@ int func_00271780(C1780 *c, int a1)
     s = CreateSema(&sp);
     c->x8 = s;
     if (s < 0) {
-        func_00271468(e);
+        _sceRpcFreePacket_void_2(e);
         return -3;
     }
-    if (func_0010F948(0x8000001D, e, 0x40, 0, 0, 0) == 0) {
-        func_00271468(e);
+    if (sceSifSendCmd(0x8000001D, e, 0x40, 0, 0, 0) == 0) {
+        _sceRpcFreePacket_void_2(e);
         DeleteSema(s);
         return -2;
     }

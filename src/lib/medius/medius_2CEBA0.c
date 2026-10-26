@@ -5,7 +5,7 @@
 int D_0048C41C = 0;
 
 /* Stores a value into a global setting. */
-void func_002CEBA0(int value)
+void MGCLSetClientConnectCallback(int value)
 {
     D_0048C41C = value;
 }

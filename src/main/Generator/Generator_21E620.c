@@ -84,9 +84,9 @@ void* Mem_Alloc(int pool, int size, char* file, int line);
 int Random_Next(void);
 void ActorObj_BuildNodeMatrix(GsMtx* out, GsActor* a);
 GsObj* Npc_ConstructSpawned(void* p, GsMtx* m, int route, int a, int b, void* c, int d, void* e, GsKey* key, int rnd);
-void func_00436C00(void* ctx);
-void func_00435F30(void* ctx, int* id, int slot);
-void func_00436BA0(void* ctx, int v);
+void cNPCInfoObject_ctor(void* ctx);
+void cNPCInfoObject_Add(void* ctx, int* id, int slot);
+void cNPCInfoObject_dtor(void* ctx, int v);
 int NetGame_InitLocalSlot(int* slot, int v);
 void ObjRegistry_AppendRecursive(void* reg, GsObj* o);
 int Event_Construct(void* msg, void* name);
@@ -130,13 +130,13 @@ extern "C" void Generator_Spawn(GsGen* gen, GsActor* actor, int idx)
             obj = Npc_ConstructSpawned(obj, &m1, route, gen->x64, gen->x68, gen->x6C, 2, gen->xA8, &k1, rnd);
         }
         obj->SetNet(1);
-        func_00436C00(ctx);
+        cNPCInfoObject_ctor(ctx);
         {
             int* id = &obj->id;
             int a = D_005721A8;
-            func_00435F30(ctx, id, NetSlot5(a));
+            cNPCInfoObject_Add(ctx, id, NetSlot5(a));
         }
-        func_00436BA0(ctx, -1);
+        cNPCInfoObject_dtor(ctx, -1);
     } else {
         {
             AllocGuard g;
@@ -207,13 +207,13 @@ struct Gen {
     char pad[0xC]; int key; char p10[0x80]; int list90; LNode head;
 };
 extern "C" {
-LNode* func_0021EDE0(LNode* n);
-LNode* func_0021E000(void* l);
-LNode** func_0021DFE0(LNode** it, LNode* n);
-void func_0043B190(void* ctx);
-int func_0043AB20(void* ctx, void* key);
-int func_00439C70(void* ctx, void* key);
-void func_003FB4B0(int id, int v);
+LNode* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_4(LNode* n);
+LNode* std_list_deleter_cSafePtr_cGOBJ_tail(void* l);
+LNode** std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(LNode** it, LNode* n);
+void cGenInfoObject_ctor(void* ctx);
+int cGenInfoObject_HasOwner(void* ctx, void* key);
+int cGenInfoObject_GetOwner(void* ctx, void* key);
+void cNetObj_SetOwner(int id, int v);
 #if 0 /* merge_units */
 int NetGame_InitLocalSlot(int*, int);
 #endif /* merge_units */
@@ -245,13 +245,13 @@ static inline Tgt* HGet(Hnd* h) {
         valid = 0;
     return valid ? p : 0;
 }
-extern "C" void func_0021EAA0(Gen* self)
+extern "C" void cGenerator_CheckForOwnershipChange(Gen* self)
 {
     char ctx[4];
     int* key;
     int id;
-    func_0043B190(ctx);
-    if (!func_0043AB20(ctx, &self->key))
+    cGenInfoObject_ctor(ctx);
+    if (!cGenInfoObject_HasOwner(ctx, &self->key))
         return;
     {
         key = &self->key;
@@ -261,13 +261,13 @@ extern "C" void func_0021EAA0(Gen* self)
             id = D_00494178;
         } else id = 0;
     }
-    int cur = func_00439C70(ctx, key);
+    int cur = cGenInfoObject_GetOwner(ctx, key);
     if (cur == id) {
         Tgt* t;
         LNode* end;
         LNode* n;
-        n = func_0021EDE0(&self->head)->next;
-        func_0021DFE0(&end, func_0021E000(&self->list90));
+        n = details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_4(&self->head)->next;
+        std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(&end, std_list_deleter_cSafePtr_cGOBJ_tail(&self->list90));
         while (n != end) {
             Hnd* h = &n->h;
             t = HGet(h);
@@ -286,19 +286,19 @@ extern "C" void func_0021EAA0(Gen* self)
                     t->x14 = 1;
                     {
                         int tid = t->id;
-                        func_003FB4B0(tid, func_00439C70(ctx, &self->key));
+                        cNetObj_SetOwner(tid, cGenInfoObject_GetOwner(ctx, &self->key));
                     }
                 }
             }
             n = n->next;
-            func_0021DFE0(&end, func_0021E000(&self->list90));
+            std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(&end, std_list_deleter_cSafePtr_cGOBJ_tail(&self->list90));
         }
     } else {
         Tgt* t;
         LNode* end;
         LNode* n;
-        n = func_0021EDE0(&self->head)->next;
-        func_0021DFE0(&end, func_0021E000(&self->list90));
+        n = details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_4(&self->head)->next;
+        std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(&end, std_list_deleter_cSafePtr_cGOBJ_tail(&self->list90));
         while (n != end) {
             Hnd* h = &n->h;
             t = HGet(h);
@@ -317,12 +317,12 @@ extern "C" void func_0021EAA0(Gen* self)
                     t->x14 = 0;
                     {
                         int tid = t->id;
-                        func_003FB4B0(tid, func_00439C70(ctx, &self->key));
+                        cNetObj_SetOwner(tid, cGenInfoObject_GetOwner(ctx, &self->key));
                     }
                 }
             }
             n = n->next;
-            func_0021DFE0(&end, func_0021E000(&self->list90));
+            std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(&end, std_list_deleter_cSafePtr_cGOBJ_tail(&self->list90));
         }
     }
 }

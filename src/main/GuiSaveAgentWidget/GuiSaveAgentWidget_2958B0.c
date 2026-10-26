@@ -80,7 +80,7 @@ void GuiStack_SwapScreens(void* stack, S_2958B0* from, void* to);
 char* GuiScreen_GetLobbyString(S_2958B0* self, int id, int a, char* s, int b, int c);
 void GuiKeyboard_Open(void* scr, char* text, char* title, S_2958B0* owner, int a, int b, int c);
 int DME_GetLobby(void);
-int func_0044AF60(int lobby, char* s);
+int SFOLobby_CellCreate(int lobby, char* s);
 int SFOLobby_FormatError(int lobby, int a);
 int GuiScreen_Navigate(S_2958B0* self, int a);
 void String_CtorCStr_13B480(Str_2958B0* s, char* c);
@@ -130,7 +130,7 @@ extern "C" int GuiCommandCenter_HandleEvent(S_2958B0* self, Msg_2958B0* msg, uns
             if (lobby && str && *str) {
                 Ui_2958B0* ui = D_004FFC04;
                 int popup = FrontEnd_OpenPopup(ui, 0, D_004AA288, GuiScreen_GetLobbyString(self, 0x7E, 0, str, 0, 0), 0, 0);
-                if (func_0044AF60(lobby, str)) {
+                if (SFOLobby_CellCreate(lobby, str)) {
                     GuiScreen_Navigate(self, 3);
                 } else {
                     int id;
@@ -351,7 +351,7 @@ extern Col_00296660 D_00587B90;
 void GuiCommandCenter_UpdateBgCircle(S_00296660* self);
 void GuiScreen_Update(S_00296660* self, float dt);
 float Math_FMod(float x, float y);
-void func_002986B0(float t, Col_00296660* out, Col_00296660* a, Col_00296660* b);
+void InterpolateColor_tRGBAR_tRGBAR_float(float t, Col_00296660* out, Col_00296660* a, Col_00296660* b);
 #if 0 /* merge_units */
 Ag_00296660* Agent_GetSelected(void* a, int b);
 #endif /* merge_units */
@@ -378,7 +378,7 @@ int i;
         return;
     self->f1B0 += 33.333332f * dt;
     self->f1B0 = Math_FMod(self->f1B0, (*(float*)dat_004AA1F8));
-    func_002986B0(Fabs_00296660(1.0f - 2.0f * self->f1B0 / (*(float*)dat_004AA1F8)), &col, &D_00587B90, &D_00587B80);
+    InterpolateColor_tRGBAR_tRGBAR_float(Fabs_00296660(1.0f - 2.0f * self->f1B0 / (*(float*)dat_004AA1F8)), &col, &D_00587B90, &D_00587B80);
     ag = Agent_GetSelected(g_Game, -1);
     if (self->state == 4) {
         n = -1;

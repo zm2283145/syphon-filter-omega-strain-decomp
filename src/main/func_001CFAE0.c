@@ -22,9 +22,9 @@ void Quat_Assign(V4*, V4*);
 void QuatCurve_Timer(void*, float);
 int func_0017D510(void*);
 void QuatCurve_Sample(V4*, void*);
-void func_0017D0A0(void*, float);
-int func_0017D070(void*);
-void func_0017CEA0(V4*, void*);
+void cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_cVector_cVector_NextFrame(void*, float);
+int cSplinedMotion_cVector_IsTransitionInProgress(void*);
+void cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_cVector_cVector_Evaluate(V4*, void*);
 void Vec4_Copy(V4*, V4*);
 }
 struct QCtl {
@@ -63,10 +63,10 @@ struct PCtl {
     void Update(float t, float u) {
         Vec4_Copy(&prev, &cur);
         Begin();
-        func_0017D0A0(filt, t);
-        if (func_0017D070(this)) {
+        cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_cVector_cVector_NextFrame(filt, t);
+        if (cSplinedMotion_cVector_IsTransitionInProgress(this)) {
             V4 tmp;
-            func_0017CEA0(&tmp, filt);
+            cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_cVector_cVector_Evaluate(&tmp, filt);
             Vec4_Copy(&cur, &tmp);
             End();
         } else {
@@ -85,13 +85,13 @@ struct S {
 };
 
 extern "C" {
-Elem* func_001CFF30(void* arr, int index);
-void func_00132840(V*);
+Elem* std_vector_cBone_opIndex(void* arr, int index);
+void cQuaternion_ctor_void(V*);
 void Quat_Multiply(V*, V*, V*);
-void func_00132800(V*, V*);
+void cQuaternion_ctor_cQuaternionR(V*, V*);
 void UpperBodyLayer_Update(S* s, void* arr, float t, float u);
 }
-static inline Elem* GetElem(void* arr, const signed char& i) { return func_001CFF30(arr, i); }static inline Plc4* MtxToPlc(Mtx* m, Plc4* out) {
+static inline Elem* GetElem(void* arr, const signed char& i) { return std_vector_cBone_opIndex(arr, i); }static inline Plc4* MtxToPlc(Mtx* m, Plc4* out) {
     Plc4* o = out;
     int f;
     int t;
@@ -262,9 +262,9 @@ void UpperBodyLayer_Update(S* s, void* arr, float t, float u)
         Plc* pi = (Plc*)&pil;
         V r;
         V q;
-        func_00132840(&q);
+        cQuaternion_ctor_void(&q);
         Quat_Multiply(&q, &pi->rot, &p.rot);
-        func_00132800(&r, &q);
+        cQuaternion_ctor_cQuaternionR(&r, &q);
         p.rot = r;
         QRot(&p.pos, &pi->rot);
         V* pp = (V*)&pil.pos;

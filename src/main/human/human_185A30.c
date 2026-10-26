@@ -28,8 +28,8 @@ typedef struct {
 } O_5A;
 static const Ids_5A D_0048A2F8 = { { -1, -1, -1, -1 }, -1 };
 static inline bool Ready_5A(O_5A* o) { return o->b2D && o->b2C && !o->b2E; }
-extern "C" void func_002C72A0(int a, int b, int c, void* d, void* e, Ids_5A* ids, int f);
-extern "C" void func_002C7110(int a, int b, int c, void* d, void* e, Ids_5A* ids, unsigned char r, unsigned char g, int f);
+extern "C" void netCreatePlayer_SendCreated(int a, int b, int c, void* d, void* e, Ids_5A* ids, int f);
+extern "C" void netCreateNPC_SendCreated(int a, int b, int c, void* d, void* e, Ids_5A* ids, unsigned char r, unsigned char g, int f);
 extern "C" int Npc_v05(O_5A* o, int a)
 {
     if (Ready_5A(o)) {
@@ -56,7 +56,7 @@ extern "C" int Npc_v05(O_5A* o, int a)
             Sub_5A* s = &o->sub60;
             int f = (int)o->f40;
             if (t->b50) t->v20();
-            func_002C72A0(a, b, c, t->sub10, s->m40, &ids, f);
+            netCreatePlayer_SendCreated(a, b, c, t->sub10, s->m40, &ids, f);
         } else {
             int b;
             int c;
@@ -73,7 +73,7 @@ extern "C" int Npc_v05(O_5A* o, int a)
             if (v) r = !o->b2E;
             int f = (int)o->f40;
             if (t->b50) t->v20();
-            func_002C7110(a, b, c, t->sub10, e, &ids, r, o->b3590, f);
+            netCreateNPC_SendCreated(a, b, c, t->sub10, e, &ids, r, o->b3590, f);
         }
     }
     return 1;

@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_0046C830(void) {
+void WriteAccessGranted(void) {
 
 }

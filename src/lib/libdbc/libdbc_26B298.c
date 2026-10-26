@@ -5,7 +5,7 @@ typedef struct { int used; char pad[0xC]; void* buf; char pad2[0x334 - 0x14]; } 
 extern E26B298 D_004FBB88[];
 extern int sceDbcCreateSocket(S26B298* p, void* rbuf, void* sbuf);
 extern int scePrintf(const char* fmt, ...);
-extern void func_0026B7C0(int i);
+extern void scePad2InitDmaDBuff(int i);
 int scePad2CreateSocket(P26B298* p, void* buf)
 {
     S26B298 s;
@@ -33,7 +33,7 @@ int scePad2CreateSocket(P26B298* p, void* buf)
     if (r < 0) return r;
     D_004FBB88[r].used = 1;
     D_004FBB88[r].buf = buf;
-    func_0026B7C0(r);
+    scePad2InitDmaDBuff(r);
     return r;
 }
 

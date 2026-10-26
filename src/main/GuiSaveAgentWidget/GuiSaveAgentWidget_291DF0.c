@@ -19,7 +19,7 @@ DEFINE_POD8_VECTOR_ERASE(func_00291DF0)
 #pragma cplusplus on
 #include "vector_insert_fill8.h"
 
-DEFINE_VECTOR_INSERT_FILL8(Vector_Insert_291F50, D_004A9B20, D_0049ECE8, 0x5C, func_001BF9E0, func_001BFBB0)
+DEFINE_VECTOR_INSERT_FILL8(Vector_Insert_291F50, D_004A9B20, D_0049ECE8, 0x5C, std_swap_vectordeleterR_vectordeleterR_10, std_vector_deleter_cSkaSwitchValue_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00291F50 */
 
@@ -56,7 +56,7 @@ void func_00292390(PtrVec* a, PtrVec* b) {
 #include "vector_release_dtor.h"
 
 /* Destroy a vector through its allocator, optionally delete. */
-DEFINE_VECTOR_RELEASE_DTOR(func_002923D0, func_001BFCB0, func_001BFAD0, D_0049ECD8)
+DEFINE_VECTOR_RELEASE_DTOR(func_002923D0, std_vector_deleter_cSkaSliderValue_clear, opDelete_cSkaSliderValueP_int_bool_charP_etc, D_0049ECD8)
 #pragma pop /* merge_units */
 /* merge_units: end func_002923D0 */
 
@@ -66,7 +66,7 @@ DEFINE_VECTOR_RELEASE_DTOR(func_002923D0, func_001BFCB0, func_001BFAD0, D_0049EC
 #include "guarded_destroy_release.h"
 
 /* Destroy and free an allocation under the allocator guard. */
-DEFINE_GUARDED_DESTROY_RELEASE(func_00292450, func_001AEFE0)
+DEFINE_GUARDED_DESTROY_RELEASE(func_00292450, cSplinedMotion_Scalar0To1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00292450 */
 
@@ -76,6 +76,6 @@ DEFINE_GUARDED_DESTROY_RELEASE(func_00292450, func_001AEFE0)
 #include "vector_destroy_dtor.h"
 
 /* Destroy a vector: destroy elements, free the buffer, optionally delete. */
-DEFINE_VECTOR_DESTROY_DTOR(func_00292530, func_001BFCA0)
+DEFINE_VECTOR_DESTROY_DTOR(func_00292530, std_vector_deleter_cSkaSwitchValue_clear)
 #pragma pop /* merge_units */
 /* merge_units: end func_00292530 */

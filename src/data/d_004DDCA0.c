@@ -19,10 +19,10 @@ extern void GuiWidget_Load();
 extern void GuiWidget_OnEvent();
 extern void GuiWidget_SetFlag4();
 extern void GuiWidget_Update();
+extern void GuiWidget_onInput();
 extern void MLTextWidget_Setup();
 extern void MLTextWidget_Teardown();
 extern void MLTextWidget_Vt07();
-extern void func_00293950();
 
 void *D_004DDCA0[8] = {
     0, 0, &GuiNetContacts_Create, 0,
@@ -37,7 +37,7 @@ void *D_004DDCC0[8] = {
 void *D_004DDCE0[24] = {
     0, 0, &GuiChatWindow_dtor, &MLTextWidget_Setup,
     &MLTextWidget_Teardown, &GuiWidget_SetFlag4, &GuiWidget_ClearFlag4, &MLTextWidget_Vt07,
-    &GuiWidget_BaseSleep, &GuiWidget_BubbleType0, &GuiWidget_BubbleType1, &func_00293950,
+    &GuiWidget_BaseSleep, &GuiWidget_BubbleType0, &GuiWidget_BubbleType1, &GuiWidget_onInput,
     &GuiMultiLineText_Draw, &GuiWidget_BubbleActivate, &GuiWidget_Update, &GuiWidget_OnEvent,
     &GuiWidget_Load, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
     &GuiWidget_FocusPrev, &GuiChatWindow_GetClassName, &GuiChatWindow_IsType, 0,

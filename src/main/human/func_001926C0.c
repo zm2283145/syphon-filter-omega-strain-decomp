@@ -25,14 +25,14 @@ void NamedRoot_Lookup(int* out) {
 }
 
 /* push_back for a vector of 20-byte elements. */
-int func_00192700(PtrVec* v, int value) {
+int cArray_cTimedEvent_PushBackActual(PtrVec* v, int value) {
     char* data = (char*)v->data;
     int count = v->count;
 
     return Vector_Insert_1BDA10(v, data + count * 20, 1, value);
 }
 
-int* func_00192730(int* pair, int first, int second) {
+int* cSkaAnimEvent_ctor_char_cSystemR(int* pair, int first, int second) {
     pair[0] = first;
     pair[1] = second;
     return pair;

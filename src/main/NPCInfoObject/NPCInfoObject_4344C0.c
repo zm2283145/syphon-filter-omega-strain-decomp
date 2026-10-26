@@ -19,9 +19,9 @@ void func_004344C0(int self, int key, int v)
     NpcInfoMsg m;
     NpcInfoRec* r;
     if (g_IsMultiplayer) {
-        func_004355D0(self);
+        cNPCInfoObject_Setup(self);
         if (NpcAuth_IsLocal()) {
-            r = func_004361C0(key, &h);
+            r = cNPCInfoObject_Find(key, &h);
             v = v >= 0 ? v : 0xFF;
             if (r && r->state != v) {
                 NPC_INFO_COPY(m, r)
@@ -42,15 +42,15 @@ static inline void merge_flush_func_004344C0(void) {}
 
 /* merge_units: begin func_00434600 */
 #pragma push /* merge_units */
-void func_00434600(int self, int key, int v)
+void cNPCInfoObject_SetOwner_cObjectIdR_int(int self, int key, int v)
 {
     int h;
     NpcInfoMsg m;
     NpcInfoRec* r;
     if (g_IsMultiplayer) {
-        func_004355D0(self);
+        cNPCInfoObject_Setup(self);
         if (NpcAuth_IsLocal()) {
-            r = func_004361C0(key, &h);
+            r = cNPCInfoObject_Find(key, &h);
             v = v >= 0 ? v : 0xFF;
             if (r && r->b4 != v) {
                 NPC_INFO_COPY(m, r)

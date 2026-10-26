@@ -1,28 +1,28 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * func_00370080 and func_00370090 are Obj370000 virtuals (vtable D_004DF6A0
+ * cXform_GetNode_void_2 and cXform_SetParent are Obj370000 virtuals (vtable D_004DF6A0
  * slots 14 and 16).
  */
 
 #include "loose03_types.h"
 
-int func_00370080(void) {
+int cXform_GetNode_void_2(void) {
     return 0;
 }
 
-void func_00370090(void) {
+void cXform_SetParent(void) {
 }
 
-void func_003700A0(void) {
+void cXform_RemoveParent(void) {
 }
 
-void func_003700B0(void) {
+void cXform_AddChild(void) {
 }
 
-void func_003700C0(void) {
+void cXform_RemoveChild(void) {
 }
 
 /* table[index] with tag 0x14000000 or-ed in. */
-int func_003700D0(int* table, int index) {
+int cVU1Man_GetMSCAL(int* table, int index) {
     return table[index] | 0x14000000;
 }

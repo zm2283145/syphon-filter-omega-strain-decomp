@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_002DCA68(void) {
+int stubDecode(void) {
     return 0;
 }

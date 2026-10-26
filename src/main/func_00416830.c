@@ -13,7 +13,7 @@ struct GuiVObj {
 
 struct GuiVHolder { int f0; GuiVObj* obj; char pad[0x3C]; GuiVHolder* owner; };
 /* Forwards to virtual +0x0C of the object at +4. */
-extern "C" void func_00416830(GuiVHolder* h)
+extern "C" void GuiDecorator_onAdd(GuiVHolder* h)
 {
     h->obj->V0C();
 }

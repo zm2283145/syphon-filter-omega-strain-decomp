@@ -36,8 +36,8 @@ struct Item { void* vt; unsigned char b4; };
 struct NMap { char pad[0x34]; int reg; };
 extern "C" int NodeNameMap_Find(NMap* m, void* name);
 extern "C" SkaClip** Registry_At(int* reg, int idx);
-extern "C" SkaClip* func_003B2A60(SkaClip* d, void* c, int a, int b, int e);
-extern "C" SkaClip* func_003B3B20(SkaClip* self, void* name, NMap* m, int a, int b, int e)
+extern "C" SkaClip* cSkaAnim_ctor_cSkaAnimR_eModifier_cEulerAngleTR_eAxisOfMotion(SkaClip* d, void* c, int a, int b, int e);
+extern "C" SkaClip* cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_eModifier_cEulerAngleTR_etc(SkaClip* self, void* name, NMap* m, int a, int b, int e)
 {
     SkaClip* c;
     Base(self, 0, Unit());
@@ -48,7 +48,7 @@ extern "C" SkaClip* func_003B3B20(SkaClip* self, void* name, NMap* m, int a, int
     c = *Registry_At(&m->reg, NodeNameMap_Find(m, name));
     if (!((Item*)c)->b4) {
         SkaClip t;
-        func_003B2A60(&t, c, a, b, e);
+        cSkaAnim_ctor_cSkaAnimR_eModifier_cEulerAngleTR_eAxisOfMotion(&t, c, a, b, e);
         *self = t;
     }
     return self;

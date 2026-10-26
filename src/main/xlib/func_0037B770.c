@@ -16,9 +16,9 @@ typedef struct Rgba {
 } Rgba;
 
 extern void Video_CopyToScreenFxBuf(Obj10CC*, int);
-extern int func_003BAF20(Sub10CC*);
-extern int func_003BAF90(Sub10CC*);
-extern int func_003BAF60(Sub10CC*);
+extern int cUserFrameEnv_GetVramAddr(Sub10CC*);
+extern int cUserFrameEnv_GetWidth(Sub10CC*);
+extern int cUserFrameEnv_GetHeight(Sub10CC*);
 extern void Video_DrawScreenFxBuf(Obj10CC*, Rgba*, int, int, int, int, int);
 
 /* Redraws with a neutral grey (0x80) color using the sub-object's geometry. */
@@ -35,7 +35,7 @@ void Video_FrameBlur(Obj10CC* o) {
     color.g = 0x80;
     color.b = 0x80;
     color.a = 0x80;
-    a = func_003BAF20(sub);
-    b = func_003BAF90(sub);
-    Video_DrawScreenFxBuf(o, &color, a, b, func_003BAF60(sub), extra, 0);
+    a = cUserFrameEnv_GetVramAddr(sub);
+    b = cUserFrameEnv_GetWidth(sub);
+    Video_DrawScreenFxBuf(o, &color, a, b, cUserFrameEnv_GetHeight(sub), extra, 0);
 }

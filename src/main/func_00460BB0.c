@@ -16,9 +16,9 @@ void GuiWidget_Init(S460BB0*);
 int FrontEnd_LoadZeusHog(void*);
 TraversalWidget* GuiWidget_FindChildByName(void*, const char*);
 void List_Begin(ChildIterator* result, ChildList* list);
-void func_0028C0B0(ChildIterator* result, const ChildIterator* source);
-void func_0028C0A0(ChildIterator* result, ChildList* list);
-void func_0028C090(ChildIterator* result, const ChildIterator* source);
+void std_list_GuiWidgetPtr_generic_iterator_ctor(ChildIterator* result, const ChildIterator* source);
+void std_list_GuiWidgetPtr_end(ChildIterator* result, ChildList* list);
+void cLListIterator_GuiWidgetPtr_ctor_listR(ChildIterator* result, const ChildIterator* source);
 void GuiEndGameAwards_Init(S460BB0* self);
 }
 
@@ -38,18 +38,18 @@ void GuiEndGameAwards_Init(S460BB0* self)
                 ChildIterator rawEnd;
                 int i;
                 List_Begin(&rawBegin, list);
-                func_0028C0B0(&begin, &rawBegin);
+                std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
                 node = begin.node;
-                func_0028C0A0(&rawEnd, list);
-                func_0028C090(&end, &rawEnd);
+                std_list_GuiWidgetPtr_end(&rawEnd, list);
+                cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
                 i = 0;
                 while (node != end.node) {
                     w = (W460BB0*)node->widget;
                     self->slots[i].w = (w && w->IsA(D_004B88F0)) ? w : 0;
                     node = node->next;
                     i++;
-                    func_0028C0A0(&rawEnd, list);
-                    func_0028C090(&end, &rawEnd);
+                    std_list_GuiWidgetPtr_end(&rawEnd, list);
+                    cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
                 }
             }
         }

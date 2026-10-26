@@ -7,15 +7,15 @@
 #include "types.h"
 #include "loose00_types.h"
 
-int* func_001E5220(PtrVec* v) {
+int* std_vector_imp_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_1_end(PtrVec* v) {
     return v->data + v->count;
 }
 
-void func_001E5240(Iter* out, void* self, Iter* src) {
+void std_vector_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_pointer2iterator(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }
 
-int* func_001E5250(PtrVec* v) {
+int* std_vector_imp_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_1_begin(PtrVec* v) {
     return v->data;
 }
 

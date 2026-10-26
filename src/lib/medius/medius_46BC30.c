@@ -11,7 +11,7 @@ extern int D_0059878C;
 unsigned int D_00497DC8[1] = { 0x0 };
 extern int Medius_TerminateString(char *, int);
 extern int Net_SendLocked(int, int, int, int, int, int, void *);
-int func_0046BC30(char *a, int b)
+int MediusGetTotalGames(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -25,7 +25,7 @@ int func_0046BC30(char *a, int b)
 /* merge_units: begin func_0046BCD0 */
 extern int D_00598794;
 int D_00497DCC = 0;
-int func_0046BCD0(char *a, int b)
+int MediusGetTotalChannels(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -39,7 +39,7 @@ int func_0046BCD0(char *a, int b)
 /* merge_units: begin func_0046BD70 */
 extern int D_0059879C;
 unsigned int D_00497DD0[1] = { 0x0 };
-int func_0046BD70(char *a, int b)
+int MediusGetLobbyPlayerNames(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -53,7 +53,7 @@ int func_0046BD70(char *a, int b)
 /* merge_units: begin func_0046BE10 */
 extern int D_005987A4;
 int D_00497DD4 = 0;
-int func_0046BE10(char *a, int b)
+int MediusGetTotalUsers(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -67,7 +67,7 @@ int func_0046BE10(char *a, int b)
 /* merge_units: begin func_0046BEB0 */
 extern int D_005987AC;
 unsigned int D_00497DD8[1] = { 0x0 };
-int func_0046BEB0(char *a, int b)
+int MediusSetLocalizationParams(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -81,7 +81,7 @@ int func_0046BEB0(char *a, int b)
 /* merge_units: begin func_0046BF50 */
 extern int D_005987B4;
 int D_00497DDC = 0;
-int func_0046BF50(char *a, int b)
+int MediusSetMessageAsRead(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);

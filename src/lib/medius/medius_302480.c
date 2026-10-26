@@ -6,18 +6,18 @@
 
 #include "types.h"
 
-extern int func_00302648(void);
+extern int rt_mutex_platform_begin_critical_section(void);
 
-int func_00302480(void) {
+int rt_mutex_begin_critical_section(void) {
     int tmp0;
 
-    tmp0 = func_00302648();
+    tmp0 = rt_mutex_platform_begin_critical_section();
     return tmp0;
 }
 
-int func_003024A0(void) {
+int rt_mutex_end_critical_section(void) {
     int tmp0;
 
-    tmp0 = func_00302648();
+    tmp0 = rt_mutex_platform_begin_critical_section();
     return tmp0;
 }

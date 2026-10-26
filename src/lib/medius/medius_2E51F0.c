@@ -1,7 +1,7 @@
 /* same-unit callee stub: weak, in a section the link discards (the real function is defined elsewhere); restores retail delay-slot choices */
 extern int D_0051FED8[];
 int __attribute__((weak, section(".dtors_drop"))) Rt_MemoryAllocate(int a0) { return 0; }
-int func_002E51F0(unsigned int a, int *out)
+int NetCreateConnInfo(unsigned int a, int *out)
 {
     int v;
     if (out == 0) return 0x17;

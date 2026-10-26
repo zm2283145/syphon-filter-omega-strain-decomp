@@ -9,7 +9,7 @@
 extern char D_0048C3DC[];
 unsigned int D_0048C3F0[1] = { 0x0 };
 
-int func_002CEF30(void) {
+int GlobalMediusTypeServerEndGameCallback(void) {
     int v0;
     int cond;
 
@@ -24,7 +24,7 @@ ret:
     return v0;
 }
 
-int func_002CEF60(void) {
+int GlobalMediusTypeServerAuthenticationCallback(void) {
     int v0;
     int cond;
 

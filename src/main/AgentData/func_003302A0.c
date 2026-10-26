@@ -11,10 +11,10 @@ extern void Hog_Register(void *, const char *, int, int);
 extern int FileMan_FindMember(void *);
 extern char *FileMan_ReadData(void *);
 extern int FileMan_GetSize(void *);
-extern ColVec *func_003305A0(ColVec *);
+extern ColVec *std_vector_tColumnData_ctor(ColVec *);
 extern void func_0033A580(ColVec *);
-extern void func_0033A590(ColVec *, int);
-extern void func_00339E30(ColVec *, Col *, int, Col *);
+extern void std_vector_deleter_tColumnData_dtor(ColVec *, int);
+extern void std_vector_imp_tColumnData_insert(ColVec *, Col *, int, Col *);
 extern void PartsTable_InsertRow(EntVec *, Ent *, int, Ent *);
 extern int atoi(const char *);
 extern int strlen(const char *);
@@ -41,7 +41,7 @@ void PartsTable_Load(int arg)
         p = FileMan_ReadData(&f);
         left = FileMan_GetSize(&f);
         first = 1;
-        func_003305A0(&v);
+        std_vector_tColumnData_ctor(&v);
         v.owns = 1;
         while (left > 0) {
             q = line;
@@ -66,7 +66,7 @@ void PartsTable_Load(int arg)
                     if (*s != ' ') {
                         *hp = atoi(s);
                         col.idx = i;
-                        func_00339E30(&v, *pd + v.count, 1, &col);
+                        std_vector_imp_tColumnData_insert(&v, *pd + v.count, 1, &col);
                         while (i < len && *s != ' ') {
                             s++;
                             i++;
@@ -94,7 +94,7 @@ void PartsTable_Load(int arg)
             }
         }
 
-        func_0033A590(&v, 0);
+        std_vector_deleter_tColumnData_dtor(&v, 0);
     }
     FileMan_Release(&f, -1);
 }

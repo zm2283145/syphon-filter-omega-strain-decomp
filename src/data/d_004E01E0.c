@@ -2,26 +2,26 @@
 
 extern void IeElement_Destroy();
 extern void Message_GetScriptTypeKey();
-extern void func_00150BF0();
+extern void cAnimator_Update();
+extern void cCharActionMsg_Int_Clone();
+extern void cCharActionMsg_Int_Pack();
+extern void cCharActionMsg_TargetInfo_Clone();
+extern void cCharActionMsg_TargetInfo_Pack();
+extern void cCharActionMsg_TargetInfo_dtor();
+extern void cInterfaceElement_NumFrames();
 extern void func_00184EB0();
-extern void func_003E6270();
-extern void func_003E62F0();
-extern void func_003E7370();
-extern void func_003E7490();
-extern void func_003E7ED0();
-extern void func_003F43C0();
 
 void *D_004E01E0[8] = {
-    0, 0, &func_00184EB0, &func_003E7370,
-    &func_003E6270, &Message_GetScriptTypeKey, 0, 0,
+    0, 0, &func_00184EB0, &cCharActionMsg_Int_Clone,
+    &cCharActionMsg_Int_Pack, &Message_GetScriptTypeKey, 0, 0,
 };
 
 void *D_004E0200[8] = {
-    0, 0, &func_00150BF0, &func_003E7490,
-    &func_003E62F0, &Message_GetScriptTypeKey, 0, 0,
+    0, 0, &cCharActionMsg_TargetInfo_dtor, &cCharActionMsg_TargetInfo_Clone,
+    &cCharActionMsg_TargetInfo_Pack, &Message_GetScriptTypeKey, 0, 0,
 };
 
 void *D_004E0220[8] = {
-    0, 0, &IeElement_Destroy, &func_003E7ED0,
-    &func_003F43C0, 0, 0, 0,
+    0, 0, &IeElement_Destroy, &cInterfaceElement_NumFrames,
+    &cAnimator_Update, 0, 0, 0,
 };

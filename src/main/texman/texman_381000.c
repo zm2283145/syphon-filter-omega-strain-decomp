@@ -14,14 +14,14 @@ int Mem_Free();
 #pragma push /* merge_units */
 typedef struct { char pad[0x10]; int count; } E2List;
 extern void Resource_Construct(void*);
-extern void func_0036E140(void*, void*, int, int);
+extern void cFileMan_EncodeFilename_charP_cFileIOP_bool(void*, void*, int, int);
 extern int TexMan_FindOrLoad(E2List*, void*);
 extern void FileMan_Release(void*, int);
 int TexCache_LoadErrorTexture(E2List* s) {
     char buf[0xA0];
     int r;
     Resource_Construct(buf);
-    func_0036E140(buf, "GAMEDATA\\COMMON\\ERROR.TDX", 0, 0);
+    cFileMan_EncodeFilename_charP_cFileIOP_bool(buf, "GAMEDATA\\COMMON\\ERROR.TDX", 0, 0);
     r = TexMan_FindOrLoad(s, buf);
     if (r == -1) r = s->count - 1;
     FileMan_Release(buf, -1);
@@ -46,13 +46,13 @@ typedef struct {
 } Mgr_381080;
 extern "C" {
 extern char D_004BC2B8[];
-void func_003BBBC0(Obj_381080* o, int flags);
+void cTexture_dtor(Obj_381080* o, int flags);
 void ObjectList_EraseRange_383420(ListNode_381080** result, List_381080* list, ListNode_381080** first, ListNode_381080** last);
 }
 static inline void Free_381080(Obj_381080* o)
 {
     AllocGuard g;
-    func_003BBBC0(o, -1);
+    cTexture_dtor(o, -1);
     Mem_Free(0, o, D_004BC2B8, 0x3D1);
 }
 static inline void ListClear_381080(List_381080* self)
@@ -75,7 +75,7 @@ static inline void Reset_381080(Mgr_381080* m)
         }
     }
 }
-extern "C" void func_00381080(Mgr_381080* m)
+extern "C" void cTexMan_FlushTextures(Mgr_381080* m)
 {
     int i;
     Reset_381080(m);
@@ -113,17 +113,17 @@ typedef struct {
     Node_3812D0* head;
     int freeA[3];
 } Obj_3812D0;
-extern "C" void func_003812D0(Obj_3812D0* o); /* gsynth: defined below */
+extern "C" void cTexMan_FlushDeletedTextures(Obj_3812D0* o); /* gsynth: defined below */
 #pragma pop
 typedef struct { char pad[0x10]; unsigned short h10; } G7S44;
 typedef struct { char pad[0x44]; G7S44* p44; char pad2[0x60 - 0x48]; char b60; char b61; } G7Obj;
 typedef struct { char pad[8]; G7Obj** arr; int pad2; int count; } G7Mgr;
 #if 0 /* merge_units */
-extern void func_003812D0(G7Mgr* m);
+extern void cTexMan_FlushDeletedTextures(G7Mgr* m);
 #endif /* merge_units */
-#define func_003812D0(a0) (func_003812D0((void *)(a0))) /* merge_units */
+#define cTexMan_FlushDeletedTextures(a0) (cTexMan_FlushDeletedTextures((void *)(a0))) /* merge_units */
 
-void func_00381260(G7Mgr* m)
+void cTexMan_Flush(G7Mgr* m)
 {
     int i;
     for (i = 0; i < m->count; i++) {
@@ -134,9 +134,9 @@ void func_00381260(G7Mgr* m)
             }
         }
     }
-    func_003812D0(m);
+    cTexMan_FlushDeletedTextures(m);
 }
-#undef func_003812D0 /* merge_units */
+#undef cTexMan_FlushDeletedTextures /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00381260(void) {}
 #pragma pop /* merge_units */
@@ -152,22 +152,22 @@ static inline void merge_flush_func_00381260(void) {}
 
 extern "C" {
 extern char D_004BC300[];
-int func_00380360(void* t);
+int cTexture_GetRefCount(void* t);
 void Tex_DestroyRecord(void* t, int a, int b, char* file, int line);
-void func_003801A0(Obj_3812D0* o, int v);
-void func_00380170(void* list, int* value);
+void cTexMan_EraseDeletedTID(Obj_3812D0* o, int v);
+void cLList_int_PushBackActual(void* list, int* value);
 }
 
-extern "C" void func_003812D0(Obj_3812D0* o)
+extern "C" void cTexMan_FlushDeletedTextures(Obj_3812D0* o)
 {
     while (o->count) {
         int v = o->head->value;
         int idx = v;
-        if (o->tex[v] && func_00380360(o->tex[idx]) <= 0) {
+        if (o->tex[v] && cTexture_GetRefCount(o->tex[idx]) <= 0) {
             Tex_DestroyRecord(o->tex[idx], 0, 1, D_004BC300, 0x39E);
             o->tex[idx] = 0;
-            func_003801A0(o, idx);
-            func_00380170(o->freeA, &idx);
+            cTexMan_EraseDeletedTID(o, idx);
+            cLList_int_PushBackActual(o->freeA, &idx);
         }
     }
 }
@@ -191,9 +191,9 @@ typedef struct {
 extern "C" {
 void TexEntry_Release(void* t);
 #if 0 /* merge_units */
-void func_003801A0(Obj_3813A0* o, int v);
+void cTexMan_EraseDeletedTID(Obj_3813A0* o, int v);
 #endif /* merge_units */
-#define func_003801A0(a0, a1) (func_003801A0((Obj_3812D0 *)(a0), (a1))) /* merge_units */
+#define cTexMan_EraseDeletedTID(a0, a1) (cTexMan_EraseDeletedTID((Obj_3812D0 *)(a0), (a1))) /* merge_units */
 
 }
 
@@ -202,21 +202,21 @@ extern "C" void Tex_Release(Obj_3813A0* o, int idx, int keep)
     int i = idx;
     if (o->tex[idx]) {
         TexEntry_Release(o->tex[idx]);
-        if (func_00380360(o->tex[i]) == 0) {
-            func_00380170(o->list428, &i);
+        if (cTexture_GetRefCount(o->tex[i]) == 0) {
+            cLList_int_PushBackActual(o->list428, &i);
         }
     }
     if (keep == 0) {
         int j = idx;
-        if (o->tex[idx] && func_00380360(o->tex[idx]) <= 0) {
+        if (o->tex[idx] && cTexture_GetRefCount(o->tex[idx]) <= 0) {
             Tex_DestroyRecord(o->tex[j], 0, 1, D_004BC300, 0x39E);
             o->tex[j] = 0;
-            func_003801A0(o, j);
-            func_00380170(o->freeA, &j);
+            cTexMan_EraseDeletedTID(o, j);
+            cLList_int_PushBackActual(o->freeA, &j);
         }
     }
 }
-#undef func_003801A0 /* merge_units */
+#undef cTexMan_EraseDeletedTID /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003813A0(void) {}
 #pragma pop /* merge_units */

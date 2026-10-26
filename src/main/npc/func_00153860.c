@@ -62,7 +62,7 @@ struct VObj_00153860 {
     virtual Ret_00153860 Get(); /* +0xE4 */
 };
 
-extern "C" Ret_00153860 func_00153860(VObj_00153860* obj)
+extern "C" Ret_00153860 cGOBJ_GetLosPosition(VObj_00153860* obj)
 {
     return obj->Get();
 }

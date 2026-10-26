@@ -26,7 +26,7 @@ DEFINE_OBJECT_LIST_ERASE_RANGE(ObjectList_EraseRange_3E3320)
  */
 
 
-List* func_003E3460(List* l) {
+List* std_list_deleter_PopVar_ctor(List* l) {
     l->count = 0;
     l->first = l->last = &l->first;
     return l;

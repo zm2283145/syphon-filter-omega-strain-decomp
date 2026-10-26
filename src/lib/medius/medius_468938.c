@@ -9,14 +9,14 @@ extern void *memset(void *, int, unsigned int);
 extern char D_00497CD0[];
 extern short D_00497CC0;
 extern int D_00497CC4;
-extern void func_00468CD0(void);
-extern int func_002E9648(void);
-int func_00468938(void)
+extern void MediusDisconnect(void);
+extern int NetClose(void);
+int MediusClose(void)
 {
     memset(D_00497CD0, 0, 0x11);
     if (D_00497CC0 != 1) return -0xF;
-    if (D_00497CC4 >= 0) func_00468CD0();
-    if (func_002E9648()) return -4;
+    if (D_00497CC4 >= 0) MediusDisconnect();
+    if (NetClose()) return -4;
     D_00497CC0 = 0;
     return 0;
 }
@@ -37,7 +37,7 @@ extern int D_00497CD0;
 #define D_00497CD0 (*(int*)&D_00497CD0) /* merge_units */
 
 
-int func_004689B0(void) {
+int MediusCloseBare(void) {
     int var_v0;
 
     memset(&D_00497CD0, 0, 0x11);
@@ -76,13 +76,13 @@ typedef struct {
 typedef struct { int pad[2]; int id; int pad2; } ConnResult;
 typedef struct { int id; int err; } ConnOut;
 extern int D_00497CF0;
-void func_002EA5B0(ConnParam*);
-int func_002EA648(ConnParam*, ConnResult*);
-void func_00468470(int);
-void func_00468420(void);
-void func_00468490(int, int);
+void NetSetDefaultConnectParams(ConnParam*);
+int NetConnect(ConnParam*, ConnResult*);
+void MediusSetClientConnectCallback(int);
+void MediusLocalConnectCallback(void);
+void MediusClearClientConnectCallback(int, int);
 
-int func_004689F8(ConnReq* req, ConnOut* out)
+int MediusConnect(ConnReq* req, ConnOut* out)
 {
     ConnParam p;
     ConnResult r;
@@ -98,24 +98,24 @@ int func_004689F8(ConnReq* req, ConnOut* out)
         out->id = -1;
         return -17;
     }
-    func_002EA5B0(&p);
+    NetSetDefaultConnectParams(&p);
     p.a = req->a;
     p.arg = req->arg;
     if (req->cb) {
-        func_00468470(req->cb);
-        p.cb = func_00468420;
+        MediusSetClientConnectCallback(req->cb);
+        p.cb = MediusLocalConnectCallback;
     } else {
-        func_00468470(0);
+        MediusSetClientConnectCallback(0);
     }
     p.f8 = req->f8;
     p.fc = req->fc;
     p.b = req->b;
-    ret = func_002EA648(&p, &r);
+    ret = NetConnect(&p, &r);
     if (ret) {
         D_00497CF0 = ret;
         out->id = r.id;
         out->err = -2;
-        func_00468490(-2, ret);
+        MediusClearClientConnectCallback(-2, ret);
         return -2;
     }
     if (!req->cb) D_00497CC4 = r.id;

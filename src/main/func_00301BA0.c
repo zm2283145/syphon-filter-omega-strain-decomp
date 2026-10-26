@@ -7,7 +7,7 @@
 #include "types.h"
 
 /* Reads a big-endian 16-bit value from src into out; returns 2 on a null argument. */
-int func_00301BA0(unsigned char* src, short* out) {
+int rt_msg_get_u2byte_be(unsigned char* src, short* out) {
     int result = 2;
     int v;
 

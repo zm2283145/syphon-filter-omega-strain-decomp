@@ -3,5 +3,5 @@
 
 /* Return the argument unchanged. */
 #pragma optimization_level 1
-DEFINE_IDENTITY_RETURN(func_0020B180)
+DEFINE_IDENTITY_RETURN(cSkaTrans_opAssign)
 #pragma optimization_level reset

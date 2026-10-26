@@ -102,7 +102,7 @@ void GuiTextWidget_SetText(W_3688C0* w, char* s, int f);
 #define GuiTextWidget_SetText(a0, a1, a2) (GuiTextWidget_SetText((void *)(a0), (a1), (a2))) /* merge_units */
 
 char* Loc_LookupText(char* k);
-void func_0041C0F0(W_3688C0* w, int v);
+void GuiTextWidget_SetDisableWrap(W_3688C0* w, int v);
 void GuiObjectives_Init(O_3688C0* o);
 }
 static inline W_3688C0* Cast_3688C0(W_3688C0* w, void* t) { return w && w->IsA(t) ? w : 0; }
@@ -167,7 +167,7 @@ void GuiObjectives_Init(O_3688C0* o)
         char* s = Loc_LookupText(g_IsMultiplayer ? D_004BBD80 : D_004BBD88);
         if (s) {
             GuiTextWidget_SetText(t, s, 0);
-            func_0041C0F0(t, 1);
+            GuiTextWidget_SetDisableWrap(t, 1);
         }
     }
 }

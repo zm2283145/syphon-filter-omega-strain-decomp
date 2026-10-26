@@ -8,7 +8,7 @@ extern char D_004B98B8[];
 }
 static inline void Cp33B860(char* d, const char* f, const char* l) { memcpy(d, f, l - f); }
 /* Byte vector constructed from the range [first, last). */
-extern "C" void func_0033B860(V33B860* v, char* first, char* last)
+extern "C" void std_vector_pod_eRequirementState_init(V33B860* v, char* first, char* last)
 {
     v->count = v->cap = last - first;
     if (v->count > 0x6000000) {

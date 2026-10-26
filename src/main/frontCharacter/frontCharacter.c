@@ -18,7 +18,7 @@
 extern int Vector_Insert_22A360(FcVec* v, int* pos, int n, int value);  /* vector insert */
 
 /* push_back(v, value) */
-int func_0022A200(FcVec* v, int value) {
+int cArray_cString4_PushBackActual(FcVec* v, int value) {
     return Vector_Insert_22A360(v, v->data + v->count, 1, value);
 }
 #pragma pop /* merge_units */
@@ -33,7 +33,7 @@ int func_0022A200(FcVec* v, int value) {
 char * Archive_Open();                   
 int Expression_Init();                                
 int Skf_Register(char *, char * );                        
-int func_00391B30(char * , char *);                       
+int cMan_LipSyncLoad(char * , char *);                       
 int AgentPartCache_LoadRules(char *, char *);                          
 int TexCache_RegisterNpcTex(char *, char * );                       
 int MeshCache_RegisterNpcSkm(char *, char * );                       
@@ -71,7 +71,7 @@ void FrontCharacter_Setup(PS0_0022A220 *arg0, int arg1) {
     arg0->fC = (int)(Archive_Open(arg1, "GAMEDATA\\FRONTEND\\LIPS.HOG", 0, 0));
     temp_a0 = (char *)(arg0->fC);
     if (F_(temp_a0, 0x14C, unsigned char) != 0) {
-        func_00391B30(temp_a0, "cdrom0:GAMEDATA\\FRONTEND\\LIPS.BNK");
+        cMan_LipSyncLoad(temp_a0, "cdrom0:GAMEDATA\\FRONTEND\\LIPS.BNK");
     }
 }
 #pragma pop /* merge_units */

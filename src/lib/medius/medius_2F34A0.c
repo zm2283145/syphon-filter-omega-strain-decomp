@@ -11,11 +11,11 @@ extern Blk2F34A0 D_0048C780;
 extern int D_00490800;
 extern unsigned short D_0048C800[];
 
-extern void func_00302088(unsigned int seed);
-extern unsigned int func_00301F40(void);
+extern void setNewSeed(unsigned int seed);
+extern unsigned int randomMT(void);
 extern void LargeInt_AddInt(Blk2F34A0* b, int sum);
 
-Blk2F34A0 func_002F34A0(void)
+Blk2F34A0 lintPoolPrime(void)
 {
     Blk2F34A0 t = D_0048C780;
     unsigned int n;
@@ -23,9 +23,9 @@ Blk2F34A0 func_002F34A0(void)
 
     if (!D_00490800) {
         D_00490800 = 1;
-        func_00302088(0x5BEF6DF9);
+        setNewSeed(0x5BEF6DF9);
     }
-    n = (func_00301F40() >> 5) & 0x1FFF;
+    n = (randomMT() >> 5) & 0x1FFF;
     sum = 0;
     while (n) {
         sum += D_0048C800[n];
@@ -39,7 +39,7 @@ Blk2F34A0 func_002F34A0(void)
 /* merge_units: begin func_002F3698 */
 typedef struct { int a; int b; int c; unsigned char s[256]; } Rc2F3698;
 
-void func_002F3698(Rc2F3698* st, unsigned char* key)
+void RCInitialize(Rc2F3698* st, unsigned char* key)
 {
     unsigned char* S = st->s;
     unsigned char i, j, n, t;
@@ -65,7 +65,7 @@ void func_002F3698(Rc2F3698* st, unsigned char* key)
 /* merge_units: begin func_002F3728 */
 typedef struct { int a; int b; int c; unsigned char s[256]; } Rc2F3728;
 
-void func_002F3728(Rc2F3728* st, unsigned char* key, int k4)
+void RCSaltyInitialize(Rc2F3728* st, unsigned char* key, int k4)
 {
     unsigned char* S = st->s;
     unsigned char i, j, n, t;
@@ -101,7 +101,7 @@ void func_002F3728(Rc2F3728* st, unsigned char* key, int k4)
 /* merge_units: begin func_002F3810 */
 typedef struct { int a; int b; int c; unsigned char s[256]; } Rc2F3810;
 
-void func_002F3810(Rc2F3810* st, unsigned char* data, unsigned int len)
+void RCEncrypt(Rc2F3810* st, unsigned char* data, unsigned int len)
 {
     unsigned char i = st->b;
     unsigned char j = st->c;
@@ -127,7 +127,7 @@ void func_002F3810(Rc2F3810* st, unsigned char* data, unsigned int len)
 /* merge_units: begin func_002F38B8 */
 typedef struct { int a; int b; int c; unsigned char s[256]; } Rc2F38B8;
 
-void func_002F38B8(Rc2F38B8* st, unsigned char* data, unsigned int len)
+void RCDecrypt(Rc2F38B8* st, unsigned char* data, unsigned int len)
 {
     unsigned char i = st->b;
     unsigned char j = st->c;
@@ -151,7 +151,7 @@ void func_002F38B8(Rc2F38B8* st, unsigned char* data, unsigned int len)
 
 /* merge_units: begin func_002F3960 */
 extern void Net_AllocZeroed(void *, int);
-int *func_002F3960(int a, int b)
+int *CreateResourceManager(int a, int b)
 {
     int *p = 0;
     Net_AllocZeroed(&p, 0x30);

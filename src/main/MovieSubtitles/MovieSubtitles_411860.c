@@ -203,17 +203,17 @@ typedef struct {
 
 extern "C" {
 extern unsigned int D_0055C5A8;
-extern int func_00412210(void* src);
-extern int func_004121F0(void* src);
-extern int func_004121D0(void* src);
-extern char* func_00412190(void* src, int i);
-extern Vec411DB0* func_00412180(void* src);
+extern int cSubtitleFeed_ItemPending(void* src);
+extern int cSubtitleFeed_GetDisplayFlags(void* src);
+extern int cSubtitleFeed_GetNumLines(void* src);
+extern char* cSubtitleFeed_GetText(void* src, int i);
+extern Vec411DB0* cSubtitleFeed_GetColor(void* src);
 extern void SubtitleTrack_LoadCue(Vec411DB0* d, Vec411DB0* s);
-extern float func_00412130(void* src);
-extern float func_00412110(void* src);
-extern int func_004120F0(void* src);
-extern void func_004120C0(void* src);
-extern void func_00412050(Sub411DB0* s);
+extern float cSubtitleFeed_GetStartTime(void* src);
+extern float cSubtitleFeed_GetEndTime(void* src);
+extern int cSubtitleFeed_GetLanguage(void* src);
+extern void cSubtitleFeed_NextItem(void* src);
+extern void cMovieSubtitles_ResetText(Sub411DB0* s);
 }
 
 extern "C" void MovieSubtitles_Update(Sub411DB0* s)
@@ -251,21 +251,21 @@ extern "C" void MovieSubtitles_Update(Sub411DB0* s)
         }
         if (!(s->time < s->stop) && s->active) {
             s->active = 0;
-            if (func_00412210(s->src)) {
-                s->flags = func_004121F0(s->src);
-                s->count = func_004121D0(s->src);
+            if (cSubtitleFeed_ItemPending(s->src)) {
+                s->flags = cSubtitleFeed_GetDisplayFlags(s->src);
+                s->count = cSubtitleFeed_GetNumLines(s->src);
                 for (j = 0; j < s->count; j++) {
-                    s->text[j] = func_00412190(s->src, j);
+                    s->text[j] = cSubtitleFeed_GetText(s->src, j);
                     s->len[j] = strlen(s->text[j]);
                     s->cur[j] = 0;
                 }
-                SubtitleTrack_LoadCue(&s->color, func_00412180(s->src));
-                s->start = func_00412130(s->src);
-                s->stop = func_00412110(s->src);
-                s->fA8 = func_004120F0(s->src);
-                func_004120C0(s->src);
+                SubtitleTrack_LoadCue(&s->color, cSubtitleFeed_GetColor(s->src));
+                s->start = cSubtitleFeed_GetStartTime(s->src);
+                s->stop = cSubtitleFeed_GetEndTime(s->src);
+                s->fA8 = cSubtitleFeed_GetLanguage(s->src);
+                cSubtitleFeed_NextItem(s->src);
             } else {
-                func_00412050(s);
+                cMovieSubtitles_ResetText(s);
             }
             if (!(s->time < s->start)) s->active = 1;
         }

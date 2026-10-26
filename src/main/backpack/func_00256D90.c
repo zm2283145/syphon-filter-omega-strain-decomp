@@ -33,17 +33,17 @@ struct SNode { SNode* prev; SNode* next; Snapshot* snap; };
 extern "C" {
 extern CrateVec* g_BackpackList;
 extern char D_004F7F48[];
-Crate** func_00256D80(CrateVec* v, int i);
+Crate** std_vector_cBackpackPtr_opIndex(CrateVec* v, int i);
 void Backpack_RestoreCrateSnapshots(void);
 extern int g_HotboxTracker;
 RT* Hotbox_CreateRuntime(int tracker, Crate* c, int flag, int big);
 Raw List_Begin(void* list);
-Raw func_00256B20(void* list);
-void func_00256B30(SNode** out, const Raw& r);
-void func_00256B10(SNode** out, const Raw& r);
+Raw std_list_CrateSavePtr_end(void* list);
+void std_list_CrateSavePtr_generic_iterator_ctor(SNode** out, const Raw& r);
+void cLListIterator_CrateSavePtr_ctor(SNode** out, const Raw& r);
 }
 
-/* byte/quadword copy macro (func_001C3C50.c's, without the nop after the alignment branch, as
+/* byte/quadword copy macro (cLoader_AllocateAndFillAnimationBuffer.c's, without the nop after the alignment branch, as
  * retail has it here); volatile because retail recomputes the index scaling after the copy (a
  * non-volatile block lets MW keep i*4 in a saved register) */
 static inline void MemCopy(void* dst, void* src, int n)
@@ -98,20 +98,20 @@ void Backpack_RestoreCrateSnapshots(void)
     SIt r;
     SIt t;
     int i;
-    func_00256B30(&b, List_Begin(D_004F7F48));
+    std_list_CrateSavePtr_generic_iterator_ctor(&b, List_Begin(D_004F7F48));
     it.p = b;
-    while ((func_00256B10(&end, func_00256B20(D_004F7F48)), it.p != end)) {
+    while ((cLListIterator_CrateSavePtr_ctor(&end, std_list_CrateSavePtr_end(D_004F7F48)), it.p != end)) {
         for (i = 0; i < list->count; i++) {
-            Crate* c = *func_00256D80(list, i);
+            Crate* c = *std_vector_cBackpackPtr_opIndex(list, i);
             Snapshot* s = it.p->snap;
             if (s->id == c->id) {
                 { int v = it.p->snap->f280; list->items[i]->f2E0 = v; }
                 { int v = it.p->snap->f284; list->items[i]->f2E4 = v; }
                 { int v = it.p->snap->f288; list->items[i]->f2E8 = v; }
                 { int v = it.p->snap->f28C; list->items[i]->f2EC = v; }
-                MemCopy((*func_00256D80(list, i))->body, it.p->snap->body, sizeof(it.p->snap->body));
+                MemCopy((*std_vector_cBackpackPtr_opIndex(list, i))->body, it.p->snap->body, sizeof(it.p->snap->body));
                 if (!list->items[i]->rt) {
-                    Crate* k = *func_00256D80(list, i);
+                    Crate* k = *std_vector_cBackpackPtr_opIndex(list, i);
                     if (!k->rt) {
                         RT* q;
                         int id;

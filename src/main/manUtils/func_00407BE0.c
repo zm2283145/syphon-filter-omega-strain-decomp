@@ -14,7 +14,7 @@ extern int D_0055D4F8;
 extern int D_0055D4FC;
 extern int D_0055D500;
 }
-extern "C" void func_00407BE0(void) {
+extern "C" void SKLHog_DeleteIdentities(void) {
     int temp_s0;
     int temp_s0_2;
 

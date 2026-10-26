@@ -3,13 +3,13 @@ typedef struct { char pad[0x80]; const char* path; } S12D0;
 typedef struct N12D0 { int m0; struct N12D0* next; S12D0* data; } N12D0;
 typedef struct { char pad[0xC]; int list; } T12D0;
 extern void List_Begin(int* out, void* list);
-extern void func_003E13D0(N12D0** out, int* in);
-extern void func_003E13C0(int* out, void* list);
-extern void func_003E13B0(N12D0** out, int* in);
+extern void std_list_SymbolTablePtr_generic_iterator_ctor(N12D0** out, int* in);
+extern void std_list_SymbolTablePtr_end(int* out, void* list);
+extern void cLListIterator_SymbolTablePtr_ctor(N12D0** out, int* in);
 extern const char* Path_GetBaseName(const char* p);
 extern void String_Copy(char* d, const char* s);
 extern int String_CompareNoCase(const char* a, const char* b);
-S12D0* func_003E12D0(T12D0* self, const char* path)
+S12D0* cScriptInterpreter_findContext(T12D0* self, const char* path)
 {
     N12D0* e;
     N12D0* it;
@@ -20,8 +20,8 @@ S12D0* func_003E12D0(T12D0* self, const char* path)
     N12D0* n;
     String_Copy(buf, Path_GetBaseName(path));
     List_Begin(&t1, &self->list);
-    func_003E13D0(&it, &t1);
-    for (n = it; func_003E13C0(&t2, &self->list), func_003E13B0(&e, &t2), n != e; n = n->next) {
+    std_list_SymbolTablePtr_generic_iterator_ctor(&it, &t1);
+    for (n = it; std_list_SymbolTablePtr_end(&t2, &self->list), cLListIterator_SymbolTablePtr_ctor(&e, &t2), n != e; n = n->next) {
         s = n->data;
         if (!String_CompareNoCase(Path_GetBaseName(s->path), buf))
             return s;

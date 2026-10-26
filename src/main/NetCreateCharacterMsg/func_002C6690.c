@@ -1,4 +1,4 @@
-/* func_002C6690: network actor-update message handler (NetCreateCharacterMsg.cc): reposition an
+/* netCreateNPC_HandleNetNPCCreate: network actor-update message handler (NetCreateCharacterMsg.cc): reposition an
  * existing actor, rebuild its components and replay its state events. */
 #pragma cplusplus on
 #include "types.h"
@@ -73,15 +73,15 @@ void* Mtx44_SetRotation(M4u* m, float a, float b, float c, float d, float e, flo
                         float g, float h, float i);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 Actor* Object_LookupById(NetId* id);
-Comp* func_002D6030(void* p, int a, Actor* o);
+Comp* cNetNPC_ctor(void* p, int a, Actor* o);
 void Actor_InitComponents(Actor* a, int n, int b, Comp* c);
 void Actor_SetHealth(Actor* a, int h, int f);
 void Event_Construct(void* e, char* t);
 void Event_Send(void* e, Actor* a, int f);
 void cMessage_dtor(void* e, int f);
 int NetMap_BindReceiver(int id, int b, Actor* a);
-void func_00185940(Actor* a, int id);
-void func_00185970(Actor* a, int r);
+void cHuman_SetNetworkID(Actor* a, int id);
+void cHuman_SetupNetworkFields(Actor* a, int r);
 }
 
 static inline void* NewMem(int size, int line)
@@ -148,7 +148,7 @@ static inline void MCopy(M4u* d0, const M4u* s0)
     __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(s) : "memory");
 }
 
-extern "C" void func_002C6690(Msg* msg, int arg1)
+extern "C" void netCreateNPC_HandleNetNPCCreate(Msg* msg, int arg1)
 {
     NetId id;
     Ang r(msg->rx, msg->ry, msg->rz);
@@ -164,7 +164,7 @@ extern "C" void func_002C6690(Msg* msg, int arg1)
     if (a) {
         {
             void* p = NewMem(0x220, 0x21B);
-            if (p) p = func_002D6030(p, 0, a);
+            if (p) p = cNetNPC_ctor(p, 0, a);
             c = (Comp*)p;
         }
         Actor_InitComponents(a, 4, 0, c);
@@ -225,8 +225,8 @@ extern "C" void func_002C6690(Msg* msg, int arg1)
             cMessage_dtor(p, 0);
         }
         a->b14 = 0;
-        func_00185940(a, msg->id.v);
-        func_00185970(a, NetMap_BindReceiver(msg->id.v, arg1, a));
+        cHuman_SetNetworkID(a, msg->id.v);
+        cHuman_SetupNetworkFields(a, NetMap_BindReceiver(msg->id.v, arg1, a));
     } else {
         NetMap_BindReceiver(msg->id.v, arg1, a);
     }

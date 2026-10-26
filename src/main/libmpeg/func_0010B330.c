@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_0010B330(int a0) {
+int sceMpegGetPictureAbort(int a0) {
     int v0, v1;
 
     v1 = *(int*)(char*)(a0 + 64);
@@ -17,7 +17,7 @@ ret:
     return v0;
 }
 
-int func_0010B340(int a0, int a1, int a2, int a3) {
+int sceMpegSetDecodeMode(int a0, int a1, int a2, int a3) {
     int tmp0;
 
     tmp0 = *(int*)((char*)a0 + 64);

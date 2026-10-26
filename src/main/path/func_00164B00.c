@@ -6,6 +6,6 @@
 #include "types.h"
 #include "path_types.h"
 
-PathListLink* func_00164B00(PathList* list) {
+PathListLink* details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_3(PathList* list) {
     return &list->head;
 }

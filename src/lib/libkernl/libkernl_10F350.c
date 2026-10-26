@@ -5,17 +5,17 @@
  */
 
 /* merge_units: begin func_0010F350 */
-extern int func_0010ED58(const char* fmt, char* ap);
-int func_0010F350(const char* fmt, ...)
+extern int _printf(const char* fmt, char* ap);
+int kprintf(const char* fmt, ...)
 {
     char* ap;
     ap = (char*)__builtin_next_arg(fmt) - (__builtin_args_info(0) < 8 ? (8 - __builtin_args_info(0)) * 8 : 0);
-    return func_0010ED58(fmt, ap);
+    return _printf(fmt, ap);
 }
 /* merge_units: end func_0010F350 */
 
 /* merge_units: begin func_0010F388 */
-extern void func_0010EA70(void);
+extern void deci2Putchar(void);
 extern void *D_004861A4;
 int scePrintf(const char *fmt, ...)
 {
@@ -23,9 +23,9 @@ int scePrintf(const char *fmt, ...)
     void *old;
     int r;
     old = D_004861A4;
-    D_004861A4 = func_0010EA70;
+    D_004861A4 = deci2Putchar;
     ap = (char *)__builtin_next_arg(fmt) - (__builtin_args_info(0) < 8 ? (8 - __builtin_args_info(0)) * 8 : 0);
-    r = func_0010ED58(fmt, ap);
+    r = _printf(fmt, ap);
     D_004861A4 = old;
     return r;
 }

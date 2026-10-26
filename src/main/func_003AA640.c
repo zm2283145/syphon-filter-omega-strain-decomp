@@ -2,9 +2,9 @@
 typedef struct { char pad[0x1D0]; } SkelNode;
 typedef struct { int cap; int count; SkelNode* data; } SkelVec;
 extern void SkelNode_CopyConstruct(SkelNode* d, SkelNode* s);
-extern void func_003BA9A0(SkelNode* p, int f);
+extern void cBone_dtor(SkelNode* p, int f);
 
-SkelNode* func_003AA640(SkelVec* v, SkelNode* first, SkelNode* last)
+SkelNode* std_vector_imp_cBone_erase(SkelVec* v, SkelNode* first, SkelNode* last)
 {
     SkelNode* end;
     int n;
@@ -23,7 +23,7 @@ SkelNode* func_003AA640(SkelVec* v, SkelNode* first, SkelNode* last)
     }
     p = first + n;
     while (p < end) {
-        func_003BA9A0(p, -1);
+        cBone_dtor(p, -1);
         p++;
     }
     v->count -= last - first;

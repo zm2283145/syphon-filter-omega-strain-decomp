@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046E470(void) {
+int MediusUniqueCallbackFileCancelOperationRequestHandler(void) {
     return 196;
 }

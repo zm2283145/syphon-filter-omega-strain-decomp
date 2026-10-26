@@ -103,7 +103,7 @@ void VisionFx_LoadFlareTextures(VisionFx* self)
 #include "trivial_dtor.h"
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_00260B40)
+DEFINE_TRIVIAL_DTOR(cVisionFxMan_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00260B40 */
 

@@ -6,7 +6,7 @@ static inline void *offset(void *base,int off) { return (char*)base+off; }
 static inline int callC(void *a,void *b,int c,int d,int *e) { if(D_00506144) return D_00506144(a,b,c,d,e+1); return -1; }
 static inline int callD(int a,void *b,void *c,int *d,int e,int f) { if(D_00506148) return D_00506148(a,b,c,d+1,e,f); return -1; }
 static inline int callE(int a) { if(D_0050614C) return D_0050614C(a); return -1; }
-int *func_0027D078(unsigned int fno, int *buf)
+int *sce_callback(unsigned int fno, int *buf)
 {
     int r = -1;
     switch (fno) {

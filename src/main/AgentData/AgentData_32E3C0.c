@@ -15,16 +15,16 @@
 #include "loose03_types.h"
 
 /* end() of a vector of 24-byte elements. */
-Elem24* func_0032E3C0(Vec24* v) {
+Elem24* std_vector_imp_Record_end(Vec24* v) {
     return v->data + v->count;
 }
 
-void func_0032E3E0(Iter* out, void* self, Iter* src) {
+void std_vector_Record_pointer2iterator(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }
 
 /* begin() */
-Elem24* func_0032E3F0(Vec24* v) {
+Elem24* std_vector_imp_Record_begin(Vec24* v) {
     return v->data;
 }
 #pragma pop /* merge_units */
@@ -46,7 +46,7 @@ typedef struct OmegaReq {
 
 extern int D_00532BB0;
 extern void* OmegaReqRow_Construct(OmegaReq*, int, int, int, int, int, int);
-extern void func_0032E230(void*, void*);
+extern void cArray_tRequirementInfo_PushBackActual(void*, void*);
 
 /* Script: cAgentData::RegisterOmegaReq(a, b, c, d). */
 int Script_cAgentData__RegisterOmegaReq(ScriptArg* args) {
@@ -59,7 +59,7 @@ int Script_cAgentData__RegisterOmegaReq(ScriptArg* args) {
     c[0] = args[2].i;
     b[0] = args[1].i;
     a[0] = args[0].i;
-    func_0032E230(&D_00532BB0, OmegaReqRow_Construct(&req, *(int*)a, 0, 0, *(int*)b, *(int*)c, *(int*)d));
+    cArray_tRequirementInfo_PushBackActual(&D_00532BB0, OmegaReqRow_Construct(&req, *(int*)a, 0, 0, *(int*)b, *(int*)c, *(int*)d));
     return 0;
 }
 #pragma pop /* merge_units */

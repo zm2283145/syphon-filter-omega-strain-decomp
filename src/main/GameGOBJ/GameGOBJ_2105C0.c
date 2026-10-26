@@ -27,7 +27,7 @@ DEFINE_VTABLE_BASE_DTOR(cPathedNotice_dtor, D_004DAE90, cMessage_dtor)
 #pragma mpwc_relax on
 int Lift_SeekFloor(int, int, int, int);                     
 int Object_LookupById(int *, int);                  
-int func_002EB650(void **);                         
+int NetGetObject(void **);                         
 int NetGame_InitLocalSlot(int *, int);                        
 extern int D_00494178;
 extern int D_005721A8;
@@ -46,7 +46,7 @@ void func_00210620(void) {
     if (D_005723C8 == 0) {
         D_005723C8 = 1;
     }
-    if (func_002EB650(&sl.f18) == 0) {
+    if (NetGetObject(&sl.f18) == 0) {
         LOCALID_(var_a1)
         o = sl.f18;
         if (F_(o, 0x4, int) == var_a1) {

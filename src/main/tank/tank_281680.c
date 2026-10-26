@@ -15,8 +15,8 @@ extern char D_004DCF10[];
 void Script_ReadU32(int* id);
 O_00281680* Backpack_Construct(void* t, unsigned char remote, int* id);
 O_00281680* Object_LookupById(int* id);
-void func_002536D0(O_00281680* o);
-void func_002579E0(O_00281680* o);
+void cBackpack_Unpack(O_00281680* o);
+void cBackpack_FadeOut(O_00281680* o);
 int NetGame_InitLocalSlot(int* id, int session);
 void Player_HandlePickupTrigger(int a, O_00281680* o);
 void Hud_PostNotification(int a, char* s);
@@ -57,15 +57,15 @@ extern "C" void cNetBackpackMsg_Apply(S_00281680* p, T_00281680* t) {
         }
         p->obj = Backpack_Construct(t, remote, &id);
         p->obj->owner = p->owner;
-        func_002536D0(p->obj);
+        cBackpack_Unpack(p->obj);
         if (t && !p->obj->b2F1) t->p3464 = p->obj;
     } else {
         p->obj = Object_LookupById(&id);
         if (!p->obj) return;
     }
-    if (p->type == 3) func_002536D0(p->obj);
+    if (p->type == 3) cBackpack_Unpack(p->obj);
     { unsigned char ty = p->type; if (ty == 1) {
-        func_002579E0(p->obj);
+        cBackpack_FadeOut(p->obj);
     } else if (ty == 2) {
         int o = p->obj->owner; if (o == LocalId_00281680() && !p->obj->b2F2) {
             p->obj->owner = p->owner;

@@ -14,11 +14,11 @@
 
 #include "types.h"
 
-void* func_00354880(void* self) {
+void* details_compressed_pair_imp_cAllocator_tAchievementInfo_int_1_first(void* self) {
     return self;
 }
 
-Rel* func_00354890(Rel* r) {
+Rel* std_vector_imp_tAchievementInfo_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
@@ -35,8 +35,8 @@ Rel* func_00354890(Rel* r) {
 extern "C" {
 extern "C" void GuiPersonnelMenu_GetClassName();
 extern "C" void GuiPersonnelMenu_IsType();
-extern "C" void func_00349ED0();
-extern "C" void func_0034D2C0();
+extern "C" void GuiPersonnelScreen_ItemGainFocus();
+extern "C" void GuiPersonnelScreen_ItemAction();
 extern "C" void GuiPersonnelMenu_Back();
 extern "C" void GuiPersonnelMenu_HandleInput();
 extern "C" void GuiPersonnelMenu_Fill();
@@ -89,6 +89,6 @@ extern "C" O3548B0* GuiPersonnelMenu_dtor(O3548B0* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DF020[28] = { (void*)0x0, (void*)0x0, (void*)GuiPersonnelMenu_dtor, (void*)GuiPersonnelMenu_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiPersonnelMenu_Wake, (void*)GuiPersonnelMenu_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiPersonnelMenu_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiPersonnelScreen_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiPersonnelMenu_GetClassName, (void*)GuiPersonnelMenu_IsType, (void*)GuiPersonnelMenu_Fill, (void*)func_00349ED0, (void*)func_0034D2C0, (void*)GuiPersonnelMenu_Back, (void*)0x0 };
+void * const D_004DF020[28] = { (void*)0x0, (void*)0x0, (void*)GuiPersonnelMenu_dtor, (void*)GuiPersonnelMenu_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiPersonnelMenu_Wake, (void*)GuiPersonnelMenu_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiPersonnelMenu_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiPersonnelScreen_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiPersonnelMenu_GetClassName, (void*)GuiPersonnelMenu_IsType, (void*)GuiPersonnelMenu_Fill, (void*)GuiPersonnelScreen_ItemGainFocus, (void*)GuiPersonnelScreen_ItemAction, (void*)GuiPersonnelMenu_Back, (void*)0x0 };
 #pragma pop /* merge_units */
 /* merge_units: end func_003548B0 */

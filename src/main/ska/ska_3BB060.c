@@ -19,7 +19,7 @@ typedef struct Mgr {
 } Mgr;
 typedef struct Pair { int a; int b; } Pair;
 extern Mgr* g_TextureMgr;
-extern void func_00382D30(Mgr*, int);
+extern void cTexMan_LockVram(Mgr*, int);
 extern void TexMan_UploadSlots(Mgr*);
 
 static inline void Push(Mgr* m, int id)
@@ -31,11 +31,11 @@ static inline void Push(Mgr* m, int id)
     }
 }
 
-void func_003BB060(Pair* p)
+void cUserFrameEnv_Activate(Pair* p)
 {
     Mgr* m;
-    func_00382D30(g_TextureMgr, p->a);
-    if (p->b != -1) func_00382D30(g_TextureMgr, p->b);
+    cTexMan_LockVram(g_TextureMgr, p->a);
+    if (p->b != -1) cTexMan_LockVram(g_TextureMgr, p->b);
     m = g_TextureMgr;
     m->f14 = 1;
     m->f15 = 1;
@@ -79,7 +79,7 @@ extern void* g_TextureMgr;
 
 extern void String_Copy(char* dst, char* src);
 extern void Libc_Strcat(char* dst, char* src);
-extern int func_00380DB0(void* mgr, char* name, int w, int h, int fmt);
+extern int cTexMan_AddTexture(void* mgr, char* name, int w, int h, int fmt);
 void RenderTarget_Create(F1RT3BB* rt, char* name, int w, int h, int fmt, int depth)
 {
     char cname[0x40];
@@ -92,8 +92,8 @@ void RenderTarget_Create(F1RT3BB* rt, char* name, int w, int h, int fmt, int dep
     rt->hasDepth = depth > 0;
     rt->color = -1;
     rt->depth = -1;
-    rt->color = func_00380DB0(g_TextureMgr, cname, w, h, fmt);
-    if (depth) rt->depth = func_00380DB0(g_TextureMgr, dname, w, h, depth);
+    rt->color = cTexMan_AddTexture(g_TextureMgr, cname, w, h, fmt);
+    if (depth) rt->depth = cTexMan_AddTexture(g_TextureMgr, dname, w, h, depth);
 }
 #undef g_TextureMgr /* merge_units */
 #pragma pop /* merge_units */
@@ -106,6 +106,6 @@ void RenderTarget_Create(F1RT3BB* rt, char* name, int w, int h, int fmt, int dep
 #include "trivial_dtor.h"
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_003BB2F0)
+DEFINE_TRIVIAL_DTOR(cUserFrameEnv_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003BB2F0 */

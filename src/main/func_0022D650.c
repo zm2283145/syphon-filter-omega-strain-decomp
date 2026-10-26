@@ -15,7 +15,7 @@ struct List22D650 {
 
 extern "C" {
 int Name_Compare48(const char* a, const char* b, int n);
-void func_0022D890(Node22D650** result, List22D650* list, Node22D650** first, Node22D650** last);
+void std_list_deleter_LosReqElem_erase(Node22D650** result, List22D650* list, Node22D650** first, Node22D650** last);
 }
 
 struct NamePred22D650 {
@@ -30,7 +30,7 @@ static inline bool NameEq22D650(Node22D650* n, const char* name) {
 
 #pragma push
 #pragma opt_common_subs off
-extern "C" void func_0022D650(List22D650* self, NamePred22D650 pred) {
+extern "C" void std_list_imp_LosReqElem_remove_if(List22D650* self, NamePred22D650 pred) {
     Node22D650* end = (Node22D650*)&self->sentinelPrev;
     Node22D650* i = self->first;
     const char* name = pred.name;
@@ -49,7 +49,7 @@ extern "C" void func_0022D650(List22D650* self, NamePred22D650 pred) {
                 Node22D650* last;
                 last = j;
                 first = i;
-                func_0022D890(&result, self, &first, &last);
+                std_list_deleter_LosReqElem_erase(&result, self, &first, &last);
                 i = result;
                 if (result == end) {
                     break;

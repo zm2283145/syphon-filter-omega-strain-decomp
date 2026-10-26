@@ -7,15 +7,15 @@
 #include "types.h"
 #include "loose01_types.h"
 
-Word* func_0022CAE0(Word* self, int value) {
+Word* std_list_deleter_LosReqElem_generic_iterator_ctor(Word* self, int value) {
     self->value = value;
     return self;
 }
 
-void* func_0022CAF0(char* self) {
+void* std_list_deleter_LosReqElem_tail(char* self) {
     return self + 4;
 }
 
-void* func_0022CB00(void* self) {
+void* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_5(void* self) {
     return self;
 }

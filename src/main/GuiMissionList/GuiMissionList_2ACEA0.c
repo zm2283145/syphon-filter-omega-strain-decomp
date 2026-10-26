@@ -16,7 +16,7 @@
 #include "loose02_types.h"
 
 extern char D_004DDB80[];   /* GuiMissionList vtable */
-extern Rel* func_002AD080(Rel* r);
+extern Rel* std_vector_SelectElem_ctor(Rel* r);
 extern GuiWidget* GuiArrayWidget_ctor(GuiWidget* self);
 
 /* GuiMissionList constructor. */
@@ -26,7 +26,7 @@ GuiMissionListObj* GuiMissionList_ctor(GuiMissionListObj* self) {
     GuiArrayWidget_ctor(&self->base);
     items = &self->items;
     self->base.vtable = D_004DDB80;
-    func_002AD080(&items->vec);
+    std_vector_SelectElem_ctor(&items->vec);
     items->owned = 1;
     self->unkA8 = 0;
     self->unkAC = 1;
@@ -52,6 +52,6 @@ GuiMissionListObj* GuiMissionList_ctor(GuiMissionListObj* self) {
 #include "member_dtor_chain.h"
 
 /* Deleting destructor that runs the member destructor. */
-DEFINE_MEMBER_DTOR_CHAIN(func_002ACF30, func_002AD780)
+DEFINE_MEMBER_DTOR_CHAIN(cArray_SelectElem_dtor, std_vector_deleter_SelectElem_dtor_void_2)
 #pragma pop /* merge_units */
 /* merge_units: end func_002ACF30 */

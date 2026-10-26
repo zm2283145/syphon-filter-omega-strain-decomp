@@ -21,11 +21,11 @@ typedef struct { Tgt_DB40* target; int serial; } Rec_DB40;
 typedef struct Node_DB40 { int pad0; struct Node_DB40* next; Rec_DB40* val; } Node_DB40;
 typedef struct { Node_DB40* n; } It_DB40;
 typedef struct { int a; } E_DB40;
-extern void func_0013B160(E_DB40* out);
-extern void func_0016DB20(It_DB40* out, E_DB40* in);
-extern void func_0016BB80(E_DB40* out, void* map);
-extern void func_0016BBA0(E_DB40* out, void* map);
-extern void func_0016BB90(It_DB40* out, E_DB40* in);
+extern void std_list_deleter_voidPtr_end_void(E_DB40* out);
+extern void std_list_cTargetAwarenessPtr_generic_iterator_ctor(It_DB40* out, E_DB40* in);
+extern void std_list_cTargetAwarenessPtr_end_void(E_DB40* out, void* map);
+extern void std_list_cTargetAwarenessPtr_begin(E_DB40* out, void* map);
+extern void cLListIterator_cTargetAwarenessPtr_ctor(It_DB40* out, E_DB40* in);
 void NpcPerception_FindRecord(It_DB40* out, void* map, Tgt_DB40* key)
 {
     It_DB40 it;
@@ -35,14 +35,14 @@ void NpcPerception_FindRecord(It_DB40* out, void* map, Tgt_DB40* key)
     E_DB40 t0;
     E_DB40 t1;
     E_DB40 t2;
-    func_0013B160(&t0);
-    func_0016DB20(&a, &t0);
+    std_list_deleter_voidPtr_end_void(&t0);
+    std_list_cTargetAwarenessPtr_generic_iterator_ctor(&a, &t0);
     it.n = a.n;
     if (key) {
-        func_0016BBA0(&t1, map);
-        func_0016BB90(&b, &t1);
+        std_list_cTargetAwarenessPtr_begin(&t1, map);
+        cLListIterator_cTargetAwarenessPtr_ctor(&b, &t1);
         it = b;
-        while (func_0016BB80(&t2, map), func_0016BB90(&end, &t2), it.n != end.n) {
+        while (std_list_cTargetAwarenessPtr_end_void(&t2, map), cLListIterator_cTargetAwarenessPtr_ctor(&end, &t2), it.n != end.n) {
             unsigned char ok;
             int isNull;
             Tgt_DB40* c;
@@ -76,19 +76,19 @@ struct Perc_DC60 { char pad[0x30]; char map[4]; char hdr[4]; char* first; };
 extern "C" {
 extern char D_0049C650[];
 #if 0 /* merge_units */
-void func_0016BB80(E_DC60* out, void* map);
+void std_list_cTargetAwarenessPtr_end_void(E_DC60* out, void* map);
 #endif /* merge_units */
-#define func_0016BB80(a0, a1) (func_0016BB80((E_DB40 *)(a0), (a1))) /* merge_units */
+#define std_list_cTargetAwarenessPtr_end_void(a0, a1) (std_list_cTargetAwarenessPtr_end_void((E_DB40 *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_0016BBA0(E_DC60* out, void* map);
+void std_list_cTargetAwarenessPtr_begin(E_DC60* out, void* map);
 #endif /* merge_units */
-#define func_0016BBA0(a0, a1) (func_0016BBA0((E_DB40 *)(a0), (a1))) /* merge_units */
+#define std_list_cTargetAwarenessPtr_begin(a0, a1) (std_list_cTargetAwarenessPtr_begin((E_DB40 *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_0016BB90(It_DC60* out, E_DC60* in);
+void cLListIterator_cTargetAwarenessPtr_ctor(It_DC60* out, E_DC60* in);
 #endif /* merge_units */
-#define func_0016BB90(a0, a1) (func_0016BB90((It_DB40 *)(a0), (E_DB40 *)(a1))) /* merge_units */
+#define cLListIterator_cTargetAwarenessPtr_ctor(a0, a1) (cLListIterator_cTargetAwarenessPtr_ctor((It_DB40 *)(a0), (E_DB40 *)(a1))) /* merge_units */
 
 void ObjectList_EraseRange(int* out, void* map, char** first, char** last);
 }
@@ -97,8 +97,8 @@ static inline void Free_DC60(void* v)
     AllocGuard g;
     Mem_Free(0, v, D_0049C650, 0x235);
 }
-static inline void Begin0_DC60(It_DC60* out, void* map) { E_DC60 t; func_0016BBA0(&t, map); func_0016BB90(out, &t); }
-static inline void End0_DC60(It_DC60* out, void* map) { E_DC60 t; func_0016BB80(&t, map); func_0016BB90(out, &t); }
+static inline void Begin0_DC60(It_DC60* out, void* map) { E_DC60 t; std_list_cTargetAwarenessPtr_begin(&t, map); cLListIterator_cTargetAwarenessPtr_ctor(out, &t); }
+static inline void End0_DC60(It_DC60* out, void* map) { E_DC60 t; std_list_cTargetAwarenessPtr_end_void(&t, map); cLListIterator_cTargetAwarenessPtr_ctor(out, &t); }
 static inline void Begin_DC60(It_DC60* out, void* map) { Begin0_DC60(out, map); }
 static inline void End_DC60(It_DC60* out, void* map) { End0_DC60(out, map); }
 static inline void Erase_DC60(Perc_DC60* self)
@@ -127,9 +127,9 @@ void NpcPerception_Clear(Perc_DC60* self)
     }
     Erase_DC60(self);
 }
-#undef func_0016BB80 /* merge_units */
-#undef func_0016BBA0 /* merge_units */
-#undef func_0016BB90 /* merge_units */
+#undef std_list_cTargetAwarenessPtr_end_void /* merge_units */
+#undef std_list_cTargetAwarenessPtr_begin /* merge_units */
+#undef cLListIterator_cTargetAwarenessPtr_ctor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0016DC60(void) {}
 #pragma pop /* merge_units */
@@ -167,14 +167,14 @@ extern "C" void NpcPerception_FindRecord(Node_DDB0** out, void* map, Tgt_DDB0* k
 #define NpcPerception_FindRecord(a0, a1, a2) (NpcPerception_FindRecord((It_DB40 *)(a0), (a1), (Tgt_DB40 *)(a2))) /* merge_units */
 
 #if 0 /* merge_units */
-extern "C" void func_0016BB80(Node_DDB0** out, void* map);
+extern "C" void std_list_cTargetAwarenessPtr_end_void(Node_DDB0** out, void* map);
 #endif /* merge_units */
-#define func_0016BB80(a0, a1) (func_0016BB80((E_DB40 *)(a0), (a1))) /* merge_units */
+#define std_list_cTargetAwarenessPtr_end_void(a0, a1) (std_list_cTargetAwarenessPtr_end_void((E_DB40 *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern "C" void func_0016BB90(Node_DDB0** out, Node_DDB0** in);
+extern "C" void cLListIterator_cTargetAwarenessPtr_ctor(Node_DDB0** out, Node_DDB0** in);
 #endif /* merge_units */
-#define func_0016BB90(a0, a1) (func_0016BB90((It_DB40 *)(a0), (E_DB40 *)(a1))) /* merge_units */
+#define cLListIterator_cTargetAwarenessPtr_ctor(a0, a1) (cLListIterator_cTargetAwarenessPtr_ctor((It_DB40 *)(a0), (E_DB40 *)(a1))) /* merge_units */
 
 extern "C" void NpcPerception_SetLastKnown(Perc_DDB0* self, Tgt_DDB0* t, void* pos, int f);
 extern "C" void TargetVis_Register(void* mgr, Tgt_DDB0* t);
@@ -212,8 +212,8 @@ extern "C" void NpcPerception_SetTarget(Perc_DDB0* self, Tgt_DDB0* t, int prio)
     self->flags.b6 = v;
     if (t) {
         NpcPerception_FindRecord(&it, self->map, t);
-        func_0016BB80(&tmp, self->map);
-        func_0016BB90(&end, &tmp);
+        std_list_cTargetAwarenessPtr_end_void(&tmp, self->map);
+        cLListIterator_cTargetAwarenessPtr_ctor(&end, &tmp);
         if (it != end) {
             self->flags.b3 = it->val->b3A;
             NpcPerception_SetLastKnown(self, t, it->val->pos, 0);
@@ -223,8 +223,8 @@ extern "C" void NpcPerception_SetTarget(Perc_DDB0* self, Tgt_DDB0* t, int prio)
     }
 }
 #undef NpcPerception_FindRecord /* merge_units */
-#undef func_0016BB80 /* merge_units */
-#undef func_0016BB90 /* merge_units */
+#undef std_list_cTargetAwarenessPtr_end_void /* merge_units */
+#undef cLListIterator_cTargetAwarenessPtr_ctor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0016DDB0(void) {}
 #pragma pop /* merge_units */

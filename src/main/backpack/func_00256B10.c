@@ -6,16 +6,16 @@
 
 #include "types.h"
 
-Word* func_00256B10(Word* dst, Word* src) {
+Word* cLListIterator_CrateSavePtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_00256B20(Iter* out, Tree* t) {
+void std_list_CrateSavePtr_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-Word* func_00256B30(Word* dst, Word* src) {
+Word* std_list_CrateSavePtr_generic_iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }

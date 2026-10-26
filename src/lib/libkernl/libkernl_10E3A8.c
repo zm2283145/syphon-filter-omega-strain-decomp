@@ -8,7 +8,7 @@
 #include "types.h"
 extern int Deci2Call(int cmd, void* arg);
 /* Issues request 0x21 with a single-word argument block. */
-int func_0010E3A8(int a)
+int sceDeci2GrpClose(int a)
 {
     int buf[4];
     buf[0] = a;
@@ -23,7 +23,7 @@ extern void Deci2Call(int kind, Request_0010E3D0* req);
 #endif /* merge_units */
 #define Deci2Call(a0, a1) ((void)Deci2Call((a0), (void *)(a1))) /* merge_units */
 
-void func_0010E3D0(int a, int b, unsigned short c)
+void sceDeci2ExRecv(int a, int b, unsigned short c)
 {
     Request_0010E3D0 req;
     req.a = a;
@@ -44,7 +44,7 @@ extern void Deci2Call(int command, int* params);
 
 
 /* SDK: issues command -6 with parameters {a, b, (unsigned short)c}. */
-void func_0010E408(int a, int b, unsigned short c)
+void sceDeci2ExSend(int a, int b, unsigned short c)
 {
     int params[3];
     params[0] = a;
@@ -63,7 +63,7 @@ extern void Deci2Call(int command, int* params);
 
 
 /* SDK (EE-GCC): issues command -7 with parameters {a, (signed char)b}. */
-void func_0010E440(int a, signed char b) {
+void sceDeci2ExReqSend(int a, signed char b) {
     int params[2];
     params[0] = a;
     params[1] = b;
@@ -78,7 +78,7 @@ extern void Deci2Call(int kind, void* req);
 #endif /* merge_units */
 #define Deci2Call(a0, a1) ((void)Deci2Call((a0), (a1))) /* merge_units */
 
-void func_0010E470(int a) { int r[4]; r[0] = a; Deci2Call(-8, r); }
+void sceDeci2ExLock(int a) { int r[4]; r[0] = a; Deci2Call(-8, r); }
 #undef Deci2Call /* merge_units */
 /* merge_units: end func_0010E470 */
 
@@ -92,7 +92,7 @@ extern void Deci2Call(int command, int* params);
 
 
 /* SDK: issues command -9 with a single parameter. */
-void func_0010E498(int a)
+void sceDeci2ExUnLock(int a)
 {
     int params[1];
     params[0] = a;
@@ -107,14 +107,14 @@ extern void Deci2Call(int kind, void* req);
 #endif /* merge_units */
 #define Deci2Call(a0, a1) ((void)Deci2Call((a0), (a1))) /* merge_units */
 
-void func_0010E4C0(int a) { int r[4]; r[0] = a; Deci2Call(0x10, r); }
+void kputs(int a) { int r[4]; r[0] = a; Deci2Call(0x10, r); }
 #undef Deci2Call /* merge_units */
 /* merge_units: end func_0010E4C0 */
 
 /* merge_units: begin func_0010E4E8 */
 typedef struct { int size; int count; unsigned char* rd; unsigned char* wr; unsigned char buf[1]; } Ring_0010E4E8;
 extern Ring_0010E4E8 D_004E2840;
-Ring_0010E4E8* func_0010E4E8(int size)
+Ring_0010E4E8* QueueInit(int size)
 {
     Ring_0010E4E8* r = &D_004E2840;
     r->count = 0;
@@ -127,7 +127,7 @@ Ring_0010E4E8* func_0010E4E8(int size)
 
 /* merge_units: begin func_0010E510 */
 typedef struct { int size; int count; unsigned char* rd; unsigned char* wr; unsigned char buf[1]; } Ring_0010E510;
-void func_0010E510(Ring_0010E510* r)
+void QueuePeekWriteDone(Ring_0010E510* r)
 {
     r->count++;
     r->wr++;

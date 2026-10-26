@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-Quad* func_0025CCE0(Quad* d, Quad* s) {
+Quad* tIRGBA_opAssign_tIRGBAR(Quad* d, Quad* s) {
     d->a = s->a;
     d->b = s->b;
     d->c = s->c;

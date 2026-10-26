@@ -8,7 +8,7 @@
 #pragma push /* merge_units */
 #include "types.h"
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
-void func_0036F010(V4* a, V4* b, V4* c) {
+void nMatrix_Multiply_NonTransposedMatrices(V4* a, V4* b, V4* c) {
     asm {
         lqc2 vf4, 0x0(c)
         lqc2 vf5, 0x10(c)
@@ -95,8 +95,8 @@ public:
     VPAD8(a) VPAD4(b) VPAD2(c) VPAD1(d)
     virtual T36F110* f44();
 };
-extern "C" void func_0036F110(int key, A36F110* a, int arg);
-void func_0036F110(int key, A36F110* a, int arg)
+extern "C" void cXformNode_RemoveChild(int key, A36F110* a, int arg);
+void cXformNode_RemoveChild(int key, A36F110* a, int arg)
 {
     T36F110* t = a ? a->f44() : 0;
     if (t && t->aA0 == key) t->f4C(arg);
@@ -113,7 +113,7 @@ void func_0036F110(int key, A36F110* a, int arg)
  */
 
 
-int func_0036F190(void) {
+int cXform_GetNode_void(void) {
     return 0;
 }
 #pragma pop /* merge_units */
@@ -156,12 +156,12 @@ static inline void G1(void* d, void* s) { __int128 t; __asm__ volatile("lq %0, 0
 static inline void GMV(void* o, void* m, void* v) { __asm__ volatile("lqc2 vf8, 0x0(%2); lqc2 vf4, 0x0(%1); lqc2 vf5, 0x10(%1); lqc2 vf6, 0x20(%1); lqc2 vf7, 0x30(%1); vmulax.xyzw ACC, vf4, vf8x; vmadday.xyzw ACC, vf5, vf8y; vmaddaz.xyzw ACC, vf6, vf8z; vmaddw.xyzw vf12, vf7, vf8w; sqc2 vf12, 0x0(%0)" : : "r"(o), "r"(m), "r"(v) : "memory"); }
 typedef struct { int p; } It;
 extern "C" {
-void func_001CF100(It* it, void* c);
-void func_001CF0E0(It* it, void* c);
-int func_001CEF10(It* a, It* b);
-void** func_001CF0D0(It* it);
-void func_001CEF50(void* p);
-void func_001CEF30(It* it);
+void cArray_cXformNodePtr_Begin(It* it, void* c);
+void cArray_cXformNodePtr_End(It* it, void* c);
+int cArray_cXformNodePtr_ConstIterator_opNe(It* a, It* b);
+void** cArray_cXformNodePtr_ConstIterator_opMul(It* it);
+void cXformNode_SetNeedsUpdate(void* p);
+void cArray_cXformNodePtr_ConstIterator_opInc(It* it);
 void PtrVector_Resize(void* v, int n, int* fill);
 M* Mtx_Transpose3x3(M* m);
 int Mtx_IsTranslationZero(M* m);
@@ -212,12 +212,12 @@ extern "C" void Xform_Detach(Xform* x, int keep)
         } else if (!self->dirty) {
             It* pe;
             self->dirty = 1;
-            func_001CF100(&b, &self->kids);
-            func_001CF0E0(&e, &self->kids);
+            cArray_cXformNodePtr_Begin(&b, &self->kids);
+            cArray_cXformNodePtr_End(&e, &self->kids);
             pe = &e;
-            while (func_001CEF10(&b, pe)) {
-                func_001CEF50(*func_001CF0D0(&b));
-                func_001CEF30(&b);
+            while (cArray_cXformNodePtr_ConstIterator_opNe(&b, pe)) {
+                cXformNode_SetNeedsUpdate(*cArray_cXformNodePtr_ConstIterator_opMul(&b));
+                cArray_cXformNodePtr_ConstIterator_opInc(&b);
             }
         }
     }

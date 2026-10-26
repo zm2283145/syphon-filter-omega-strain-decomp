@@ -1,6 +1,6 @@
 #include "types.h"
 int __register_global_object();
-int func_00144930();
+int cSubclassId_dtor();
 int Script_cGameDirectionalLight_TurnOff();
 int Script_cGameDirectionalLight_TurnOn();
 int ScriptType_cGameDirectionalLight_Init();
@@ -29,7 +29,7 @@ extern int D_004EE8E8;
 extern int D_004EE8F0;
 void StaticInit_RegisterGameLight(void) {
     D_004EE890 = "LIGHT";
-    __register_global_object(&D_004EE890, func_00144930, &D_004EE880);
+    __register_global_object(&D_004EE890, cSubclassId_dtor, &D_004EE880);
     D_004EE898 = Script_RegisterType("cGameLight", ScriptType_cGameLight_Init, 0, 1);
     D_004EE8A0 = D_004EE898;
     D_004EE8A8 = Script_RegisterNative(D_004EE898, Script_cGameLight_TurnOn, &D_00493880, "TurnOn", 1, &D_004EE898);

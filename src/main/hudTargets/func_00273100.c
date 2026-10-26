@@ -9,68 +9,68 @@
 
 extern int ObjMarkerMgr_Remove(ObjMarkerMgr* mgr, int* id, int send);
 
-Word* func_00273100(Word* dst, Word* src) {
+Word* cLListIterator_cHudTargetInfoPtr_ctor_cLListIteratorR(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
 /* List iterator inequality. */
-int func_00273110(ListPos* a, ListPos* b) {
+int opNe_cLListIteratorR_cLListIteratorR_5(ListPos* a, ListPos* b) {
     return a->node != b->node;
 }
 
-void func_00273130(Iter* out, Tree* t) {
+void cLList_cHudTargetInfoPtr_End(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
 /* List iterator ++. */
-ListPos* func_00273140(ListPos* it) {
+ListPos* cLListIterator_cHudTargetInfoPtr_opInc(ListPos* it) {
     it->node = it->node->next;
     return it;
 }
 
 /* List iterator dereference. */
-int* func_00273160(ListPos* it) {
+int* cLListIterator_cHudTargetInfoPtr_opMul(ListPos* it) {
     return &it->node->value;
 }
 
-float* func_00273170(float* dst, float* src) {
+float* cLListIterator_cHudTargetInfoPtr_opAssign(float* dst, float* src) {
     *dst = *src;
     return dst;
 }
 
-void func_00273180(Iter* out, PtrVec* v) {
+void cLList_cHudTargetInfoPtr_Begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 
-void* func_00273190(void* self) {
+void* cLListIterator_cHudTargetInfoPtr_ctor_void(void* self) {
     return self;
 }
 
-Word* func_002731A0(Word* dst, Word* src) {
+Word* cLListIterator_cHudTargetsObserverPtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_002731B0(Iter* out, Tree* t) {
+void std_list_cHudTargetsObserverPtr_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-Word* func_002731C0(Word* dst, Word* src) {
+Word* std_list_cHudTargetsObserverPtr_generic_iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_002731D0(Iter* out, Tree* t) {
+void std_list_cHudTargetInfoPtr_end_void_2(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-Word* func_002731E0(Word* dst, Word* src) {
+Word* cLListIterator_cHudTargetInfoPtr_ctor_listR(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_002731F0(Iter* out, PtrVec* v) {
+void std_list_cHudTargetInfoPtr_begin_void_2(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 

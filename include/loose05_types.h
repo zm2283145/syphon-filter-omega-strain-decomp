@@ -170,7 +170,7 @@ typedef struct BodyTossMsg {
     unsigned char unk24;            /* 0x24 */
 } BodyTossMsg;
 
-/* Rel triple followed by an enabled flag (func_00460E90). */
+/* Rel triple followed by an enabled flag (cArray_tQuip_ctor). */
 typedef struct FlaggedRel {
     Rel rel;                        /* 0x00 */
     char enabled;                   /* 0x0C */

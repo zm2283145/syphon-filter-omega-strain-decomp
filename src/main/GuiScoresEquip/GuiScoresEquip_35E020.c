@@ -85,7 +85,7 @@ static inline void merge_flush_func_0035E1C0(void) {}
 #pragma cplusplus on
 
 /* Find a key in a tree; end() when absent. */
-DEFINE_TREE_FIND(func_0035E350, func_0013C310)
+DEFINE_TREE_FIND(func_0035E350, std_basic_string_char_char_traits_char_compare_basicstringR)
 #pragma pop /* merge_units */
 /* merge_units: end func_0035E350 */
 
@@ -96,7 +96,7 @@ DEFINE_TREE_FIND(func_0035E350, func_0013C310)
 /* Resize a vector of 60-byte elements. */
 DEFINE_RESIZE_ELEMENT(Elem60, 60)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(ChannelVector_Resize_35E420, Elem60, AnimChannelVec_Grow, func_001BEB20)
+DEFINE_VECTOR_RESIZE(ChannelVector_Resize_35E420, Elem60, AnimChannelVec_Grow, std_vector_imp_cSkaSliderValue_erase)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_0035E420 */
@@ -108,7 +108,7 @@ DEFINE_VECTOR_RESIZE(ChannelVector_Resize_35E420, Elem60, AnimChannelVec_Grow, f
 /* Resize a vector of 8-byte elements. */
 DEFINE_RESIZE_ELEMENT(Elem8, 8)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_0035E4B0, Elem8, Vector_Insert_1BF5A0, func_001BF440)
+DEFINE_VECTOR_RESIZE(func_0035E4B0, Elem8, Vector_Insert_1BF5A0, std_vector_imp_cSkaSwitchValue_erase)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_0035E4B0 */

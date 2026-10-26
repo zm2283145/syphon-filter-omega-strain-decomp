@@ -18,13 +18,13 @@ extern "C" {
 extern char D_004DB040[];
 extern char D_004A4550[];
 extern unsigned char g_IsMultiplayer;
-void func_002EC2A8(int a);
-void** func_002151B0(void* v, int i);
+void NetFreeObject(int a);
+void** std_vector_charPtr_opIndex_uint(void* v, int i);
 void FileMan_Release(void* p, int flag);
-void func_001736C0(void* p, int flag);
+void std_vector_cHotboxPtr_dtor(void* p, int flag);
 void func_0013A040(void* p, int flag);
-void func_00145F10(void* p, int flag);
-void func_00215E40(void* p, int flag);
+void std_vector_charPtr_dtor_void(void* p, int flag);
+void std_vector_cGameGOBJPtr_dtor(void* p, int flag);
 void* cPathedGOBJ_dtor(void* p, int flag);
 void operator_delete(void* p);
 }
@@ -57,7 +57,7 @@ extern "C" cElevatorGOBJ* cElevatorGOBJ_dtor(cElevatorGOBJ* self, short flag)
         if (g_IsMultiplayer) {
             ElevHandle* d = self->p128;
             if (d) {
-                if (d->c) func_002EC2A8(d->h);
+                if (d->c) NetFreeObject(d->h);
                 else Free_215F50(d, 0xCAD);
                 self->p128 = 0;
             }
@@ -69,7 +69,7 @@ extern "C" cElevatorGOBJ* cElevatorGOBJ_dtor(cElevatorGOBJ* self, short flag)
             }
         }
         for (i = 0; i < self->nFC; i++) {
-            void* p = *func_002151B0(self->mF8, i);
+            void* p = *std_vector_charPtr_opIndex_uint(self->mF8, i);
             Free_215F50(p, 0x5D8);
             self->p100[i] = 0;
         }
@@ -77,10 +77,10 @@ extern "C" cElevatorGOBJ* cElevatorGOBJ_dtor(cElevatorGOBJ* self, short flag)
         SndDtor(&self->snd[2]);
         SndDtor(&self->snd[1]);
         SndDtor(&self->snd[0]);
-        if (self->m118) func_001736C0(self->m118, -1);
+        if (self->m118) std_vector_cHotboxPtr_dtor(self->m118, -1);
         if (self->m108) func_0013A040(self->m108, -1);
-        if (self->mF8) func_00145F10(self->mF8, -1);
-        if (self->mE8) func_00215E40(self->mE8, -1);
+        if (self->mF8) std_vector_charPtr_dtor_void(self->mF8, -1);
+        if (self->mE8) std_vector_cGameGOBJPtr_dtor(self->mE8, -1);
         cPathedGOBJ_dtor(self, 0);
         if (flag > 0)
             operator_delete(self);
@@ -448,7 +448,7 @@ struct cInteractGOBJ_00216AE0 {
 };
 extern "C" {
 extern void cGameGOBJ_ctor(cInteractGOBJ_00216AE0* self, void* a1, void* a2, int kind);
-extern Rel_00216AE0* func_00215F30(Rel_00216AE0* r);
+extern Rel_00216AE0* std_vector_cGameGOBJPtr_ctor(Rel_00216AE0* r);
 extern void PtrVector_Resize(Rel_00216AE0* v, int n, int* fill);
 extern char D_004DB160[];
 cInteractGOBJ_00216AE0* cInteractGOBJ_ctor(cInteractGOBJ_00216AE0* self, void* a1, void* a2);
@@ -460,7 +460,7 @@ cInteractGOBJ_00216AE0* cInteractGOBJ_ctor(cInteractGOBJ_00216AE0* self, void* a
     self->vtable = D_004DB160;
     {
         RelFlag* rf = &self->x98;
-        func_00215F30(&rf->rel);
+        std_vector_cGameGOBJPtr_ctor(&rf->rel);
         rf->flag = 1;
     }
     if (self->x70) {

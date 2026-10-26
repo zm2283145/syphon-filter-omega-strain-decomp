@@ -5,7 +5,7 @@
 typedef struct { int unk0; int unk4; int unk8; int unkC; } Obj;
 
 /* Resets an object; returns 2 if it is NULL, 0 otherwise. */
-int func_002F5398(Obj* obj)
+int rt_circ_buf_clear(Obj* obj)
 {
     int ret = 2;
     if (obj != 0) {

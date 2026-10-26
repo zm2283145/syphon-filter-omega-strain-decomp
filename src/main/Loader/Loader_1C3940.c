@@ -70,10 +70,10 @@ extern char D_0049EE88[];
 extern void Alloc_Lock(int n);
 extern void Alloc_Unlock(int n);
 extern void** PtrVec_Back_1C3C30(Vec_1C3B00* v);
-extern void func_00136DA0(int* g);
-extern void func_0012F530(int* g, int f);
-extern void func_001454E0(Vec_1C3B00* v, int f);
-void func_001C3B00(Obj_1C3B00* o)
+extern void cTimerDisable_ctor(int* g);
+extern void cTimerDisable_dtor(int* g, int f);
+extern void cArray_charPtr_dtor_void(Vec_1C3B00* v, int f);
+void cLoader_DeallocateAllAnimationBuffers(Obj_1C3B00* o)
 {
     Vec_1C3B00* v = o->vec;
     if (v) {
@@ -90,10 +90,10 @@ void func_001C3B00(Obj_1C3B00* o)
             o->vec->count--;
             v = o->vec;
         }
-        func_00136DA0(g);
-        func_001454E0(v, -1);
+        cTimerDisable_ctor(g);
+        cArray_charPtr_dtor_void(v, -1);
         Mem_Free(0, v, D_0049EE88, 0x111);
-        func_0012F530(g, -1);
+        cTimerDisable_dtor(g, -1);
         o->vec = 0;
     }
 }

@@ -122,7 +122,7 @@ extern float D_00587DB0;
 extern float D_00587DB4;
 extern float D_00587DB8;
 extern float D_00587DBC;
-void func_004D8570(void)
+void StaticInit_guiConstants(void)
 {
     D_00587B50 = 1.0f;
     *(float*)((char*)&D_00587B50 + 4) = 1.0f;

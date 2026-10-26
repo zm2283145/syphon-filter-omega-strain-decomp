@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_0010B3F8(int a0) {
+int sceMpegClearRefBuff(int a0) {
     int v0, v1;
 
     v1 = *(int*)((char*)a0 + 64);

@@ -9,7 +9,7 @@
 extern SpecListPos* List_InsertBefore(SpecListPos* result, void* list, SpecListPos* pos, int* value);
 
 /* push_back on a list whose sentinel node is at +4. */
-SpecListPos* func_002359A0(void* list, int* value) {
+SpecListPos* std_list_cElementPtr_push_back_cElementPR_2(void* list, int* value) {
     SpecListPos end;
     SpecListPos result;
 
@@ -17,15 +17,15 @@ SpecListPos* func_002359A0(void* list, int* value) {
     return List_InsertBefore(&result, list, &end, value);
 }
 
-void func_002359D0(Iter* out, Tree* t) {
+void std_list_cElementPtr_end_void_2(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-Word* func_002359E0(Word* dst, Word* src) {
+Word* cLListIterator_cElementPtr_ctor_listR_2(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_002359F0(Iter* out, PtrVec* v) {
+void std_list_cElementPtr_begin_void_2(Iter* out, PtrVec* v) {
     out->p = v->data;
 }

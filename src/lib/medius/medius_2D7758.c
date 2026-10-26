@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_002D7758(void) {
+void SetBlock(void) {
 
 }

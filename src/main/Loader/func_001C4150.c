@@ -6,16 +6,16 @@
 #include "types.h"
 
 /* End pointer. */
-int* func_001C4150(PtrVec* v) {
+int* std_vector_imp_cTerrainPtr_1_end(PtrVec* v) {
     return v->data + v->count;
 }
 
 /* Copy an iterator. */
-void func_001C4170(Iter* out, void* self, Iter* src) {
+void std_vector_cTerrainPtr_pointer2iterator(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }
 
 /* Data pointer. */
-int* func_001C4180(PtrVec* v) {
+int* std_vector_imp_cTerrainPtr_1_begin(PtrVec* v) {
     return v->data;
 }

@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046CE70(void) {
+int MediusUniqueCallbackFindWorldByNameRequestHandler(void) {
     return 108;
 }

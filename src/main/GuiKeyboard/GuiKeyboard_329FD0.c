@@ -9,15 +9,15 @@
 typedef struct { int a, b, c; } S29930;
 typedef struct { int first; int count; void* buf; char flag; } V29F60;
 typedef struct { S29930 s0; V29F60 v; int x; } E20;
-extern void func_00329930(S29930* dst, S29930* src);
-extern V29F60* func_00329F60(V29F60* dst, V29F60* src);
-E20* func_00329FD0(E20* first, E20* last, E20* result)
+extern void cString_opAssign(S29930* dst, S29930* src);
+extern V29F60* cArray_Slide_opAssign(V29F60* dst, V29F60* src);
+E20* std_copy_backward_Section_copy_backward(E20* first, E20* last, E20* result)
 {
     while (first < last) {
         --last;
         --result;
-        func_00329930(&result->s0, &last->s0);
-        func_00329F60(&result->v, &last->v);
+        cString_opAssign(&result->s0, &last->s0);
+        cArray_Slide_opAssign(&result->v, &last->v);
         result->x = last->x;
     }
     return result;
@@ -37,15 +37,15 @@ E20* func_00329FD0(E20* first, E20* last, E20* result)
 #include "loose02_types.h"
 
 extern void* String_CopyCtor(void* dst, void* src);
-extern Rel* func_0032A0B0(Rel* dst, Rel* src);
+extern Rel* std_vector_Slide_ctor(Rel* dst, Rel* src);
 
 /* Copy constructor. */
-Rec32A050* func_0032A050(Rec32A050* self, Rec32A050* src) {
+Rec32A050* GuiSlideShow_Section_ctor(Rec32A050* self, Rec32A050* src) {
     OwnedRel* vec;
 
     String_CopyCtor(self, src);
     vec = &self->vec;
-    func_0032A0B0(&vec->vec, &src->vec.vec);
+    std_vector_Slide_ctor(&vec->vec, &src->vec.vec);
     vec->owned = src->vec.owned;
     self->unk1C = src->unk1C;
     return self;

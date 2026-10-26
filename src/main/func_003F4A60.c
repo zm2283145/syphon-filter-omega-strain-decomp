@@ -12,7 +12,7 @@ extern void WaitSema(void* lock);
 extern void SignalSema(void* lock);
 
 /* Under the lock, returns base + index * 0x800. */
-int func_003F4A60(LockedBuf* buf) {
+int viBufCount(LockedBuf* buf) {
     int addr;
     WaitSema(buf->lock);
     addr = buf->base + (buf->index << 11);

@@ -11,7 +11,7 @@
 #include "short_string_replace.h"
 extern "C" void String_Reserve(ShortStr* self, unsigned int n);
 struct SB40B200 { ShortStr s; unsigned char c; };
-extern "C" SB40B200* func_0040B200(SB40B200* self, const SB40B200* src)
+extern "C" SB40B200* std_pair_cString_char_ctor(SB40B200* self, const SB40B200* src)
 {
     if (!ShortStr_IsLong(&src->s)) {
         self->s = src->s;
@@ -35,6 +35,6 @@ extern "C" SB40B200* func_0040B200(SB40B200* self, const SB40B200* src)
 #include "tree_insert_obj.h"
 
 extern "C" { char D_004BEC48[] = "allocator.hh"; }
-DEFINE_TREE_INSERT_OBJ(func_0040B2A0, 0x1C, 0x10, D_004BEBD0, D_004BEC48, 0x5C, Mem_PlacementNew, func_0040B410, func_0013CD40)
+DEFINE_TREE_INSERT_OBJ(std_tree_pair_cString_value_compare_insert_node_at_nodeP_bool_bool_pairR_4, 0x1C, 0x10, D_004BEBD0, D_004BEC48, 0x5C, Mem_PlacementNew, std_pair_cString_int_ctor, std_red_black_tree_1_balance_insert)
 #pragma pop /* merge_units */
 /* merge_units: end func_0040B2A0 */

@@ -3,7 +3,7 @@
 typedef struct { float m[16]; } Mtx16;
 
 /* Builds a 4x4 matrix from 16 floats; returns it. */
-Mtx16* func_0024FF60(Mtx16* out, float m0, float m1, float m2, float m3, float m4, float m5, float m6, float m7,
+Mtx16* cMatrix_Set_float_float_float_float_etc(Mtx16* out, float m0, float m1, float m2, float m3, float m4, float m5, float m6, float m7,
                      float m8, float m9, float m10, float m11, float m12, float m13, float m14, float m15)
 {
     out->m[0] = m0;

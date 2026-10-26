@@ -7,7 +7,7 @@ void Mem_Free(int pool, void* allocation, char* file, int line);
 void operator_delete(void* allocation);
 }
 typedef struct { int a; int b; int c; void* buffer; } BufHolder393DD0;
-extern "C" BufHolder393DD0* func_00393DD0(BufHolder393DD0* self, short deleteFlag)
+extern "C" BufHolder393DD0* _cdeque_imp_cSkaSystem_RequestPtr_1_dtor(BufHolder393DD0* self, short deleteFlag)
 {
     if (self) {
         if (self) {

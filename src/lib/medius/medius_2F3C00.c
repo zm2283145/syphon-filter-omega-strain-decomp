@@ -14,25 +14,25 @@ typedef struct S {
     char pad24[0x8];
     void *cur;
 } S;
-extern int func_002DC288(void *p);
-extern void func_002DC1F0(void *p);
-extern void *func_002DBD58(void *h, int id, int n);
-extern int func_002DC230(void *p);
-void *func_002F3C00(S *s, int id, int lim)
+extern int GetCodecType(void *p);
+extern void DestroyCodec(void *p);
+extern void *CreateCodec(void *h, int id, int n);
+extern int InitCodec(void *p);
+void *RequestEncoder(S *s, int id, int lim)
 {
     void *p;
     if (s->busy) return 0;
     if (s->cnt >= s->max && s->max + 1 < lim) return 0;
-    if (s->cur && func_002DC288(s->cur) != id) {
-        func_002DC1F0(s->cur);
+    if (s->cur && GetCodecType(s->cur) != id) {
+        DestroyCodec(s->cur);
         s->cur = 0;
     }
     if (s->cur == 0) {
-        s->cur = func_002DBD58(s->h, id, 1);
+        s->cur = CreateCodec(s->h, id, 1);
     }
     p = s->cur;
     if (p) {
-        func_002DC230(p);
+        InitCodec(p);
         s->busy = 1;
     }
     return p;
@@ -44,33 +44,33 @@ typedef struct N2F3CD0 { struct N2F3CD0 *next; struct N2F3CD0 *prev; int a; int 
 typedef struct { int owner; int max; char pad8[0x10]; int used; int nfree; int pad20; N2F3CD0 *used_l; N2F3CD0 *free_l; } P2F3CD0;
 extern int Net_AllocZeroed(void *, int);
 #if 0 /* merge_units */
-extern int func_002DBD58(int, int, int);
+extern int CreateCodec(int, int, int);
 #endif /* merge_units */
-#define func_002DBD58(a0, a1, a2) ((int)func_002DBD58((void *)(a0), (a1), (a2))) /* merge_units */
+#define CreateCodec(a0, a1, a2) ((int)CreateCodec((void *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_002DC1F0(int);
+extern void DestroyCodec(int);
 #endif /* merge_units */
-#define func_002DC1F0(a0) (func_002DC1F0((void *)(a0))) /* merge_units */
+#define DestroyCodec(a0) (DestroyCodec((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_002DC230(int);
+extern int InitCodec(int);
 #endif /* merge_units */
-#define func_002DC230(a0) (func_002DC230((void *)(a0))) /* merge_units */
+#define InitCodec(a0) (InitCodec((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_002DC288(int);
+extern int GetCodecType(int);
 #endif /* merge_units */
-#define func_002DC288(a0) (func_002DC288((void *)(a0))) /* merge_units */
+#define GetCodecType(a0) (GetCodecType((void *)(a0))) /* merge_units */
 
-extern void func_002FB3C0(void *);
-int func_002F3CD0(P2F3CD0 *q, int key)
+extern void rt_memory_free(void *);
+int RequestDecoder(P2F3CD0 *q, int key)
 {
     N2F3CD0 *n;
     int r = 0;
     n = q->free_l;
     while (n) {
-        if (func_002DC288(n->val) == key)
+        if (GetCodecType(n->val) == key)
             break;
         n = n->prev;
         if (n == q->free_l)
@@ -91,15 +91,15 @@ int func_002F3CD0(P2F3CD0 *q, int key)
             e->prev->next = e->next;
             if (q->nfree <= 0)
                 q->free_l = 0;
-            func_002DC1F0(e->val);
-            func_002FB3C0(&e);
+            DestroyCodec(e->val);
+            rt_memory_free(&e);
         }
         if (q->used < q->max) {
             Net_AllocZeroed(&n, 0x10);
             if (n != 0) {
-                n->val = func_002DBD58(q->owner, key, 2);
+                n->val = CreateCodec(q->owner, key, 2);
                 if (n->val == 0)
-                    func_002FB3C0(&n);
+                    rt_memory_free(&n);
             }
         }
     }
@@ -115,25 +115,25 @@ int func_002F3CD0(P2F3CD0 *q, int key)
         }
         r = n->val;
         q->used++;
-        func_002DC230(r);
+        InitCodec(r);
     }
     return r;
 }
-#undef func_002DBD58 /* merge_units */
-#undef func_002DC1F0 /* merge_units */
-#undef func_002DC230 /* merge_units */
-#undef func_002DC288 /* merge_units */
+#undef CreateCodec /* merge_units */
+#undef DestroyCodec /* merge_units */
+#undef InitCodec /* merge_units */
+#undef GetCodecType /* merge_units */
 /* merge_units: end func_002F3CD0 */
 
 /* merge_units: begin func_002F3F00 */
 typedef struct N2F3F00 { struct N2F3F00 *next; struct N2F3F00 *prev; int a; int val; } N2F3F00;
 typedef struct { int owner; int max; char pad8[0x10]; int used; int nfree; int busy; N2F3F00 *used_l; N2F3F00 *free_l; int cur; } P2F3F00;
-extern int func_002DC290(int);
-void func_002F3F00(P2F3F00 *q, int val)
+extern int GetCodecMode(int);
+void ReleaseCodec(P2F3F00 *q, int val)
 {
     N2F3F00 *n, *head;
     if (val == 0) return;
-    if (func_002DC290(val) == 1) {
+    if (GetCodecMode(val) == 1) {
         if (val == q->cur) q->busy = 0;
         return;
     }
@@ -165,9 +165,9 @@ void func_002F3F00(P2F3F00 *q, int val)
 /* merge_units: begin func_002F4030 */
 typedef struct N2F4030 { struct N2F4030 *next; struct N2F4030 *prev; int a; int val; } N2F4030;
 typedef struct { int a; int max; int used; int nfree; N2F4030 *used_l; N2F4030 *free_l; } P2F4030;
-extern int func_003135E0(void);
-extern void func_00313688(int);
-int func_002F4030(P2F4030 *q)
+extern int CreateSequence(void);
+extern void InitSequence(int);
+int RequestSequencer(P2F4030 *q)
 {
     N2F4030 *n = 0;
     int r = 0;
@@ -175,9 +175,9 @@ int func_002F4030(P2F4030 *q)
         if (q->used < q->max) {
             Net_AllocZeroed(&n, 0x10);
             if (n != 0) {
-                n->val = func_003135E0();
+                n->val = CreateSequence();
                 if (n->val == 0) {
-                    func_002FB3C0(&n);
+                    rt_memory_free(&n);
                     n = 0;
                 }
             }
@@ -203,7 +203,7 @@ int func_002F4030(P2F4030 *q)
     }
     r = n->val;
     q->used++;
-    func_00313688(r);
+    InitSequence(r);
     }
     return r;
 }
@@ -226,7 +226,7 @@ typedef struct {
     Node_002F4180 *freeList;
 } List_002F4180;
 
-void func_002F4180(List_002F4180 *l, int key)
+void ReleaseSequencer(List_002F4180 *l, int key)
 {
     Node_002F4180 *n;
     Node_002F4180 *f;

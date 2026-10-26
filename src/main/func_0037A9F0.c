@@ -49,13 +49,13 @@ extern void Video_FrameFlag8(GsCtx37A9F0*);
 extern void RenderTarget_Release(Rt37A9F0*);
 extern void Renderer_ClearRect(GsCtx37A9F0*, int, int, int*, int, int);
 extern void Display_SetPmode(GsCtx37A9F0*);
-extern void func_00382060(int);
+extern void cTexMan_TermTextureStream(int);
 extern void Vif1Packet_Flip(void*);
 extern void Video_FreeDeferredBuffers(GsCtx37A9F0*, int);
 extern void Video_RollFrameStats(GsCtx37A9F0*);
 extern void Video_BuildFrameClearPacket(GsCtx37A9F0*);
 extern void ListenerList_Update(void*, float);
-extern void func_003820C0(int);
+extern void cTexMan_StartFrame(int);
 extern char D_00537F80[];
 extern int g_TimerAccum;
 extern s64 g_TickCounter64;
@@ -145,7 +145,7 @@ void Video_BeginFrame(GsCtx37A9F0* c)
         *(volatile int*)0x10000810 = 0x82;
         g_TimerAccum = 0;
     }
-    func_00382060(c->dev);
+    cTexMan_TermTextureStream(c->dev);
     Vif1Packet_Flip(D_00537F80);
     Video_FreeDeferredBuffers(c, 0);
     Video_RollFrameStats(c);
@@ -155,5 +155,5 @@ void Video_BeginFrame(GsCtx37A9F0* c)
     ((unsigned char*)c)[c->slot * 0x110 + 0x2F6] = 1;
     Video_BuildFrameClearPacket(c);
     ListenerList_Update(c->listeners, c->dt);
-    func_003820C0(c->dev);
+    cTexMan_StartFrame(c->dev);
 }

@@ -50,7 +50,7 @@ typedef struct cOutOfAmmoMsg {
     int weapon;              /* 0x24 */
 } cOutOfAmmoMsg;
 
-/* 24-byte element of the vector handled by func_00147600. */
+/* 24-byte element of the vector handled by cArray_Record_PushBackActual. */
 typedef struct WeaponRec24 {
     char data[24];
 } WeaponRec24;

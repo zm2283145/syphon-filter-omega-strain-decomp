@@ -12,11 +12,11 @@ typedef struct {
     char p1EA8[0x1EAC-0x1EA8]; int fAC; char p1EB0[4]; int fB4;
     char p1EB8[0x23EC-0x1EB8]; int h0; int h2; int h1; char p23F8[0x255C-0x23F8]; int state;
 } Cell;
-extern void func_00452FC0(Cell*, int);
+extern void SFOLobby_SetCallback(Cell*, int);
 extern void LobbyArray_Init(void*, int, int, int);
-extern int func_00451BE0(Cell*, int);
+extern int SFOLobby_HandleOverflowJoinChannel(Cell*, int);
 extern void LobbyArray_Free(int);
-extern void func_0044D780(Cell*);
+extern void SFOLobby_ContactGetInvites(Cell*);
 extern int Lobby_GetTime(void);
 extern int D_00497788;
 static inline void SetA0(Cell* o, int v) { if (v != o->fA0) o->fA0 = v; }
@@ -27,7 +27,7 @@ int SFOLobby_JoinRoom(Cell* self, int a1, int a2, int a3, int t0)
     char* b = (char*)self;
     if (self->state != 9) return 0;
     self->state = 5;
-    func_00452FC0(self, a1);
+    SFOLobby_SetCallback(self, a1);
     self->h0 = a2;
     self->h1 = a3;
     self->h2 = t0;
@@ -42,13 +42,13 @@ int SFOLobby_JoinRoom(Cell* self, int a1, int a2, int a3, int t0)
     self->t9C = 0;
     self->fA0 = 1;
     SetA0(self, 0);
-    if (self->fB4 != self->fAC && !func_00451BE0(self, self->fB4)) {
+    if (self->fB4 != self->fAC && !SFOLobby_HandleOverflowJoinChannel(self, self->fB4)) {
         RelH(&self->h0);
         RelH(&self->h1);
         RelH(&self->h2);
         return 0;
     }
-    func_0044D780(self);
+    SFOLobby_ContactGetInvites(self);
     if (Lobby_GetTime() - self->t98 > D_00497788 - 1000) {
         self->t98 = Lobby_GetTime() - D_00497788 + 1000;
     }
@@ -94,7 +94,7 @@ extern int D_00497830;
 extern R451B30 D_00585E90;
 extern unsigned char SFOLobby_RequestAccountInfo(S451B30*, int);
 extern void func_004499A0(S451B30*);
-extern void func_004505E0(S451B30*, R451B30*);
+extern void SFOLobby_UpdateStats(S451B30*, R451B30*);
 extern void SFOLobby_CacheAccount(S451B30*, int, char*, int, R451B30*);
 
 void func_00451B30(S451B30* s)
@@ -109,7 +109,7 @@ void func_00451B30(S451B30* s)
         func_004499A0(s);
         room = ok ? &s->room : &D_00585E90;
         room->fE8 = s->f2484;
-        func_004505E0(s, room);
+        SFOLobby_UpdateStats(s, room);
         SFOLobby_CacheAccount(s, s->f2480, s->fAA4, room->fF4, room);
     }
 }

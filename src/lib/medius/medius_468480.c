@@ -8,7 +8,7 @@
 
 extern char D_00497E28[];
 
-int func_00468480(void) {
+int MediusGetClientConnectCallback(void) {
     int tmp0;
 
     tmp0 = *(int*)D_00497E28;

@@ -1,4 +1,4 @@
-void func_002F1480(unsigned int* m, unsigned int n)
+void TrimIP(unsigned int* m, unsigned int n)
 {
     unsigned int i = n >> 5;
     unsigned int* p = m + i;

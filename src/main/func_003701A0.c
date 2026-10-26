@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_003701A0(char* self) {
+void cVU1Man_NewProgBatch(char* self) {
     *(int*)(self + 324) = 0;
 }

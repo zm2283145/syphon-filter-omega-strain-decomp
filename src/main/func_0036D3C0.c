@@ -5,7 +5,7 @@ typedef struct {
     char* base; char* names; int* offsets;
 } S36D3C0;
 extern int String_CompareNoCase(char* a, char* b);
-char* func_0036D3C0(S36D3C0* o, char* name)
+char* cHogFile_GetBlock_charP_bool(S36D3C0* o, char* name)
 {
     int i;
     char* s;

@@ -15,13 +15,13 @@ extern char D_00498C80[];
 extern char D_00498C98[];
 extern char D_00498CA8[];
 extern char D_00498CB8[];
-extern void func_00118718(void);
+extern void cmd_sem_init(void);
 extern int PollSema(int);
 extern int SignalSema(int);
 extern int ReferThreadStatus(int, void *);
 extern int sceCdSync(int);
 extern void func_0010FBC0(int);
-extern void func_0010FB10(void *, int);
+extern void sceSifWriteBackDCache(void *, int);
 extern int sceSifBindRpc(RpcCd *cd, unsigned int id, int mode);
 extern int sceSifCallRpc(RpcCd *, int, int, void *, int, void *, int, void *, void *);
 extern void scePrintf(const char *, ...);
@@ -33,7 +33,7 @@ int sceCdSearchFile(sceCdlFILE *fp, const char *name, int layer)
 {
     int i;
     int ret;
-    func_00118718();
+    cmd_sem_init();
     if (D_004878A8 != PollSema(D_004878A8)) return 0;
     D_0048789C = 1;
     ReferThreadStatus(D_004E9D18, &D_004E9D20);
@@ -61,7 +61,7 @@ int sceCdSearchFile(sceCdlFILE *fp, const char *name, int layer)
     if (D_00487890 > 0) scePrintf(D_00498C80, D_004E9D80.name);
     D_004E9D80.layer = layer;
     D_004E9D80.dest = &D_004E9D80;
-    func_0010FB10(&D_004E9D80, sizeof(SearchBuf));
+    sceSifWriteBackDCache(&D_004E9D80, sizeof(SearchBuf));
     if (sceSifCallRpc(&D_004E9F00, 0, 0, &D_004E9D80, sizeof(SearchBuf), &D_004E9EC0, 4, 0, 0) < 0) {
         SignalSema(D_004878A8);
         return 0;

@@ -18,11 +18,11 @@
 extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
 
 /* push_back on a pointer vector. */
-int func_00426870(PtrVec* v, int value) {
+int std_vector_cArray_tTextElementPtr_push_back(PtrVec* v, int value) {
     return PtrVec_Insert(v, v->data + v->count, 1, value);
 }
 
-Vec4* func_00426890(Vec4* v, float x, float y, float z, float w) {
+Vec4* tRGBA_ctor_float_float_float_float(Vec4* v, float x, float y, float z, float w) {
     v->x = x;
     v->y = y;
     v->z = z;
@@ -30,11 +30,11 @@ Vec4* func_00426890(Vec4* v, float x, float y, float z, float w) {
     return v;
 }
 
-void* func_004268B0(void* self) {
+void* tRGBA_ctor_void(void* self) {
     return self;
 }
 
-Rel* func_004268C0(Rel* r) {
+Rel* std_vector_tTextElement_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
@@ -67,8 +67,8 @@ extern "C" void GuiWidget_Deinit();
 extern "C" void GuiWidget_Load();
 extern "C" void GuiArrayWidget_SendEvent21();
 extern "C" void GuiArrayWidget_SendEvent20();
-extern "C" void func_00423610();
-extern "C" void func_00423660();
+extern "C" void GuiArrayWidget_onRowRender();
+extern "C" void GuiArrayWidget_onColumnRender();
 extern "C" void GuiArrayWidget_Draw();
 extern "C" void GuiArrayWidget_OnInput();
 extern "C" void GuiArrayWidget_OnLoseFocus();
@@ -81,22 +81,22 @@ extern "C" void GuiTextArrayWidget_Init();
 extern "C" void GuiTextArrayWidget_SetDims();
 extern void * const D_004E0DC0[];
 extern char D_004E0D20[];
-void func_00428090(TextArrayRow* row, int flags);
-void func_004263C0(guiTextArrayWidget* self);
+void std_vector_deleter_tTextElement_dtor(TextArrayRow* row, int flags);
+void GuiTextArrayWidget_DestroyTextArray(guiTextArrayWidget* self);
 void String_Dtor(void* string, int flags);
-TextArrayStore* func_00426BD0(TextArrayStore* store, short flags);
-void func_0013B2E0(void* state, int flags);
+TextArrayStore* std_vector_cArray_tTextElementPtr_dtor(TextArrayStore* store, short flags);
+void cArray_int_dtor(void* state, int flags);
 void GuiWidget_Destroy(guiTextArrayWidget* self, int flags);
-void func_0013B340(TextArrayStore* store, int flags);
+void std_vector_imp_int_1_dtor(TextArrayStore* store, int flags);
 void Mem_Free(int pool, void* allocation, char* file, int line);
 void operator_delete(void* allocation);
 }
 
 /* Destroy the row's cell vector before optional deletion. */
-extern "C" TextArrayRow* func_004268E0(TextArrayRow* self, short deleteFlag)
+extern "C" TextArrayRow* std_vector_imp_tTextElement_dtor(TextArrayRow* self, short deleteFlag)
 {
     if (self) {
-        func_00428090(self, 0);
+        std_vector_deleter_tTextElement_dtor(self, 0);
         if (deleteFlag > 0)
             operator_delete(self);
     }
@@ -125,14 +125,14 @@ static inline void release_child(TextArrayWidgetChild* child)
 static inline void destroy_store(TextArrayStore* store)
 {
     if (store)
-        func_00426BD0(store, -1);
+        std_vector_cArray_tTextElementPtr_dtor(store, -1);
 }
 
 static inline void destroy_widget_base(guiTextArrayWidget* self)
 {
     if (self) {
         self->vtable = D_004E0D20;
-        func_0013B2E0(self->baseState, -1);
+        cArray_int_dtor(self->baseState, -1);
         GuiWidget_Destroy(self, 0);
     }
 }
@@ -142,7 +142,7 @@ extern "C" guiTextArrayWidget* GuiTextArrayWidget_dtor(guiTextArrayWidget* self,
 {
     if (self) {
         self->vtable = ((char*)D_004E0DC0);
-        func_004263C0(self);
+        GuiTextArrayWidget_DestroyTextArray(self);
         TextArrayWidgetChild* child = self->unk90;
         if (child)
             release_child(child);
@@ -157,7 +157,7 @@ extern "C" guiTextArrayWidget* GuiTextArrayWidget_dtor(guiTextArrayWidget* self,
 static inline void destroy_vector_base(TextArrayStore* store)
 {
     if (store)
-        func_0013B340(store, 0);
+        std_vector_imp_int_1_dtor(store, 0);
 }
 
 /* Destroy the pointer vector's base before optional deletion. */
@@ -206,7 +206,7 @@ static inline void release_base(TextArrayStore* store)
 }
 
 /* Release pointer storage through both base layers before optional deletion. */
-extern "C" TextArrayStore* func_00426BD0(TextArrayStore* self, short deleteFlag)
+extern "C" TextArrayStore* std_vector_cArray_tTextElementPtr_dtor(TextArrayStore* self, short deleteFlag)
 {
     if (self) {
         release_base(self);
@@ -215,7 +215,7 @@ extern "C" TextArrayStore* func_00426BD0(TextArrayStore* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004E0DC0[30] = { (void*)0x0, (void*)0x0, (void*)GuiTextArrayWidget_dtor, (void*)GuiTextArrayWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiTextArrayWidget_Wake, (void*)GuiTextArrayWidget_Sleep, (void*)GuiArrayWidget_OnGainFocus, (void*)GuiArrayWidget_OnLoseFocus, (void*)GuiArrayWidget_OnInput, (void*)GuiArrayWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiTextArrayWidget_GetClassName, (void*)GuiTextArrayWidget_IsType, (void*)GuiTextArrayWidget_SetDims, (void*)func_00423660, (void*)func_00423610, (void*)GuiTextArrayWidget_DrawCell, (void*)GuiArrayWidget_SendEvent20, (void*)GuiArrayWidget_SendEvent21, (void*)0x0 };
+void * const D_004E0DC0[30] = { (void*)0x0, (void*)0x0, (void*)GuiTextArrayWidget_dtor, (void*)GuiTextArrayWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiTextArrayWidget_Wake, (void*)GuiTextArrayWidget_Sleep, (void*)GuiArrayWidget_OnGainFocus, (void*)GuiArrayWidget_OnLoseFocus, (void*)GuiArrayWidget_OnInput, (void*)GuiArrayWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiTextArrayWidget_GetClassName, (void*)GuiTextArrayWidget_IsType, (void*)GuiTextArrayWidget_SetDims, (void*)GuiArrayWidget_onColumnRender, (void*)GuiArrayWidget_onRowRender, (void*)GuiTextArrayWidget_DrawCell, (void*)GuiArrayWidget_SendEvent20, (void*)GuiArrayWidget_SendEvent21, (void*)0x0 };
 #pragma pop /* merge_units */
 /* merge_units: end func_004268E0 */
 
@@ -227,7 +227,7 @@ extern char D_004E0DC0[];   /* guiTextArrayWidget vtable */
 #define D_004E0DC0 ((char*)&D_004E0DC0) /* merge_units */
 
 extern void* GuiArrayWidget_ctor(void* self);
-extern Rel* func_00427000(Rel* r);
+extern Rel* std_vector_cArray_tTextElementPtr_ctor(Rel* r);
 
 /* guiTextArrayWidget constructor. */
 guiTextArrayWidget* guiTextArrayWidget_ctor(guiTextArrayWidget* self) {
@@ -236,7 +236,7 @@ guiTextArrayWidget* guiTextArrayWidget_ctor(guiTextArrayWidget* self) {
     GuiArrayWidget_ctor(self);
     store = &self->store;
     self->vtable = D_004E0DC0;
-    func_00427000((Rel*)store);
+    std_vector_cArray_tTextElementPtr_ctor((Rel*)store);
     store->unk0C = 1;
     self->unk90 = 0;
     self->count = 0;
@@ -257,6 +257,6 @@ guiTextArrayWidget* guiTextArrayWidget_ctor(guiTextArrayWidget* self) {
 #include "base_dtor_chain.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_00426D40, func_00426DA0)
+DEFINE_BASE_DTOR_CHAIN(cArray_cArray_tTextElementPtr_dtor, std_vector_imp_cArray_tTextElementPtr_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00426D40 */

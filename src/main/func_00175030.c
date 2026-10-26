@@ -7,7 +7,7 @@ extern "C" {
 extern char D_0049CAA0[];
 extern char D_0049CAD8[];
 extern char D_0049CAC8[];
-void func_00174FF0(KV* a, KV* b);
+void std_swap_vectordeleterR_vectordeleterR_5(KV* a, KV* b);
 }
 
 extern "C" void KeyVector_Reserve(KV* v, unsigned int n)
@@ -36,7 +36,7 @@ extern "C" void KeyVector_Reserve(KV* v, unsigned int n)
             d++;
             tmp.count++;
         }
-        func_00174FF0(&tmp, v);
+        std_swap_vectordeleterR_vectordeleterR_5(&tmp, v);
         tmp.count = 0;
         int* fp = tmp.data;
         if (fp) {

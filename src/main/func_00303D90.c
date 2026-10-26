@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_00303D90(void) {
+void rt_p2p_handle_accept_event(void) {
 
 }

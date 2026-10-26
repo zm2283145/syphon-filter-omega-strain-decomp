@@ -4,7 +4,7 @@
 #include "vtable_base_dtor.h"
 
 extern "C" {
-extern "C" void func_00293890();
+extern "C" void GuiSaveAgentWidget_SaveDone();
 extern "C" void GuiScreen_PollLobby();
 extern "C" void GuiScreen_Update();
 extern "C" void GuiScreen_Sleep();
@@ -41,4 +41,4 @@ extern "C" VtableObject* GuiNetMessages_dtor(VtableObject* self, short deleteFla
     }
     return self;
 }
-void * const D_004DEB10[28] = { (void*)0x0, (void*)0x0, (void*)GuiNetMessages_dtor, (void*)GuiNetMessages_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiNetMessages_Wake, (void*)GuiScreen_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiNetMessages_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiScreen_Update, (void*)GuiNetMessages_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiNetMessages_GetClassName, (void*)GuiNetMessages_IsType, (void*)func_00293890, (void*)GuiScreen_PollLobby, (void*)func_003476B0, (void*)func_00347690, (void*)0x0 };
+void * const D_004DEB10[28] = { (void*)0x0, (void*)0x0, (void*)GuiNetMessages_dtor, (void*)GuiNetMessages_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiNetMessages_Wake, (void*)GuiScreen_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiNetMessages_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiScreen_Update, (void*)GuiNetMessages_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiNetMessages_GetClassName, (void*)GuiNetMessages_IsType, (void*)GuiSaveAgentWidget_SaveDone, (void*)GuiScreen_PollLobby, (void*)func_003476B0, (void*)func_00347690, (void*)0x0 };

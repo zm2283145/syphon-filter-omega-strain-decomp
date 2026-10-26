@@ -3,22 +3,22 @@
 typedef struct V4 { float x, y, z, w; } __attribute__((aligned(16))) V4;
 struct Limit { V4 scale; V4 post; V4 pre; };
 extern "C" {
-int func_001D1100(V4* v);
+int cQuaternion_IsZeroXYZ(V4* v);
 void Quat_Assign(V4* d, V4* s);
-float func_001CF640(V4* v);
-float func_001CF630(V4* v);
-float func_001CF620(V4* v);
-float func_001CF650(V4* v);
-float* func_001CF610(V4* v);
-float* func_001CF600(V4* v);
-float* func_001CF5F0(V4* v);
-float* func_001CF5E0(V4* v);
+float cQuaternion_X_void_2(V4* v);
+float cQuaternion_Y_void_2(V4* v);
+float cQuaternion_Z_void_2(V4* v);
+float cQuaternion_W_void_2(V4* v);
+float* cQuaternion_W_void(V4* v);
+float* cQuaternion_X_void(V4* v);
+float* cQuaternion_Y_void(V4* v);
+float* cQuaternion_Z_void(V4* v);
 V4* Vec4_Set(V4* v, float x, float y, float z, float w);
 V4* Vec4_NormalizeXYZ_1D10C0(V4* v, float* len);
 V4* Vec4_Assign(V4* d, const V4* s);
-float func_001D10B0(float x);
-float func_001D10A0(float a, float b);
-float func_001D1080(float x);
+float SQUARE(float x);
+float CLAMP_LOW(float a, float b);
+float SQRT(float x);
 float Vec4_GetX(V4* v);
 float Vec4_GetY(V4* v);
 float Vec4_GetZ(V4* v);
@@ -45,7 +45,7 @@ static inline void Neg(V4* d, const V4* s) {
 // VU0 macro-mode vector op (COP2), not expressible in C
 static inline float WDot(const V4* a, const V4* b) { int t; float r = 0.0f; __asm__ volatile("lqc2 vf1, 0x0(%2)\n lqc2 vf2, 0x0(%3)\n vmul.xyz vf3, vf1, vf1\n vmul.xyz vf4, vf3, vf2\n vmulax.w ACC, vf0, vf4x\n vmadday.w ACC, vf0, vf4y\n vmaddz.w vf5, vf0, vf4z\n vdiv Q, vf0w, vf5w\n vwaitq\n vaddq.x vf6, vf0, Q\n qmfc2.ni %1, vf6\n mtc1 %1, %0" : "+f"(r), "=&r"(t) : "r"(a), "r"(b) : "memory"); return r; }
 
-extern "C" void func_001D0DF0(V4* out, V4* q, int flag, Limit* lim)
+extern "C" void nIk_OneBoneDirectionalIK(V4* out, V4* q, int flag, Limit* lim)
 {
     float len;
     V4 a, r2, t80, r, t60, axis, t40;
@@ -57,20 +57,20 @@ extern "C" void func_001D0DF0(V4* out, V4* q, int flag, Limit* lim)
     if (flag && a.w < 0.0f) {
         Neg(&a, &a);
     }
-    if (func_001D1100(&a)) {
+    if (cQuaternion_IsZeroXYZ(&a)) {
         Quat_Assign(out, &a);
     } else {
-        float x = func_001CF640(&a);
-        float y = func_001CF630(&a);
-        float z = func_001CF620(&a);
+        float x = cQuaternion_X_void_2(&a);
+        float y = cQuaternion_Y_void_2(&a);
+        float z = cQuaternion_Z_void_2(&a);
         Vec4_Assign(&axis, Vec4_NormalizeXYZ_1D10C0(Vec4_Set(&t40, x, y, z, 0.0f), &len));
         float k = WDot(&axis, &lim->scale);
-        if (func_001D10B0(len) > k || func_001CF650(&a) < 0.0f) {
-            *func_001CF610(out) = func_001D1080(func_001D10A0(1.0f - k, 0.0f));
-            float s = func_001D1080(k);
-            *func_001CF600(out) = s * Vec4_GetX(&axis);
-            *func_001CF5F0(out) = s * Vec4_GetY(&axis);
-            *func_001CF5E0(out) = s * Vec4_GetZ(&axis);
+        if (SQUARE(len) > k || cQuaternion_W_void_2(&a) < 0.0f) {
+            *cQuaternion_W_void(out) = SQRT(CLAMP_LOW(1.0f - k, 0.0f));
+            float s = SQRT(k);
+            *cQuaternion_X_void(out) = s * Vec4_GetX(&axis);
+            *cQuaternion_Y_void(out) = s * Vec4_GetY(&axis);
+            *cQuaternion_Z_void(out) = s * Vec4_GetZ(&axis);
         } else {
             Quat_Assign(out, &a);
         }

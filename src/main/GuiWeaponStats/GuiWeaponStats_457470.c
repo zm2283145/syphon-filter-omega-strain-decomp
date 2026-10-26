@@ -2,7 +2,7 @@
 #include "vtable_base_dtor.h"
 
 extern "C" {
-extern "C" void func_00293950();
+extern "C" void GuiWidget_onInput();
 extern "C" void GuiWidget_FocusPrev();
 extern "C" void GuiWidget_FocusNext();
 extern "C" void GuiWidget_FocusLast();
@@ -35,4 +35,4 @@ extern "C" VtableObject* GuiStartMenuBackdrop_dtor(VtableObject* self, short del
     }
     return self;
 }
-void * const D_004E1490[24] = { (void*)0x0, (void*)0x0, (void*)GuiStartMenuBackdrop_dtor, (void*)GuiStartMenuBackdrop_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiStartMenuBackdrop_OnWake, (void*)GuiStartMenuBackdrop_OnSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_00293950, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiStartMenuBackdrop_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiStartMenuBackdrop_GetClassName, (void*)GuiStartMenuBackdrop_IsType, (void*)0x0 };
+void * const D_004E1490[24] = { (void*)0x0, (void*)0x0, (void*)GuiStartMenuBackdrop_dtor, (void*)GuiStartMenuBackdrop_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiStartMenuBackdrop_OnWake, (void*)GuiStartMenuBackdrop_OnSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiWidget_onInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiStartMenuBackdrop_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiStartMenuBackdrop_GetClassName, (void*)GuiStartMenuBackdrop_IsType, (void*)0x0 };

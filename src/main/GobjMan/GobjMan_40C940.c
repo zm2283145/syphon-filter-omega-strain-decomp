@@ -5,7 +5,7 @@ extern void Object_SetRegistry(void* obj, void* registry);
 extern void ObjRegistry_AppendRecursive(void* registry, void* obj);
 
 /* Attaches the object to the global registry and appends it recursively. */
-void func_0040C940(void* obj)
+void nGobjManager_AddNode(void* obj)
 {
     void* registry;
     Object_SetRegistry(obj, registry = g_GobjRootScope);

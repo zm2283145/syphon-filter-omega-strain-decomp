@@ -1,7 +1,7 @@
 typedef struct { int currentCount; int maxCount; int initCount; int numWaitThreads; unsigned int attr; unsigned int option; } ScfSemaParam;
 typedef struct { unsigned char ok; int f4; int f8; int sema; int f10; } ScfSem_4C0;
 extern int CreateSema(ScfSemaParam *p);
-int func_003024C0(ScfSem_4C0 *o)
+int rt_mutex_platform_create(ScfSem_4C0 *o)
 {
     ScfSemaParam p;
     int id;

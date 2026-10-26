@@ -16,7 +16,7 @@ typedef struct HandlePair {
 } HandlePair;
 
 /* True when first is non-zero or second is not -1. */
-int func_003AD2C0(HandlePair* p) {
+int cSkaPlaybackGroupId_IsValid(HandlePair* p) {
     return p->first != 0 || ~p->second != 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -28,7 +28,7 @@ static inline void merge_flush_func_003AD2C0(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0x40]; int v; } Obj40;
 /* Returns whether the field at +0x40 is set. */
-int func_003AD2F0(Obj40* o) { return !(o->v == 0); }
+int cSkaAnimCheckpoints_HasScheduledEvents(Obj40* o) { return !(o->v == 0); }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003AD2F0(void) {}
 #pragma pop /* merge_units */

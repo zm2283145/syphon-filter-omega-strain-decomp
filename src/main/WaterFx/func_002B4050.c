@@ -40,8 +40,8 @@ extern char g_Video[];
 extern long long D_005381F8;
 extern long long D_004BC1B0;
 void Renderer_BindTexture(void* m, int idx);
-void func_0025CD10(void* s);
-void func_0025CA40(void* s);
+void XLib_NewStrip(void* s);
+void XLib_NextBatchVert(void* s);
 void Vec4_Copy(V4* d, const V4* s);
 void GuiBatch_AddVertexColor(V4* d, const V4* s);
 float GuiBatch_AddVertexUV(void);
@@ -121,7 +121,7 @@ static inline void Emit(const V4& pos, const V4c& col, const V4c& uv)
     V4 tmp;
     Ent* e;
     float u;
-    func_0025CA40(g_Video);
+    XLib_NextBatchVert(g_Video);
     e = &RS->ents[D_00539210.f10];
     Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
     GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], (const V4*)&col);
@@ -169,7 +169,7 @@ extern "C" void WaterFx_RenderSplash(Splash* s)
     e->c2C += D_00539224;
     e->c30 += D_00539224;
     e->c34 += D_00539224;
-    func_0025CD10(g_Video);
+    XLib_NewStrip(g_Video);
     D_00539224 = 0;
     Emit(c0, V4c(1.0f, 1.0f, 1.0f, a), V4c(0.0f, 1.0f, 1.0f, 0.0f));
     Emit(c1, V4c(1.0f, 1.0f, 1.0f, a), V4c(0.0f, 0.0f, 1.0f, 0.0f));

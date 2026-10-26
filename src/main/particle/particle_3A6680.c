@@ -40,7 +40,7 @@ int Iop_LoadEzNetModules(int load)
  */
 
 
-int func_003A6700(void) {
+int SFOLibInit_RequestNetworkIRX(void) {
     return 1;
 }
 #pragma pop /* merge_units */
@@ -57,9 +57,9 @@ int LibInit_LoadIrxModule(char *, int, char *, int);
 #define LibInit_LoadIrxModule(a0, a1, a2, a3) (LibInit_LoadIrxModule((const char *)(a0), (a1), (const char *)(a2), (a3))) /* merge_units */
           
 int sceSifSearchModuleByName(char *);                             
-int func_0027C3D0();                                  
-int func_002BCA88(int);                                 
-int func_003A6390();                                  
+int sceNetcnfifInit();                                  
+int sceNetcnfifCreateMc2Thread(int);                                 
+int SFOPreparePowerOff();                                  
 extern signed char D_004934A0;
 extern unsigned char D_004934A8;
 extern unsigned char D_004934B0;
@@ -75,8 +75,8 @@ int Iop_LoadNetModules(int arg0) {
             LibInit_LoadIrxModule("INET.IRX", 0xA, "mem=100KB", 1);
             D_0053BBA0 = LibInit_LoadIrxModule("NETCNF.IRX", 0x58, "icon=cdrom0:\\GAMEDATA\\NETWORK\\SYS_NET.ICO;1\0iconsys=cdrom0:\\GAMEDATA\\NETWORK\\ICON.SYS;1", 1);
             D_0053BBA8 = LibInit_LoadIrxModule("NETCNFIF.IRX", 0, NULL, 1);
-            func_0027C3D0();
-            func_002BCA88(1);
+            sceNetcnfifInit();
+            sceNetcnfifCreateMc2Thread(1);
             D_004934A0 = 1;
             if (arg0 != 0) {
                 LibInit_LoadIrxModule("INETCTL.IRX", 0x31, "-no_decode\0cdrom0:\\GAMEDATA\\NETWORK\\NET005.CNF;1", 1);
@@ -93,7 +93,7 @@ int Iop_LoadNetModules(int arg0) {
         if (sceSifSearchModuleByName(&D_004BC670) < 0) {
             return 0;
         }
-        func_003A6390();
+        SFOPreparePowerOff();
         D_004934B8 = 0;
         if ((D_004934C0 != 0) && (LibInit_LoadIrxModule("SMAP.IRX", 0, NULL, 0) < 0)) {
             return 0;
@@ -118,11 +118,11 @@ extern void func_0010FBC0(int a);
 extern int sceCdInit(int mode);
 extern int scePrintf(const char* fmt, ...);
 extern int sceSifRebootIop(const char* img);
-extern int func_00115798(void);
-extern int func_00114368(void);
-extern int func_00119AF0(void);
-extern int func_00119D90(int mode);
-extern int func_00111578(void);
+extern int sceSifSyncIop(void);
+extern int sceSifInitIopHeap(void);
+extern int sceCdGetDiskType(void);
+extern int sceCdMmode(int mode);
+extern int sceFsReset(void);
 extern char D_00493480[];
 
 void LibInitModules(int flash)
@@ -133,29 +133,29 @@ void LibInitModules(int flash)
         scePrintf("\nLibInitModules(): Flashing IOP... (%s)\n\n", D_00493480);
         while (!sceSifRebootIop(D_00493480)) {
         }
-        while (!func_00115798()) {
+        while (!sceSifSyncIop()) {
         }
         func_0010FBC0(0);
     }
-    func_00114368();
+    sceSifInitIopHeap();
     sceCdInit(0);
-    switch (func_00119AF0()) {
+    switch (sceCdGetDiskType()) {
     case 0xFF:
         scePrintf("Disk Type= IllegalMedia\n");
         break;
     case 0x14:
         scePrintf("Disk Type= PlayStation2 DVD\n");
-        func_00119D90(2);
+        sceCdMmode(2);
         break;
     case 0x12:
         scePrintf("Disk Type= PlayStation2 CD\n");
-        func_00119D90(1);
+        sceCdMmode(1);
         break;
     default:
         scePrintf("Disk Type= OTHER DISK\n");
         break;
     }
-    func_00111578();
+    sceFsReset();
     LibInit_LoadIrxModule("SIO2MAN.IRX", 0, 0, 1);
     LibInit_LoadIrxModule("DBCMAN.IRX", 0, 0, 1);
     LibInit_LoadIrxModule("SIO2D.IRX", 0, 0, 1);

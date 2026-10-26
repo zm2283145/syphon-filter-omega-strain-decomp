@@ -7,13 +7,13 @@ extern int DME_GetLobby(void);
 extern char* GuiScreen_GetLobbyString(O33*, int, char*, char*, int, int);
 extern int FrontEnd_OpenPopup(void*, int, char*, char*, int, int);
 extern void FrontEnd_ClosePopup(void*, int);
-extern int func_0044AC10(int, int);
+extern int SFOLobby_CellInviteAgent(int, int);
 extern unsigned char SFOLobby_FormatError(int, int);
 extern void String_CtorCStr_13B480(String*, char*);
 extern char* String_CStr(String*);
 extern void String_Dtor(String*, int);
 
-void func_0033C9E0(O33* self, int buddy, char* name)
+void GuiLobbyScreen_CellInviteAgent(O33* self, int buddy, char* name)
 {
     int lobby;
     int h;
@@ -23,7 +23,7 @@ void func_0033C9E0(O33* self, int buddy, char* name)
         void* g = D_004FFC04;
         h = FrontEnd_OpenPopup(g, 0, D_004B99D8, GuiScreen_GetLobbyString(self, 0x4A, name, 0, 0, 0), 0, 0);
     }
-    if (func_0044AC10(lobby, buddy)) {
+    if (SFOLobby_CellInviteAgent(lobby, buddy)) {
         void* g = D_004FFC04;
         FrontEnd_OpenPopup(g, 2, D_004B99D8, GuiScreen_GetLobbyString(self, 0x4B, name, 0, 0, 0), 0, 0);
     } else {

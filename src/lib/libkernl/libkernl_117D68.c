@@ -9,7 +9,7 @@ typedef struct N7D68 { struct N7D68 *next; int p[3]; } N7D68;
 extern N7D68 D_004E96C0[];
 extern N7D68 *D_004E9AC0;
 
-int func_00117D68(void)
+int _InitAlarm(void)
 {
     int i;
     D_004E9AC0 = D_004E96C0;
@@ -33,7 +33,7 @@ extern N7DB8 *volatile D_004E9AC0;
 #define D_004E9AC0 (*(N7DB8 * volatile*)&D_004E9AC0) /* merge_units */
 
 
-int func_00117DB8(int id, int b, int c, N7DB8 *n)
+int AlarmHandler(int id, int b, int c, N7DB8 *n)
 {
     int ret = n->func(((int)n << 4) | (id & 0xFE) | 1, b, c, n->arg);
     if (ret == 0) {
@@ -56,13 +56,13 @@ extern N7E18 *volatile D_004E9AC0;
 
 extern int DIntr(void);
 extern void EIntr(void);
-extern int func_00117DB8();
+extern int AlarmHandler();
 static inline N7E18 *node_alloc(void) { N7E18 *n = D_004E9AC0; if (n) D_004E9AC0 = n->next; return n; }
-extern int func_00117420(void);
-extern int func_00117B40(int, long, void *, void *);
-extern int func_001176B8(int);
+extern int AllocTimerCounter(void);
+extern int SetTimerHandler(int, long, void *, void *);
+extern int StartTimerCounter(int);
 
-int func_00117E18(long t, void *h, void *arg)
+int SetTimerAlarm(long t, void *h, void *arg)
 {
     int s, id;
     N7E18 *n;
@@ -73,7 +73,7 @@ int func_00117E18(long t, void *h, void *arg)
         if (s) EIntr();
         return 0x80008005;
     }
-    id = func_00117420();
+    id = AllocTimerCounter();
     if (id < 0) {
         n->next = D_004E9AC0;
         D_004E9AC0 = n;
@@ -84,8 +84,8 @@ int func_00117E18(long t, void *h, void *arg)
     n->func = h;
     n->arg = arg;
     n->id = id;
-    func_00117B40(id, t, func_00117DB8, n);
-    func_001176B8(id);
+    SetTimerHandler(id, t, AlarmHandler, n);
+    StartTimerCounter(id);
     if (s) EIntr();
     return ((int)n << 4) | (id & 0xFE) | 1;
 }
@@ -98,18 +98,18 @@ extern N7E18 *volatile D_004E9AC0;
 #endif /* merge_units */
 #define D_004E9AC0 (*(N7E18 * volatile*)&D_004E9AC0) /* merge_units */
 
-extern int func_001173B0(void);
-extern int func_00117A48(int, long, void *, void *);
-extern int func_00117608(int);
+extern int iAllocTimerCounter(void);
+extern int iSetTimerHandler(int, long, void *, void *);
+extern int iStartTimerCounter(int);
 
-int func_00117F48(long t, void *h, void *arg)
+int iSetTimerAlarm(long t, void *h, void *arg)
 {
     int id;
     N7E18 *n;
     if (h == 0) return 0x80000016;
     n = node_alloc();
     if (n == 0) return 0x80008005;
-    id = func_001173B0();
+    id = iAllocTimerCounter();
     if (id < 0) {
         n->next = D_004E9AC0;
         D_004E9AC0 = n;
@@ -119,8 +119,8 @@ int func_00117F48(long t, void *h, void *arg)
     n->func = h;
     n->arg = arg;
     n->id = id;
-    func_00117A48(id, t, func_00117DB8, n);
-    func_00117608(id);
+    iSetTimerHandler(id, t, AlarmHandler, n);
+    iStartTimerCounter(id);
     return ((int)n << 4) | (id & 0xFE) | 1;
 }
 #undef D_004E9AC0 /* merge_units */
@@ -132,9 +132,9 @@ extern N7E18 *volatile D_004E9AC0;
 #endif /* merge_units */
 #define D_004E9AC0 (*(N7E18 * volatile*)&D_004E9AC0) /* merge_units */
 
-extern int func_00117508(int);
+extern int FreeTimerCounter(int);
 
-int func_00118038(int id)
+int ReleaseTimerAlarm(int id)
 {
     N7E18 *n = (N7E18 *)(((unsigned int)id >> 8) << 4);
     int s = DIntr();
@@ -142,7 +142,7 @@ int func_00118038(int id)
         if (s) EIntr();
         return 0x80008002;
     }
-    func_00117508(n->id);
+    FreeTimerCounter(n->id);
     n->next = D_004E9AC0;
     D_004E9AC0 = n;
     n->id = 0;
@@ -158,14 +158,14 @@ extern N7E18 *volatile D_004E9AC0;
 #endif /* merge_units */
 #define D_004E9AC0 (*(N7E18 * volatile*)&D_004E9AC0) /* merge_units */
 
-extern int func_00117468(int);
+extern int iFreeTimerCounter(int);
 
-int func_001180E0(int id)
+int iReleaseTimerAlarm(int id)
 {
     N7E18 *n = (N7E18 *)(((unsigned int)id >> 8) << 4);
     int r;
     if (id < 0 || ((id ^ n->id) & 0xFF)) return 0x80008002;
-    r = func_00117468(n->id);
+    r = iFreeTimerCounter(n->id);
     if (r == 0) {
         n->next = D_004E9AC0;
         D_004E9AC0 = n;
@@ -181,7 +181,7 @@ int D_00487868 = 0;
 int D_0048786C = 0;
 extern char D_004E9AC8[];
 extern void* memset(void* p, int c, unsigned int n);
-void func_00118158(void)
+void sceSifInitRebootNotify(void)
 {
     D_00487868 = 0;
     D_0048786C = 0;

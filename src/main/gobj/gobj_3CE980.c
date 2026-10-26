@@ -52,10 +52,10 @@ static inline void merge_flush_func_003CE980(void) {}
 void cNode_v14(void) {
 }
 
-void func_003CE9E0(void) {
+void cGOBJ_Load(void) {
 }
 
-void func_003CE9F0(void) {
+void cGOBJ_Init(void) {
 }
 
 void cNode_v0D(void) {

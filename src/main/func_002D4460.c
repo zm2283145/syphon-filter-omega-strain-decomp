@@ -55,15 +55,15 @@ Obj_4460* Object_LookupById(unsigned short* id);
 void Event_Construct(void* msg, void* type);
 void Event_Send(void* msg, void* target, int immediate);
 void cMessage_dtor(void* msg, int flags);
-void func_00436C00(int* t);
-int func_00434440(int* t, void* id);
+void cNPCInfoObject_ctor(int* t);
+int cNPCInfoObject_GetOwner_cObjectIdR(int* t, void* id);
 void NetObjectMgr_Remove(Actor_4460* a);
-void func_00436BA0(int* t, int f);
+void cNPCInfoObject_dtor(int* t, int f);
 }
 
 static inline bool IsAlive_4460(Actor_4460* a) { return a->x2D && a->x2C && !a->x2E; }
 
-extern "C" void func_002D4460(cNPC_4460* self)
+extern "C" void cNetNPC_Deactivate(cNPC_4460* self)
 {
     int t;
     Empty_4460 e;
@@ -89,10 +89,10 @@ extern "C" void func_002D4460(cNPC_4460* self)
                 cMessage_dtor(&m, 0);
             }
         } else if (self->IsLocal()) {
-            func_00436C00(&t);
-            func_00434440(&t, (char*)self->actor + 0xC);
+            cNPCInfoObject_ctor(&t);
+            cNPCInfoObject_GetOwner_cObjectIdR(&t, (char*)self->actor + 0xC);
             if (self->net) NetObjectMgr_Remove(self->actor);
-            func_00436BA0(&t, -1);
+            cNPCInfoObject_dtor(&t, -1);
         }
         self->done = 1;
     }

@@ -46,10 +46,10 @@ extern void FileMan_Release(void*, int);
 extern void Hog_Register(void*, char*, int, int);
 extern void ParticleLib_LoadPar(S397B20*, void*);
 extern int ParticleLib_FindId(void*, char*);
-extern void func_00136DA0(int* g);
-extern void func_0012F530(int* g, int del);
-extern void func_00397EA0(E397B20*, int);
-extern void func_00397D50(L397B20*, int);
+extern void cTimerDisable_ctor(int* g);
+extern void cTimerDisable_dtor(int* g, int del);
+extern void cEffectRequest_dtor(E397B20*, int);
+extern void cArray_cEffectRequestPtr_dtor(L397B20*, int);
 extern char D_004BC5D0[];
 extern char D_004BC5E0[];
 extern char D_004BC600[];
@@ -88,19 +88,19 @@ void ParticleLib_ResolveRequests(S397B20* self, int arg1)
         }
         {
             int g[1];
-            func_00136DA0(g);
-            func_00397EA0(e, -1);
+            cTimerDisable_ctor(g);
+            cEffectRequest_dtor(e, -1);
             Mem_Free(0, e, D_004BC5D0, 0x11E1);
-            func_0012F530(g, -1);
+            cTimerDisable_dtor(g, -1);
         }
     }
     {
         L397B20* l = D_0053BB58;
         int g[1];
-        func_00136DA0(g);
-        func_00397D50(l, -1);
+        cTimerDisable_ctor(g);
+        cArray_cEffectRequestPtr_dtor(l, -1);
         Mem_Free(0, l, D_004BC5D0, 0x11E4);
-        func_0012F530(g, -1);
+        cTimerDisable_dtor(g, -1);
     }
     D_0053BB58 = 0;
     self->loaded = 1;

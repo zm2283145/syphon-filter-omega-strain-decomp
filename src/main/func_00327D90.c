@@ -16,7 +16,7 @@ extern void GuiSlideShow_Refresh(S327D90* self);
 extern W327D90* GuiWidget_FindChildByName(S327D90* self, char* name);
 #pragma opt_strength_reduction off
 #pragma opt_unroll_loops off
-/* Total number of sub-items over all entries (inlined func_00327F20; the
+/* Total number of sub-items over all entries (inlined GuiSlideShow_GetNumSlides; the
    data pointer is loaded once after the guard). */
 static inline int Count327D90(S327D90* l)
 {

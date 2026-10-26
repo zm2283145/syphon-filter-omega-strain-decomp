@@ -6,12 +6,12 @@ typedef struct { int handle; int unk4; } AnimRef;
 typedef struct { void* res; char pad[0xC]; char inst[1]; } AnimModel;
 extern void* ModelCtx_GetAnchorById(void* res, int a);
 extern void AnimEvent_Construct(AnimList* l);
-extern void func_001A1500(AnimSet* s);
+extern void cSkaAnimCheckpoints_ctor_void(AnimSet* s);
 extern void* func_001ADD70(void* inst);
-extern void* func_00393F10(AnimRange* r);
-extern void func_0018C620(AnimRef* r, void* anim);
+extern void* cSkaCrossFadeDuration_ctor_void(AnimRange* r);
+extern void nSka_GetPlaybackGroupId(AnimRef* r, void* anim);
 extern void AnimCtl_InstallMotion(void* inst, void* anim, int mode, void* range, float speed, float start, AnimRef* ref, AnimList* a, AnimList* b, AnimSet* s);
-extern void func_00189F40(AnimSet* s, int flags);
+extern void cSkaAnimCheckpoints_dtor(AnimSet* s, int flags);
 extern void AnimEvent_dtor(AnimList* l, int flags);
 /* Starts the model's default animation. */
 void AnimModel_InitAnim(AnimModel* m)
@@ -28,12 +28,12 @@ void AnimModel_InitAnim(AnimModel* m)
         anim = ModelCtx_GetAnchorById(m->res, 0);
         AnimEvent_Construct(&a);
         AnimEvent_Construct(&b);
-        func_001A1500(&set);
+        cSkaAnimCheckpoints_ctor_void(&set);
         inst = func_001ADD70(m->inst);
-        r = func_00393F10(&range);
-        func_0018C620(&ref, anim);
+        r = cSkaCrossFadeDuration_ctor_void(&range);
+        nSka_GetPlaybackGroupId(&ref, anim);
         AnimCtl_InstallMotion(inst, anim, 3, r, -1.0f, 0.0f, &ref, &a, &b, &set);
-        func_00189F40(&set, -1);
+        cSkaAnimCheckpoints_dtor(&set, -1);
         AnimEvent_dtor(&b, -1);
         AnimEvent_dtor(&a, -1);
     }

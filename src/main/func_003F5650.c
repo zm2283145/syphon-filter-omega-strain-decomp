@@ -25,10 +25,10 @@ typedef struct Stream3F5 {
 } Stream3F5;
 
 extern int CreateSema(SemaParam* param); /* CreateSema */
-extern void func_003F54B0(Stream3F5* self);
+extern void viBufReset(Stream3F5* self);
 
 /* Initializes a stream: address/size fields, a binary semaphore, then resets it. Returns 1. */
-int func_003F5650(Stream3F5* self, int id, unsigned int addr, int size, int user0, int user1) {
+int viBufCreate(Stream3F5* self, int id, unsigned int addr, int size, int user0, int user1) {
     SemaParam param;
     self->id = id;
     self->addr = (addr & 0x0FFFFFFF) | 0x20000000;
@@ -39,7 +39,7 @@ int func_003F5650(Stream3F5* self, int id, unsigned int addr, int size, int user
     param.initCount = 1;
     param.maxCount = 1;
     self->sema = CreateSema(&param);
-    func_003F54B0(self);
+    viBufReset(self);
     self->position = 0;
     return 1;
 }

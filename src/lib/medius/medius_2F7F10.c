@@ -1,6 +1,6 @@
 #include "types.h"
 
-int func_002F7F10(int a0, int a1) {
+int RemoveKeyChain(int a0, int a1) {
     int v0, v1;
     int cond;
 

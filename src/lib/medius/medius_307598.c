@@ -3,10 +3,10 @@ typedef struct {
     int f0; RtPeer *peers; int f8; char q[0x20]; unsigned int npeers;
 } RtUdp;
 typedef struct { char name[16]; unsigned char port[2]; } RtAddr;
-extern int func_002FABD0(void *list, void **pkt);
-extern char *func_002FAED0(void *pkt);
+extern int rt_list_buf_get_head(void *list, void **pkt);
+extern char *rt_list_buf_get_data_ptr(void *pkt);
 extern char *strncpy(char *d, const char *s, unsigned int n);
-int func_00307598(RtUdp *r, unsigned int ep, char *addr, unsigned short *port)
+int rt_udp_get_address(RtUdp *r, unsigned int ep, char *addr, unsigned short *port)
 {
     int ret = 2;
     void *pkt = 0;
@@ -21,8 +21,8 @@ int func_00307598(RtUdp *r, unsigned int ep, char *addr, unsigned short *port)
         return 0;
     }
     if (ep == (unsigned int)-2) {
-    if (func_002FABD0(r->q, &pkt) != 0) return 10;
-    a = *(RtAddr *)func_002FAED0(pkt);
+    if (rt_list_buf_get_head(r->q, &pkt) != 0) return 10;
+    a = *(RtAddr *)rt_list_buf_get_data_ptr(pkt);
     strncpy(addr, a.name, 16);
     *port = *(unsigned short *)a.port;
     return 0;

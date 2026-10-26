@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046C990(void) {
+int MediusUniqueCallbackDnasSignaturePostHandler(void) {
     return 80;
 }

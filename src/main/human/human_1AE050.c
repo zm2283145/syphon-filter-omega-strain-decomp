@@ -69,7 +69,7 @@ typedef struct BitSetOwner {
 } BitSetOwner;
 
 /* Tests bit `index` in the 256-bit set at +0x3204. */
-int func_001AE0D0(BitSetOwner* obj, unsigned char index) {
+int cHuman_CheckState(BitSetOwner* obj, unsigned char index) {
     return ((obj->bits[(unsigned int)index >> 5] >> (index & 0x1F)) & 1) != 0;
 }
 /* merge_units: generate this block's code under its own pragmas */

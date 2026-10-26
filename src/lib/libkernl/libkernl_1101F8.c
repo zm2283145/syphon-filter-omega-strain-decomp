@@ -14,7 +14,7 @@ typedef struct Group { char pad[8]; Item* items; char padC[8]; struct Group* nex
 typedef struct { char pad[0x28]; Group* groups; } Owner;
 
 /* Searches all groups of owner for the item with the given key. */
-Item* func_001101F8(int key, Owner* owner)
+Item* _search_svdata(int key, Owner* owner)
 {
     Group* g;
     Item* it;
@@ -36,9 +36,9 @@ Item* func_001101F8(int key, Owner* owner)
  */
 
 
-extern int func_0010F988(int, int, int, int, int, int);
+extern int isceSifSendCmd(int, int, int, int, int, int);
 
-int func_00110248(int a0, int a1, int a2, int a3) {
+int _alarm_bind(int a0, int a1, int a2, int a3) {
     int t0, t1, v0, v1;
 
     a1 = a3;
@@ -48,7 +48,7 @@ int func_00110248(int a0, int a1, int a2, int a3) {
     a3 = 0;
     t0 = 0;
     t1 = 0;
-    v0 = func_0010F988(a0, a1, a2, a3, t0, t1);
+    v0 = isceSifSendCmd(a0, a1, a2, a3, t0, t1);
     v1 = 0 + 2048;
     if (v0 != 0) v1 = 0;
     v0 = v1;

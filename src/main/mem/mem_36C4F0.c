@@ -29,12 +29,12 @@ typedef struct Heap {
 extern unsigned char D_00492F68;
 extern char D_004BBF50[];
 extern void printf(char* fmt, ...);
-extern void func_0036C030(Blk* b, Blk* v);
-extern void func_0036C040(Blk* b, Blk* v);
-extern Blk* func_0036C050(Blk* b);
-extern Blk* func_0036C060(Heap* h, unsigned int size);
-extern unsigned int func_0036C0B0(Blk* b);
-unsigned long long func_0036C4F0(Heap* h)
+extern void cMemChunk_SetPrev(Blk* b, Blk* v);
+extern void cMemChunk_SetNext(Blk* b, Blk* v);
+extern Blk* cMemChunk_GetNext(Blk* b);
+extern Blk* cMemBin_FindBin(Heap* h, unsigned int size);
+extern unsigned int cMemChunk_GetSize(Blk* b);
+unsigned long long cMemBin_Consolidate(Heap* h)
 {
     Blk* bin;
     Blk* b;
@@ -75,21 +75,21 @@ unsigned long long func_0036C4F0(Heap* h)
                 total += s;
                 b->f4->f8 = b->f8;
                 b->f8->f4 = b->f4;
-                tgt = func_0036C060(h, func_0036C0B0(b));
+                tgt = cMemBin_FindBin(h, cMemChunk_GetSize(b));
                 it = tgt;
-                sz = func_0036C0B0(b);
-                while (func_0036C050(it) != tgt && func_0036C0B0(func_0036C050(it)) < sz) {
-                    if ((char*)func_0036C050(it) < h->base || (char*)func_0036C050(it) > h->cur) {
+                sz = cMemChunk_GetSize(b);
+                while (cMemChunk_GetNext(it) != tgt && cMemChunk_GetSize(cMemChunk_GetNext(it)) < sz) {
+                    if ((char*)cMemChunk_GetNext(it) < h->base || (char*)cMemChunk_GetNext(it) > h->cur) {
                         printf(D_004BBF50, it);
-                        func_0036C040(it, tgt);
+                        cMemChunk_SetNext(it, tgt);
                         break;
                     }
-                    it = func_0036C050(it);
+                    it = cMemChunk_GetNext(it);
                 }
-                func_0036C030(b, it);
-                func_0036C040(b, func_0036C050(it));
-                func_0036C030(func_0036C050(it), b);
-                func_0036C040(it, b);
+                cMemChunk_SetPrev(b, it);
+                cMemChunk_SetNext(b, cMemChunk_GetNext(it));
+                cMemChunk_SetPrev(cMemChunk_GetNext(it), b);
+                cMemChunk_SetNext(it, b);
                 if (h->last < tgt) h->last = tgt;
                 n = bin->f8;
             } else {
@@ -108,7 +108,7 @@ static inline void merge_flush_func_0036C4F0(void) {}
 #pragma push /* merge_units */
 typedef struct G6N36 { unsigned int size : 28; unsigned int flags : 4; int x; struct G6N36* next; struct G6N36* prev; } G6N36;
 typedef struct { G6N36 bins[128]; G6N36* last; } G6H36;
-unsigned int func_0036C810(G6H36* h)
+unsigned int cMemBin_GetTotalFreeMem(G6H36* h)
 {
     G6N36* n;
     unsigned int max;
@@ -131,7 +131,7 @@ static inline void merge_flush_func_0036C810(void) {}
 
 /* merge_units: begin func_0036C880 */
 #pragma push /* merge_units */
-int func_0036C880(G6H36* h, char* lo, int hi)
+int cMemBin_HaveAllocationInRange(G6H36* h, char* lo, int hi)
 {
     char* e;
     G6N36* n;

@@ -12,10 +12,10 @@ struct Pred_ab50 {
     Pred_ab50(const Empty_ab50& c, Svc_ab50** s) : e(c), svc(s) {}
 };
 extern "C" {
-void func_0013B160(SvcIt_ab50* out, void* list);
-SvcIt_ab50* func_003CAB40(SvcIt_ab50* dst, SvcIt_ab50* src);
-void func_003CAB30(SvcIt_ab50* out, void* list);
-SvcIt_ab50* func_003CAB20(SvcIt_ab50* dst, SvcIt_ab50* src);
+void std_list_deleter_voidPtr_end_void(SvcIt_ab50* out, void* list);
+SvcIt_ab50* std_list_cSystemPtr_generic_iterator_ctor(SvcIt_ab50* dst, SvcIt_ab50* src);
+void std_list_cSystemPtr_begin(SvcIt_ab50* out, void* list);
+SvcIt_ab50* cLListIterator_cSystemPtr_ctor(SvcIt_ab50* dst, SvcIt_ab50* src);
 void ActiveList_EraseMatching(void* v, Pred_ab50 p);
 }
 struct KeyPred_ab50 { int* k; KeyPred_ab50(int* kk) : k(kk) {} bool operator()(Svc_ab50* s) const { return *s->key == *k; } };
@@ -29,7 +29,7 @@ inline Svc_ab50* Erase_ab50(SvcMgr_ab50* self, Svc_ab50*& svc, SvcIt_ab50 it, Sv
     return 0;
 }
 struct ItW_ab50 { SvcIt_ab50 i; };
-extern "C" Svc_ab50* func_003CAB50(SvcMgr_ab50* self, Svc_ab50* svc) {
+extern "C" Svc_ab50* cSystemContainer_RemoveSystem(SvcMgr_ab50* self, Svc_ab50* svc) {
     ItW_ab50 uit;
     SvcIt_ab50 beg;
     SvcIt_ab50 end;
@@ -37,11 +37,11 @@ extern "C" Svc_ab50* func_003CAB50(SvcMgr_ab50* self, Svc_ab50* svc) {
     SvcIt_ab50 e0;
     SvcIt_ab50 b0;
     SvcNode_ab50* last;
-    func_0013B160(&e0, &self->list);
-    func_003CAB40(&end, &e0);
+    std_list_deleter_voidPtr_end_void(&e0, &self->list);
+    std_list_cSystemPtr_generic_iterator_ctor(&end, &e0);
     last = end.p;
-    func_003CAB30(&b0, &self->list);
-    func_003CAB20(&beg, &b0);
+    std_list_cSystemPtr_begin(&b0, &self->list);
+    cLListIterator_cSystemPtr_ctor(&beg, &b0);
     for (uit = *(ItW_ab50*)&beg; uit.i.p != last; uit.i.p = uit.i.p->next) {
         if (KeyPred_ab50(svc->key)(uit.i.p->svc)) {
             ActiveList_EraseMatching(&self->list, Pred_ab50(e, &svc));

@@ -60,7 +60,7 @@ static inline void merge_flush_func_00164B70(void) {}
 #pragma opt_rotateloops off
 struct CxEraseItem {__int128 q[2];~CxEraseItem(){}};
 struct CxEraseVec {int capacity,count;CxEraseItem*data;};
-extern "C" CxEraseItem*func_00164BD0(CxEraseVec*self,CxEraseItem*first,CxEraseItem*last){
+extern "C" CxEraseItem*std_vector_imp_cBox_erase(CxEraseVec*self,CxEraseItem*first,CxEraseItem*last){
  if(first==last)return first;
  CxEraseItem*end=self->data+self->count;
  int count=((int)end-(int)last)/32;
@@ -98,7 +98,7 @@ extern "C" {
 extern char D_0049C1C0[];
 extern char D_0049C210[];
 extern char D_0049C240[];
-void func_001651B0(V_00164CA0* a, V_00164CA0* b);
+void std_swap_vectordeleterR_vectordeleterR_4(V_00164CA0* a, V_00164CA0* b);
 }
 /* whole-function settings; left in effect because C++ code generation is deferred to end of file */
 #pragma opt_rotateloops off
@@ -177,7 +177,7 @@ extern "C" void Vector_Insert_164CA0(V_00164CA0* v, T* pos, unsigned int n, cons
             Construct_00164CA0(dst, src);
             tmp.count++;
         }
-        func_001651B0(&tmp, v);
+        std_swap_vectordeleterR_vectordeleterR_4(&tmp, v);
         {
             T* b_ = tmp.data;
             T* e_ = b_ + tmp.count;

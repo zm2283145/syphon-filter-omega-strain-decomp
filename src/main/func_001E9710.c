@@ -18,11 +18,11 @@ struct Obj8 { char pad[0x14]; unsigned char m14; char pad2[3]; char skel[0x10]; 
 struct Self { char pad[8]; Obj8* m8; char pad2[0xE8 - 0xC]; unsigned char mE8; char pad3[7]; char plane[0x10]; };
 extern "C" {
 void* Skeleton_NodeAt(void*, long);
-void* func_0019F420(void*);
-VC* func_001E20C0(void*);
+void* cBone_Xform(void*);
+VC* cXform_GetTranslation(void*);
 Mtx* Transform_GetUpdated(Node*);
 VC Mtx_MulVec4(VC* v, Mtx* m);
-float func_001E53E0(void*);
+float cPlane_C(void*);
 float Plane_HeightAt(void*, V*);
 V* Vec4_Set(V* o, float x, float y, float z, float w);
 }
@@ -32,8 +32,8 @@ static inline float H2(void* pl, float x, float y) { V t; return Plane_HeightAt(
 static inline float H1(void* pl, float x, float y) { return -H2(pl, x, y); }
 static inline VC GetPos(Obj8* o, long n)
 {
-    if (o->m14) return Mtx_MulVec4(func_001E20C0(func_0019F420(Skeleton_NodeAt(o->skel, n))), Transform_GetUpdated(o->m28));
-    return *func_001E20C0(o->m28);
+    if (o->m14) return Mtx_MulVec4(cXform_GetTranslation(cBone_Xform(Skeleton_NodeAt(o->skel, n))), Transform_GetUpdated(o->m28));
+    return *cXform_GetTranslation(o->m28);
 }
 extern "C" V ActorPhysical_ProbeSurface(Self* self, bool* hit, int mode, float thresh)
 {
@@ -48,7 +48,7 @@ extern "C" V ActorPhysical_ProbeSurface(Self* self, bool* hit, int mode, float t
         float py;
         py = pos.y;
         px = pos.x;
-        float z = func_001E53E0(self->plane) != 0.0f ? H1(self->plane, px, py) / func_001E53E0(self->plane) : 0.0f;
+        float z = cPlane_C(self->plane) != 0.0f ? H1(self->plane, px, py) / cPlane_C(self->plane) : 0.0f;
         r = V(px, py, z, 1.0f);
         if (pos.z - r.z < thresh) *hit = 1;
     }

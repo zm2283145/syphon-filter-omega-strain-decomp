@@ -66,7 +66,7 @@ extern char D_004E05A0[];
 extern void IeElement_Release(void* p);
 extern void cGOBJ_dtor(void* self, short del);
 extern void operator_delete(void* p);
-G9B20* func_003E9B20(G9B20* self, short del)
+G9B20* cMAP_GOBJ_dtor(G9B20* self, short del)
 {
     if (self) {
         self->vt = D_004E0360;

@@ -7,8 +7,8 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern char* func_001F2E20(Iter16*);
+extern char* std_list_deleter_voidPtr_generic_iterator_1_opMul(Iter16*);
 
-char* func_001F3530(Iter16* it) {
-    return func_001F2E20(it);
+char* std_list_cSkaTransBLENDPtr_generic_iterator_1_opMul(Iter16* it) {
+    return std_list_deleter_voidPtr_generic_iterator_1_opMul(it);
 }

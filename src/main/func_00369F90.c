@@ -11,7 +11,7 @@ typedef struct {
 typedef struct { int a0; int count; } PadSet;
 extern void Pad_GetStickDeadzone(float* out, void* state, void* stick, int flag);
 
-int func_00369F90(PadSet* self) {
+int cJoystick_IsDormant(PadSet* self) {
     unsigned char active = 0;
     int i;
     for (i = 0; i < self->count; i++) {

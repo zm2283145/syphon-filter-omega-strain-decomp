@@ -7,6 +7,6 @@
 #include "types.h"
 #include "loose04_types.h"
 
-int* func_0040B6C0(PtrVec* v) {
+int* std_vector_imp_cObjectId_begin(PtrVec* v) {
     return v->data;
 }

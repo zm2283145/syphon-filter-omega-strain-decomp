@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0023EE90(void) {
+int cNIEventBase_GetVUM(void) {
     return 0;
 }

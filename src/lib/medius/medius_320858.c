@@ -25,12 +25,12 @@ typedef struct {
 } Out_858;
 
 extern int func_00323248(void);
-extern void func_00323550(Ctx_858* c);
-extern void func_003235B8(Ctx_858* c);
-extern void func_0031F5A0(int h, void* p0, int* f4, void* p8, unsigned short n, unsigned short* pos, unsigned char* bit, float* s, int* k, float* m, float* v, float* g, int last);
-extern void func_0031FEA8(float s0, int k0, float s1, int k1, float s2, int k2, int n, void* p, int h0, int h1, int h2);
+extern void VU0Save(Ctx_858* c);
+extern void VU0Restore(Ctx_858* c);
+extern void NellyAltDecodeSase3200(int h, void* p0, int* f4, void* p8, unsigned short n, unsigned short* pos, unsigned char* bit, float* s, int* k, float* m, float* v, float* g, int last);
+extern void FftTripleSumCosOlAdd(float s0, int k0, float s1, int k1, float s2, int k2, int n, void* p, int h0, int h1, int h2);
 
-int func_00320858(Ctx_858* a, Ctx_858* b, Ctx_858* c, Buf_858* d, Buf_858* e, Buf_858* f, Out_858* g, Out_858* h, Out_858* o)
+int nciTripleDecodeVoicePropSase3200(Ctx_858* a, Ctx_858* b, Ctx_858* c, Buf_858* d, Buf_858* e, Buf_858* f, Out_858* g, Out_858* h, Out_858* o)
 {
     float m0[12];
     float v0[16];
@@ -80,14 +80,14 @@ int func_00320858(Ctx_858* a, Ctx_858* b, Ctx_858* c, Buf_858* d, Buf_858* e, Bu
     b->x28 = e;
     c->x28 = f;
     if (func_00323248() == 3) {
-        func_00323550(c);
-        func_00323550(b);
-        func_00323550(a);
+        VU0Save(c);
+        VU0Save(b);
+        VU0Save(a);
     }
-    func_0031F5A0(c->x1C, f->p0, &f->f4, f->p8, f->fC, &f->fE, &f->f10, &s2, &k2, m2, v2, &g2, 0);
-    func_0031F5A0(b->x1C, e->p0, &e->f4, e->p8, e->fC, &e->fE, &e->f10, &s1, &k1, m1, v1, &g1, 0);
-    func_0031F5A0(a->x1C, d->p0, &d->f4, d->p8, d->fC, &d->fE, &d->f10, &s0, &k0, m0, v0, &g0, 1);
-    func_0031FEA8(s0, k0, s1, k1, s2, k2, 0xA0, d->p0, a->x1C, b->x1C, c->x1C);
+    NellyAltDecodeSase3200(c->x1C, f->p0, &f->f4, f->p8, f->fC, &f->fE, &f->f10, &s2, &k2, m2, v2, &g2, 0);
+    NellyAltDecodeSase3200(b->x1C, e->p0, &e->f4, e->p8, e->fC, &e->fE, &e->f10, &s1, &k1, m1, v1, &g1, 0);
+    NellyAltDecodeSase3200(a->x1C, d->p0, &d->f4, d->p8, d->fC, &d->fE, &d->f10, &s0, &k0, m0, v0, &g0, 1);
+    FftTripleSumCosOlAdd(s0, k0, s1, k1, s2, k2, 0xA0, d->p0, a->x1C, b->x1C, c->x1C);
     if (g) {
         g->f0 = g0;
         for (i = 0; i < 12; i++) g->a[i] = v0[i];
@@ -104,9 +104,9 @@ int func_00320858(Ctx_858* a, Ctx_858* b, Ctx_858* c, Buf_858* d, Buf_858* e, Bu
         for (i = 0; i < 12; i++) o->b[i] = m2[i];
     }
     if (func_00323248() == 3) {
-        func_003235B8(c);
-        func_003235B8(b);
-        func_003235B8(a);
+        VU0Restore(c);
+        VU0Restore(b);
+        VU0Restore(a);
     }
     return 0;
 }

@@ -54,7 +54,7 @@ DEFINE_STREAM_STRING_DTOR(String_Dtor_350EE0)
 
 DEFINE_RESIZE_ELEMENT(Elem350FD0, 0x5C)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_00350FD0, Elem350FD0, func_00351810, func_003515D0)
+DEFINE_VECTOR_RESIZE(std_vector_imp_MissionStats_resize, Elem350FD0, std_vector_imp_MissionStats_insert, std_vector_imp_MissionStats_erase)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_00350FD0 */

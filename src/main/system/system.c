@@ -111,10 +111,10 @@ extern "C" {
 extern char D_004BD1A8[];                   /* "system.cc" */
 extern char D_004D9DE0[];                   /* base timed-event vtable */
 extern "C" void Node_DeferredDeleteCallback();
-extern "C" void func_003CB530();
-extern "C" void func_003CB590();
+extern "C" void cDeleteCallback_dtor();
+extern "C" void cDeleteCallback_IsReferencing();
 /* DeleteLaterEvent vtable. */
-void * const D_004DFE20[8] = { (void*)0x0, (void*)0x0, (void*)func_003CB530, (void*)func_003CB590, (void*)Node_DeferredDeleteCallback, (void*)0x0, (void*)0x0, (void*)0x0 };
+void * const D_004DFE20[8] = { (void*)0x0, (void*)0x0, (void*)cDeleteCallback_dtor, (void*)cDeleteCallback_IsReferencing, (void*)Node_DeferredDeleteCallback, (void*)0x0, (void*)0x0, (void*)0x0 };
 void* Mem_Alloc(int, int, char*, int);
 void EventQueue_Admit(DeleteLaterEvent*);
 }

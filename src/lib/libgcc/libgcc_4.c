@@ -80,7 +80,7 @@ int Math_Atan2f(float f12, float f13) {
 /* merge_units: begin func_00121AD0 */
 extern int func_0011D980(float);
 
-int func_00121AD0(float f12) {
+int Libc_Expf(float f12) {
     return func_0011D980(f12);
 }
 /* merge_units: end func_00121AD0 */
@@ -97,7 +97,7 @@ void Math_FMod(void) {
 /* merge_units: begin func_00121B00 */
 extern int func_0011DDA8(float);
 
-int func_00121B00(float f12) {
+int Libc_Logf(float f12) {
     return func_0011DDA8(f12);
 }
 /* merge_units: end func_00121B00 */
@@ -105,7 +105,7 @@ int func_00121B00(float f12) {
 /* merge_units: begin func_00121B18 */
 extern int func_0011E088(float);
 
-int func_00121B18(float f12) {
+int Libc_Log10f(float f12) {
     return func_0011E088(f12);
 }
 /* merge_units: end func_00121B18 */
@@ -121,7 +121,7 @@ int Math_Powf(float f12, float f13) {
 /* merge_units: begin func_00121B48 */
 extern int Math_Sqrtf(float);
 
-int func_00121B48(float f12) {
+int Libc_Sqrtf(float f12) {
     return Math_Sqrtf(f12);
 }
 /* merge_units: end func_00121B48 */

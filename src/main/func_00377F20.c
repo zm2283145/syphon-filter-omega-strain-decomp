@@ -4,7 +4,7 @@ typedef struct { int count; R377F20 r[20]; } G377F20;
 extern G377F20 D_00492F80[5];
 extern unsigned int D_00493300[5];
 
-void func_00377F20(int* out)
+void cVU1Man_BuildAddressTable(int* out)
 {
     int k;
 int acc;

@@ -9,8 +9,8 @@ typedef struct Node {
     char pad90[0x10];
     Vec4 color;
 } Node;
-int func_001F3030(void* obj);
-int func_003EE500(Node* self);
+int std_list_imp_voidPtr_size(void* obj);
+int cInterfaceModel_IsInstanced(Node* self);
 int func_003EE5E0(Node* self, Vec4* v);
 void IeNode_PropagateColour(Node* self, Vec4* v)
 {
@@ -24,7 +24,7 @@ void IeNode_PropagateColour(Node* self, Vec4* v)
             c->color.z = v->z;
             c->color.w = v->w;
             for (j = 0; j < c->count; j++) {
-                if (func_001F3030(&c->children[j]->hidden) <= 0) {
+                if (std_list_imp_voidPtr_size(&c->children[j]->hidden) <= 0) {
                     Node* d = c->children[j];
                     int k;
                     d->color.x = v->x;
@@ -32,7 +32,7 @@ void IeNode_PropagateColour(Node* self, Vec4* v)
                     d->color.z = v->z;
                     d->color.w = v->w;
                     for (k = 0; k < d->count; k++) {
-                        if (func_003EE500(d->children[k]) == 0)
+                        if (cInterfaceModel_IsInstanced(d->children[k]) == 0)
                             func_003EE5E0(d->children[k], v);
                     }
                 }

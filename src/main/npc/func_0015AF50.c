@@ -7,7 +7,7 @@ extern "C" {
 extern char D_0049B670[];
 extern char g_NpcThinkList[];
 void* Mem_Alloc(int, int, char*, int);
-void func_0015B030(void*, Think_f4**);
+void std_list_cActiveListItemPtr_push_back(void*, Think_f4**);
 }
 extern "C" void NpcThinkList_Add(Npc_f4* npc)
 {
@@ -31,6 +31,6 @@ extern "C" void NpcThinkList_Add(Npc_f4* npc)
         p->id = *src;
     }
     t[0] = p;
-    func_0015B030(g_NpcThinkList, t);
+    std_list_cActiveListItemPtr_push_back(g_NpcThinkList, t);
 }
 

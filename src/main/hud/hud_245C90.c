@@ -20,7 +20,7 @@
 #pragma cplusplus on
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR(func_00245C90)
+DEFINE_BUF_HOLDER_DTOR(std_vector_cInterfaceElementPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00245C90 */
 
@@ -29,7 +29,7 @@ DEFINE_BUF_HOLDER_DTOR(func_00245C90)
 #pragma cplusplus on
 
 /* Destroy an object list: erase all nodes, optionally delete. */
-DEFINE_OBJ_LIST_DTOR(func_00245D80)
+DEFINE_OBJ_LIST_DTOR(std_list_tCalloutPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00245D80 */
 

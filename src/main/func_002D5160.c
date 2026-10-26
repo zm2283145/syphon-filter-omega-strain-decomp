@@ -40,7 +40,7 @@ extern "C" {
 Obj* Object_LookupById(int*);
 Ctl* AiController_GetActor(Self*);
 int Weapon_CanAttack(Inv*);
-void func_002D4E70(Self*, Obj*);
+void cNetNPC_AimFireWeapon(Self*, Obj*);
 float Vec4_GetX(V4*);
 float Vec4_GetY(V4*);
 float Vec4_GetZ(V4*);
@@ -48,29 +48,29 @@ void Mtx_MakeAxisRotation(M4*, float, float, float, float);
 V4 Node_GetTranslation(PNode*);
 int TeleportMsg_IsMode3(Msg* m);
 void* func_00133EC0(void* obj);
-void func_0015A400(V4* out, void* v);
+void cVector_Copy_WSet0(V4* out, void* v);
 void Vec4_CopyAsPoint(V4* out, void* v);
 void Mtx_SetRotationTranslation(void* data, void* obj, V4* v);
 void NpcPath_HoldAtRouteNode(Path*, int);
 void NpcAi_ModeFollow(Self*, FMsg*);
 M4* Mtx_GetIdentity();
-int func_001600A0(Path*, int);
+int cPathNavigator_GetRelativePathPosition(Path*, int);
 PNode* NpcPath_GetNode(int);
-void func_0042D790(Obj*);
+void cNetObjectMgr_TerrainActivation(Obj*);
 void NpcThinkList_RemoveActor(Obj*);
 void NpcAi_AddToDeadList(void*, Self**);
 int Npc_IsDeadRemovalAllowed(Self*);
 void NpcAi_RunLocomotion(Self*);
-Word* func_0014ABD0(Word* dst, Word* src);
-void func_0014ABE0(Iter* out, void* v);
-Word* func_0014ABF0(Word* dst, Word* src);
-int func_0014AC00(Iter* a, Iter* b);
-void func_0014AC20(Iter* out, void* v);
-Iter* func_0014AC30(Iter* it);
-Self** func_0014AC50(Iter* it);
-Iter* func_0014AC60(Iter* dst, Iter* src);
-void func_0014AC70(Iter* out, void* v);
-Iter* func_0014AC80(Iter* self);
+Word* cLListIterator_cNPCPtr_ctor_listR(Word* dst, Word* src);
+void std_list_cNPCPtr_end(Iter* out, void* v);
+Word* cLListIterator_cNPCPtr_ctor_cLListIteratorR(Word* dst, Word* src);
+int opNe_cLListIteratorR_cLListIteratorR(Iter* a, Iter* b);
+void cLList_cNPCPtr_End(Iter* out, void* v);
+Iter* cLListIterator_cNPCPtr_opInc(Iter* it);
+Self** cLListIterator_cNPCPtr_opMul(Iter* it);
+Iter* cLListIterator_cNPCPtr_opAssign(Iter* dst, Iter* src);
+void cLList_cNPCPtr_Begin(Iter* out, void* v);
+Iter* cLListIterator_cNPCPtr_ctor_void(Iter* self);
 }
 static inline void V4_Copy(V4* d, const V4* s) { __int128 q; __asm__ volatile("lq %0, 0(%2); sq %0, 0(%1)" : "=r"(q) : "r"(d), "r"(s) : "memory"); }
 static inline void Sub(V4* d, V4* a, V4* b) {
@@ -125,10 +125,10 @@ static inline bool NodeActive(PNode* n) { Obj* o = n->obj; bool r = 0; if (o) { 
 
 
 
-static inline void SetMtx(Msg* m, M4* mtx) { V4 a2; V4 b2; V4* v; if (TeleportMsg_IsMode3(m)) { func_0015A400(&a2, func_00133EC0(mtx)); v = &a2; } else { Vec4_CopyAsPoint(&b2, func_00133EC0(mtx)); v = &b2; } Mtx_SetRotationTranslation(m->data, mtx, v); }
+static inline void SetMtx(Msg* m, M4* mtx) { V4 a2; V4 b2; V4* v; if (TeleportMsg_IsMode3(m)) { cVector_Copy_WSet0(&a2, func_00133EC0(mtx)); v = &a2; } else { Vec4_CopyAsPoint(&b2, func_00133EC0(mtx)); v = &b2; } Mtx_SetRotationTranslation(m->data, mtx, v); }
 static inline void SetPt(Msg* m, M4* id, V4* p) { V4 pt; Vec4_CopyAsPoint(&pt, p); Mtx_SetRotationTranslation(m->data, id, &pt); }
 static inline void MakeRot(M4* m, const V4& ax, float a) { Mtx_MakeAxisRotation(m, Vec4_GetX((V4*)&ax), Vec4_GetY((V4*)&ax), Vec4_GetZ((V4*)&ax), a); }
-extern "C" void func_002D5160(Self* self, float dt)
+extern "C" void cNetNPC_NextFrame(Self* self, float dt)
 {
     float len;
     Word x;
@@ -169,7 +169,7 @@ extern "C" void func_002D5160(Self* self, float dt)
             if (self->f88 > 0.0f) self->f88 -= dt;
             if (self->f84 > 0.0f) self->f84 -= dt;
         }
-        func_002D4E70(self, tgt);
+        cNetNPC_AimFireWeapon(self, tgt);
         if (AiController_GetActor(self)->tgt) {
             Tgt* t;
             float base;
@@ -229,7 +229,7 @@ extern "C" void func_002D5160(Self* self, float dt)
                     cMessage_dtor(&msg2, 0);
                 } else if (!self->path->hold) {
                     unsigned char r;
-                    if ((r = func_001600A0(self->path, self->x208)) != 0) {
+                    if ((r = cPathNavigator_GetRelativePathPosition(self->path, self->x208)) != 0) {
                         if (r == 3) {
                             self->b1EE = 2;
                         } else if (r == 2) {
@@ -261,7 +261,7 @@ extern "C" void func_002D5160(Self* self, float dt)
                     if (self->f204 > 1.0f) {
                         self->obj->f60(1);
                         done = 1;
-                        func_0042D790(self->obj);
+                        cNetObjectMgr_TerrainActivation(self->obj);
                     }
                     self->f204 += dt;
                 } else {
@@ -271,17 +271,17 @@ extern "C" void func_002D5160(Self* self, float dt)
         }
     } else {
         if (!self->f44()) {
-            func_0014AC80(&it);
-            func_0014AC70(&b, g_NpcDeadList);
-            func_0014AC60(&it, &b);
-            while (func_0014AC20(&end, g_NpcDeadList), func_0014AC00(&it, &end)) {
-                if (*func_0014AC50(&it) == self) break;
-                func_0014AC30(&it);
+            cLListIterator_cNPCPtr_ctor_void(&it);
+            cLList_cNPCPtr_Begin(&b, g_NpcDeadList);
+            cLListIterator_cNPCPtr_opAssign(&it, &b);
+            while (cLList_cNPCPtr_End(&end, g_NpcDeadList), opNe_cLListIteratorR_cLListIteratorR(&it, &end)) {
+                if (*cLListIterator_cNPCPtr_opMul(&it) == self) break;
+                cLListIterator_cNPCPtr_opInc(&it);
             }
-            func_0014ABF0(&w4, (Word*)&it);
+            cLListIterator_cNPCPtr_ctor_cLListIteratorR(&w4, (Word*)&it);
             x = w4;
-            func_0014ABE0(&end2, g_NpcDeadList);
-            func_0014ABD0(&w3, (Word*)&end2);
+            std_list_cNPCPtr_end(&end2, g_NpcDeadList);
+            cLListIterator_cNPCPtr_ctor_listR(&w3, (Word*)&end2);
             y = w3;
             if (x.value == y.value) {
                 NpcThinkList_RemoveActor(self->obj);

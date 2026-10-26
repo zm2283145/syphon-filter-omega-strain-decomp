@@ -1,15 +1,15 @@
-extern void func_00116210(void); extern void func_00116338(void); extern void func_00116928(void);
-extern void func_00116AA0(int a); extern void func_00116CE0(void); extern void func_0010DF38(void);
-extern void func_00116570(void); extern void func_00115A48(void); extern void func_00118158(void);
-void func_00116448(void)
+extern void supplement_crt0(void); extern void InitSystemCallTableAddress(void); extern void InitAlarm(void);
+extern void InitTimer(int a); extern void StartTimerSystemTime(void); extern void func_0010DF38(void);
+extern void InitExecPS2(void); extern void InitTLBFunctions(void); extern void sceSifInitRebootNotify(void);
+void _InitSys(void)
 {
-    func_00116210();
-    func_00116338();
-    func_00116928();
-    func_00116AA0(2);
-    func_00116CE0();
+    supplement_crt0();
+    InitSystemCallTableAddress();
+    InitAlarm();
+    InitTimer(2);
+    StartTimerSystemTime();
     func_0010DF38();
-    func_00116570();
-    func_00115A48();
-    func_00118158();
+    InitExecPS2();
+    InitTLBFunctions();
+    sceSifInitRebootNotify();
 }

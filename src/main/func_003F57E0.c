@@ -4,15 +4,15 @@ typedef struct { char* base; char* y; int pad8; int padC; int count; } MovieBufs
 typedef struct { int a; int b; int stopped; char pad[0xA8 - 0xC]; int state; } MovieCtx;
 typedef struct { int y; int uv; } Frame;
 extern "C" {
-int func_0010B378(MovieCtx*);
-void func_0010B398(MovieCtx*);
+int sceMpegIsEnd(MovieCtx*);
+void sceMpegReset(MovieCtx*);
 void sceMpegGetPicture(MovieCtx*, int, int);
 void printf(char*);
-int func_003F5F20(MovieBufs*);
-void func_003F5F70(MovieBufs*);
-int func_003F72D0(char*, char*, int, int, int);
-void func_003F7FD0(int, int);
-void func_003F7FF0(void);
+int voBufGetData(MovieBufs*);
+void voBufIncCount(MovieBufs*);
+int setImageTag(char*, char*, int, int, int);
+void cMoviePlayer_SetMovieDims(int, int);
+void cMoviePlayer_SwitchThread(void);
 void MovieSubtitles_SetBuffers(char*, int, int, int, int);
 void MovieSubtitles_SetupPackets(char*);
 void MovieSubtitles_Start(char*);
@@ -26,34 +26,34 @@ extern "C" int Movie_DecodeThread(MovieCtx* self)
 {
     int ret = 1;
     Frame f[2];
-    while (!func_0010B378(self)) {
+    while (!sceMpegIsEnd(self)) {
         int buf;
         if (self->state == 1) {
             ret = -1;
             printf(D_004BE1C0);
             break;
         }
-        while (!(buf = func_003F5F20(&D_0055C460)))
-            func_003F7FF0();
+        while (!(buf = voBufGetData(&D_0055C460)))
+            cMoviePlayer_SwitchThread();
         sceMpegGetPicture(self, buf, 0x654);
         if (self->stopped == 0) {
             int a = self->a;
             int b = self->b;
             int i;
             for (i = 0; i < D_0055C460.count; i++) {
-                f[i].y = func_003F72D0(D_0055C460.y + i * 0x4CE40 + 0x40, D_0055C460.base + i * 0x195000, 0, a, b);
-                f[i].uv = func_003F72D0(D_0055C460.y + i * 0x4CE40 + 0x26740, D_0055C460.base + i * 0x195000, 1, a, b);
+                f[i].y = setImageTag(D_0055C460.y + i * 0x4CE40 + 0x40, D_0055C460.base + i * 0x195000, 0, a, b);
+                f[i].uv = setImageTag(D_0055C460.y + i * 0x4CE40 + 0x26740, D_0055C460.base + i * 0x195000, 1, a, b);
             }
-            func_003F7FD0(a, b);
+            cMoviePlayer_SetMovieDims(a, b);
             D_0055C5A8 = 0;
             MovieSubtitles_SetBuffers(D_00571CF0, f[0].y, f[0].uv, f[1].y, f[1].uv);
             MovieSubtitles_Start(D_00571CF0);
         }
         MovieSubtitles_SetupPackets(D_00571CF0);
-        func_003F5F70(&D_0055C460);
-        func_003F7FF0();
+        voBufIncCount(&D_0055C460);
+        cMoviePlayer_SwitchThread();
     }
-    func_0010B398(self);
+    sceMpegReset(self);
     return ret;
 }
 

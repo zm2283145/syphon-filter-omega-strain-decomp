@@ -13,7 +13,7 @@ void** List_Front(void*);
 void Hud_CrosshairDefault(Hud*);
 void Hud_CrosshairRelease(Hud*);
 void Hud_HideNoFire(Hud*);
-Spr** func_00242180(SprVec*, int);
+Spr** std_vector_cInterfaceElementPtr_opIndex(SprVec*, int);
 void IeElement_SetShown(Spr*, int);
 void IeElement_EvaluateAt(Spr*, float);
 void IeElement_Fade(Spr*, float);
@@ -75,7 +75,7 @@ extern "C" int Hud_UpdateCrosshair(Hud* h, int on, int a2_, Ent* e, Tgt* t)
     if (e && e->type == 1) Hud_HideNoFire(h);
     for (int i = 0; i < h->v.n; i++) {
         if (i != idx - 1 && h->v.data[i]->f4 == 0.0f)
-            IeElement_SetShown(*func_00242180(&h->v, i), 0);
+            IeElement_SetShown(*std_vector_cInterfaceElementPtr_opIndex(&h->v, i), 0);
     }
     h->cur = idx;
     return a2;

@@ -6,16 +6,16 @@
 
 #include "types.h"
 
-Word* func_00438DF0(Word* dst, Word* src) {
+Word* cLListIterator_tGenInfoPtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_00438E00(Iter* out, Tree* t) {
+void std_list_tGenInfoPtr_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-Word* func_00438E10(Word* dst, Word* src) {
+Word* std_list_tGenInfoPtr_generic_iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }

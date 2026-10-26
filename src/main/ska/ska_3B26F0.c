@@ -15,7 +15,7 @@
  */
 
 
-int func_003B26F0(char* self) {
+int cPointer_cSkaAnimData_opCast_constcSkaAnimDataPtr(char* self) {
     return *(int*)(self + 0);
 }
 /* merge_units: generate this block's code under its own pragmas */

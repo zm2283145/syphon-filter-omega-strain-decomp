@@ -9,19 +9,19 @@
 #pragma cplusplus on
 #include "types.h"
 #include "member0_dtor.h"
-DEFINE_NESTED_MEMBER0_DTOR(func_0013BF00, func_0013BE90)
+DEFINE_NESTED_MEMBER0_DTOR(cKeyedRegistry_cString_cConsCommand_dtor, std_map_cString_cConsCommandPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0013BF00 */
 
 /* merge_units: begin func_0013BF60 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-extern "C" { void* func_0013BE20(void); void func_0013C270(void* a, void* b, void* c); void String_Dtor(void* p, short f); void operator_delete(void* p); }
-extern "C" void* func_0013BF60(void* self, short del)
+extern "C" { void* cKeyedAutoRegisterObject_cString_cConsCommand_GetNonConstRegistry(void); void cKeyedRegistry_cString_cConsCommand_Unregister(void* a, void* b, void* c); void String_Dtor(void* p, short f); void operator_delete(void* p); }
+extern "C" void* cConsCommand_dtor(void* self, short del)
 {
     if (self) {
         if (self) {
-            func_0013C270(func_0013BE20(), self, self);
+            cKeyedRegistry_cString_cConsCommand_Unregister(cKeyedAutoRegisterObject_cString_cConsCommand_GetNonConstRegistry(), self, self);
             if (self) String_Dtor(self, 0);
         }
         if (del > 0) operator_delete(self);
@@ -70,10 +70,10 @@ struct N_0013C030 { N_0013C030* left; N_0013C030* right; int f8; char val[4]; };
 extern "C" {
 void Mem_Free(int pool, void* p, const char* file, int line);
 }
-extern "C" void func_0013C030(void* t, N_0013C030* n)
+extern "C" void std_tree_pair_cString_value_compare_destroy_nodeP_2(void* t, N_0013C030* n)
 {
-    if (n->left) func_0013C030(t, n->left);
-    if (n->right) func_0013C030(t, n->right);
+    if (n->left) std_tree_pair_cString_value_compare_destroy_nodeP_2(t, n->left);
+    if (n->right) std_tree_pair_cString_value_compare_destroy_nodeP_2(t, n->right);
     if (n->val) { if (n->val) String_Dtor(n->val, 0); }
     if (n) {
         AllocGuard g;

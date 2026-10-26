@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046D7A0(void) {
+int MediusUniqueCallbackGetMyIPRequestHandler(void) {
     return 38;
 }

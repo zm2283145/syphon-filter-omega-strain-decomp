@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0010D850(void) {
+int Libc_Ioctl(void) {
     return -1;
 }

@@ -7,13 +7,13 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern ObjVec* func_001F3B20(ObjVec*);
-extern ObjVec* func_001F3B50(ObjVec*);
-extern ObjVec* func_001F3B80(ObjVec*);
-extern ObjVec* func_001F3BB0(ObjVec*);
+extern ObjVec* cArray_cSkaBlendSequenceItem_ctor_void(ObjVec*);
+extern ObjVec* std_vector_cSkaBlendSequenceItem_ctor_void(ObjVec*);
+extern ObjVec* std_vector_imp_cSkaBlendSequenceItem_ctor_void(ObjVec*);
+extern ObjVec* std_vector_deleter_cSkaBlendSequenceItem_ctor_void(ObjVec*);
 
 MotionEntry24* MotionEntry_Ctor(MotionEntry24* self, int a1, int a2, float f) {
-    func_001F3B20(&self->list);
+    cArray_cSkaBlendSequenceItem_ctor_void(&self->list);
     self->unk10 = f;
     self->unk14 = f;
     self->unk18 = -1;
@@ -24,18 +24,18 @@ MotionEntry24* MotionEntry_Ctor(MotionEntry24* self, int a1, int a2, float f) {
 }
 
 /* Array constructor: sets the owns-storage flag. */
-ObjVec* func_001F3B20(ObjVec* self) {
-    func_001F3B50(self);
+ObjVec* cArray_cSkaBlendSequenceItem_ctor_void(ObjVec* self) {
+    std_vector_cSkaBlendSequenceItem_ctor_void(self);
     self->owned = 1;
     return self;
 }
 
-ObjVec* func_001F3B50(ObjVec* self) {
-    func_001F3B80(self);
+ObjVec* std_vector_cSkaBlendSequenceItem_ctor_void(ObjVec* self) {
+    std_vector_imp_cSkaBlendSequenceItem_ctor_void(self);
     return self;
 }
 
-ObjVec* func_001F3B80(ObjVec* self) {
-    func_001F3BB0(self);
+ObjVec* std_vector_imp_cSkaBlendSequenceItem_ctor_void(ObjVec* self) {
+    std_vector_deleter_cSkaBlendSequenceItem_ctor_void(self);
     return self;
 }

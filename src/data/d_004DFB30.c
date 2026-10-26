@@ -9,28 +9,28 @@ extern void ParticleEmitter_Draw();
 extern void ParticleEmitter_IsDead();
 extern void ParticleEmitter_Update();
 extern void ParticleEmitter_dtor();
-extern void func_003A1930();
-extern void func_003A23F0();
-extern void func_003A6110();
-extern void func_003A6120();
-extern void func_003A6180();
+extern void cParticleBase_GetRenderMatrix();
+extern void cParticleBase_dtor();
+extern void cParticleSpline_Definition();
+extern void cSplineDefinition_dtor();
+extern void cSprayDefinition_dtor();
 
 void *D_004DFB30[8] = {
     0, 0, &ParticleEmitter_dtor, &ParticleEmitter_Draw,
-    &ParticleEmitter_Update, &func_003A6110, &ParticleEmitter_IsDead, &func_003A23F0,
+    &ParticleEmitter_Update, &cParticleSpline_Definition, &ParticleEmitter_IsDead, &cParticleBase_GetRenderMatrix,
 };
 
 void *D_004DFB50[8] = {
-    0, 0, &func_003A1930, 0,
-    &ParticleEmitterBase_Update, 0, &ParticleEmitter_IsDead, &func_003A23F0,
+    0, 0, &cParticleBase_dtor, 0,
+    &ParticleEmitterBase_Update, 0, &ParticleEmitter_IsDead, &cParticleBase_GetRenderMatrix,
 };
 
 void *D_004DFB70[8] = {
-    0, 0, &func_003A6120, &ParticleDefType1_Parse,
+    0, 0, &cSplineDefinition_dtor, &ParticleDefType1_Parse,
     &ParticleDef_FinalizeType1, 0, 0, 0,
 };
 
 void *D_004DFB90[8] = {
-    0, 0, &func_003A6180, &ParticleDef_ParseType0,
+    0, 0, &cSprayDefinition_dtor, &ParticleDef_ParseType0,
     &ParticleDef_FinalizeType0, 0, 0, 0,
 };

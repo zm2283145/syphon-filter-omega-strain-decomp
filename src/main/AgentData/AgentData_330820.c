@@ -16,16 +16,16 @@
  */
 
 
-void* func_00330820(char* self) {
+void* std_vector_deleter_RatingRecord_data(char* self) {
     return self + 8;
 }
 
-int func_00330830(Iter* a, Iter* b) {
+int cArray_Record_Iterator_opNe(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 
 /* ++it over ObjectiveRow entries. */
-ObjectiveRow** func_00330850(ObjectiveRow** it) {
+ObjectiveRow** cArray_Record_Iterator_opInc(ObjectiveRow** it) {
     *it = *it + 1;
     return it;
 }
@@ -47,16 +47,16 @@ static inline void merge_flush_func_00330870(void) {}
 
 /* merge_units: begin func_003308A0 */
 #pragma push /* merge_units */
-ObjectiveRow* func_003308A0(ObjectiveRow** it) {
+ObjectiveRow* cArray_Record_Iterator_opMul(ObjectiveRow** it) {
     return *it;
 }
 
 /* out = end() of the registration row vector. */
-void func_003308B0(ObjectiveRow** out, ObjectiveRowVec* v) {
+void cArray_Record_End(ObjectiveRow** out, ObjectiveRowVec* v) {
     *out = v->data + v->count;
 }
 
-void func_003308D0(Iter* out, PtrVec* v) {
+void cArray_Record_Begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 /* merge_units: generate this block's code under its own pragmas */

@@ -23,9 +23,9 @@ typedef struct Widget {
     Child* child;           /* +0x44 */
 } Widget;
 extern "C" void List_Begin(ListIter* out, NodeList* list);  /* list.begin() */
-extern "C" void func_0028C0B0(ListIter* out, ListIter* in);    /* iterator -> const_iterator */
-extern "C" void func_0028C0A0(ListIter* out, NodeList* list);  /* list.end() */
-extern "C" void func_0028C090(ListIter* out, ListIter* in);    /* iterator -> const_iterator */
+extern "C" void std_list_GuiWidgetPtr_generic_iterator_ctor(ListIter* out, ListIter* in);    /* iterator -> const_iterator */
+extern "C" void std_list_GuiWidgetPtr_end(ListIter* out, NodeList* list);  /* list.end() */
+extern "C" void cLListIterator_GuiWidgetPtr_ctor_listR(ListIter* out, ListIter* in);    /* iterator -> const_iterator */
 
 /* Sets flag 0x1 and notifies every child widget in the +0x28 list (child +0x44, virtual +0xC). */
 extern "C" void GuiWidget_Init(Widget* self)
@@ -37,16 +37,16 @@ extern "C" void GuiWidget_Init(Widget* self)
     ListNode* node;
     self->flags |= 1;
     List_Begin(&beginIt, &self->children);
-    func_0028C0B0(&it, &beginIt);
+    std_list_GuiWidgetPtr_generic_iterator_ctor(&it, &beginIt);
     node = it.node;
-    func_0028C0A0(&endIt, &self->children);
-    func_0028C090(&last, &endIt);
+    std_list_GuiWidgetPtr_end(&endIt, &self->children);
+    cLListIterator_GuiWidgetPtr_ctor_listR(&last, &endIt);
     if (node != last.node) {
     do {
     node->data->child->MethodC();
     node = node->next;
-    func_0028C0A0(&endIt, &self->children);
-    func_0028C090(&last, &endIt);
+    std_list_GuiWidgetPtr_end(&endIt, &self->children);
+    cLListIterator_GuiWidgetPtr_ctor_listR(&last, &endIt);
     } while (node != last.node);
     }
 }

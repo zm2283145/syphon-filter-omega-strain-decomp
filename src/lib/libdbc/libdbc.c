@@ -47,12 +47,12 @@ extern int sceSifCallRpc(void *cd, unsigned int fno, int mode, void *send, int s
 extern int sceSifCheckStatRpc(void *);
 extern int scePrintf(const char *, ...);
 
-int func_0026A2D0(void);
+int sceDbcGetModVersion(void);
 int sceDbcSetWorkAddr(int addr);
-void func_0026B1C8(const char *fmt, ...);
+void DPRINT(const char *fmt, ...);
 
 /* Returns the dbcman.irx module version (major << 8 | minor). */
-int func_0026A2D0(void)
+int sceDbcGetModVersion(void)
 {
     sceSifCallRpc(&D_004F85C8, 0x80001363, 0, D_004F8640, DBC_RPC_SIZE, D_004F8640, DBC_RPC_SIZE, 0, 0);
     return D_004F8640[0];
@@ -69,7 +69,7 @@ int sceDbcInit(void)
     func_0010FBC0(0);
     for (;;) {
         if (sceSifBindRpc(&D_004F85C8, DBC_SERVER, 0) < 0) {
-            func_0026B1C8("libdbc: bind failed\n");
+            DPRINT("libdbc: bind failed\n");
             return 0;
         }
         if (D_004F85C8.server) break;
@@ -78,7 +78,7 @@ int sceDbcInit(void)
     }
     for (;;) {
         if (sceSifBindRpc(&D_004F85F0, DBC_SERVER_SEND2, 0) < 0) {
-            func_0026B1C8("libdbc: bind failed\n");
+            DPRINT("libdbc: bind failed\n");
             return 0;
         }
         if (D_004F85F0.server) break;
@@ -87,14 +87,14 @@ int sceDbcInit(void)
     }
     for (;;) {
         if (sceSifBindRpc(&D_004F8618, DBC_SERVER_SEND3, 0) < 0) {
-            func_0026B1C8("libdbc: bind failed\n");
+            DPRINT("libdbc: bind failed\n");
             return 0;
         }
         if (D_004F8618.server) break;
         i = 0x10000;
         while (i--) {}
     }
-    ver = func_0026A2D0();
+    ver = sceDbcGetModVersion();
     if ((ver >> 8) != 3) {
         scePrintf("libdbc: Module version mismatch ");
         scePrintf("[libdbc.a = %d.%d, dbcman.irx = %d.%d]\n", 3, 0, ver >> 8, ver & 0xFF);
@@ -105,14 +105,14 @@ int sceDbcInit(void)
     D_004FBB80 = CreateSema(&sp);
     if (D_004FBB80 < 0) return 0;
     for (i = 15; i >= 0; i--) ((int *)&D_004FBB40)[i] = 0;
-    func_0026B1C8("libdbc: SifDmaAddr %08x\n", &D_004FBAC0);
+    DPRINT("libdbc: SifDmaAddr %08x\n", &D_004FBAC0);
     sceDbcSetWorkAddr((int)&D_004FBAC0);
     D_0048B238 = 1;
     return 1;
 }
 
 /* Shutdown: if initialised, clears the flag and deletes the semaphore (if valid); returns 1, else 0. */
-int func_0026A568(void)
+int sceDbcEnd(void)
 {
     if (D_0048B238 == 0) return 0;
     D_0048B238 = 0;
@@ -124,7 +124,7 @@ int sceDbcSetWorkAddr(int addr)
 {
     D_004F8640[1] = addr;
     if (sceSifCallRpc(&D_004F85C8, 0x80001304, 0, D_004F8640, DBC_RPC_SIZE, D_004F8640, DBC_RPC_SIZE, 0, 0) < 0) {
-        func_0026B1C8("sceDbcSetWorkAddr: rpc error\n");
+        DPRINT("sceDbcSetWorkAddr: rpc error\n");
         return 0;
     }
     return D_004F8640[0];
@@ -145,7 +145,7 @@ int sceDbcCreateSocket(DbcSock *s, int a, int b)
     p->h.f10 = s->h.f10;
     for (i = 0; i < 16; i++) p->name[i] = s->name[i];
     if (sceSifCallRpc(&D_004F85C8, 0x80001301, 0, D_004F8640, DBC_RPC_SIZE, D_004F8640, DBC_RPC_SIZE, 0, 0) < 0) {
-        func_0026B1C8("sceDbcCreateSocket: rpc error\n");
+        DPRINT("sceDbcCreateSocket: rpc error\n");
         return 0;
     }
     return p->ret;
@@ -156,7 +156,7 @@ int sceDbcDeleteSocket(int a)
     if (D_0048B238 == 0) return 0;
     D_004F8640[0] = a;
     if (sceSifCallRpc(&D_004F85C8, 0x80001302, 0, D_004F8640, DBC_RPC_SIZE, D_004F8640, DBC_RPC_SIZE, 0, 0) < 0) {
-        func_0026B1C8("sceDbcDeleteSocket: rpc error\n");
+        DPRINT("sceDbcDeleteSocket: rpc error\n");
         return 0;
     }
     return D_004F8640[1];
@@ -171,14 +171,14 @@ int sceDbcGetDepNumber(int sock)
     if (((int *)&D_004FBB40)[sock] != 1) return -12;
     D_004F8640[0] = sock;
     if (sceSifCallRpc(&D_004F85C8, 0x80001303, 0, D_004F8640, DBC_RPC_SIZE, D_004F8640, DBC_RPC_SIZE, 0, 0) < 0) {
-        func_0026B1C8("sceDbcGetDepNumber: rpc error\n");
+        DPRINT("sceDbcGetDepNumber: rpc error\n");
         return 0;
     }
     return D_004F8640[1];
 }
 
 /* Socket state: 1 if socket `sock` is connected, else 3. */
-int func_0026A8C8(int sock)
+int sceDbcGetConnection(int sock)
 {
     SyncDCache(&D_004FBAC0, (char *)&D_004FBAC0 + 0x80);
     DIntr();
@@ -191,7 +191,7 @@ int sceDbcInitSocket(int a)
 {
     D_004F8640[0] = a;
     if (sceSifCallRpc(&D_004F85C8, 0x80001315, 0, D_004F8640, DBC_RPC_SIZE, D_004F8640, DBC_RPC_SIZE, 0, 0) < 0) {
-        func_0026B1C8("sceDbcInitSocket: rpc error\n");
+        DPRINT("sceDbcInitSocket: rpc error\n");
         return 0;
     }
     return D_004F8640[1];
@@ -201,7 +201,7 @@ int sceDbcResetSocket(int a)
 {
     D_004F8640[0] = a;
     if (sceSifCallRpc(&D_004F85C8, 0x80001316, 0, D_004F8640, DBC_RPC_SIZE, D_004F8640, DBC_RPC_SIZE, 0, 0) < 0) {
-        func_0026B1C8("sceDbcResetSocket: rpc error\n");
+        DPRINT("sceDbcResetSocket: rpc error\n");
         return 0;
     }
     return D_004F8640[1];
@@ -212,20 +212,20 @@ int sceDbcGetDeviceStatus(int a)
 {
     D_004F8640[0] = a;
     if (sceSifCallRpc(&D_004F85C8, 0x80001317, 0, D_004F8640, DBC_RPC_SIZE, D_004F8640, DBC_RPC_SIZE, 0, 0) < 0) {
-        func_0026B1C8("sceDbcGetDeviceStatus: rpc error\n");
+        DPRINT("sceDbcGetDeviceStatus: rpc error\n");
         return 0;
     }
     return D_004F8640[1];
 }
 
 /* RPC 0x1D; reuses the GetDeviceStatus error message. */
-int func_0026AB10(int *p)
+int sceDbcSearchPortSpecific(int *p)
 {
     D_004F8640[2] = 2;
     D_004F8640[4] = p[2];
     D_004F8640[5] = p[3];
     if (sceSifCallRpc(&D_004F85C8, 0x8000131D, 0, D_004F8640, DBC_RPC_SIZE, D_004F8640, DBC_RPC_SIZE, 0, 0) < 0) {
-        func_0026B1C8("sceDbcGetDeviceStatus: rpc error\n");
+        DPRINT("sceDbcGetDeviceStatus: rpc error\n");
         return -1;
     }
     return D_004F8640[1];
@@ -241,7 +241,7 @@ int sceDbcSRData(int a, int b, int *slen, unsigned char *sdata, int *rlen, unsig
     p->xC = *rlen;
     for (i = 0; i < *slen; i++) p->sdata[i] = sdata[i];
     if (sceSifCallRpc(&D_004F85C8, 0x80001318, 0, D_004F8640, DBC_RPC_SIZE, D_004F8640, DBC_RPC_SIZE, 0, 0) < 0) {
-        func_0026B1C8("sceDbcSRData: rpc error\n");
+        DPRINT("sceDbcSRData: rpc error\n");
         return 0;
     }
     if (p->x410 >= 0) {
@@ -263,7 +263,7 @@ int sceDbcSendData(int a, int b, int *len, unsigned char *in)
     p->x8 = *len;
     for (i = 0; i < *len; i++) p->data[i] = in[i];
     if (sceSifCallRpc(&D_004F85C8, 0x80001319, 0, D_004F8640, DBC_RPC_SIZE, D_004F8640, DBC_RPC_SIZE, 0, 0) < 0) {
-        func_0026B1C8("sceDbcSendData: rpc error\n");
+        DPRINT("sceDbcSendData: rpc error\n");
         SignalSema(D_004FBB80);
         return 0;
     }
@@ -277,7 +277,7 @@ int sceDbcSendData2(int a, int b, int *len, unsigned char *in)
     DbcSD2 *p;
     int i;
     if (*len > 0x1080) {
-        func_0026B1C8("libdbc: SendData2 data length too long [%d]\n", *len);
+        DPRINT("libdbc: SendData2 data length too long [%d]\n", *len);
         return 0;
     }
     WaitSema(D_004FBB80);
@@ -287,12 +287,12 @@ int sceDbcSendData2(int a, int b, int *len, unsigned char *in)
     p->x8 = *len;
     for (i = 0; i < *len; i++) p->data[i] = in[i];
     if (sceSifCheckStatRpc(&D_004F85F0) == 1) {
-        func_0026B1C8("dbcman : SendData2 BUSY\n");
+        DPRINT("dbcman : SendData2 BUSY\n");
         SignalSema(D_004FBB80);
         return 0;
     }
     if (sceSifCallRpc(&D_004F85F0, 0x8000131B, 1, &D_004F88C0, 0x1090, &D_004F88C0, 0x1090, 0, 0) < 0) {
-        func_0026B1C8("sceDbcSendData2: rpc error\n");
+        DPRINT("sceDbcSendData2: rpc error\n");
         SignalSema(D_004FBB80);
         return 0;
     }
@@ -305,7 +305,7 @@ int sceDbcSendData3(int a, int b, int *len, unsigned char *in, void *endf)
     DbcSD3 *p;
     int i;
     if (*len > 0x2080) {
-        func_0026B1C8("libdbc: SendData3 data length too long\n");
+        DPRINT("libdbc: SendData3 data length too long\n");
         return 0;
     }
     WaitSema(D_004FBB80);
@@ -315,7 +315,7 @@ int sceDbcSendData3(int a, int b, int *len, unsigned char *in, void *endf)
     p->x8 = *len;
     for (i = 0; i < *len; i++) p->data[i] = in[i];
     if (sceSifCheckStatRpc(&D_004F8618) == 1) {
-        func_0026B1C8("dbcman : SendData3 BUSY\n");
+        DPRINT("dbcman : SendData3 BUSY\n");
         SignalSema(D_004FBB80);
         return 0;
     }
@@ -335,7 +335,7 @@ int sceDbcReceiveData(int a, int b, int *len, unsigned char *out)
     p->x4 = b;
     p->x8 = *len;
     if (sceSifCallRpc(&D_004F85C8, 0x8000131A, 0, D_004F8640, DBC_RPC_SIZE, D_004F8640, DBC_RPC_SIZE, 0, 0) < 0) {
-        func_0026B1C8("sceDbcReceiveData: rpc error\n");
+        DPRINT("sceDbcReceiveData: rpc error\n");
         return 0;
     }
     if (p->x20C >= 0) {
@@ -346,6 +346,6 @@ int sceDbcReceiveData(int a, int b, int *len, unsigned char *out)
 }
 
 /* Debug printf, compiled out in retail. */
-void func_0026B1C8(const char *fmt, ...)
+void DPRINT(const char *fmt, ...)
 {
 }

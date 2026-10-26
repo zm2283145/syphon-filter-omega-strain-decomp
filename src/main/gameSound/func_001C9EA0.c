@@ -9,18 +9,18 @@
 /* SoundMgr vtable */
 extern void SoundMgr_OnMessage();
 extern void GObj_GetID();
-extern void func_0012ECF0();
-extern void func_0012ED00();
-extern void func_0012ED10();
-extern void func_0012ED20();
-extern void func_0012ED30();
-extern void func_0012ED40();
-extern void func_0012ED50();
-extern void func_001383D0();
+extern void cSystem_ScriptGetRealObj();
+extern void cSystem_SendCreated();
+extern void cSystem_NetActivate();
+extern void cSystem_NetDeactivate();
+extern void cSystem_NetEnable();
+extern void cSystem_NetDisable();
+extern void cSystem_IsDeliverable();
+extern void cSystem_IsNetworked();
 extern void SoundMgr_dtor();
 extern void Receiver_GetScriptTypeKey();
 extern void Receiver_ScriptDispatch();
-void * const D_004DACB0[16] = { (void*)0x0, (void*)0x0, (void*)SoundMgr_dtor, (void*)SoundMgr_OnMessage, (void*)GObj_GetID, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)Receiver_GetScriptTypeKey, (void*)Receiver_ScriptDispatch, (void*)0x0 };
+void * const D_004DACB0[16] = { (void*)0x0, (void*)0x0, (void*)SoundMgr_dtor, (void*)SoundMgr_OnMessage, (void*)GObj_GetID, (void*)cSystem_ScriptGetRealObj, (void*)cSystem_IsNetworked, (void*)cSystem_SendCreated, (void*)cSystem_NetActivate, (void*)cSystem_NetDeactivate, (void*)cSystem_NetEnable, (void*)cSystem_NetDisable, (void*)cSystem_IsDeliverable, (void*)Receiver_GetScriptTypeKey, (void*)Receiver_ScriptDispatch, (void*)0x0 };
 /* receiver registration data */
 extern char D_004F2CC0[];
 extern void* Receiver_Construct(void* self, void* info);

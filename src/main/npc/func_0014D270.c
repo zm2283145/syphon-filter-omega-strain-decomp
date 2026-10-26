@@ -4,4 +4,4 @@
 #include "vtable2_base_dtor.h"
 
 /* Two-level destructor: restore vtables, run base destructor, optionally delete. */
-DEFINE_VTABLE2_BASE_DTOR(func_0014D270, D_004E0100, D_004E0840, cMessage_dtor)
+DEFINE_VTABLE2_BASE_DTOR(cGeneratorMessage_dtor, D_004E0100, D_004E0840, cMessage_dtor)

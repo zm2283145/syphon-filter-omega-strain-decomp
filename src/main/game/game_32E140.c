@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-int func_0032E140(void) {
+int gsmDecode(void) {
     return -1;
 }
 #pragma pop /* merge_units */

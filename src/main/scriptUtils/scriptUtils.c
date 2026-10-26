@@ -83,13 +83,13 @@ static inline void merge_flush_func_00267AE0(void) {}
 /* merge_units: begin func_00267B30 */
 #pragma push /* merge_units */
 typedef union ScriptArg_00267B30 { int i; float f; void* p; } ScriptArg_00267B30;
-extern void* func_00175FA0(void* object);
+extern void* cPlayer_SOBJ_convert(void* object);
 extern float Global_Distance_3(void* a, void* b);
 
 /* Script native: distance between the objects of args[0] and args[1], returned as float bits. */
 int Script_Distance_3(ScriptArg_00267B30* args)
 {
-    void* a = func_00175FA0(args[0].p);
+    void* a = cPlayer_SOBJ_convert(args[0].p);
     void* b = NpcScript_GetReceiver(args[1].p);
     float result = Global_Distance_3(a, b);
     return *(int*)&result;
@@ -113,7 +113,7 @@ extern float Global_Distance_2(void* a, void* b);
 /* Script native: distance between the two objects, returned as float bits. */
 int Script_Distance_2(ScriptArg_00267B80* args)
 {
-    void* a = func_00175FA0(args[0].p);
+    void* a = cPlayer_SOBJ_convert(args[0].p);
     float d[1];
     d[0] = Global_Distance_2(a, GObj_IdentityB(args[1].p));
     return *(int*)d;

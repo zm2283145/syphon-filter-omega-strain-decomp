@@ -12,7 +12,7 @@
 #include "owned_buffer8_dtor_deep.h"
 
 extern "C" { char D_004BACB8[] = "allocator.hh"; }
-DEFINE_OWNED_BUFFER8_DTOR_MID(func_00351230, D_004BACB8)
+DEFINE_OWNED_BUFFER8_DTOR_MID(std_vector_imp_StatType_1_dtor, D_004BACB8)
 #pragma pop /* merge_units */
 /* merge_units: end func_00351230 */
 
@@ -24,16 +24,16 @@ DEFINE_OWNED_BUFFER8_DTOR_MID(func_00351230, D_004BACB8)
 struct E351320 { int words[0x5C / 4]; };
 struct V351320 { int capacity; unsigned int count; E351320* data; };
 extern "C" {
-void* func_0034F720(void* self, short deleteFlag);
-void func_00351320(V351320* v);
+void* MissionStats_dtor(void* self, short deleteFlag);
+void std_vector_deleter_MissionStats_clear(V351320* v);
 }
-void func_00351320(V351320* v)
+void std_vector_deleter_MissionStats_clear(V351320* v)
 {
     E351320* first = v->data;
     E351320* last = first + v->count;
     while (first < last) {
         --last;
-        func_0034F720(last, -1);
+        MissionStats_dtor(last, -1);
     }
     v->count = 0;
 }

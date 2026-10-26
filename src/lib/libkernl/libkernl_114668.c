@@ -10,7 +10,7 @@ extern char D_004E6000[];
 extern int D_004E6040[];
 extern int D_004E6080[];
 extern int sceSifCallRpc(void *cd, int fno, int mode, void *send, int ssize, void *recv, int rsize, void *endf, void *endp);
-unsigned int func_00114668(void)
+unsigned int sceSifQueryMemSize(void)
 {
     if (D_00486258 < 0) return 0;
     if (sceSifCallRpc(D_004E6000, 5, 0, 0, 0, D_004E6040, 4, 0, 0) < 0) return 0xFFFFFFFF;
@@ -19,7 +19,7 @@ unsigned int func_00114668(void)
 /* merge_units: end func_00114668 */
 
 /* merge_units: begin func_001146D8 */
-unsigned int func_001146D8(void)
+unsigned int sceSifQueryMaxFreeMemSize(void)
 {
     if (D_00486258 < 0) return 0;
     if (sceSifCallRpc(D_004E6000, 6, 0, 0, 0, D_004E6040, 4, 0, 0) < 0) return 0xFFFFFFFF;
@@ -28,7 +28,7 @@ unsigned int func_001146D8(void)
 /* merge_units: end func_001146D8 */
 
 /* merge_units: begin func_00114748 */
-unsigned int func_00114748(void)
+unsigned int sceSifQueryTotalFreeMemSize(void)
 {
     if (D_00486258 < 0) return 0;
     if (sceSifCallRpc(D_004E6000, 7, 0, 0, 0, D_004E6040, 4, 0, 0) < 0) return 0xFFFFFFFF;
@@ -37,7 +37,7 @@ unsigned int func_00114748(void)
 /* merge_units: end func_00114748 */
 
 /* merge_units: begin func_001147B8 */
-unsigned int func_001147B8(int a0)
+unsigned int sceSifQueryBlockTopAddress(int a0)
 {
     if (D_00486258 < 0) return 0;
     D_004E6080[0] = a0;
@@ -47,7 +47,7 @@ unsigned int func_001147B8(int a0)
 /* merge_units: end func_001147B8 */
 
 /* merge_units: begin func_00114838 */
-unsigned int func_00114838(int a0)
+unsigned int sceSifQueryBlockSize(int a0)
 {
     if (D_00486258 < 0) return 0;
     D_004E6080[0] = a0;
@@ -69,7 +69,7 @@ extern int sceSifCallRpc(void*,int,int,void*,int,void*,int,void*,void*);
 #endif /* merge_units */
 #define sceSifCallRpc(a0, a1, a2, a3, a4, a5, a6, a7, a8) (sceSifCallRpc((a0), (a1), (a2), (a3), (a4), (a5), (a6), (a7), (a8))) /* merge_units */
 
-int func_001148B8(void) {
+int _lf_bind(void) {
  int n;
  if((*(int*)D_00486260)<0) {
 retry:
@@ -99,7 +99,7 @@ extern char D_004E63E8[];
 extern char D_0048618C[];
 extern char D_00498B70[];
 static char *D_00486264 = D_00498B70;
-int func_001149B8(void)
+int _lf_version(void)
 {
     char *b = D_0048618C;
     char *a = D_004E63E8;

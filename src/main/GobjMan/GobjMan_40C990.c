@@ -72,7 +72,7 @@ int Object_Register(int obj) {
     return ret;
 }
 
-int func_0040CA20(void) {
+int nGobjManager_GetGOBJAndNodeList(void) {
     return g_GobjRootScope;
 }
 
@@ -109,12 +109,12 @@ void ObjMap_Find(GobjMapNode** result, GobjMap* map, const GobjId* id)
 
 /* merge_units: begin func_0040CAC0 */
 #pragma push /* merge_units */
-extern void func_0040CD10(Tree* t, int root);
+extern void std_tree_pair_cObjectId_value_compare_destroy(Tree* t, int root);
 
 /* Erases every node of the tree and resets it to empty. */
-void func_0040CAC0(Tree* t) {
+void std_tree_pair_cObjectId_value_compare_clear(Tree* t) {
     if (t->header != 0) {
-        func_0040CD10(t, t->header);
+        std_tree_pair_cObjectId_value_compare_destroy(t, t->header);
         t->unk0 = 0;
         t->header = 0;
         t->leftmost = &t->header;
@@ -129,6 +129,6 @@ void func_0040CAC0(Tree* t) {
 #include "tree_erase_iter.h"
 
 extern "C" { char D_004BECF0[] = "allocator.hh"; }
-DEFINE_TREE_ERASE_ITER(func_0040CB00, func_0013C800, D_004BECF0, 0x64)
+DEFINE_TREE_ERASE_ITER(std_tree_pair_cObjectId_value_compare_erase, std_red_black_tree_1_balance_erase, D_004BECF0, 0x64)
 #pragma pop /* merge_units */
 /* merge_units: end func_0040CB00 */

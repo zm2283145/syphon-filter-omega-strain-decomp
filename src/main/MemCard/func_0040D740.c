@@ -19,11 +19,11 @@ extern char D_004BED20[], D_004BED38[], D_004BED48[], D_004BED58[];
 extern char* D_00494008;
 extern char* D_00494010;
 extern int D_00493C40[];
-extern int func_0040E5D0(MCP* p);
+extern int MemCard_MemCardMain(MCP* p);
 extern void Resource_Construct(Res* r);
 extern void String_Copy(char* d, const char* s);
 extern void Libc_Strcat(char* d, const char* s);
-extern void func_0036E140(Res* r, char* name, int a, int b);
+extern void cFileMan_EncodeFilename_charP_cFileIOP_bool(Res* r, char* name, int a, int b);
 extern int FileMan_FindMember(Res* r);
 extern int FileMan_GetSize(Res* r);
 extern void Alloc_Lock(int id);
@@ -31,7 +31,7 @@ extern void Alloc_Unlock(int id);
 extern void* Mem_Alloc(int heap, int size, const char* file, int line);
 extern void Mem_Free(int heap, void* p, const char* file, int line);
 extern void FileMan_LoadMemberSync(Res* r, void** out, int z);
-extern void func_0036DEC0(Res* r);
+extern void cFileMan_Close(Res* r);
 extern int MemCardWrap_Write(MC* c, const char* name, void* data, int size, int flag);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern void FileMan_Release(Res* r, int flags);
@@ -95,7 +95,7 @@ int MemCardWrap_MakeDirectory(MC* c)
     p->done = 0;
     c->state = 6;
     do {
-        c->busy = func_0040E5D0(c->p) != 0;
+        c->busy = MemCard_MemCardMain(c->p) != 0;
         if (((c->busy != 0) ^ 1) != 0)
             c->state = 0;
         if (c->cb)
@@ -105,7 +105,7 @@ int MemCardWrap_MakeDirectory(MC* c)
         Resource_Construct(&r);
         String_Copy(path, D_004BED20);
         Libc_Strcat(path, D_00494008);
-        func_0036E140(&r, path, 0, 0);
+        cFileMan_EncodeFilename_charP_cFileIOP_bool(&r, path, 0, 0);
         if (!(unsigned char)FileMan_FindMember(&r)) {
             size = FileMan_GetSize(&r);
             if (g_ProfileLockEnabled) Alloc_Lock(9);
@@ -116,7 +116,7 @@ int MemCardWrap_MakeDirectory(MC* c)
             buf = m;
             ClearMem(buf, size);
             FileMan_LoadMemberSync(&r, &buf, 0);
-            func_0036DEC0(&r);
+            cFileMan_Close(&r);
             ok = MemCardWrap_Write(c, D_00494008, buf, size, 1) != 0;
             {
                 void* q = buf;

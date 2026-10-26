@@ -9,7 +9,7 @@
 extern char D_00497E00[];
 extern char D_00497E04[];
 
-int func_0046DD88(void) {
+int MediusUniqueCallbackGameList_ExtraInfoResponseHandler(void) {
     int v0;
     int cond;
 
@@ -24,11 +24,11 @@ ret:
     return v0;
 }
 
-int func_0046DDB8(void) {
+int MediusUniqueCallbackChannelList_ExtraInfoRequestHandler(void) {
     return 26;
 }
 
-int func_0046DDC0(void) {
+int MediusUniqueCallbackChannelList_ExtraInfoResponseHandler(void) {
     int v0;
     int cond;
 

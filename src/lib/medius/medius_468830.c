@@ -5,7 +5,7 @@ int String_Copy(int, int);
 extern char D_004C2C00[];
 static void * const dat_00497E30[1] = { (void*)D_004C2C00 };
 
-int func_00468830(int arg0) {
+int MediusVersionClient(int arg0) {
     int var_v0;
 
     var_v0 = -0x12;

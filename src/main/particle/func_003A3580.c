@@ -5,7 +5,7 @@
 
 #include "types.h"
 
-Word* func_003A3580(Word* dst, Word* src) {
+Word* cConstLListIterator_cParticleDefinitionPtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }

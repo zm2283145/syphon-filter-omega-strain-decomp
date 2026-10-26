@@ -1,10 +1,10 @@
 #pragma cplusplus on
 #include "types.h"
 #include "vslot_pad.h"
-/* func_00348530: GuiNetMessages list cell draw: column 0 places the type
+/* GuiNetMessageArray_onElementRender: GuiNetMessages list cell draw: column 0 places the type
  * icon widget, columns 1/3 draw the message text / localised type name in
- * the type colour. The helpers are the inlined func_003488E0 (type name),
- * func_00348950 (icon widget) and func_003489A0 (colour) of
+ * the type colour. The helpers are the inlined GuiNetMessageArray_GetMessageDescription (type name),
+ * GuiNetMessageArray_GetMessageIcon (icon widget) and GuiNetMessageArray_GetMessageColor (colour) of
  * GuiNetMessages_3488E0.c. */
 #pragma opt_rebuildconditionals off
 
@@ -38,7 +38,7 @@ void TextObj_SetColour(Text* c, void* p);
 char* String_CStr(void* s);
 void TextObj_SetText(Text* c, char* text);
 void TextObj_Draw(Text* c);
-void func_00348530(Self* self, int col, unsigned int row, float* r);
+void GuiNetMessageArray_onElementRender(Self* self, int col, unsigned int row, float* r);
 }
 
 static inline Mtx* MtxAt(int i) { return &((Render*)g_Video)->mtx[i]; }
@@ -85,7 +85,7 @@ static inline char* TypeColour(Self* self, int k)
     }
 }
 
-extern "C" void func_00348530(Self* self, int col, unsigned int row, float* r)
+extern "C" void GuiNetMessageArray_onElementRender(Self* self, int col, unsigned int row, float* r)
 {
     Msg* m;
     GuiArrayWidget_DrawCell(self, col, row, r);

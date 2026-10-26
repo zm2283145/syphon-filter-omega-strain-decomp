@@ -1,4 +1,4 @@
 #pragma cplusplus on
 #include "types.h"
 #include "member0_dtor.h"
-DEFINE_MEMBER0_DTOR(func_001F2420, func_001F2480)
+DEFINE_MEMBER0_DTOR(cArray_cSkaBlendSequenceItem_dtor, std_vector_cSkaBlendSequenceItem_dtor)

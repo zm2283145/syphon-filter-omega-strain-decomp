@@ -52,7 +52,7 @@ static inline V4 Scale_(V4* v, float s) {
 #pragma push
 #pragma peephole off
 
-V4 func_003B1450(S_3B1450* p) {
+V4 cSkaPlaybackItem_GetSummedOffsetRootRotation(S_3B1450* p) {
     if (p->on) return Scale_(&p->v, p->s);
     return p->v;
 }
@@ -65,7 +65,7 @@ static inline void merge_flush_func_003B1450(void) {}
 /* merge_units: begin func_003B14A0 */
 #pragma push /* merge_units */
 typedef struct { int id; float weight; unsigned char active; char pad[7]; Vec4 v; } AC_3B14A0;
-AC_3B14A0* func_003B14A0(AC_3B14A0* self, AC_3B14A0* o) {
+AC_3B14A0* cSkaPlaybackItem_opAssign(AC_3B14A0* self, AC_3B14A0* o) {
     self->id = o->id;
     self->weight = o->weight;
     self->active = o->active;

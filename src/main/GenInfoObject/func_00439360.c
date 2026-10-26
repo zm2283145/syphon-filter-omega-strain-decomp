@@ -6,15 +6,15 @@
 
 #include "types.h"
 
-Word* func_00439360(Word* dst, Word* src) {
+Word* cAssocArray_tGenInfoPtr_bool_Iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_00439370(Iter* out, Tree* t) {
+void std_map_tGenInfoPtr_bool_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-void func_00439380(Iter* out, Tree* t) {
+void std_tree_pair_tGenInfoPtr_value_compare_begin(Iter* out, Tree* t) {
     out->p = t->leftmost;
 }

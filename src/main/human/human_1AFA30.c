@@ -16,7 +16,7 @@
 #pragma cplusplus on
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_001AFA30)
+DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_cSkeletonCenterOfMassContributionPtr_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_001AFA30 */
 
@@ -38,15 +38,15 @@ int Alloc_Unlock(int);
 int ColScratch_Init(int, int, int, int);                      
 int HumanCol_Init();                                  
 char * Mem_Alloc(int, int, char *, int);                      
-int func_001360D0(int);                                 
-int func_001361D0(int *);                           
+int cCollisionSystem_cBox_InitStatics(int);                                 
+int cArrayCapacity_Int(int *);                           
 int PtrVec_Reserve_Thunk_1AFCF0(char * , int);                       
-int func_001AFD00(char * );                            
+int std_vector_cSkeletonBBoxContributionPtr_ctor(char * );                            
 int PtrVec_Reserve_Thunk_1AFD20(char * , int);                       
-int func_001AFD30(char * );                            
+int std_vector_cSkeletonCenterOfMassContributionPtr_ctor(char * );                            
 int HumanBounds_BuildTable(char * );                            
 int HumanCentroid_GetTable(char * );                            
-int func_001D8720();                                  
+int cHumanIkRoutine_InitStatics();                                  
 extern char D_0049D8D0;
 extern char * D_004EE9D0;
 extern char * D_004EE9D8;
@@ -59,9 +59,9 @@ void Human_InitStatics(void) {
     char * temp_s0_2;
 
     ColScratch_Init(0, 0, 0, 0);
-    func_001360D0(0x320);
+    cCollisionSystem_cBox_InitStatics(0x320);
     HumanCol_Init();
-    func_001D8720();
+    cHumanIkRoutine_InitStatics();
     sp2C = 0x15;
     if (D_004EE9D0 == NULL) {
         if (g_ProfileLockEnabled != 0) {
@@ -74,8 +74,8 @@ void Human_InitStatics(void) {
         }
         g_ProfileLockDepth -= 1;
         if (temp_s0 != NULL) {
-            func_001AFD30(temp_s0);
-            PtrVec_Reserve_Thunk_1AFD20(temp_s0, func_001361D0(&sp2C));
+            std_vector_cSkeletonCenterOfMassContributionPtr_ctor(temp_s0);
+            PtrVec_Reserve_Thunk_1AFD20(temp_s0, cArrayCapacity_Int(&sp2C));
             F_(temp_s0, 0xC, signed char) = 1;
         }
         D_004EE9D0 = temp_s0;
@@ -92,8 +92,8 @@ void Human_InitStatics(void) {
         }
         g_ProfileLockDepth -= 1;
         if (temp_s0_2 != NULL) {
-            func_001AFD00(temp_s0_2);
-            PtrVec_Reserve_Thunk_1AFCF0(temp_s0_2, func_001361D0(&sp2C));
+            std_vector_cSkeletonBBoxContributionPtr_ctor(temp_s0_2);
+            PtrVec_Reserve_Thunk_1AFCF0(temp_s0_2, cArrayCapacity_Int(&sp2C));
             F_(temp_s0_2, 0xC, signed char) = 1;
         }
         D_004EE9D8 = temp_s0_2;

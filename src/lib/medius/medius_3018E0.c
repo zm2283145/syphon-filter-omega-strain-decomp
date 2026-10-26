@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_003018E0(int a0, int a1) {
+int rt_msg_set_ubyte(int a0, int a1) {
     int v0;
     int cond;
 

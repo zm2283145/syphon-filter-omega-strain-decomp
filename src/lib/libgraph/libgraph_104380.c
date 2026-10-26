@@ -1,6 +1,6 @@
 extern int DIntr(void);
 extern void EIntr(void);
-unsigned int func_00104380(volatile unsigned int *p)
+unsigned int sceDmaPause(volatile unsigned int *p)
 {
     int s = DIntr();
     unsigned int en = *(volatile unsigned int *)0x1000F520;

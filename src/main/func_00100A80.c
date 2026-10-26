@@ -2,10 +2,10 @@
 #include "types.h"
 #include "call_global_hook.h"
 
-extern void func_00100AE0(void);
-void (*D_00485E88)(void) = func_00100AE0;
+extern void std_duhandler(void);
+void (*D_00485E88)(void) = std_duhandler;
 
 /* Call the installed hook. */
 #pragma tailcall off
-DEFINE_CALL_GLOBAL_HOOK(func_00100A80)
+DEFINE_CALL_GLOBAL_HOOK(std_unexpected)
 #pragma tailcall reset

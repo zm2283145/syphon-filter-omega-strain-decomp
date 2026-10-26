@@ -5,16 +5,16 @@
 
 #include "types.h"
 
-Word* func_00432720(Word* dst, Word* src) {
+Word* cLListIterator_tNPCInfoPtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_00432730(Iter* out, Tree* t) {
+void std_list_tNPCInfoPtr_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-Word* func_00432740(Word* dst, Word* src) {
+Word* std_list_tNPCInfoPtr_generic_iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }

@@ -13,7 +13,7 @@
 
 /* Copy a range of 60-byte elements by assignment. */
 DEFINE_COPY_ELEMENT(Elem60, 60)
-DEFINE_RANGE_COPY_ASSIGN(func_00291600, Elem60, func_001BECC0)
+DEFINE_RANGE_COPY_ASSIGN(func_00291600, Elem60, cSplinedMotion_Scalar0To1_opAssign)
 #pragma pop /* merge_units */
 /* merge_units: end func_00291600 */
 
@@ -27,9 +27,9 @@ typedef struct Obj291 {
     unsigned char flag;
 } Obj291;
 
-extern void func_001BED80(void* dst, void* src);
-extern float func_001BED70(void* src);
-extern void func_001BED50(void* dst, void* ref, float value);
+extern void cHermiteSplineWithScaledDuration_float_opAssign(void* dst, void* src);
+extern float cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_float_float_GetTimeLeft(void* src);
+extern void cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_float_float_Reset(void* dst, void* ref, float value);
 
 /* Copy-assigns src into dst (all fields but the first word); returns dst. */
 Obj291* func_00291670(Obj291* dst, Obj291* src) {
@@ -38,8 +38,8 @@ Obj291* func_00291670(Obj291* dst, Obj291* src) {
     dst->values[2] = src->values[2];
     dst->values[3] = src->values[3];
     dst->values[4] = src->values[4];
-    func_001BED80(dst->sub18, src->sub18);
-    func_001BED50(dst->sub30, dst->sub18, func_001BED70(src->sub30));
+    cHermiteSplineWithScaledDuration_float_opAssign(dst->sub18, src->sub18);
+    cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_float_float_Reset(dst->sub30, dst->sub18, cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_float_float_GetTimeLeft(src->sub30));
     dst->flag = src->flag;
     return dst;
 }
@@ -91,7 +91,7 @@ Float6* func_00291730(Float6* dst, Float6* src) {
 #pragma cplusplus on
 #include "vector_insert_fill_obj.h"
 
-DEFINE_VECTOR_INSERT_FILL_OBJ(Vector_Insert_291770, 0x3C, 0x199999, 0xCCCCC, D_004A9B20, D_0049ECF8, 0x5C, Mem_PlacementNew, AnimChannel_CopyCtor, func_001BF2E0, func_001BF280, func_001BF240, func_001BFA50)
+DEFINE_VECTOR_INSERT_FILL_OBJ(Vector_Insert_291770, 0x3C, 0x199999, 0xCCCCC, D_004A9B20, D_0049ECF8, 0x5C, Mem_PlacementNew, AnimChannel_CopyCtor, std_copy_backward_cSkaSliderValue_copy_backward, std_fill_n_cSkaSliderValue_int_fill_n, std_swap_vectordeleterR_vectordeleterR_9, std_vector_deleter_cSkaSliderValue_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00291770 */
 

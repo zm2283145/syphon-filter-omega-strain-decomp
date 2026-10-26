@@ -85,30 +85,30 @@ extern int D_0048C49C;
 extern int D_0048C4A0;
 
 extern void String_Copy(char *, const char *);
-extern int func_002DCD20(int);
-extern int func_002E0F00(int *);
-extern int func_002E5008(int, int);
-extern int func_002E51F0(unsigned int, Ctx **);
-extern int func_002E54E8(unsigned int, const char *);
-extern int func_002E5550(unsigned int, int);
-extern int func_002FB9F8(void *, void *);
-extern int func_002FBA98(unsigned short);
-extern int func_002FBBA0(unsigned short, unsigned char);
-extern int func_002FC568(void *);
-extern int func_003060C0(void *);
-extern int func_003060F0(void *, unsigned int *);
-extern int func_00314550(int, int, int *);
+extern int RtMsgToDmeConnectionIndex(int);
+extern int NetISetNATServiceAddr(int *);
+extern int NetMapMsgClientError(int, int);
+extern int NetCreateConnInfo(unsigned int, Ctx **);
+extern int NetSetServerIpAddress(unsigned int, const char *);
+extern int NetSetSessionMasterClientIndex(unsigned int, int);
+extern int rt_msg_client_connect(void *, void *);
+extern int rt_msg_client_disconnect(unsigned short);
+extern int rt_msg_client_update(unsigned short, unsigned char);
+extern int rt_msg_client_set_default_connect_options(void *);
+extern int rt_time_start(void *);
+extern int rt_time_elapsed(void *, unsigned int *);
+extern int NetStreamMediaEnableOnConnection(int, int, int *);
 extern void *memset(void *, int, unsigned int);
 extern unsigned int strlen(const char *);
 extern char *strncpy(char *, const char *, unsigned int);
 
-extern void func_002DFCD8();
-extern void func_002DF1B8();
-extern void func_002DF958();
-extern void func_002DFFE8();
-extern void func_002E6640();
+extern void MsgClientConnectCallback();
+extern void RemoteClientEvent();
+extern void IncomingMessageFunc();
+extern void MsgClientDisconnectCallback();
+extern void MsgClientSystemMessageCallback();
 
-int func_002E0210(Req *req0, Key *k0, int *res0)
+int NetConnect_ClientServerTCP(Req *req0, Key *k0, int *res0)
 {
     register Req *req asm("$17");
     register Key *k asm("$19");
@@ -141,7 +141,7 @@ int func_002E0210(Req *req0, Key *k0, int *res0)
     }
     if (req->x04 <= 0) goto bad;
     if (k->type != one && k->type != 3 && k->type != 4) goto bad;
-    if (k->x1C == 3) func_002E0F00(&k->x1C);
+    if (k->x1C == 3) NetISetNATServiceAddr(&k->x1C);
     D_0048C468 = (void (*)(Info *))req->xA4;
     D_0048C46C = req->xA8;
     D_0048C470 = req->xAC;
@@ -156,7 +156,7 @@ int func_002E0210(Req *req0, Key *k0, int *res0)
         len = bufp - buf;
         bufp = buf;
     }
-    ret = func_002E5008(func_002FC568(&prm), 0x18);
+    ret = NetMapMsgClientError(rt_msg_client_set_default_connect_options(&prm), 0x18);
     if (ret != 0) return ret;
     if (k->type == 1 || k->type == 4) {
         prm.mode = 0;
@@ -177,14 +177,14 @@ int func_002E0210(Req *req0, Key *k0, int *res0)
     prm.x2C = D_0048C4A0;
     prm.x30 = bufp;
     prm.x34 = len;
-    prm.x38 = func_002DFCD8;
-    prm.x44 = func_002DFFE8;
-    prm.x3C = func_002DF1B8;
-    prm.x40 = func_002DF958;
-    prm.x48 = func_002E6640;
-    h = func_002FB9F8(&handle, &prm);
+    prm.x38 = MsgClientConnectCallback;
+    prm.x44 = MsgClientDisconnectCallback;
+    prm.x3C = RemoteClientEvent;
+    prm.x40 = IncomingMessageFunc;
+    prm.x48 = MsgClientSystemMessageCallback;
+    h = rt_msg_client_connect(&handle, &prm);
     if (h != 0) {
-        func_002FBA98(handle);
+        rt_msg_client_disconnect(handle);
         if (D_0048C468 != 0) {
             Info info;
             memset(&info, 0, sizeof(info));
@@ -195,18 +195,18 @@ int func_002E0210(Req *req0, Key *k0, int *res0)
             info.user = D_0048C46C;
             D_0048C468(&info);
         }
-        ret = func_002E5008(h, 3);
+        ret = NetMapMsgClientError(h, 3);
         res[1] = ret;
         if (ret != 0) return ret;
     }
-    slot = func_002DCD20(handle);
+    slot = RtMsgToDmeConnectionIndex(handle);
     res[2] = slot;
-    res[1] = func_002E51F0(slot, &ctx);
+    res[1] = NetCreateConnInfo(slot, &ctx);
     if (res[1] == 0) {
-        if (req->xD0 == 1) res[1] = func_00314550(slot, req->x04, &req->xCC);
+        if (req->xD0 == 1) res[1] = NetStreamMediaEnableOnConnection(slot, req->x04, &req->xCC);
     }
     if (res[1] != 0 || ctx == 0) {
-        func_002FBA98(handle);
+        rt_msg_client_disconnect(handle);
         if (D_0048C468 != 0) {
             Info info;
             memset(&info, 0, sizeof(info));
@@ -219,7 +219,7 @@ int func_002E0210(Req *req0, Key *k0, int *res0)
         }
         return res[1];
     }
-    func_002E5550(slot, 0x100);
+    NetSetSessionMasterClientIndex(slot, 0x100);
     ctx->x428 = req->xB4;
     ctx->x42C = req->xB8;
     ctx->x430 = req->xBC;
@@ -229,23 +229,23 @@ int func_002E0210(Req *req0, Key *k0, int *res0)
     ctx->x444 = req->x04;
     ctx->x448 = req->x120;
     ctx->x44C = k->type;
-    ret = func_002E54E8(slot, k->name);
+    ret = NetSetServerIpAddress(slot, k->name);
     res[1] = ret;
     if (ret != 0) {
         ctx->x438 = 3;
         return ret;
     }
     if (D_0048C468 == 0) {
-        func_003060C0(timer);
+        rt_time_start(timer);
         while (ctx->x438 == 2) {
-            int h2 = func_002FBBA0(handle, 1);
+            int h2 = rt_msg_client_update(handle, 1);
             if (h2 != 0) {
                 ctx->x438 = 3;
-                ret = func_002E5008(h2, 3);
+                ret = NetMapMsgClientError(h2, 3);
                 res[1] = ret;
                 if (ret != 0) return ret;
             }
-            func_003060F0(timer, &elapsed);
+            rt_time_elapsed(timer, &elapsed);
             if (elapsed > 30000) {
                 ctx->x438 = 3;
                 res[1] = 3;

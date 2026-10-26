@@ -47,7 +47,7 @@ typedef struct cObjectiveMan {
     char pad00[0xA4];
     int stage;                 /* 0xA4: current stage */
     int nextId;                /* 0xA8 */
-    unsigned char unkAC;       /* 0xAC: flag cleared by func_002261C0 */
+    unsigned char unkAC;       /* 0xAC: flag cleared by cObjectiveMan_DeactivateObjectiveScreen */
     char padAD[3];
     cObjective* stageObjectives[OBJMAN_STAGE_COUNT][OBJMAN_BUCKET_SLOTS]; /* 0xB0 */
     cObjective* globalObjectives[OBJMAN_BUCKET_SLOTS];                    /* 0x10B0 */

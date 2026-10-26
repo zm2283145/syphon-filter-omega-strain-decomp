@@ -1,9 +1,9 @@
-extern void func_00111160(void);
+extern void _sceFsSemInit(void);
 extern void WaitSema(int a);
 extern int D_00486244;
-int func_001111B0(void)
+int _sceFsWaitS(void)
 {
-    func_00111160();
+    _sceFsSemInit();
     WaitSema(D_00486244);
     return 0;
 }

@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_00316688(void) {
+int lpcCreate(void) {
     return 0;
 }

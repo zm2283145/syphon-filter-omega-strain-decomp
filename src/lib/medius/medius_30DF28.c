@@ -28,10 +28,10 @@ extern char D_004AFAB0[];
 extern char D_004AFAE0[];
 extern char D_004AFB18[];
 extern char D_004AFB48[];
-extern int func_002F5C98(int *sock, int a, int port, OptsDF28 *opts);
+extern int rt_comm_create(int *sock, int a, int port, OptsDF28 *opts);
 extern int Socket_WriteAddressed(int sock, char *addr, unsigned short port, char *data, unsigned short len, unsigned short *sent);
-extern void func_002F5DB0(int sock);
-extern int func_003060D8(int *timer);
+extern void rt_comm_destroy(int sock);
+extern int rt_time_get_time_stamp(int *timer);
 
 int UPnP_SendSsdpSearch(UpnpDF28 *u, unsigned int type, int arg)
 {
@@ -67,16 +67,16 @@ int UPnP_SendSsdpSearch(UpnpDF28 *u, unsigned int type, int arg)
         memset(&opts, 0, sizeof(opts));
         opts.a = 1;
         opts.b = 0x800;
-        if (func_002F5C98(&u->ctx->sock, 0, 0x76C, &opts) != 0)
+        if (rt_comm_create(&u->ctx->sock, 0, 0x76C, &opts) != 0)
             return 5;
         if (Socket_WriteAddressed(u->ctx->sock, D_004B0148, 0x76C, u->ctx->msg, strlen(u->ctx->msg), &sent) != 0
             || strlen(u->ctx->msg) != sent) {
-            func_002F5DB0(u->ctx->sock);
+            rt_comm_destroy(u->ctx->sock);
             return 8;
         }
     }
     u->active = 1;
-    func_003060D8(u->ctx->timer);
+    rt_time_get_time_stamp(u->ctx->timer);
     u->ctx->arg = arg;
     u->ctx->type = type;
     return 0;

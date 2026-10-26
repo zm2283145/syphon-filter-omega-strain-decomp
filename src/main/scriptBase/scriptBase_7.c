@@ -26,14 +26,14 @@ extern int D_00554F40;
 extern int D_00554F48;
 extern int D_00554F50;
 void Mem_Free(int pool, void* p, char* file, int line);
-void func_0012F530(G_3D7960* g, int f);
-void func_00136DA0(G_3D7960* g);
-void func_003D5DD0(void* p, int f);
-void func_003D6F40(void* p, int f);
-void func_003D95D0(void* p, int f);
+void cTimerDisable_dtor(G_3D7960* g, int f);
+void cTimerDisable_ctor(G_3D7960* g);
+void FuncDef_dtor(void* p, int f);
+void ClassDef_dtor(void* p, int f);
+void std_vector_deleter_EnumField_dtor(void* p, int f);
 }
-struct G_3D7960 { char c; G_3D7960() { func_00136DA0(this); } __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~G_3D7960() { func_0012F530(this, -1); } };
-static inline void M3_3D7960(void* p) { if (p) func_003D95D0(p, 0); }
+struct G_3D7960 { char c; G_3D7960() { cTimerDisable_ctor(this); } __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~G_3D7960() { cTimerDisable_dtor(this, -1); } };
+static inline void M3_3D7960(void* p) { if (p) std_vector_deleter_EnumField_dtor(p, 0); }
 static inline void M2_3D7960(void* p) { if (p) M3_3D7960(p); }
 static inline void M1_3D7960(void* p) { if (p) M2_3D7960(p); }
 static inline void FreeP_3D7960(void* p, int line) { AllocGuard g; Mem_Free(0, p, D_004BD3B0, line); }
@@ -42,8 +42,8 @@ static inline void DtorC_3D7960(C_3D7960* c) { FreeP_3D7960(c->buf, 0x1F9); if (
 
 static inline void DelA_3D7960(A_3D7960* a) { AllocGuard g; if (a) DtorA_3D7960(a); Mem_Free(0, a, D_004BD3B0, 0xF2); }
 static inline void DelC_3D7960(C_3D7960* c) { AllocGuard g; if (c) DtorC_3D7960(c); Mem_Free(0, c, D_004BD3B0, 0xFE); }
-static inline void DelB0_3D7960(void* b) { G_3D7960 g; func_003D5DD0(b, -1); Mem_Free(0, b, D_004BD3B0, 0xF8); }
-static inline void DelD0_3D7960(void* d) { G_3D7960 g; func_003D6F40(d, -1); Mem_Free(0, d, D_004BD3B0, 0x104); }
+static inline void DelB0_3D7960(void* b) { G_3D7960 g; FuncDef_dtor(b, -1); Mem_Free(0, b, D_004BD3B0, 0xF8); }
+static inline void DelD0_3D7960(void* d) { G_3D7960 g; ClassDef_dtor(d, -1); Mem_Free(0, d, D_004BD3B0, 0x104); }
 /* nested delete helpers (inline depth sets the guard slot order) */
 static inline void DelB1_3D7960(void* b) { DelB0_3D7960(b); }
 static inline void DelB2_3D7960(void* b) { DelB1_3D7960(b); }

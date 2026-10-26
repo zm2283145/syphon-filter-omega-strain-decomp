@@ -6,14 +6,14 @@
 
 #include "types.h"
 
-void func_0010B5E8(int a0) {
+void _alalcSetDynamic(int a0) {
     int tmp0;
 
     tmp0 = *(int*)((char*)a0 + 8);
     *(int*)((char*)a0 + 12) = tmp0;
 }
 
-void func_0010B5F8(int a0) {
+void _alalcFree(int a0) {
     int tmp0;
 
     tmp0 = *(int*)((char*)a0 + 12);

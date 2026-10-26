@@ -50,7 +50,7 @@ Mgr* Gui_GetScreenStack(void);
 Node* func_002CAC70(void* p);
 Node* func_002CAC60(void* p);
 void func_002CAC50(Node** it, Node* n);
-void func_002CE070(void* ret, void* list, Node** it);
+void std_list_deleter_MessageBoxEntry_erase_listdeleter(void* ret, void* list, Node** it);
 int String_CStr(void* p);
 void GuiMessageBox_Setup(Obj258* o, int a, int b, int c, int d, int e);
 }
@@ -74,7 +74,7 @@ extern "C" bool FrontEnd_ClosePopup(SelfCAC80* self, int id)
         while (func_002CAC50(&end, func_002CAC60(&self->list)), n != end) {
             if (id == -1 || id == n->id) {
                 tmp = n;
-                func_002CE070(ret, &self->list, &tmp);
+                std_list_deleter_MessageBoxEntry_erase_listdeleter(ret, &self->list, &tmp);
                 found = 1;
                 break;
             }

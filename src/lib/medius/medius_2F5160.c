@@ -1,9 +1,9 @@
 extern int D_00490890;
 extern int D_00490894;
-extern int func_002F5150(void);
-int func_002F5160(void)
+extern int GetPS2Timer(void);
+int GetCurrentTimeMs(void)
 {
-    int now = func_002F5150();
+    int now = GetPS2Timer();
     int d;
     if (D_00490890 == 1 && D_00490894 == 0) D_00490894 = now;
     d = now - D_00490894;

@@ -21,13 +21,13 @@ struct It_3C1 {
 };
 struct Gath;
 struct Scene_3C1;
-extern "C" Tri_3C1** func_003C13A0(Scene_3C1* s);
+extern "C" Tri_3C1** std_vector_deleter_cCollisionFace_data_void_2(Scene_3C1* s);
 struct Scene_3C1 {
     int cap;
     int count;
     Tri_3C1* data;
-    It_3C1 Begin() { It_3C1 r; r.p = *func_003C13A0(this); return r; }
-    It_3C1 End() { It_3C1 r; r.p = *func_003C13A0(this) + count; return r; }
+    It_3C1 Begin() { It_3C1 r; r.p = *std_vector_deleter_cCollisionFace_data_void_2(this); return r; }
+    It_3C1 End() { It_3C1 r; r.p = *std_vector_deleter_cCollisionFace_data_void_2(this) + count; return r; }
 };
 // VU0 macro-mode: load triangle corners + scale into a fixed vf register group
 #define LOADTRI(t, S) { int tmp; __asm__ volatile(S : "=&r"(tmp) : "r"(&t->p0), "r"(&t->p1), "r"(&t->p2), "f"(t->n.w) : "memory"); }

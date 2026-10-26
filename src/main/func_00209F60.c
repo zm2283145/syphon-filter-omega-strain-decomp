@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_00209F60(void* self) {
+void* details_compressed_pair_imp_rep_s_2_first_void_2(void* self) {
     return self;
 }

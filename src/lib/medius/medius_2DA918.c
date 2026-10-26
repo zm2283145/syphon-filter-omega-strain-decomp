@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_002DA918(int a0) {
+int GetGrid0(int a0) {
     int tmp0;
 
     tmp0 = *(int*)((char*)a0 + 100);

@@ -5,14 +5,14 @@ extern void Receiver_GetScriptTypeKey();
 extern void Receiver_ScriptDispatch();
 extern void World_Destruct();
 extern void World_HandleMessage();
-extern void func_0012ECD0();
-extern void func_0012ECF0();
-extern void func_0012ED00();
-extern void func_0012ED10();
-extern void func_0012ED20();
-extern void func_0012ED30();
-extern void func_0012ED40();
-extern void func_0012ED50();
+extern void cGameSystem_IsNetworked();
+extern void cSystem_IsDeliverable();
+extern void cSystem_NetActivate();
+extern void cSystem_NetDeactivate();
+extern void cSystem_NetDisable();
+extern void cSystem_NetEnable();
+extern void cSystem_ScriptGetRealObj();
+extern void cSystem_SendCreated();
 extern void std_bad_exception_dtor();
 extern void std_bad_exception_what();
 
@@ -22,7 +22,7 @@ void *D_004D9050[4] = {
 
 void *D_004D9060[16] = {
     0, 0, &World_Destruct, &World_HandleMessage,
-    &GObj_GetID, &func_0012ECF0, &func_0012ECD0, &func_0012ED00,
-    &func_0012ED10, &func_0012ED20, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &Receiver_GetScriptTypeKey, &Receiver_ScriptDispatch, 0,
+    &GObj_GetID, &cSystem_ScriptGetRealObj, &cGameSystem_IsNetworked, &cSystem_SendCreated,
+    &cSystem_NetActivate, &cSystem_NetDeactivate, &cSystem_NetEnable, &cSystem_NetDisable,
+    &cSystem_IsDeliverable, &Receiver_GetScriptTypeKey, &Receiver_ScriptDispatch, 0,
 };

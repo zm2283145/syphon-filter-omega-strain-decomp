@@ -25,8 +25,8 @@ int func_0044D9C0(void* g, int a);
 void FrontEnd_ClosePopup(void* ui, int id);
 int SFOLobby_LookupAccountId(void* g, char* t);
 int SFOLobby_FormatError(void* g, int a);
-void func_0033C7C0(S_002ADAB0* self, int r, char* t);
-void func_0033D8E0(S_002ADAB0* self, int a);
+void GuiLobbyScreen_ContactInviteAgent(S_002ADAB0* self, int r, char* t);
+void GuiMissionLobbyScreen_SetDisplayMode(S_002ADAB0* self, int a);
 int GuiMenuScreen_HandleEvent(S_002ADAB0* self, void* w, int msg, int sub, char* text);
 }
 extern "C" int GuiNetContacts_HandleEvent(S_002ADAB0* self, void* w, int msg, int sub, char* text)
@@ -68,7 +68,7 @@ extern "C" int GuiNetContacts_HandleEvent(S_002ADAB0* self, void* w, int msg, in
                         void* ui = D_004FFC04;
                         FrontEnd_OpenPopup(ui, 2, D_004ABB08, GuiScreen_GetLobbyString(self, 0x17, text, 0, 0, 0), 0, 0);
                     } else {
-                        func_0033C7C0(self, r, text);
+                        GuiLobbyScreen_ContactInviteAgent(self, r, text);
                     }
                 }
             }
@@ -77,11 +77,11 @@ extern "C" int GuiNetContacts_HandleEvent(S_002ADAB0* self, void* w, int msg, in
     }
     if (m == 0 && w != self->p88) {
         if (w == self->p98)
-            func_0033D8E0(self, 3);
+            GuiMissionLobbyScreen_SetDisplayMode(self, 3);
         else if (w == self->p160)
-            func_0033D8E0(self, 4);
+            GuiMissionLobbyScreen_SetDisplayMode(self, 4);
         else
-            func_0033D8E0(self, 1);
+            GuiMissionLobbyScreen_SetDisplayMode(self, 1);
     }
     return GuiMenuScreen_HandleEvent(self, w, msg, sub, text);
 }
@@ -107,7 +107,7 @@ extern G2ADE60* DME_GetLobby(void);
 #endif /* merge_units */
 #define DME_GetLobby() ((G2ADE60 *)DME_GetLobby()) /* merge_units */
 
-extern void func_004426B0(G2ADE60* g);
+extern void SFOLobby_MissionScreenExit(G2ADE60* g);
 extern void App_CardWaitPoll(void);
 extern void SFOLobby_EnterContactsState(G2ADE60* g, void* cb, void* a, void* b);
 void GuiNetContacts_Activate(S2ADE60* s)
@@ -116,7 +116,7 @@ void GuiNetContacts_Activate(S2ADE60* s)
         G2ADE60* g = DME_GetLobby();
         if (g) {
             if (g->mode == 4)
-                func_004426B0(g);
+                SFOLobby_MissionScreenExit(g);
             SFOLobby_EnterContactsState(g, App_CardWaitPoll, s->mAC, s->mC8);
         }
         if (s->p88) {

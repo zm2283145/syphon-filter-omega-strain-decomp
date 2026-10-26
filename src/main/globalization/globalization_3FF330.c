@@ -11,7 +11,7 @@
 
 #define PACK_BODY(e, b) MP_U(b, 8) = MP_I(e, 0x24); MP_U(b, 9) = MP_U(e, 0x28);
 
-DEFINE_MESSAGE_PACK_NOTYPE(func_003FF330, 12, D_0055D490, PACK_BODY)
+DEFINE_MESSAGE_PACK_NOTYPE(cCharActionMsg_Pack, 12, D_0055D490, PACK_BODY)
 #pragma pop /* merge_units */
 /* merge_units: end func_003FF330 */
 
@@ -76,18 +76,18 @@ int cDisableMsg_v03(void) {
 
 /* merge_units: begin func_003FF4F0 */
 #pragma push /* merge_units */
-extern int func_002E9A10(void);
+extern int NetRegisterMessageStart(void);
 extern int Event_UnpackHeader(void* p);
-extern int func_002E9A98(void* a, void* b, int c, int d);
-extern int func_002E9F08(void* t, void* fn);
+extern int NetMessageField(void* a, void* b, int c, int d);
+extern int NetRegisterApplicationMessage(void* t, void* fn);
 extern int D_0055D4A0;
-extern int func_003FF5D0();
-unsigned char func_003FF4F0(void) {
+extern int cDisableMsg_DisableCallback();
+unsigned char cDisableMsg_InitNet(void) {
     int ok[2];
     int buf[2];
     unsigned char r = 0;
-    if (func_002E9A10() == 0 && Event_UnpackHeader(buf) != 0 && func_002E9A98(buf, ok, 4, 1) == 0 &&
-        func_002E9F08(&D_0055D4A0, func_003FF5D0) == 0) {
+    if (NetRegisterMessageStart() == 0 && Event_UnpackHeader(buf) != 0 && NetMessageField(buf, ok, 4, 1) == 0 &&
+        NetRegisterApplicationMessage(&D_0055D4A0, cDisableMsg_DisableCallback) == 0) {
         r = 1;
     }
     return r;

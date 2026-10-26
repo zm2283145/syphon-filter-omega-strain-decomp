@@ -3,8 +3,8 @@ extern E2BB520 D_0051AAC0[];
 extern int D_0048C098;
 extern void func_002BC808(void);
 extern void SyncDCache(void *, void *);
-extern int func_0026A8C8(int);
-E2BB520 *func_002BB520(int a)
+extern int sceDbcGetConnection(int);
+E2BB520 *SyncDma(int a)
 {    E2BB520 *p = D_0051AAC0;
     E2BB520 *q;
     int g0;
@@ -20,7 +20,7 @@ E2BB520 *func_002BB520(int a)
     if (q->gen > D_0048C098 && q->gen > g0) {
         D_0048C098 = q->gen;
         return &D_0051AAC0[1];
-    }    if (func_0026A8C8(a) == 3) {
+    }    if (sceDbcGetConnection(a) == 3) {
         p->x8 = 0;
         return p;
     }

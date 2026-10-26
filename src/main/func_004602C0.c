@@ -18,7 +18,7 @@ void String_Copy(char* d, const char* s);
 void Libc_Strcat(char* d, const char* s);
 void GuiBitmapWidget_SetImage(void* obj, char* name, int x);
 
-void func_004602C0(O_4602C0* o, int x, int type, int sub, int val)
+void GuiEndGameAwards_AddAward(O_4602C0* o, int x, int type, int sub, int val)
 {
     char buf[256];
     E_4602C0* e;

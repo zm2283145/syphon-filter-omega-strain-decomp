@@ -12,30 +12,30 @@ typedef void (*Cb80D0)(int, unsigned int);
 extern Cb80D0 D_00598398[];
 extern int D_00590318[];
 extern int D_0048C450;
-extern int func_002DD9F8(unsigned int, Ent80D0 **);
-extern int func_002E51B8(int, Tab80D0 **);
-extern int func_002DDB30(unsigned int *, int);
-extern int func_002DD328(void *);
-extern int func_002F5348(void *);
-int func_002E80D0(int a0, int a1, int a2, Src80D0 *src)
+extern int NetGetStreamChannel(unsigned int, Ent80D0 **);
+extern int NetGetConnInfo(int, Tab80D0 **);
+extern int NetIGetSessionMasterClientIndex(unsigned int *, int);
+extern int DmeFree(void *);
+extern int rt_circ_buf_destroy(void *);
+int DataStreamEndPacketHandler(int a0, int a1, int a2, Src80D0 *src)
 {
     Ent80D0 *p = 0;
     Tab80D0 *tab = 0;
     unsigned int n = 0x100;
     Cb80D0 cb;
     if (src == 0) return -1;
-    if (func_002DD9F8(src->id, &p) == 0 && p != 0 && p->state == 2) {
+    if (NetGetStreamChannel(src->id, &p) == 0 && p != 0 && p->state == 2) {
         cb = D_00598398[p->slot];
         if (cb != 0) cb(a2, src->id);
-        if (func_002E51B8(D_0048C450, &tab) == 0 && tab != 0) {
-            func_002DDB30(&n, a0);
+        if (NetGetConnInfo(D_0048C450, &tab) == 0 && tab != 0) {
+            NetIGetSessionMasterClientIndex(&n, a0);
             if (tab->cur == n && p->ready != 0 && D_00590318[p->slot] != 0) {
                 p->flag = 1;
             } else {
                 p->state = 1;
                 if (p->active != 0) {
-                    func_002DD328(&p->x10);
-                    func_002F5348(p->x2C);
+                    DmeFree(&p->x10);
+                    rt_circ_buf_destroy(p->x2C);
                     p->x10 = 0;
                     p->x14 = 0;
                 }
@@ -48,14 +48,14 @@ int func_002E80D0(int a0, int a1, int a2, Src80D0 *src)
 
 /* merge_units: begin func_002E8228 */
 #if 0 /* merge_units */
-extern int func_002E51B8(unsigned int, char **);
+extern int NetGetConnInfo(unsigned int, char **);
 #endif /* merge_units */
-#define func_002E51B8(a0, a1) (func_002E51B8((int)(a0), (Tab80D0 * *)(a1))) /* merge_units */
+#define NetGetConnInfo(a0, a1) (NetGetConnInfo((int)(a0), (Tab80D0 * *)(a1))) /* merge_units */
 
-extern int func_002E52D8(unsigned int, unsigned int, unsigned char **);
-extern void func_002DCA70(unsigned int, unsigned int);
-extern void func_002E8C50(unsigned int, unsigned int, unsigned int, unsigned int);
-int func_002E8228(unsigned int port, int unused, unsigned int b, unsigned char *m)
+extern int NetGetClientInfo(unsigned int, unsigned int, unsigned char **);
+extern void SendMyClientStatus(unsigned int, unsigned int);
+extern void AcceptClientIntoGame(unsigned int, unsigned int, unsigned int, unsigned int);
+int ArbitrateJoinPacketHandler(unsigned int port, int unused, unsigned int b, unsigned char *m)
 {
     char *p = 0;
     unsigned char *q = 0;
@@ -64,9 +64,9 @@ int func_002E8228(unsigned int port, int unused, unsigned int b, unsigned char *
     if (m == 0) return ret;
     if (port >= 4) return ret;
     if (b >= 0x100) return ret;
-    if (func_002E51B8(port, &p) != 0) return -1;
+    if (NetGetConnInfo(port, &p) != 0) return -1;
     if (p == 0) goto fail;
-    if (func_002E52D8(port, m[1], &q) != 0) return -1;
+    if (NetGetClientInfo(port, m[1], &q) != 0) return -1;
     if (q == 0) {
 fail:
         return -1;
@@ -75,9 +75,9 @@ fail:
     *(int *)(q + 0x14) = m[0];
     idx = *(unsigned int *)(p + 0x400);
     if (idx >= 0x100) return ret;
-    func_002DCA70(port, m[1]);
-    if (*(int *)(*(char **)(p + (idx << 2)) + 0x14) == 5) func_002E8C50(port, m[1], m[2], m[3]);
+    SendMyClientStatus(port, m[1]);
+    if (*(int *)(*(char **)(p + (idx << 2)) + 0x14) == 5) AcceptClientIntoGame(port, m[1], m[2], m[3]);
     return 4;
 }
-#undef func_002E51B8 /* merge_units */
+#undef NetGetConnInfo /* merge_units */
 /* merge_units: end func_002E8228 */

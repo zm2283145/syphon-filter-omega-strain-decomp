@@ -39,27 +39,27 @@ extern char D_004D9060[];
 void Mem_Free(int pool, void* p, char* file, int line);
 VObj_36DF0** PtrVec_At(PtrVec_36DF0* v, int i);
 void HudObject_dtor(void* p, int f);
-void func_00260B40(void* p, int f);
+void cVisionFxMan_dtor(void* p, int f);
 void WaterFx_Destroy(void* p, int f);
 void DecalMgr_dtor(void* p, int f);
-void func_001C3B00(void* p);
-void func_00136DA0(Guard_36DF0* g);
-void func_001378C0(void* p, int f);
-void func_0012F530(Guard_36DF0* g, int f);
+void cLoader_DeallocateAllAnimationBuffers(void* p);
+void cTimerDisable_ctor(Guard_36DF0* g);
+void cEnvMan_dtor(void* p, int f);
+void cTimerDisable_dtor(Guard_36DF0* g, int f);
 void TremorList_Free(void* p, int f);
-void func_00147390(void* p, int f);
-void func_00336460(void* p, int f);
-void func_00136CD0(World_36DF0* w);
-void func_00136BD0(World_36DF0* w);
-void func_001309A0(World_36DF0* w);
+void cWeaponDB_dtor(void* p, int f);
+void cAgentData_dtor(void* p, int f);
+void cGameSystem_ClearNodeList(World_36DF0* w);
+void cGameSystem_ClearNodeGroups(World_36DF0* w);
+void cGameSystem_DestroyAnimationSets(World_36DF0* w);
 void World_UnloadSkelHog(World_36DF0* w);
-void func_00132A40(World_36DF0* w);
-void func_00137840(void* p, int f);
-void func_001377C0(void* p, int f);
-void func_00137750(void* p, int f);
+void cGameSystem_DestroyPlayerCameraAndScene(World_36DF0* w);
+void std_list_cCAMERA_GOBJPtr_dtor(void* p, int f);
+void std_list_cGOBJPtr_dtor(void* p, int f);
+void std_map_cString_cSkaAnimationSetPtr_dtor(void* p, int f);
 void String_Dtor(void* p, int f);
-void func_00137670(void* p, int f);
-void func_00137580(void* p, int f);
+void cLList_cHogFile_dtor(void* p, int f);
+void std_vector_tVUMNamePairPtr_dtor(void* p, int f);
 void ListReceiver_Dtor(World_36DF0* w, int f);
 void operator_delete(void* p);
 }
@@ -75,7 +75,7 @@ extern "C" World_36DF0* World_Destruct(World_36DF0* self, short del)
     if (self) {
         self->vt = D_004D9060;
         DELETE_36DF0(self->pDC, HudObject_dtor, 0xCA)
-        DELETE_36DF0(self->pE0, func_00260B40, 0xCD)
+        DELETE_36DF0(self->pE0, cVisionFxMan_dtor, 0xCD)
         DELETE_36DF0(self->pE4, WaterFx_Destroy, 0xCF)
         {
             void* q = self->pE8;
@@ -100,23 +100,23 @@ extern "C" World_36DF0* World_Destruct(World_36DF0* self, short del)
         {
             void* q = self->p88;
             AllocGuard g;
-            if (q) func_001C3B00(q);
+            if (q) cLoader_DeallocateAllAnimationBuffers(q);
             Mem_Free(0, q, D_0049A890, 0xDA);
         }
         {
             /* this block's allocator guard was not inlined: explicit calls to its out-of-line ctor/dtor */
             Guard_36DF0 g;
             void* q = self->p84;
-            func_00136DA0(&g);
-            func_001378C0(q, -1);
+            cTimerDisable_ctor(&g);
+            cEnvMan_dtor(q, -1);
             Mem_Free(0, q, D_0049A890, 0xDB);
-            func_0012F530(&g, -1);
+            cTimerDisable_dtor(&g, -1);
         }
         DELETE_36DF0(self->p8C, TremorList_Free, 0xDE)
         {
             void* q = self->p1E0;
             AllocGuard g;
-            func_00147390(q, -1);
+            cWeaponDB_dtor(q, -1);
             Mem_Free(0, q, D_0049A890, 0xE0);
         }
         int i;
@@ -125,22 +125,22 @@ extern "C" World_36DF0* World_Destruct(World_36DF0* self, short del)
             void* q = pp[0x1C8 / 4]; /* self->p1C8[i] */
             if (q) {
                 AllocGuard g;
-                func_00336460(q, -1);
+                cAgentData_dtor(q, -1);
                 Mem_Free(0, q, D_0049A890, 0xE4);
             }
         }
-        func_00136CD0(self);
-        func_00136BD0(self);
-        func_001309A0(self);
+        cGameSystem_ClearNodeList(self);
+        cGameSystem_ClearNodeGroups(self);
+        cGameSystem_DestroyAnimationSets(self);
         World_UnloadSkelHog(self);
-        func_00132A40(self);
+        cGameSystem_DestroyPlayerCameraAndScene(self);
         /* member destructors (the null tests are the compiler's this-checks) */
-        if (self->mC4) func_00137840(self->mC4, 0);
-        if (self->m9C) func_001377C0(self->m9C, 0);
-        if (self->m70) func_00137750(self->m70, -1);
+        if (self->mC4) std_list_cCAMERA_GOBJPtr_dtor(self->mC4, 0);
+        if (self->m9C) std_list_cGOBJPtr_dtor(self->m9C, 0);
+        if (self->m70) std_map_cString_cSkaAnimationSetPtr_dtor(self->m70, -1);
         if (self->m54) String_Dtor(self->m54, 0);
-        if (self->m3C) func_00137670(self->m3C, -1);
-        if (self->m2C) func_00137580(self->m2C, -1);
+        if (self->m3C) cLList_cHogFile_dtor(self->m3C, -1);
+        if (self->m2C) std_vector_tVUMNamePairPtr_dtor(self->m2C, -1);
         ListReceiver_Dtor(self, 0);
         if (del > 0)
             operator_delete(self);

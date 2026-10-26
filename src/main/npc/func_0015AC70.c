@@ -14,31 +14,31 @@ typedef struct NpcTriple {
     int unk8;
 } NpcTriple;
 
-NpcTriple* func_0015AC70(NpcTriple* self) {
+NpcTriple* cTargetAwareness_ctor(NpcTriple* self) {
     self->unk4 = -2;
     self->unk0 = 0;
     self->unk8 = -1;
     return self;
 }
 
-Word* func_0015AC90(Word* self, int value) {
+Word* cObjectId_ctor_uint(Word* self, int value) {
     self->value = value;
     return self;
 }
 
-void* func_0015ACA0(void* self) {
+void* cPathTransfer_ctor(void* self) {
     return self;
 }
 
-void* func_0015ACB0(void* self) {
+void* cPathNavigatorTransfer_ctor(void* self) {
     return self;
 }
 
-void* func_0015ACC0(void* self) {
+void* cAiTargetTransfer_ctor(void* self) {
     return self;
 }
 
-NpcTriple* func_0015ACD0(NpcTriple* self) {
+NpcTriple* cAiTransfer_ctor(NpcTriple* self) {
     self->unk0 = 0;
     self->unk8 = 0;
     NpcAi_RequestMode(self, 0, 0);

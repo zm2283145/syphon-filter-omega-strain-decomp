@@ -1,6 +1,6 @@
 #include "types.h"
-extern int* func_0020B350(void);
+extern int* std_vector_deleter_cSkaTransBLEND_cap_void_2(void);
 #pragma optimization_level 1
-/* Returns the value pointed to by func_0020B350(). */
-int func_0020B320(void) { return *func_0020B350(); }
+/* Returns the value pointed to by std_vector_deleter_cSkaTransBLEND_cap_void_2(). */
+int std_vector_imp_cSkaTransBLEND_capacity(void) { return *std_vector_deleter_cSkaTransBLEND_cap_void_2(); }
 #pragma optimization_level reset

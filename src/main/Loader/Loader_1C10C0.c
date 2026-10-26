@@ -27,7 +27,7 @@ Node_1C10C0* Node_Construct(void* p, PopReader_1C10C0* r, int i);
 void Loader_UpdateLoadingScreen(void* a, char* name, int x);
 void* App_GetInstance(void);
 void PtrVector_Resize(Vec_1C10C0* v, int n, void** fill);
-void func_0040C940(Node_1C10C0* n);
+void nGobjManager_AddNode(Node_1C10C0* n);
 void World_RegisterNode(void* w, Node_1C10C0* n);
 }
 #pragma opt_strength_reduction off
@@ -61,7 +61,7 @@ extern "C" void Loader_InitNodes(void* a0, PopReader_1C10C0* r)
                 if (p)
                     p = Node_Construct(p, r, i);
                 *slot = p;
-                func_0040C940(list->data[i]);
+                nGobjManager_AddNode(list->data[i]);
                 Node_1C10C0* q = list->data[i];
                 if (q->flags & 0x200)
                     World_RegisterNode(g_Game, q);
@@ -89,8 +89,8 @@ int Pop_FindTag(PopReader_1C12A0* r, int tag);
 
 void* cEnvSettings_ctor(void* p, PopReader_1C12A0* r);
 void EnvController_AddEnv(void* list, void** item);
-int func_001723F0(void* list);
-void** func_00172360(void* list, int i);
+int cLList_cEnvSettingsPtr_Empty(void* list);
+void** cLList_cEnvSettingsPtr_opIndex(void* list, int i);
 void EnvController_ActivateFirst(void* list, void* item);
 }
 extern "C" void Loader_InitEnvironmentSettings(void* a0, PopReader_1C12A0* r)
@@ -120,7 +120,7 @@ extern "C" void Loader_InitEnvironmentSettings(void* a0, PopReader_1C12A0* r)
         EnvController_AddEnv(list, item);
         Object_Register(p);
     }
-    EnvController_ActivateFirst(list, func_001723F0(list) ? 0 : *func_00172360(list, 0));
+    EnvController_ActivateFirst(list, cLList_cEnvSettingsPtr_Empty(list) ? 0 : *cLList_cEnvSettingsPtr_opIndex(list, 0));
 }
 #undef Pop_FindTag /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */

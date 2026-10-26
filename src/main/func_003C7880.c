@@ -26,7 +26,7 @@ static inline E* Copy(E* first, E* last, E* dest) {
     while (first < last) { *dest = *first; ++first; ++dest; }
     return dest;
 }
-extern "C" E* func_003C7880(EVec* self, E* first, E* last)
+extern "C" E* std_vector_imp_cCollisionEdge_erase(EVec* self, E* first, E* last)
 {
     if (first == last)
         return first;

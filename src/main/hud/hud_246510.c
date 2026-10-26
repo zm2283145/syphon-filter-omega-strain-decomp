@@ -37,7 +37,7 @@ static inline void merge_flush_func_00246510(void) {}
 extern ListPos* List_InsertBefore(ListPos* result, void* list, ListPos* pos, int value);
 
 /* push_back on a list whose sentinel node is at +4. */
-ListPos* func_00246540(void* list, int value) {
+ListPos* cLList_cHudTargetsObserverPtr_PushBackActual(void* list, int value) {
     ListPos end;
     ListPos result;
 
@@ -45,14 +45,14 @@ ListPos* func_00246540(void* list, int value) {
     return List_InsertBefore(&result, list, &end, value);
 }
 
-Rel* func_00246570(Rel* r) {
+Rel* std_vector_cInterfaceElementPtr_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
     return r;
 }
 
-Rel* func_00246590(Rel* r) {
+Rel* std_vector_PDAQuip_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

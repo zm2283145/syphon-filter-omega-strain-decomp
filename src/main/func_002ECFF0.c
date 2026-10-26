@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_002ECFF0(void) {
+int NetIRegisterMessageStart(void) {
     return 0;
 }

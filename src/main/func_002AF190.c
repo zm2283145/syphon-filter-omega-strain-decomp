@@ -10,7 +10,7 @@ extern void String_Dtor(String* s, int flags);
 extern int GuiScreen_GetLobbyString(Item* it, int id, String* name, int a, int b, int c);
 extern void FrontEnd_OpenPopup(void* mgr, int a, char* fmt, int v, Item* it, int b);
 /* Copies kind and name from src, then registers the item. */
-void func_002AF190(Item* it, Src* src)
+void GuiNetAgencyCell_SelectAgentRemove(Item* it, Src* src)
 {
     String tmp;
     void* mgr;

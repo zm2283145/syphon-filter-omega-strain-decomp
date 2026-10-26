@@ -21,7 +21,7 @@ extern unsigned char D_0051EE90;
 extern unsigned char D_00572528;
 extern unsigned char D_005723C8;
 extern void SleepThread(void);
-extern void func_0010D0D0(int);
+extern void SuspendThread_2(int);
 extern void SuspendThread(int);
 extern void App_CardWaitPoll(int, int);
 extern O2C84B0* DME_GetLobby(void);
@@ -113,7 +113,7 @@ extern "C" void FrontEnd_SplashThreadMain(int arg)
             *(volatile int*)0x10000810 = 0x82;
             g_TimerAccum = 0;
             if (DivTime() - last >= 10 && !g_ProfileLockDepth) {
-                func_0010D0D0(D_0048C348);
+                SuspendThread_2(D_0048C348);
                 SpSave(buf);
                 fp = App_CardWaitPoll;
                 D_0051EE90 = g_GuiSoundGate = 1;
@@ -202,15 +202,15 @@ extern char D_00538C68;
 extern V4_002C8840 D_00539170;
 extern long long D_004BC1B0;
 void Renderer_BindTexture(void* m, int idx);
-void func_0025CD10(void* s);
-void func_0025CA40(void* s);
+void XLib_NewStrip(void* s);
+void XLib_NextBatchVert(void* s);
 void Vec4_Copy(V4_002C8840* d, V4_002C8840* s);
 void GuiBatch_AddVertexColor(V4_002C8840* d, V4_002C8840* s);
 float GuiBatch_AddVertexUV(void);
 V4_002C8840* Vec4_Set(V4_002C8840* o, float x, float y, float z, float w);
 void Renderer_FlushPrimitives(void* s);
 void Video_BeginFrame(void* s);
-void func_0036E4B0(void* s, char* name, int a, int b);
+void cFileMan_ctor_charP_cFileIOP_bool(void* s, char* name, int a, int b);
 void FileMan_Release(void* s, int a);
 int TexMan_FindOrLoad(void* m, void* s);
 void Tex_Release(void* m, int idx, int a, int b);
@@ -238,7 +238,7 @@ static inline void Emit_002C8840(const V4c_002C8840& pos, const V4c_002C8840& co
     V4_002C8840 tmp;
     Ent_002C8840* e;
     float u;
-    func_0025CA40(g_Video);
+    XLib_NextBatchVert(g_Video);
     e = &RS_002C8840->ents[D_00539210.f10];
     Vec4_Copy(&e->pos[D_00539224 - 1], (V4_002C8840*)&pos);
     GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], (V4_002C8840*)&col);
@@ -260,7 +260,7 @@ extern "C" void func_002C8840(char* name)
     Ent_002C8840* e;
     int vp;
     if (name == 0 || *name == 0) return;
-    func_0036E4B0(&str, name, 0, 0);
+    cFileMan_ctor_charP_cFileIOP_bool(&str, name, 0, 0);
     idx = TexMan_FindOrLoad(g_TextureMgr, &str);
     if (idx == -1) {
         FileMan_Release(&str, -1);
@@ -310,7 +310,7 @@ extern "C" void func_002C8840(char* name)
         e->c2C += D_00539224;
         e->c30 += D_00539224;
         e->c34 += D_00539224;
-        func_0025CD10(g_Video);
+        XLib_NewStrip(g_Video);
         D_00539224 = 0;
         Emit_002C8840(V4c_002C8840(-hw, hh, 0.5f, 1.0f), V4c_002C8840(1.0f, 1.0f, 1.0f, 1.0f), V4c_002C8840(0.0f, 0.0f, 1.0f, 0.0f));
         Emit_002C8840(V4c_002C8840(hw, -hh, 0.5f, 1.0f), V4c_002C8840(1.0f, 1.0f, 1.0f, 1.0f), V4c_002C8840(umax, vmax, 1.0f, 0.0f));

@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-void func_002D9EB0(int a0, int a1) {
+void ResetAudioStatus(int a0, int a1) {
     int tmp0;
 
     tmp0 = *(int*)((char*)a0 + 112);

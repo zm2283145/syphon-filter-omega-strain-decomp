@@ -36,7 +36,7 @@ typedef struct Script {
     int* enumMap;                   /* 0x48 indexed by (local id - 10) */
 } Script;
 
-/* 12-byte enum member record; first word read by func_003DC470. */
+/* 12-byte enum member record; first word read by cScriptInterpreter_SymbolTable_remapEnumVal. */
 typedef struct ScriptEnumMember {
     int unk0;
     int unk4;
@@ -49,7 +49,7 @@ typedef struct ScriptEnum {
     ScriptEnumMember* members;      /* 0x0C */
 } ScriptEnum;
 
-/* Result of func_003DCF70: global enum id at +0x14. */
+/* Result of cScriptInterpreter_considerEnum: global enum id at +0x14. */
 typedef struct ScriptEnumEntry {
     char pad00[0x14];
     int id;                         /* 0x14 */

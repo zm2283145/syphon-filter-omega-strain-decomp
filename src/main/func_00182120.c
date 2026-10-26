@@ -7,12 +7,12 @@
 #include "types.h"
 #include "loose00_types.h"
 
-extern int func_00182260(void* self, int* it);
+extern int cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_2(void* self, int* it);
 
-/* Pass a copy of the iterator to func_00182260. */
-int func_00182120(void* self, int* it) {
+/* Pass a copy of the iterator to cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_2. */
+int cCollisionModel_Data_GetTreeNode(void* self, int* it) {
     int copy[1];
 
     copy[0] = it[0];
-    return func_00182260(self, copy);
+    return cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_2(self, copy);
 }

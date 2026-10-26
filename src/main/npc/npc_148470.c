@@ -7,6 +7,6 @@
 #include "types.h"
 
 /* clear(): count = 0. */
-void func_00148470(PtrVec* v) {
+void std_vector_deleter_Record_clear(PtrVec* v) {
     v->count = 0;
 }

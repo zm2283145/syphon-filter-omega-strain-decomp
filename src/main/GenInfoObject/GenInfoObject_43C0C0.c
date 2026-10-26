@@ -65,8 +65,8 @@ extern TexMan* g_TextureMgr;
 extern int g_DrawMode;
 void GuiWidget_Draw(Self* self);
 void Renderer_BindTexture(TexMan* m, int idx);
-void func_0025CD10(char* r);
-void func_0025CA40(char* r);
+void XLib_NewStrip(char* r);
+void XLib_NextBatchVert(char* r);
 void Vec4_Copy(void* d, const void* s);
 void GuiBatch_AddVertexColor(void* out, const void* in);
 float GuiBatch_AddVertexUV(void);
@@ -87,7 +87,7 @@ static inline void Emit(const V4& pos, const V4& col, const V4c& uv)
     V4 tmp;
     Ent* e;
     float u;
-    func_0025CA40(g_Video);
+    XLib_NextBatchVert(g_Video);
     e = EntAt(D_00539210);
     Vec4_Copy(e->pos + (D_00539224 - 1) * 16, &pos);
     GuiBatch_AddVertexColor(e->c30 + (D_00539224 - 1) * 16, &col);
@@ -141,7 +141,7 @@ extern "C" void GuiBitmapWidget_Draw(Self* self)
         e->c2C += D_00539224 * 16;
         e->c30 += D_00539224 * 16;
         e->c34 += D_00539224 * 16;
-        func_0025CD10(g_Video);
+        XLib_NewStrip(g_Video);
         D_00539224 = 0;
     }
     Emit(p0, self->color, V4c(0.0f, 0.0f, 1.0f, 0.0f));
@@ -194,7 +194,7 @@ extern int g_TextureMgr;
 
 
 #pragma opt_common_subs off
-void func_0043C6E0(int arg0) {
+void GuiBitmapWidget_UnloadBitmap(int arg0) {
     int temp_a1;
 
     temp_a1 = F_(arg0, 0x48, int);
@@ -216,7 +216,7 @@ int Hog_Register();
 int String_CStr();                          
 int String_Length();                             
 int FileMan_Release();                            
-int func_0036E4B0();                    
+int cFileMan_ctor_charP_cFileIOP_bool();                    
 int Resource_Construct();                               
 int TexMan_FindOrLoad();                        
 #if 0 /* merge_units */
@@ -239,7 +239,7 @@ int GuiBitmapWidget_Load(char * arg0) {
         F_(arg0, 0x48, int) = TexMan_FindOrLoad(g_TextureMgr, sl.fC0);
         FileMan_Release(sl.fC0, -1);
     } else {
-        func_0036E4B0(sl.f20, String_CStr(arg0 + 0x50), 0, 0);
+        cFileMan_ctor_charP_cFileIOP_bool(sl.f20, String_CStr(arg0 + 0x50), 0, 0);
         F_(arg0, 0x48, int) = TexMan_FindOrLoad(g_TextureMgr, sl.f20);
         FileMan_Release(sl.f20, -1);
     }

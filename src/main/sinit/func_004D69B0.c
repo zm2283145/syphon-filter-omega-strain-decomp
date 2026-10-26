@@ -8,11 +8,11 @@ int LinkList_Ctor_3ECAF0(char *);
 extern char D_0055A890;
 extern char D_0055C098;
 extern char D_0055C0A8;
-extern char func_003ECA90;
-extern char func_003ECB30;
+extern char cLList_cSfxSchedulerPtr_dtor;
+extern char cSfxScheduler_tItem_ctor;
 
-void func_004D69B0(void) {
-    __construct_array(&D_0055A890, &func_003ECB30, 0, 0x10, 384);
+void StaticInit_specfx(void) {
+    __construct_array(&D_0055A890, &cSfxScheduler_tItem_ctor, 0, 0x10, 384);
     LinkList_Ctor_3ECAF0(&D_0055C0A8);
-    __register_global_object(&D_0055C0A8, &func_003ECA90, &D_0055C098);
+    __register_global_object(&D_0055C0A8, &cLList_cSfxSchedulerPtr_dtor, &D_0055C098);
 }

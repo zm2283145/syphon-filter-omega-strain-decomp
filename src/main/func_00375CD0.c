@@ -5,7 +5,7 @@ typedef struct {
     B375770* last0; B375770* lastA; B375770* lastB; int aD8; int idx0; int idxA; int idxB; int size0; int sizeA; int sizeB;
 } S375770;
 extern int sceGsSyncPath(int, int);
-void func_00375CD0(S375770* o)
+void cDmaMan_Reset(S375770* o)
 {
     B375770* p;
     sceGsSyncPath(0, 0);

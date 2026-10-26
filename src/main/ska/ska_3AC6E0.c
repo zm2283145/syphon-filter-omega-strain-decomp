@@ -63,11 +63,11 @@ void Event_Send(void* m, int target, int immediate);
 void cMessage_dtor(NMsg* m, int flags);
 int TransitionReq_SameKey(void* a, void* b);
 void AnimBlend_Evaluate(float w, Slot* s, unsigned char* a, float* nw, unsigned char* b, void* p, unsigned char* f, float t);
-int func_003AD2F0(NNotify* n);
-int func_003AD2C0(int* p);
+int cSkaAnimCheckpoints_HasScheduledEvents(NNotify* n);
+int cSkaPlaybackGroupId_IsValid(int* p);
 int func_003AD1E0(int* g, int* p);
-void func_003ACEA0(NNotify* n, int x);
-int func_003AC6D0(Slot* s);
+void cSkaAnimCheckpoints_TriggerScheduledEvents(NNotify* n, int x);
+int cSkaSystem_Request_PlaybackGroupId(Slot* s);
 bool AnimGroup_IsComplete(int* g, int x);
 #if 0 /* merge_units */
 void func_003ACD30(int* g, unsigned char f);
@@ -111,7 +111,7 @@ static inline bool Differs(void* q, void* r) { return !TransitionReq_SameKey(q, 
 static inline bool Slot_Done(Slot* s)
 {
     if (s->cur != -1.0f) return s->cur == s->end;
-    return AnimGroup_IsComplete(&s->grp, func_003AC6D0(s));
+    return AnimGroup_IsComplete(&s->grp, cSkaSystem_Request_PlaybackGroupId(s));
 }
 
 extern "C" void AnimCtl_Evaluate(void* a0, void* a1, Dq* q, void* req, unsigned char flag, float w, float t)
@@ -131,8 +131,8 @@ extern "C" void AnimCtl_Evaluate(void* a0, void* a1, Dq* q, void* req, unsigned 
         s->active = 0;
         s->done = 0;
         AnimCtl_Evaluate(a0, a1, q, req, nflag, nw, t);
-        if (func_003AD2F0(&s->notify) && func_003AD2C0(s->x1C)) {
-            func_003ACEA0(&s->notify, func_003AD1E0(&s->grp, s->x1C));
+        if (cSkaAnimCheckpoints_HasScheduledEvents(&s->notify) && cSkaPlaybackGroupId_IsValid(s->x1C)) {
+            cSkaAnimCheckpoints_TriggerScheduledEvents(&s->notify, func_003AD1E0(&s->grp, s->x1C));
         }
         if (started) {
             MsgSend(&s->msg, 1, t);
@@ -173,8 +173,8 @@ typedef struct { int w[1]; } Raw_3ACD30;
 
 extern "C" {
 void func_003ACDC0(Raw_3ACD30* out, void* list);
-void func_00396AF0(It_3ACD30* out, Raw_3ACD30* raw);
-void func_00396B00(Raw_3ACD30* out, void* list);
+void cLListIterator_cSkaPlaybackGroupPtr_ctor(It_3ACD30* out, Raw_3ACD30* raw);
+void std_list_cSkaPlaybackGroupPtr_end(Raw_3ACD30* out, void* list);
 }
 
 extern "C" void func_003ACD30(void* list, int flag)
@@ -186,10 +186,10 @@ extern "C" void func_003ACD30(void* list, int flag)
     Node_3ACD30* n;
     Node_3ACD30* end;
     func_003ACDC0(&rawFirst, list);
-    func_00396AF0(&first, &rawFirst);
+    cLListIterator_cSkaPlaybackGroupPtr_ctor(&first, &rawFirst);
     n = first.p;
-    func_00396B00(&rawLast, list);
-    func_00396AF0(&last, &rawLast);
+    std_list_cSkaPlaybackGroupPtr_end(&rawLast, list);
+    cLListIterator_cSkaPlaybackGroupPtr_ctor(&last, &rawLast);
     end = last.p;
     unsigned char f = flag;
     for (; n != end; n = n->next)

@@ -8,7 +8,7 @@
 #include "types.h"
 typedef struct { char pad0[0x20]; short x; short y; char pad24[4]; short dirty; } S318318B;
 typedef struct { char pad0[0x48]; S318318B* b; } S318318A;
-void func_00318318(S318318A* a, float v)
+void NellySetSpectralFactorSase3200(S318318A* a, float v)
 {
     S318318B* b = a->b;
     b->dirty = 1;
@@ -19,7 +19,7 @@ void func_00318318(S318318A* a, float v)
 /* merge_units: begin func_00318348 */
 typedef struct { char pad0[0x20]; short x; short y; char pad24[4]; short dirty; } S318348B;
 typedef struct { char pad0[0x48]; S318348B* b; } S318348A;
-void func_00318348(S318348A* a, float v)
+void NellySetSpectralLedgeSase3200(S318348A* a, float v)
 {
     S318348B* b = a->b;
     b->dirty = 1;

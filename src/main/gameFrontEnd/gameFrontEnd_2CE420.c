@@ -42,7 +42,7 @@ int func_002CE4E0(WordFields* self) {
     return self->unk04;
 }
 
-List* func_002CE4F0(List* l) {
+List* std_list_deleter_MessageBoxEntry_ctor(List* l) {
     l->count = 0;
     l->first = l->last = &l->first;
     return l;
@@ -56,7 +56,7 @@ List* func_002CE4F0(List* l) {
 #include "vector_destroy_dtor.h"
 
 /* Destroy a vector: destroy elements, free the buffer, optionally delete. */
-DEFINE_VECTOR_DESTROY_DTOR_FILE(func_002CE510, func_00299510, D_004AA5B8)
+DEFINE_VECTOR_DESTROY_DTOR_FILE(func_002CE510, std_vector_deleter_tAchievementInfo_clear, D_004AA5B8)
 #pragma pop /* merge_units */
 /* merge_units: end func_002CE510 */
 

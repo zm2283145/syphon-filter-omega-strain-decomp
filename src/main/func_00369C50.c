@@ -26,9 +26,9 @@ typedef struct {
     int state;
     unsigned char connected;
 } Pad369C50;
-int func_0026B3F8(int, PadRaw369C50*);
-void func_0026B4D0(int, unsigned char*);
-int func_0026B5A0(int);
+int scePad2Read(int, PadRaw369C50*);
+void scePad2GetButtonProfile(int, unsigned char*);
+int scePad2GetState(int);
 extern int D_004BBE20[];
 
 static inline float PadAxis_369C50(unsigned int v)
@@ -41,20 +41,20 @@ void Pad_Update(Pad369C50* p)
     PadRaw369C50 b;
     if (!p->connected) {
         unsigned char st[4];
-        func_0026B4D0(p->port, st);
+        scePad2GetButtonProfile(p->port, st);
         if (st[2] != 0xFF) {
             p->state = 0;
             return;
         }
         p->connected = 1;
     }
-    p->state = func_0026B5A0(p->port);
+    p->state = scePad2GetState(p->port);
     if (p->state == 0) {
         p->connected = 0;
         return;
     }
     if (p->state == 1) {
-        if (func_0026B3F8(p->port, &b) == 0x12) {
+        if (scePad2Read(p->port, &b) == 0x12) {
             int bits;
             float lx, ly, rx, ry;
             int i;

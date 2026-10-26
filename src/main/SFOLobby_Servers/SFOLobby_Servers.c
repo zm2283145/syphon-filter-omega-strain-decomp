@@ -26,10 +26,10 @@ int* LobbyArray_At(LobbyArray*, int);
 void SFOLobby_SetError(SFOLobby*, int, char*, int);
 void SFOLobby_CallUpdateHook(SFOLobby*, int, int);
 int SFOLobby_Poll(SFOLobby*, int, int, int);
-int func_0046B280(void*, void*);
-void func_00446E50();
+int MediusPickLocation(void*, void*);
+void SFOLobby_Callback_PickLocation();
 
-/* Joins lobby `index` of lobbyList (func_0046B280, reply callback func_00446E50)
+/* Joins lobby `index` of lobbyList (MediusPickLocation, reply callback SFOLobby_Callback_PickLocation)
  * and records its world id in lobbyWorldId. */
 int SFOLobby_JoinLobby(SFOLobby* self, int index) {
     Join442840 l;
@@ -44,7 +44,7 @@ int SFOLobby_JoinLobby(SFOLobby* self, int index) {
     *(int*)((char*)self + 0x26A8) = 0; /* just past the end of SFOLobby */
     self->waitStart = Lobby_GetTime();
     self->gotReply1B0 = 0;
-    self->requestResult = func_0046B280(&l, func_00446E50);
+    self->requestResult = MediusPickLocation(&l, SFOLobby_Callback_PickLocation);
     while (self->gotReply1B0 == 0) {
         SFOLobby_CallUpdateHook(self, 0, 0);
         if (SFOLobby_Poll(self, self->waitStart, D_00497890, 0) == 0) {
@@ -191,10 +191,10 @@ typedef struct {
 extern char D_00583A00[];
 char* strncpy(char*, const char*, unsigned int);
 int sceLibnetInitialize(void*, int, int, int);
-int func_0034B868(void*, void*);
-int func_0034AA50(void*, void*, int, void*, char*, int, int);
-int func_0034AB38(void*, void*, char*, int, void*);
-void func_0034B7E8(void*);
+int sceLibnetRegisterHandler(void*, void*);
+int sceInetName2Address(void*, void*, int, void*, char*, int, int);
+int sceInetAddress2String(void*, void*, char*, int, void*);
+void sceLibnetTerminate(void*);
 
 /* Resolves `hostName` with sceLibnet (DNS lookup) and stores the address
  * string (max 31 chars) in `out`. */
@@ -208,22 +208,22 @@ int SFOLobby_ResolveHost(SFOLobby* self, char* hostName, char* out) {
     if (sceLibnetInitialize(self->libnetCtx, 0x800, 0x2000, 0x20) != 0) {
         return 0;
     }
-    if (func_0034B868(self->libnetCtx, D_00583A00) < 0) {
+    if (sceLibnetRegisterHandler(self->libnetCtx, D_00583A00) < 0) {
         return 0;
     }
-    if (func_0034AA50(self->libnetCtx, D_00583A00, 0, cfg.data, hostName, 0, 0) < 0) {
+    if (sceInetName2Address(self->libnetCtx, D_00583A00, 0, cfg.data, hostName, 0, 0) < 0) {
         SFOLobby_SetError(self, 0x2D, D_004C05D0, 0xB3);
-        func_0034B7E8(self->libnetCtx);
+        sceLibnetTerminate(self->libnetCtx);
         return 0;
     }
-    if (func_0034AB38(self->libnetCtx, D_00583A00, buf, 0x80, cfg.data) < 0) {
+    if (sceInetAddress2String(self->libnetCtx, D_00583A00, buf, 0x80, cfg.data) < 0) {
         SFOLobby_SetError(self, 0x2D, D_004C05D0, 0xC0);
-        func_0034B7E8(self->libnetCtx);
+        sceLibnetTerminate(self->libnetCtx);
         return 0;
     }
     strncpy(out, buf, 0x1F);
     out[0x1F] = 0;
-    func_0034B7E8(self->libnetCtx);
+    sceLibnetTerminate(self->libnetCtx);
     return 1;
 }
 #pragma pop /* merge_units */
@@ -235,10 +235,10 @@ int SFOLobby_ResolveHost(SFOLobby* self, char* hostName, char* out) {
 #pragma opt_common_subs off
 
 void LobbyArray_Clear(LobbyArray*);
-int func_0046B1E0(char*, void*);
-void func_00446EA0();
+int MediusGetLocations(char*, void*);
+void SFOLobby_Callback_GetLocations();
 
-/* Refills lobbyList (func_0046B1E0, one reply per lobby via func_00446EA0) and
+/* Refills lobbyList (MediusGetLocations, one reply per lobby via SFOLobby_Callback_GetLocations) and
  * waits for the end-of-list record. */
 int SFOLobby_RequestLobbyList(SFOLobby* self) {
     char buf[0x26]; /* message id, session key at +0x15 */
@@ -249,7 +249,7 @@ int SFOLobby_RequestLobbyList(SFOLobby* self) {
     String_Copy(buf, D_004C05C8);
     String_Copy(buf + 0x15, self->sessionKey);
     self->waitStart = Lobby_GetTime();
-    self->requestResult = func_0046B1E0(buf, func_00446EA0);
+    self->requestResult = MediusGetLocations(buf, SFOLobby_Callback_GetLocations);
     while (self->reply39CEnd != 1) {
         SFOLobby_CallUpdateHook(self, 0, 0);
         if (SFOLobby_Poll(self, self->waitStart, D_00497890, 0) == 0) {

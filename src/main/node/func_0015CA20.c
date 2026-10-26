@@ -5,4 +5,4 @@
 
 /* Clear and free a vector, optionally delete. */
 extern "C" { char D_0049C1A8[] = "allocator.hh"; }
-DEFINE_CLEAR_BUFFER_DTOR(func_0015CA20, D_0049C1A8)
+DEFINE_CLEAR_BUFFER_DTOR(std_vector_deleter_tNodeLink_dtor, D_0049C1A8)

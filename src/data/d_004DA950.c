@@ -3,17 +3,17 @@
 extern void Actor_FireRespawnTimer();
 extern void Event_PackHeader();
 extern void Message_GetScriptTypeKey();
-extern void func_00177E20();
-extern void func_00189E80();
-extern void func_001B9FC0();
-extern void func_001BA0D0();
+extern void cCBData_IsReferencing();
+extern void cCharEventMsg_Clone();
+extern void cCharEventMsg_dtor();
+extern void cHumanRespawnCB_dtor();
 
 void *D_004DA950[8] = {
-    0, 0, &func_00189E80, &func_001B9FC0,
+    0, 0, &cCharEventMsg_dtor, &cCharEventMsg_Clone,
     &Event_PackHeader, &Message_GetScriptTypeKey, 0, 0,
 };
 
 void *D_004DA970[8] = {
-    0, 0, &func_001BA0D0, &func_00177E20,
+    0, 0, &cHumanRespawnCB_dtor, &cCBData_IsReferencing,
     &Actor_FireRespawnTimer, 0, 0, 0,
 };

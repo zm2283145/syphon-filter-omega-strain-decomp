@@ -29,9 +29,9 @@ typedef struct {
     Vec4 r[4];
 } Mtx235A00;
 
-extern void func_002359F0(ListIt235A00* out, void* list);
-extern void func_002359D0(ListIt235A00* out, void* list);
-extern ListIt235A00* func_002359E0(ListIt235A00* dst, ListIt235A00* src);
+extern void std_list_cElementPtr_begin_void_2(ListIt235A00* out, void* list);
+extern void std_list_cElementPtr_end_void_2(ListIt235A00* out, void* list);
+extern ListIt235A00* cLListIterator_cElementPtr_ctor_listR_2(ListIt235A00* dst, ListIt235A00* src);
 extern void ParticleInst_Draw(void* obj, int key, Mtx235A00* m);
 
 #pragma push
@@ -46,10 +46,10 @@ void SmokeField_Draw(Fx235A00* self) {
     Mtx235A00 m;
 
     VU0_UnitMatrix(&m);
-    func_002359F0(&tmpBegin, self->list);
-    func_002359E0(&first, &tmpBegin);
+    std_list_cElementPtr_begin_void_2(&tmpBegin, self->list);
+    cLListIterator_cElementPtr_ctor_listR_2(&first, &tmpBegin);
     it = first;
-    while (func_002359D0(&tmpEnd, self->list), func_002359E0(&last, &tmpEnd), it.node != last.node) {
+    while (std_list_cElementPtr_end_void_2(&tmpEnd, self->list), cLListIterator_cElementPtr_ctor_listR_2(&last, &tmpEnd), it.node != last.node) {
         LightRef235A00* v = it.node->value;
         if (v->obj != 0) {
             /* unfolded quad copy idiom */

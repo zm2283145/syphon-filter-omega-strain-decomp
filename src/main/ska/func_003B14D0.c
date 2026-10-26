@@ -5,6 +5,6 @@
 
 #include "types.h"
 
-void* func_003B14D0(char* self) {
+void* std_vector_deleter_cSkaPlaybackItem_data(char* self) {
     return self + 8;
 }

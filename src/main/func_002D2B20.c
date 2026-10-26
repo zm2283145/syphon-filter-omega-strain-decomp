@@ -7,24 +7,24 @@
 #include "types.h"
 #include "loose02_types.h"
 
-int func_002D2B20(void) {
+int cNetNPC_IsNetNPC(void) {
     return 1;
 }
 
-int func_002D2B30(void) {
+int cNetNPC_DetermineDeathType(void) {
     return 1;
 }
 
-void func_002D2B40(void) {
+void cNetNPC_SelectTravelMode(void) {
 }
 
-int func_002D2B50(void) {
+int cNetNPC_UseCurrentLookAt(void) {
     return 0;
 }
 
 /* Builds the target position as a homogeneous vector (w = 1). The original
  * returns the address of this stack buffer. */
-float* func_002D2B60(Controller2D* self) {
+float* cNetNPC_TargetPositionLastSeen(Controller2D* self) {
     float pos[4];
     ControllerTarget* target;
     float x, z, y;  /* declaration order fixes register choice */
@@ -40,12 +40,12 @@ float* func_002D2B60(Controller2D* self) {
     return pos;
 }
 
-int func_002D2BA0(void) {
+int cNetNPC_TargetDirectionValid(void) {
     return 0;
 }
 
-void func_002D2BB0(void) {
+void cNetNPC_RequestLookAt_cVector_float_int(void) {
 }
 
-void func_002D2BC0(void) {
+void cNetNPC_ResumeAITravelSpeed(void) {
 }

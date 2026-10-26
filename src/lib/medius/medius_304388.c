@@ -6,25 +6,25 @@
 
 #include "types.h"
 
-extern int func_00305268(int, int);
+extern int rt_p2p_generic_disconnect(int, int);
 
-int func_00304388(int a0, int a1) {
+int rt_p2p_handle_reset_event(int a0, int a1) {
     int tmp0;
 
-    tmp0 = func_00305268(a0, a1);
+    tmp0 = rt_p2p_generic_disconnect(a0, a1);
     return tmp0;
 }
 
-int func_003043A8(int a0, int a1) {
+int rt_p2p_handle_closed_event(int a0, int a1) {
     int tmp0;
 
-    tmp0 = func_00305268(a0, a1);
+    tmp0 = rt_p2p_generic_disconnect(a0, a1);
     return tmp0;
 }
 
-int func_003043C8(int a0, int a1) {
+int rt_p2p_handle_error_event(int a0, int a1) {
     int tmp0;
 
-    tmp0 = func_00305268(a0, a1);
+    tmp0 = rt_p2p_generic_disconnect(a0, a1);
     return tmp0;
 }

@@ -11,8 +11,8 @@ extern "C" {
 int Mem_Alloc(...);                        
 int Font_ctor(...);                             
 int ListReceiver_Ctor(...);                                  
-int func_003E7D60(...);                     
-int func_0042B850(...);                            
+int cConsole_ctor(...);                     
+int cDME_ctor(...);                            
 extern char D_0049C390;
 extern char D_004D97B0;
 extern unsigned char g_ProfileLockEnabled;
@@ -26,8 +26,8 @@ extern "C" char * App_Ctor(char * arg0) {
 
     ListReceiver_Ctor();
     F_(arg0, 0x0, int) = (int)(&D_004D97B0);
-    func_003E7D60(arg0 + 0x2C, "1.0", &D_0055A700);
-    func_0042B850(arg0 + 0x279);
+    cConsole_ctor(arg0 + 0x2C, "1.0", &D_0055A700);
+    cDME_ctor(arg0 + 0x279);
     F_(arg0, 0x268, int) = 0;
     F_(arg0, 0x264, int) = 0;
     var_s2 = 0;

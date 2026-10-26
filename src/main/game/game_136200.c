@@ -21,10 +21,10 @@ extern char D_004DA2F0[];
 extern void Alloc_Lock(int);
 extern void Alloc_Unlock(int);
 extern void* Mem_Alloc(int, int, char*, int);
-extern void func_00136540(F1Los136* p, int* a, int* b);
+extern void cCollisionModelList_ctor(F1Los136* p, int* a, int* b);
 extern Vec4* Vec4_GetZero(void);
 extern void Vec4_Assign(Vec4* d, Vec4* s);
-extern void func_001364B0(void* p);
+extern void cActivationTracker_ctor(void* p);
 static inline void* f1_Alloc136(int size, char* file, int line)
 {
     void* p;
@@ -44,11 +44,11 @@ void LosProvider_Create(int arg)
             int a[1];
             b[0] = 2;
             a[0] = arg;
-            func_00136540(p, a, b);
+            cCollisionModelList_ctor(p, a, b);
             p->vt = D_004DA2F0;
             p->x20 = 0;
             Vec4_Assign(&p->v30, Vec4_GetZero());
-            func_001364B0(p->st40);
+            cActivationTracker_ctor(p->st40);
             p->x60 = 0;
         }
         D_004EA0B8 = p;
@@ -64,7 +64,7 @@ static inline void merge_flush_func_00136200(void) {}
 #pragma cplusplus on
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_00136300)
+DEFINE_TRIVIAL_DTOR(cActivationTracker_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00136300 */
 
@@ -74,18 +74,18 @@ DEFINE_TRIVIAL_DTOR(func_00136300)
 struct O_00136350 { void* vt; char m[4]; };
 extern "C" {
 extern char D_004D9140[];
-void func_001363C0(void* m, short f);
+void std_vector_cGOBJPtr_dtor(void* m, short f);
 #if 0 /* merge_units */
 void operator_delete(void* p);
 #endif /* merge_units */
 #define operator_delete(a0) ((void)operator_delete((a0))) /* merge_units */
 
 }
-extern "C" O_00136350* func_00136350(O_00136350* self, short del)
+extern "C" O_00136350* cCollisionModelList_dtor(O_00136350* self, short del)
 {
     if (self) {
         self->vt = D_004D9140;
-        if (self->m) func_001363C0(self->m, -1);
+        if (self->m) std_vector_cGOBJPtr_dtor(self->m, -1);
         if (del > 0) operator_delete(self);
     }
     return self;

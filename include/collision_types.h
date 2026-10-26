@@ -13,7 +13,7 @@ typedef struct ColTri {
     unsigned char edgeFlags[3];     /* 0x0B */
 } ColTri;
 
-/* Small {pointer, flag} record initialised by func_003C1790. */
+/* Small {pointer, flag} record initialised by cCollisionModelMaster_UnLoad. */
 typedef struct ColRef {
     int unk0;                       /* 0x00 */
     char unk4;                      /* 0x04 set to 1 */

@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-Word* func_00209870(Word* dst, Word* src) {
+Word* cPointer_cSkaNode_ctor_cPointerR(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }

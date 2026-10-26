@@ -83,7 +83,7 @@ extern float D_004BC0FC;
 extern int D_004BC100;
 extern int D_004BC104;
 extern int D_004BC108;
-void func_004D4E80(void)
+void StaticInit_xdrawprim(void)
 {
     D_004BBFC0 = -1.0f;
     D_004BBFC4 = 3.0f;

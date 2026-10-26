@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-Rel* func_003C3170(Rel* r) {
+Rel* std_vector_imp_cGOBJPtr_1_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

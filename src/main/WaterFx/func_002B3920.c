@@ -6,21 +6,21 @@
 #include "types.h"
 #include "WaterFx_types.h"
 
-Word* func_002B3920(Word* dst, Word* src) {
+Word* cLListIterator_tNode_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_002B3930(Iter* out, Tree* t) {
+void std_list_deleter_tNode_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-WaterListIter* func_002B3940(WaterListIter* it, WaterListLink* node) {
+WaterListIter* std_list_deleter_tNode_generic_iterator_ctor_nodeP(WaterListIter* it, WaterListLink* node) {
     it->node = node;
     return it;
 }
 
 /* Address of the list sentinel (end()). */
-WaterListLink* func_002B3950(WaterList* list) {
+WaterListLink* std_list_deleter_tNode_tail(WaterList* list) {
     return &list->head;
 }

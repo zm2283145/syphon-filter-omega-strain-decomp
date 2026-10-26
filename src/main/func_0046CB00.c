@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046CB00(void) {
+int MediusUniqueCallbackAccountUpdatePasswordRequestHandler(void) {
     return 102;
 }

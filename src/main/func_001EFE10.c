@@ -10,7 +10,7 @@
 extern float Math_Clampf(float, float, float);
 
 /* Sets a range and clamps it: x into [0,1], y into [x,1]. */
-Vec2f* func_001EFE10(Vec2f* self, float x, float y) {
+Vec2f* cSkaAnimPlaybackRange_Normalized_ctor(Vec2f* self, float x, float y) {
     self->x = x;
     self->y = y;
     self->x = Math_Clampf(self->x, 0.0f, 1.0f);

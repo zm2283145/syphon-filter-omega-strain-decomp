@@ -8,7 +8,7 @@
 #include "loose02_types.h"
 
 /* Rec22 copy (assignment). */
-Rec22* func_002C5EE0(Rec22* dst, Rec22* src) {
+Rec22* cAiTargetTransfer_opAssign(Rec22* dst, Rec22* src) {
     Q q;
     float unk10;
     float unk14;

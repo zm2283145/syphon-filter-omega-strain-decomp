@@ -23,7 +23,7 @@ int sprintf(...);
 extern int D_004A7520;
 extern int D_004C1A38;
 }
-extern "C" void func_00456600(int arg0, int arg1) {
+extern "C" void GuiStartMenu_SetCurrentOption(int arg0, int arg1) {
     int sp30[4];
     int temp_v0;
     void **var_s0;

@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_00247D50(char* self) {
+void* cSystem_GetObjectID_void_2(char* self) {
     return self + 12;
 }

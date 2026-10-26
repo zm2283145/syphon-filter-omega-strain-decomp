@@ -12,26 +12,26 @@
 /* merge_units: begin func_003C17A0 */
 #pragma push /* merge_units */
 typedef struct { float x; int pad[3]; __int128 q; } S003C1880;
-S003C1880* func_003C1880(S003C1880* arg0, S003C1880* arg1); /* gsynth: defined below */typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
+S003C1880* cSphere_opAssign(S003C1880* arg0, S003C1880* arg1); /* gsynth: defined below */typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
 typedef struct { V4 min; V4 max; } Box_18A0;
 typedef struct { float r; int pad[3]; V4 c; } Sphere_18A0;
-void func_003C18A0(Sphere_18A0* out, Box_18A0* b); /* gsynth: defined below */typedef struct { int pad[7]; int f1C; } ColData_f3;
+void cBox_BoundingSphere(Sphere_18A0* out, Box_18A0* b); /* gsynth: defined below */typedef struct { int pad[7]; int f1C; } ColData_f3;
 typedef struct { ColData_f3* data; unsigned char loaded; char pad[11]; int f10; } ColHolder_f3;
 typedef struct { int w[11]; } ColTmp_f3;
 extern int FileMan_FindMember(void* f);
 extern void FileMan_LoadMemberSync(void* f, int* out, int z);
-extern void func_0036DEC0(void* f);
+extern void cFileMan_Close(void* f);
 extern void Col_Relocate(ColData_f3* d);
-extern void* func_003C19A0(ColData_f3* d);
+extern void* cCollisionModel_Data_BoundingBox(ColData_f3* d);
 #if 0 /* merge_units */
-extern void func_003C18A0(ColTmp_f3* t, void* p);
+extern void cBox_BoundingSphere(ColTmp_f3* t, void* p);
 #endif /* merge_units */
-#define func_003C18A0(a0, a1) (func_003C18A0((void *)(a0), (void *)(a1))) /* merge_units */
+#define cBox_BoundingSphere(a0, a1) (cBox_BoundingSphere((void *)(a0), (void *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_003C1880(int* dst, ColTmp_f3* t);
+extern void cSphere_opAssign(int* dst, ColTmp_f3* t);
 #endif /* merge_units */
-#define func_003C1880(a0, a1) ((void)func_003C1880((void *)(a0), (void *)(a1))) /* merge_units */
+#define cSphere_opAssign(a0, a1) ((void)cSphere_opAssign((void *)(a0), (void *)(a1))) /* merge_units */
 
 int Col_Load(ColHolder_f3* c, void* file)
 {
@@ -44,11 +44,11 @@ int Col_Load(ColHolder_f3* c, void* file)
             return 0;
         }
         FileMan_LoadMemberSync(file, buf, 0);
-        func_0036DEC0(file);
+        cFileMan_Close(file);
         c->data = (ColData_f3*)buf[0];
         Col_Relocate(c->data);
-        func_003C18A0(&tmp, func_003C19A0(c->data));
-        func_003C1880(&c->f10, &tmp);
+        cBox_BoundingSphere(&tmp, cCollisionModel_Data_BoundingBox(c->data));
+        cSphere_opAssign(&c->f10, &tmp);
         {
             unsigned char b = 1;
             if (c->data != 0 && c->data->f1C != 0) b = 0;
@@ -58,8 +58,8 @@ int Col_Load(ColHolder_f3* c, void* file)
     }
     return 0;
 }
-#undef func_003C18A0 /* merge_units */
-#undef func_003C1880 /* merge_units */
+#undef cBox_BoundingSphere /* merge_units */
+#undef cSphere_opAssign /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003C17A0(void) {}
 #pragma pop /* merge_units */
@@ -69,7 +69,7 @@ static inline void merge_flush_func_003C17A0(void) {}
 #pragma push /* merge_units */
 #pragma push
 #pragma opt_propagation off
-S003C1880 *func_003C1880(S003C1880 *arg0, S003C1880 *arg1) {
+S003C1880 *cSphere_opAssign(S003C1880 *arg0, S003C1880 *arg1) {
     S003C1880 *s = arg1;
     arg0->x = s->x;
     {
@@ -90,7 +90,7 @@ static inline void merge_flush_func_003C1880(void) {}
 #pragma push
 #pragma peephole off
 #pragma opt_common_subs off
-void func_003C18A0(Sphere_18A0* out, Box_18A0* b)
+void cBox_BoundingSphere(Sphere_18A0* out, Box_18A0* b)
 {
     V4 lenV;
     V4 cc;

@@ -11,7 +11,7 @@
 
 /* merge_units: begin func_0017F5E0 */
 #pragma push /* merge_units */
-/* func_0017F5E0: sub-object ctor (2 x {V4 p,q}) filled from two by-pointer V4s. Hand-matched (auto1 family seed).
+/* cHermiteSpline_cVector_ctor_cVectorR_cVectorR: sub-object ctor (2 x {V4 p,q}) filled from two by-pointer V4s. Hand-matched (auto1 family seed).
  * The empty asm block is a scheduling barrier reproducing retail order. */
 #pragma cplusplus on
 inline void* operator new(unsigned int, void* p) { return p; }
@@ -20,7 +20,7 @@ struct E_F5E0 { V4_F5E0 p; V4_F5E0 q; E_F5E0() {} };
 struct M_F5E0 { E_F5E0 e[2]; };
 #pragma opt_rotateloops off
 #pragma opt_unroll_loops off
-extern "C" M_F5E0* func_0017F5E0(M_F5E0* m, const V4_F5E0* a, const V4_F5E0* b)
+extern "C" M_F5E0* cHermiteSpline_cVector_ctor_cVectorR_cVectorR(M_F5E0* m, const V4_F5E0* a, const V4_F5E0* b)
 {
     V4_F5E0 tb; V4_F5E0 ta;
     V4_F5E0* pa; E_F5E0* pe; V4_F5E0* pb;

@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0022F430(void) {
+int cGobjController_Team(void) {
     return -1;
 }

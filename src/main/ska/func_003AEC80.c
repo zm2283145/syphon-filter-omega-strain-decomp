@@ -10,7 +10,7 @@ typedef struct ModelDesc {
 extern void RootCollection_Construct(ModelDesc* desc);
 extern void RootCollection_Copy(void* self, ModelDesc* desc);
 extern void Transform_SetOrientation(void* dst, void* src);
-extern void func_003961E0(ModelDesc* desc, int flags);
+extern void std_vector_deleter_cSkaAnimAnchorListEntry_dtor(ModelDesc* desc, int flags);
 
 /* Initializes a root collection from a temporary model description. */
 void RootCollection_InitFromModel(char* self) {
@@ -19,5 +19,5 @@ void RootCollection_InitFromModel(char* self) {
     RootCollection_Copy(self, &desc);
     Transform_SetOrientation(self + 0x10, desc.first);
     Transform_SetOrientation(self + 0x30, desc.second);
-    func_003961E0(&desc, 0);
+    std_vector_deleter_cSkaAnimAnchorListEntry_dtor(&desc, 0);
 }

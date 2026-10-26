@@ -24,7 +24,7 @@ extern char D_004E0140[];
 void Event_Construct(void* m, void* type);
 void Event_Send(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
-void func_00249490(void* s, void* actor, V* v);
+void cPlayerControls_NetSetManualTarget(void* s, void* actor, V* v);
 }
 
 struct MsgB {
@@ -44,7 +44,7 @@ extern "C" void PlayerInput_AimViewPointAction(void* s, Cam* cam, void* actor)
     float k = 100.0f;
     V pt = pos + dir * k;
     MsgPt(pt).Send(actor);
-    if (g_IsMultiplayer) func_00249490(s, actor, &pt);
+    if (g_IsMultiplayer) cPlayerControls_NetSetManualTarget(s, actor, &pt);
 }
 
 

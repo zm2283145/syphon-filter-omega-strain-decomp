@@ -29,7 +29,7 @@ int GuiNetJoinMission_IsType(void* self, const char* name)
  */
 
 
-void func_002A8B50(void) {
+void GuiMissionLobbyScreen_SelectAgentRemove(void) {
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_002A8B50 */

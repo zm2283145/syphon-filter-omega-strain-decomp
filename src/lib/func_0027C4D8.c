@@ -9,15 +9,15 @@
 extern char D_00504080[];
 extern char D_005040C0[];
 extern int sceSifCallRpc(int, int, int, int, int, int, int, int);
-extern int func_0027C3D0(void);
-extern void func_0027D278(int);
+extern int sceNetcnfifInit(void);
+extern void sce_delete_callback_thread(int);
 
-int func_0027C4D8(void) {
+int sceNetcnfifDeleteCallbackThread(void) {
     int loc[4];
     int a0, a1, a2, a3, t0, t1, t2, t3, v0, v1;
 
-    func_0027D278(a0);
-    v0 = func_0027C3D0();
+    sce_delete_callback_thread(a0);
+    v0 = sceNetcnfifInit();
     a3 = (int)D_005040C0;
     a0 = (int)D_00504080;
     *(int*)(char*)loc = 0;

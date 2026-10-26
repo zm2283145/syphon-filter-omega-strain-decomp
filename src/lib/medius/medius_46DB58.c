@@ -9,7 +9,7 @@
 extern char D_00497DD0[];
 extern char D_00497DD4[];
 
-int func_0046DB58(void) {
+int MediusUniqueCallbackGetLobbyPlayerNamesResponseHandler(void) {
     int v0;
     int cond;
 
@@ -24,11 +24,11 @@ ret:
     return v0;
 }
 
-int func_0046DB88(void) {
+int MediusUniqueCallbackGetTotalUsersRequestHandler(void) {
     return 44;
 }
 
-int func_0046DB90(void) {
+int MediusUniqueCallbackGetTotalUsersResponseHandler(void) {
     int v0;
     int cond;
 

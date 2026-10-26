@@ -10,10 +10,10 @@ extern "C" {
 extern char D_004BEF70[];
 extern char D_004BEFA0[];
 void String_CopyCtor(E413FB0* d, const E413FB0* s);
-void func_004144D0(E413FB0* first, E413FB0* last, E413FB0* dlast);
+void std_copy_backward_cString_copy_backward(E413FB0* first, E413FB0* last, E413FB0* dlast);
 void func_00414410(E413FB0* first, unsigned int n, const E413FB0* value);
-void func_004143D0(V413FB0* a, V413FB0* b);
-void func_004145A0(V413FB0* v, int flags);
+void std_swap_vectordeleterR_vectordeleterR_48(V413FB0* a, V413FB0* b);
+void std_vector_deleter_cString_dtor(V413FB0* v, int flags);
 }
 static inline void Construct413FB0(E413FB0* p, const E413FB0* src)
 {
@@ -21,7 +21,7 @@ static inline void Construct413FB0(E413FB0* p, const E413FB0* src)
         String_CopyCtor(p, src);
 }
 
-extern "C" void func_00413FB0(V413FB0* v, E413FB0* pos, unsigned int n, const E413FB0* value)
+extern "C" void std_vector_imp_cString_insert(V413FB0* v, E413FB0* pos, unsigned int n, const E413FB0* value)
 {
     if (n == 0)
         return;
@@ -52,7 +52,7 @@ extern "C" void func_00413FB0(V413FB0* v, E413FB0* pos, unsigned int n, const E4
             }
             if (((E413FB0*)((char*)data_ + off_)) - (after - n) <= value && value < ((E413FB0*)((char*)data_ + off_)))
                 value += n;
-            func_004144D0(pos, pos + (after - n), ((E413FB0*)((char*)data_ + off_)));
+            std_copy_backward_cString_copy_backward(pos, pos + (after - n), ((E413FB0*)((char*)data_ + off_)));
         }
         func_00414410(pos, n, value);
     } else {
@@ -94,8 +94,8 @@ extern "C" void func_00413FB0(V413FB0* v, E413FB0* pos, unsigned int n, const E4
             Construct413FB0(dst, src);
             (*tcount)++;
         }
-        func_004143D0(&tmp, v);
-        func_004145A0(&tmp, -1);
+        std_swap_vectordeleterR_vectordeleterR_48(&tmp, v);
+        std_vector_deleter_cString_dtor(&tmp, -1);
     }
 }
 

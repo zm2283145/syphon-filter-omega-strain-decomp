@@ -8,13 +8,13 @@
 
 extern char D_00504080[];
 extern char D_005040C0[];
-extern int func_0027C3D0(void);
-extern int func_0027D3A8(int, int, int);
+extern int sceNetcnfifInit(void);
+extern int sce_call_rpc(int, int, int);
 
-int func_0027CF38(void) {
+int sceNetcnfifGetAddr(void) {
     int tmp2;
 
-    func_0027C3D0();
-    tmp2 = func_0027D3A8((int)D_00504080, (int)D_005040C0, 100);
+    sceNetcnfifInit();
+    tmp2 = sce_call_rpc((int)D_00504080, (int)D_005040C0, 100);
     return tmp2;
 }

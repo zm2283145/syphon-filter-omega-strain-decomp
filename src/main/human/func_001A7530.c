@@ -9,7 +9,7 @@
 
 extern int PtrVec_Insert(PtrVec*, int*, int, int);
 
-void* func_001A7530(void* self) {
+void* cQuatVec_ctor_void(void* self) {
     return self;
 }
 

@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-float func_001AF320(char* self) {
+float cSkeletonCenterOfMassContribution_Weight(char* self) {
     return *(float*)(self + 4);
 }
 
@@ -17,28 +17,28 @@ char* SkelNodes_GetAt(PtrVec* v, int i) {
     return data + i * 464;
 }
 
-int func_001AF350(char* self) {
+int cSkeletonCenterOfMassContribution_BoneIndex(char* self) {
     return *(int*)(self + 0);
 }
 
-int func_001AF360(char* self) {
+int cArray_cSkeletonCenterOfMassContributionPtr_ConstIterator_opMul(char* self) {
     return *(int*)(self + 0);
 }
 
-void func_001AF370(Iter* out, PtrVec* v) {
+void cArray_cSkeletonCenterOfMassContributionPtr_End(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
 
-void func_001AF390(Iter* out, PtrVec* v) {
+void cArray_cSkeletonCenterOfMassContributionPtr_Begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 
-int func_001AF3A0(Iter* a, Iter* b) {
+int cArray_cBone_Iterator_opNe(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 
 /* Iterator ++ over 464-byte nodes. */
-Iter16* func_001AF3C0(Iter16* it) {
+Iter16* cArray_cBone_Iterator_opInc(Iter16* it) {
     it->p = it->p + 464;
     return it;
 }

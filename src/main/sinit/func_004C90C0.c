@@ -11,10 +11,10 @@ extern float Math_Cos(float);
 extern float Math_Sin(float);
 extern void __register_global_object(void* obj, void* dtor, void* link);
 extern void __construct_array(void* arr, void* ctor, void* dtor, int size, int n);
-extern void func_001D7D90(void);
-extern void func_001DFA30(void);
-extern void func_001DF9E0(void);
-extern void func_001DF980(void);
+extern void cJointLimits_dtor(void);
+extern void cBoneIk_ctor(void);
+extern void cBoneIk_dtor(void);
+extern void cArray_FixedSize_cBoneIk_21_dtor(void);
 extern float D_0049F718;
 extern float D_0049F720;
 }
@@ -241,8 +241,8 @@ extern V D_004F2D90, D_004F2DA0, D_004F2DB0, D_004F2DC0, D_004F2DD0, D_004F2DE0,
 extern SO D_004F3030, D_004F3040, D_004F3050, D_004F3060, D_004F3070, D_004F3080, D_004F3090, D_004F30A0, D_004F30B0, D_004F30C0, D_004F30D0, D_004F30E0, D_004F30F0, D_004F3100, D_004F3110, D_004F3120, D_004F3130, D_004F3140, D_004F3150, D_004F3160, D_004F3170;
 extern Ent SecondaryStateTable, D_0049F7E0, D_0049F830, D_0049F880, D_0049F8D0, D_0049F920, D_0049F970, D_0049F9C0, D_0049FA10, D_0049FA60, D_0049FAB0, D_0049FB00, D_0049FB50, D_0049FBA0, D_0049FBF0, D_0049FC40, D_0049FC90, D_0049FCE0, D_0049FD30, D_0049FD80, D_0049FDD0, D_0049FE20, D_0049FE70, D_0049FEC0, D_0049FF10;
 }
-extern "C" void func_004C90C0(void);
-void func_004C90C0(void)
+extern "C" void StaticInit_humanIk(void);
+void StaticInit_humanIk(void)
 {
     D_0049F718 = 0.35f;
     { float h = 0.5f; D_0049F720 = h; EQh(D_004F2D90, E(0.0f, 0.0f, 0.0f), h); }
@@ -267,47 +267,47 @@ void func_004C90C0(void)
     EQ(D_004F2EC0, E(0.0f, 0.0f, 0.0f));
     EQ(D_004F2ED0, E(0.0f, 0.0f, 0.0f));
     { float a = 3.1415927f; SinInit(&D_004F3030, a, a, a); }
-    __register_global_object(&D_004F3030, func_001D7D90, D_004F2EE0);
+    __register_global_object(&D_004F3030, cJointLimits_dtor, D_004F2EE0);
     { float a, b, c; c = 0.87266463f; b = 0.6981317f; a = 0.5235988f; SinInit(&D_004F3040, a, b, c); }
-    __register_global_object(&D_004F3040, func_001D7D90, D_004F2EF0);
+    __register_global_object(&D_004F3040, cJointLimits_dtor, D_004F2EF0);
     { float a, b; b = 0.87266463f; a = 0.5235988f; SinInit(&D_004F3050, a, a, b); }
-    __register_global_object(&D_004F3050, func_001D7D90, D_004F2F00);
+    __register_global_object(&D_004F3050, cJointLimits_dtor, D_004F2F00);
     { float a = 0.7853982f; SinInit(&D_004F3060, a, a, a); }
-    __register_global_object(&D_004F3060, func_001D7D90, D_004F2F10);
+    __register_global_object(&D_004F3060, cJointLimits_dtor, D_004F2F10);
     { float a = 0.7853982f; SinInit(&D_004F3070, a, a, a); }
-    __register_global_object(&D_004F3070, func_001D7D90, D_004F2F20);
+    __register_global_object(&D_004F3070, cJointLimits_dtor, D_004F2F20);
     { float a, b; b = 0.61086524f; a = 0.5235988f; SinInit(&D_004F3080, a, b, b); }
-    __register_global_object(&D_004F3080, func_001D7D90, D_004F2F30);
+    __register_global_object(&D_004F3080, cJointLimits_dtor, D_004F2F30);
     { float a = 1.7453293f; SinInit(&D_004F3090, a, a, a); }
-    __register_global_object(&D_004F3090, func_001D7D90, D_004F2F40);
+    __register_global_object(&D_004F3090, cJointLimits_dtor, D_004F2F40);
     { float a = 1.5707964f; SinInit(&D_004F30A0, a, a, a); }
-    __register_global_object(&D_004F30A0, func_001D7D90, D_004F2F50);
+    __register_global_object(&D_004F30A0, cJointLimits_dtor, D_004F2F50);
     { float a, b; b = 0.87266463f; a = 1.5707964f; SinInit(&D_004F30B0, a, a, b); }
-    __register_global_object(&D_004F30B0, func_001D7D90, D_004F2F60);
+    __register_global_object(&D_004F30B0, cJointLimits_dtor, D_004F2F60);
     { float a, b; b = 0.61086524f; a = 0.5235988f; SinInit(&D_004F30C0, a, b, b); }
-    __register_global_object(&D_004F30C0, func_001D7D90, D_004F2F70);
+    __register_global_object(&D_004F30C0, cJointLimits_dtor, D_004F2F70);
     { float a = 1.7453293f; SinInit(&D_004F30D0, a, a, a); }
-    __register_global_object(&D_004F30D0, func_001D7D90, D_004F2F80);
+    __register_global_object(&D_004F30D0, cJointLimits_dtor, D_004F2F80);
     { float a = 1.5707964f; SinInit(&D_004F30E0, a, a, a); }
-    __register_global_object(&D_004F30E0, func_001D7D90, D_004F2F90);
+    __register_global_object(&D_004F30E0, cJointLimits_dtor, D_004F2F90);
     { float a, b; b = 0.87266463f; a = 1.5707964f; SinInit(&D_004F30F0, a, a, b); }
-    __register_global_object(&D_004F30F0, func_001D7D90, D_004F2FA0);
+    __register_global_object(&D_004F30F0, cJointLimits_dtor, D_004F2FA0);
     { float a, b, c; c = 0.61086524f; b = 1.3089969f; a = 1.3962634f; SinInit(&D_004F3100, a, b, c); }
-    __register_global_object(&D_004F3100, func_001D7D90, D_004F2FB0);
+    __register_global_object(&D_004F3100, cJointLimits_dtor, D_004F2FB0);
     { float a, b, c; c = 0.61086524f; b = 1.3089969f; a = 1.3962634f; SinInit(&D_004F3110, a, b, c); }
-    __register_global_object(&D_004F3110, func_001D7D90, D_004F2FC0);
+    __register_global_object(&D_004F3110, cJointLimits_dtor, D_004F2FC0);
     { float a, b; b = 0.5235988f; a = 0.7853982f; SinInit(&D_004F3120, a, b, b); }
-    __register_global_object(&D_004F3120, func_001D7D90, D_004F2FD0);
+    __register_global_object(&D_004F3120, cJointLimits_dtor, D_004F2FD0);
     { float a, b; b = 0.5235988f; a = 1.5707964f; SinInit(&D_004F3130, a, b, b); }
-    __register_global_object(&D_004F3130, func_001D7D90, D_004F2FE0);
+    __register_global_object(&D_004F3130, cJointLimits_dtor, D_004F2FE0);
     { float a, b, c; c = 0.61086524f; b = 1.3089969f; a = 1.3962634f; SinInit(&D_004F3140, a, b, c); }
-    __register_global_object(&D_004F3140, func_001D7D90, D_004F2FF0);
+    __register_global_object(&D_004F3140, cJointLimits_dtor, D_004F2FF0);
     { float a, b, c; c = 0.61086524f; b = 1.3089969f; a = 1.3962634f; SinInit(&D_004F3150, a, b, c); }
-    __register_global_object(&D_004F3150, func_001D7D90, D_004F3000);
+    __register_global_object(&D_004F3150, cJointLimits_dtor, D_004F3000);
     { float a, b; b = 0.5235988f; a = 0.7853982f; SinInit(&D_004F3160, a, b, b); }
-    __register_global_object(&D_004F3160, func_001D7D90, D_004F3010);
+    __register_global_object(&D_004F3160, cJointLimits_dtor, D_004F3010);
     { float a, b; b = 0.5235988f; a = 1.5707964f; SinInit(&D_004F3170, a, b, b); }
-    __register_global_object(&D_004F3170, func_001D7D90, D_004F3020);
+    __register_global_object(&D_004F3170, cJointLimits_dtor, D_004F3020);
     SetEnt(SecondaryStateTable, 0, Z(), D_0048A6E0, D_0048A820, D_004F31E0, 0, 0, 0, 0);
     SetEnt(D_0049F7E0, 1, Z(), D_0048A6E0, D_0048A820, D_004F31E0, 0, 0, 0, 0);
     SetEnt(D_0049F830, 2, S(D_004A01A0), D_0048A740, D_0048A880, D_0048A4C0, 1, 1, 0, 1);
@@ -333,6 +333,6 @@ void func_004C90C0(void)
     SetEnt(D_0049FE70, 0x16, Z(), D_0048A720, D_0048A860, D_0048A5E0, 0, 1, 0, 0);
     SetEnt(D_0049FEC0, 0x17, S(D_004A01A0), D_0048A7E0, D_0048A920, D_0048A640, 1, 1, 0, 1);
     SetEnt(D_0049FF10, 0x18, S(D_004A01E0), D_0048A800, D_0048A940, D_004F3240, 0, 0, 1, 1);
-    __construct_array(UpperBodyNodeTable, func_001DFA30, func_001DF9E0, 0x100, 0x15);
-    __register_global_object(UpperBodyNodeTable, func_001DF980, D_004F3298);
+    __construct_array(UpperBodyNodeTable, cBoneIk_ctor, cBoneIk_dtor, 0x100, 0x15);
+    __register_global_object(UpperBodyNodeTable, cArray_FixedSize_cBoneIk_21_dtor, D_004F3298);
 }

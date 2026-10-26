@@ -1,9 +1,9 @@
 typedef struct { int err; int f4; int f8; int fC; char pad[0x14]; int f24; char pad2[0xC]; int state; } NetCtx_6C0;
 typedef struct { char pad[0x20]; NetCtx_6C0 *ctx; } NetObj_6C0;
 extern void FlushCache(int a);
-extern int func_0034A6E8(NetCtx_6C0 *c, NetCtx_6C0 **pp, unsigned char *flag);
-extern int func_0034C8E0(NetObj_6C0 *o, int *out);
-int func_0034C6C0(NetObj_6C0 *o, int *out)
+extern int libnetb_get_valid_data_header_ptr(NetCtx_6C0 *c, NetCtx_6C0 **pp, unsigned char *flag);
+extern int sceBInetIsOpened(NetObj_6C0 *o, int *out);
+int sceBInetGetAvailBytesToRead(NetObj_6C0 *o, int *out)
 {
     NetCtx_6C0 *c;
     int r;
@@ -16,7 +16,7 @@ int func_0034C6C0(NetObj_6C0 *o, int *out)
         NetCtx_6C0 *p;
         flag = 0;
         p = 0;
-        r = func_0034A6E8(c, &p, &flag);
+        r = libnetb_get_valid_data_header_ptr(c, &p, &flag);
         if (r != 0) return r;
         if (flag == 1) { *out = p->f24; return p->fC; }
         *out = 0;
@@ -24,7 +24,7 @@ int func_0034C6C0(NetObj_6C0 *o, int *out)
     }
     l = 0;
     if (c->fC != 0) {
-        r = func_0034C8E0(o, &l);
+        r = sceBInetIsOpened(o, &l);
         if (r != 0) return r;
         if (l == 0) return 0;
     }

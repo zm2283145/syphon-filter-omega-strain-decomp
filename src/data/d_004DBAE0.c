@@ -2,15 +2,15 @@
 
 extern void Effect_Draw();
 extern void Effect_Update();
-extern void func_00237130();
-extern void func_00237190();
+extern void cParticleBundle_dtor();
+extern void cWeaponFx_dtor();
 
 void *D_004DBAE0[8] = {
-    0, 0, &func_00237130, &Effect_Update,
+    0, 0, &cWeaponFx_dtor, &Effect_Update,
     &Effect_Draw, 0, 0, 0,
 };
 
 void *D_004DBB00[8] = {
-    0, 0, &func_00237190, &Effect_Update,
+    0, 0, &cParticleBundle_dtor, &Effect_Update,
     &Effect_Draw, 0, 0, 0,
 };

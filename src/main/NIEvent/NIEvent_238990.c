@@ -164,7 +164,7 @@ extern char D_004A6FA8[];
 extern void** D_004F7C70;
 extern int D_004F7C78;
 }
-extern "C" void func_00238F20(void)
+extern "C" void cNIEventFXTrack_FreeStringTable(void)
 {
     int i;
     for (i = 0; i < D_004F7C78; i++) {
@@ -269,16 +269,16 @@ struct Elem_239370 { void* vt; };
 struct Vec_239370 { int cap; };
 struct Obj_239370 { char pad[0xC]; Vec_239370 vec; int count; };
 extern "C" {
-Elem_239370** func_00239590(Vec_239370* v, int i);
-void func_002394A0(Vec_239370* v, int f);
+Elem_239370** std_vector_cFXKeyPtr_opIndex(Vec_239370* v, int i);
+void std_vector_cFXKeyPtr_dtor(Vec_239370* v, int f);
 void operator_delete(void* p);
 }
-extern "C" Obj_239370* func_00239370(Obj_239370* o, short flag)
+extern "C" Obj_239370* cNIEventFXTrack_dtor(Obj_239370* o, short flag)
 {
     if (o) {
         int i;
         for (i = 0; i < o->count; i++) {
-            Elem_239370* e = *func_00239590(&o->vec, i);
+            Elem_239370* e = *std_vector_cFXKeyPtr_opIndex(&o->vec, i);
             AllocGuard g;
             if (e)
                 e->vt = D_004DC038;
@@ -287,7 +287,7 @@ extern "C" Obj_239370* func_00239370(Obj_239370* o, short flag)
         o->count = 0;
         Vec_239370* v = &o->vec;
         if (v)
-            func_002394A0(v, -1);
+            std_vector_cFXKeyPtr_dtor(v, -1);
         if (flag > 0)
             operator_delete(o);
     }

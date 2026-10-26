@@ -1,11 +1,11 @@
 #include "types.h"
 
-extern void func_0020B310(void* self);
+extern void details_compressed_pair_imp_cAllocator_cSkaTransBLEND_int_1_first_void(void* self);
 
 #pragma optimization_level 1
-/* Forwards to func_0020B310 (unit built at -O1: no tail call). */
-void func_0020B2F0(void* self)
+/* Forwards to details_compressed_pair_imp_cAllocator_cSkaTransBLEND_int_1_first_void (unit built at -O1: no tail call). */
+void std_vector_deleter_cSkaTransBLEND_alloc_void(void* self)
 {
-    func_0020B310(self);
+    details_compressed_pair_imp_cAllocator_cSkaTransBLEND_int_1_first_void(self);
 }
 #pragma optimization_level reset

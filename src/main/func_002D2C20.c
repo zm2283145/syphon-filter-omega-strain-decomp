@@ -17,15 +17,15 @@ void func_002D2C30(void) {
 void func_002D2C40(void) {
 }
 
-void func_002D2C50(void) {
+void cNetNPC_SetViewConeRadius(void) {
 }
 
-void func_002D2C60(void) {
+void cNetNPC_SetViewConeAngle(void) {
 }
 
-void func_002D2C70(void) {
+void cNetNPC_DropWeapon(void) {
 }
 
-int func_002D2C80(Controller2D* self) {
+int cNetNPC_GetDarkness(Controller2D* self) {
     return self->owner->unk44;
 }

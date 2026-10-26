@@ -16,7 +16,7 @@
 #pragma cplusplus on
 
 /* Deleting destructor: restore the vtable chain, optionally delete. */
-DEFINE_VTABLE_CHAIN_DTOR2(func_001638C0, D_004D9700, D_004D9720)
+DEFINE_VTABLE_CHAIN_DTOR2(cPriorityQueueItem_cNodeIndex_dtor, D_004D9700, D_004D9720)
 #pragma pop /* merge_units */
 /* merge_units: end func_001638C0 */
 
@@ -25,6 +25,6 @@ DEFINE_VTABLE_CHAIN_DTOR2(func_001638C0, D_004D9700, D_004D9720)
 #pragma cplusplus on
 
 /* Deleting destructor: restore the vtable chain, optionally delete. */
-DEFINE_VTABLE_CHAIN_DTOR1(func_00163920, D_004D9720)
+DEFINE_VTABLE_CHAIN_DTOR1(cParticleListItem_cNodeIndex_dtor, D_004D9720)
 #pragma pop /* merge_units */
 /* merge_units: end func_00163920 */

@@ -3,21 +3,21 @@ extern int D_0048623C,D_004E4800[],D_004E5440,D_0048624C;
 extern volatile int D_004861B8[32];
 extern Entry D_004E5D00[];
 extern char D_004E5F00[];
-extern Entry *func_00110D38(int);
-extern int func_001111B0(int);extern void func_001111E0(void),WaitSema(int),SignalSema(int),DeleteSema(int);
+extern Entry *get_iob(int);
+extern int _sceFsWaitS(int);extern void _sceFsSigSema(void),WaitSema(int),SignalSema(int),DeleteSema(int);
 extern int CreateSema(void *);
 extern int sceSifCallRpc(void *,int,int,void *,int,void *,int,void *,void *);
 static inline int isNowait(unsigned short mode){return mode&0x8000;}
-long long func_00113B50(int fd,long long offset,int whence){
+long long sceLseek64(int fd,long long offset,int whence){
  int *g=D_004E4800;
  Entry *iob;
  int inuse,uv,h,rc,i;
  long long result;
  int sema[8];
- iob=func_00110D38(fd);
- func_001111B0(0x16);
- if(D_0048623C==0){func_001111E0();return -1;}
- if(iob==0||(inuse=iob->used)==0){func_001111E0();return -9;}
+ iob=get_iob(fd);
+ _sceFsWaitS(0x16);
+ if(D_0048623C==0){_sceFsSigSema();return -1;}
+ if(iob==0||(inuse=iob->used)==0){_sceFsSigSema();return -9;}
  *(long long *)(g+4)=offset;
  g[3]=iob->fd;
  g[6]=whence;
@@ -34,9 +34,9 @@ long long func_00113B50(int fd,long long offset,int whence){
   SignalSema(D_0048624C);
  }
  rc=sceSifCallRpc(D_004E5F00,0x16,0,D_004E4800,0x20,&D_004E5440,4,0,0);
- if(rc<0){DeleteSema(h);func_001111E0();return -11;}
+ if(rc<0){DeleteSema(h);_sceFsSigSema();return -11;}
  uv=*(int *)((unsigned)&D_004E5440|0x20000000);
- func_001111E0();
+ _sceFsSigSema();
  if(uv==0){DeleteSema(h);return -11;}
  if(isNowait(inuse)){DeleteSema(h);return 0;}
  WaitSema(h);DeleteSema(h);return result;

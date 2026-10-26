@@ -26,7 +26,7 @@ struct O3641C0 { char pad[0x48]; V3641C0* p48; char pad4C[0x44]; V3641C0* p90; }
 extern "C" {
 extern void* D_004FFC04;
 void GuiWidget_Deinit(void* p);
-void func_002C9C80(void* p, int f);
+void cGameFrontEnd_CloseCharacter(void* p, int f);
 }
 static inline void Del3641C0(V3641C0* o, int line)
 {
@@ -37,7 +37,7 @@ static inline void Del3641C0(V3641C0* o, int line)
 extern "C" void GuiAgentDisplay_Deinit(O3641C0* s)
 {
     GuiWidget_Deinit(s);
-    func_002C9C80(D_004FFC04, 0);
+    cGameFrontEnd_CloseCharacter(D_004FFC04, 0);
     if (s->p48) {
         s->p48->v22(1);
         Del3641C0(s->p48, 0x5B);

@@ -47,7 +47,7 @@ extern char D_004B92B0[];
 void *memcpy(void *d, const void *s, unsigned int n);
 int strlen(const char *s);
 void FrontEnd_FlushMessages(void *p);
-int func_00334780(void);
+int cBitArray_224_NumChunks(void);
 int AgentFile_EncodeName(const char *in, char *out, int digit, unsigned int max);
 int MemCardWrap_Write(Mc4110 *mc, char *name, void *buf, int size, int flag);
 }
@@ -83,7 +83,7 @@ extern "C" int AgentData_Save(A4110 *self)
             WInt4110(0x11);
             { int t = *(int *)0x10000800 + g_TimerAccum; t += t << 16; WInt4110(t ^ 0xFFFF); }
             WBuf4110(self->stats, 0x38);
-            for (a = 0; a < func_00334780(); a++) WInt4110(self->objectiveBits[a]);
+            for (a = 0; a < cBitArray_224_NumChunks(); a++) WInt4110(self->objectiveBits[a]);
             WBuf4110(self->name8AC, 0x10);
             WBuf4110(self->b8CC, 0x10);
             WBuf4110(self->b8BC, 0x10);

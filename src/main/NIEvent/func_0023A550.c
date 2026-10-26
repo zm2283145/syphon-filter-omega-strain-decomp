@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int* func_0023A550(PtrVec* v, int i) {
+int* std_vector_cNIEventBasePtr_opIndex(PtrVec* v, int i) {
     return v->data + i;
 }

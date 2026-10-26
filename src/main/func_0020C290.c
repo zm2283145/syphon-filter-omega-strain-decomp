@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_0020C290(void* self) {
+void* details_compressed_pair_imp_cAllocator_cSkaSwitchItem_int_1_first_void_2(void* self) {
     return self;
 }

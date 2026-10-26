@@ -19,9 +19,9 @@ typedef struct {
     char pad0[0x58];
     UpnpReq *req;
 } UpnpObj;
-extern int func_002F61A0(int sock, void *from, unsigned short *fromlen, char *buf, int size, unsigned short *len);
+extern int rt_comm_receive_from(int sock, void *from, unsigned short *fromlen, char *buf, int size, unsigned short *len);
 extern int func_0030B760(char *resp, char *hdr);
-extern int func_003060F0(void *timer, unsigned int *ms);
+extern int rt_time_elapsed(void *timer, unsigned int *ms);
 extern int String_CompareN(const char *a, const char *b, unsigned int n);
 extern char D_004AFAB0[];
 extern char D_004AFAE0[];
@@ -37,7 +37,7 @@ int func_0030BE60(UpnpObj *o, unsigned char *done)
     unsigned int ms;
     char *svc;
 
-    if (func_002F61A0(o->req->sock, from, &fromlen, o->req->resp, 0x800, &len) != 0) {
+    if (rt_comm_receive_from(o->req->sock, from, &fromlen, o->req->resp, 0x800, &len) != 0) {
         *done = 1;
         return 5;
     }
@@ -66,7 +66,7 @@ int func_0030BE60(UpnpObj *o, unsigned char *done)
             return 11;
         }
     } else {
-        func_003060F0(o->req->timer, &ms);
+        rt_time_elapsed(o->req->timer, &ms);
         if (ms >= 5001) {
             *done = 1;
             return 6;
@@ -105,9 +105,9 @@ extern char D_004AFB78[];
 int func_0030BB48(Blob_30BFE8* d, int flags, char* buf);
 int func_0030B5F0(char* url, char* host, char* addr, unsigned short* port);
 int func_00310988(void** h, int n, int x);
-int func_002F5C98(void* p, char* addr, unsigned short port, Opt_30BFE8* o);
+int rt_comm_create(void* p, char* addr, unsigned short port, Opt_30BFE8* o);
 int func_00310C30(void* h);
-int func_002F5DB0(void* p);
+int rt_comm_destroy(void* p);
 int Socket_WriteConnected(void* p, char* buf, unsigned short len, unsigned short* out);
 void* memset(void* d, int c, unsigned int n);
 int sprintf(char* d, const char* fmt, ...);
@@ -134,14 +134,14 @@ int UPnP_SendQueryStateVariable(Conn_30BFE8* c, int flags, char* body)
     memset(&o, 0, 0xC);
     o.a = 0;
     o.b = 0x800;
-    if (func_002F5C98(c->req, addr, port, &o) != 0) {
+    if (rt_comm_create(c->req, addr, port, &o) != 0) {
         func_00310C30(c->req->h);
         return 5;
     }
     sprintf(c->req->buf, D_004AFB78, c->req->host, addr, port, strlen(body) + 0x11C, body);
     if (Socket_WriteConnected(c->req->p0, c->req->buf, strlen(c->req->buf), &written) != 0
         || strlen(c->req->buf) != written) {
-        func_002F5DB0(c->req->p0);
+        rt_comm_destroy(c->req->p0);
         func_00310C30(c->req->h);
         return 8;
     }
@@ -189,9 +189,9 @@ int func_0030BB48(Blob_30C1B8* d, int flags, char* buf);
 #define func_0030BB48(a0, a1, a2) (func_0030BB48((Blob_30BFE8 *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-int func_002F5C98(void* p, char* addr, unsigned short port, Opt_30C1B8* o);
+int rt_comm_create(void* p, char* addr, unsigned short port, Opt_30C1B8* o);
 #endif /* merge_units */
-#define func_002F5C98(a0, a1, a2, a3) (func_002F5C98((a0), (a1), (a2), (Opt_30BFE8 *)(a3))) /* merge_units */
+#define rt_comm_create(a0, a1, a2, a3) (rt_comm_create((a0), (a1), (a2), (Opt_30BFE8 *)(a3))) /* merge_units */
 
 char* strncpy(char* d, const char* s, unsigned int n);
 
@@ -221,7 +221,7 @@ int UPnP_SendSoapAction(Conn_30C1B8* c, char* action, char* args)
     memset(&o, 0, 0xC);
     o.a = 0;
     o.b = 0x800;
-    if (func_002F5C98(c->req, addr, port, &o) != 0) {
+    if (rt_comm_create(c->req, addr, port, &o) != 0) {
         func_00310C30(c->req->h);
         return 5;
     }
@@ -232,7 +232,7 @@ int UPnP_SendSoapAction(Conn_30C1B8* c, char* action, char* args)
             c->req->path, action, action, c->req->path, args, action);
     if (Socket_WriteConnected(c->req->p0, c->req->buf, strlen(c->req->buf), &written) != 0
         || strlen(c->req->buf) != written) {
-        func_002F5DB0(c->req->p0);
+        rt_comm_destroy(c->req->p0);
         func_00310C30(c->req->h);
         return 8;
     }
@@ -240,5 +240,5 @@ int UPnP_SendSoapAction(Conn_30C1B8* c, char* action, char* args)
 }
 #undef D_00529980 /* merge_units */
 #undef func_0030BB48 /* merge_units */
-#undef func_002F5C98 /* merge_units */
+#undef rt_comm_create /* merge_units */
 /* merge_units: end func_0030C1B8 */

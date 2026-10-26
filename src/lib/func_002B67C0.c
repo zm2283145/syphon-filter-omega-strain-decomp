@@ -1,4 +1,4 @@
-int func_002B67C0(char *s)
+int _get_dir_nest(char *s)
 {
     int n = 0;
     while (*s) {

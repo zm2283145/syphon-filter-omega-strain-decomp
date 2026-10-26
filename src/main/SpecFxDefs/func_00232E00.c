@@ -28,9 +28,9 @@ typedef struct {
     Vec4 r[4];
 } Mtx232E00;
 
-extern void func_00232F00(ListIt232E00* out, void* list);
-extern void func_00232EE0(ListIt232E00* out, void* list);
-extern ListIt232E00* func_00232EF0(ListIt232E00* dst, ListIt232E00* src);
+extern void std_list_cElementPtr_begin_void(ListIt232E00* out, void* list);
+extern void std_list_cElementPtr_end_void(ListIt232E00* out, void* list);
+extern ListIt232E00* cLListIterator_cElementPtr_ctor_listR(ListIt232E00* dst, ListIt232E00* src);
 extern void ParticleInst_Draw(void* obj, int key, Mtx232E00* m);
 
 #pragma push
@@ -44,10 +44,10 @@ void SnowField_Draw(Fx232E00* self) {
     Mtx232E00 m;
 
     VU0_UnitMatrix(&m);
-    func_00232F00(&tmpBegin, self->list);
-    func_00232EF0(&first, &tmpBegin);
+    std_list_cElementPtr_begin_void(&tmpBegin, self->list);
+    cLListIterator_cElementPtr_ctor_listR(&first, &tmpBegin);
     it = first;
-    while (func_00232EE0(&tmpEnd, self->list), func_00232EF0(&last, &tmpEnd), it.node != last.node) {
+    while (std_list_cElementPtr_end_void(&tmpEnd, self->list), cLListIterator_cElementPtr_ctor_listR(&last, &tmpEnd), it.node != last.node) {
         if (it.node->value->obj != 0 && it.node->value->enabled) {
             ParticleInst_Draw(it.node->value->obj, self->key, &m);
         }

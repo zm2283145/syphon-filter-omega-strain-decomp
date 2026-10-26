@@ -15,11 +15,11 @@ float func_0018A2C0(char* self) {
     return *(float*)(self + 156);
 }
 
-float func_0018A2D0(char* self) {
+float cSkaRequestStream_AnimationPacket_GetDuration(char* self) {
     return *(float*)(self + 152);
 }
 
-void* func_0018A2E0(char* self) {
+void* cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(char* self) {
     return self + 76;
 }
 

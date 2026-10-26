@@ -48,7 +48,7 @@ extern "C" int AnimContext_GetCount(void* s);
 extern "C" void** PtrStack_Top(void* s);
 extern "C" void* AnimBlend_GetGroupCollection(void* b);
 extern "C" void AnimGroup_AddContribution(void* g, AnimContribution* c, int id, float w);
-extern "C" void func_003B0CB0(AnimContribution* c, int f);
+extern "C" void cSkaPlaybackItem_dtor(AnimContribution* c, int f);
 static inline void Submit(SkaClip* self, const V* r, Ctx* ctx, float w)
 {
     int id = self->f40;
@@ -59,7 +59,7 @@ static inline void Submit(SkaClip* self, const V* r, Ctx* ctx, float w)
             AnimContribution c;
             AnimContribution_Init(&c, self, r, w);
             AnimGroup_AddContribution(AnimBlend_GetGroupCollection(blend), &c, id, wt);
-            func_003B0CB0(&c, -1);
+            cSkaPlaybackItem_dtor(&c, -1);
         }
     }
 }

@@ -8,17 +8,17 @@ extern Root45* g_LocalPlayer;
 extern int D_00497B18;
 extern int WeaponInv_SlotOfItem(int);
 extern void PtrVec_PushBack_1C1080(PtrVec*, int*);
-extern int func_0045C960(Iter*, Iter*);
+extern int cArray_int_Iterator_opNe(Iter*, Iter*);
 extern Iter* func_0045C980(Iter*);
 extern Word* func_0045C9A0(Word*, Iter*);
 extern int* func_0045C9B0(Iter*);
-extern void func_0045C9C0(Iter*, PtrVec*);
+extern void cArray_int_End(Iter*, PtrVec*);
 extern void func_0045C9E0(Iter*, PtrVec*);
 extern Word* func_0045C9F0(Word*, Iter*);
-extern void func_0045CA00(Iter*, PtrVec*);
+extern void std_vector_int_end_void_2(Iter*, PtrVec*);
 static inline Word* find45(Word* out, Iter* b, Iter* e, int* v)
 {
-    while (func_0045C960(b, e)) {
+    while (cArray_int_Iterator_opNe(b, e)) {
         if (*v == *func_0045C9B0(b)) {
             func_0045C9A0(out, b);
             return out;
@@ -47,10 +47,10 @@ void GuiGameScreen_GatherWeapons(W45C760* w)
         Iter b;
         Iter e; Word* r;
         if ((item = s->e[i & 0xFF].id) != -1) {
-            func_0045CA00(&tmp, &w->vec);
+            std_vector_int_end_void_2(&tmp, &w->vec);
             func_0045C9F0(&endc, &tmp);
             func_0045C9E0(&b, &w->vec);
-            func_0045C9C0(&e, &w->vec);
+            cArray_int_End(&e, &w->vec);
             if (r = find45(&found, &b, &e, &item), r->value == endc.value) {
                 PtrVec_PushBack_1C1080(&w->vec, &item);
                 if (cur == item) w->idx = n;

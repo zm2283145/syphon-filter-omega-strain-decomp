@@ -25,7 +25,7 @@ extern void GuiWidget_BroadcastEvent(W43EF00* w, int kind, int pos, int z);
 #pragma push
 static inline float Mul43EF00(float a, float b) { return a * b; }
 static inline int Lerp43EF00(int a, int b, float t) { return a + (int)Mul43EF00(t, (float)(b - a)); }
-void func_0043EF00(W43EF00* w, int sel)
+void GuiSliderWidget_SetState(W43EF00* w, int sel)
 {
     w->sel = sel;
     if (w->vis[w->sel]) {
@@ -50,7 +50,7 @@ extern void GuiWidget_BroadcastEvent(W43EFA0* w, int kind, int pos, int z);
 #pragma push
 static inline float Mul43EFA0(float a, float b) { return a * b; }
 static inline int Lerp43EFA0(int a, int b, float t) { return a + (int)Mul43EFA0(t, (float)(b - a)); }
-void func_0043EFA0(W43EFA0* w, int notify)
+void GuiSliderWidget_UpdateSlider(W43EFA0* w, int notify)
 {
     if (w->vis[w->sel]) {
         int lo = w->lo;
@@ -75,7 +75,7 @@ extern void GuiWidget_BroadcastEvent(W43F070* w, int kind, int pos, int z);
 #pragma push
 static inline float Mul43F070(float a, float b) { return a * b; }
 static inline int Lerp43F070(int a, int b, float t) { return a + (int)Mul43F070(t, (float)(b - a)); }
-void func_0043F070(W43F070* w, int v)
+void GuiSliderWidget_SetValue(W43F070* w, int v)
 {
     w->v = v < w->lo ? w->lo : (w->hi < v ? w->hi : v);
     if (w->vis[w->sel]) {

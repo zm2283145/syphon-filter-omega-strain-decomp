@@ -5,4 +5,4 @@
 #include "object_list_erase_range.h"
 extern "C" { char D_004A6688[] = "allocator.hh"; }
 
-DEFINE_OBJECT_LIST_ERASE_RANGE(func_0022D890)
+DEFINE_OBJECT_LIST_ERASE_RANGE(std_list_deleter_LosReqElem_erase)

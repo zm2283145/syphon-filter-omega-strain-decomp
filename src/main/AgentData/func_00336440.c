@@ -6,10 +6,10 @@
 #include "types.h"
 #include "AgentData_types.h"
 
-int func_00336440(ByteVec* v) {
+int cArray_eRequirementState_Size(ByteVec* v) {
     return v->count;
 }
 
-char* func_00336450(ByteVec* v, int i) {
+char* cArray_eRequirementState_opIndex(ByteVec* v, int i) {
     return v->data + i;
 }

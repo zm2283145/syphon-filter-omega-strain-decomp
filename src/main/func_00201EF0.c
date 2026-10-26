@@ -3,7 +3,7 @@ typedef struct { float x, y, z, w; } Quat;
 extern float Math_CosThunk(float);
 extern float Math_SinThunk(float);
 
-Quat* func_00201EF0(Quat* q, Vec3* e) {
+Quat* cQuaternion_ctor_cEulerAngleTR(Quat* q, Vec3* e) {
     float hx = 0.5f * e->x;
     float hy = 0.5f * e->y;
     float hz = 0.5f * e->z;

@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-void func_003E3B20(PtrVec* a, PtrVec* b) {
+void std_swap_vectordeleterR_vectordeleterR_42(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;
         int* p;
@@ -47,6 +47,6 @@ DEFINE_WORD_VECTOR_ERASE(PtrVector_Erase_3E3B60)
 #include "tree_insert_v8.h"
 
 extern "C" { char D_004BDA80[] = "tree::insert length error\n"; }
-DEFINE_TREE_INSERT_V8(func_003E3C80, TIValueII, D_004BDA80, D_004BDBD8, 0x5C, func_0013CD40)
+DEFINE_TREE_INSERT_V8(std_tree_pair_int_value_compare_cAllocator_pair_insert_node_at_nodeP_bool_bool_pairR_2, TIValueII, D_004BDA80, D_004BDBD8, 0x5C, std_red_black_tree_1_balance_insert)
 #pragma pop /* merge_units */
 /* merge_units: end func_003E3C80 */

@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-void func_0033A2F0(PtrVec* a, PtrVec* b) {
+void std_swap_vectordeleterR_vectordeleterR_35(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;
         int* p;

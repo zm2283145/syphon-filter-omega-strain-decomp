@@ -6,11 +6,11 @@ typedef struct Obj3 {
     int c;
 } Obj3;
 
-extern void func_001F3800(Obj3*, int);
+extern void compressed_pair_cAllocator_cSkaTransBLEND_int_ctor_uint(Obj3*, int);
 
-/* Constructor: func_001F3800(self, 0), then clears +4 and +8. */
-Obj3* func_001F37C0(Obj3* o) {
-    func_001F3800(o, 0);
+/* Constructor: compressed_pair_cAllocator_cSkaTransBLEND_int_ctor_uint(self, 0), then clears +4 and +8. */
+Obj3* std_vector_deleter_cSkaTransBLEND_ctor_void(Obj3* o) {
+    compressed_pair_cAllocator_cSkaTransBLEND_int_ctor_uint(o, 0);
     o->b = 0;
     o->c = 0;
     return o;

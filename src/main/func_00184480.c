@@ -10,9 +10,9 @@ typedef struct {
 extern char D_0055D4D8[];
 extern char D_004D9DA0[];
 extern void Event_Construct(PosMsg* msg, void* name);
-extern int func_00184470(PosMsg* msg);
+extern int cMoveMsg_Template_HasDeltaPosition(PosMsg* msg);
 extern Vec4* func_00133EC0(void* xform);
-extern void func_0015A400(Vec4* out, Vec4* v);
+extern void cVector_Copy_WSet0(Vec4* out, Vec4* v);
 extern void Vec4_CopyAsPoint(Vec4* out, Vec4* v);
 extern void Mtx_SetRotationTranslation(void* dst, void* basis, Vec4* pos);
 extern void Event_Send(PosMsg* msg, void* target, int flags);
@@ -29,8 +29,8 @@ void Npc_v24(void* target, void* xform)
     Event_Construct(m, D_0055D4D8);
     m->vtable = D_004D9DA0;
     m->flag = 1;
-    if (func_00184470(m)) {
-        func_0015A400(&dir, func_00133EC0(xform));
+    if (cMoveMsg_Template_HasDeltaPosition(m)) {
+        cVector_Copy_WSet0(&dir, func_00133EC0(xform));
         pos = &dir;
     } else {
         Vec4_CopyAsPoint(&point, func_00133EC0(xform));

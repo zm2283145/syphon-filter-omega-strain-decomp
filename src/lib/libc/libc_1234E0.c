@@ -51,9 +51,9 @@ int fflush(FILE *fp)
 /* merge_units: begin func_001235F8 */
 typedef struct { unsigned char *_p; int _r; } FILE_001235F8;
 extern int __srefill(FILE_001235F8 *);
-extern void *func_00125DC0(const void *, int, unsigned int);
+extern void *Libc_Memchr(const void *, int, unsigned int);
 extern void *memcpy(void *, const void *, unsigned int);
-char *func_001235F8(char *buf, int n, FILE_001235F8 *fp)
+char *Libc_Fgets(char *buf, int n, FILE_001235F8 *fp)
 {
     unsigned int len;
     char *s;
@@ -76,7 +76,7 @@ char *func_001235F8(char *buf, int n, FILE_001235F8 *fp)
         p = fp->_p;
         if (len > n)
             len = n;
-        t = (unsigned char *)func_00125DC0((void *)p, '\n', len);
+        t = (unsigned char *)Libc_Memchr((void *)p, '\n', len);
         if (t != 0) {
             len = ++t - p;
             fp->_r -= len;
@@ -98,7 +98,7 @@ char *func_001235F8(char *buf, int n, FILE_001235F8 *fp)
 /* merge_units: begin func_00123730 */
 extern int Newlib_Sread(); extern int Newlib_Swrite(); extern int Newlib_Sseek(); extern int Newlib_Sclose();
 typedef struct { unsigned char* _p; int _r; int _w; short _flags; short _file; unsigned char* _bf_base; int _bf_size; int _lbfsize; void* _cookie; void* _read; void* _write; void* _seek; void* _close; char pad[0x24]; void* _data; } FILE_00123730;
-void func_00123730(FILE_00123730* ptr, int flags, int file, void* data)
+void Newlib_Std(FILE_00123730* ptr, int flags, int file, void* data)
 {
   ptr->_p = 0;
   ptr->_r = 0;

@@ -8,7 +8,7 @@
 typedef struct N2F7DB8 { int a; int b; int c; int d; int e; int f; int g; } N2F7DB8;
 extern void func_002FB2D8(void *, int);
 /* Allocates and clears a 0x1C-byte node. */
-N2F7DB8 *func_002F7DB8(void)
+N2F7DB8 *NewKeyChain(void)
 {
     N2F7DB8 *p = 0;
     func_002FB2D8(&p, 0x1C);
@@ -26,14 +26,14 @@ N2F7DB8 *func_002F7DB8(void)
 /* merge_units: end func_002F7DB8 */
 
 /* merge_units: begin func_002F7E20 */
-extern void func_002FB3C0(void *);
-void func_002F7E20(char *s)
+extern void rt_memory_free(void *);
+void DeleteKeyChain(char *s)
 {
     if (s == 0) return;
-    if (*(int *)(s + 0xC)) func_002FB3C0(s + 0xC);
-    if (*(int *)(s + 0x18)) func_002FB3C0(s + 0x18);
-    if (*(int *)(s + 0x10)) func_002FB3C0(s + 0x10);
-    if (*(int *)(s + 0x14)) func_002FB3C0(s + 0x14);
-    func_002FB3C0(&s);
+    if (*(int *)(s + 0xC)) rt_memory_free(s + 0xC);
+    if (*(int *)(s + 0x18)) rt_memory_free(s + 0x18);
+    if (*(int *)(s + 0x10)) rt_memory_free(s + 0x10);
+    if (*(int *)(s + 0x14)) rt_memory_free(s + 0x14);
+    rt_memory_free(&s);
 }
 /* merge_units: end func_002F7E20 */

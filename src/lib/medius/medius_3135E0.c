@@ -1,7 +1,7 @@
 typedef struct { int a; int b; char pad[0xF8]; } ScfSlot;
 typedef struct { int f0; int f4; int f8; int fC; ScfSlot slot[64]; } ScfSlotTbl;
 extern int Net_AllocZeroed(void *pp, int size);
-ScfSlotTbl *func_003135E0(void)
+ScfSlotTbl *CreateSequence(void)
 {
     ScfSlotTbl *t = 0;
     unsigned int i;

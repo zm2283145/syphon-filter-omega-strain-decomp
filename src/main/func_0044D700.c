@@ -7,7 +7,7 @@ int SFOLobby_RequestBuddyList(char * , int);
 extern int D_004977B8;
 
 typedef struct { char p0[9596]; int f257C; } PS0_0044D700;
-void func_0044D700(PS0_0044D700 *arg0, int arg1) {
+void SFOLobby_ContactUpdateMemberList(PS0_0044D700 *arg0, int arg1) {
     int temp_a0;
     int temp_s0;
 

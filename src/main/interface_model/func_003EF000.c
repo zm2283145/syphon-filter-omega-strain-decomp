@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-Word* func_003EF000(Word* dst, Word* src) {
+Word* std_list_cInterfaceElementPtr_generic_iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }

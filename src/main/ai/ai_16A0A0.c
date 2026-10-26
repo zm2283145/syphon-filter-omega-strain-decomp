@@ -30,8 +30,8 @@ extern char D_0049C800[];
 extern char D_0049C650[];
 extern char D_0049C648[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
-int func_002EAF28(int* out, int a, int b, int c, int d, int e, int f, void* g, char* h, int i);
-int func_002EB650(P_A0A0** out, int id);
+int NetCreateObject(int* out, int a, int b, int c, int d, int e, int f, void* g, char* h, int i);
+int NetGetObject(P_A0A0** out, int id);
 }
 /* 0x100-byte relation matrix, allocated through a class operator new
    (lock/unlock written out rather than AllocGuard). The non-POD
@@ -69,8 +69,8 @@ extern "C" void TeamRelations_CreateMultiplayer(void)
         if (D_005721D0 && !D_004EE618) {
             int id;
             P_A0A0* p;
-            if (!func_002EAF28(&id, 1, 4, 0, 0, 0, 0, D_004EE620, D_0049C648, D_004EE610)
-                && !func_002EB650(&p, id)) {
+            if (!NetCreateObject(&id, 1, 4, 0, 0, 0, 0, D_004EE620, D_0049C648, D_004EE610)
+                && !NetGetObject(&p, id)) {
                 void* old = D_004EE620;
                 void* nv = p->data;
                 if (old && !D_004EE628) {
@@ -99,7 +99,7 @@ extern "C" {
 unsigned int D_0048A100[4] = { 0x1, 0x0, 0x0, 0x0 };
 extern unsigned char D_005723C8;
 }
-extern "C" void func_0016A450(void)
+extern "C" void cTeam_TeamDeleteCallback(void)
 {
     if (!D_005723C8)
         D_005723C8 = 1;
@@ -128,7 +128,7 @@ extern char D_005723C8[];
 #define D_005723C8 ((char*)&D_005723C8) /* merge_units */
 
 
-void func_0016A550(void) {
+void cTeam_TeamUpdateCallback(void) {
     int v1;
     int cond;
 

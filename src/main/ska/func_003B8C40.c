@@ -5,6 +5,6 @@
 
 #include "types.h"
 
-void* func_003B8C40(void* self) {
+void* details_compressed_pair_imp_cAllocator_int_int_1_second(void* self) {
     return self;
 }

@@ -9,7 +9,7 @@
 typedef struct { char pad[0xC]; int handle; } Obj;
 extern int DeleteSema(int h);
 /* Returns 2 when o is NULL, else whether DeleteSema(o->handle) returned -1. */
-int func_00302518(Obj* o)
+int rt_mutex_platform_destroy(Obj* o)
 {
     int ret = 2;
     if (o != 0) {
@@ -26,7 +26,7 @@ typedef struct { int pad[3]; int sema; } Obj_00302548;
 extern int WaitSema(int sema); /* syscall 0x44: WaitSema */
 
 /* Waits on the object's semaphore: returns 2 for NULL, 1 if WaitSema failed (-1), else 0. */
-int func_00302548(Obj_00302548* obj)
+int rt_mutex_platform_lock(Obj_00302548* obj)
 {
     int ret = 2;
     if (obj != 0)

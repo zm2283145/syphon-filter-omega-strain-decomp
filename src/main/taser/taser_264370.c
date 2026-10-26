@@ -32,7 +32,7 @@ static inline float Calc264370(float k, float* p, float x, int flag)
     return d;
 }
 #pragma opt_strength_reduction off
-void func_00264370(V264370* v, float dt, int flag)
+void cAirTaser_AddTension(V264370* v, float dt, int flag)
 {
     int i;
     float k = D_0048B110 * dt;
@@ -105,7 +105,7 @@ void Mtx_FromRowsAndTranslation(M* m, V* a, V* b, V* c, V* t);
 void Mtx_FrameFromAxis(M* m, V* axis);
 void Mtx_SetIdentity(M* m);
 }
-extern "C" void func_00264530(Path* s, V* org)
+extern "C" void cAirTaser_PointsToWorld(Path* s, V* org)
 {
     s->p[0].pos = *org;
     V axis;

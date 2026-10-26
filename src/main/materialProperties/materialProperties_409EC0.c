@@ -8,10 +8,10 @@ static inline void Assign409EC0(ShortStr* self, const ShortStr* src)
     if (!selfLong && !ShortStr_IsLong(src)) {
         *self = *src;
     } else {
-        func_0013D710(self, 0, selfLong ? self->u.l.length : ShortStr_ShortLen(self), src);
+        std_basic_string_char_char_traits_char_replace_uint_uint_basicstringR(self, 0, selfLong ? self->u.l.length : ShortStr_ShortLen(self), src);
     }
 }
-extern "C" E409EC0* func_00409EC0(E409EC0* self, const E409EC0* src)
+extern "C" E409EC0* cMaterialProperties_MatPropInfo_opAssign(E409EC0* self, const E409EC0* src)
 {
     Assign409EC0(&self->a, &src->a);
     self->b = src->b;

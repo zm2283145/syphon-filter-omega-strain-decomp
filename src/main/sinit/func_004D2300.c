@@ -1,6 +1,6 @@
 #include "types.h"
 extern char D_004FFE60[], D_004FFE50[];
-extern char func_002783A0[], func_00278250[], func_00278230[];
+extern char cBullet_ctor[], cBullet_dtor[], func_00278230[];
 extern char D_004A91C0[], D_004A91D0[], D_004A91E0[], D_004A91F0[], D_004A9200[], D_004A9208[];
 extern char D_0048B318, D_0048B320, D_0048B330, D_0048B338, D_0048B340, D_0048B348;
 extern char D_00493888[], D_00493890[];
@@ -18,7 +18,7 @@ extern int D_004A90A0, D_004A90A4, D_004A90A8, D_004A90AC, D_004A90B0, D_004A90B
 
 void StaticInit_RegisterBulletVars(void)
 {
-    __construct_array(D_004FFE60, func_002783A0, func_00278250, 0x150, 0x32);
+    __construct_array(D_004FFE60, cBullet_ctor, cBullet_dtor, 0x150, 0x32);
     __register_global_object(0, func_00278230, D_004FFE50);
     D_00504000 = Script_RegisterVariable(D_004A91C0, (int)&D_0048B318, D_00493890);
     D_00504008 = Script_RegisterVariable(D_004A91D0, (int)&D_0048B320, D_00493890);

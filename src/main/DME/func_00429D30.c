@@ -29,18 +29,18 @@ void cMessage_dtor(NetLevelInfoMsg* m, int f);
 int NetLevelInfoMsg_Send(NetLevelInfoMsg* m, int a, int* out, int b, int c, int size, char* buf);
 int Net_SendLocked(int kind, int net, int dst, int ch, unsigned int len, int n, void* buf);
 void printf(char* fmt, char* file, int line, int err); /* debug printf */
-int func_002EBCE0(int* out);
+int NetGetTime(int* out);
 void func_003FBEB0(void);
-void func_0043A810(void);
-void func_00436C00(int* o);
-void func_004352C0(int* o);
-void func_00436BA0(int* o, int v);
-int func_002EC4F8(void);
-void func_002EB7A0(unsigned int* out, int net, int i);
-void func_002ECF08(int net, int i, int* a, int* b, int* c, int* d);
-void func_002EC580(int* arr);
+void cGenInfoObject_ReleasePrivate(void);
+void cNPCInfoObject_ctor(int* o);
+void cNPCInfoObject_CheckForPendingRelease(int* o);
+void cNPCInfoObject_dtor(int* o, int v);
+int NetUpdate(void);
+void NetGetClientStatus(unsigned int* out, int net, int i);
+void NetGetClientBufferStatus(int net, int i, int* a, int* b, int* c, int* d);
+void NetGetNetUpdateErrors(int* arr);
 int snprintf(char* s, int n, const char* fmt, ...);
-void func_003FAC40(char* p);
+void cNetObj_Update(char* p);
 void SFOLobby_Update(int v);
 
 #pragma opt_dead_assignments off
@@ -86,22 +86,22 @@ int DME_Update(void)
             NetBusyEnter();
             NetBusyLeave();
             if (D_005721D0 && D_00572420) D_005724E0 = 0;
-            D_005724D8 = func_002EBCE0(&netTime) == 0 ? netTime : -1;
+            D_005724D8 = NetGetTime(&netTime) == 0 ? netTime : -1;
             if (D_005724D0) func_003FBEB0();
             if (D_005721D0) {
-                func_0043A810();
-                func_00436C00(&obj);
-                func_004352C0(&obj);
-                func_00436BA0(&obj, -1);
+                cGenInfoObject_ReleasePrivate();
+                cNPCInfoObject_ctor(&obj);
+                cNPCInfoObject_CheckForPendingRelease(&obj);
+                cNPCInfoObject_dtor(&obj, -1);
             }
-            ret = func_002EC4F8();
+            ret = NetUpdate();
             if (D_005721D0) {
                 int j;
                 for (j = 0; j < 4; j++) {
                     if (j != NetLocalId()) {
-                        func_002EB7A0(&peerState, D_005721A8, j);
+                        NetGetClientStatus(&peerState, D_005721A8, j);
                         if (peerState > 1) {
-                            func_002ECF08(D_005721A8, j, &ping, &e0, &e4, &dc);
+                            NetGetClientBufferStatus(D_005721A8, j, &ping, &e0, &e4, &dc);
                             D_00572270[j][g_DmePingHistoryPos[j]] = ping;
                             g_DmePingHistoryPos[j]++;
                             if (g_DmePingHistoryPos[j] >= 0x14) g_DmePingHistoryPos[j] = 0;
@@ -112,7 +112,7 @@ int DME_Update(void)
             if (ret) {
                 int k;
                 connStates[0] = 0x18;
-                func_002EC580(connStates);
+                NetGetNetUpdateErrors(connStates);
                 for (k = 0; k < 4; k++) {
                     int v = connStates[k + 1];
                     if (v) {
@@ -126,7 +126,7 @@ int DME_Update(void)
                 }
             }
         }
-        func_003FAC40(D_00572408);
+        cNetObj_Update(D_00572408);
     }
     if (D_00572528 && g_DmeLobby && g_DmeLobbyActive && !D_005723C8) {
         NetBusyEnter();

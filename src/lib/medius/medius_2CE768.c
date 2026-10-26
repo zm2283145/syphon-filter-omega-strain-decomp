@@ -8,7 +8,7 @@
 /* Stores a 48-byte block passed by value into a global. */
 typedef struct { unsigned char b[48]; } Blk2CE768;
 extern Blk2CE768 D_0051EFA8;
-void func_002CE768(Blk2CE768 s)
+void MGCLSetClientAddrList(Blk2CE768 s)
 {
     D_0051EFA8 = s;
 }
@@ -21,6 +21,6 @@ extern B2CE840 D_0051EFA8;
 #endif /* merge_units */
 #define D_0051EFA8 (*(B2CE840*)&D_0051EFA8) /* merge_units */
 
-void func_002CE840(B2CE840* p) { *p = D_0051EFA8; }
+void MGCLGetClientAddrList(B2CE840* p) { *p = D_0051EFA8; }
 #undef D_0051EFA8 /* merge_units */
 /* merge_units: end func_002CE840 */

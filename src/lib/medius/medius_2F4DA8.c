@@ -1,4 +1,4 @@
-unsigned int func_002F4DA8(char* s)
+unsigned int rt_audio_stringtoip(char* s)
 {
     unsigned int r = 0;
     unsigned int n = 0;

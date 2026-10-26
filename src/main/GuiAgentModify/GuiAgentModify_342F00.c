@@ -89,7 +89,7 @@ void GuiAgentModify_AdvancePatchB(O_342FA0* o, int v);
 
 W_342FA0* GuiWidget_FindChildByName(void* o, char* name);
 void GuiAgentModify_GroupHide(O_342FA0* o, W_342FA0* w);
-void func_00345020(void);
+void AgentRenderWrapper(void);
 #if 0 /* merge_units */
 A_342FA0* Agent_GetSelected(void* p, int i);
 #endif /* merge_units */
@@ -143,7 +143,7 @@ void GuiAgentModify_Init(O_342FA0* o)
     p = Cast_342FA0(GuiWidget_FindChildByName(o, "playercharacter"), D_004A9BF0);
     if (p) {
         D_005331D0 = o;
-        p->f48 = (void*)func_00345020;
+        p->f48 = (void*)AgentRenderWrapper;
     }
     a = Cast_342FA0(GuiWidget_FindChildByName(o, "value_agent"), D_004A7520);
     b = Cast_342FA0(GuiWidget_FindChildByName(o, "value_rank"), D_004A7520);
@@ -173,8 +173,8 @@ typedef union { __int128 q; char c[16]; } Key;
 
 
 extern char g_AgentPartCache[];
-extern int func_004027E0(void *t, __int128 key);
-extern void func_004022E0(void *t, __int128 key, E *e, short *a, short *b, unsigned char u, signed char s);
+extern int FindTex__7MonsterF1(void *t, __int128 key);
+extern void Monster_FindTheTexture(void *t, __int128 key, E *e, short *a, short *b, unsigned char u, signed char s);
 
 void GuiAgentModify_AdvancePatchB(O *o, int idx)
 {
@@ -182,7 +182,7 @@ void GuiAgentModify_AdvancePatchB(O *o, int idx)
     char *lo, *hi, *b;
     int i;
     k.q = o->p->sub.e[idx].key;
-    if (func_004027E0(g_AgentPartCache, k.q) != -1)
+    if (FindTex__7MonsterF1(g_AgentPartCache, k.q) != -1)
         return;
     
     b = k.c;
@@ -196,9 +196,9 @@ void GuiAgentModify_AdvancePatchB(O *o, int idx)
         } else {
             (*lo)++;
         }
-        if (func_004027E0(g_AgentPartCache, k.q) != -1) {
+        if (FindTex__7MonsterF1(g_AgentPartCache, k.q) != -1) {
             Sub *s = &o->p->sub;
-            func_004022E0(g_AgentPartCache, k.q, &s->e[idx], &s->a[idx], &s->b[idx], s->u, s->s);
+            Monster_FindTheTexture(g_AgentPartCache, k.q, &s->e[idx], &s->a[idx], &s->b[idx], s->u, s->s);
             o->p->sub.e[idx].key = k.q;
             return;
         }

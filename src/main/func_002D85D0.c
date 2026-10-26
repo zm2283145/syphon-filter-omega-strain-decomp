@@ -4,7 +4,7 @@ typedef struct { void* vt; char p4[0x40]; char* p44; char* p48; Own2D85D0* owner
 extern char D_004DE530[];
 extern void Component_BaseInit(C2D85D0* c);
 /* Component constructor: binds the owner and caches its sub-object. */
-C2D85D0* func_002D85D0(C2D85D0* c, char* a, Own2D85D0* owner)
+C2D85D0* cNetPlayer_ctor(C2D85D0* c, char* a, Own2D85D0* owner)
 {
     Component_BaseInit(c);
     c->vt = D_004DE530;

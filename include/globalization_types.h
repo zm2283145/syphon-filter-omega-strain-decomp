@@ -9,7 +9,7 @@ typedef struct LocEntry {
     int unk00;
 } LocEntry;
 
-/* Object with an int at +0x04 cleared by func_003FEED0 (size unknown). */
+/* Object with an int at +0x04 cleared by std_vector_deleter_1_clear (size unknown). */
 typedef struct LocTable {
     int unk00;
     int unk04;

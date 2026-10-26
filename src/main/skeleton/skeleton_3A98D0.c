@@ -34,9 +34,9 @@ struct It_9D40 {
     It_9D40& operator++() { p++; return *this; }
 };
 static inline bool HEq(const It_9D40* a, const It_9D40* b) { Node_9D40* bp = b->p; return a->p == bp; }
-extern "C" Node_9D40** func_001D5E80(Coll_9D40*);
-static inline It_9D40 HBegin(Coll_9D40* c) { It_9D40 r(*func_001D5E80(c)); return r; }
-static inline It_9D40 HEnd(Coll_9D40* c) { It_9D40 r(*func_001D5E80(c) + c->count); return r; }
+extern "C" Node_9D40** std_vector_deleter_cBone_data_void_2(Coll_9D40*);
+static inline It_9D40 HBegin(Coll_9D40* c) { It_9D40 r(*std_vector_deleter_cBone_data_void_2(c)); return r; }
+static inline It_9D40 HEnd(Coll_9D40* c) { It_9D40 r(*std_vector_deleter_cBone_data_void_2(c) + c->count); return r; }
 static inline void Mul_9D40(void* d, void* a, void* b) {
     __asm__ volatile(
         "lqc2 $vf4, 0x0(%2)\n"

@@ -5,7 +5,7 @@ typedef struct IkBytePair { signed char a; signed char b; } IkBytePair;
 typedef struct IkPose { IkBytePair bp; SegPair sp; } IkPose;
 /* GCC-style volatile lq/sq quad copy (c57da idiom): keeps the unfolded addiu address regs */
 static inline void V4_Copy(V4* d, const V4* s) { __int128 q; __asm__ volatile("lq %0, 0(%2); sq %0, 0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
-IkPose* func_001DF910(IkPose* d, const IkPose* s)
+IkPose* std_pair_cWeaponSlotPair_cIkTarget_LeftRight_ctor_pairR_2(IkPose* d, const IkPose* s)
 {
     V4* dp = &d->sp.a.p;
     d->bp.a = s->bp.a;

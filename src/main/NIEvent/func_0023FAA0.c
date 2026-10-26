@@ -3,8 +3,8 @@
 
 typedef struct { int a; } Proto_0023FAA0;
 extern char D_004F7C40[];
-extern void func_0023F9A0(void);
+extern void cNIShuttle_NIShuttleCallback(void);
 
-NETREG_BEGIN_KEEP(func_0023FAA0, Proto_0023FAA0)
+NETREG_BEGIN_KEEP(cNIShuttle_InitNet, Proto_0023FAA0)
 NETREG_FIELD(a, 4, 1)
-NETREG_END(D_004F7C40, func_0023F9A0)
+NETREG_END(D_004F7C40, cNIShuttle_NIShuttleCallback)

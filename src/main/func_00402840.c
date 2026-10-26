@@ -7,11 +7,11 @@ extern signed char D_00493A60;
 extern char D_0055D510[];
 extern char D_0055D950[];
 extern void Resource_Construct(SklFile_h5* f);
-extern void func_0036E140(SklFile_h5* f, char* path, int a, int b);
+extern void cFileMan_EncodeFilename_charP_cFileIOP_bool(SklFile_h5* f, char* path, int a, int b);
 extern int FileMan_FindMember(SklFile_h5* f);
 extern int FileMan_GetSize(SklFile_h5* f);
 extern void* FileMan_ReadData(SklFile_h5* f);
-extern void func_0036DEC0(SklFile_h5* f);
+extern void cFileMan_Close(SklFile_h5* f);
 extern void FileMan_Release(SklFile_h5* f, int flags);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern void Appearance_PackText(char* dst, void* text, int len);
@@ -21,7 +21,7 @@ void Skl_Load(void* self, char* skelPath, char* animPath)
     {
         SklFile_h5 f;
         Resource_Construct(&f);
-        func_0036E140(&f, skelPath, 0, 0);
+        cFileMan_EncodeFilename_charP_cFileIOP_bool(&f, skelPath, 0, 0);
         if ((unsigned char)FileMan_FindMember(&f)) {
             char msg[128];
             sprintf(msg, "Failed to open %s in LoadSKL\n", f.name);
@@ -29,14 +29,14 @@ void Skl_Load(void* self, char* skelPath, char* animPath)
         } else {
             int len = FileMan_GetSize(&f);
             Appearance_PackText(D_0055D510, FileMan_ReadData(&f), len);
-            func_0036DEC0(&f);
+            cFileMan_Close(&f);
             FileMan_Release(&f, -1);
         }
     }
     {
         SklFile_h5 f;
         Resource_Construct(&f);
-        func_0036E140(&f, animPath, 0, 0);
+        cFileMan_EncodeFilename_charP_cFileIOP_bool(&f, animPath, 0, 0);
         if ((unsigned char)FileMan_FindMember(&f)) {
             char msg[128];
             sprintf(msg, "Failed to open %s in LoadSKL\n", f.name);
@@ -44,7 +44,7 @@ void Skl_Load(void* self, char* skelPath, char* animPath)
         } else {
             int len = FileMan_GetSize(&f);
             Appearance_PackText(D_0055D950, FileMan_ReadData(&f), len);
-            func_0036DEC0(&f);
+            cFileMan_Close(&f);
             FileMan_Release(&f, -1);
         }
     }

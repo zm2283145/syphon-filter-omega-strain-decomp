@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-void func_00337F50(PtrVec* a, PtrVec* b) {
+void std_swap_vectordeleterR_vectordeleterR_29(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;
         int* p;
@@ -41,6 +41,6 @@ void func_00337F50(PtrVec* a, PtrVec* b) {
 
 struct E_00337F90 { int m0; int m1; char m2; int m3; int m4; int m5; int m6; };
 static char D_004B9948[] = "allocator.hh";
-DEFINE_VECTOR_INSERT_FILL_CNT(func_00337F90, E_00337F90, 0x36DB6D, 0x1B6DB6, D_004B9320, D_004B9948, 0x5C, func_00338560, void func_00299270(func_00337F90_V* v, int flags);, func_00299270(&tmp, -1), VIFC_ASSIGN, VIFC_COPY)
+DEFINE_VECTOR_INSERT_FILL_CNT(std_vector_imp_tRequirementInfo_insert, E_00337F90, 0x36DB6D, 0x1B6DB6, D_004B9320, D_004B9948, 0x5C, std_swap_vectordeleterR_vectordeleterR_30, void std_vector_deleter_tRequirementInfo_dtor(std_vector_imp_tRequirementInfo_insert_V* v, int flags);, std_vector_deleter_tRequirementInfo_dtor(&tmp, -1), VIFC_ASSIGN, VIFC_COPY)
 #pragma pop /* merge_units */
 /* merge_units: end func_00337F90 */

@@ -6,12 +6,12 @@
 
 #include "types.h"
 
-int func_001989E0(Iter* a, Iter* b) {
+int opNe_cConstLListIteratorR_cConstLListIteratorR(Iter* a, Iter* b) {
     return a->p != b->p;
 }
 
 /* List iterator ++: follow the next link at node +0x04. */
-Iter* func_00198A00(Iter* it) {
+Iter* cConstLListIterator_cSkaPlaybackGroupPtr_opInc(Iter* it) {
     it->p = (int*)it->p[1];
     return it;
 }

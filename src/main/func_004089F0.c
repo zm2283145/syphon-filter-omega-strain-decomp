@@ -25,11 +25,11 @@ extern char D_0053B540[];
 extern char D_004BEB78[];
 extern void* g_TextureMgr;
 void MaterialProps_Init(MProps* s);
-void func_0040AFE0(TMap* m, Cmp* c, Alloc* a);
-void func_00408D80(TMap* m, int f);
-Material** func_00408E90(MVec* v);
-Material* func_00408E00(MVec* v);
-void func_00408DF0(MIt* out, MVec* v, Material** p);
+void std_tree_pair_cString_value_compare_ctor_valuecompareR_cAllocatorR_4(TMap* m, Cmp* c, Alloc* a);
+void std_map_cString_int_dtor(TMap* m, int f);
+Material** std_vector_deleter_cMaterialProperties_data(MVec* v);
+Material* std_vector_imp_cMaterialProperties_end(MVec* v);
+void std_vector_cMaterialProperties_pointer2iterator(MIt* out, MVec* v, Material** p);
 int String_Length(MStr* s);
 char* String_CStr(MStr* s);
 void String_Replace(MStr* s, int pos, int n, const char* a, const char* b, Alloc al);
@@ -39,11 +39,11 @@ void String_Copy(char* d, const char* s);
 char* strstr(const char* a, const char* b);
 void Libc_Strcat(char* d, const char* s);
 void ParticleLib_Request(void* lib, char* name, int* out);
-void func_00409870(TIt* out, TMap* m, MStr* key);
-void func_00408E80(TIt* out, TMap* m);
-void func_00408E70(TIt* out, TIt* in);
-void func_00408E30(TPair* out, MStr* k, int v);
-void func_0040AEC0(TIns* out, TMap* m, TPair* p);
+void std_tree_pair_cString_value_compare_find_cStringR_4(TIt* out, TMap* m, MStr* key);
+void std_map_cString_int_end(TIt* out, TMap* m);
+void cAssocArray_cString_int_Iterator_ctor(TIt* out, TIt* in);
+void std_make_pair_cString_int(TPair* out, MStr* k, int v);
+void std_tree_pair_cString_value_compare_insert_one_pairR_4(TIns* out, TMap* m, TPair* p);
 void Resource_Construct(Res* r);
 void Hog_Register(Res* r, char* name, int a, int b);
 int TexMan_FindOrLoad(void* mgr, Res* r);
@@ -55,8 +55,8 @@ static inline char First(MStr* s) { return ((s->word & 1) ? s->data : (char*)s +
 /* vector end() iterator; one inline level below NotEnd so the temp gets the lowest slot */
 static inline void VecEnd(MIt* e, MVec* v)
 {
-    Material* t = func_00408E00(v);
-    func_00408DF0(e, v, &t);
+    Material* t = std_vector_imp_cMaterialProperties_end(v);
+    std_vector_cMaterialProperties_pointer2iterator(e, v, &t);
 }
 static inline bool NotEnd(Material* m, MVec* v, MIt* e)
 {
@@ -66,8 +66,8 @@ static inline bool NotEnd(Material* m, MVec* v, MIt* e)
 static inline void TexEnd0(TIt* out, TMap* m)
 {
     TIt e1;
-    func_00408E80(&e1, m);
-    func_00408E70(out, &e1);
+    std_map_cString_int_end(&e1, m);
+    cAssocArray_cString_int_Iterator_ctor(out, &e1);
 }
 /* the extra inline level puts e1 below the Clear allocators (retail's slot order) */
 static inline void TexEnd(TIt* out, TMap* m) { TexEnd0(out, m); }
@@ -83,8 +83,8 @@ void MaterialProps_ResolveEffects(MProps* s, int arc)
     Alloc a;
     MIt e;
     if (!s->inited) MaterialProps_Init(s);
-    func_0040AFE0(&texs, &c, &a);
-    for (m = *func_00408E90(s->vec); NotEnd(m, s->vec, &e); m++) {
+    std_tree_pair_cString_value_compare_ctor_valuecompareR_cAllocatorR_4(&texs, &c, &a);
+    for (m = *std_vector_deleter_cMaterialProperties_data(s->vec); NotEnd(m, s->vec, &e); m++) {
         int i;
         for (i = 0; i < 5; i++) {
             MProp* pr = &m->props[i];
@@ -94,7 +94,7 @@ void MaterialProps_ResolveEffects(MProps* s, int arc)
             }
             if (String_Length(&pr->tex) && First(&pr->tex)) {
                 TNode* n;
-                func_00409870(&f, &texs, &pr->tex);
+                std_tree_pair_cString_value_compare_find_cStringR_4(&f, &texs, &pr->tex);
                 n = f.n;
                 TexEnd(&e2, &texs);
                 if ((n == e2.n) ^ 1) {
@@ -115,10 +115,10 @@ void MaterialProps_ResolveEffects(MProps* s, int arc)
                         TPair pa;
                         TPair pb;
                         String_CopyCtor(&k, &pr->tex);
-                        func_00408E30(&pa, &k, id);
+                        std_make_pair_cString_int(&pa, &k, id);
                         String_CopyCtor(&pb.key, &pa.key);
                         pb.val = pa.val;
-                        func_0040AEC0(&ins, &texs, &pb);
+                        std_tree_pair_cString_value_compare_insert_one_pairR_4(&ins, &texs, &pb);
                         String_Dtor(&pb, 0);
                         String_Dtor(&pa, 0);
                         String_Dtor(&k, 0);
@@ -129,5 +129,5 @@ void MaterialProps_ResolveEffects(MProps* s, int arc)
             }
         }
     }
-    func_00408D80(&texs, -1);
+    std_map_cString_int_dtor(&texs, -1);
 }

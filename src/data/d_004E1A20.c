@@ -6,6 +6,8 @@ extern void GuiCanvas_IsType();
 extern void GuiCanvas_Navigate();
 extern void GuiCanvas_PopScreen();
 extern void GuiCanvas_PushScreen();
+extern void GuiCommonCanvas_dtor();
+extern void GuiCommonCanvas_onMessage();
 extern void GuiFrontendCanvas_Draw();
 extern void GuiFrontendCanvas_ctor();
 extern void GuiGameCanvas_Create();
@@ -26,14 +28,12 @@ extern void GuiWidget_Load();
 extern void GuiWidget_SetFlag4();
 extern void GuiWidget_Update();
 extern void func_00465A40();
-extern void func_00465A50();
-extern void func_00465EC0();
 
 void *D_004E1A20[28] = {
-    0, 0, &func_00465EC0, &GuiWidget_Init,
+    0, 0, &GuiCommonCanvas_dtor, &GuiWidget_Init,
     &GuiWidget_Deinit, &GuiWidget_SetFlag4, &GuiWidget_ClearFlag4, &GuiWidget_BaseWake,
     &GuiWidget_BaseSleep, &GuiWidget_BubbleType0, &GuiWidget_BubbleType1, &GuiCanvas_Navigate,
-    &GuiWidget_Draw, &GuiWidget_BubbleActivate, &GuiWidget_Update, &func_00465A50,
+    &GuiWidget_Draw, &GuiWidget_BubbleActivate, &GuiWidget_Update, &GuiCommonCanvas_onMessage,
     &GuiWidget_Load, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
     &GuiWidget_FocusPrev, &GuiCanvas_GetClassName, &GuiCanvas_IsType, &GuiFrontendCanvas_Draw,
     &GuiCanvas_CheckControllers, &GuiCanvas_PushScreen, &GuiCanvas_PopScreen, &func_00465A40,

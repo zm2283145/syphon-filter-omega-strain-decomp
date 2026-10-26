@@ -16,7 +16,7 @@
 #pragma cplusplus on
 extern "C" char D_004D9340[];
 extern "C" char D_004DFD80[];
-MSG_CLONE_BEGIN(func_0015B690, 0x30, "ai.hh", 0x191)
+MSG_CLONE_BEGIN(cAIMessage_Clone, 0x30, "ai.hh", 0x191)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);

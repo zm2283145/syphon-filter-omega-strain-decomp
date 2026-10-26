@@ -9,7 +9,7 @@
 extern char D_00598478[];
 extern char D_0059847C[];
 
-int func_0046D658(void) {
+int MediusUniqueCallbackGetMyClansResponseHandler(void) {
     int v0;
     int cond;
 
@@ -24,11 +24,11 @@ ret:
     return v0;
 }
 
-int func_0046D688(void) {
+int MediusUniqueCallbackGetClanTeamChallengesRequestHandler(void) {
     return 60;
 }
 
-int func_0046D690(void) {
+int MediusUniqueCallbackGetClanTeamChallengesResponseHandler(void) {
     int v0;
     int cond;
 

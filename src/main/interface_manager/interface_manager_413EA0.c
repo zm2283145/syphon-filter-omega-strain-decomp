@@ -12,7 +12,7 @@
 #include "base_dtor_chain.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_00413EA0, String_Dtor)
+DEFINE_BASE_DTOR_CHAIN(cInterfaceManager_Entry_dtor, String_Dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00413EA0 */
 
@@ -25,7 +25,7 @@ DEFINE_BASE_DTOR_CHAIN(func_00413EA0, String_Dtor)
  */
 
 
-Rel* func_00413F00(Rel* r) {
+Rel* cInterfaceManager_Entry_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

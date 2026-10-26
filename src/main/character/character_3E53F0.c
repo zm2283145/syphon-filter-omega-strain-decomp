@@ -8,20 +8,20 @@
 #pragma push /* merge_units */
 #include "types.h"
 
-extern int func_002E9A10(void);
-extern int func_003FF2C0(void);
-extern int func_002E9A98(void* buf, void* end, int size, int count);
-extern int func_002E9F08(void* obj, void* callback);
+extern int NetRegisterMessageStart(void);
+extern int cCharActionMsg_RegisterFields(void);
+extern int NetMessageField(void* buf, void* end, int size, int count);
+extern int NetRegisterApplicationMessage(void* obj, void* callback);
 extern char D_0055A1F0[];
-extern void func_003E4CC0();
+extern void cCharActionMsg_ObjectId_NetCharActionNetObjectIDReq();
 
 /* Runs the setup sequence; returns 1 only if every step succeeds. */
-unsigned char func_003E53F0(void) {
+unsigned char cCharActionMsg_ObjectId_InitNet(void) {
     unsigned char ok = 0;
     char buf[0xC];
     int err;
-    if (!func_002E9A10() && func_003FF2C0() && !(err = func_002E9A98(buf, buf + 0xC, 4, 1)) && !err
-        && !func_002E9F08(D_0055A1F0, func_003E4CC0)) {
+    if (!NetRegisterMessageStart() && cCharActionMsg_RegisterFields() && !(err = NetMessageField(buf, buf + 0xC, 4, 1)) && !err
+        && !NetRegisterApplicationMessage(D_0055A1F0, cCharActionMsg_ObjectId_NetCharActionNetObjectIDReq)) {
         ok = 1;
     }
     return ok;
@@ -34,31 +34,31 @@ unsigned char func_003E53F0(void) {
 typedef struct { char pad[0xC]; int a; int b; int c; int d; } Hdr;
 extern char D_0055A1E8[];
 #if 0 /* merge_units */
-extern int func_002E9A98(Hdr* h, void* dst, int size, int count);
+extern int NetMessageField(Hdr* h, void* dst, int size, int count);
 #endif /* merge_units */
-#define func_002E9A98(a0, a1, a2, a3) (func_002E9A98((void *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define NetMessageField(a0, a1, a2, a3) (NetMessageField((void *)(a0), (a1), (a2), (a3))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_002E9F08(void* table, void* fn);
+extern int NetRegisterApplicationMessage(void* table, void* fn);
 #endif /* merge_units */
-#define func_002E9F08(a0, a1) (func_002E9F08((a0), (a1))) /* merge_units */
+#define NetRegisterApplicationMessage(a0, a1) (NetRegisterApplicationMessage((a0), (a1))) /* merge_units */
 
-extern void func_003E4DA0(void);
+extern void cCharActionMsg_Vector_NetCharActionVectorReq(void);
 /* Reads four header words and registers the handler; returns 1 on success. */
-unsigned char func_003E5470(void)
+unsigned char cCharActionMsg_Vector_InitNet(void)
 {
     Hdr h;
     unsigned char ok = 0;
-    if (func_002E9A10() == 0 && func_003FF2C0() != 0 &&
-        func_002E9A98(&h, &h.a, 4, 1) == 0 &&
-        func_002E9A98(&h, &h.b, 4, 1) == 0 &&
-        func_002E9A98(&h, &h.c, 4, 1) == 0 &&
-        func_002E9A98(&h, &h.d, 4, 1) == 0 &&
-        func_002E9F08(D_0055A1E8, func_003E4DA0) == 0)
+    if (NetRegisterMessageStart() == 0 && cCharActionMsg_RegisterFields() != 0 &&
+        NetMessageField(&h, &h.a, 4, 1) == 0 &&
+        NetMessageField(&h, &h.b, 4, 1) == 0 &&
+        NetMessageField(&h, &h.c, 4, 1) == 0 &&
+        NetMessageField(&h, &h.d, 4, 1) == 0 &&
+        NetRegisterApplicationMessage(D_0055A1E8, cCharActionMsg_Vector_NetCharActionVectorReq) == 0)
         ok = 1;
     return ok;
 }
-#undef func_002E9A98 /* merge_units */
-#undef func_002E9F08 /* merge_units */
+#undef NetMessageField /* merge_units */
+#undef NetRegisterApplicationMessage /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003E5470 */

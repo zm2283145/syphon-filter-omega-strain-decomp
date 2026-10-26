@@ -5,6 +5,6 @@
 
 #include "types.h"
 
-void* func_003AC6D0(char* self) {
+void* cSkaSystem_Request_PlaybackGroupId(char* self) {
     return self + 28;
 }

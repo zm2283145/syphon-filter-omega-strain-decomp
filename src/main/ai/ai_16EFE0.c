@@ -45,7 +45,7 @@ static inline void QCopy_EFE0(void* dst, void* src, int n0)
         .set reorder
     }
 }
-void func_0016EFE0(void* src, char* obj)
+void cAiTransfer_Put(void* src, char* obj)
 {
     if (obj)
         obj += 0x44;
@@ -94,7 +94,7 @@ static inline void QCopy_F060(void* dst, void* src, int n0)
         .set reorder
     }
 }
-void func_0016F060(void* dst, char* obj)
+void cAiTransfer_Get(void* dst, char* obj)
 {
     if (obj)
         obj += 0x44;

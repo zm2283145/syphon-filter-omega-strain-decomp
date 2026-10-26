@@ -3,7 +3,7 @@ extern char *strncpy(char *d, const char *s, unsigned int n);
 extern char *strstr(const char *searchee, const char *lookfor);
 extern int atoi(const char *s);
 
-int func_0034BD28(char *out, int n)
+int sceBInetGetBuildTimestamp(char *out, int n)
 {
     char months[] = "JanFebMarAprMayJunJulAugSepOctNovDec\0";
     char mon[16];

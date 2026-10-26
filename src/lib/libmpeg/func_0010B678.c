@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_0010B678(int a0) {
+int _alalcRest(int a0) {
     int tmp0;
     int tmp1;
     int tmp2;

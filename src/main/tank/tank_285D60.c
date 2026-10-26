@@ -25,7 +25,7 @@ void* Mem_Alloc(int pool, int size, char* file, int line);
 void* cTank_SetTurret(void* t, void* a, void* b, void* c, void* d, void* owner);
 extern char D_004A93D0[];
 }
-extern "C" void func_00285D60(Tank00285D60* self, void* a, void* b, void* c, void* d) {
+extern "C" void cTank_SetTurret_2(Tank00285D60* self, void* a, void* b, void* c, void* d) {
     void* old;
     void* t;
     old = self->turret;

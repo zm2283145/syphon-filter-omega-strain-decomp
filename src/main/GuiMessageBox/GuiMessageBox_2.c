@@ -126,7 +126,7 @@ extern int sprintf(char* buf, const char* fmt, ...); /* sprintf */
 extern void GuiWidget_ctor(GuiWidget* self);
 
 /* Formats prefix followed by a number into buf; returns buf. */
-char* func_002A8740(char* prefix, int n, char* buf) {
+char* CreateWidgetName(char* prefix, int n, char* buf) {
     sprintf(buf, D_004AB5B0, prefix, n);
     return buf;
 }
@@ -169,9 +169,9 @@ extern void* Gui_GetScreenStack(void);
 
 
 extern Mgr2A8800* Gui_GetScreenList(void);
-extern void func_002A88C0(int* it, void* set, int* key);
-extern void func_002A88B0(int* it, void* set);
-extern int func_002A8890(int* a, int* b);
+extern void cLList_GuiWidgetPtr_Find(int* it, void* set, int* key);
+extern void cLList_GuiWidgetPtr_End(int* it, void* set);
+extern int opNe_cLListIteratorR_cLListIteratorR_6(int* a, int* b);
 /* Returns o when it is the root widget or is registered with the manager, else 0. */
 void* GuiMessageBox_ValidateTarget(void* o)
 {
@@ -183,9 +183,9 @@ int end[1];
     if (o == Gui_GetScreenStack()) return o;
     key[0] = (int)o;
     m = Gui_GetScreenList();
-    func_002A88C0(it, m->set, key);
-    func_002A88B0(end, m->set);
-    return func_002A8890(it, end) ? o : 0;
+    cLList_GuiWidgetPtr_Find(it, m->set, key);
+    cLList_GuiWidgetPtr_End(end, m->set);
+    return opNe_cLListIteratorR_cLListIteratorR_6(it, end) ? o : 0;
 }
 #undef Gui_GetScreenStack /* merge_units */
 #pragma pop /* merge_units */

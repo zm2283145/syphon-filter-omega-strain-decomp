@@ -35,14 +35,14 @@ void SFOLobby_LeaveNetworkState(int n);
 void LobbyArray_ctor(List_D390* l);
 void LobbyArray_dtor(List_D390* l, int flags);
 void* LobbyArray_At(List_D390* l, int i);
-int func_00442F40(int n, int (*cb)(void), List_D390* l);
+int SFOLobby_ServerScreenStart(int n, int (*cb)(void), List_D390* l);
 char* GameIni_GetString(char* key);
 int String_CompareNoCase(char* a, char* b);
 char* func_002CA0E0(Fe_D390* fe);
 void func_002CA100(Fe_D390* fe, char* s);
 void FrontEnd_DownloadPolicies(Fe_D390* fe);
 int SFOLobby_ConnectUniverse(int n, int i);
-void func_00442E90(int n);
+void SFOLobby_ServerScreenExit(int n);
 int SFOLobby_JoinLobby(int n, int i);
 int SFOLobby_AutoJoin(int n);
 void SFOLobby_RequestSettings(int n);
@@ -121,7 +121,7 @@ extern "C" void GuiOnlineConnect_DnasRetry(O_D390* o)
     D_004FFC04->b2A = 1;
     LobbyArray_ctor(&lst);
     fail = 0;
-    if (func_00442F40(n, App_CardWaitPoll, &lst)) {
+    if (SFOLobby_ServerScreenStart(n, App_CardWaitPoll, &lst)) {
         char* cur;
         int found;
         int i;
@@ -160,7 +160,7 @@ extern "C" void GuiOnlineConnect_DnasRetry(O_D390* o)
             txt = String_CStr(&t1);
             FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&s1), txt, o, 0);
             FrontEnd_ClosePopup(D_004FFC04, o->x120);
-            func_00442E90(n);
+            SFOLobby_ServerScreenExit(n);
             String_Dtor(&t1, 0);
             String_Dtor(&s1, 0);
             LobbyArray_dtor(&lst, -1);
@@ -168,7 +168,7 @@ extern "C" void GuiOnlineConnect_DnasRetry(O_D390* o)
         }
         ok = Find_D390(n, &lst, any);
         if (!ok && !SFOLobby_AutoJoin(n)) fail = 1;
-        func_00442E90(n);
+        SFOLobby_ServerScreenExit(n);
     } else {
         FrontEnd_ClosePopup(D_004FFC04, o->x120);
         GuiOnlineConnect_Back(o, 1);
@@ -210,7 +210,7 @@ extern char* String_CStr(Str_D980*);
 #endif /* merge_units */
 #define String_CStr(a0) (String_CStr((Str_D390 *)(a0))) /* merge_units */
 
-extern void func_00209620(Str_D980*, Str_D980*);
+extern void std_basic_string_char_char_traits_char_append_basicstringR(Str_D980*, Str_D980*);
 #if 0 /* merge_units */
 extern void String_Dtor(Str_D980*, int);
 #endif /* merge_units */
@@ -253,10 +253,10 @@ void GuiOnlineConnect_ShowDnasPopup(O_D980* o, void* src) {
     String_CtorCStr_13B480(&s, body);
     if (extra[0]) {
         String_CtorCStr_13B480(&t, D_004AAC10);
-        func_00209620(&s, &t);
+        std_basic_string_char_char_traits_char_append_basicstringR(&s, &t);
         String_Dtor(&t, 0);
         String_CtorCStr_13B480(&u, extra);
-        func_00209620(&s, &u);
+        std_basic_string_char_char_traits_char_append_basicstringR(&s, &u);
         String_Dtor(&u, 0);
     }
     flags = 0;

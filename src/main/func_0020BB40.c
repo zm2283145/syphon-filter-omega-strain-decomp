@@ -1,10 +1,10 @@
 #include "types.h"
 #pragma optimization_level 1
 
-extern char** func_001F2DF0(void* v);
+extern char** std_vector_deleter_cSkaSwitchItem_data(void* v);
 
 /* Returns the data pointer of the vector. */
-char* func_0020BB40(void* v)
+char* std_vector_imp_cSkaSwitchItem_begin(void* v)
 {
-    return *func_001F2DF0(v);
+    return *std_vector_deleter_cSkaSwitchItem_data(v);
 }

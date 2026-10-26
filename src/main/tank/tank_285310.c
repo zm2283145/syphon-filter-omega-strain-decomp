@@ -44,7 +44,7 @@ static inline void merge_flush_func_00285310(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0x50]; float angle; } Ang5360;
 typedef struct { char pad[0x6C]; Ang5360* angles; } AngOwner5360;
-void func_00285360(AngOwner5360* self, float deg) {
+void cTank_SetFiringCone(AngOwner5360* self, float deg) {
     Ang5360* a = self->angles;
     if (a) {
         a->angle = 0.017453292f * deg;
@@ -84,7 +84,7 @@ typedef struct AngleOwner {
 } AngleOwner;
 
 /* Stores two angles given in degrees as radians into the attached angle block. */
-void func_002853B0(AngleOwner* self, float pitchDeg, float yawDeg) {
+void cTank_SetPitchLimit(AngleOwner* self, float pitchDeg, float yawDeg) {
     Angles* angles = self->angles;
     if (angles) {
         angles->pitch = 0.017453292f * pitchDeg;
@@ -110,7 +110,7 @@ typedef struct Obj6C {
 } Obj6C;
 
 /* Stores (x, y) scaled by 0.0174533 (degrees to radians) into the target. */
-void func_002853E0(Obj6C* o, float x, float y) {
+void cTank_SetRotLimit(Obj6C* o, float x, float y) {
     Target20* t = o->target;
     if (t != 0) {
         float k = 0.017453292f;

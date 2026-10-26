@@ -17,7 +17,7 @@
 
 
 /* Constructor: null pointer wrapper. */
-int* func_003C3110(int* self) {
+int* cArray_FixedCapacity_cGOBJPtr_2_ctor(int* self) {
     *self = 0;
     return self;
 }
@@ -33,12 +33,12 @@ typedef struct Obj3C3 {
     char flag;
 } Obj3C3;
 
-extern void func_003C3170(Obj3C3* self, int* src, int flag);
+extern void std_vector_imp_cGOBJPtr_1_ctor(Obj3C3* self, int* src, int flag);
 extern void PtrVec_Reserve(Obj3C3* self, int value);
 
 /* Constructor: base init, applies *src, then stores the flag byte at +0xC. */
-Obj3C3* func_003C3120(Obj3C3* self, int* src, int flag) {
-    func_003C3170(self, src, flag);
+Obj3C3* cArray_cGOBJPtr_ctor(Obj3C3* self, int* src, int flag) {
+    std_vector_imp_cGOBJPtr_1_ctor(self, src, flag);
     PtrVec_Reserve(self, *src);
     self->flag = flag;
     return self;

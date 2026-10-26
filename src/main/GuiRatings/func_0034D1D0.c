@@ -4,11 +4,11 @@
 #include "vtable2_base_dtor.h"
 
 extern "C" {
-extern "C" void func_00349ED0();
+extern "C" void GuiPersonnelScreen_ItemGainFocus();
 extern "C" void GuiRatings_GetClassName();
 extern "C" void GuiRatings_IsType();
-extern "C" void func_0034D2B0();
-extern "C" void func_0034D2C0();
+extern "C" void GuiPersonnelScreen_PopulateList();
+extern "C" void GuiPersonnelScreen_ItemAction();
 extern "C" void GuiRatings_HandleInput();
 extern "C" void GuiRatings_HandleEvent();
 extern "C" void GuiRatings_Draw();
@@ -53,4 +53,4 @@ extern "C" Vtable2Object* GuiRatings_dtor(Vtable2Object* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DECC0[28] = { (void*)0x0, (void*)0x0, (void*)GuiRatings_dtor, (void*)GuiRatings_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiRatings_Wake, (void*)GuiRatings_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiRatings_HandleInput, (void*)GuiRatings_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiRatings_HandleEvent, (void*)GuiWidget_Load, (void*)GuiRatings_First, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiRatings_GetClassName, (void*)GuiRatings_IsType, (void*)func_0034D2B0, (void*)func_00349ED0, (void*)func_0034D2C0, (void*)GuiPersonnelScreen_Back, (void*)0x0 };
+void * const D_004DECC0[28] = { (void*)0x0, (void*)0x0, (void*)GuiRatings_dtor, (void*)GuiRatings_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiRatings_Wake, (void*)GuiRatings_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiRatings_HandleInput, (void*)GuiRatings_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiRatings_HandleEvent, (void*)GuiWidget_Load, (void*)GuiRatings_First, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiRatings_GetClassName, (void*)GuiRatings_IsType, (void*)GuiPersonnelScreen_PopulateList, (void*)GuiPersonnelScreen_ItemGainFocus, (void*)GuiPersonnelScreen_ItemAction, (void*)GuiPersonnelScreen_Back, (void*)0x0 };

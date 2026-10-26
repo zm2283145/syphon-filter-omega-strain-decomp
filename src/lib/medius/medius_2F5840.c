@@ -1,4 +1,4 @@
-int func_002F5840(unsigned int *o, unsigned int *out)
+int rt_circ_buf_get_used_nowrap(unsigned int *o, unsigned int *out)
 {
     int ret = 2;
     if (o != 0 && out != 0) {

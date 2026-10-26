@@ -134,8 +134,8 @@ static inline void merge_flush_func_0026DBC0(void) {}
 extern "C" {
 void operator_delete(void* allocation);
 void Interface_Dtor(void* p, int flag);
-int* func_0026D030(PtrVec* v, int i);
-void func_0026DF80(PtrVec* v, int flag);
+int* std_vector_cVUM_GOBJPtr_opIndex_uint(PtrVec* v, int i);
+void std_vector_cVUM_GOBJPtr_dtor(PtrVec* v, int flag);
 extern char D_004DCBB0[];
 extern char D_004DC930[];
 }
@@ -152,7 +152,7 @@ struct Holder {
     PtrVec list;
 };
 
-extern "C" Holder* func_0026DDC0(Holder* self, short deleteFlag) {
+extern "C" Holder* cMap_dtor(Holder* self, short deleteFlag) {
     if (self) {
         self->vtbl = D_004DCBB0;
         {
@@ -164,14 +164,14 @@ extern "C" Holder* func_0026DDC0(Holder* self, short deleteFlag) {
         {
             int i;
             for (i = self->list.count - 1; i >= 0; i--) {
-                Elem* e = *(Elem**)func_0026D030(&self->list, i);
+                Elem* e = *(Elem**)std_vector_cVUM_GOBJPtr_opIndex_uint(&self->list, i);
                 AllocGuard guard;
                 e->Destroy(-1);
                 Mem_Free(0, e, D_004A8808, 0x137);
             }
         }
         self->list.count = 0;
-        if (&self->list) func_0026DF80(&self->list, -1);
+        if (&self->list) std_vector_cVUM_GOBJPtr_dtor(&self->list, -1);
         if (self) self->vtbl = D_004DC930;
         if (deleteFlag > 0) operator_delete(self);
     }

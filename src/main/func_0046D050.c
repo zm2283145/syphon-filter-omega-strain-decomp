@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046D050(void) {
+int MediusUniqueCallbackAddToBuddyListFwdConfirmationResponseHandler0(void) {
     return 52;
 }

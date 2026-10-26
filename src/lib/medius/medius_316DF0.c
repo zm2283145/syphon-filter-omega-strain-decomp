@@ -5,7 +5,7 @@ typedef struct BitW316DF0 {
     unsigned short* pos;
     unsigned char* bit;
 } BitW316DF0;
-void func_00316DF0(BitW316DF0* w, short val, int n)
+void BitPackCBuffer(BitW316DF0* w, short val, int n)
 {
     unsigned short* pos = w->pos;
     unsigned char* bit = w->bit;

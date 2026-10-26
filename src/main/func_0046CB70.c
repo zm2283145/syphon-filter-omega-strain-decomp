@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046CB70(void) {
+int MediusUniqueCallbackAnonymousLoginRequestHandler(void) {
     return 326;
 }

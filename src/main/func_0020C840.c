@@ -3,5 +3,5 @@
 
 #pragma push
 #pragma optimization_level 1
-DEFINE_O1_VECTOR_CLEAR(func_0020C840, 20, func_001F2DF0, func_0020C1B0, func_0020C8E0)
+DEFINE_O1_VECTOR_CLEAR(std_vector_deleter_cSkaSwitchItem_clear, 20, std_vector_deleter_cSkaSwitchItem_data, std_vector_deleter_cSkaSwitchItem_alloc_void, cAllocator_cSkaSwitchItem_destroy)
 #pragma pop

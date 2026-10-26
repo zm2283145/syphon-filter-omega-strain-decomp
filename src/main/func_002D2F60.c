@@ -10,9 +10,9 @@
 /* Sends message (id, 8, arg) to the owner. */
 extern int NetEvent_Send(ControllerOwner* owner, int id, int kind, int arg, int a4, int a5, int a6);
 
-int func_002D2F60(Controller2D* self) {
+int cNetNPC_Kill(Controller2D* self) {
     return NetEvent_Send(self->owner, 25, 8, 0, 0, 0, 0);
 }
 
-void func_002D2F80(void) {
+void cNetNPC_SetDarkness(void) {
 }

@@ -1,7 +1,7 @@
 #pragma cplusplus on
 #include "types.h"
 /* VecCurve_InitState: set up a vector camera curve from v0 toward v1: vtable, the
- * from/current/target/start values, t = 0, the two-key spline (func_0017F5E0) built from
+ * from/current/target/start values, t = 0, the two-key spline (cHermiteSpline_cVector_ctor_cVectorR_cVectorR) built from
  * v0 and v1 scaled by 0 (Vec4_Scale), and its cursor reset to the first key (clone of
  * CameraCurve_MakeQuaternion). */
 struct V4 { float x, y, z, w; V4() {} } __attribute__((aligned(16)));
@@ -23,7 +23,7 @@ struct CamCurve_F520 {
 extern "C" {
 extern char D_004DA3B0[];
 V4 Vec4_Scale(const V4* b, float s);
-Keys_F520* func_0017F5E0(Keys_F520* m, const V4* a, const V4* b);
+Keys_F520* cHermiteSpline_cVector_ctor_cVectorR_cVectorR(Keys_F520* m, const V4* a, const V4* b);
 CamCurve_F520* VecCurve_InitState(CamCurve_F520* c, const V4* q0, const V4* q1);
 }
 /* 16-byte lq/sq copy macro */
@@ -39,7 +39,7 @@ CamCurve_F520* VecCurve_InitState(CamCurve_F520* c, const V4* q0, const V4* q1)
     {
         KeySet_F520* k = &c->set;
         V4 z = Vec4_Scale(q1, 0.0f);
-        func_0017F5E0(&k->keys, q0, &z);
+        cHermiteSpline_cVector_ctor_cVectorR_cVectorR(&k->keys, q0, &z);
         k->count = 0;
         k->cur = 0;
     }

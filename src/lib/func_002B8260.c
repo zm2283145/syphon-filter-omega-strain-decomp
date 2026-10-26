@@ -4,8 +4,8 @@ extern char D_004AC1B8[];
 extern int strcmp(const char *, const char *);
 extern unsigned int strlen(const char *);
 extern int func_002BB2D0(int, void *, int, int);
-extern int func_002B6D20(int, int, int *);
-int func_002B8260(int idx, MC2Dirent *out, int *pos, char *name, int cl, int n)
+extern int _sceMcFatGetNextClust(int, int, int *);
+int _SearchEntry(int idx, MC2Dirent *out, int *pos, char *name, int cl, int n)
 {
     MC2Dirent buf[2];
     int err = 0;
@@ -38,7 +38,7 @@ int func_002B8260(int idx, MC2Dirent *out, int *pos, char *name, int cl, int n)
             }
             if (n > 0) n--;
         }
-        cl = func_002B6D20(idx, cl, &err);
+        cl = _sceMcFatGetNextClust(idx, cl, &err);
         if (err) return err;
         if (cl == -1) goto nf;
         cl &= 0x7FFFFFFF;

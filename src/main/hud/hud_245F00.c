@@ -137,9 +137,9 @@ Snd_245F00* App_GetInstance(void);
 void** Hud_LoadIeScreen(int a, int b);
 void Hud_SelectTextColorTable(Hud_245F00* h, int a);
 void Hud_InitCalloutRects(Hud_245F00* h);
-void func_00246540(void* mgr, Link_245F00** l);
-void func_00246570(void* p);
-void func_00246590(Hud_245F00* h);
+void cLList_cHudTargetsObserverPtr_PushBackActual(void* mgr, Link_245F00** l);
+void std_vector_cInterfaceElementPtr_ctor(void* p);
+void std_vector_PDAQuip_ctor(Hud_245F00* h);
 void WeaponPreview_ctor(void* p);
 int Hud_FindOrCreateElement(void* a, char* name);
 void HudRadar_ctor(void* a, void* b);
@@ -160,7 +160,7 @@ Widget_245F00* GuiWidget_FindChildByName(void* a, char* name);
 
 #pragma inline_depth(10)
 static inline void* Alloc_245F00(int n, int line) { AllocGuard g; return Mem_Alloc(0, n, D_004A7210, line); }
-static inline void Reg_245F00(void* mgr, Link_245F00* l) { l->owner = mgr; func_00246540(mgr, &l); }
+static inline void Reg_245F00(void* mgr, Link_245F00* l) { l->owner = mgr; cLList_cHudTargetsObserverPtr_PushBackActual(mgr, &l); }
 static inline Widget_245F00* Cast_245F00(Widget_245F00* w, void* t) { return w && w->IsA(t) ? w : 0; }
 extern "C" Hud_245F00* HudObject_ctor(Hud_245F00* h, int a1, int a2, int a3)
 {
@@ -168,7 +168,7 @@ extern "C" Hud_245F00* HudObject_ctor(Hud_245F00* h, int a1, int a2, int a3)
     void* grp;
     Widget_245F00* wa;
     Widget_245F00* wb;
-    func_00246590(h);
+    std_vector_PDAQuip_ctor(h);
     h->bC = 1;
     h->f50 = a1;
     h->f54 = Hud_LoadIeScreen(a2, a1);
@@ -179,7 +179,7 @@ extern "C" Hud_245F00* HudObject_ctor(Hud_245F00* h, int a1, int a2, int a3)
     h->f68 = 0;
     {
         Sub7C_245F00* s = &h->m7C;
-        func_00246570(s);
+        std_vector_cInterfaceElementPtr_ctor(s);
         s->bC = 1;
     }
     ObjMarkerMgr_ctor(h->m90);

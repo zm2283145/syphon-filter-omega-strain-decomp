@@ -11,7 +11,7 @@ typedef struct AcPair { int token; int target; } AcPair;
 typedef struct AcHost { unsigned char active; char p1[3]; AcPair pairs[6]; } AcHost;
 void MotionNotify_SendSlot(AcHost* h, int idx, unsigned char clear); /* gsynth: defined below */typedef struct { char pad[0x28]; unsigned char kind; char pad29[3]; void* target; unsigned char sent; char pad31[3]; float value; } D6AnimMsg;
 void MotionMsg_Send(D6AnimMsg* m, unsigned char kind, float value); /* gsynth: defined below */
-/* func_003ABB10: walks the active motion deque, resetting both message slots and the notify slot of
+/* cSkaRequestStream_SignalInterruptionOfCurrentlyPlayingItems: walks the active motion deque, resetting both message slots and the notify slot of
  * every 0xF8-byte record (MotionGraph_ClearActive without the final deque clear). Same iterator idiom
  * as src/main/ska/MotionGraph_ClearActive.c. */
 #pragma cplusplus on
@@ -39,7 +39,7 @@ struct DqIt {
 struct BlockArray { int cap; int size; int start; int** data; int first; int count; };
 struct MGraph { char pad[0x18]; BlockArray arr; };
 extern "C" {
-void func_00397840(DqIt* out, BlockArray* a, int n);
+void std_deque_deleter_common_cSkaSystem_Request_make_iterator(DqIt* out, BlockArray* a, int n);
 #if 0 /* merge_units */
 void MotionMsg_Send(void* m, unsigned char kind, float value);
 #endif /* merge_units */
@@ -52,17 +52,17 @@ void MotionNotify_SendSlot(void* h, int idx, unsigned char clear);
 
 void MotionArray_Clear(BlockArray* a);
 }
-extern "C" void func_003ABB10(MGraph* g)
+extern "C" void cSkaRequestStream_SignalInterruptionOfCurrentlyPlayingItems(MGraph* g)
 {
     DqIt it;
     DqIt b;
     char* p;
     char* e;
-    func_00397840(&b, &g->arr, 0);
+    std_deque_deleter_common_cSkaSystem_Request_make_iterator(&b, &g->arr, 0);
     it = b;
     {
         DqIt r;
-        func_00397840(&r, &g->arr, g->arr.count);
+        std_deque_deleter_common_cSkaSystem_Request_make_iterator(&r, &g->arr, g->arr.count);
         e = r.elem;
     }
     while (it.Ne(e)) {
@@ -165,11 +165,11 @@ extern "C" void MotionGraph_ClearActive(MGraph* g)
     DqIt b;
     char* p;
     char* e;
-    func_00397840(&b, &g->arr, 0);
+    std_deque_deleter_common_cSkaSystem_Request_make_iterator(&b, &g->arr, 0);
     it = b;
     {
         DqIt r;
-        func_00397840(&r, &g->arr, g->arr.count);
+        std_deque_deleter_common_cSkaSystem_Request_make_iterator(&r, &g->arr, g->arr.count);
         e = r.elem;
     }
     while (it.Ne(e)) {
@@ -213,11 +213,11 @@ extern "C" void MotionGraph_ClearQueued(MGraph_003ABF80* g)
     DqIt b;
     char* p;
     char* e;
-    func_00397840(&b, &g->arr, 0);
+    std_deque_deleter_common_cSkaSystem_Request_make_iterator(&b, &g->arr, 0);
     it = b;
     {
         DqIt r;
-        func_00397840(&r, &g->arr, g->arr.count);
+        std_deque_deleter_common_cSkaSystem_Request_make_iterator(&r, &g->arr, g->arr.count);
         e = r.elem;
     }
     while (it.Ne(e)) {
@@ -270,12 +270,12 @@ extern void cMessage_dtor(UtMsg* m, int flags);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
 
-extern UtSlot* func_003AC4A0(UtArr* a, int index);
+extern UtSlot* std_deque_cSkaSystem_Request_opIndex(UtArr* a, int index);
 extern UtSlot* Array_GetLast(UtArr* a);
-extern UtReq* func_003AC450(UtArr* a);
-extern int func_003AC530(UtSlot* s, UtRange* r);
+extern UtReq* std_deque_deleter_common_cSkaSystem_Request_front(UtArr* a);
+extern int IsReadyForNextAnim(UtSlot* s, UtRange* r);
 extern void MotionGraph_Install(float w, UtCtl* c, UtReq* r, int stop);
-extern void func_003B87A0(UtArr* a);
+extern void std_deque_deleter_cSkaSystem_Request_pop_front(UtArr* a);
 
 static inline void UtMsgSend(UtAnimMsg* m, unsigned char kind, float value)
 {
@@ -325,17 +325,17 @@ void AnimCtl_UpdateTransitions(UtCtl* c, float t)
     if (n > 1) {
         found = -1;
         for (i = n - 1; i > 0; i--) {
-            if (func_003AC4A0(&c->arr, i)->weight == 1.0f) {
+            if (std_deque_cSkaSystem_Request_opIndex(&c->arr, i)->weight == 1.0f) {
                 found = i;
                 break;
             }
         }
         if (found != -1) {
             for (j = 0; j < found; j++) {
-                if (j == 0 && n == 2 && func_003AC4A0(&c->arr, 1)->weight == 1.0f) {
-                    s = func_003AC4A0(&c->arr, j);
+                if (j == 0 && n == 2 && std_deque_cSkaSystem_Request_opIndex(&c->arr, 1)->weight == 1.0f) {
+                    s = std_deque_cSkaSystem_Request_opIndex(&c->arr, j);
                     UtMsgSend(&s->msg, 4, t);
-                    ns = func_003AC4A0(&c->arr, j);
+                    ns = std_deque_cSkaSystem_Request_opIndex(&c->arr, j);
                     if (ns->notify.active) {
                         p = &ns->notify.links[5];
                         if (UtLinkValid(p)) {
@@ -353,21 +353,21 @@ void AnimCtl_UpdateTransitions(UtCtl* c, float t)
                 }
             }
             for (i = 0; i < found; i++) {
-                func_003B87A0(&c->arr);
+                std_deque_deleter_cSkaSystem_Request_pop_front(&c->arr);
             }
         }
     } else if (c->queue.count > 0) {
 
         e = Array_GetLast(&c->arr);
-        r = func_003AC450(&c->queue);
-        if (func_003AC530(e, &r->range)) {
+        r = std_deque_deleter_common_cSkaSystem_Request_front(&c->queue);
+        if (IsReadyForNextAnim(e, &r->range)) {
             e->done = 1;
             MotionGraph_Install(0.0f, c, r, 0);
-            func_003B87A0(&c->queue);
+            std_deque_deleter_cSkaSystem_Request_pop_front(&c->queue);
         }
     } else if (c->hold) {
         e = Array_GetLast(&c->arr);
-        if (func_003AC530(e, &c->range)) {
+        if (IsReadyForNextAnim(e, &c->range)) {
             UtNotifySend(&e->notify, 2, 1);
         }
     }

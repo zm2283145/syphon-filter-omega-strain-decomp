@@ -16,10 +16,10 @@ struct SEnum { char* name; EVec items; int pad10; int id; };
 struct SReg { int pad; int base; };
 extern "C" {
 extern SReg* D_00554F30;
-void func_003D7E90(void* src);
-char* func_003D9280(void* src);
-void func_003D9210(EVec* v, int n, const EItem& fill);
-void func_003D91F0(SReg* r, SEnum** e);
+void cScriptBase_checkInitTypes(void* src);
+char* buildNameWithPrefix(void* src);
+void cArray_EnumField_ctor(EVec* v, int n, const EItem& fill);
+void std_vector_EnumDefPtr_push_back(SReg* r, SEnum** e);
 int ScriptEnum_Register(void* src, EItem* items, int n);
 }
 static inline void* SD_Alloc(int n, int line)
@@ -38,7 +38,7 @@ static inline char* Dup(char* s)
     }
     return p;
 }
-static inline void Resize_8F60(EVec* v, int n, const EItem& f = EItem()) { func_003D9210(v, n, f); }
+static inline void Resize_8F60(EVec* v, int n, const EItem& f = EItem()) { cArray_EnumField_ctor(v, n, f); }
 #pragma opt_strength_reduction off
 int ScriptEnum_Register(void* src, EItem* items, int n)
 {
@@ -46,8 +46,8 @@ int ScriptEnum_Register(void* src, EItem* items, int n)
     SEnum* e;
     int i;
     SEnum* r;
-    func_003D7E90(src);
-    name = func_003D9280(src);
+    cScriptBase_checkInitTypes(src);
+    name = buildNameWithPrefix(src);
     e = (SEnum*)SD_Alloc(24, 100);
     if (e) {
         int base = D_00554F30->base;
@@ -67,6 +67,6 @@ int ScriptEnum_Register(void* src, EItem* items, int n)
         if (c) it->name = c + 1;
         items++;
     }
-    func_003D91F0(D_00554F30, &r);
+    std_vector_EnumDefPtr_push_back(D_00554F30, &r);
     return r->id;
 }

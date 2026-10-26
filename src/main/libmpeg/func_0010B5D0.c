@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-void func_0010B5D0(int a0, int a1, int a2) {
+void _alalcInit(int a0, int a1, int a2) {
     *(int*)((char*)a0 + 12) = a1;
     *(int*)((char*)a0 + 4) = a2;
     *(int*)((char*)a0) = a1;

@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_002DCA58(void) {
+void stubInit(void) {
 
 }

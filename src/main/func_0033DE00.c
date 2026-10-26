@@ -10,7 +10,7 @@ extern G3DE00* Gui_GetScreenStack(void);
 extern T3DE00** func_0033DEF0(void* key);
 extern int DME_GetLobby(void);
 extern E3DE00* LobbyArray_At(void* list, int i);
-extern void func_002AEC90(void* p, char* a, char* b, unsigned char c);
+extern void GuiChatWindow_AddChatLine(void* p, char* a, char* b, unsigned char c);
 extern void LobbyArray_Clear(void* list);
 void GuiMenuScreen_Update(T3DE00* self)
 {
@@ -28,7 +28,7 @@ void GuiMenuScreen_Update(T3DE00* self)
         for (i = 0; i < self->count; i++) {
             E3DE00* e = LobbyArray_At(self->lAC, i);
             if (e)
-                func_002AEC90(self->p8C, e->a, e->b, e->c);
+                GuiChatWindow_AddChatLine(self->p8C, e->a, e->b, e->c);
         }
         LobbyArray_Clear(self->lAC);
     }

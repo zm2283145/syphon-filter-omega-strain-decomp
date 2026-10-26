@@ -30,20 +30,20 @@ extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
 void IdMgr_Allocate(int* id, int cat);
 void Actor_Construct(void* self, int* id, char* name);
-void func_001B7AE0(void* p);
+void cStatesWithHistory_1_ctor(void* p);
 V4_1B7B00* Vec4_GetZero(void);
 void Vec4_Assign(void* d, V4_1B7B00* s);
 void AngleCurve_Construct(void* p);
-void func_001B79F0(void* p);
+void cHumanMotionParams_cTargetZRotationStack_ctor(void* p);
 void Curve_Construct(void* p);
-int func_001B7940(void* p, float a, float b);
+int cHumanMotionParams_PushTargetZRotationOnStack(void* p, float a, float b);
 void AngleCurve_SetDamping(void* p, float d);
 void VecCurve_SetDamping(void* p, float d);
-void func_001B78F0(void* p, int v);
+void cBitArray_8_ctor(void* p, int v);
 void func_001B75B0(void* p, int v);
 void func_001B7580(void* p, int v);
-void func_00136540(void* p, int* a, int* b);
-void func_001364B0(void* p);
+void cCollisionModelList_ctor(void* p, int* a, int* b);
+void cActivationTracker_ctor(void* p);
 void cCheckpoint_ctor(void* p);
 void Root_BaseConstruct(Pair_1B7B00* p);
 void VecPair_Copy(void* d, Pair_1B7B00* s);
@@ -114,11 +114,11 @@ static inline void Body_1B7B00(void* self, int x, unsigned char type, int flag, 
     V4q_1B7B00 z;
     {
         char* a = (char*)self + 12336;
-        func_001B7AE0(a);
+        cStatesWithHistory_1_ctor(a);
         B_(a, 12) = 1;
         Vec4_Assign(a + 16, Vec4_GetZero());
         AngleCurve_Construct(a + 32);
-        func_001B79F0(a + 88);
+        cHumanMotionParams_cTargetZRotationStack_ctor(a + 88);
         W_(a, 108) = 0;
         W_(a, 112) = 0;
         W_(a, 116) = 0xFF7FFFFF;
@@ -145,7 +145,7 @@ static inline void Body_1B7B00(void* self, int x, unsigned char type, int flag, 
         B_(a, 428) = 1;
         B_(a, 429) = 0;
         W_(a, 432) = 0;
-        W_(a, 104) = func_001B7940(a, 0.0f, -1.0f);
+        W_(a, 104) = cHumanMotionParams_PushTargetZRotationOnStack(a, 0.0f, -1.0f);
         AngleCurve_SetDamping(a + 32, 15.0f);
         VecCurve_SetDamping(a + 192, 10.0f);
     }
@@ -153,9 +153,9 @@ static inline void Body_1B7B00(void* self, int x, unsigned char type, int flag, 
     Tag_1B7B00((char*)self + 12784, tag);
     {
         char* b = (char*)self + 12800;
-        func_001B78F0(b, 0);
-        func_001B78F0(b + 4, 0);
-        func_001B78F0(b + 8, 0);
+        cBitArray_8_ctor(b, 0);
+        cBitArray_8_ctor(b + 4, 0);
+        cBitArray_8_ctor(b + 8, 0);
     }
     {
         char* c = (char*)self + 12812;
@@ -176,11 +176,11 @@ static inline void Body_1B7B00(void* self, int x, unsigned char type, int flag, 
         int t2;
         t2 = 0;
         t1 = 0;
-        func_00136540(d, &t1, &t2);
+        cCollisionModelList_ctor(d, &t1, &t2);
         *(char**)d = D_004DA2F0;
         W_(d, 32) = 0;
         Vec4_Assign(d + 48, Vec4_GetZero());
-        func_001364B0(d + 64);
+        cActivationTracker_ctor(d + 64);
         W_(d, 96) = 0;
     }
     W_(self, 13072) = 0;

@@ -4,13 +4,13 @@
 #pragma optimization_level 1
 
 typedef struct { int head; char rest[4]; } Pair;
-extern void func_00209870(Pair* dst, Pair* src);
-extern void func_0020C080(void* dst, void* src);
+extern void cPointer_cSkaNode_ctor_cPointerR(Pair* dst, Pair* src);
+extern void cArray_cSkaTransBLEND_ctor_cArrayR(void* dst, void* src);
 
 /* Copies both parts of the pair; returns dst. */
-Pair* func_0020C020(Pair* dst, Pair* src)
+Pair* cSkaSwitchItem_ctor_cSkaSwitchItemR(Pair* dst, Pair* src)
 {
-    func_00209870(dst, src);
-    func_0020C080(dst->rest, src->rest);
+    cPointer_cSkaNode_ctor_cPointerR(dst, src);
+    cArray_cSkaTransBLEND_ctor_cArrayR(dst->rest, src->rest);
     return dst;
 }

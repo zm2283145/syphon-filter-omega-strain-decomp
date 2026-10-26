@@ -8,7 +8,7 @@
 #include "NIEvent_types.h"
 
 /* Constructs an empty vector. */
-NIEventVec3* func_0023F620(NIEventVec3* vec) {
+NIEventVec3* std_vector_VisKey_ctor(NIEventVec3* vec) {
     vec->begin = 0;
     vec->end = 0;
     vec->cap = 0;
@@ -16,7 +16,7 @@ NIEventVec3* func_0023F620(NIEventVec3* vec) {
 }
 
 /* Constructs an empty vector. */
-NIEventVec3* func_0023F640(NIEventVec3* vec) {
+NIEventVec3* std_vector_VectorKey_ctor(NIEventVec3* vec) {
     vec->begin = 0;
     vec->end = 0;
     vec->cap = 0;
@@ -24,7 +24,7 @@ NIEventVec3* func_0023F640(NIEventVec3* vec) {
 }
 
 /* Constructs an empty vector. */
-NIEventVec3* func_0023F660(NIEventVec3* vec) {
+NIEventVec3* std_vector_cNIEventBasePtr_ctor(NIEventVec3* vec) {
     vec->begin = 0;
     vec->end = 0;
     vec->cap = 0;

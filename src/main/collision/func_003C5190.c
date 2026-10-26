@@ -1,4 +1,4 @@
-/* func_003C5190: recursive per-actor LOS candidate gather (child walk of Los_GatherCandidates) */
+/* cCollisionModelList_CollectFaces_cCollisionFaceCollectorR_cGOBJP_cRayMatrixR_cSphereR: recursive per-actor LOS candidate gather (child walk of Los_GatherCandidates) */
 #pragma cplusplus on
 #include "types.h"
 #pragma opt_propagation off
@@ -45,31 +45,31 @@ static inline bool Has(PA* l, Actor* v)
     return Find((Actor**)l->items, e, v) != e;
 }
 extern "C" {
-void func_003C62F0(Q70*, Box*);
+void cRayMatrix_opAssign(Q70*, Box*);
 void Transform_GetInverseMatrix(M40*, Xf*);
-void func_003C61D0(Q70*, M40*);
+void cRayMatrix_Transform(Q70*, M40*);
 void ColGather_SetSource(Src*, Shp*);
-Mesh* func_00182270(int);
-void func_003C55C0(Mesh*, Src*, void*);
+Mesh* cCollisionModelMaster_GetData(int);
+void cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cRayMatrixR(Mesh*, Src*, void*);
 int PtrArray_Begin(void*);
 int PtrArray_End(void*);
-void func_00181CD0(It*, void*, int*);
+void std_vector_cGOBJPtr_pointer2iterator_cGOBJPPR(It*, void*, int*);
 Xf* Object_GetRootNode(Actor*);
 int GameObject_IsCollisionEnabled(Actor*);
 int* InlinePtrArray_Find(PA*, Actor**);
 int* InlinePtrArray_End(PA*);
-void func_003C65A0(Q70*);
-void func_003C6440(Q70*, Box*, Actor*, Xf*);
-void func_003C6330(Shp*, Src*, void*);
+void cRayMatrix_ctor_void(Q70*);
+void nCollision_GetTransformedCollectorObject_RelativeToObjectWithXform_cRayMatrixR_cRayMatrixR_cGOBJP_cXformP(Q70*, Box*, Actor*, Xf*);
+void cCollisionModel_GetNearFaces_cCollisionFaceCollector_cRayMatrixR(Shp*, Src*, void*);
 void PtrVec_Begin(It*, void*);
 void PtrVec_End(It*, void*);
-int func_001815A0(It*, It*);
-Actor** func_001827B0(It*);
+int cArray_cGOBJPtr_Iterator_opNe(It*, It*);
+Actor** cArray_cGOBJPtr_Iterator_opMul(It*);
 It* Iter_Advance4(It*);
-void func_003C5190(Gath* self, Src* src, Actor* node, Box* box, Sph* e0);
+void cCollisionModelList_CollectFaces_cCollisionFaceCollectorR_cGOBJP_cRayMatrixR_cSphereR(Gath* self, Src* src, Actor* node, Box* box, Sph* e0);
 }
 
-void func_003C5190(Gath* self, Src* src, Actor* node, Box* box, Sph* e0)
+void cCollisionModelList_CollectFaces_cCollisionFaceCollectorR_cGOBJP_cRayMatrixR_cSphereR(Gath* self, Src* src, Actor* node, Box* box, Sph* e0)
 {
     It ib;
     It ie;
@@ -90,18 +90,18 @@ void func_003C5190(Gath* self, Src* src, Actor* node, Box* box, Sph* e0)
         xf = node->xf;
         if (xf != 0) {
             if (Live(node) && !Has(&self->list, node)) {
-                func_003C62F0(&bx, box);
+                cRayMatrix_opAssign(&bx, box);
                 Transform_GetInverseMatrix(&inv, xf);
-                func_003C61D0(&bx, &inv);
+                cRayMatrix_Transform(&bx, &inv);
                 Src s1 = *src;
                 ColGather_SetSource(&s1, sh);
-                func_003C55C0(func_00182270(sh->mesh), &s1, &bx);
+                cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cRayMatrixR(cCollisionModelMaster_GetData(sh->mesh), &s1, &bx);
             }
         } else {
             if (Live(node) && !Has(&self->list, node)) {
                 Src s2 = *src;
                 ColGather_SetSource(&s2, sh);
-                func_003C55C0(func_00182270(sh->mesh), &s2, box);
+                cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cRayMatrixR(cCollisionModelMaster_GetData(sh->mesh), &s2, box);
             }
         }
     }
@@ -110,10 +110,10 @@ void func_003C5190(Gath* self, Src* src, Actor* node, Box* box, Sph* e0)
         Actor** p;
         Actor** e;
         tb = PtrArray_Begin(ch);
-        func_00181CD0(&ib, ch, &tb);
+        std_vector_cGOBJPtr_pointer2iterator_cGOBJPPR(&ib, ch, &tb);
         p = (Actor**)ib.p;
         te = PtrArray_End(ch);
-        func_00181CD0(&ie, ch, &te);
+        std_vector_cGOBJPtr_pointer2iterator_cGOBJPPR(&ie, ch, &te);
         e = (Actor**)ie.p;
         if (NeP(p, *(Actor** volatile*)&ie.p)) {
         do {
@@ -127,14 +127,14 @@ void func_003C5190(Gath* self, Src* src, Actor* node, Box* box, Sph* e0)
                     if (x != 0) {
                         if (GameObject_IsCollisionEnabled(act)
                             && InlinePtrArray_Find(&self->list, &act) == InlinePtrArray_End(&self->list)) {
-                            func_003C65A0(&q);
-                            func_003C6440(&q, box, act, x);
-                            func_003C6330(s, src, &q);
+                            cRayMatrix_ctor_void(&q);
+                            nCollision_GetTransformedCollectorObject_RelativeToObjectWithXform_cRayMatrixR_cRayMatrixR_cGOBJP_cXformP(&q, box, act, x);
+                            cCollisionModel_GetNearFaces_cCollisionFaceCollector_cRayMatrixR(s, src, &q);
                         }
                     } else {
                         if (GameObject_IsCollisionEnabled(act)
                             && InlinePtrArray_Find(&self->list, &act) == InlinePtrArray_End(&self->list)) {
-                            func_003C6330(s, src, box);
+                            cCollisionModel_GetNearFaces_cCollisionFaceCollector_cRayMatrixR(s, src, box);
                         }
                     }
                 }
@@ -144,8 +144,8 @@ void func_003C5190(Gath* self, Src* src, Actor* node, Box* box, Sph* e0)
                 if (c2 != 0) {
                     PtrVec_Begin(&it1, c2);
                     PtrVec_End(&it2, c2);
-                    while (func_001815A0(&it1, &it2)) {
-                        func_003C5190(self, src, *func_001827B0(&it1), box, e0);
+                    while (cArray_cGOBJPtr_Iterator_opNe(&it1, &it2)) {
+                        cCollisionModelList_CollectFaces_cCollisionFaceCollectorR_cGOBJP_cRayMatrixR_cSphereR(self, src, *cArray_cGOBJPtr_Iterator_opMul(&it1), box, e0);
                         Iter_Advance4(&it1);
                     }
                 }

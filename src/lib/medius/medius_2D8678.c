@@ -1,11 +1,11 @@
 #include "types.h"
 
 extern char D_0048C438[];
-extern int func_002F5160(void);
+extern int GetCurrentTimeMs(void);
 
-void func_002D8678(void) {
+void StartTime(void) {
     int tmp0;
 
-    tmp0 = func_002F5160();
+    tmp0 = GetCurrentTimeMs();
     *(int*)D_0048C438 = tmp0;
 }

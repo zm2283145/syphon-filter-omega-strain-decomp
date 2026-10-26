@@ -7,8 +7,8 @@
 #include "types.h"
 
 extern char D_0055A700[];
-extern int func_003D1770(void* obj);
+extern int cUSBKeybd_Init(void* obj);
 
-int func_00165DC0(void) {
-    return func_003D1770(D_0055A700);
+int cMachine_InitUSB(void) {
+    return cUSBKeybd_Init(D_0055A700);
 }

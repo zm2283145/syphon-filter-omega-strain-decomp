@@ -6,14 +6,14 @@
 
 #include "types.h"
 
-int* func_001A0890(PtrVec* v) {
+int* std_vector_imp_cTreeNode_cSkaSystemPtrPtr_1_end_void(PtrVec* v) {
     return v->data + v->count;
 }
 
-void func_001A08B0(Iter* out, void* self, Iter* src) {
+void std_vector_cTreeNode_cSkaSystemPtrPtr_pointer2iterator_cTreeNodePPR(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }
 
-int func_001A08C0(char* self) {
+int std_vector_imp_cTreeNode_cSkaSystemPtrPtr_1_begin_void(char* self) {
     return *(int*)(self + 8);
 }

@@ -49,7 +49,7 @@ static inline void NormQ(V* a) {
 static inline void Unit(V* a) {
     asm { sqc2 vf0, 0x0(a) }
 }
-extern "C" V func_003ADDE0(Obj3ADDE0* o)
+extern "C" V cSkaPlaybackItem_GetSummedAndNormalizedOffsetRootRotation(Obj3ADDE0* o)
 {
     if (o->b8) return o->v10;
     if (!IsZero(&o->v10)) {

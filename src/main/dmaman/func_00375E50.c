@@ -8,11 +8,11 @@ typedef struct {
 } S375E50;
 extern "C" {
 extern char D_004BC160[];
-extern void func_00103D68(int);
+extern void sceDmaReset(int);
 extern void* memset(void*, int, unsigned int);
 extern void FlushCache(int);
 extern void* Mem_Alloc(int, int, char*, int);
-extern void func_00375CD0(S375E50*);
+extern void cDmaMan_Reset(S375E50*);
 }
 static inline void SetupBuf(B375E50* b)
 {
@@ -29,10 +29,10 @@ static inline void* AllocBuf(int size, int line)
     AllocGuard g;
     return Mem_Alloc(0, size, D_004BC160, line);
 }
-extern "C" void func_00375E50(S375E50* o, int sz0, int sz1, int sz2)
+extern "C" void cDmaMan_Init(S375E50* o, int sz0, int sz1, int sz2)
 {
     int i;
-    func_00103D68(1);
+    sceDmaReset(1);
     memset(o->bufs, 0, sizeof(o->bufs));
     for (i = 0; i < 2; i++) {
         if (sz0) {
@@ -64,7 +64,7 @@ extern "C" void func_00375E50(S375E50* o, int sz0, int sz1, int sz2)
     o->last0 = &o->bufs[0][0];
     o->lastA = &o->bufs[0][1];
     o->lastB = &o->bufs[0][2];
-    func_00375CD0(o);
+    cDmaMan_Reset(o);
 }
 
 

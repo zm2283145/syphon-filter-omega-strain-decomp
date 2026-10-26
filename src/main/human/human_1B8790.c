@@ -12,7 +12,7 @@
 extern int WeaponInv_Equip(int, int);
 extern void WeaponInv_HolsterCurrent(int);
 
-void func_001B8790(int a0, int a1, int a2) {
+void cHuman_cDrawAndHolsterWeaponCallback_Trigger(int a0, int a1, int a2) {
     int v0;
     int cond;
 
@@ -37,7 +37,7 @@ static inline void merge_flush_func_001B8790(void) {}
 
 /* merge_units: begin func_001B87E0 */
 #pragma push /* merge_units */
-void func_001B87E0(float* p, float* ang) {
+void cSplinedMotion_Angle_TeleportByDelta(float* p, float* ang) {
     float a = *ang;
     for (;;) {
         if (a > 3.1415927f) { a += -6.2831855f; continue; }

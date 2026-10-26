@@ -15,13 +15,13 @@
 #pragma push /* merge_units */
 typedef struct { char d[0x3C]; } g2E3C;
 typedef struct { int pad0; int size; g2E3C* data; } g2Vec3C;
-extern void func_001AEF70(g2E3C* e, int flag);
+extern void cSkaSliderValue_dtor(g2E3C* e, int flag);
 void func_002A6F40(g2Vec3C* v) {
     g2E3C* b = v->data;
     g2E3C* e = b + v->size;
     while (b < e) {
         --e;
-        func_001AEF70(e, -1);
+        cSkaSliderValue_dtor(e, -1);
     }
     v->size = 0;
 }
@@ -38,7 +38,7 @@ static inline void merge_flush_func_002A6F40(void) {}
 extern "C" {
 char D_004AB358[] = "guiWidget.hh";
 }
-DEFINE_GUARDED_NEW_CTOR(func_002A6FC0, 0xE0, D_004AB358, GuiEquipmentSetup_Create)
+DEFINE_GUARDED_NEW_CTOR(ConcreteWidgetClassRep_GuiEquipmentSetup_Create, 0xE0, D_004AB358, GuiEquipmentSetup_Create)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002A6FC0(void) {}
 #pragma pop /* merge_units */

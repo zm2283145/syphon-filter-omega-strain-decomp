@@ -21,7 +21,7 @@ extern int LargeInt_IsOne(LargeInt *a);
 extern void LargeInt_AddInt(LargeInt *a, int v);                              /* a += v */
 extern void LargeInt_Sub3(LargeInt *out, LargeInt *a, LargeInt *b);           /* out = a - b */
 extern void LargeInt_DivMod(LargeInt *x, LargeInt *y, LargeInt *q, LargeInt *r); /* q = x / y, r = x % y */
-extern void func_002F12A8(LargeInt *p, int bits); /* makes a prime of `bits` bits (sieved with a small-prime table) */
+extern void lintPrime(LargeInt *p, int bits); /* makes a prime of `bits` bits (sieved with a small-prime table) */
 extern int LargeInt_Greater(LargeInt *a, LargeInt *b);                         /* a > b */
 extern int LargeInt_Less(LargeInt *a, LargeInt *b);                            /* a < b */
 extern void LargeInt_Add(LargeInt *a, LargeInt *b);                            /* a += b */
@@ -36,10 +36,10 @@ void RSA_GenerateKeyPair(RSAKey *pub, RSAKey *priv)
 {
     LargeInt p, q, d, e, r, phi;
     LargeInt_SetInt(&d, 0);
-    func_002F12A8(&p, 0x100);
+    lintPrime(&p, 0x100);
     do {
         q = p;
-        func_002F12A8(&p, 0x100);
+        lintPrime(&p, 0x100);
         LargeInt_Mul(&phi, &p, &q);
         *pub = *(RSAKey *)&phi;                 /* n = p * q */
         LargeInt_AddInt(&phi, 1);
@@ -79,17 +79,17 @@ void RSA_GenerateKeyPair(RSAKey *pub, RSAKey *priv)
 /* merge_units: end func_002F4258 */
 
 /* merge_units: begin func_002F4638 */
-extern LargeInt func_002F34A0(void); /* returns a prime by value (the other prime source) */
+extern LargeInt lintPoolPrime(void); /* returns a prime by value (the other prime source) */
 
-/* Same as RSA_GenerateKeyPair, with the primes from func_002F34A0. */
+/* Same as RSA_GenerateKeyPair, with the primes from lintPoolPrime. */
 void RSA_GenerateKeyPair2(RSAKey *pub, RSAKey *priv)
 {
     LargeInt p, q, d, e, r, phi;
     LargeInt_SetInt(&d, 0);
-    p = func_002F34A0();
+    p = lintPoolPrime();
     do {
         q = p;
-        p = func_002F34A0();
+        p = lintPoolPrime();
         LargeInt_Mul(&phi, &p, &q);
         *pub = *(RSAKey *)&phi;
         LargeInt_AddInt(&phi, 1);

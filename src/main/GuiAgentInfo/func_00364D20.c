@@ -30,7 +30,7 @@ extern "C" void AnimChannel_RebuildSegment(void*, float*, float*, float*, float*
 extern "C" void AnimChannel_UpdateEndpoint(void*, int, float*, float*);
 extern "C" void func_0017CA90(void* p, float d, int n);
 extern "C" void* Mem_PlacementNew(int kind, void* p);
-extern "C" void func_0017CA00(void* p, float s, void* a, void* b, void* c, float* r);
+extern "C" void cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_floatR_floatR_etc(void* p, float s, void* a, void* b, void* c, float* r);
 extern float D_00492ED0;
 extern float D_00492ED8;
 static inline int IsZero_364D20(float f) { return 0.0f == f; }
@@ -71,7 +71,7 @@ extern "C" void func_00364D20(Ch364D20* o)
             func_0017CA90(&o->b18, d, -1);
             p = Mem_PlacementNew(0x18, &o->b18);
             if (p) {
-                func_0017CA00(p, o->scale, &o->b8, &o->bc, &o->b10, &D_00492ED0);
+                cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_floatR_floatR_etc(p, o->scale, &o->b8, &o->bc, &o->b10, &D_00492ED0);
             }
         } else if ((IsZero_364D20(o->cur) ^ 1)) {
             Pair364D20* q = &o->out;

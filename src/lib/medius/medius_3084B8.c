@@ -4,9 +4,9 @@ typedef struct { int sock; ScfPeer *ents; char pad[0x24]; unsigned int count; ch
 extern void *memset(void *d, int c, unsigned int n);
 extern int Socket_WriteAddressed(int sock, void *addr, unsigned short port, void *data, int len, unsigned short *sent);
 extern int RtUdp_SendPump(ScfSock *s, ScfPeer *e);
-extern void func_003060F0(int *timer, unsigned int *elapsed);
-extern void func_003060D8(int *timer);
-extern int func_00309518(ScfSock *s);
+extern void rt_time_elapsed(int *timer, unsigned int *elapsed);
+extern void rt_time_get_time_stamp(int *timer);
+extern int rt_udp_receive_messages(ScfSock *s);
 
 int RtUdp_UpdateRegular(ScfSock *s)
 {
@@ -22,16 +22,16 @@ int RtUdp_UpdateRegular(ScfSock *s)
         ret = RtUdp_SendPump(s, e);
         if (ret != 0) return ret;
         if (e->type == 12) {
-            func_003060F0(e->timer, &elapsed);
+            rt_time_elapsed(e->timer, &elapsed);
             if (elapsed > 5000) {
                 memset(&hdr, 0, 12);
                 hdr.val = e->f74;
                 hdr.id = s->b48;
                 Socket_WriteAddressed(s->sock, e->addr, e->port, &hdr, 12, &sent);
-                func_003060D8(e->timer);
+                rt_time_get_time_stamp(e->timer);
             }
         }
     }
-    return func_00309518(s);
+    return rt_udp_receive_messages(s);
 }
 

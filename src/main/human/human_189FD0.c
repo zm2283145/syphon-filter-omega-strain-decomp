@@ -31,7 +31,7 @@ void operator_delete(void* p);
 #define operator_delete(a0) ((void)operator_delete((a0))) /* merge_units */
 
 }
-extern "C" void* func_0018A040(void* self, short deleteFlag)
+extern "C" void* cArray_FixedSize_cSkaAnimEvent_7_dtor(void* self, short deleteFlag)
 {
     if (self) {
         __destroy_array(self, (void*)func_0018A210, 8, 7);

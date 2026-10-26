@@ -10,7 +10,7 @@
 
 /* merge_units: begin func_001B79C0 */
 #pragma push /* merge_units */
-Rel* func_001B7A20(Rel* r); /* gsynth: defined below */
+Rel* std_vector_cTargetZRotationStackSlot_ctor(Rel* r); /* gsynth: defined below */
 /*
  * Matched functions (byte-identical with the retail executable).
  * Original translation unit not identified yet; functions are named by address
@@ -19,27 +19,27 @@ Rel* func_001B7A20(Rel* r); /* gsynth: defined below */
 
 
 #if 0 /* merge_units */
-extern Rel* func_001B7A20(Rel*);
+extern Rel* std_vector_cTargetZRotationStackSlot_ctor(Rel*);
 #endif /* merge_units */
-#define func_001B7A20(a0) (func_001B7A20((a0))) /* merge_units */
+#define std_vector_cTargetZRotationStackSlot_ctor(a0) (std_vector_cTargetZRotationStackSlot_ctor((a0))) /* merge_units */
 
 
-void func_001B79C0(char* self, float* value) {
+void cSplinedMotion_float_SetTargetVal(char* self, float* value) {
     *(float*)(self + 16) = *value;
 }
 
 /* back(): address of the last 8-byte element. */
-char* func_001B79D0(PtrVec* v) {
+char* cArray_cTargetZRotationStackSlot_Back(PtrVec* v) {
     return (char*)v->data + (v->count << 3) - 8;
 }
 
 /* Clear the three words and set the byte at +0x0C. */
-Rel* func_001B79F0(Rel* r) {
-    func_001B7A20(r);
+Rel* cHumanMotionParams_cTargetZRotationStack_ctor(Rel* r) {
+    std_vector_cTargetZRotationStackSlot_ctor(r);
     *((char*)r + 12) = 1;
     return r;
 }
-#undef func_001B7A20 /* merge_units */
+#undef std_vector_cTargetZRotationStackSlot_ctor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001B79C0(void) {}
 #pragma pop /* merge_units */
@@ -54,7 +54,7 @@ static const float dat_0048A1C0[2] = { 0.0f, 0.0f };
 extern char D_004DA380[];   /* CurveChannel base vtable */
 extern char D_004DA7D0[];   /* AngleCurve vtable */
 
-Rel* func_001B7A20(Rel* r) {
+Rel* std_vector_cTargetZRotationStackSlot_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
@@ -75,7 +75,7 @@ CurveChannel* AngleCurve_Construct(CurveChannel* self) {
     return self;
 }
 
-Rel* func_001B7AE0(Rel* r) {
+Rel* cStatesWithHistory_1_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

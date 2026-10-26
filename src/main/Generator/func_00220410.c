@@ -12,7 +12,7 @@ O00220410* t;
     if (!isNull) if (t->id != h->id) ok = false;
     return ok ? t : 0;
 }
-extern "C" bool func_00220410(H00220410* x, H00220410* y)
+extern "C" bool cSafePtr_cGOBJ_opEq(H00220410* x, H00220410* y)
 {
     O00220410* b = Get00220410(y); return Get00220410(x) == b;
 }

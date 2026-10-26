@@ -36,9 +36,9 @@ MSG_CLONE_END
 
 /* merge_units: begin func_00432040 */
 #pragma push /* merge_units */
-int cNetTransferMsg_NetReceive(int unused0, int unused1, int unused2, const NetObjectUpdate* update); /* gsynth: defined below */extern int func_002E9A10(void);
+int cNetTransferMsg_NetReceive(int unused0, int unused1, int unused2, const NetObjectUpdate* update); /* gsynth: defined below */extern int NetRegisterMessageStart(void);
 extern int Event_UnpackHeader(void* p);
-extern int func_002E9A98(void* a, void* b, int c, int d);
+extern int NetMessageField(void* a, void* b, int c, int d);
 extern int NetMsg_RegisterType(void* t, int id, void* fn);
 extern int D_00582768;
 extern int cNetTransferMsg_NetReceive();
@@ -48,9 +48,9 @@ unsigned char cNetTransferMsg_NetRegister(void) {
     int a[1];
     int busy;
     unsigned char r = 0;
-    busy = func_002E9A10();
-    if (!busy && Event_UnpackHeader(buf) && !busy && func_002E9A98(buf, a, 4, 1) == 0 &&
-        func_002E9A98(buf, b, 2, 1) == 0 && NetMsg_RegisterType(&D_00582768, 2, cNetTransferMsg_NetReceive) == 0) {
+    busy = NetRegisterMessageStart();
+    if (!busy && Event_UnpackHeader(buf) && !busy && NetMessageField(buf, a, 4, 1) == 0 &&
+        NetMessageField(buf, b, 2, 1) == 0 && NetMsg_RegisterType(&D_00582768, 2, cNetTransferMsg_NetReceive) == 0) {
         r = 1;
     }
     return r;
@@ -64,7 +64,7 @@ static inline void merge_flush_func_00432040(void) {}
 #pragma push /* merge_units */
 extern volatile unsigned char D_005723C8;
 extern unsigned char D_005721D0;
-extern void func_0042D360(const GobjId* id, int value);
+extern void cNetObjectMgr_TransferRequest(const GobjId* id, int value);
 
 /* Forward a received object update while the network session is active. */
 int cNetTransferMsg_NetReceive(int unused0, int unused1, int unused2, const NetObjectUpdate* update)
@@ -74,7 +74,7 @@ int cNetTransferMsg_NetReceive(int unused0, int unused1, int unused2, const NetO
         D_005723C8 = 1;
     if (D_005721D0) {
         staged[0].word = update->id.word;
-        func_0042D360(staged, update->value);
+        cNetObjectMgr_TransferRequest(staged, update->value);
     }
     D_005723C8 = 0;
     return 16;

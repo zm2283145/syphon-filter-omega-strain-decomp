@@ -1,16 +1,16 @@
 #pragma opt_propagation off
 extern char* App_GetInstance(void);
 extern void Boot_LoadFonts(char* g);
-extern void func_002CCE80(int x);
-extern void func_004136F0(char* a, char* b);
+extern void SetFontColors(int x);
+extern void cInterfaceManager_RemoveHogPath(char* a, char* b);
 extern void func_00413880(char* a, char* b);
-extern void func_004138F0(char* a, char* b);
-extern void func_00413900(char* a, char* b);
-extern void func_00413C70(char* a);
+extern void cInterfaceManager_SetHogList(char* a, char* b);
+extern void cInterfaceManager_OpenHogOfHog(char* a, char* b);
+extern void cInterfaceManager_Init(char* a);
 extern int Gui_GetScreenList(void);
 extern char* Gui_GetScreenStack(void);
 extern void GuiCanvas_Create(char* s);
-extern void func_004158C0(char* p, int x);
+extern void GuiCanvas_Activate(char* p, int x);
 extern void GuiFont_Register(int a, char* b, int c, int d);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern char D_0048B2F8[];
@@ -61,17 +61,17 @@ void FrontEnd_CreateCanvas(SelfB8C0* self, int flag)
         char* g = App_GetInstance();
         GuiFont_Register(Gui_GetScreenList(), D_004AD088, *(int*)(g + 0x288), 0);
     }
-    func_002CCE80(*(int*)(App_GetInstance() + 0x280));
-    func_002CCE80(*(int*)(App_GetInstance() + 0x284));
-    func_002CCE80(*(int*)(App_GetInstance() + 0x288));
+    SetFontColors(*(int*)(App_GetInstance() + 0x280));
+    SetFontColors(*(int*)(App_GetInstance() + 0x284));
+    SetFontColors(*(int*)(App_GetInstance() + 0x288));
     Gui_GetScreenStack()[0x51] = 0;
-    func_004158C0(Gui_GetScreenStack(), 1);
-    func_00413C70(D_00571DC0);
-    func_004138F0(D_00571DC0, D_004FFB8C);
+    GuiCanvas_Activate(Gui_GetScreenStack(), 1);
+    cInterfaceManager_Init(D_00571DC0);
+    cInterfaceManager_SetHogList(D_00571DC0, D_004FFB8C);
     sprintf(buf, D_004AD098, D_0048B2F8);
     func_00413880(D_00571DC0, buf);
-    func_00413900(D_00571DC0, D_004AD0A8);
-    func_004136F0(D_00571DC0, buf);
+    cInterfaceManager_OpenHogOfHog(D_00571DC0, D_004AD0A8);
+    cInterfaceManager_RemoveHogPath(D_00571DC0, buf);
     if (!flag) {
         SlotB8C0* s = (SlotB8C0*)(g_Video + D_00538C60 * 0x110);
         float* v = D_00539170;

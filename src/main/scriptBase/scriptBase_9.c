@@ -18,7 +18,7 @@
 extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
 
 /* push_back: inserts one value at the end. */
-int func_003D8A10(PtrVec* v, int value) {
+int std_vector_FieldDefPtr_push_back(PtrVec* v, int value) {
     return PtrVec_Insert(v, v->data + v->count, 1, value);
 }
 #pragma pop /* merge_units */
@@ -33,8 +33,8 @@ int func_003D8A10(PtrVec* v, int value) {
 int Alloc_Lock(int);                                    
 int Alloc_Unlock(int);                                  
 char * Mem_Alloc(int, int, char *, int);                    
-int func_003D7E90();                                  
-int func_003D8C30(int, void **);                      
+int cScriptBase_checkInitTypes();                                  
+int std_vector_VarDefPtr_push_back(int, void **);                      
 int memcpy(char * , char *, int);                         
 int sprintf(char *, char *, char * );                        
 int strlen(char *);                                    
@@ -61,7 +61,7 @@ int Script_RegisterVariable(char * arg0, int arg1, int arg2) {
     if ((*arg0 == 0x67) && ((&D_00499C71)[var_s0[1]] & 1)) {
         var_s0 += 1;
     }
-    func_003D7E90();
+    cScriptBase_checkInitTypes();
     sprintf(sp60, &D_004BD3C8, var_s0);
     if (g_ProfileLockEnabled != 0) {
         Alloc_Lock(9);
@@ -94,7 +94,7 @@ int Script_RegisterVariable(char * arg0, int arg1, int arg2) {
         F_(temp_s2, 0x19, signed char) = 0;
     }
     sp16C = temp_s2;
-    func_003D8C30(D_00554F18, &sp16C);
+    std_vector_VarDefPtr_push_back(D_00554F18, &sp16C);
     return 0;
 }
 #pragma pop

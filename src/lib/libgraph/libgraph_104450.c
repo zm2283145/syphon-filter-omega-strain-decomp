@@ -7,7 +7,7 @@
 /* merge_units: begin func_00104450 */
 typedef struct { unsigned int *buf; int x4; int *tag; } Pkt4450;
 
-unsigned int *func_00104450(Pkt4450 *p)
+unsigned int *sceGifPkTerminate(Pkt4450 *p)
 {
     unsigned int *a = p->buf;
     int *tag = p->tag;
@@ -22,15 +22,15 @@ unsigned int *func_00104450(Pkt4450 *p)
 /* merge_units: begin func_001044A8 */
 typedef struct { unsigned int *buf; int x4; unsigned int *tag; } Pkt44A8;
 #if 0 /* merge_units */
-extern unsigned int *func_00104450(Pkt44A8 *);
+extern unsigned int *sceGifPkTerminate(Pkt44A8 *);
 #endif /* merge_units */
-#define func_00104450(a0) (func_00104450((Pkt4450 *)(a0))) /* merge_units */
+#define sceGifPkTerminate(a0) (sceGifPkTerminate((Pkt4450 *)(a0))) /* merge_units */
 
 
-void func_001044A8(Pkt44A8 *p, unsigned int x1, unsigned int x2, unsigned int n)
+void sceGifPkCnt(Pkt44A8 *p, unsigned int x1, unsigned int x2, unsigned int n)
 {
     unsigned int *a;
-    p->tag = func_00104450(p);
+    p->tag = sceGifPkTerminate(p);
     a = p->buf;
     *a++ = n | 0x10000000;
     a[0] = 0;
@@ -38,21 +38,21 @@ void func_001044A8(Pkt44A8 *p, unsigned int x1, unsigned int x2, unsigned int n)
     a[2] = x2;
     p->buf = a + 3;
 }
-#undef func_00104450 /* merge_units */
+#undef sceGifPkTerminate /* merge_units */
 /* merge_units: end func_001044A8 */
 
 /* merge_units: begin func_00104520 */
 typedef struct { unsigned int *buf; int x4; unsigned int *tag; } Pkt4520;
 #if 0 /* merge_units */
-extern unsigned int *func_00104450(Pkt4520 *);
+extern unsigned int *sceGifPkTerminate(Pkt4520 *);
 #endif /* merge_units */
-#define func_00104450(a0) (func_00104450((Pkt4450 *)(a0))) /* merge_units */
+#define sceGifPkTerminate(a0) (sceGifPkTerminate((Pkt4450 *)(a0))) /* merge_units */
 
 
-void func_00104520(Pkt4520 *p, unsigned int addr, unsigned int id, unsigned int x2, unsigned int x3, unsigned int n)
+void sceGifPkRef(Pkt4520 *p, unsigned int addr, unsigned int id, unsigned int x2, unsigned int x3, unsigned int n)
 {
     unsigned int *a;
-    func_00104450(p);
+    sceGifPkTerminate(p);
     a = p->buf;
     { unsigned int t = id | 0x30000000; *a++ = n | t; }
     a[0] = addr & 0x9FFFFFFF;
@@ -60,21 +60,21 @@ void func_00104520(Pkt4520 *p, unsigned int addr, unsigned int id, unsigned int 
     a[2] = x3;
     p->buf = a + 3;
 }
-#undef func_00104450 /* merge_units */
+#undef sceGifPkTerminate /* merge_units */
 /* merge_units: end func_00104520 */
 
 /* merge_units: begin func_001045B8 */
 typedef struct { unsigned int *buf; int x4; unsigned int *tag; } Pkt45B8;
 #if 0 /* merge_units */
-extern unsigned int *func_00104450(Pkt45B8 *);
+extern unsigned int *sceGifPkTerminate(Pkt45B8 *);
 #endif /* merge_units */
-#define func_00104450(a0) (func_00104450((Pkt4450 *)(a0))) /* merge_units */
+#define sceGifPkTerminate(a0) (sceGifPkTerminate((Pkt4450 *)(a0))) /* merge_units */
 
 
-void func_001045B8(Pkt45B8 *p, unsigned int x1, unsigned int x2, unsigned int n)
+void sceGifPkEnd(Pkt45B8 *p, unsigned int x1, unsigned int x2, unsigned int n)
 {
     unsigned int *a;
-    p->tag = func_00104450(p);
+    p->tag = sceGifPkTerminate(p);
     a = p->buf;
     *a++ = n | 0x70000000;
     a[0] = 0;
@@ -82,5 +82,5 @@ void func_001045B8(Pkt45B8 *p, unsigned int x1, unsigned int x2, unsigned int n)
     a[2] = x2;
     p->buf = a + 3;
 }
-#undef func_00104450 /* merge_units */
+#undef sceGifPkTerminate /* merge_units */
 /* merge_units: end func_001045B8 */

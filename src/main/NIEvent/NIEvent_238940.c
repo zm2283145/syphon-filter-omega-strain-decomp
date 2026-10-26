@@ -17,11 +17,11 @@
  */
 
 
-extern NIEventVec3* func_00238970(NIEventVec3* vec);
+extern NIEventVec3* std_vector_imp_FloatKey_ctor(NIEventVec3* vec);
 
 /* Constructs an empty vector that owns its storage. */
-NIEventOwnedVec* func_00238940(NIEventOwnedVec* self) {
-    func_00238970(&self->vec);
+NIEventOwnedVec* cArray_FloatKey_ctor(NIEventOwnedVec* self) {
+    std_vector_imp_FloatKey_ctor(&self->vec);
     self->owned = 1;
     return self;
 }
@@ -33,7 +33,7 @@ static inline void merge_flush_func_00238940(void) {}
 /* merge_units: begin func_00238970 */
 #pragma push /* merge_units */
 /* Constructs an empty vector. */
-NIEventVec3* func_00238970(NIEventVec3* vec) {
+NIEventVec3* std_vector_imp_FloatKey_ctor(NIEventVec3* vec) {
     vec->begin = 0;
     vec->end = 0;
     vec->cap = 0;

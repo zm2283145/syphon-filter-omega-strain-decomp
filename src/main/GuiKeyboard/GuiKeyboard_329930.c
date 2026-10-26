@@ -4,13 +4,13 @@
 #include "short_string_assign.h"
 
 /* Assign one string to another; returns the destination. */
-extern "C" ShortStr* func_00329930(ShortStr* self, const ShortStr* src)
+extern "C" ShortStr* cString_opAssign(ShortStr* self, const ShortStr* src)
 {
     bool selfLong = ShortStr_IsLong(self);
     if (!selfLong && !ShortStr_IsLong(src)) {
         *self = *src;
     } else {
-        func_0013D710(self, 0, selfLong ? self->u.l.length : ShortStr_ShortLen(self), src);
+        std_basic_string_char_char_traits_char_replace_uint_uint_basicstringR(self, 0, selfLong ? self->u.l.length : ShortStr_ShortLen(self), src);
     }
     return self;
 }

@@ -31,10 +31,10 @@ extern "C" {
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void Mem_Free(int pool, void* p, char* file, int line);
 void ModelNames_Insert(int* out, Owner_3B49A0* self, void* name, Node_3B49A0* value);
-Node_3B49A0* func_003B2C50(Node_3B49A0* self, Node_3B49A0* o, unsigned char mode);
+Node_3B49A0* cSkaAnim_ctor_cSkaAnimR_eModifier(Node_3B49A0* self, Node_3B49A0* o, unsigned char mode);
 Node_3B49A0* MotionNode_BaseCopy(Node_3B49A0* self, Node_3B49A0* src, V4_3B49A0* offset);
 void MotionSlider_CopyChildren(void* d, void* s);
-void func_003B4E70(void* d, void* s);
+void cArray_cSkaSwitchItem_ctor_cArrayR(void* d, void* s);
 extern int D_004BCD60;
 extern char D_004BCD70[];
 extern char D_004DFC10[];
@@ -58,14 +58,14 @@ extern "C" void MotionSlider_RegisterNode(int* out, Owner_3B49A0* owner, void* n
     case 0:
         {
             Node_3B49A0* p = (Node_3B49A0*)AllocL_3B49A0(0x50, 0x22C);
-            if (p) p = func_003B2C50(p, src, 0);
+            if (p) p = cSkaAnim_ctor_cSkaAnimR_eModifier(p, src, 0);
             n = p;
         }
         break;
     case 1:
         n = (Node_3B49A0*)AllocL_3B49A0(0x70, 0x231);
         if (n) {
-            func_003B2C50(n, src, 0);
+            cSkaAnim_ctor_cSkaAnimR_eModifier(n, src, 0);
             n->vt = D_004DFC10;
             n->x50 = src->x50;
             n->f54 = src->f54;
@@ -94,7 +94,7 @@ extern "C" void MotionSlider_RegisterNode(int* out, Owner_3B49A0* owner, void* n
             MotionNode_BaseCopy(n, src, &c);
             n->vt = D_004DFBB0;
             n->x20 = src->x20;
-            func_003B4E70(n->c24, src->c24);
+            cArray_cSkaSwitchItem_ctor_cArrayR(n->c24, src->c24);
         }
         owner->n58 = Max_3B49A0(n->x20 + 1, owner->n58);
         break;

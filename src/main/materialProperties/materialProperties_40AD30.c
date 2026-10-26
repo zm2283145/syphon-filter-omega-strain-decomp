@@ -14,15 +14,15 @@
 /* Allocator release(ptr, pool, destroy, file, line): destroy the element's member at +4, then Mem_Free under the guard. */
 extern "C" {
 void Mem_Free(int pool, void* allocation, char* file, int line);
-void* func_00408D20(void* self, short flags);
-void func_0040AD30(void* allocation, int pool, int destroy, char* file, int line);
+void* std_pair_cString_int_dtor(void* self, short flags);
+void opDelete_nodeP_int_bool_charP_etc_9(void* allocation, int pool, int destroy, char* file, int line);
 }
-void func_0040AD30(void* allocation, int pool, int destroy, char* file, int line)
+void opDelete_nodeP_int_bool_charP_etc_9(void* allocation, int pool, int destroy, char* file, int line)
 {
     AllocGuard guard;
     if (destroy) {
         if (allocation)
-            func_00408D20((char*)allocation + 12, -1);
+            std_pair_cString_int_dtor((char*)allocation + 12, -1);
     }
     Mem_Free(pool, allocation, file, line);
 }
@@ -32,20 +32,20 @@ void func_0040AD30(void* allocation, int pool, int destroy, char* file, int line
 /* merge_units: begin func_0040AE10 */
 #pragma push /* merge_units */
 extern char D_004BEC68[];
-extern void func_00136DA0(int* g);
-extern void func_0012F530(int* g, int del);
+extern void cTimerDisable_ctor(int* g);
+extern void cTimerDisable_dtor(int* g, int del);
 #if 0 /* merge_units */
 extern void Mem_Free(int heap, void* p, const char* file, int line);
 #endif /* merge_units */
 #define Mem_Free(a0, a1, a2, a3) (Mem_Free((a0), (a1), (char *)(a2), (a3))) /* merge_units */
 
-void func_0040AE10(void* self, void* p)
+void cAllocator_node_deallocate_nodeP_uint_10(void* self, void* p)
 {
     if (p) {
         int g[1];
-        func_00136DA0(g);
+        cTimerDisable_ctor(g);
         Mem_Free(0, p, D_004BEC68, 100);
-        func_0012F530(g, -1);
+        cTimerDisable_dtor(g, -1);
     }
 }
 #undef Mem_Free /* merge_units */
@@ -64,18 +64,18 @@ void func_0040AE10(void* self, void* p)
 
 extern int String_Dtor_138350(void* obj, int flags);
 
-void* func_0040AE70(char* self) {
+void* std_tree_pair_cString_value_compare_node_alloc_void_2(char* self) {
     return self + 4;
 }
 
 /* Destroys obj (flags -1) when it is non-null. */
-void func_0040AE80(void* self, void* obj) {
+void cAllocator_pair_cString_destroy_pairP_2(void* self, void* obj) {
     if (obj != 0) {
         String_Dtor_138350(obj, -1);
     }
 }
 
-void* func_0040AEB0(void* self) {
+void* std_tree_pair_cString_value_compare_alloc_void_2(void* self) {
     return self;
 }
 #pragma pop /* merge_units */
@@ -91,10 +91,10 @@ struct R1C4770 { N1C4770* node; unsigned char inserted; };
 extern "C" {
 static const unsigned int dat_00493C08[2] = { 0x1, 0x0 };
 static const unsigned int dat_00493C10[2] = { 0 };
-int func_0013C310(const K1C4770* a, const K1C4770* b);
-N1C4770* func_0040B2A0(T1C4770* t, N1C4770* parent, bool left, bool leftmost, const K1C4770* k); }
-static inline int K1C4770_less(const K1C4770* a, const K1C4770* b) { int r = func_0013C310(a, b) < 0; return r; }
-extern "C" void func_0040AEC0(R1C4770* out, T1C4770* t, const K1C4770* k)
+int std_basic_string_char_char_traits_char_compare_basicstringR(const K1C4770* a, const K1C4770* b);
+N1C4770* std_tree_pair_cString_value_compare_insert_node_at_nodeP_bool_bool_pairR_4(T1C4770* t, N1C4770* parent, bool left, bool leftmost, const K1C4770* k); }
+static inline int K1C4770_less(const K1C4770* a, const K1C4770* b) { int r = std_basic_string_char_char_traits_char_compare_basicstringR(a, b) < 0; return r; }
+extern "C" void std_tree_pair_cString_value_compare_insert_one_pairR_4(R1C4770* out, T1C4770* t, const K1C4770* k)
 {
     N1C4770* j;
     N1C4770* y;
@@ -120,7 +120,7 @@ extern "C" void func_0040AEC0(R1C4770* out, T1C4770* t, const K1C4770* k)
         }
     }
     if (j == 0 || K1C4770_less(&j->key, k)) {
-        out->node = func_0040B2A0(t, y, left, leftmost, k);
+        out->node = std_tree_pair_cString_value_compare_insert_node_at_nodeP_bool_bool_pairR_4(t, y, left, leftmost, k);
         out->inserted = (*(unsigned char*)dat_00493C08);
     } else {
         out->node = j;
@@ -132,7 +132,7 @@ extern "C" void func_0040AEC0(R1C4770* out, T1C4770* t, const K1C4770* k)
 
 /* merge_units: begin func_0040AFE0 */
 #pragma push /* merge_units */
-Map* func_0040AFE0(Map* m, unsigned char* cmp) {
+Map* std_tree_pair_cString_value_compare_ctor_valuecompareR_cAllocatorR_4(Map* m, unsigned char* cmp) {
     m->count = 0;
     m->head = 0;
     m->cmp = *cmp;
@@ -146,14 +146,14 @@ Map* func_0040AFE0(Map* m, unsigned char* cmp) {
 #pragma push /* merge_units */
 typedef struct { char d[0x124]; } RB000;
 typedef struct { int m0; unsigned int size; RB000* data; } VB000;
-extern void func_00408930(RB000* r, short del);
+extern void cMaterialProperties_dtor(RB000* r, short del);
 /* Destroys every record and sets the size to zero. */
-void func_0040B000(VB000* v) {
+void std_vector_deleter_cMaterialProperties_clear(VB000* v) {
     RB000* b = v->data;
     RB000* e = b + v->size;
     while (b < e) {
         --e;
-        func_00408930(e, -1);
+        cMaterialProperties_dtor(e, -1);
     }
     v->size = 0;
 }

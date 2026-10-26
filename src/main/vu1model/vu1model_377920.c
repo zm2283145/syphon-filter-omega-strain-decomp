@@ -42,7 +42,7 @@ extern "C" {
 extern char g_LightMgr[];
 extern void FileMan_FindMember(void* f);
 extern void FileMan_LoadMemberSync(void* f, ModelL* m, int z);
-extern void func_0036DEC0(void* f);
+extern void cFileMan_Close(void* f);
 extern void Model_BindTextures(ModelL* m, void* t);
 extern void Model_FoldMaterialFlags(ModelL* m);
 extern void Model_PatchMscal(ModelL* m);
@@ -55,7 +55,7 @@ extern void LightMgr_Register(void* mgr, int id, ModelL* m, int i);
 extern "C" void Model_Load(ModelL* m, void* f, void* tex) {
     FileMan_FindMember(f);
     FileMan_LoadMemberSync(f, m, 0);
-    func_0036DEC0(f);
+    cFileMan_Close(f);
     m->hdr = (HdrL*)m->base;
     if (!m->hdr->loaded) {
         m->hdr->mats = (MatL*)((int)m->base + (int)m->hdr->mats);
@@ -104,7 +104,7 @@ extern "C" void Model_Load(ModelL* m, void* f, void* tex) {
 #pragma cplusplus on
 #include "self_call_dtor.h"
 
-DEFINE_SELF_CALL_DTOR(func_00377BD0, Model_Unload)
+DEFINE_SELF_CALL_DTOR(cVU1Model_dtor, Model_Unload)
 #pragma pop /* merge_units */
 /* merge_units: end func_00377BD0 */
 
@@ -119,7 +119,7 @@ DEFINE_SELF_CALL_DTOR(func_00377BD0, Model_Unload)
 #include "loose03_types.h"
 
 /* Rec377C30 constructor: zero all words, set the flag byte. */
-Rec377C30* func_00377C30(Rec377C30* self) {
+Rec377C30* cVU1Model_ctor(Rec377C30* self) {
     self->unk[0] = 0;
     self->unk[1] = 0;
     self->unk[2] = 0;

@@ -9,7 +9,7 @@
 extern char D_005984B8[];
 extern char D_005984BC[];
 
-int func_0046E2B8(void) {
+int MediusUniqueCallbackFileDownloadStreamResponseHandler(void) {
     int v0;
     int cond;
 
@@ -24,11 +24,11 @@ ret:
     return v0;
 }
 
-int func_0046E2E8(void) {
+int MediusUniqueCallbackFileDeleteRequestHandler(void) {
     return 196;
 }
 
-int func_0046E2F0(void) {
+int MediusUniqueCallbackFileDeleteResponseHandler(void) {
     int v0;
     int cond;
 

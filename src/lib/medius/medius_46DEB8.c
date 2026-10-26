@@ -10,7 +10,7 @@ extern char D_00497E0C[];
 extern char D_00497E14[];
 extern char D_00497E18[];
 
-int func_0046DEB8(void) {
+int MediusUniqueCallbackGetLadderStatsResponseHandler(void) {
     int v0;
     int cond;
 
@@ -25,7 +25,7 @@ ret:
     return v0;
 }
 
-int func_0046DEE8(void) {
+int MediusUniqueCallbackGetLadderStatsWideResponseHandler(void) {
     int v0;
     int cond;
 
@@ -40,11 +40,11 @@ ret:
     return v0;
 }
 
-int func_0046DF18(void) {
+int MediusUniqueCallbackLadderPosition_ExtraInfoRequestHandler(void) {
     return 36;
 }
 
-int func_0046DF20(void) {
+int MediusUniqueCallbackLadderPosition_ExtraInfoResponseHandler(void) {
     int v0;
     int cond;
 

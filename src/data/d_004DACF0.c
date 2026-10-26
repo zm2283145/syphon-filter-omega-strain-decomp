@@ -4,9 +4,9 @@ extern void ActorPhys_Dtor();
 extern void ActorPhys_GatherBounds();
 extern void ActorPhys_Update();
 extern void Secondary_Update();
-extern void func_001B4B10();
+extern void cHumanIkRoutine_dtor();
 
-void *D_004DACF0[4] = { 0, 0, &func_001B4B10, &Secondary_Update };
+void *D_004DACF0[4] = { 0, 0, &cHumanIkRoutine_dtor, &Secondary_Update };
 
 void *D_004DAD00[8] = {
     0, 0, &ActorPhys_Dtor, &ActorPhys_GatherBounds,

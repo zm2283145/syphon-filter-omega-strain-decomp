@@ -4,11 +4,11 @@
 #pragma push
 #pragma optimization_level 1
 
-extern void func_0020A690(void* obj);
+extern void std_fill_n_cSkaBlendSequenceItem_int_fill_n(void* obj);
 
-/* Thin wrapper around func_0020A690. */
-void func_0020A670(void* obj) {
-    func_0020A690(obj);
+/* Thin wrapper around std_fill_n_cSkaBlendSequenceItem_int_fill_n. */
+void std_fill_n_cSkaBlendSequenceItemP_uint_cSkaBlendSequenceItemR(void* obj) {
+    std_fill_n_cSkaBlendSequenceItem_int_fill_n(obj);
 }
 
 #pragma pop

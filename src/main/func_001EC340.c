@@ -2,7 +2,7 @@
 #include "prio_bitset.h"
 PB_DEFINE(PS_1EC340, 1)
 #pragma opt_rotateloops off
-PS_1EC340* func_001EC340(PS_1EC340* p, int v)
+PS_1EC340* cModeSwitch_12_ctor_uint(PS_1EC340* p, int v)
 {
     int i;
     p->w[0] = 0;

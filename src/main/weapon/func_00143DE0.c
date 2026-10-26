@@ -8,6 +8,6 @@
 
 extern int WeaponInv_ClipsForActor(void* a0, int key);
 
-int func_00143DE0(Inventory* inv, int key) {
+int cWeapon_AdjustMaxClips(Inventory* inv, int key) {
     return WeaponInv_ClipsForActor(inv->unk88, key);
 }

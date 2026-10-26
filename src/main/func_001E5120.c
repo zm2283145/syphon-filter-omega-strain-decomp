@@ -5,9 +5,9 @@
 typedef struct { char** p; } It_1E5120;
 typedef struct { char pad[0xB4]; int vec; int count; } O_1E5120;
 extern "C" {
-char** func_001E5250(int* v);
-char** func_001E5220(int* v);
-void func_001E5240(It_1E5120* out, int* v, char*** p);
+char** std_vector_imp_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_1_begin(int* v);
+char** std_vector_imp_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_1_end(int* v);
+void std_vector_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_pointer2iterator(It_1E5120* out, int* v, char*** p);
 char* Root_IdentityAccessor(char* r);
 void Transform_SetOrientation(char* t, void* q);
 void Root_PropagateChildren(char* r);
@@ -26,11 +26,11 @@ void Physical_SetChildOffsets(O_1E5120* self, void* q)
     char** end;
     if (EqI_1E5120(self->count, 0) ^ 1) {
         int* v = &self->vec;
-        t0 = func_001E5250(v);
-        func_001E5240(&b, &self->vec, &t0);
+        t0 = std_vector_imp_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_1_begin(v);
+        std_vector_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_pointer2iterator(&b, &self->vec, &t0);
         it = b.p;
-        t1 = func_001E5220(v);
-        func_001E5240(&e, v, &t1);
+        t1 = std_vector_imp_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_1_end(v);
+        std_vector_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_pointer2iterator(&e, v, &t1);
         end = e.p;
         /* volatile read: retail reloads e.p for the loop guard separately from end */
         if (Eq_1E5120(it, *(char** volatile*)&e.p) ^ 1) {

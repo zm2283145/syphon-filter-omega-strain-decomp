@@ -36,7 +36,7 @@ void Vec4_Assign(void*, void*);
 extern char D_004BD228[];
 }
 
-extern "C" void func_003CD630(Obj_3CD630* o_, M44* m_)
+extern "C" void cGOBJ_CreateMovementInfo_cMatrixR(Obj_3CD630* o_, M44* m_)
 {
     Node_3CD630* n = o_->node;
     Obj_3CD630* o = o_; M44* m = m_;

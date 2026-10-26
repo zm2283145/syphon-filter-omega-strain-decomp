@@ -37,9 +37,9 @@ public:
 typedef struct { char pad[0xC]; unsigned int id; char pad10[0x48]; G2Sub157* sub; } G2Gen157;
 extern "C" {
 extern unsigned char g_IsMultiplayer;
-void func_00436C00(int* t);
-int func_00434440(int* t, unsigned int* id);
-void func_00436BA0(int* t, int f);
+void cNPCInfoObject_ctor(int* t);
+int cNPCInfoObject_GetOwner_cObjectIdR(int* t, unsigned int* id);
+void cNPCInfoObject_dtor(int* t, int f);
 }
 static inline unsigned char G2IsA(G2Gen157* g) { unsigned char r = 0; if (g->sub && g->sub->IsA()) r = 1; return r; }
 static inline unsigned char G2IsB(G2Gen157* g) { unsigned char r = 0; if (g->sub && g->sub->IsB()) r = 1; return r; }
@@ -51,9 +51,9 @@ extern "C" void cNPC_Deactivate(G2Npc157* n, G2Gen157* g)
         if (g) {
             if (G2IsA(g) || G2IsB(g)) {
                 int tmp[1];
-                func_00436C00(tmp);
-                v = func_00434440(tmp, &g->id);
-                func_00436BA0(tmp, -1);
+                cNPCInfoObject_ctor(tmp);
+                v = cNPCInfoObject_GetOwner_cObjectIdR(tmp, &g->id);
+                cNPCInfoObject_dtor(tmp, -1);
             } else {
                 v = ((g->id & 0x7F000000) >> 24) - 1;
             }
@@ -84,7 +84,7 @@ extern char D_004E0F00[];
 void NpcAi_GetPlayerRecord(void* self, int a, int b);
 void NetGame_InitLocalSlot(int* p, int v);
 void NetObjectMgr_Remove(void* o);
-void func_00429200(void* m, int a, int b);
+void cDeactivateMsg_SendDeactivated(void* m, int a, int b);
 void Event_Construct(void* m, void* type);
 void Transport_Send(int a, void* m, int b, int c);
 void cMessage_dtor(void* m, int f);
@@ -132,7 +132,7 @@ extern "C" void NpcAi_DeactivateAnon(Npc_7510* self)
                     Msg2_7510 m2;
                     Event_Construct(&m1, D_00572198);
                     m1.vt = D_004E0E80;
-                    func_00429200(&m1, self->body->cC, i);
+                    cDeactivateMsg_SendDeactivated(&m1, self->body->cC, i);
                     m1.vt = D_004E0E80;
                     cMessage_dtor(&m1, 0);
                     Event_Construct(&m2, D_00582760);

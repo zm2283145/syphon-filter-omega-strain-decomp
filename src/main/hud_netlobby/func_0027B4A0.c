@@ -9,12 +9,12 @@
 
 extern ListPos* List_InsertBefore(ListPos* result, void* list, ListPos* pos, int value);
 
-void func_0027B4A0(int* dst, int* src) {
+void std_list_GameInfoPtr_generic_iterator_opCast(int* dst, int* src) {
     *dst = *src;
 }
 
 /* push_back on a list whose sentinel node is at +4. */
-ListPos* func_0027B4B0(void* list, int value) {
+ListPos* std_list_GameInfoPtr_push_back(void* list, int value) {
     ListPos end;
     ListPos result;
 

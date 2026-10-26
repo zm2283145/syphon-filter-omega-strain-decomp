@@ -7,7 +7,7 @@ typedef struct {
 } S44EDC0;
 extern int Name_Compare48(void*, void*, int);
 extern int Lobby_GetTime(void);
-extern void func_0044EFF0(S44EDC0*, void*, E44EDC0*);
+extern void SFOLobby_RefreshGameInfo(S44EDC0*, void*, E44EDC0*);
 extern E44EDC0* LobbyArray_At(L44EDC0*, int);
 extern void LobbyArray_Append(L44EDC0*, E44EDC0*);
 extern void* memcpy(void*, const void*, int);
@@ -29,7 +29,7 @@ static inline E44EDC0* Find44EDC0(L44EDC0* list, int id)
     return 0;
 }
 
-void func_0044EDC0(S44EDC0* s, int id, int a2, int a3, int a4, void* name)
+void SFOLobby_RefreshGameData(S44EDC0* s, int id, int a2, int a3, int a4, void* name)
 {
     E44EDC0* e;
     unsigned char changed;
@@ -60,15 +60,15 @@ void func_0044EDC0(S44EDC0* s, int id, int a2, int a3, int a4, void* name)
         changed = 1;
     }
     if (changed) {
-        func_0044EFF0(s, s->lC4, e);
-        func_0044EFF0(s, s->l8C, e);
-        func_0044EFF0(s, s->lA8, e);
-        func_0044EFF0(s, s->lC4, e);
-        func_0044EFF0(s, s->lE0, e);
-        func_0044EFF0(s, s->l23F0, e);
-        func_0044EFF0(s, s->l23F4, e);
-        func_0044EFF0(s, s->l23E4, e);
-        func_0044EFF0(s, s->l23E8, e);
+        SFOLobby_RefreshGameInfo(s, s->lC4, e);
+        SFOLobby_RefreshGameInfo(s, s->l8C, e);
+        SFOLobby_RefreshGameInfo(s, s->lA8, e);
+        SFOLobby_RefreshGameInfo(s, s->lC4, e);
+        SFOLobby_RefreshGameInfo(s, s->lE0, e);
+        SFOLobby_RefreshGameInfo(s, s->l23F0, e);
+        SFOLobby_RefreshGameInfo(s, s->l23F4, e);
+        SFOLobby_RefreshGameInfo(s, s->l23E4, e);
+        SFOLobby_RefreshGameInfo(s, s->l23E8, e);
     }
     }
 }

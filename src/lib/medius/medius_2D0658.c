@@ -11,7 +11,7 @@ extern char *strstr(char *, const char *);
 extern int atoi(const char *);
 extern char D_004AD3C8[];
 extern char D_004AD3D0[];
-int func_002D0658(unsigned char *out, const char *s)
+int MGCLIPStringToBinary(unsigned char *out, const char *s)
 {
     char buf[16];
     char *p;
@@ -43,7 +43,7 @@ extern char *strstr(const char *, const char *);
 #endif /* merge_units */
 #define strstr(a0, a1) (strstr((char *)(a0), (a1))) /* merge_units */
 
-int func_002D0728(char *out)
+int MGCLGetMGCLBuildTimeStamp(char *out)
 {
     M00468708 months = months_init;
     char mon[16];

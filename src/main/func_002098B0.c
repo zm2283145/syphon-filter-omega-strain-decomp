@@ -4,11 +4,11 @@
 #pragma push
 #pragma optimization_level 1
 
-extern void func_002098D0(void* obj);
+extern void details_compressed_pair_imp_cAllocator_cSkaBlendSequenceItem_int_1_second_void(void* obj);
 
-/* Thin wrapper around func_002098D0. */
-void func_002098B0(void* obj) {
-    func_002098D0(obj);
+/* Thin wrapper around details_compressed_pair_imp_cAllocator_cSkaBlendSequenceItem_int_1_second_void. */
+void std_vector_deleter_cSkaBlendSequenceItem_cap_void(void* obj) {
+    details_compressed_pair_imp_cAllocator_cSkaBlendSequenceItem_int_1_second_void(obj);
 }
 
 #pragma pop

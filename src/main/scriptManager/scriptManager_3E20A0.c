@@ -42,7 +42,7 @@ static inline void merge_flush_func_003E20A0(void) {}
  */
 
 
-void func_003E2140(ScriptManager* self, int value) {
+void cScriptInterpreter_SetHog(ScriptManager* self, int value) {
     self->unk4E90 = value;
 }
 /* merge_units: generate this block's code under its own pragmas */

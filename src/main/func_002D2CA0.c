@@ -11,7 +11,7 @@ void Event_Construct(Ev2CA0* e, void* type);
 void NpcAi_ModeFollow(Npc2CA0* o, Ev2CA0* e);
 void cMessage_dtor(void* self, int flags);
 }
-extern "C" void func_002D2CA0(Npc2CA0* o, bool on)
+extern "C" void cNetNPC_NetFollow(Npc2CA0* o, bool on)
 {
     if (on) {
         Ev2CA0 ev;

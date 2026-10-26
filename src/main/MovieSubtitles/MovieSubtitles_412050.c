@@ -18,7 +18,7 @@
 
 
 /* Resets the block to its default state. */
-void func_00412050(SubtitleBlock* b) {
+void cMovieSubtitles_ResetText(SubtitleBlock* b) {
     b->base = 0;
     b->unk90 = 0;
     b->unk6C = 0;
@@ -54,7 +54,7 @@ typedef struct Cursor {
 } Cursor;
 
 /* Advances current while below count. */
-void func_004120C0(Cursor* c) {
+void cSubtitleFeed_NextItem(Cursor* c) {
     if (c->current < c->count) c->current++;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -68,7 +68,7 @@ typedef struct { char pad[0x13C]; int value; } Entry140; /* size 0x140 */
 typedef struct { char pad[0x60]; Entry140* entries; char pad64[4]; int current; } Table;
 
 /* Returns the value of the current 0x140-byte entry. */
-int func_004120F0(Table* t)
+int cSubtitleFeed_GetLanguage(Table* t)
 {
     return t->entries[t->current].value;
 }
@@ -80,7 +80,7 @@ static inline void merge_flush_func_004120F0(void) {}
 /* merge_units: begin func_00412110 */
 #pragma push /* merge_units */
 /* Return the final float field of the selected subtitle transform. */
-float func_00412110(SubtitleTransformTable* table)
+float cSubtitleFeed_GetEndTime(SubtitleTransformTable* table)
 {
     return table->entries[table->current].unk134;
 }
@@ -105,7 +105,7 @@ typedef struct EntryTable {
 } EntryTable;
 
 /* Returns the float at +0x130 of the current 0x140-byte entry. */
-float func_00412130(EntryTable* t) {
+float cSubtitleFeed_GetStartTime(EntryTable* t) {
     return t->entries[t->current].value;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -124,12 +124,12 @@ SubVec4* SubtitleTrack_LoadCue(SubVec4* dst, SubVec4* src) {
     return dst;
 }
 
-char* func_00412180(SubtitleBlock* b) {
+char* cSubtitleFeed_GetColor(SubtitleBlock* b) {
     return b->unk50;
 }
 
 /* Address of column col in the current row (rows of 320 bytes, columns of 100 bytes). */
-int func_00412190(SubtitleBlock* b, int col) {
+int cSubtitleFeed_GetText(SubtitleBlock* b, int col) {
     int row = b->unk68;
     int base = b->base;
     return (base + (row * 320)) + (col * 100);
@@ -144,7 +144,7 @@ static inline void merge_flush_func_00412150(void) {}
 typedef struct { char pad[0x12C]; int unk12C; char pad130[0x10]; } Entry004121D0; /* 0x140 */
 typedef struct { char pad[0x60]; Entry004121D0* entries; int unk64; int current; } Obj004121D0;
 /* Return field 0x12C of the current entry. */
-int func_004121D0(Obj004121D0* obj)
+int cSubtitleFeed_GetNumLines(Obj004121D0* obj)
 {
     return obj->entries[obj->current].unk12C;
 }
@@ -169,7 +169,7 @@ typedef struct EntryTable_004121F0 {
 } EntryTable_004121F0;
 
 /* Returns the value field of the current entry. */
-int func_004121F0(EntryTable_004121F0* t) {
+int cSubtitleFeed_GetDisplayFlags(EntryTable_004121F0* t) {
     return t->entries[t->current].value;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -180,7 +180,7 @@ static inline void merge_flush_func_004121F0(void) {}
 /* merge_units: begin func_00412210 */
 #pragma push /* merge_units */
 /* True while the current row is below unk64. */
-int func_00412210(SubtitleBlock* b) {
+int cSubtitleFeed_ItemPending(SubtitleBlock* b) {
     return b->unk68 < b->unk64;
 }
 /* merge_units: generate this block's code under its own pragmas */

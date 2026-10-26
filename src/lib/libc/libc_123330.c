@@ -37,7 +37,7 @@ extern void _free_r(reent_X* r, void* p);
 #define HASLB(fp) ((fp)->_lb_base != 0)
 #define FREELB(fp) { _free_r((fp)->_data, (char *)(fp)->_lb_base); (fp)->_lb_base = 0; }
 extern int fflush(FILE_X* fp);
-int func_001233E0(FILE_X * fp)
+int Libc_Fclose(FILE_X * fp)
 {
   int r;
 

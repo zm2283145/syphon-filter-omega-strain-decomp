@@ -4,4 +4,4 @@
 #include "base_dtor_chain.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_004088D0, String_Dtor)
+DEFINE_BASE_DTOR_CHAIN(std_pair_cString_char_dtor, String_Dtor)

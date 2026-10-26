@@ -5,6 +5,6 @@
 #include "gobj_types.h"
 
 /* Address of the member at +8. */
-void* func_00393680(char* self) {
+void* std_vector_deleter_cSkaAnimAnchorListEntry_data(char* self) {
     return self + 8;
 }

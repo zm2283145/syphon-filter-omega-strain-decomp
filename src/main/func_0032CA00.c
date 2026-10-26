@@ -24,14 +24,14 @@ extern "C" {
 void GuiWidget_BaseWake(Self_32CA00* self);
 void GuiKeyboard_Relabel(Self_32CA00* self, unsigned int flags);
 Stack_32CA00* Gui_GetScreenStack(void);
-W_32CA00*** func_00171EC0(Vec_32CA00* v);
+W_32CA00*** std_vector_pod_int_data(Vec_32CA00* v);
 VC_32CA00* func_0032C110(W_32CA00* w);
 int GuiKeyboard_IsSpecialKey(Self_32CA00* self, W_32CA00* w);
 }
 
 static inline float clamp01(float x) { float lo = 0.0f; float hi = 1.0f; asm { max.s lo, x, lo; min.s lo, lo, hi } return lo; }
 
-static inline W_32CA00* At(Vec_32CA00* v, int i) { return (*func_00171EC0(v))[i]; }
+static inline W_32CA00* At(Vec_32CA00* v, int i) { return (*std_vector_pod_int_data(v))[i]; }
 
 static inline void Focus(Self_32CA00* self, W_32CA00* w)
 {

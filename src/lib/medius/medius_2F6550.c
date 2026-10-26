@@ -1,7 +1,7 @@
 #include "types.h"
 
-extern int func_002F7CB8(float);
+extern int rt_comm_platform_display_state(float);
 
-int func_002F6550(float f12) {
-    return func_002F7CB8(f12);
+int rt_comm_display_state(float f12) {
+    return rt_comm_platform_display_state(f12);
 }

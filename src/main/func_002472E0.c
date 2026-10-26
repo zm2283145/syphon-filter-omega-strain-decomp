@@ -7,16 +7,16 @@
 #include "types.h"
 
 extern int D_004F7E50;
-extern int* func_002472F0(void);
+extern int* cMenuChoiceMsg_SOBJ_getClassId(void);
 
-void* func_002472E0(void* self) {
+void* cMenuChoiceMsg_SOBJ_convert(void* self) {
     return self;
 }
 
-int* func_002472F0(void) {
+int* cMenuChoiceMsg_SOBJ_getClassId(void) {
     return &D_004F7E50;
 }
 
 int cMenuChoiceMsg_v03(void) {
-    return *func_002472F0();
+    return *cMenuChoiceMsg_SOBJ_getClassId();
 }

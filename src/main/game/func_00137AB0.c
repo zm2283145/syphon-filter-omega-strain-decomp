@@ -8,8 +8,8 @@ extern char D_0049A890[];
 extern char D_0049AB60[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void ListReceiver_Ctor(void* p);
-void func_001383B0(void* p);
-void func_001391E0(void* p);
+void std_vector_tVUMNamePairPtr_ctor(void* p);
+void std_list_deleter_cHogFile_ctor(void* p);
 void Map_Ctor(void* p, void* a, void* b);
 void ScalarCollection_Init(void* p);
 void String_Copy(void* s, char* src);
@@ -17,12 +17,12 @@ void* cVisionFxMan_ctor(void* p);
 void* WaterFx_Construct(void* p);
 void* NpcRouteMgr_Construct(void* p);
 void* SoundMgr_Construct(void* p);
-void* func_0016B340(void* p);
+void* cAISoundSystem_ctor(void* p);
 void* ObjMan_Ctor(void* p);
 void* HotboxTracker_Construct(void* p, int a);
 void* Options_SetDefaults(void* p);
 void* FrontEnd_ctor(void* p);
-void* func_00147910(void* p);
+void* cWeaponDB_ctor(void* p);
 void Script_AddChild(void* w, void* p);
 void PtrVec_Reserve(void* p, int n);
 }
@@ -111,10 +111,10 @@ extern "C" World_WC* World_Construct(World_WC* w)
     w->vtbl = D_004D9060;
     {
         Sub2C_WC* m = &w->m2C;
-        func_001383B0(m);
+        std_vector_tVUMNamePairPtr_ctor(m);
         m->bC = 1;
     }
-    func_001391E0(w->m3C);
+    std_list_deleter_cHogFile_ctor(w->m3C);
     w->b50 = 0;
     w->b51 = 0;
     w->f54 = 0;
@@ -178,7 +178,7 @@ extern "C" World_WC* World_Construct(World_WC* w)
     {
         void* p;
         WC_ALLOC(p, void*, 0x20, 0x99);
-        if (p) p = func_0016B340(p);
+        if (p) p = cAISoundSystem_ctor(p);
         Script_AddChild(w, p);
     }
     {
@@ -232,7 +232,7 @@ extern "C" World_WC* World_Construct(World_WC* w)
     {
         void* p;
         WC_ALLOC(p, void*, 0xD8, 0xB2);
-        if (p) p = func_00147910(p);
+        if (p) p = cWeaponDB_ctor(p);
         w->f1E0 = p;
     }
     w->f1C8 = 0;

@@ -13,7 +13,7 @@ int strlen(const char *);
 /* merge_units: begin func_001C4300 */
 #pragma push /* merge_units */
 typedef struct { int w0, w4, w8; } String;
-String* func_001C4330(String* str, int pos, int count, const char* s); /* gsynth: defined below */
+String* std_basic_string_char_char_traits_char_replace_uint_uint_charP(String* str, int pos, int count, const char* s); /* gsynth: defined below */
 /* Short/long string header: bit 0 = long form, bits 1-7 = inline length. */
 typedef struct StrHdr {
     unsigned isLong : 1;
@@ -22,22 +22,22 @@ typedef struct StrHdr {
 } StrHdr;
 
 #if 0 /* merge_units */
-extern void func_001C4330(StrHdr* str, int len, int start, int arg);
+extern void std_basic_string_char_char_traits_char_replace_uint_uint_charP(StrHdr* str, int len, int start, int arg);
 #endif /* merge_units */
-#define func_001C4330(a0, a1, a2, a3) ((void)func_001C4330((void *)(a0), (a1), (a2), (void *)(a3))) /* merge_units */
+#define std_basic_string_char_char_traits_char_replace_uint_uint_charP(a0, a1, a2, a3) ((void)std_basic_string_char_char_traits_char_replace_uint_uint_charP((void *)(a0), (a1), (a2), (void *)(a3))) /* merge_units */
 
 
-/* Forwards to func_001C4330 with the string's current length and start 0. */
-void func_001C4300(StrHdr* str, int arg) {
+/* Forwards to std_basic_string_char_char_traits_char_replace_uint_uint_charP with the string's current length and start 0. */
+void std_basic_string_char_char_traits_char_append_charP(StrHdr* str, int arg) {
     int len;
     if (*(int*)str & 1) {
         len = str->longLen;
     } else {
         len = (unsigned char)str->shortLen;
     }
-    func_001C4330(str, len, 0, arg);
+    std_basic_string_char_char_traits_char_replace_uint_uint_charP(str, len, 0, arg);
 }
-#undef func_001C4330 /* merge_units */
+#undef std_basic_string_char_char_traits_char_replace_uint_uint_charP /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C4300(void) {}
 #pragma pop /* merge_units */
@@ -49,7 +49,7 @@ typedef struct { char unused; } Alloc; /* empty allocator object passed by value
 
 extern String* String_Replace(String* str, int pos, int count, const char* first, const char* last, Alloc alloc);
 /* Replaces count characters at pos with the C string s. */
-String* func_001C4330(String* str, int pos, int count, const char* s)
+String* std_basic_string_char_char_traits_char_replace_uint_uint_charP(String* str, int pos, int count, const char* s)
 {
     Alloc alloc;
     return String_Replace(str, pos, count, s, s + strlen(s), alloc);

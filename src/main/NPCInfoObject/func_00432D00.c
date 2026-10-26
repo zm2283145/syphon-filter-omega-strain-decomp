@@ -12,22 +12,22 @@ extern "C" {
 extern char D_00582B50[];
 extern char D_004BFCA0[];
 void Mem_Free(int pool, void* p, char* file, int line);
-void func_00432F40(It_2D00* r, void* map);
-It_2D00 func_00432F30(void* map);
-void func_00432F20(It_2D00* r, const It_2D00& s);
+void std_tree_pair_tNPCInfoPtr_value_compare_begin(It_2D00* r, void* map);
+It_2D00 std_map_tNPCInfoPtr_bool_end(void* map);
+void cAssocArray_tNPCInfoPtr_bool_Iterator_ctor(It_2D00* r, const It_2D00& s);
 void Tree_Successor(It_2D00* it);
-void func_00436C90(void* map, Node_2D00** n);
+void std_tree_pair_tNPCInfoPtr_value_compare_erase(void* map, Node_2D00** n);
 }
 static inline unsigned char Ne_2D00(It_2D00* a, It_2D00* b) { return !(a->node == b->node); }
-extern "C" void func_00432D00(void* self, NpcInfoRec* arr, int key)
+extern "C" void cNPCInfoObject_DoPendingActiveTerrain(void* self, NpcInfoRec* arr, int key)
 {
     It_2D00 it;
     It_2D00 end;
     It_2D00 b;
     Node_2D00* cur; NpcInfoRec* found; unsigned char flag; Ent_2D00* e;
-    func_00432F40(&b, D_00582B50);
+    std_tree_pair_tNPCInfoPtr_value_compare_begin(&b, D_00582B50);
     it = b;
-    while (func_00432F20(&end, func_00432F30(D_00582B50)), Ne_2D00(&it, &end)) {
+    while (cAssocArray_tNPCInfoPtr_bool_Iterator_ctor(&end, std_map_tNPCInfoPtr_bool_end(D_00582B50)), Ne_2D00(&it, &end)) {
         cur = it.node;
         e = cur->e;
         flag = cur->flag;
@@ -45,7 +45,7 @@ extern "C" void func_00432D00(void* self, NpcInfoRec* arr, int key)
             }
             {
                 Node_2D00* c = cur;
-                func_00436C90(D_00582B50, &c);
+                std_tree_pair_tNPCInfoPtr_value_compare_erase(D_00582B50, &c);
             }
         }
     }

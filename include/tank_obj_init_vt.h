@@ -2,7 +2,7 @@
 #define TANK_OBJ_INIT_VT_H
 /* Variant of tank_obj_init.h whose vtable declaration lets a unit define it.
    cTank-style object (vtable cTank_vtable, 0x78 bytes): field init, register,
-   activate (virtual slot 0x5C) and bind to the net map (func_002863E0 body,
+   activate (virtual slot 0x5C) and bind to the net map (cTank_init body,
    inlined into the factories). C++ only; needs net_local_id.h and
    #pragma inline_depth(10) in the user. */
 #include "vslot_pad.h"

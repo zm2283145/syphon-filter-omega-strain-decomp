@@ -9,7 +9,7 @@
 int D_00497CBC = 0;
 extern char D_005984A0[];
 
-int func_0046E078(void) {
+int MediusUniqueCallbackTicketEventResponseHandler(void) {
     int v0;
     int cond;
 
@@ -24,11 +24,11 @@ ret:
     return v0;
 }
 
-int func_0046E0A8(void) {
+int MediusUniqueCallbackFileCreateRequestHandler(void) {
     return 472;
 }
 
-int func_0046E0B0(void) {
+int MediusUniqueCallbackFileCreateResponseHandler(void) {
     int v0;
     int cond;
 

@@ -210,7 +210,7 @@ static inline void merge_flush_func_00142F20(void) {}
 #pragma cplusplus on
 
 /* Message destructor: payload members, then cMessage base. */
-DEFINE_MESSAGE_TWO_MEMBER_DTOR(func_001432E0, D_004DADF0)
+DEFINE_MESSAGE_TWO_MEMBER_DTOR(cStopSoundMsg_dtor, D_004DADF0)
 #pragma pop /* merge_units */
 /* merge_units: end func_001432E0 */
 

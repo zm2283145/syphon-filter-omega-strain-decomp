@@ -1,6 +1,6 @@
 #include "types.h"
 
-void func_003C0D90(int a0, int a1, int a2, int a3) {
+void cCollisionModel_EdgeId_GetIndicesIntoFaceVertexList(int a0, int a1, int a2, int a3) {
     int v1;
     int cond;
 

@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-void func_003D1950(char* self) {
+void cCellAnimTexture_Reset(char* self) {
     *(int*)(self + 48) = 0;
 }
 #pragma pop /* merge_units */

@@ -1,7 +1,7 @@
 #include "types.h"
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 int __register_global_object(int *, int *, int *);          
-int func_003747A0(int *);                               
+int cLightMan_ctor(int *);                               
 extern int D_004BC110;
 extern int D_004BC114;
 extern int D_004BC118;
@@ -22,8 +22,8 @@ extern int D_00535D10;
 extern int g_LightMgr;
 extern int LightMgr_dtor;
 
-void func_004D5140(void) {
-    func_003747A0(&g_LightMgr);
+void StaticInit_lights(void) {
+    cLightMan_ctor(&g_LightMgr);
     __register_global_object(&g_LightMgr, &LightMgr_dtor, &D_00535D10);
     D_004BC114 = 0;
     D_004BC110 = 0xBF800000;

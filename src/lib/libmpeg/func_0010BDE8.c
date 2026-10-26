@@ -12,7 +12,7 @@ typedef struct {
     u_long pad;
 } DmaTag;
 
-void func_0010BDE8(char *mp, int addr, int size)
+void _sendDataToIPU(char *mp, int addr, int size)
 {
     DmaTag *base;
     DmaTag *t;

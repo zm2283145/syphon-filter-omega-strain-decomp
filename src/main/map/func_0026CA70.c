@@ -33,19 +33,19 @@ extern Mtx D_0055C0C0;
 extern char D_0055C100;
 int func_00159570(void* l);
 void* List_Front(void* l);
-void func_0037A1E0(char* r);
+void XLib_ClearZBuffer(char* r);
 void HudMap_Cull(void* v);
-DbObj** func_0026D030(void* v, int i);
+DbObj** std_vector_cVUM_GOBJPtr_opIndex_uint(void* v, int i);
 void IeScreen_Draw(Ctx* c);
-void func_0013F800(DbMap* m, void* cmp, void* alloc);
-void func_0013F180(DbPair* p, float* f, DbObj** o);
+void std_tree_pair_float_value_compare_ctor(DbMap* m, void* cmp, void* alloc);
+void std_pair_float_cGOBJPtr_ctor(DbPair* p, float* f, DbObj** o);
 void SceneDrawMap_Insert(DbIt* out, DbMap* m, DbPair* kv);
-void func_0013F170(DbIt* out, DbMap* m);
-void func_0013F120(DbIt* out, DbMap* m);
-int func_0013F100(DbIt* a, DbIt* b);
-DbObj** func_0013F160(DbIt* it);
+void cAssocMultiArray_float_cGOBJPtr_Begin(DbIt* out, DbMap* m);
+void cAssocMultiArray_float_cGOBJPtr_End(DbIt* out, DbMap* m);
+int cAssocMultiArray_float_cGOBJPtr_Iterator_opNe(DbIt* a, DbIt* b);
+DbObj** cAssocMultiArray_float_cGOBJPtr_Iterator_opMul(DbIt* it);
 void TreeIter_Increment(DbIt* it);
-void func_0013F090(DbMap* m, short del);
+void cAssocMultiArray_float_cGOBJPtr_dtor(DbMap* m, short del);
 }
 
 #define SlotAt(i) ((Slot*)(g_Video + 0x1F0 + (i) * 0x110))
@@ -89,31 +89,31 @@ extern "C" void HudMap_Draw(HSelf* self)
     D_00538C68 = 1;
     SetClip(SlotAt(D_00538C60), D_0048B2B0, D_0048B298, D_0048B290);
     g_DrawMode = 1;
-    func_0037A1E0(g_Video);
+    XLib_ClearZBuffer(g_Video);
     D_005382E4 = 2;
     HudMap_Cull(self->cull);
-    func_0013F800(&map, cmp, alloc);
+    std_tree_pair_float_value_compare_ctor(&map, cmp, alloc);
     for (i = 0; i < self->count; i++) {
         if (self->objs[i]->kind == 128)
             continue;
-        DbObj* q = *func_0026D030(self->cull, i);
-        float d = (*func_0026D030(self->cull, i))->depth;
+        DbObj* q = *std_vector_cVUM_GOBJPtr_opIndex_uint(self->cull, i);
+        float d = (*std_vector_cVUM_GOBJPtr_opIndex_uint(self->cull, i))->depth;
         o = q;
         f = d;
-        func_0013F180(&tmp, &f, &o);
+        std_pair_float_cGOBJPtr_ctor(&tmp, &f, &o);
         kv.f = tmp.f;
         kv.o = tmp.o;
         SceneDrawMap_Insert(&res, &map, &kv);
     }
-    for (func_0013F170(&it, &map); func_0013F120(&e, &map), func_0013F100(&it, &e); TreeIter_Increment(&it)) {
-        DbObj* d = *func_0013F160(&it);
+    for (cAssocMultiArray_float_cGOBJPtr_Begin(&it, &map); cAssocMultiArray_float_cGOBJPtr_End(&e, &map), cAssocMultiArray_float_cGOBJPtr_Iterator_opNe(&it, &e); TreeIter_Increment(&it)) {
+        DbObj* d = *cAssocMultiArray_float_cGOBJPtr_Iterator_opMul(&it);
         d->Draw();
     }
-    func_0013F090(&map, -1);
+    cAssocMultiArray_float_cGOBJPtr_dtor(&map, -1);
     g_DrawMode = 0;
     D_00538C68 = 1;
     D_00538C64--;
-    func_0037A1E0(g_Video);
+    XLib_ClearZBuffer(g_Video);
     SetClip(SlotAt(D_00538C60), D_0048B2B0, 1.25f, D_0048B290);
     D_005382E4 = 1;
     UM(&m208);
@@ -133,7 +133,7 @@ extern "C" void HudMap_Draw(HSelf* self)
     UM(&D_0055C0C0);
     D_005382E4 = 2;
     D_0055C100 = 0;
-    func_0037A1E0(g_Video);
+    XLib_ClearZBuffer(g_Video);
     {
         Slot* s = SlotAt(D_00538C60);
         s->fF0 = nearZ;

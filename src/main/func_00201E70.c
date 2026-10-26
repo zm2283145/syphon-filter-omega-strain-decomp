@@ -6,12 +6,12 @@
 
 #include "types.h"
 
-extern int func_00201E90(int);
+extern int details_compressed_pair_imp_cAllocator_cSkaBlendSequenceItem_int_1_first_void(int);
 
-void* func_00201E70(void* self) {
+void* cAllocator_cSkaBlendSequenceItem_ctor_cAllocatorR(void* self) {
     return self;
 }
 
-int func_00201E80(int a0) {
-    return func_00201E90(a0);
+int std_vector_deleter_cSkaBlendSequenceItem_alloc_void(int a0) {
+    return details_compressed_pair_imp_cAllocator_cSkaBlendSequenceItem_int_1_first_void(a0);
 }

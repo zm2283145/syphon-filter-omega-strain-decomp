@@ -25,15 +25,15 @@
 
 extern "C" {
 char * Mem_Alloc(int, int, char *, int);                      
-int func_001361D0(int *);                           
-int func_003D8340(char * , int);                       
-int func_003D8350(char * );                            
-int func_003D8370(char * , int);                       
-int func_003D8380(char * );                            
-int func_003D8490(char * , int);                       
-int func_003D84A0(char * );                            
-int func_003D84C0(char * , int);                       
-int func_003D84D0(char * );                            
+int cArrayCapacity_Int(int *);                           
+int std_vector_VarDefPtr_reserve(char * , int);                       
+int std_vector_VarDefPtr_ctor(char * );                            
+int std_vector_FuncDefPtr_reserve(char * , int);                       
+int std_vector_FuncDefPtr_ctor(char * );                            
+int std_vector_EnumDefPtr_reserve(char * , int);                       
+int std_vector_EnumDefPtr_ctor(char * );                            
+int std_vector_ClassDefPtr_reserve(char * , int);                       
+int std_vector_ClassDefPtr_ctor(char * );                            
 extern char D_004BD3B0;
 extern unsigned char g_ProfileLockEnabled;
 extern unsigned char D_00554F10;
@@ -42,7 +42,7 @@ extern char * D_00554F20;
 extern char * D_00554F28;
 extern char * D_00554F30;
 }
-extern "C" void func_003D7E90(void) {
+extern "C" void cScriptBase_checkInitTypes(void) {
     int sp3C;
     int sp38;
     int sp34;
@@ -60,8 +60,8 @@ extern "C" void func_003D7E90(void) {
         }
         if (temp_s0 != NULL) {
             sp3C = 0x100;
-            func_003D84D0(temp_s0);
-            func_003D84C0(temp_s0, func_001361D0(&sp3C));
+            std_vector_ClassDefPtr_ctor(temp_s0);
+            std_vector_ClassDefPtr_reserve(temp_s0, cArrayCapacity_Int(&sp3C));
             F_(temp_s0, 0xC, signed char) = 0;
         }
         D_00554F28 = temp_s0;
@@ -71,8 +71,8 @@ extern "C" void func_003D7E90(void) {
         }
         if (temp_s0_2 != NULL) {
             sp38 = 0x80;
-            func_003D84A0(temp_s0_2);
-            func_003D8490(temp_s0_2, func_001361D0(&sp38));
+            std_vector_EnumDefPtr_ctor(temp_s0_2);
+            std_vector_EnumDefPtr_reserve(temp_s0_2, cArrayCapacity_Int(&sp38));
             F_(temp_s0_2, 0xC, signed char) = 0;
         }
         D_00554F30 = temp_s0_2;
@@ -82,8 +82,8 @@ extern "C" void func_003D7E90(void) {
         }
         if (temp_s0_3 != NULL) {
             sp34 = 0x800;
-            func_003D8380(temp_s0_3);
-            func_003D8370(temp_s0_3, func_001361D0(&sp34));
+            std_vector_FuncDefPtr_ctor(temp_s0_3);
+            std_vector_FuncDefPtr_reserve(temp_s0_3, cArrayCapacity_Int(&sp34));
             F_(temp_s0_3, 0xC, signed char) = 0;
         }
         D_00554F20 = temp_s0_3;
@@ -93,8 +93,8 @@ extern "C" void func_003D7E90(void) {
         }
         if (temp_s0_4 != NULL) {
             sp30 = 0x400;
-            func_003D8350(temp_s0_4);
-            func_003D8340(temp_s0_4, func_001361D0(&sp30));
+            std_vector_VarDefPtr_ctor(temp_s0_4);
+            std_vector_VarDefPtr_reserve(temp_s0_4, cArrayCapacity_Int(&sp30));
             F_(temp_s0_4, 0xC, signed char) = 0;
         }
         D_00554F18 = temp_s0_4;
@@ -110,7 +110,7 @@ static inline void merge_flush_func_003D7E90(void) {}
 #pragma cplusplus on
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR(func_003D8160)
+DEFINE_BUF_HOLDER_DTOR(std_vector_VarDefPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003D8160 */
 
@@ -119,6 +119,6 @@ DEFINE_BUF_HOLDER_DTOR(func_003D8160)
 #pragma cplusplus on
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR(func_003D8250)
+DEFINE_BUF_HOLDER_DTOR(std_vector_FuncDefPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003D8250 */

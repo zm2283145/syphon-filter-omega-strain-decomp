@@ -35,31 +35,31 @@ public:
 
 extern "C" {
 void Vec4_Assign(V4_13A* d, const V4_13A* s);
-void func_00136060(void* buf);
+void cLosResult_ctor_void(void* buf);
 Provider_13A* LosProvider_Get(void);
 void LosProvider_ClearExclusions(Provider_13A* p, int v);
 void LosProvider_AddExclusion(Provider_13A* p, int v);
 void Ptr_Identity(V4_13A* p);
-void func_0013AAE0(Hit_13A* h);
+void cCollisionFace_ctor_void(Hit_13A* h);
 int Los_TraceImmediate(V4_13A* pt, Hit_13A* hit, V4_13A* from, V4_13A* to, Provider_13A* p, int a, unsigned char b, int c, long d, long e);
 void LosResult_SetStatus(void* r, unsigned char s);
 void LosResult_SetPoint(void* r, V4_13A* pt);
-void func_0013AA30(void* r, Hit_13A* h);
-void func_00131B70(Hit_13A* h, int f);
-void func_0013AA20(void* r, int v);
+void cLosResult_SetBlockingFace(void* r, Hit_13A* h);
+void cCollisionFace_dtor(Hit_13A* h, int f);
+void cLosResult_SetHandle(void* r, int v);
 void LosResultEvent_Ctor(Ev_13A* e, void* r);
 void Event_Send(Ev_13A* e, int target, int f);
 void LosResultEvent_dtor(Ev_13A* e, int f);
-void func_0013A930(It_13A* out, void* v);
-void func_0013A910(It_13A* out, void* v);
-int func_0013A820(It_13A* a, It_13A* b);
-Rec_13A* func_0013A900(It_13A* it);
-unsigned char func_0013A8F0(Rec_13A* r);
-int func_0013A8D0(Self_13A* s);
-void func_0013A870(Rec_13A* r, V4_13A* a, V4_13A* b, int id, void* buf, int d0, int d4, int d8, int dc);
-Rec_13A* func_0013A860(It_13A* it);
-void func_0013A840(It_13A* it);
-void func_0013A7F0(void* list, Rec_13A** v);
+void cArray_cLosRequest_cCollisionModelList_Game_Begin(It_13A* out, void* v);
+void cArray_cLosRequest_cCollisionModelList_Game_End(It_13A* out, void* v);
+int cArray_cLosRequest_cCollisionModelList_Game_Iterator_opNe(It_13A* a, It_13A* b);
+Rec_13A* cArray_cLosRequest_cCollisionModelList_Game_Iterator_opArrow(It_13A* it);
+unsigned char cLosRequest_cCollisionModelList_Game_IsInUse(Rec_13A* r);
+int cLosManager_cCollisionModelList_Game_GetNewHandle(Self_13A* s);
+void cLosRequest_cCollisionModelList_Game_Reset(Rec_13A* r, V4_13A* a, V4_13A* b, int id, void* buf, int d0, int d4, int d8, int dc);
+Rec_13A* cArray_cLosRequest_cCollisionModelList_Game_Iterator_opMul(It_13A* it);
+void cArray_cLosRequest_cCollisionModelList_Game_Iterator_opInc(It_13A* it);
+void std_list_cLosRequest_cCollisionModelList_GamePtr_push_back(void* list, Rec_13A** v);
 }
 
 /* inline LosResult storage; its (inlined, otherwise empty) dtor leaves only the this-null check */
@@ -84,7 +84,7 @@ struct Query_13A {
         self->active = 1;
         self->id = i;
         self->buf = b ? b : &self->inl;
-        func_00136060(&self->inl);
+        cLosResult_ctor_void(&self->inl);
         self->d0 = 0;
         self->d4 = a4;
         self->d8 = a8;
@@ -96,15 +96,15 @@ static inline Rec_13A* FindFree(Self_13A* self, Req_13A* req)
 {
     It_13A it;
     It_13A end;
-    func_0013A930(&it, self->recs);
-    func_0013A910(&end, self->recs);
-    for (; func_0013A820(&it, &end); func_0013A840(&it)) {
-        if (!func_0013A8F0(func_0013A900(&it))) {
+    cArray_cLosRequest_cCollisionModelList_Game_Begin(&it, self->recs);
+    cArray_cLosRequest_cCollisionModelList_Game_End(&end, self->recs);
+    for (; cArray_cLosRequest_cCollisionModelList_Game_Iterator_opNe(&it, &end); cArray_cLosRequest_cCollisionModelList_Game_Iterator_opInc(&it)) {
+        if (!cLosRequest_cCollisionModelList_Game_IsInUse(cArray_cLosRequest_cCollisionModelList_Game_Iterator_opArrow(&it))) {
             int idx;
-            if (req->outIdx) *req->outIdx = func_0013A8D0(self);
+            if (req->outIdx) *req->outIdx = cLosManager_cCollisionModelList_Game_GetNewHandle(self);
             idx = req->outIdx ? *req->outIdx : 0;
-            func_0013A870(func_0013A900(&it), &req->from, &req->to, req->id, req->buf, idx, req->x50, req->x54, req->x58);
-            return func_0013A860(&it);
+            cLosRequest_cCollisionModelList_Game_Reset(cArray_cLosRequest_cCollisionModelList_Game_Iterator_opArrow(&it), &req->from, &req->to, req->id, req->buf, idx, req->x50, req->x54, req->x58);
+            return cArray_cLosRequest_cCollisionModelList_Game_Iterator_opMul(&it);
         }
     }
     return 0;
@@ -123,15 +123,15 @@ extern "C" int LosReceiver_HandleRequest(Self_13A* self, Req_13A* req)
             V4_13A pt;
             Hit_13A hit;
             Ptr_Identity(&pt);
-            func_0013AAE0(&hit);
+            cCollisionFace_ctor_void(&hit);
             int st = Los_TraceImmediate(&pt, &hit, &q.from, &q.to, p, 0, *(unsigned char*)&q.dc, 0, 0, 1);
             LosResult_SetStatus(q.buf, st);
 
             LosResult_SetPoint(q.buf, &pt);
-            func_0013AA30(q.buf, &hit);
-            func_00131B70(&hit, -1);
+            cLosResult_SetBlockingFace(q.buf, &hit);
+            cCollisionFace_dtor(&hit, -1);
         }
-        func_0013AA20(q.buf, q.d0);
+        cLosResult_SetHandle(q.buf, q.d0);
         if (q.id) {
             Ev_13A ev;
             LosResultEvent_Ctor(&ev, q.buf);
@@ -143,10 +143,10 @@ extern "C" int LosReceiver_HandleRequest(Self_13A* self, Req_13A* req)
         if (!rec) return 0;
         switch (req->mode) {
         case 1:
-            func_0013A7F0(self->list30, &rec);
+            std_list_cLosRequest_cCollisionModelList_GamePtr_push_back(self->list30, &rec);
             break;
         case 2:
-            func_0013A7F0(self->list3C, &rec);
+            std_list_cLosRequest_cCollisionModelList_GamePtr_push_back(self->list3C, &rec);
             break;
         default:
             if (rec) ((unsigned char*)rec)[0x20] = 0;

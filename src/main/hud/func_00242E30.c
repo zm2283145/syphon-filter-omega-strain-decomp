@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_00242E30(Iter* out, PtrVec* v) {
+void std_list_tCalloutPtr_begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }

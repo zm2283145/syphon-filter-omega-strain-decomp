@@ -23,7 +23,7 @@
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-DEFINE_NESTED_NULL_DTOR2(func_00458620, func_00219CC0)
+DEFINE_NESTED_NULL_DTOR2(func_00458620, std_vector_imp_float_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00458620 */
 
@@ -41,6 +41,6 @@ DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_00458680)
 #pragma cplusplus on
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_00458770, func_004587D0)
+DEFINE_BASE_DTOR_CHAIN(cArray_cLList_TextAtomPtr_dtor, std_vector_imp_cLList_TextAtomPtr_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00458770 */

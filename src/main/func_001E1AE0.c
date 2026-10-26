@@ -8,7 +8,7 @@ extern "C" void Message_GetScriptTypeKey();
 extern void * const D_004DAD20[];
 void* cMessage_dtor(void* self, short deleteFlag);
 }
-extern "C" VtableObject* func_001E1AE0(VtableObject* self, short deleteFlag)
+extern "C" VtableObject* cGameEventMsg_dtor(VtableObject* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004DAD20);
@@ -18,4 +18,4 @@ extern "C" VtableObject* func_001E1AE0(VtableObject* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DAD20[8] = { (void*)0x0, (void*)0x0, (void*)func_001E1AE0, (void*)ContactEvent_Clone, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
+void * const D_004DAD20[8] = { (void*)0x0, (void*)0x0, (void*)cGameEventMsg_dtor, (void*)ContactEvent_Clone, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };

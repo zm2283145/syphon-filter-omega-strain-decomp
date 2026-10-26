@@ -16,10 +16,10 @@ struct CxHpLink {CxHpLink* next;CxHpLink* prev;CxHpReq* req;};
 struct CxHpList {int count;void* unused;CxHpLink* head;};
 struct CxHpManager {char pad[0x20];CxHpList queue;};
 struct CxHpIt { CxHpLink* link;};
-extern "C" void func_00163FA0(CxHpIt*,CxHpList*);
-extern "C" void func_00163F90(CxHpIt*,CxHpIt*);
+extern "C" void std_list_cPathSystemRequestPtr_begin_void_2(CxHpIt*,CxHpList*);
+extern "C" void cConstLListIterator_cPathSystemRequestPtr_ctor(CxHpIt*,CxHpIt*);
 static inline CxHpActor* CxHp_Get(CxHpReq* req){bool isNull;bool ok;CxHpActor* actor;actor=req->actor;isNull=!actor;ok=true;if(!isNull)if(actor->serial!=req->serial)ok=false;return ok ? actor:0;}
-static inline void CxHp_Conv(CxHpIt* out,CxHpList* l){CxHpIt it;func_00163FA0(&it,l);func_00163F90(out,&it);}
+static inline void CxHp_Conv(CxHpIt* out,CxHpList* l){CxHpIt it;std_list_cPathSystemRequestPtr_begin_void_2(&it,l);cConstLListIterator_cPathSystemRequestPtr_ctor(out,&it);}
 static inline int PendingCopy(CxHpIt other){return (unsigned char)!other.link->req->reported;}
 static inline int Pending0(CxHpList*l){CxHpIt temp;temp.link=l->head;return PendingCopy(temp);}
 /* Nested iterator conversion preserves separate temporary lifetimes. */
@@ -47,7 +47,7 @@ static inline void merge_flush_func_00163FD0(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0xC]; int serial; } Tgt_40B0;
 typedef struct { Tgt_40B0* t; int serial; int x8; char c; unsigned char d; unsigned char e; } S_40B0;
-S_40B0* func_001640B0(S_40B0* self, Tgt_40B0* t, char c)
+S_40B0* cPathSystemRequest_ctor(S_40B0* self, Tgt_40B0* t, char c)
 {
     int none;
     int* p;

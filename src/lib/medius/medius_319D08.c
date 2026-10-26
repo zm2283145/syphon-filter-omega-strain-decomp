@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-float func_00319D08(int a0, int a1, int a2, int a3) {
+float Dim2VectorLUT(int a0, int a1, int a2, int a3) {
     float f0, f1;
 
     a2 = (unsigned int)a0 < (unsigned int)a2;

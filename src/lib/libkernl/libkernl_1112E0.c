@@ -11,11 +11,11 @@ typedef struct {int w[9];int serve;} Client;
 extern void func_0010FBC0(int);
 extern int DIntr(void);
 extern void EIntr(void);
-extern void func_0010F748(int,void *,void *);
-extern void func_00110DA8(void),func_00111298(void);
+extern void sceSifAddCmdHandler(int,void *,void *);
+extern void func_00110DA8(void),_sceFs_Poff_Intr(void);
 extern int sceSifBindRpc(void *,int,int);
 extern int sceSifCallRpc(void *,int,int,void *,int,void *,int,void *,void *);
-extern void func_00110C50(void);extern int WaitSema(int),SignalSema(int);
+extern void _sceFsIobSemaMK(void);extern int WaitSema(int),SignalSema(int);
 extern int D_00486248,D_0048623C,D_00486240;
 typedef struct {int a;void *b;} CB;extern CB D_004E5F80;
 extern char D_004E5F40[],D_004E5D00[],D_004E5480[],D_004E5440[],D_004E5F28[];
@@ -28,15 +28,15 @@ int func_001112E0(void){
  func_0010FBC0(0);
  cb->a=0;cb->b=0;
  intr=DIntr();
- func_0010F748(0x80000011,func_00110DA8,D_004E5F40);
- func_0010F748(0x80000013,func_00111298,cb);
+ sceSifAddCmdHandler(0x80000011,func_00110DA8,D_004E5F40);
+ sceSifAddCmdHandler(0x80000013,_sceFs_Poff_Intr,cb);
  if(intr)EIntr();
  for(;;){
   if(sceSifBindRpc(&D_004E5F00,0x80000001,0)<0)return -1;
   if(D_004E5F00.serve!=0)break;
   for(i=0x100000;i!=-1;i--){}
  }
- func_00110C50();
+ _sceFsIobSemaMK();
  WaitSema(D_00486248);
  p=D_004E5D00;end=p+0x200;
  while(p<end){((int *)p)[1]=0;p+=0x10;}
@@ -59,7 +59,7 @@ extern char D_0048618C[];
 extern char D_00498B68[];
 static void * const dat_00486250[2] = { (void*)D_00498B68, (void*)0x0 };
 
-int func_001114E8(void)
+int _fs_version(void)
 {
     char *b = D_0048618C;
     char *a = D_004E5F28;

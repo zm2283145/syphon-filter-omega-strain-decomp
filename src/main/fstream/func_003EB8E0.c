@@ -6,6 +6,6 @@
 #include "types.h"
 
 /* List iterator dereference: address of the node payload at node +0x08. */
-char* func_003EB8E0(char** self) {
+char* std_list_cFSDataPtr_generic_iterator_opMul(char** self) {
     return *self + 8;
 }

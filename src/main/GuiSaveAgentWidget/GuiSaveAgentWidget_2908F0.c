@@ -11,7 +11,7 @@
 #include "trivial_dtor.h"
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_002908F0)
+DEFINE_TRIVIAL_DTOR(cBone_SkeletonBBoxContribution_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_002908F0 */
 
@@ -28,15 +28,15 @@ DEFINE_TRIVIAL_DTOR(func_002908F0)
 
 extern int PtrVec_Insert(PtrVec*, int*, int, int*);
 
-int* func_00290940(PtrVec* v) {
+int* std_vector_imp_cSkeletonBBoxContributionPtr_1_end(PtrVec* v) {
     return v->data + v->count;
 }
 
-void func_00290960(Iter* out, void* self, Iter* src) {
+void std_vector_cSkeletonBBoxContributionPtr_pointer2iterator(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }
 
-int* func_00290970(PtrVec* v) {
+int* std_vector_imp_cSkeletonBBoxContributionPtr_1_begin(PtrVec* v) {
     return v->data;
 }
 
@@ -44,12 +44,12 @@ int** func_00290980(PtrVec* v) {
     return &v->data;
 }
 
-void* func_00290990(char* self) {
+void* cSKM_GOBJ_GetSkeleton_void_2(char* self) {
     return self + 11856;
 }
 
 /* push_back */
-int func_002909A0(PtrVec* v, int* value) {
+int cArray_cSkeletonBBoxContributionPtr_PushBackActual(PtrVec* v, int* value) {
     return PtrVec_Insert(v, v->data + v->count, 1, value);
 }
 #pragma pop /* merge_units */
@@ -68,7 +68,7 @@ typedef struct {
     char pad0c[4];
     Vec4 v;
 } Obj2909C0;
-Obj2909C0* func_002909C0(Obj2909C0* o, int a, Vec4* v, float f) {
+Obj2909C0* cSkeletonBBoxContribution_ctor(Obj2909C0* o, int a, Vec4* v, float f) {
     int k, fl; unsigned char r;
     o->a = a;
     asm {
@@ -105,12 +105,12 @@ Obj2909C0* func_002909C0(Obj2909C0* o, int a, Vec4* v, float f) {
 /* merge_units: begin func_00290A50 */
 #pragma push /* merge_units */
 typedef struct { char pad[0xC]; unsigned char flag; } Obj00290A50;
-extern void func_00290B90(Obj00290A50* obj, int* src, unsigned char flag);
+extern void std_vector_imp_cSkeletonBBoxContributionPtr_1_ctor(Obj00290A50* obj, int* src, unsigned char flag);
 extern void PtrVec_Reserve(Obj00290A50* obj, int value);
 /* Construct from src and flag; returns obj. */
-Obj00290A50* func_00290A50(Obj00290A50* obj, int* src, unsigned char flag)
+Obj00290A50* cArray_cSkeletonBBoxContributionPtr_ctor(Obj00290A50* obj, int* src, unsigned char flag)
 {
-    func_00290B90(obj, src, flag);
+    std_vector_imp_cSkeletonBBoxContributionPtr_1_ctor(obj, src, flag);
     PtrVec_Reserve(obj, *src);
     obj->flag = flag;
     return obj;

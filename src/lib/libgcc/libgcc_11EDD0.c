@@ -60,9 +60,9 @@ __asm__(".set nomove\n"
 typedef int __int32_t;
 
 extern double scalbn(double, int); /* scalbn */
-extern double func_00120D20(double);      /* floor */
+extern double Libc_Floor(double);      /* floor */
 #define scalbn scalbn
-#define floor func_00120D20
+#define floor Libc_Floor
 
 /* init_jk / PIo2 tables (+ zero, one, two24, twon24) live in unowned .data */
 extern const int D_00499A28[];

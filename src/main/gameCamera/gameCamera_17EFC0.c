@@ -23,7 +23,7 @@
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-DEFINE_NESTED_NULL_DTOR3(func_0017EFC0, func_001810D0)
+DEFINE_NESTED_NULL_DTOR3(cArray_cVector_dtor, std_vector_deleter_cVector_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0017EFC0 */
 
@@ -32,7 +32,7 @@ DEFINE_NESTED_NULL_DTOR3(func_0017EFC0, func_001810D0)
 #pragma cplusplus on
 
 /* Deleting destructor: restore the vtable chain, optionally delete. */
-DEFINE_VTABLE_CHAIN_DTOR1(func_0017F030, D_004DA330)
+DEFINE_VTABLE_CHAIN_DTOR1(cCollisionRoutine_cBox_dtor_void_2, D_004DA330)
 #pragma pop /* merge_units */
 /* merge_units: end func_0017F030 */
 
@@ -41,6 +41,6 @@ DEFINE_VTABLE_CHAIN_DTOR1(func_0017F030, D_004DA330)
 #pragma cplusplus on
 
 /* Derived destructor: restore vtable, run cGOBJ base destructor, optionally delete. */
-DEFINE_VTABLE_BASE_DTOR(func_0017F080, D_004DA470, cGOBJ_dtor)
+DEFINE_VTABLE_BASE_DTOR(cCAMERA_GOBJ_dtor, D_004DA470, cGOBJ_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0017F080 */

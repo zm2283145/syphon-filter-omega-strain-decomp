@@ -5,6 +5,6 @@
 
 #include "types.h"
 
-void* func_003AB960(char* self) {
+void* std_vector_deleter_cSkaSliderValue_data(char* self) {
     return self + 8;
 }

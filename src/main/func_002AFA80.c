@@ -24,7 +24,7 @@ extern char* D_0048BCF0;
 extern char D_004A7520[];
 extern void* D_004FFC04;
 G_002AFA80* DME_GetLobby(void);
-void func_004426B0(G_002AFA80* g);
+void SFOLobby_MissionScreenExit(G_002AFA80* g);
 void App_CardWaitPoll(void);
 int func_0044B420(G_002AFA80* g, void* cb, void* a, void* b);
 Ag_002AFA80* Agent_GetSelected(void* a, int b);
@@ -32,9 +32,9 @@ void String_Copy(char* d, const char* s);
 void String_CtorCStr_13B480(Str_002AFA80* s, const char* c);
 void String_AssignString(Str_002AFA80* d, Str_002AFA80* s);
 void String_Dtor(Str_002AFA80* s, int flags);
-char* func_0044A060(G_002AFA80* g);
+char* SFOLobby_CellGetMessage(G_002AFA80* g);
 void GuiTextWidget_SetText(W_002AFA80* w, char* s, int a);
-unsigned char func_0044A1D0(G_002AFA80* g);
+unsigned char SFOLobby_CellIsPlayerCellLeader(G_002AFA80* g);
 int GuiScreen_GetLobbyString(Self_002AFA80* self, int a, int b, int c, int d, int e);
 void FrontEnd_OpenPopup(void* a, int b, char* c, int d, Self_002AFA80* e, int f);
 void* GuiWidget_FindChildByName(Self_002AFA80* self, char* name);
@@ -63,7 +63,7 @@ extern "C" void GuiNetAgencyCell_Activate(Self_002AFA80* self)
     g = DME_GetLobby();
     if (g) {
         if (g->f255C == 4)
-            func_004426B0(g);
+            SFOLobby_MissionScreenExit(g);
         if (func_0044B420(g, (void*)App_CardWaitPoll, self->fC8, self->fAC)) {
             char* n = g->name;
             G_002AFA80* g2;
@@ -81,11 +81,11 @@ extern "C" void GuiNetAgencyCell_Activate(Self_002AFA80* self)
             }
             g2 = DME_GetLobby();
             if (g2) {
-                char* t = func_0044A060(g2);
+                char* t = SFOLobby_CellGetMessage(g2);
                 if (self->p160)
                     GuiTextWidget_SetText(self->p160, t ? t : D_004ABCD0, 0);
             }
-            self->b170 = func_0044A1D0(g);
+            self->b170 = SFOLobby_CellIsPlayerCellLeader(g);
         } else {
             void* ui = D_004FFC04;
             FrontEnd_OpenPopup(ui, 2, D_004ABCD0, GuiScreen_GetLobbyString(self, 0x58, 0, 0, 0, 0), self, 0xF);

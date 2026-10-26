@@ -29,9 +29,9 @@ extern signed char D_00542B70;
 extern char D_00542B78[];
 extern F6Sel D_00542B90;
 extern void TransitionReq_Reset(void*);
-extern void func_0018A700(void*, int);
+extern void cSkaPlaybackGroupId_ctor_int(void*, int);
 extern void AnimEvent_Construct(void*);
-extern void func_001A1500(void*);
+extern void cSkaAnimCheckpoints_ctor_void(void*);
 extern void TransitionReq_Construct(void*, float);
 extern void __register_global_object(void*, void*, void*);
 extern void func_00397400(void);
@@ -50,10 +50,10 @@ F6Sel* AnimCtl_GetSelected(F6Ctl* c)
         D_00542B90.b1 = 0;
         D_00542B90.i4 = 0;
         TransitionReq_Reset(D_00542B90.req);
-        func_0018A700(D_00542B90.x1C, -1);
+        cSkaPlaybackGroupId_ctor_int(D_00542B90.x1C, -1);
         AnimEvent_Construct(D_00542B90.ev1);
         AnimEvent_Construct(D_00542B90.ev2);
-        func_001A1500(s->x94);
+        cSkaAnimCheckpoints_ctor_void(s->x94);
         s->fE0 = -1.0f;
         s->iE4 = 0;
         TransitionReq_Construct(s->trans, 0.0f);
@@ -85,10 +85,10 @@ typedef struct {
     int iE4;
     char trans[0x10];
 } D5Sel;
-extern D5F5* func_003AD650(D5F5* dst, D5F5* src);
+extern D5F5* cSkaSystem_Transition_ctor_cSkaSystemTransitionR(D5F5* dst, D5F5* src);
 extern void MotionGroup_CopyPair(void* dst, void* src);
 extern void AnimEvent_Copy(void* dst, void* src);
-extern void func_0018A710(void* dst, void* src);
+extern void cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(void* dst, void* src);
 #if 0 /* merge_units */
 extern void TransitionReq_Construct(void* self, float t);
 #endif /* merge_units */
@@ -96,7 +96,7 @@ extern void TransitionReq_Construct(void* self, float t);
 
 extern void AnimCtl_Install(void* c, D5Sel* r, unsigned char mode);
 extern void func_00396910(void* p, int f);
-extern void func_00189F40(void* p, int f);
+extern void cSkaAnimCheckpoints_dtor(void* p, int f);
 extern void AnimEvent_dtor(void* p, int f);
 #pragma opt_propagation off
 void AnimCtl_InstallMotion(void* ctl, int id, unsigned char mode, D5F4* range, void* pair, void* m1, void* m2, void* x, float f0, float f1)
@@ -112,17 +112,17 @@ void AnimCtl_InstallMotion(void* ctl, int id, unsigned char mode, D5F4* range, v
     s.b0 = 0;
     s.b1 = 0;
     s.i4 = id;
-    func_003AD650(&s.req, &t);
+    cSkaSystem_Transition_ctor_cSkaSystemTransitionR(&s.req, &t);
     MotionGroup_CopyPair(s.x1C, pair);
     AnimEvent_Copy(s.ev1, m1);
     AnimEvent_Copy(s.ev2, m2);
-    func_0018A710(p->x94, x);
+    cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(p->x94, x);
     p->fE0 = f0;
     p->iE4 = 0;
     TransitionReq_Construct(p->trans, f1);
     AnimCtl_Install(ctl, &s, mode);
     func_00396910(s.trans, -1);
-    func_00189F40(s.x94, -1);
+    cSkaAnimCheckpoints_dtor(s.x94, -1);
     AnimEvent_dtor(s.ev2, -1);
     AnimEvent_dtor(s.ev1, -1);
 }

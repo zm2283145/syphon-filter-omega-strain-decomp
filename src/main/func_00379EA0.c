@@ -20,7 +20,7 @@ struct R { char pad[0xF00]; M m; };
 
 extern "C" {
 void Renderer_UpdateCameraMatrices(R*);
-bool func_00379EA0(R* r, V* p);
+bool XLib_Inside(R* r, V* p);
 }
 
 static inline V Xform(M* m, const V& v)
@@ -42,7 +42,7 @@ static inline V Xform(M* m, const V& v)
     return *pp;
 }
 
-bool func_00379EA0(R* r, V* p)
+bool XLib_Inside(R* r, V* p)
 {
     Renderer_UpdateCameraMatrices(r);
     V c = Xform(&r->m, *p);

@@ -5,7 +5,7 @@
 
 #include "types.h"
 
-Word* func_0016EF80(Word* dst, Word* src) {
+Word* cConstLListIterator_cTargetAwarenessPtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }

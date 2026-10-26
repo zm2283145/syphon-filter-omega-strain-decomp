@@ -1,6 +1,6 @@
 #include "types.h"
 
-/* Codec parameters filled in by func_00320570. */
+/* Codec parameters filled in by nciGetInfoSase3200. */
 typedef struct NellyInfo {
     char pad00[0x3C];
     unsigned short frameSamples; /* 0x3C */
@@ -60,16 +60,16 @@ extern char* D_00582648;
 
 extern void* sfo_malloc_42C960();
 extern void* sfo_malloc_2CA9B0();
-void func_00322438(void* fn);
-void func_00322468(void* fn);
-void func_00323508(int n);
-void func_00320570(NellyInfo* info);
-void func_00321398(int* h);
-void func_0031C530(int* h);
-void func_0031DEF8(int h);
-void func_0031E030(int h, int n);
-void func_0031E0D0(int h, int n);
-void func_0031C260(int h);
+void nciSetCallocFunction(void* fn);
+void nciSetFreeFunction(void* fn);
+void nciEnableVu0Optimizations(int n);
+void nciGetInfoSase3200(NellyInfo* info);
+void nciInitDecodeSase3200(int* h);
+void nciInitEncodeSase3200(int* h);
+void nciEnableVAD(int h);
+void nciSetVADSilenceDuration(int h, int n);
+void nciSetVADEnergyTrigLevel(int h, int n);
+void nciDisableVoiceFontsSase3200(int h);
 
 static inline void* nm_alloc(unsigned int size, int line)
 {
@@ -91,9 +91,9 @@ void NellyWrap_Init(void)
     int n;
     if (D_00582660)
         return;
-    func_00322438(sfo_malloc_42C960);
-    func_00322468(sfo_malloc_2CA9B0);
-    func_00323508(1);
+    nciSetCallocFunction(sfo_malloc_42C960);
+    nciSetFreeFunction(sfo_malloc_2CA9B0);
+    nciEnableVu0Optimizations(1);
     memset(&D_005825B0, 0, 0x18);
     memset(&D_005825D0, 0, 0x18);
     memset(&D_005825F0, 0, 0x18);
@@ -102,7 +102,7 @@ void NellyWrap_Init(void)
     D_00582578 = 0;
     D_00582580 = 0;
     D_00582588 = 0;
-    func_00320570(&info);
+    nciGetInfoSase3200(&info);
     n = info.frameBits >> 3;
     if (info.frameBits & 7)
         n++;
@@ -141,23 +141,23 @@ void NellyWrap_Init(void)
     D_00582620 = 0;
     D_00582622 = 0;
     D_00582624 = 0;
-    func_00321398(&D_00582578);
-    func_00321398(&D_00582580);
-    func_00321398(&D_00582588);
-    func_0031C530(&D_00582570);
+    nciInitDecodeSase3200(&D_00582578);
+    nciInitDecodeSase3200(&D_00582580);
+    nciInitDecodeSase3200(&D_00582588);
+    nciInitEncodeSase3200(&D_00582570);
     D_00582628 = nm_alloc(0x280, 0xDF);
     D_00582638 = nm_alloc(0x280, 0xE0);
     D_00582648 = nm_alloc(0x280, 0xE1);
     memset(D_00582628, 0, 0x280);
     memset(D_00582638, 0, 0x280);
     memset(D_00582648, 0, 0x280);
-    func_0031DEF8(D_00582570);
+    nciEnableVAD(D_00582570);
     {
         int h = D_00582570;
-        func_0031E030(h, 100);
-        func_0031E0D0(h, 100);
+        nciSetVADSilenceDuration(h, 100);
+        nciSetVADEnergyTrigLevel(h, 100);
     }
-    func_0031C260(D_00582570);
+    nciDisableVoiceFontsSase3200(D_00582570);
     D_00582658 = 0;
     D_00582660 = 1;
 }

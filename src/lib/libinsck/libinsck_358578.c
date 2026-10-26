@@ -33,7 +33,7 @@ typedef struct T8678 { struct T8678 *next; int x4; int id; } T8678;
 typedef struct S8678 { struct S8678 *next; int x4; int id; char pad[0x44]; T8678 *x50; int x54; T8678 *x58; } S8678;
 extern S8678 *D_00492CD8;
 
-int func_00358678(void)
+int unused_socket_id(void)
 {
     int id = 0;
     S8678 *s;
@@ -60,33 +60,33 @@ typedef struct N81E0 { struct N81E0 *next; struct N81E0 *prev; int tid; int err;
 extern int D_00492CCC;
 extern N81E0 *D_00492CD0;
 extern N81E0 *D_00492CD4;
-extern void func_0034B7E8(void *);
-extern void func_00357D88(void *);
-extern void *func_00357D50(int);
+extern void sceLibnetTerminate(void *);
+extern void my_free(void *);
+extern void *my_malloc(int);
 extern N81E0 *Insck_GetThreadContext(int);
 extern int Insck_SetErrno(N81E0 *, int);
 extern int sceLibnetInitialize(void *, unsigned int, int, int);
 
-int func_003586F0(unsigned int a, int b, int c)
+int sceInsockSetSifMBindRpcValue(unsigned int a, int b, int c)
 {
     N81E0 *n = Insck_GetThreadContext(0);
     unsigned int mask;
     int err;
     if (n == 0) return -1;
     mask = 0xFFFFFFC0;
-    func_0034B7E8(n->x14);
-    func_00357D88(n->x50);
+    sceLibnetTerminate(n->x14);
+    my_free(n->x50);
     n->x5C = b;
     n->x60 = c;
     n->x58 = a;
-    n->x50 = func_00357D50((a + 0x63) | 0x3F);
+    n->x50 = my_malloc((a + 0x63) | 0x3F);
     if (n->x50 == 0) {
         N81E0 *x = n->next;
         if (n->prev) n->prev->next = x;
         else D_00492CD0 = x;
         if (n->next) n->next->prev = n->prev;
         else D_00492CD4 = n->prev;
-        func_00357D88(n);
+        my_free(n);
         D_00492CCC--;
         return Insck_SetErrno(n, 0xC);
     } else {
@@ -97,7 +97,7 @@ int func_003586F0(unsigned int a, int b, int c)
             else D_00492CD0 = x;
             if (n->next) n->next->prev = n->prev;
             else D_00492CD4 = n->prev;
-            func_00357D88(n);
+            my_free(n);
             D_00492CCC--;
             return Insck_SetErrno(n, 0x16);
         } else {
@@ -120,7 +120,7 @@ extern int Insck_SetErrno(int h, int c);
 #endif /* merge_units */
 #define Insck_SetErrno(a0, a1) (Insck_SetErrno((N81E0 *)(a0), (a1))) /* merge_units */
 
-int func_00358890(int a, int b)
+int sceInsockSetRecvTimeout(int a, int b)
 {
     int h = Insck_GetThreadContext(0);
     E358890* e;
@@ -152,7 +152,7 @@ extern int Insck_SetErrno(int h, int c);
 #endif /* merge_units */
 #define Insck_SetErrno(a0, a1) (Insck_SetErrno((N81E0 *)(a0), (a1))) /* merge_units */
 
-int func_00358910(int a, int b)
+int sceInsockSetSendTimeout(int a, int b)
 {
     int h = Insck_GetThreadContext(0);
     E358910* e;
@@ -185,7 +185,7 @@ extern int Insck_SetErrno(int h, int c);
 #endif /* merge_units */
 #define Insck_SetErrno(a0, a1) (Insck_SetErrno((N81E0 *)(a0), (a1))) /* merge_units */
 
-int func_00358990(int a, int b)
+int sceInsockSetShutdownTimeout(int a, int b)
 {
     int h = Insck_GetThreadContext(0);
     E358990* e;

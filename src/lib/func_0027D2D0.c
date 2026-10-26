@@ -1,5 +1,5 @@
 extern void iSignalSema(void);
-void func_0027D2D0(void)
+void sce_cbfunc(void)
 {
     iSignalSema();
     __asm__ __volatile__("sync");

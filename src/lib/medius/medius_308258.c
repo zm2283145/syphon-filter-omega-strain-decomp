@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_00308258(int a0, int a1) {
+int rt_udp_listen(int a0, int a1) {
     int v0;
     int cond;
 

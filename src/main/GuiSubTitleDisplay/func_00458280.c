@@ -9,14 +9,14 @@
 extern "C" {
 /*fc*/
 int Mem_Free(...);                         
-int func_00219730(...);                         
+int std_vector_float_dtor(...);                         
 int GuiWidget_Destroy(...);                         
 int func_004583B0(...);                         
-int func_004593A0(...);                            
+int GuiSubTitleDisplay_DestroyTextLines(...);                            
 int operator_delete(...);                          
 extern char D_004C1EB0;
 extern "C" void GuiSubTitleDisplay_IsType();
-extern "C" void func_00293950();
+extern "C" void GuiWidget_onInput();
 extern "C" void GuiWidget_FocusPrev();
 extern "C" void GuiWidget_FocusNext();
 extern "C" void GuiWidget_FocusLast();
@@ -52,10 +52,10 @@ extern "C" char * GuiSubTitleDisplay_dtor(char * arg0, long long arg1) {
             Mem_Free(0, temp_s2, &D_004C1EB0, 0x14A);
             }
         }
-        func_004593A0(arg0);
+        GuiSubTitleDisplay_DestroyTextLines(arg0);
         temp_a0 = arg0 + 0x68;
         if (temp_a0 != NULL) {
-            func_00219730(temp_a0, -1);
+            std_vector_float_dtor(temp_a0, -1);
         }
         temp_a0_2 = arg0 + 0x58;
         if (temp_a0_2 != NULL) {
@@ -68,4 +68,4 @@ extern "C" char * GuiSubTitleDisplay_dtor(char * arg0, long long arg1) {
     }
     return arg0;
 }
-void * const D_004E1560[24] = { (void*)0x0, (void*)0x0, (void*)GuiSubTitleDisplay_dtor, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiSubTitleDisplay_OnWake, (void*)GuiSubTitleDisplay_OnSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_00293950, (void*)GuiSubTitleDisplay_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiSubTitleDisplay_Update, (void*)GuiWidget_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiSubTitleDisplay_GetClassName, (void*)GuiSubTitleDisplay_IsType, (void*)0x0 };
+void * const D_004E1560[24] = { (void*)0x0, (void*)0x0, (void*)GuiSubTitleDisplay_dtor, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiSubTitleDisplay_OnWake, (void*)GuiSubTitleDisplay_OnSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiWidget_onInput, (void*)GuiSubTitleDisplay_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiSubTitleDisplay_Update, (void*)GuiWidget_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiSubTitleDisplay_GetClassName, (void*)GuiSubTitleDisplay_IsType, (void*)0x0 };

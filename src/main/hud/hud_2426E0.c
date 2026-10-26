@@ -10,11 +10,11 @@
 /* merge_units: begin func_002426E0 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x6A4]; void* snd; unsigned char b6A8; unsigned char b6A9; unsigned char b6AA; } Obj2426;
-extern void func_0045DD90(void* p, int on);
+extern void GuiGameScreen_ActivateQuickChat(void* p, int on);
 extern void Pad_ResetHeldMask(void* p);
-extern char D_0055A300[];void func_002426E0(Obj2426* s) {
+extern char D_0055A300[];void cHud_DeactivateQuickChat(Obj2426* s) {
     if (!s->b6AA || !s->snd) return;
-    func_0045DD90(s->snd, 0);
+    GuiGameScreen_ActivateQuickChat(s->snd, 0);
     Pad_ResetHeldMask(D_0055A300);
     s->b6AA = 0;
 }
@@ -25,10 +25,10 @@ static inline void merge_flush_func_002426E0(void) {}
 
 /* merge_units: begin func_00242740 */
 #pragma push /* merge_units */
-void func_00242740(Obj2426* s) {
+void cHud_ActivateQuickChat(Obj2426* s) {
     if (s->b6AA || !s->snd) return;
     Pad_ResetHeldMask(D_0055A300);
-    func_0045DD90(s->snd, 1);
+    GuiGameScreen_ActivateQuickChat(s->snd, 1);
     s->b6AA = 1;
 }
 /* merge_units: generate this block's code under its own pragmas */

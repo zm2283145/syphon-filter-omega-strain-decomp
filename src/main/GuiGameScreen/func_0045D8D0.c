@@ -5,16 +5,16 @@
 /*fc*/
 int GuiWidget_Draw();                            
 int GuiGameScreen_DrawRoundCounts();                            
-int func_0045D710();                            
-int func_0045D7F0();                                  
+int GuiGameScreen_WeaponRestoreTransparency();                            
+int GuiGameScreen_WeaponSaveTransparency();                                  
 extern char * g_Hud;
 
 void GuiGameScreen_Draw(char * arg0) {
     if (F_(g_Hud, 0x6A8, unsigned char) == 0) {
         if (F_(F_(arg0, 0x6C, int), 0x14, unsigned short) & 2) {
-            func_0045D7F0();
+            GuiGameScreen_WeaponSaveTransparency();
             GuiWidget_Draw(arg0);
-            func_0045D710(arg0);
+            GuiGameScreen_WeaponRestoreTransparency(arg0);
             if (F_(arg0, 0xD4, int) == 1) {
                 GuiGameScreen_DrawRoundCounts(arg0);
             }

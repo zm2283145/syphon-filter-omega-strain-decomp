@@ -8,7 +8,7 @@ extern int D_004E9D20;
 extern RpcCd D_00488A50;
 extern char D_00498CD0[];
 extern char D_00498CF8[];
-extern void func_00118718(void);
+extern void cmd_sem_init(void);
 extern int PollSema(int);
 extern int SignalSema(int);
 extern int ReferThreadStatus(int, void *);
@@ -17,10 +17,10 @@ extern void func_0010FBC0(int);
 extern int sceSifBindRpc(RpcCd *cd, unsigned int id, int mode);
 extern int scePrintf(const char *, ...);
 
-int func_00118CF8(int cmd)
+int _sceCd_ncmd_prechk(int cmd)
 {
     int i;
-    func_00118718();
+    cmd_sem_init();
     if (D_004878A8 != PollSema(D_004878A8)) {
         if (D_00487890 > 0) scePrintf(D_00498CD0, cmd, D_0048789C);
         return 0;

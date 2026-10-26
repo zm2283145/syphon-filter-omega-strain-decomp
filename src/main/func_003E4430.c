@@ -1,7 +1,7 @@
 #include "types.h"
 
 /* Net packet handler (returns the packet size 0x28): builds an actor-action message
- * (class via func_003E4940, kind 13) with a target sub-record and queues a clone to the
+ * (class via cCharActionMsg_ctor_messagebaseR_int_eParamType, kind 13) with a target sub-record and queues a clone to the
  * object found by NetMap_Lookup. For u26 == 0xFFFF the direction is decoded from two
  * 2.14 fixed values and optionally transformed by the referenced object's camera node. */
 
@@ -15,28 +15,28 @@ typedef struct {
     short h24;
     unsigned short u26;
 } Pkt;
-/* object id handle built by func_0015AC90; 8 bytes gives retail's slot at sp+296 */
+/* object id handle built by cObjectId_ctor_uint; 8 bytes gives retail's slot at sp+296 */
 typedef struct { int v; int pad; } Handle;
 
 extern unsigned char D_005723C8, D_005721D0;
 extern char D_004E0100[], D_004E0840[];
-extern void func_003E4940(Msg* m, Pkt* p, int a, int b);
-extern V4* func_003E4920(V4* v, float x, float y, float z, float w);
+extern void cCharActionMsg_ctor_messagebaseR_int_eParamType(Msg* m, Pkt* p, int a, int b);
+extern V4* cPlane_ctor_float_float_float_float(V4* v, float x, float y, float z, float w);
 extern V4* Vec4_Set(V4* v, float x, float y, float z, float w);
 extern float Fixed13ToFloat(int v);
 extern float UFixed15ToFloat(unsigned int v);
 extern float Fixed14ToFloat(int v);
-extern void func_003E4880(Sub* s, V4* a, V4* b, float c, float d, int e);
+extern void cDestinationParams_ctor_cVectorR_cPlaneR_float_float(Sub* s, V4* a, V4* b, float c, float d, int e);
 extern void StaticInit_FloorContactVecs(V4* v, int flag);
 extern void Vec4_NormalizeXYZInPlace(V4* v);
-extern float* func_003B2680(V4* v);
-extern float* func_003B2650(V4* v);
-extern float* func_003B2630(V4* v);
+extern float* cVector_X_void_2(V4* v);
+extern float* cVector_Y_void_2(V4* v);
+extern float* cVector_Z_void_2(V4* v);
 extern Sub* func_003E4850(Sub* s);
 extern void Vec4_Assign(V4* d, Sub* s);
 extern void func_003E4840(V4* d, V4* s);
 extern int func_003E4830(void);
-extern void func_0015AC90(Handle* h, int id);
+extern void cObjectId_ctor_uint(Handle* h, int id);
 extern void* Object_LookupById(Handle* h);
 extern void* Camera_GetNode(void* o);
 extern void* Transform_GetUpdated(void* n);
@@ -68,11 +68,11 @@ int func_003E4430(int x, int y, int z, Pkt* p0)
         V4* pb;
         float c;
         void** obj;
-        func_003E4940(m, p, 0, 13);
-        func_003E4920(&a, p->q.f.x, p->q.f.y, p->q.f.z, p->q.f.w);
+        cCharActionMsg_ctor_messagebaseR_int_eParamType(m, p, 0, 13);
+        cPlane_ctor_float_float_float_float(&a, p->q.f.x, p->q.f.y, p->q.f.z, p->q.f.w);
         pb = Vec4_Set(&b, p->x, p->y, p->z, 1.0f);
         c = Fixed13ToFloat(p->h24);
-        func_003E4880(&m->sub, pb, &a, c, UFixed15ToFloat(p->u26), 0);
+        cDestinationParams_ctor_cVectorR_cPlaneR_float_float(&m->sub, pb, &a, c, UFixed15ToFloat(p->u26), 0);
         StaticInit_FloorContactVecs(&a, -1);
         m->vt = D_004E0100;
         if (p->u26 == 0xFFFF) {
@@ -83,16 +83,16 @@ int func_003E4430(int x, int y, int z, Pkt* p0)
             int id;
             Vec4_Set(&d, fx, Fixed14ToFloat((short)(w >> 16)), p->q.i.pz, 0.0f);
             Vec4_NormalizeXYZInPlace(&d);
-            rx = func_003B2680(&d);
-            ry = func_003B2650(&d);
-            func_003E4920(&e, *rx, *ry, *func_003B2630(&d), p->q.i.pw);
+            rx = cVector_X_void_2(&d);
+            ry = cVector_Y_void_2(&d);
+            cPlane_ctor_float_float_float_float(&e, *rx, *ry, *cVector_Z_void_2(&d), p->q.i.pw);
             Vec4_Assign(&g, func_003E4850(&m->sub));
             func_003E4840(&h, &e);
             id = p->q.i.obj;
             if (id != func_003E4830()) {
                 Handle hd;
                 void* o;
-                func_0015AC90(&hd, id);
+                cObjectId_ctor_uint(&hd, id);
                 o = Object_LookupById(&hd);
                 if (o) {
                     void* n = Camera_GetNode(o);

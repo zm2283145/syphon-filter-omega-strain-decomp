@@ -6,15 +6,15 @@
 
 #include "types.h"
 
-Word* func_00130AE0(Word* dst, Word* src) {
+Word* cAssocArray_cString_cSkaAnimationSetPtr_Iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_00130AF0(Iter* out, Tree* t) {
+void std_map_cString_cSkaAnimationSetPtr_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-void func_00130B00(Iter* out, Tree* t) {
+void std_tree_pair_cString_value_compare_begin(Iter* out, Tree* t) {
     out->p = t->leftmost;
 }

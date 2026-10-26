@@ -6,9 +6,9 @@
 
 #include "types.h"
 
-extern int func_00106478(int);
+extern int _ipuSetMPEG1(int);
 
-int func_0010BB90(int a0) {
+int _initSeqAgain(int a0) {
     *(int*)((char*)a0 + 2144) = 0;
-    return func_00106478(1);
+    return _ipuSetMPEG1(1);
 }

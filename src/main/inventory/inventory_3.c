@@ -15,7 +15,7 @@
 #include "types.h"
 
 /* swap(a, b) */
-void func_00471960(PtrVec* a, PtrVec* b) {
+void std_swap_vectordeleterR_vectordeleterR_54(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;
         int* p;
@@ -45,6 +45,6 @@ void func_004719A0(PtrVec* v) {
 
 /* Clear and free a vector, optionally delete. */
 extern "C" { char D_004C33E0[] = "allocator.hh"; }
-DEFINE_CLEAR_BUFFER_DTOR(func_004719B0, D_004C33E0)
+DEFINE_CLEAR_BUFFER_DTOR(std_vector_deleter_tRecord_dtor, D_004C33E0)
 #pragma pop /* merge_units */
 /* merge_units: end func_004719B0 */

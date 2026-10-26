@@ -1,6 +1,6 @@
 #include "types.h"
 extern char* D_004F56B0;
-extern char func_00144930[];
+extern char cSubclassId_dtor[];
 extern char D_004F56A0[];
 extern char* D_004A4A68;
 extern char* D_004A4A70;
@@ -47,19 +47,19 @@ extern signed char D_004EA0C8;
 extern char* g_LosCheckService;
 extern int __register_global_object();
 extern int Script_RegisterType();
-extern int func_0014A6A0();
+extern int cNPC_SOBJ_getClassId();
 extern int Script_RegisterNative();
 extern int cGOBJ_GetScriptTypeKeyPtr();
 void StaticInit_RegisterGenerator(void)
 {
     D_004F56B0 = "GENR";
-    __register_global_object(&D_004F56B0, func_00144930, D_004F56A0);
+    __register_global_object(&D_004F56B0, cSubclassId_dtor, D_004F56A0);
     D_004A4A68 = "Generator Message";
     D_004A4A70 = "GeneratorBase Message";
     D_004A4A78 = "GeneratorData Message";
     D_004F56D8 = Script_RegisterType("cGeneratorMessageBase", ScriptType_cGeneratorMessageBase_Init, 1, 0);
     D_004F56E0 = D_004F56D8;
-    D_004F56E8 = Script_RegisterNative(D_004F56D8, Script_cGeneratorMessageBase_GetNPC, func_0014A6A0(), "GetNPC", 1, &D_004F56D8);
+    D_004F56E8 = Script_RegisterNative(D_004F56D8, Script_cGeneratorMessageBase_GetNPC, cNPC_SOBJ_getClassId(), "GetNPC", 1, &D_004F56D8);
     D_004F56F0 = Script_RegisterType("cSpawnedNPCMsg", ScriptType_cSpawnedNPCMsg_Init, 1, 0);
     D_004F56F8 = D_004F56F0;
     D_004F5700 = Script_RegisterType("cDespawnedNPCMsg", ScriptType_cDespawnedNPCMsg_Init, 1, 0);

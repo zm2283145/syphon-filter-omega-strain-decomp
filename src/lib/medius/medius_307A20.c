@@ -9,11 +9,11 @@ typedef struct {
 extern int RtUdp_BuildHeader(RtUdp *r, RtPeer *e, int kind, RtHdr *hdr);
 extern int RtUdp_CopyPacket(RtPeer *e, RtHdr *hdr, void *body, int n);
 extern void RtUdp_SendPump(RtUdp *r, RtPeer *e);
-extern int func_002FABD0(void *list, void **pkt);
-extern void *func_002FAF00(void *pkt);
-extern int func_00308D18(RtUdp *r, RtPeer *e, int flags, void *pkt, void *data, int len);
-extern int func_00308E78(void *pkt, unsigned char *st);
-extern int func_00308F58(void *pkt, RtHdr *hdr);
+extern int rt_list_buf_get_head(void *list, void **pkt);
+extern void *rt_list_buf_get_next(void *pkt);
+extern int rt_udp_append_data_to_packet(RtUdp *r, RtPeer *e, int flags, void *pkt, void *data, int len);
+extern int rt_udp_get_send_header(void *pkt, unsigned char *st);
+extern int rt_udp_get_packet_header(void *pkt, RtHdr *hdr);
 int RtUdp_QueueSend(RtUdp *r, unsigned int idx, unsigned char flags, void *data, unsigned int len)
 {
     RtHdr h;
@@ -28,9 +28,9 @@ int RtUdp_QueueSend(RtUdp *r, unsigned int idx, unsigned char flags, void *data,
     e = &r->peers[idx];
     if (e->state != 12) return 3;
     if (data == 0 || len == 0 || r->f38 < len) return 1;
-    if (func_002FABD0(e->q1C, &p) != 0) return 10;
+    if (rt_list_buf_get_head(e->q1C, &p) != 0) return 10;
     while (p != 0 && !(unsigned char)(flags & 1) && r->f3C != 0) {
-        if (func_00308E78(p, st) != 0 || func_00308F58(p, &h) != 0 || st[0] != 0) { p = func_002FAF00(p); continue; }
+        if (rt_udp_get_send_header(p, st) != 0 || rt_udp_get_packet_header(p, &h) != 0 || st[0] != 0) { p = rt_list_buf_get_next(p); continue; }
         {
             if (found != 0 && (flags & 2)) {
                 found = (h.flags & 2) ? 0 : found;
@@ -38,10 +38,10 @@ int RtUdp_QueueSend(RtUdp *r, unsigned int idx, unsigned char flags, void *data,
             if ((h.flags & 7) == (flags & 7) && found == 0 && h.len + len <= r->f38 && !(h.flags & 0x80))
                 found = p;
         }
-        p = func_002FAF00(p);
+        p = rt_list_buf_get_next(p);
     }
     if (found != 0) {
-        ret = func_00308D18(r, e, flags, found, data, len);
+        ret = rt_udp_append_data_to_packet(r, e, flags, found, data, len);
         if (ret != 0) return ret;
     } else {
         ret = RtUdp_BuildHeader(r, e, flags, &h);

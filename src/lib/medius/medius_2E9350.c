@@ -9,7 +9,7 @@ extern int sprintf(char* buf, const char* fmt, ...);
 extern char* strstr(const char* s, const char* sub);
 extern int atoi(const char* s);
 
-int func_002E9350(char* out)
+int NetGetBuildTimeStamp(char* out)
 {
     char months[] = "JanFebMarAprMayJunJulAugSepOctNovDec\0";
     char buf[16];
@@ -30,13 +30,13 @@ int func_002E9350(char* out)
 
 /* merge_units: begin func_002E9480 */
 extern void *memset(void *, int, unsigned int);
-extern int func_00476998(void);
-int func_002E9480(int *p)
+extern int KM_GetSoftwareID(void);
+int NetSetDefaultInitializeParams(int *p)
 {
     int v;
     if (p == 0) return 0x17;
     memset(p, 0, 0x1C);
-    v = func_00476998();
+    v = KM_GetSoftwareID();
     p[0] = 1;
     p[3] = 0xE4A;
     p[6] = 0;
@@ -52,13 +52,13 @@ typedef struct { int f0; int f4; } Res;
 extern unsigned char D_0048C4D7, D_0048C4DC;
 extern unsigned int D_0048C4D8;
 extern char D_005253F0[];
-extern int func_003021D0(char *);
-extern int func_00302218(char *);
+extern int rt_mutex_create(char *);
+extern int rt_mutex_destroy(char *);
 extern int RecursiveLock_Acquire(char *, int);
 extern int RecursiveLock_Release(char *, int);
 extern int NetMsg_Init(int *, Res *);
 
-int func_002E94E0(int *o, Res *res)
+int NetInitialize(int *o, Res *res)
 {
     int r;
     int v;
@@ -80,7 +80,7 @@ int func_002E94E0(int *o, Res *res)
         res->f4 = 0;
         return 0;
     }
-    if (D_0048C4DC == v || func_003021D0(D_005253F0) != 0) {
+    if (D_0048C4DC == v || rt_mutex_create(D_005253F0) != 0) {
         res->f4 = 0x2B;
         return 0x2B;
     }
@@ -89,7 +89,7 @@ int func_002E94E0(int *o, Res *res)
     r = NetMsg_Init(o, res);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     if (r) {
-        func_00302218(D_005253F0);
+        rt_mutex_destroy(D_005253F0);
         D_0048C4DC = 0;
         D_0048C4D7 = 0;
         return r;
@@ -111,13 +111,13 @@ extern int RecursiveLock_Release(void *, int);
 #endif /* merge_units */
 #define RecursiveLock_Release(a0, a1) (RecursiveLock_Release((char *)(a0), (a1))) /* merge_units */
 
-extern int func_002E4EA8(void);
+extern int NetIClose(void);
 #if 0 /* merge_units */
-extern int func_00302218(void *);
+extern int rt_mutex_destroy(void *);
 #endif /* merge_units */
-#define func_00302218(a0) (func_00302218((char *)(a0))) /* merge_units */
+#define rt_mutex_destroy(a0) (rt_mutex_destroy((char *)(a0))) /* merge_units */
 
-int func_002E9648(void)
+int NetClose(void)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
@@ -128,10 +128,10 @@ int func_002E9648(void)
         return 0;
     }
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E4EA8();
+    r = NetIClose();
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     if (r == 0) {
-        if (func_00302218(D_005253F0)) return 0x2B;
+        if (rt_mutex_destroy(D_005253F0)) return 0x2B;
         D_0048C4DC = 0;
         D_0048C4D7 = 0;
         D_0048C4D8 = 0;
@@ -140,7 +140,7 @@ int func_002E9648(void)
 }
 #undef RecursiveLock_Acquire /* merge_units */
 #undef RecursiveLock_Release /* merge_units */
-#undef func_00302218 /* merge_units */
+#undef rt_mutex_destroy /* merge_units */
 /* merge_units: end func_002E9648 */
 
 /* merge_units: begin func_002E9740 */
@@ -154,14 +154,14 @@ extern int RecursiveLock_Release(void *, int);
 #endif /* merge_units */
 #define RecursiveLock_Release(a0, a1) (RecursiveLock_Release((char *)(a0), (a1))) /* merge_units */
 
-extern int func_002DCD48(void *, void *);
-int func_002E9740(void *a, void *b)
+extern int NetIGetAverageDelayToClient(void *, void *);
+int NetGetAverageDelayToClient(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DCD48(a, b);
+    r = NetIGetAverageDelayToClient(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
@@ -180,14 +180,14 @@ extern int RecursiveLock_Release(void *, int);
 #endif /* merge_units */
 #define RecursiveLock_Release(a0, a1) (RecursiveLock_Release((char *)(a0), (a1))) /* merge_units */
 
-extern int func_002DCF40(void *, void *, void *, void *, void *);
-int func_002E97E8(void *a, void *b, void *c, void *d, void *e)
+extern int NetIGetBufferStatus(void *, void *, void *, void *, void *);
+int NetGetBufferStatus(void *a, void *b, void *c, void *d, void *e)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DCF40(a, b, c, d, e);
+    r = NetIGetBufferStatus(a, b, c, d, e);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
@@ -206,14 +206,14 @@ extern int RecursiveLock_Release(void *, int);
 #endif /* merge_units */
 #define RecursiveLock_Release(a0, a1) (RecursiveLock_Release((char *)(a0), (a1))) /* merge_units */
 
-extern int func_002DD030(void *, void *, void *);
-int func_002E98C0(void *a, void *b, void *c)
+extern int NetISetSendAggregationInterval(void *, void *, void *);
+int NetSetSendAggregationInterval(void *a, void *b, void *c)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DD030(a, b, c);
+    r = NetISetSendAggregationInterval(a, b, c);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
@@ -232,14 +232,14 @@ extern int RecursiveLock_Release(void *, int);
 #endif /* merge_units */
 #define RecursiveLock_Release(a0, a1) (RecursiveLock_Release((char *)(a0), (a1))) /* merge_units */
 
-extern int func_002DD0F0(void *);
-int func_002E9978(void *a)
+extern int NetIGetBandwidthInfo(void *);
+int NetGetBandwidthInfo(void *a)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DD0F0(a);
+    r = NetIGetBandwidthInfo(a);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
@@ -258,14 +258,14 @@ extern int RecursiveLock_Release(void *, int);
 #endif /* merge_units */
 #define RecursiveLock_Release(a0, a1) (RecursiveLock_Release((char *)(a0), (a1))) /* merge_units */
 
-extern int func_002ECFF0(void);
-int func_002E9A10(void)
+extern int NetIRegisterMessageStart(void);
+int NetRegisterMessageStart(void)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002ECFF0();
+    r = NetIRegisterMessageStart();
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
@@ -284,14 +284,14 @@ extern int RecursiveLock_Release(void *, int);
 #endif /* merge_units */
 #define RecursiveLock_Release(a0, a1) (RecursiveLock_Release((char *)(a0), (a1))) /* merge_units */
 
-extern int func_002ECFF8(void *, void *, void *, void *);
-int func_002E9A98(void *a, void *b, void *c, void *d)
+extern int NetIMessageField(void *, void *, void *, void *);
+int NetMessageField(void *a, void *b, void *c, void *d)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002ECFF8(a, b, c, d);
+    r = NetIMessageField(a, b, c, d);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
@@ -310,14 +310,14 @@ extern int RecursiveLock_Release(void *, int);
 #endif /* merge_units */
 #define RecursiveLock_Release(a0, a1) (RecursiveLock_Release((char *)(a0), (a1))) /* merge_units */
 
-extern int func_002ED000(void);
-int func_002E9B60(void)
+extern int NetIRegisterObjectStart(void);
+int NetRegisterObjectStart(void)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002ED000();
+    r = NetIRegisterObjectStart();
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
@@ -336,14 +336,14 @@ extern int RecursiveLock_Release(void *, int);
 #endif /* merge_units */
 #define RecursiveLock_Release(a0, a1) (RecursiveLock_Release((char *)(a0), (a1))) /* merge_units */
 
-extern int func_002ED028(void *, void *, void *, void *, void *, void *);
-int func_002E9BE8(void *a, void *b, void *c, void *d, void *e, void *f)
+extern int NetIObjectField(void *, void *, void *, void *, void *, void *);
+int NetObjectField(void *a, void *b, void *c, void *d, void *e, void *f)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002ED028(a, b, c, d, e, f);
+    r = NetIObjectField(a, b, c, d, e, f);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
@@ -362,14 +362,14 @@ extern int RecursiveLock_Release(void *, int);
 #endif /* merge_units */
 #define RecursiveLock_Release(a0, a1) (RecursiveLock_Release((char *)(a0), (a1))) /* merge_units */
 
-extern int func_002ED280(void *, void *, void *);
-int func_002E9CD0(void *a, void *b, void *c)
+extern int NetIRegisterStructure(void *, void *, void *);
+int NetRegisterStructure(void *a, void *b, void *c)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002ED280(a, b, c);
+    r = NetIRegisterStructure(a, b, c);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
@@ -388,14 +388,14 @@ extern int RecursiveLock_Release(void *, int);
 #endif /* merge_units */
 #define RecursiveLock_Release(a0, a1) (RecursiveLock_Release((char *)(a0), (a1))) /* merge_units */
 
-extern int func_002ED570(void *, void *, void *, void *);
-int func_002E9D88(void *a, void *b, void *c, void *d)
+extern int NetIRegisterRemoteObjectCallback(void *, void *, void *, void *);
+int NetRegisterRemoteObjectCallback(void *a, void *b, void *c, void *d)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002ED570(a, b, c, d);
+    r = NetIRegisterRemoteObjectCallback(a, b, c, d);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
@@ -440,14 +440,14 @@ extern int RecursiveLock_Release(void *, int);
 #endif /* merge_units */
 #define RecursiveLock_Release(a0, a1) (RecursiveLock_Release((char *)(a0), (a1))) /* merge_units */
 
-extern int func_002ED550(void *, void *);
-int func_002E9F08(void *a, void *b)
+extern int NetIRegisterApplicationMessage(void *, void *);
+int NetRegisterApplicationMessage(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002ED550(a, b);
+    r = NetIRegisterApplicationMessage(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
@@ -466,14 +466,14 @@ extern int RecursiveLock_Release(void *, int);
 #endif /* merge_units */
 #define RecursiveLock_Release(a0, a1) (RecursiveLock_Release((char *)(a0), (a1))) /* merge_units */
 
-extern int func_002DDFF8(signed char, void *, void *, void *, void *, void *);
-int func_002E9FB0(signed char a, void *b, void *c, void *d, void *e, void *f)
+extern int NetISendMessageByUDPToIP(signed char, void *, void *, void *, void *, void *);
+int NetSendMessageByUDPToIP(signed char a, void *b, void *c, void *d, void *e, void *f)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DDFF8(a, b, c, d, e, f);
+    r = NetISendMessageByUDPToIP(a, b, c, d, e, f);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
@@ -518,14 +518,14 @@ extern int RecursiveLock_Release(void *, int);
 #endif /* merge_units */
 #define RecursiveLock_Release(a0, a1) (RecursiveLock_Release((char *)(a0), (a1))) /* merge_units */
 
-extern int func_002DE770(signed char, void *, void *, void *, void *, void *, void *);
-int func_002EA198(signed char a, void *b, void *c, void *d, void *e, void *f, void *g)
+extern int NetISendFilteredMessage(signed char, void *, void *, void *, void *, void *, void *);
+int NetSendFilteredMessage(signed char a, void *b, void *c, void *d, void *e, void *f, void *g)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DE770(a, b, c, d, e, f, g);
+    r = NetISendFilteredMessage(a, b, c, d, e, f, g);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
@@ -544,14 +544,14 @@ extern int RecursiveLock_Release(void *, int);
 #endif /* merge_units */
 #define RecursiveLock_Release(a0, a1) (RecursiveLock_Release((char *)(a0), (a1))) /* merge_units */
 
-extern int func_002DE828(signed char, void *, void *, void *, void *, void *);
-int func_002EA290(signed char a, void *b, void *c, void *d, void *e, void *f)
+extern int NetISendApplicationMessage(signed char, void *, void *, void *, void *, void *);
+int NetSendApplicationMessage(signed char a, void *b, void *c, void *d, void *e, void *f)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DE828(a, b, c, d, e, f);
+    r = NetISendApplicationMessage(a, b, c, d, e, f);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
@@ -570,14 +570,14 @@ extern int RecursiveLock_Release(void *, int);
 #endif /* merge_units */
 #define RecursiveLock_Release(a0, a1) (RecursiveLock_Release((char *)(a0), (a1))) /* merge_units */
 
-extern int func_002ED448(void *, void *, void *, void *);
-int func_002EA380(void *a, void *b, void *c, void *d)
+extern int NetIRegisterDataStream(void *, void *, void *, void *);
+int NetRegisterDataStream(void *a, void *b, void *c, void *d)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002ED448(a, b, c, d);
+    r = NetIRegisterDataStream(a, b, c, d);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
@@ -596,14 +596,14 @@ extern int RecursiveLock_Release(void *, int);
 #endif /* merge_units */
 #define RecursiveLock_Release(a0, a1) (RecursiveLock_Release((char *)(a0), (a1))) /* merge_units */
 
-extern int func_002ED4D0(void *, void *);
-int func_002EA448(void *a, void *b)
+extern int NetIRegisterObjectFilter(void *, void *);
+int NetRegisterObjectFilter(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002ED4D0(a, b);
+    r = NetIRegisterObjectFilter(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }

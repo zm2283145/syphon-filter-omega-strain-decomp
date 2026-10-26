@@ -9,7 +9,7 @@ struct TransferObjectInsertResult { TransferObjectIterator position; unsigned ch
 struct PendingTransferValue { GobjId id; TransferMessage* message; };
 struct PendingTransferInsertResult { PendingTransferIterator position; unsigned char inserted; };
 
-extern "C" void func_0013C800(TransferTreeNode* node, void* root);
+extern "C" void std_red_black_tree_1_balance_erase(TransferTreeNode* node, void* root);
 
 template <class Node>
 static inline void transfer_tree_next(Node** position)
@@ -53,7 +53,7 @@ static inline void transfer_tree_erase(RbTree* tree, Node** position)
     Node* node = *position;
     if (node == leftmost)
         transfer_tree_advance_minimum(position, minimum);
-    func_0013C800((TransferTreeNode*)node, tree->root);
+    std_red_black_tree_1_balance_erase((TransferTreeNode*)node, tree->root);
     if (node) {
         AllocGuard guard;
         Mem_Free(0, node, File, 0x64);

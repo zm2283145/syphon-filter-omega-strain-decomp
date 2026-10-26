@@ -50,9 +50,9 @@ struct Obj4FA {
 
 extern "C" {
 extern Tree g_NpcThinkList;
-extern void func_0014FC10(Iter* out, Tree* t);
-extern Word* func_0014AB70(Word* dst, Word* src);
-extern void func_0014AB80(Iter* out, Tree* t);
+extern void std_list_cActiveListItemPtr_begin_void(Iter* out, Tree* t);
+extern Word* cLListIterator_cActiveListItemPtr_ctor(Word* dst, Word* src);
+extern void std_list_cActiveListItemPtr_end_void(Iter* out, Tree* t);
 }
 
 static inline void FCopy4FA(float* d, float* s) { float* ss = s; float* dd = d; *dd = *ss; }
@@ -67,12 +67,12 @@ extern "C" Ctl4FA* NpcAi_NodeReservedBy(int node)
     Iter end;
     Ctl4FA* result = 0;
 
-    func_0014FC10(&b, &g_NpcThinkList);
-    func_0014AB70(&w, (Word*)&b);
+    std_list_cActiveListItemPtr_begin_void(&b, &g_NpcThinkList);
+    cLListIterator_cActiveListItemPtr_ctor(&w, (Word*)&b);
     { int v = w.value; tmp = v; }
     FCopy4FA((float*)&it, (float*)&tmp);
-    func_0014AB80(&end, &g_NpcThinkList);
-    func_0014AB70(&w2, (Word*)&end);
+    std_list_cActiveListItemPtr_end_void(&end, &g_NpcThinkList);
+    cLListIterator_cActiveListItemPtr_ctor(&w2, (Word*)&end);
     while (*(int*)&it != w2.value) {
         unsigned char valid;
         Handle4FA* h;
@@ -112,8 +112,8 @@ extern "C" Ctl4FA* NpcAi_NodeReservedBy(int node)
             }
         }
         it = it->next;
-        func_0014AB80(&end, &g_NpcThinkList);
-        func_0014AB70(&w2, (Word*)&end);
+        std_list_cActiveListItemPtr_end_void(&end, &g_NpcThinkList);
+        cLListIterator_cActiveListItemPtr_ctor(&w2, (Word*)&end);
     }
     return result;
 }

@@ -7,13 +7,13 @@
 #include "types.h"
 #include "loose02_types.h"
 
-Word* func_002C5A70(Word* dst, Word* src) {
+Word* cNpcTransfer_cStateID_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
 /* Copies a 3x3 word matrix row by row. */
-Mat3Words* func_002C5A80(Mat3Words* dst, Mat3Words* src) {
+Mat3Words* cBitArray_256_ctor(Mat3Words* dst, Mat3Words* src) {
     int* d;
     int* s;
     int i;

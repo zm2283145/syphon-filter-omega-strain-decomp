@@ -16,21 +16,21 @@ int strlen(const char *);
 #pragma push /* merge_units */
 typedef struct { char pad[0xFC]; int n; int* items; char pad2[0x24]; int* f128; } E214;
 extern void* g_LocalPlayer;
-extern void func_00176160(void*, E214*);
-extern void func_001761E0(void*, int);
-extern void func_00176220(void*, char*);
-extern void func_001761A0(void*, int);
-extern void func_00176260(void*);
+extern void cPlayer_SetMenuReceiver(void*, E214*);
+extern void cPlayer_SetMenuDefault(void*, int);
+extern void cPlayer_SetMenuTitle_2(void*, char*);
+extern void cPlayer_AddMenuChoice_2(void*, int);
+extern void cPlayer_LaunchChooseMenu_2(void*);
 extern char* Loc_LookupText(char*);
 #pragma opt_strength_reduction off
 void cElevatorGOBJ_ChooseFloor(E214* e) {
     void* m = g_LocalPlayer;
     int i;
-    func_00176160(m, e);
-    func_001761E0(m, *e->f128);
-    func_00176220(m, Loc_LookupText("ElevChooseFloor"));
-    for (i = 0; i < e->n; i++) func_001761A0(m, e->items[i]);
-    func_00176260(m);
+    cPlayer_SetMenuReceiver(m, e);
+    cPlayer_SetMenuDefault(m, *e->f128);
+    cPlayer_SetMenuTitle_2(m, Loc_LookupText("ElevChooseFloor"));
+    for (i = 0; i < e->n; i++) cPlayer_AddMenuChoice_2(m, e->items[i]);
+    cPlayer_LaunchChooseMenu_2(m);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00214BD0(void) {}
@@ -62,7 +62,7 @@ extern void cElevatorGOBJ_ChooseFloor(Lift_00214C90* l);
 #endif /* merge_units */
 #define cElevatorGOBJ_ChooseFloor(a0) (cElevatorGOBJ_ChooseFloor((void *)(a0))) /* merge_units */
 
-extern void func_002EC3C8(void* h);
+extern void NetRequestObjectPrivateOwnership(void* h);
 extern void Lift_DeactivateRecipients(Lift_00214C90* l);
 extern unsigned char Lift_OpenDoors(Lift_00214C90* l);
 static inline int IsAuth_00214C90(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
@@ -90,7 +90,7 @@ void Lift_SeekFloor(Lift_00214C90* l, int floor, int a2, int a3)
             } else {
                 Snd_00214C90* s = l->snd;
                 if (s)
-                    func_002EC3C8(s->h);
+                    NetRequestObjectPrivateOwnership(s->h);
             }
         } else {
             cElevatorGOBJ_ChooseFloor(l);
@@ -184,7 +184,7 @@ typedef struct NameVec {
     char** data;
 } NameVec;
 
-extern "C" char** func_002151B0(NameVec* v, int i);
+extern "C" char** std_vector_charPtr_opIndex_uint(NameVec* v, int i);
 
 typedef struct cElevatorGOBJ {
     char pad[0xF8];
@@ -200,7 +200,7 @@ extern "C" void cElevatorGOBJ_SetFloorName(cElevatorGOBJ* self, int i, char* nam
     if (i >= 0 && i < self->names.count) {
         pd = &self->names.data;
         if ((*pd)[i]) {
-            p = *func_002151B0(&self->names, i);
+            p = *std_vector_charPtr_opIndex_uint(&self->names, i);
             AllocGuard g;
             Mem_Free(0, p, D_004A4550, 0x697);
         }

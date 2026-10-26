@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_0046C850(void) {
+void RemoteObjectUpdateCallback(void) {
 
 }

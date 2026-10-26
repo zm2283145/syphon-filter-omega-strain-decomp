@@ -57,7 +57,7 @@ int PtrVec_PushBack_275780(PtrVec* v, int* value) {
 
 /* merge_units: begin func_002757A0 */
 #pragma push /* merge_units */
-/* func_002757A0 (BulletPool bullet draw) - mw38 MATCH. First OpM site (b->dir * b->len) uses a
+/* cBullet_Render (BulletPool bullet draw) - mw38 MATCH. First OpM site (b->dir * b->len) uses a
    per-site gcc-style helper (OpM2) whose asm operand order (pa, pr, s) fixes src/dst colouring. */
 #pragma cplusplus on
 #pragma opt_loop_invariants off
@@ -174,8 +174,8 @@ extern long long D_005381F8;
 extern V4 D_004A90A0[];
 void ParticleInst_Draw(int h, int k, void* p);
 void Renderer_BindTexture(void* m, int idx);
-void func_0025CD10(void* s);
-void func_0025CA40(void* s);
+void XLib_NewStrip(void* s);
+void XLib_NextBatchVert(void* s);
 void Vec4_Copy(V4* d, const V4* s);
 void GuiBatch_AddVertexColor(V4* d, const V4* s);
 float GuiBatch_AddVertexUV(void);
@@ -208,7 +208,7 @@ static inline V4* UV_002757A0(const V4& uv)
 static inline void Emit_002757A0(const V4& pos, const V4c_002757A0& col, const V4& uv)
 {
     Ent_002757A0* e;
-    func_0025CA40(g_Video);
+    XLib_NextBatchVert(g_Video);
     e = &RS_002757A0->ents[D_00539210.f10];
     Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
     GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], (V4*)&col);
@@ -238,7 +238,7 @@ static inline void Restart_002757A0(void)
     }
 }
 
-extern "C" void func_002757A0(Bullet_002757A0* b)
+extern "C" void cBullet_Render(Bullet_002757A0* b)
 {
     if (b->f115 && b->f110) ParticleInst_Draw(b->f110, 2, b->f20);
     if (b->f116 && b->f110 == 0) {
@@ -271,7 +271,7 @@ extern "C" void func_002757A0(Bullet_002757A0* b)
         e->c2C += D_00539224;
         e->c30 += D_00539224;
         e->c34 += D_00539224;
-        func_0025CD10(g_Video);
+        XLib_NewStrip(g_Video);
         D_00539224 = 0;
         Emit_002757A0(p0, c1, D_004A90A0[b->uv]);
         Emit_002757A0(p1, c1, D_004A90A0[b->uv + 1]);

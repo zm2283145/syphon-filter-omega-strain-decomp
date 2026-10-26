@@ -7,7 +7,7 @@
 /* merge_units: begin func_00223F10 */
 typedef struct { unsigned char key; char pad; unsigned short val; } K223F10;
 extern K223F10 D_004A5A50[2][21];
-unsigned int func_00223F10(int set, unsigned char k)
+unsigned int cnv_keypad(int set, unsigned char k)
 {
     unsigned int c = k;
     unsigned int i;
@@ -26,7 +26,7 @@ unsigned int func_00223F10(int set, unsigned char k)
 typedef struct { int f0; int f4; int f8; int mode; int f10; int f14; int f18; int f1c; unsigned short s20; unsigned short buf[4]; char pad2[2]; int wr; int rd; int count; } E223F80;
 typedef struct { int count; E223F80* tbl; int f8; int fc; int f10; } G223F80;
 extern G223F80 D_004F5780;
-int func_00223F80(int i, unsigned int mode)
+int sceUsbKbSetReadMode(int i, unsigned int mode)
 {
     E223F80* e; int off;
     if (i >= D_004F5780.count) return -11;
@@ -58,11 +58,11 @@ extern unsigned char D_004F5880[];
 extern char D_004F5820[];
 extern char D_004F58C0[];
 extern char D_004A4D80[];
-extern void func_00223400(void* p);
+extern void rpccall_end(void* p);
 extern void WaitSema(int s);
 extern int sceSifCallRpc(void* cd, int fno, int mode, void* send, int ssize, void* recv, int rsize, void (*end)(void*), void* param);
 extern int scePrintf(char* fmt, ...);
-int func_00223FF0(unsigned int port)
+int sceUsbKbClearRbuf(unsigned int port)
 {
     E223FF0* e;
     int r;
@@ -70,7 +70,7 @@ int func_00223FF0(unsigned int port)
     if (port >= D_004F5780.count) return -11;
     D_004F5880[0] = port;
     WaitSema(D_0048AB18);
-    r = sceSifCallRpc(D_004F5820, 6, 1, D_004F5880, 0x10, D_004F58C0, 0, func_00223400, 0);
+    r = sceSifCallRpc(D_004F5820, 6, 1, D_004F5880, 0x10, D_004F58C0, 0, rpccall_end, 0);
     if (r != 0) {
         scePrintf(D_004A4D80, r);
         return -2;

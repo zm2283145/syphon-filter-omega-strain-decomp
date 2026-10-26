@@ -3,23 +3,23 @@
 extern void Event_PackHeader();
 extern void Message_GetScriptTypeKey();
 extern void Player_RespawnPollEvent();
-extern void func_00176E60();
-extern void func_00177890();
-extern void func_00177C00();
-extern void func_00177E20();
-extern void func_00177E30();
+extern void cCBData_IsReferencing();
+extern void cCBData_dtor();
+extern void cMoveMsg_Template_1_Clone();
+extern void cMoveMsg_Template_1_dtor();
+extern void cPlayerRespawnCB_dtor();
 
 void *D_004D9DA0[8] = {
-    0, 0, &func_00177890, &func_00177E30,
+    0, 0, &cMoveMsg_Template_1_dtor, &cMoveMsg_Template_1_Clone,
     &Event_PackHeader, &Message_GetScriptTypeKey, 0, 0,
 };
 
 void *D_004D9DC0[8] = {
-    0, 0, &func_00177C00, &func_00177E20,
+    0, 0, &cPlayerRespawnCB_dtor, &cCBData_IsReferencing,
     &Player_RespawnPollEvent, 0, 0, 0,
 };
 
 void *D_004D9DE0[8] = {
-    0, 0, &func_00176E60, &func_00177E20,
+    0, 0, &cCBData_dtor, &cCBData_IsReferencing,
     0, 0, 0, 0,
 };

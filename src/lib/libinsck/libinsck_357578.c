@@ -5,7 +5,7 @@
 extern int func_00357150(void);
 
 /* Reads a value and masks it to 24, 16 or 8 bits depending on its top bits. */
-int func_00357578(void)
+int sceInsockInetLnaof(void)
 {
     unsigned int v = func_00357150();
     if ((v & 0x80000000) == 0)

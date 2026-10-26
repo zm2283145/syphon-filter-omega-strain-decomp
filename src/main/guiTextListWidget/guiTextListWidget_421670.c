@@ -51,10 +51,10 @@ void String_Dtor(void* string, int flags);
 TextRenderChild* TextObj_Construct(TextRenderChild* self, int x, int y,
                              int width, int height, void* resource,
                              TextRenderStyle* style);
-void func_00423000(TextListEntryVec* entries, int flags);
-void func_0013B2E0(void* state, int flags);
+void std_vector_deleter_Item_dtor(TextListEntryVec* entries, int flags);
+void cArray_int_dtor(void* state, int flags);
 void GuiWidget_Destroy(TextRenderWidget* self, int flags);
-void func_0013B340(TextListEntryVec* entries, int flags);
+void std_vector_imp_int_1_dtor(TextListEntryVec* entries, int flags);
 void operator_delete(void* allocation);
 }
 
@@ -80,7 +80,7 @@ static inline void release_child(TextRenderChild* child, int line)
 static inline void destroy_entry_storage(TextListEntryVec* entries)
 {
     if (entries)
-        func_00423000(entries, 0);
+        std_vector_deleter_Item_dtor(entries, 0);
 }
 
 static inline void destroy_entry_base(TextListEntryVec* entries)
@@ -99,7 +99,7 @@ static inline void destroy_widget_base(TextRenderWidget* self)
 {
     if (self) {
         self->vtable = D_004E0D20;
-        func_0013B2E0(self->baseState, -1);
+        cArray_int_dtor(self->baseState, -1);
         GuiWidget_Destroy(self, 0);
     }
 }
@@ -173,7 +173,7 @@ extern "C" TextRenderWidget* GuiTextListWidget_dtor(TextRenderWidget* self, shor
 static inline void destroy_vector_base(TextListEntryVec* entries)
 {
     if (entries)
-        func_0013B340(entries, 0);
+        std_vector_imp_int_1_dtor(entries, 0);
 }
 
 /* Destroy the vector base before optionally releasing the vector itself. */

@@ -157,7 +157,7 @@ typedef struct {
     sceGsScissor scissor1; u_long scissor1addr;
 } sceGsDrawEnv1;
 
-void func_00103B60(sceGsDrawEnv1 *draw, short centerx, short centery, short halfoff)
+void sceGsSetHalfOffset(sceGsDrawEnv1 *draw, short centerx, short centery, short halfoff)
 {
     s_long ofy = ((s_long)centery - ((u_long)(int)(draw->scissor1.SCAY1 + 1) >> 1)) << 4;
     s_long ofx = ((s_long)centerx - ((u_long)(int)(draw->scissor1.SCAX1 + 1) >> 1)) << 4;
@@ -171,7 +171,7 @@ void func_00103B60(sceGsDrawEnv1 *draw, short centerx, short centery, short half
 /* merge_units: begin func_00103BE8 */
 typedef struct { volatile int chcr; } DmaChan3BE8;
 extern int scePrintf(const char *, ...);
-extern unsigned int func_00104380(DmaChan3BE8 *);
+extern unsigned int sceDmaPause(DmaChan3BE8 *);
 
 void sceDmaSync(DmaChan3BE8 *d)
 {
@@ -180,7 +180,7 @@ void sceDmaSync(DmaChan3BE8 *d)
         if (--cnt < 0) {
             scePrintf("libdma: sync timeout
 ");
-            func_00104380(d);
+            sceDmaPause(d);
         }
     }
 }
@@ -190,20 +190,20 @@ void sceDmaSync(DmaChan3BE8 *d)
 typedef struct { volatile int chcr; int p0[3]; volatile unsigned int madr; } DmaChan3C58;
 extern char D_00498308[];
 #if 0 /* merge_units */
-extern unsigned int func_00104380(DmaChan3C58 *);
+extern unsigned int sceDmaPause(DmaChan3C58 *);
 #endif /* merge_units */
-#define func_00104380(a0) (func_00104380((DmaChan3BE8 *)(a0))) /* merge_units */
+#define sceDmaPause(a0) (sceDmaPause((DmaChan3BE8 *)(a0))) /* merge_units */
 
 
-void func_00103C58(DmaChan3C58 *d, unsigned int a, int n)
+void WatchDma(DmaChan3C58 *d, unsigned int a, int n)
 {
     int cnt = n ? n : 0x1000000;
     while (d->madr < a) {
         if (--cnt < 0) {
             scePrintf(D_00498308);
-            func_00104380(d);
+            sceDmaPause(d);
         }
     }
 }
-#undef func_00104380 /* merge_units */
+#undef sceDmaPause /* merge_units */
 /* merge_units: end func_00103C58 */

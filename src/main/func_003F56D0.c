@@ -7,7 +7,7 @@ extern char D_0055C4C8[];
 extern void func_003F45C0(void* src, Pair64* out);
 
 /* Fetches a 24-byte record and copies its first 16 bytes from D_0055C4C8 into out+8; returns 1. */
-int func_003F56D0(void* self, Pair64Out* out)
+int mpegTS(void* self, Pair64Out* out)
 {
     Pair64 tmp;
     func_003F45C0(D_0055C4C8, &tmp);

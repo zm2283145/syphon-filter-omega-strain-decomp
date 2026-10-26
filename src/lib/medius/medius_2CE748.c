@@ -12,7 +12,7 @@
 extern int D_0051EFA0;
 
 /* Stores a value into a global setting. */
-void func_002CE748(int value)
+void MGCLSetProcessingState(int value)
 {
     D_0051EFA0 = value;
 }
@@ -32,7 +32,7 @@ extern char D_0051EFA0[];
 #define D_0051EFA0 ((char*)&D_0051EFA0) /* merge_units */
 
 
-int func_002CE758(void) {
+int MGCLGetProcessingState(void) {
     int tmp0;
 
     tmp0 = *(int*)D_0051EFA0;

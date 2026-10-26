@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-extern int func_001144E0(int);
+extern int sceSifFreeSysMemory(int);
 
-int func_00114558(int a0) {
+int sceSifFreeIopHeap(int a0) {
     int tmp0;
 
-    tmp0 = func_001144E0(a0);
+    tmp0 = sceSifFreeSysMemory(a0);
     return tmp0;
 }

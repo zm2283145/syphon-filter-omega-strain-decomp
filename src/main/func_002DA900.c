@@ -7,11 +7,11 @@
 #include "types.h"
 #include "loose02_types.h"
 
-int func_002DA900(Obj2D9* self, int* out) {
+int GetLocalID(Obj2D9* self, int* out) {
     *out = self->unk78;
     return 0;
 }
 
-int func_002DA910(Obj2D9* self) {
+int GetCurChannel(Obj2D9* self) {
     return self->unk98;
 }

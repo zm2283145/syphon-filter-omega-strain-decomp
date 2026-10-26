@@ -2,4 +2,4 @@
 #include "last_key_time.h"
 
 /* Time of the last key. */
-DEFINE_LAST_KEY_TIME(func_003F4360)
+DEFINE_LAST_KEY_TIME(cKeyframeAnimation_tRGB_NumFrames)

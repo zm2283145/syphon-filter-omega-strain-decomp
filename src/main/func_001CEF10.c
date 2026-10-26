@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-int func_001CEF10(Iter* a, Iter* b) {
+int cArray_cXformNodePtr_ConstIterator_opNe(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 
-Iter* func_001CEF30(Iter* it) {
+Iter* cArray_cXformNodePtr_ConstIterator_opInc(Iter* it) {
     it->p++;
     return it;
 }

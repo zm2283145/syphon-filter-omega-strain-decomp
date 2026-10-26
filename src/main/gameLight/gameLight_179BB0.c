@@ -42,13 +42,13 @@ static inline void merge_flush_func_00179BB0(void) {}
  */
 
 
-void func_00179BF0(void) {
+void cGameLight_NextFrame(void) {
 }
 
-void func_00179C00(void) {
+void cGameLight_Load(void) {
 }
 
-void func_00179C10(void) {
+void cGameLight_Init(void) {
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00179BF0(void) {}

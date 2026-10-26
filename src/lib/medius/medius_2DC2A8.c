@@ -15,11 +15,11 @@ typedef struct Codec {
 
 extern void *memcpy(void *, const void *, unsigned int);
 extern void Libc_Memmove(void *, const void *, int);
-extern void func_002D8678(void);
-extern int func_002D86A0(void);
-extern void func_002D86C8(int, int, int);
+extern void StartTime(void);
+extern int MeasureTime(void);
+extern void UpdateAudioEncodePerformance(int, int, int);
 
-int func_002DC2A8(Codec *s, char *in, int inlen, char *out, int outcap)
+int EncodeData(Codec *s, char *in, int inlen, char *out, int outcap)
 {
     int total = 0;
     int n;
@@ -77,9 +77,9 @@ int func_002DC2A8(Codec *s, char *in, int inlen, char *out, int outcap)
         } else {
             int done = 0;
             while (s->inLen - done >= s->inBlk && s->outLen + s->outBlk <= 0x1E0) {
-                func_002D8678();
+                StartTime();
                 s->fn(s->ctx, s->in + done, s->out + s->outLen);
-                func_002D86C8(s->stats, s->inBlk, func_002D86A0());
+                UpdateAudioEncodePerformance(s->stats, s->inBlk, MeasureTime());
                 s->outLen += s->outBlk;
                 done += s->inBlk;
             }

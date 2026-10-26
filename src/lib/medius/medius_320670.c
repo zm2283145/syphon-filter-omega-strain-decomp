@@ -1,7 +1,7 @@
 #include "types.h"
 
-extern int func_00320688(int, int, int);
+extern int nciDecodeVoicePropSase3200(int, int, int);
 
-int func_00320670(int a0, int a1) {
-    return func_00320688(a0, a1, 0);
+int nciDecodeSase3200(int a0, int a1) {
+    return nciDecodeVoicePropSase3200(a0, a1, 0);
 }

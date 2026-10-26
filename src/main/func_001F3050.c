@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern int func_001F3060(int);
+extern int details_compressed_pair_imp_cAllocator_voidPtr_int_1_second(int);
 
-int func_001F3050(int a0) {
-    return func_001F3060(a0);
+int std_list_deleter_voidPtr_sz_void_2(int a0) {
+    return details_compressed_pair_imp_cAllocator_voidPtr_int_1_second(a0);
 }

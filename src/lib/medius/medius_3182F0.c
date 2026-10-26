@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-float func_003182F0(int a0, int a1) {
+float VoiceFontShift(int a0, int a1) {
     float tmp0;
     float tmp1;
 

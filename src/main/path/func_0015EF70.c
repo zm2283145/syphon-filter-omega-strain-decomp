@@ -6,6 +6,6 @@
 #include "types.h"
 #include "path_types.h"
 
-int* func_0015EF70(PathListNode** it) {
+int* cConstLListIterator_cPathSystemRequestPtr_opMul(PathListNode** it) {
     return &(*it)->value;
 }

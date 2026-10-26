@@ -10,9 +10,9 @@ extern N81E0 *D_00492CD0;
 extern N81E0 *D_00492CD4;
 extern int D_00492CCC;
 extern int D_00492CC8;
-extern void func_0034B7E8(void *);
-extern void func_00357D88(void *);
-extern int func_003581C0(void);
+extern void sceLibnetTerminate(void *);
+extern void my_free(void *);
+extern int unblock(void);
 extern int func_00358158(void);
 extern int GetThreadId(void);
 extern int DeleteSema(int);
@@ -23,7 +23,7 @@ int Insck_SetErrno(N81E0 *n, int err)
 {
     n->err = err;
     if (D_00492CE0) *Newlib_Errno() = err;
-    func_003581C0();
+    unblock();
     return err ? -1 : 0;
 }
 /* merge_units: end func_003583A0 */
@@ -32,7 +32,7 @@ int Insck_SetErrno(N81E0 *n, int err)
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int func_003581C0();                                  
+int unblock();                                  
 int Insck_GetThreadContext(int);                               
 int D_00492CE4 = 12;
 
@@ -43,7 +43,7 @@ int func_003583F0(void) {
     if (temp_v0 == 0) {
         return &D_00492CE4;
     }
-    func_003581C0();
+    unblock();
     return temp_v0 + 0xC;
 }
 /* merge_units: end func_003583F0 */
@@ -60,7 +60,7 @@ int func_00358438(void) {
     if (temp_v0 == 0) {
         return &(*(int*)dat_00492CE8);
     }
-    func_003581C0();
+    unblock();
     return temp_v0 + 0x10;
 }
 /* merge_units: end func_00358438 */

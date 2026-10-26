@@ -2,7 +2,7 @@ typedef struct { int count; int max_count; int init_count; int numWaitThreads; u
 extern int CreateSema(SemaParam_00116210* p);
 int D_004868D0 = 0;
 int D_004868D4 = 0;
-void func_00116210(void)
+void supplement_crt0(void)
 {
     SemaParam_00116210 a;
     SemaParam_00116210 b;

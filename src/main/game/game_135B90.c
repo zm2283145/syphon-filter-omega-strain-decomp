@@ -28,7 +28,7 @@
 #pragma cplusplus on
 
 /* Destroy an object list: erase all nodes, optionally delete. */
-DEFINE_OBJ_LIST_DTOR(func_00135B90)
+DEFINE_OBJ_LIST_DTOR(std_basic_string_char_char_traits_char_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00135B90 */
 
@@ -55,7 +55,7 @@ DEFINE_OBJ_LIST_DTOR_MID(func_00135C90)
 #pragma cplusplus on
 
 /* Destroy an object list, optionally delete. */
-DEFINE_OBJ_LIST_DTOR_SHALLOW(func_00135D10)
+DEFINE_OBJ_LIST_DTOR_SHALLOW(std_vector_deleter_cArray_int_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00135D10 */
 
@@ -64,7 +64,7 @@ DEFINE_OBJ_LIST_DTOR_SHALLOW(func_00135D10)
 #pragma cplusplus on
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR(func_00135D80)
+DEFINE_BUF_HOLDER_DTOR(std_vector_int_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00135D80 */
 
@@ -94,8 +94,8 @@ extern char D_004D90A0[];
 extern void Receiver_Construct(LosReceiver_f3* r, void* type);
 extern LosVec_f3* Vec4_GetZero(void);
 extern void Vec4_Assign(LosVec_f3* d, LosVec_f3* s);
-extern void func_00136060(void* buf);
-extern void func_00136020(LosSub_f3* sub, int arg, LosQuery_f3* q);
+extern void cLosResult_ctor_void(void* buf);
+extern void std_vector_imp_cLosRequest_cCollisionModelList_Game_ctor(LosSub_f3* sub, int arg, LosQuery_f3* q);
 extern void ScalarCollection_Init(void* c);
 LosReceiver_f3* LosReceiver_Construct(LosReceiver_f3* self, int arg)
 {
@@ -108,13 +108,13 @@ LosReceiver_f3* LosReceiver_Construct(LosReceiver_f3* self, int arg)
     q.active = 0;
     q.data = q.buf;
     q.count = 0;
-    func_00136060(q.buf);
+    cLosResult_ctor_void(q.buf);
     q.cap = 4;
     q.f110 = 0;
     q.f114 = 0;
     q.f118 = 0;
     sub = &self->sub;
-    func_00136020(sub, arg, &q);
+    std_vector_imp_cLosRequest_cCollisionModelList_Game_ctor(sub, arg, &q);
     sub->ready = 1;
     q.active = 0;
     ScalarCollection_Init(self->coll30);

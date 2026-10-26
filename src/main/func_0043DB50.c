@@ -6,16 +6,16 @@
 
 #include "types.h"
 
-Word* func_0043DB50(Word* dst, Word* src) {
+Word* cLListIterator_charPtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_0043DB60(Iter* out, Tree* t) {
+void std_list_charPtr_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-Word* func_0043DB70(Word* dst, Word* src) {
+Word* std_list_charPtr_generic_iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }

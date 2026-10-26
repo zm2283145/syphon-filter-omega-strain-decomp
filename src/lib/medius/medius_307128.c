@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_00307128(int a0, int a1) {
+int rt_udp_set_aggregation_interval(int a0, int a1) {
     int v0;
     int cond;
 

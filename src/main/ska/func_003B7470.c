@@ -1,4 +1,4 @@
-/* func_003B7470: vector<E>::insert(pos, n, value) for a 32-byte element (int, float, byte, quadword). */
+/* std_vector_imp_cSkaPlaybackItem_insert: vector<E>::insert(pos, n, value) for a 32-byte element (int, float, byte, quadword). */
 #include "types.h"
 #pragma cplusplus on
 #pragma inline_depth(8)
@@ -38,9 +38,9 @@ extern "C" {
 extern char D_004BCE60[];
 extern char D_004BCFC8[];
 extern char D_004BC4C0[];
-void func_003B7A10(V_003B7470* a, V_003B7470* b);
+void std_swap_vectordeleterR_vectordeleterR_40(V_003B7470* a, V_003B7470* b);
 }
-extern "C" void func_003B7470(V_003B7470* v, E_003B7470* pos, unsigned int n, const E_003B7470* value)
+extern "C" void std_vector_imp_cSkaPlaybackItem_insert(V_003B7470* v, E_003B7470* pos, unsigned int n, const E_003B7470* value)
 {
     unsigned int maxN;
     if (n == 0)
@@ -127,7 +127,7 @@ extern "C" void func_003B7470(V_003B7470* v, E_003B7470* pos, unsigned int n, co
             Construct_3B7470(dst, src);
             tmp.count++;
         }
-        func_003B7A10(&tmp, v);
+        std_swap_vectordeleterR_vectordeleterR_40(&tmp, v);
         {
             E_003B7470* e;
             E_003B7470* b = tmp.data;

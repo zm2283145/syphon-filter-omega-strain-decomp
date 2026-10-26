@@ -9,7 +9,7 @@ struct DqIt {
 };
 struct DqTag { char c; };
 extern "C" {
-void func_003B9550(DqBuf* self, DqIt first, DqIt last, DqTag t);
+void _cdeque_deleter_int_1_do_assign(DqBuf* self, DqIt first, DqIt last, DqTag t);
 }
 static inline DqIt DqBegin(const DqBuf* x) { return DqIt(x, x->start); }
 static inline DqIt DqEnd(const DqBuf* x)
@@ -17,11 +17,11 @@ static inline DqIt DqEnd(const DqBuf* x)
     unsigned int i = x->cap ? (x->start + x->size) % x->cap : 0;
     return DqIt(x, i);
 }
-extern "C" DqBuf* func_003B9070(DqBuf* self, const DqBuf* x)
+extern "C" DqBuf* _cdeque_imp_cSkaSystem_RequestPtr_1_opAssign(DqBuf* self, const DqBuf* x)
 {
     if (self != x) {
         DqTag t;
-        func_003B9550(self, DqBegin(x), DqEnd(x), t);
+        _cdeque_deleter_int_1_do_assign(self, DqBegin(x), DqEnd(x), t);
     }
     return self;
 }

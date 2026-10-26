@@ -1,29 +1,29 @@
 #include "types.h"
 typedef struct { int w[9]; } ECAE0;
 typedef struct { int x0; unsigned int count; } VCAE0;
-extern int func_0020CC20(ECAE0* first, ECAE0* last);
-extern unsigned int func_0020B380(VCAE0* v);
-extern void func_00209950(const char* msg);
+extern int std_distance_cSkaTransBLENDP_cSkaTransBLENDP(ECAE0* first, ECAE0* last);
+extern unsigned int std_vector_imp_cSkaTransBLEND_max_size(VCAE0* v);
+extern void std_msl_error(const char* msg);
 extern char D_004A3E70[];
-extern void* func_0020B2F0(VCAE0* v);
-extern ECAE0* func_0020AF10(void* alloc, int n, int hint);
-extern ECAE0** func_001F3510(VCAE0* v);
-extern int* func_0020AF50(VCAE0* v);
-extern ECAE0* func_0020AEE0(VCAE0* v);
-extern void func_0020B220(void* alloc, ECAE0* p, ECAE0* src);
+extern void* std_vector_deleter_cSkaTransBLEND_alloc_void(VCAE0* v);
+extern ECAE0* cAllocator_cSkaTransBLEND_allocate(void* alloc, int n, int hint);
+extern ECAE0** std_vector_deleter_cSkaTransBLEND_data_void(VCAE0* v);
+extern int* std_vector_deleter_cSkaTransBLEND_cap_void(VCAE0* v);
+extern ECAE0* std_vector_imp_cSkaTransBLEND_begin_void(VCAE0* v);
+extern void cAllocator_cSkaTransBLEND_construct(void* alloc, ECAE0* p, ECAE0* src);
 #pragma optimization_level 1
-void func_0020CAE0(VCAE0* v, ECAE0* first, ECAE0* last)
+void std_vector_imp_cSkaTransBLEND_init(VCAE0* v, ECAE0* first, ECAE0* last)
 {
     int x; int* px = &x; /* unused address-taken local: reproduces the retail 16-byte frame slot */
-    int n = func_0020CC20(first, last);
-    if (v->count > func_0020B380(v))
-        func_00209950(D_004A3E70);
+    int n = std_distance_cSkaTransBLENDP_cSkaTransBLENDP(first, last);
+    if (v->count > std_vector_imp_cSkaTransBLEND_max_size(v))
+        std_msl_error(D_004A3E70);
     if (n != 0) {
         ECAE0* p;
-        *func_001F3510(v) = func_0020AF10(func_0020B2F0(v), n, 0);
-        *func_0020AF50(v) = n;
-        for (p = func_0020AEE0(v); first != last; first++) {
-            func_0020B220(func_0020B2F0(v), p, first);
+        *std_vector_deleter_cSkaTransBLEND_data_void(v) = cAllocator_cSkaTransBLEND_allocate(std_vector_deleter_cSkaTransBLEND_alloc_void(v), n, 0);
+        *std_vector_deleter_cSkaTransBLEND_cap_void(v) = n;
+        for (p = std_vector_imp_cSkaTransBLEND_begin_void(v); first != last; first++) {
+            cAllocator_cSkaTransBLEND_construct(std_vector_deleter_cSkaTransBLEND_alloc_void(v), p, first);
             p++;
             v->count++;
         }

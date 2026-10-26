@@ -95,7 +95,7 @@ int snd_FreeVAGStreamChannels(void) {
     return snd_SendIOPCommandNoWait(52, 0, 0, 0, 0);
 }
 
-void func_003A7330(int a0, int a1, int a2) {
+void snd_SetVAGStreamChannelRange(int a0, int a1, int a2) {
     int args[4];
 
     args[0] = a0;

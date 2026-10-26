@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046CA90(void) {
+int MediusUniqueCallbackAccountGetProfileRequestHandler(void) {
     return 38;
 }

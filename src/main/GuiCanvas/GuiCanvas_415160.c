@@ -15,7 +15,7 @@
 #include "types.h"
 #include "loose04_types.h"
 
-void func_00415160(Word* dst, Word* src) {
+void std_list_GuiWidgetPtr_generic_iterator_opCast(Word* dst, Word* src) {
     dst->value = src->value;
 }
 #pragma pop /* merge_units */

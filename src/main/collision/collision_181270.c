@@ -30,13 +30,13 @@ void Sphere_FromCenter(V4*, V4*);
 float Vec4_Length(V4*);
 void Box_GetCenter(V4*, Sph*);
 void Sphere_Set(Sph*, V4*, float);
-void func_0013B260(Scene*);
-void func_00183270(It*, Lst*);
-void func_00183260(It*, It*);
-void func_00183230(It*, Lst*);
+void std_vector_deleter_cCollisionFace_clear(Scene*);
+void std_vector_cGOBJPtr_rbegin(It*, Lst*);
+void cArray_cGOBJPtr_ConstReverseIterator_ctor(It*, It*);
+void std_vector_cGOBJPtr_rend(It*, Lst*);
 Xf* Object_GetRootNode(Actor*);
-Sph* func_00183210(Shape*);
-void func_001831F0(Sph*, Sph*);
+Sph* cCollisionModel_BoundingSphere_LocalSpace(Shape*);
+void cSphere_ctor_cSphereR(Sph*, Sph*);
 void* Transform_GetUpdated(Xf*);
 void Sphere_Transform(Sph*, void*);
 int Sphere_Overlaps(Sph*, Sph*);
@@ -44,12 +44,12 @@ int GameObject_IsCollisionEnabled(Actor*);
 int* InlinePtrArray_Find(PA*, Actor**);
 int* InlinePtrArray_End(PA*);
 void Bounds_SetEmpty(Bnd*);
-void func_001828E0(Bnd*, Sph*, Actor*, Xf*);
+void nCollision_GetTransformedCollectorObject_RelativeToObjectWithXform_cBoxR_cBoxR_cGOBJP_cXformP(Bnd*, Sph*, Actor*, Xf*);
 void ColGather_GatherWrapper(Shape*, void*, void*);
 void PtrVec_Begin(It*, void*);
 void PtrVec_End(It*, void*);
-int func_001815A0(It*, It*);
-Actor** func_001827B0(It*);
+int cArray_cGOBJPtr_Iterator_opNe(It*, It*);
+Actor** cArray_cGOBJPtr_Iterator_opMul(It*);
 void Collision_GatherNode(Gath*, void*, Actor*, Sph*, Sph*);
 It* Iter_Advance4(It*);
 void ColGather_ComputeNormals(Gath*, Scene*);
@@ -81,13 +81,13 @@ void Collision_GatherScene(Gath* self, Scene* scene, Sph* sph, int a3)
     r = 0.5f * Vec4_Length(&d0);
     Box_GetCenter(&c0, sph);
     Sphere_Set(&e0, &c0, r);
-    func_0013B260(scene);
+    std_vector_deleter_cCollisionFace_clear(scene);
     self->Begin();
     lst = self->GetList();
-    func_00183270(&t114, lst);
-    func_00183260(&rit, &t114);
-    func_00183230(&t110, lst);
-    func_00183260(&rend, &t110);
+    std_vector_cGOBJPtr_rbegin(&t114, lst);
+    cArray_cGOBJPtr_ConstReverseIterator_ctor(&rit, &t114);
+    std_vector_cGOBJPtr_rend(&t110, lst);
+    cArray_cGOBJPtr_ConstReverseIterator_ctor(&rend, &t110);
     while (q = *(Actor** volatile*)&rit, Ne(&rit, &rend)) {
         Actor* p = q[-1];
         if (p != 0) {
@@ -96,16 +96,16 @@ void Collision_GatherScene(Gath* self, Scene* scene, Sph* sph, int a3)
             if (sh != 0) {
                 Xf* xf = Object_GetRootNode(act);
                 if (xf != 0) {
-                    func_001831F0(&xs, func_00183210(sh));
+                    cSphere_ctor_cSphereR(&xs, cCollisionModel_BoundingSphere_LocalSpace(sh));
                     Sphere_Transform(&xs, Transform_GetUpdated(xf));
                     if ((unsigned char)Sphere_Overlaps(&xs, &e0) && GameObject_IsCollisionEnabled(act)
                         && InlinePtrArray_Find(&self->list, &act) == InlinePtrArray_End(&self->list)) {
                         Bounds_SetEmpty(&bnd);
-                        func_001828E0(&bnd, sph, act, xf);
+                        nCollision_GetTransformedCollectorObject_RelativeToObjectWithXform_cBoxR_cBoxR_cGOBJP_cXformP(&bnd, sph, act, xf);
                         ColGather_GatherWrapper(sh, (void*)0x70000000, &bnd);
                     }
                 } else {
-                    if ((unsigned char)Sphere_Overlaps(func_00183210(sh), &e0) && GameObject_IsCollisionEnabled(act)
+                    if ((unsigned char)Sphere_Overlaps(cCollisionModel_BoundingSphere_LocalSpace(sh), &e0) && GameObject_IsCollisionEnabled(act)
                         && InlinePtrArray_Find(&self->list, &act) == InlinePtrArray_End(&self->list)) {
                         ColGather_GatherWrapper(sh, (void*)0x70000000, sph);
                     }
@@ -116,8 +116,8 @@ void Collision_GatherScene(Gath* self, Scene* scene, Sph* sph, int a3)
                 if (ch != 0) {
                     PtrVec_Begin(&it1, ch);
                     PtrVec_End(&it2, ch);
-                    while (func_001815A0(&it1, &it2)) {
-                        Collision_GatherNode(self, (void*)0x70000000, *func_001827B0(&it1), sph, &e0);
+                    while (cArray_cGOBJPtr_Iterator_opNe(&it1, &it2)) {
+                        Collision_GatherNode(self, (void*)0x70000000, *cArray_cGOBJPtr_Iterator_opMul(&it1), sph, &e0);
                         Iter_Advance4(&it1);
                     }
                 }

@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_003C0DF0(char* self) {
+int std_vector_cCollisionEdge_capacity(char* self) {
     return *(int*)(self + 0);
 }

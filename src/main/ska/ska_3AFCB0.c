@@ -62,14 +62,14 @@ static inline const V* Pick(Sel* self, const V* q) {
 }
 extern "C" {
 extern float D_004BCD68;
-Child* func_003B01C0(Ctx* c, Sel* s);
-int func_003B01A0(Ctx* c, int i);
-void* func_003B0180(void* v, int i);
-EvNode* func_003B0170(void* e);
-void* func_003B0150(Sel* s, Ctx* c);
-int func_003B0140(void* p);
-int func_003B0130(void* p);
-int func_003B0050(Sel* s, Ctx* c);
+Child* cSkaParams_GetTransPlayback(Ctx* c, Sel* s);
+int cSkaParams_GetSwitchCurrGoalState(Ctx* c, int i);
+void* cArray_cSkaSwitchItem_opIndex(void* v, int i);
+EvNode* cSkaSwitchItem_WhatToPlay(void* e);
+void* cSkaSwitch_GetSwitchValue(Sel* s, Ctx* c);
+int cSkaSwitchValue_NextGoalState(void* p);
+int cSkaSwitchValue_CurrGoalState(void* p);
+int cSkaSwitch_GetTransPlayback(Sel* s, Ctx* c);
 #if 0 /* merge_units */
 void* AnimSelector_BeginTransition(Ctx* c, int a, int b, Sel* s);
 #endif /* merge_units */
@@ -82,18 +82,18 @@ void AnimSelector_Evaluate(Sel* self, float t, const V* q, Ctx* ctx)
 {
     if (t < D_004BCD68) return;
     const V* r = Pick(self, q);
-    Child* ch = func_003B01C0(ctx, self);
+    Child* ch = cSkaParams_GetTransPlayback(ctx, self);
     if (ch) {
         float u = t * ch->k;
         ch->a->Eval(MaxF(0.0f, t - u), r, ctx);
         ch->b->Eval(u, r, ctx);
     } else {
-        func_003B0170(func_003B0180(&self->vec, func_003B01A0(ctx, self->idx)))->Eval(t, r, ctx);
+        cSkaSwitchItem_WhatToPlay(cArray_cSkaSwitchItem_opIndex(&self->vec, cSkaParams_GetSwitchCurrGoalState(ctx, self->idx)))->Eval(t, r, ctx);
     }
-    void* p = func_003B0150(self, ctx);
-    int from = func_003B0140(p);
-    int to = func_003B0130(p);
-    if (from != to && !func_003B0050(self, ctx))
+    void* p = cSkaSwitch_GetSwitchValue(self, ctx);
+    int from = cSkaSwitchValue_NextGoalState(p);
+    int to = cSkaSwitchValue_CurrGoalState(p);
+    if (from != to && !cSkaSwitch_GetTransPlayback(self, ctx))
         AnimSelector_BeginTransition(ctx, from, to, self);
 }
 #undef AnimSelector_BeginTransition /* merge_units */
@@ -109,7 +109,7 @@ extern int g_ProfileLockDepth;
 extern void Alloc_Lock(int);
 extern void Alloc_Unlock(int);
 extern void* Mem_Alloc(int, int, char*, int);
-extern void func_003B0020(int* list, AnimTrans_f3** item);
+extern void std_list_cSkaTransPlaybackPtr_push_back(int* list, AnimTrans_f3** item);
 static inline void* AllocL_f3(int size, char* file, int line)
 {
     void* p;
@@ -139,7 +139,7 @@ AnimTrans_f3* AnimSelector_BeginTransition(AnimSel_f3* sel, int a, int b, int ta
         p->f24 = 0;
     }
     t[0] = p;
-    func_003B0020(&sel->list, t);
+    std_list_cSkaTransPlaybackPtr_push_back(&sel->list, t);
     return t[0];
 }
 /* merge_units: generate this block's code under its own pragmas */

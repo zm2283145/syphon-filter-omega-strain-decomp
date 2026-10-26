@@ -17,14 +17,14 @@ void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 void Mem_Free(int pool, void* p, char* file, int line);
 void Libc_Abort(void);
 void Libc_Fprintf(void* s, char* msg);
-void func_00471960(Vec_471C20* a, Vec_471C20* b);
+void std_swap_vectordeleterR_vectordeleterR_54(Vec_471C20* a, Vec_471C20* b);
 }
 
 static inline E_471C20* Alloc_471C20(unsigned int n) { AllocGuard g; return (E_471C20*)Mem_Alloc(0, n * sizeof(E_471C20), D_004C33F0, 0x5C); }
 #pragma push
 #pragma peephole off
 #pragma opt_propagation off
-extern "C" void func_00471C20(Vec_471C20* v0, unsigned int n0)
+extern "C" void std_vector_imp_tRecord_reserve(Vec_471C20* v0, unsigned int n0)
 {
     Vec_471C20* v = v0;
     unsigned int n = n0;
@@ -47,7 +47,7 @@ extern "C" void func_00471C20(Vec_471C20* v0, unsigned int n0)
                 new (d) E_471C20(*s);
                 tmp.count++;
             }
-            func_00471960(&tmp, v);
+            std_swap_vectordeleterR_vectordeleterR_54(&tmp, v);
             tmp.count = 0;
             {
                 E_471C20* p = tmp.data;

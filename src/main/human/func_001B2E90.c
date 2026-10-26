@@ -39,14 +39,14 @@ int sprintf(char*, const char*, ...);
 void Notify_Insert(char*, char*, Color*, int, int);
 void Actor_BuildVoiceKey(Act*, int);
 Agent* Agent_GetSelected(char*, int);
-void func_003FB750(int);
-void func_001B31A0(Iter*, char*);
-void func_001B3170(Iter*, char*, int*);
-int func_001B3150(Iter*, Iter*);
+void cNetObj_RemovePlayer_int(int);
+void cAssocArray_int_netSystemField_End(Iter*, char*);
+void cAssocArray_int_netSystemField_Find(Iter*, char*, int*);
+int cAssocArray_int_netSystemField_Iterator_opNe(Iter*, Iter*);
 int ReceiverMap_Erase(char*, Iter*);
 void ActorWorld_RequestRemove(void*, Act*);
 void Object_DeleteLater(Act*, float);
-void func_002EC2A8(int);
+void NetFreeObject(int);
 void func_00257040(int);
 }
 static inline bool IsOn(Act* a)
@@ -93,15 +93,15 @@ extern "C" bool Player_HandleLeftGame(Act* a)
             Actor_BuildVoiceKey(a, 3);
             D_0055C780[idx] = 0;
             Agent_GetSelected(g_Game, idx)->bB70 = 0;
-            func_003FB750(idx);
+            cNetObj_RemovePlayer_int(idx);
             key = a->wC;
             {
                 Iter e, f;
-                func_001B31A0(&e, D_0055C7A0);
-                func_001B3170(&f, D_0055C7A0, &key);
-                if (func_001B3150(&e, &f)) {
+                cAssocArray_int_netSystemField_End(&e, D_0055C7A0);
+                cAssocArray_int_netSystemField_Find(&f, D_0055C7A0, &key);
+                if (cAssocArray_int_netSystemField_Iterator_opNe(&e, &f)) {
                     Iter g;
-                    func_001B3170(&g, D_0055C7A0, &key);
+                    cAssocArray_int_netSystemField_Find(&g, D_0055C7A0, &key);
                     ReceiverMap_Erase(D_0055C7A0, &g);
                 }
             }
@@ -111,7 +111,7 @@ extern "C" bool Player_HandleLeftGame(Act* a)
             ret = 1;
             {
                 unsigned char mp = Mp();
-                if (mp && a->p3584) func_002EC2A8(a->p3584->w24);
+                if (mp && a->p3584) NetFreeObject(a->p3584->w24);
             }
             func_00257040(idx);
         }

@@ -15,7 +15,7 @@
 #pragma cplusplus on
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR(func_001363C0)
+DEFINE_BUF_HOLDER_DTOR(std_vector_cGOBJPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_001363C0 */
 
@@ -49,7 +49,7 @@ static inline const int* Id(const R* p) {
     return r;
 }
 /* Resets the vector to zero, m10 to 0 and m14 to -1. */
-extern "C" T* func_001364B0(T* d)
+extern "C" T* cActivationTracker_ctor(T* d)
 {
     *(__int128*)&d->q = GL(Vec4_Zero());
     d->m14 = -1;

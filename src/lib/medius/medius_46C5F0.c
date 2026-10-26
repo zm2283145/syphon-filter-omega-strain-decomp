@@ -11,7 +11,7 @@ extern int D_00598814;
 extern int D_00497E10;
 extern int Medius_TerminateString(char *, int);
 extern int Net_SendLocked(int, int, int, int, int, int, void *);
-int func_0046C5F0(char *a, int b)
+int MediusUpdateLadderStatsWide(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     if (D_00497CC0 != 1) return -0xF;
@@ -24,7 +24,7 @@ int func_0046C5F0(char *a, int b)
 /* merge_units: begin func_0046C680 */
 extern int D_0059881C;
 int D_00497E14 = 0;
-int func_0046C680(char *a, int b)
+int MediusGetLadderStats(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     if (D_00497CC0 != 1) return -0xF;

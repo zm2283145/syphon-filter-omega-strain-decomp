@@ -20,12 +20,12 @@ struct CxFrList {int count;void*unused;CxFrLink*head;};
 struct CxFrManager {char pad[0x2C];CxFrList cache;};
 struct CxFrIt {CxFrLink*link;bool operator!=(const CxFrIt&o)const{return link!=o.link;}CxFrReq*Req(){return link->req;}};
 extern "C" {
-CxFrIt func_0015F770(CxFrList*);
-CxFrIt func_0015F760(const CxFrIt&);
-CxFrIt func_0015F750(CxFrList*);
+CxFrIt std_list_cPathSystemRequestPtr_begin_void(CxFrList*);
+CxFrIt cLListIterator_cPathSystemRequestPtr_ctor(const CxFrIt&);
+CxFrIt std_list_cPathSystemRequestPtr_end_void(CxFrList*);
 }
-static inline CxFrIt CxFr_Begin(CxFrList*l){return func_0015F760(func_0015F770(l));}
-static inline CxFrIt CxFr_End(CxFrList*l){return func_0015F760(func_0015F750(l));}
+static inline CxFrIt CxFr_Begin(CxFrList*l){return cLListIterator_cPathSystemRequestPtr_ctor(std_list_cPathSystemRequestPtr_begin_void(l));}
+static inline CxFrIt CxFr_End(CxFrList*l){return cLListIterator_cPathSystemRequestPtr_ctor(std_list_cPathSystemRequestPtr_end_void(l));}
 static inline CxFrV4 CxFr_Sub(CxFrV4*a,CxFrV4*b){
     CxFrV4 r;
     __asm__ volatile("lqc2 $vf1, 0x0(%1); lqc2 $vf2, 0x0(%2); vsub.xyzw $vf1, $vf1, $vf2; sqc2 $vf1, 0x0(%0)" : : "r"(&r), "r"(a), "r"(b) : "memory");

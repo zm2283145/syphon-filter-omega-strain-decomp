@@ -27,7 +27,7 @@ extern int func_00310D20(int p, UpListD2B8 **out);
 extern int String_CompareN(char *a, char *b, int n);
 extern int strtol(char *s, char **end, int base);
 extern int func_00310C30(int p);
-extern void func_002F5DB0(int s);
+extern void rt_comm_destroy(int s);
 extern void *memset(void *d, int c, unsigned int n);
 extern char D_004AFF28[];
 extern char D_004B0008[];
@@ -72,7 +72,7 @@ clean:
     {
         UpCtxD2B8 *c1 = u->ctx;
         c1->parser = 0;
-        func_002F5DB0(c1->sock);
+        rt_comm_destroy(c1->sock);
     }
     u->ctx->sock = 0;
     memset(&u->ctx->status, 0, 0x100C);
@@ -119,9 +119,9 @@ extern int func_00310C30(int);
 #define func_00310C30(a0) (func_00310C30((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_002F5DB0(int);
+extern void rt_comm_destroy(int);
 #endif /* merge_units */
-#define func_002F5DB0(a0) (func_002F5DB0((a0))) /* merge_units */
+#define rt_comm_destroy(a0) (rt_comm_destroy((a0))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void *memset(void *, int, unsigned int);
@@ -142,7 +142,7 @@ int func_0030D520(Upnp *u)
             if (u->ctx->status != 200 || flag == 0) r = 11;
             func_00310C30(u->ctx->h4);
             u->ctx->h4 = 0;
-            func_002F5DB0(u->ctx->h0);
+            rt_comm_destroy(u->ctx->h0);
             u->ctx->h0 = 0;
             memset(&u->ctx->status, 0, 0x100C);
             u->ctx->cb(u, r, u->ctx->h8);
@@ -154,7 +154,7 @@ int func_0030D520(Upnp *u)
 }
 #undef func_0030BC98 /* merge_units */
 #undef func_00310C30 /* merge_units */
-#undef func_002F5DB0 /* merge_units */
+#undef rt_comm_destroy /* merge_units */
 #undef memset /* merge_units */
 /* merge_units: end func_0030D520 */
 
@@ -184,15 +184,15 @@ struct UpnpD610 {
 typedef unsigned int IpD610;
 typedef struct { IpD610 ip; unsigned short port; } AddrD610;
 typedef struct { unsigned short port; unsigned short recvd; unsigned short port2; } InfoD610;
-extern int func_002F61A0(int sock, char *buf, unsigned short *port, AddrD610 *data, int len, unsigned short *recvd);
+extern int rt_comm_receive_from(int sock, char *buf, unsigned short *port, AddrD610 *data, int len, unsigned short *recvd);
 extern int sprintf(char *buf, const char *fmt, ...);
 extern char D_004B00B8[];
-extern int func_003060D8(int *timer);
-extern int func_003060F0(int *timer, unsigned int *elapsed);
+extern int rt_time_get_time_stamp(int *timer);
+extern int rt_time_elapsed(int *timer, unsigned int *elapsed);
 extern int Socket_WriteAddressed(int sock, char *addr, unsigned short port, char *data, int len, unsigned short *sent);
 extern void func_0030ECF8(UpnpD610 *u);
 
-int func_0030D610(UpnpD610 *u)
+int process_nat_resolution_timeslice(UpnpD610 *u)
 {
     AddrD610 data;
     unsigned char ip[4];
@@ -205,7 +205,7 @@ int func_0030D610(UpnpD610 *u)
 
     in.recvd = 0;
     in.port2 = 0;
-    if (func_002F61A0(u->sock, buf, &in.port, &data, 6, &in.recvd) == 0 && in.recvd == 6) {
+    if (rt_comm_receive_from(u->sock, buf, &in.port, &data, 6, &in.recvd) == 0 && in.recvd == 6) {
         if (String_CompareN(buf, u->host, 0x10) == 0 && in.port == u->port2) {
             *(IpD610 *)ip = data.ip;
             in.port2 = data.port;
@@ -213,7 +213,7 @@ int func_0030D610(UpnpD610 *u)
             u->started = 1;
             u->state = 0;
             u->port = (in.port2 >> 8) | (in.port2 << 8);
-            func_003060D8(u->timer);
+            rt_time_get_time_stamp(u->timer);
             u->active = 0;
             u->ctx->cb(u, u->state, u->name, u->port);
             func_0030ECF8(u);
@@ -222,13 +222,13 @@ int func_0030D610(UpnpD610 *u)
         }
     }
     if (u->active) {
-        func_003060F0(u->timer, &elapsed);
+        rt_time_elapsed(u->timer, &elapsed);
         if (elapsed > 800) {
             if (u->retries < 5) {
                 pkt[2] = -0x1C;
                 sent = 0;
                 if (Socket_WriteAddressed(u->sock, u->host, u->port2, pkt, 4, &sent) == 0 && sent == 4) {
-                    func_003060D8(u->timer);
+                    rt_time_get_time_stamp(u->timer);
                     u->retries++;
                 } else {
                     u->state = 8;
@@ -264,27 +264,27 @@ extern int Socket_WriteAddressed(int sock, void *addr, unsigned short port, void
 #define Socket_WriteAddressed(a0, a1, a2, a3, a4, a5) (Socket_WriteAddressed((a0), (char *)(a1), (a2), (char *)(a3), (a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_003060D8(int *timer);
+extern void rt_time_get_time_stamp(int *timer);
 #endif /* merge_units */
-#define func_003060D8(a0) ((void)func_003060D8((a0))) /* merge_units */
+#define rt_time_get_time_stamp(a0) ((void)rt_time_get_time_stamp((a0))) /* merge_units */
 
-int func_0030D830(UpnpD830 *u)
+int process_heartbeat_timeslice(UpnpD830 *u)
 {
     char pkt[4];
     unsigned short sent = 0;
     unsigned int elapsed;
     if (u->active) {
-        func_003060F0(u->timer, &elapsed);
+        rt_time_elapsed(u->timer, &elapsed);
         if (elapsed > 5000) {
             pkt[3] = 0xD4;
             Socket_WriteAddressed(u->sock, u->host, u->port, pkt, 4, &sent);
-            func_003060D8(u->timer);
+            rt_time_get_time_stamp(u->timer);
         }
     }
     return 0;
 }
 #undef Socket_WriteAddressed /* merge_units */
-#undef func_003060D8 /* merge_units */
+#undef rt_time_get_time_stamp /* merge_units */
 /* merge_units: end func_0030D830 */
 
 /* merge_units: begin func_0030D8B0 */

@@ -11,7 +11,7 @@ typedef struct {
     __int128 keys[1];
 } KS00401E40;
 extern char g_AgentPartCache[];
-int func_00401FF0(KS00401E40* s, __int128 key, int* out, int mode, int a, int b);
+int Monster_CountTexByName(KS00401E40* s, __int128 key, int* out, int mode, int a, int b);
 static inline int ks00401E40eq(__int128 a, __int128 b) {
     __int128 t;
     long long r;
@@ -60,7 +60,7 @@ int func_00401E40(KS00401E40* s, __int128 key, __int128 sub, int* out, int mode,
         if (!ks00401E40meq(s->m30, s->keys[i], cmp)
             && ks00401E40meq(mask, s->keys[i], key)) {
             int r = -1;
-            int got = func_00401FF0(s, Splice(sub, s->keys[i]), &r, mode, a, b);
+            int got = Monster_CountTexByName(s, Splice(sub, s->keys[i]), &r, mode, a, b);
             if (ks00401E40eq(key, s->keys[i])) {
                 *out = n;
                 if (r != -1)

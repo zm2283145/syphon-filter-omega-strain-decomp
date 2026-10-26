@@ -5,6 +5,6 @@
 
 #include "types.h"
 
-int func_003A23F0(void) {
+int cParticleBase_GetRenderMatrix(void) {
     return 0;
 }

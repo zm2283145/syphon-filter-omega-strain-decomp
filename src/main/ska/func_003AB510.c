@@ -19,15 +19,15 @@ struct BIt_3AB510 {
 };
 
 static inline bool BEq(const BIt_3AB510* a, const BIt_3AB510* b) { char* bp = b->p; return a->p == bp; }
-extern "C" char** func_001D0770(void* self);
+extern "C" char** std_vector_deleter_cBone_data_void(void* self);
 extern "C" char D_004BCFD8[];
 
 struct BVec_3AB510 {
     int x0;
     int size;
     char* data;
-    BIt_3AB510 begin() { return BIt_3AB510(*func_001D0770(this)); }
-    BIt_3AB510 end() { return BIt_3AB510(*func_001D0770(this) + size * 0x1D0); }
+    BIt_3AB510 begin() { return BIt_3AB510(*std_vector_deleter_cBone_data_void(this)); }
+    BIt_3AB510 end() { return BIt_3AB510(*std_vector_deleter_cBone_data_void(this) + size * 0x1D0); }
 };
 
 struct Out_3AB510 {
@@ -70,14 +70,14 @@ typedef struct {
 
 extern "C" {
 void AnimChannels_Update(void* ch, float dt, float inv);
-void func_003939C0(LIt_3AB510* out, void* list);
-void func_003938D0(LIt_3AB510* out, void* list);
-int func_003938B0(LIt_3AB510* a, LIt_3AB510* b);
-int* func_003939B0(LIt_3AB510* it);
-void func_003938E0(LIt_3AB510* it);
-int func_003B0540(int e, void* key);
-void func_003AB880(void* list, int* v);
-void func_00393900(int p, int pool, int flags, char* file, int line);
+void cLList_cSkaTransPlaybackPtr_Begin(LIt_3AB510* out, void* list);
+void cLList_cSkaTransPlaybackPtr_End(LIt_3AB510* out, void* list);
+int opNe_cLListIteratorR_cLListIteratorR_8(LIt_3AB510* a, LIt_3AB510* b);
+int* cLListIterator_cSkaTransPlaybackPtr_opMul(LIt_3AB510* it);
+void cLListIterator_cSkaTransPlaybackPtr_opInc(LIt_3AB510* it);
+int cSkaTransPlayback_NextFrame(int e, void* key);
+void cLList_cSkaTransPlaybackPtr_Remove(void* list, int* v);
+void opDelete_cSkaTransPlaybackP_int_bool_charP_etc(int p, int pool, int flags, char* file, int line);
 void Bone_ResetAccumulators(char* b);
 void Bone_FinalizeTranslation(char* b);
 void Bone_FinalizeRotation(char* b);
@@ -144,16 +144,16 @@ static inline void PurgeList_3AB510(int* list, void* key)
 {
     LIt_3AB510 it;
     LIt_3AB510 e;
-    func_003939C0(&it, list);
-    func_003938D0(&e, list);
-    while (func_003938B0(&it, &e)) {
-        if ((unsigned char)func_003B0540(*func_003939B0(&it), key)) {
-            int v = *func_003939B0(&it);
-            func_003938E0(&it);
-            func_003AB880(list, &v);
-            func_00393900(v, 0, 1, D_004BCFD8, 0x49A);
+    cLList_cSkaTransPlaybackPtr_Begin(&it, list);
+    cLList_cSkaTransPlaybackPtr_End(&e, list);
+    while (opNe_cLListIteratorR_cLListIteratorR_8(&it, &e)) {
+        if ((unsigned char)cSkaTransPlayback_NextFrame(*cLListIterator_cSkaTransPlaybackPtr_opMul(&it), key)) {
+            int v = *cLListIterator_cSkaTransPlaybackPtr_opMul(&it);
+            cLListIterator_cSkaTransPlaybackPtr_opInc(&it);
+            cLList_cSkaTransPlaybackPtr_Remove(list, &v);
+            opDelete_cSkaTransPlaybackP_int_bool_charP_etc(v, 0, 1, D_004BCFD8, 0x49A);
         } else {
-            func_003938E0(&it);
+            cLListIterator_cSkaTransPlaybackPtr_opInc(&it);
         }
     }
 }

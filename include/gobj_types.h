@@ -113,7 +113,7 @@ typedef struct cVUM_GOBJ {
     char pad68[4];
     struct cVUM_GOBJ* self;    /* 0x006C */
     int unk70;                 /* 0x0070 */
-    int unk74;                 /* 0x0074: sub-object (func_0036D630) */
+    int unk74;                 /* 0x0074: sub-object (cHogFile_ctor) */
     char pad78[0x178];
     unsigned char unk1F0;      /* 0x01F0 */
     unsigned char unk1F1;      /* 0x01F1 */
@@ -148,10 +148,10 @@ typedef struct IntFloatVec {
     IntFloat* data;
 } IntFloatVec;
 
-/* Small record initialized by func_0021A800 / SchedEvent_Init (0x0C bytes). */
+/* Small record initialized by cSafePtr_cGOBJ_ctor_void / SchedEvent_Init (0x0C bytes). */
 typedef struct Rec0C {
     int unk0;                  /* 0x0 */
-    signed char unk4;          /* 0x4 (func_0021A800 writes -2 as a word over 0x4..0x7) */
+    signed char unk4;          /* 0x4 (cSafePtr_cGOBJ_ctor_void writes -2 as a word over 0x4..0x7) */
     signed char unk5;          /* 0x5 */
     char pad6[2];
     void* unk8;                /* 0x8 */
@@ -163,7 +163,7 @@ typedef struct RelFlag {
     unsigned char flag;        /* 0xC */
 } RelFlag;
 
-/* Four-word record cleared by func_00393EF0; func_00393F10 sets min/max to FLT_MAX. */
+/* Four-word record cleared by _cdeque_deleter_int_1_ctor; cSkaCrossFadeDuration_ctor_void sets min/max to FLT_MAX. */
 typedef struct Quad4 {
     int unk0;
     int unk4;

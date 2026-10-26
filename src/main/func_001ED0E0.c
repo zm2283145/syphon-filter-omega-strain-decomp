@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-int func_001ED0E0(Iter* a, Iter* b) {
+int cArray_cEdgeGroup_ConstIterator_opNe(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 
-Iter16* func_001ED100(Iter16* it) {
+Iter16* cArray_cEdgeGroup_ConstIterator_opInc(Iter16* it) {
     it->p += 16;
     return it;
 }

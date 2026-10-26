@@ -20,7 +20,7 @@ struct Crv_CA00 { Key_CA00 k[2]; float dur; float inv; };
 /* two-key curve: keys (*v0, *s0 * dur) and (*v1, *s1 * dur), duration and inverse */
 #pragma push
 #pragma opt_unroll_loops off
-extern "C" Crv_CA00* func_0017CA00(Crv_CA00* c, float* v0, float* s0, float* v1, float* s1, float dur)
+extern "C" Crv_CA00* cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_floatR_floatR_etc(Crv_CA00* c, float* v0, float* s0, float* v1, float* s1, float dur)
 {
     float vs0; float vs1;
     vs1 = *s1 * dur; vs0 = *s0 * dur;

@@ -60,7 +60,7 @@ extern unsigned char D_005721C0;
 float Math_Atan2f(float y, float x);
 void Actor_BaseLogicUpdate(Cam* c, float dt);
 Player* PlayerSlots_Get(int i);
-int func_0017A1E0(Cam* c, void* target);
+int cGameCamera_CanSee(Cam* c, void* target);
 void Event_Construct(void* e, char* type);
 void Event_Send(void* e, void* to, int f);
 void cMessage_dtor(void* e, int f);
@@ -111,7 +111,7 @@ void cGameCamera_v10(Cam* c, float dt)
             Player* p = PlayerSlots_Get(i);
             if (p && p->ctl && p->ctl->IsActive() && p->ctl->State() != 4) {
                 void* t = p->ctl->target;
-                if (func_0017A1E0(c, t)) {
+                if (cGameCamera_CanSee(c, t)) {
                     EvMsg m(t);
                     m.kind = DeadOk() ? 1 : 2;
                     if (c->listener) Event_Send(&m, c->listener, 0);

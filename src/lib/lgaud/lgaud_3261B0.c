@@ -5,13 +5,13 @@
  */
 
 /* merge_units: begin func_003261B0 */
-extern int func_003260F0(void);
+extern int IsT10K(void);
 extern void GetOsdConfigParam(unsigned int *cfg);
-#define SCF_CFG_GET(name, override, expr) extern unsigned char override; int name(void) { unsigned int cfg; if (func_003260F0() == 0) { GetOsdConfigParam(&cfg); return expr; } return override; }
+#define SCF_CFG_GET(name, override, expr) extern unsigned char override; int name(void) { unsigned int cfg; if (IsT10K() == 0) { GetOsdConfigParam(&cfg); return expr; } return override; }
 
-SCF_CFG_GET(func_003261B0, D_004914A2, (cfg >> 1) & 3)
+SCF_CFG_GET(sceScfGetAspect, D_004914A2, (cfg >> 1) & 3)
 /* merge_units: end func_003261B0 */
 
 /* merge_units: begin func_003261F0 */
-SCF_CFG_GET(func_003261F0, D_004914A5, cfg & 1)
+SCF_CFG_GET(sceScfGetSpdif, D_004914A5, cfg & 1)
 /* merge_units: end func_003261F0 */

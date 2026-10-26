@@ -11,6 +11,6 @@ extern int D_004F56D8;      /* NPC message base script type key */
 void ScriptType_cGeneratorMessageBase_Init(void) {
 }
 
-int func_0021D100(void) {
+int cGeneratorMessageBase_getSOBJClassId(void) {
     return D_004F56D8;
 }

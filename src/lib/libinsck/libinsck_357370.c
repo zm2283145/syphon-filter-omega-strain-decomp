@@ -1,7 +1,7 @@
 extern unsigned int func_00357150(unsigned int x);
-extern unsigned int func_00357190(const char *nptr, char **endptr, int base, int *err);
+extern unsigned int strtoui_internal(const char *nptr, char **endptr, int base, int *err);
 
-int func_00357370(const char *cp, unsigned int *addr)
+int sceInsockInetAton(const char *cp, unsigned int *addr)
 {
     unsigned int parts[4];
     unsigned int val;
@@ -17,7 +17,7 @@ int func_00357370(const char *cp, unsigned int *addr)
     gotend = 0;
     while (!gotend) {
         err = 0;
-        val = func_00357190(c, &endptr, 0, &err);
+        val = strtoui_internal(c, &endptr, 0, &err);
 
         if (err == 34)
             return 0;

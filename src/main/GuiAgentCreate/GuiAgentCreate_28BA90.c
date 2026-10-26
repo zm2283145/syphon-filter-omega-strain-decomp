@@ -260,13 +260,13 @@ static inline void merge_flush_func_0028BBE0(void) {}
 /* Clear flag 0x80 on every other child of the given type. */
 extern "C" {
 extern char D_004A9870[];
-void func_0028BF90(ChildWidget* o);
+void RecurseChildrenNotFocusable(ChildWidget* o);
 }
 static inline ChildWidget* cast28BF90(ChildWidget* w)
 {
     return (w && w->IsA(D_004A9870)) ? w : 0;
 }
-void func_0028BF90(ChildWidget* o)
+void RecurseChildrenNotFocusable(ChildWidget* o)
 {
     ChildIter e;
     void* l;

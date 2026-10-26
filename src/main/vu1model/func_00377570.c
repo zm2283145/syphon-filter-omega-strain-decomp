@@ -3,8 +3,8 @@
 int Alloc_Lock();
 int Alloc_Unlock();
 void* Mem_Alloc(int, int, char*, int);
-int func_0036DFB0();
-int func_0036E140();
+int cFileMan_EncodeFilename_charP_cFileManR();
+int cFileMan_EncodeFilename_charP_cFileIOP_bool();
 int FileMan_Release();
 int Resource_Construct();
 short TexMan_FindOrLoad(int, void*);
@@ -57,10 +57,10 @@ void Model_BindTextures(Mdl* self, int arg1) {
     for (i = 0; i < self->desc->count; i++) {
         Resource_Construct(name);
         sprintf(buf, &D_004BC180, s);
-        func_0036DFB0(name, buf, arg1);
+        cFileMan_EncodeFilename_charP_cFileManR(name, buf, arg1);
         self->ids[i] = TexMan_FindOrLoad(g_TextureMgr, name);
         if (self->ids[i] == -1) {
-            func_0036E140(name, &D_004BC190, 0, 0);
+            cFileMan_EncodeFilename_charP_cFileIOP_bool(name, &D_004BC190, 0, 0);
             self->ids[i] = TexMan_FindOrLoad(g_TextureMgr, name);
         }
         s += strlen(s) + 1;

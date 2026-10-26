@@ -115,37 +115,37 @@ static inline void SetEmpty(Bnd* b)
     b->hi.w = 1.0f;
 }
 extern "C" {
-void* func_001827A0(Actor*);
-unsigned char func_00182790(void*);
-void* func_00182780(void*);
+void* cGOBJ_GetMovementInfo(Actor*);
+unsigned char cMovement_WasMovingLastFrame(void*);
+void* cMovement_PrevTransform(void*);
 M40* Transform_GetUpdated(Xf*);
-void func_00182760(Box2*, Bnd*);
+void cBox_ctor_cBoxR(Box2*, Bnd*);
 void Mtx_InvertRigid_13ECA0(M40*, void*);
 void ColTree_GatherBounds(void*, M40*);
-void func_001822F0(Bnd*, Bnd*);
+void cBox_opAssign(Bnd*, Bnd*);
 void Box_Union(Bnd*, Box2*);
 void Transform_GetInverseMatrix(M40*, Xf*);
 void ColGather_SetSource(Src*, Shp*);
-Mesh* func_00182270(char*);
+Mesh* cCollisionModelMaster_GetData(char*);
 void ColTree_VisitRootNode(Mesh*, Src*, Bnd*);
 int PtrArray_Begin(void*);
 int PtrArray_End(void*);
-void func_00181CD0(It*, void*, int*);
+void std_vector_cGOBJPtr_pointer2iterator_cGOBJPPR(It*, void*, int*);
 Xf* Object_GetRootNode(Actor*);
-Sph* func_00183210(Shp*);
-void func_001831F0(Sph*, Sph*);
+Sph* cCollisionModel_BoundingSphere_LocalSpace(Shp*);
+void cSphere_ctor_cSphereR(Sph*, Sph*);
 void Sphere_Transform(Sph*, M40*);
 int Sphere_Overlaps(Sph*, Sph*);
 int GameObject_IsCollisionEnabled(Actor*);
 int* InlinePtrArray_Find(PA*, Actor**);
 int* InlinePtrArray_End(PA*);
 void Bounds_SetEmpty(Bnd*);
-void func_001828E0(Bnd*, Bnd*, Actor*, Xf*);
+void nCollision_GetTransformedCollectorObject_RelativeToObjectWithXform_cBoxR_cBoxR_cGOBJP_cXformP(Bnd*, Bnd*, Actor*, Xf*);
 void ColGather_GatherWrapper(Shp*, Src*, Bnd*);
 void PtrVec_Begin(It*, void*);
 void PtrVec_End(It*, void*);
-int func_001815A0(It*, It*);
-Actor** func_001827B0(It*);
+int cArray_cGOBJPtr_Iterator_opNe(It*, It*);
+Actor** cArray_cGOBJPtr_Iterator_opMul(It*);
 It* Iter_Advance4(It*);
 void Collision_GatherNode(Gath* self, Src* src, Actor* node, Bnd* box, Sph* e0);
 }
@@ -182,31 +182,31 @@ void Collision_GatherNode(Gath* self, Src* src, Actor* node, Bnd* box, Sph* e0)
             if (Overlaps(&xs, e0) && Live(node) && !Has(&self->list, node)) {
                 void* t;
                 SetEmpty(&bb);
-                t = func_001827A0(node);
-                if (t != 0 && func_00182790(t)) {
-                    void* m = func_00182780(t);
+                t = cGOBJ_GetMovementInfo(node);
+                if (t != 0 && cMovement_WasMovingLastFrame(t)) {
+                    void* m = cMovement_PrevTransform(t);
                     M40* u = Transform_GetUpdated(xf);
-                    func_00182760(&b4, box);
+                    cBox_ctor_cBoxR(&b4, box);
                     Mtx_InvertRigid_13ECA0(&m1, m);
                     ColTree_GatherBounds(&b4, &m1);
-                    func_001822F0(&bb, box);
+                    cBox_opAssign(&bb, box);
                     Mtx_InvertRigid_13ECA0(&m2, u);
                     ColTree_GatherBounds(&bb, &m2);
                     Box_Union(&bb, &b4);
                 } else {
-                    func_001822F0(&bb, box);
+                    cBox_opAssign(&bb, box);
                     Transform_GetInverseMatrix(&m3, xf);
                     ColTree_GatherBounds(&bb, &m3);
                 }
                 Src s1 = *src;
                 ColGather_SetSource(&s1, sh);
-                ColTree_VisitRootNode(func_00182270(sh->node), &s1, &bb);
+                ColTree_VisitRootNode(cCollisionModelMaster_GetData(sh->node), &s1, &bb);
             }
         } else {
             if (Overlaps((Sph*)(sh->node + 16), e0) && Live(node) && !Has(&self->list, node)) {
                 Src s2 = *src;
                 ColGather_SetSource(&s2, sh);
-                ColTree_VisitRootNode(func_00182270(sh->node), &s2, box);
+                ColTree_VisitRootNode(cCollisionModelMaster_GetData(sh->node), &s2, box);
             }
         }
     }
@@ -214,10 +214,10 @@ void Collision_GatherNode(Gath* self, Src* src, Actor* node, Bnd* box, Sph* e0)
     if (ch != 0) {
         /* argument pointers taken into locals first: retail sets a2 before a0 for both converter calls */
         tb = PtrArray_Begin(ch);
-        { int* pt = &tb; It* pi = &ib; func_00181CD0(pi, ch, pt); }
+        { int* pt = &tb; It* pi = &ib; std_vector_cGOBJPtr_pointer2iterator_cGOBJPPR(pi, ch, pt); }
         p = ib;
         te = PtrArray_End(ch);
-        { int* pt = &te; It* pi = &ie; func_00181CD0(pi, ch, pt); }
+        { int* pt = &te; It* pi = &ie; std_vector_cGOBJPtr_pointer2iterator_cGOBJPPR(pi, ch, pt); }
         e = ie;
         while (Ne(&p, &e)) {
             act = *(Actor**)p.p;
@@ -226,16 +226,16 @@ void Collision_GatherNode(Gath* self, Src* src, Actor* node, Bnd* box, Sph* e0)
                 if (s != 0) {
                     Xf* x = Object_GetRootNode(act);
                     if (x != 0) {
-                        func_001831F0(&xs2, func_00183210(s));
+                        cSphere_ctor_cSphereR(&xs2, cCollisionModel_BoundingSphere_LocalSpace(s));
                         Sphere_Transform(&xs2, Transform_GetUpdated(x));
                         if ((unsigned char)Sphere_Overlaps(&xs2, e0) && GameObject_IsCollisionEnabled(act)
                             && InlinePtrArray_Find(&self->list, &act) == InlinePtrArray_End(&self->list)) {
                             Bounds_SetEmpty(&bnd);
-                            func_001828E0(&bnd, box, act, x);
+                            nCollision_GetTransformedCollectorObject_RelativeToObjectWithXform_cBoxR_cBoxR_cGOBJP_cXformP(&bnd, box, act, x);
                             ColGather_GatherWrapper(s, src, &bnd);
                         }
                     } else {
-                        if ((unsigned char)Sphere_Overlaps(func_00183210(s), e0) && GameObject_IsCollisionEnabled(act)
+                        if ((unsigned char)Sphere_Overlaps(cCollisionModel_BoundingSphere_LocalSpace(s), e0) && GameObject_IsCollisionEnabled(act)
                             && InlinePtrArray_Find(&self->list, &act) == InlinePtrArray_End(&self->list)) {
                             ColGather_GatherWrapper(s, src, box);
                         }
@@ -247,8 +247,8 @@ void Collision_GatherNode(Gath* self, Src* src, Actor* node, Bnd* box, Sph* e0)
                 if (c2 != 0) {
                     PtrVec_Begin(&it1, c2);
                     PtrVec_End(&it2, c2);
-                    while (func_001815A0(&it1, &it2)) {
-                        Collision_GatherNode(self, src, *func_001827B0(&it1), box, e0);
+                    while (cArray_cGOBJPtr_Iterator_opNe(&it1, &it2)) {
+                        Collision_GatherNode(self, src, *cArray_cGOBJPtr_Iterator_opMul(&it1), box, e0);
                         Iter_Advance4(&it1);
                     }
                 }

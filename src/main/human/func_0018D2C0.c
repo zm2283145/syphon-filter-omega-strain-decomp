@@ -109,22 +109,22 @@ Obj_L* Object_LookupById(int* id);
 void ActorObj_BuildNodeMatrix(Mtx_L* out, Node_L* n);
 Anm_L* ModelCtx_GetAnchorById(void* lib, int id);
 Anm_L* Motion_Lookup(void* lib, Name_L* n);
-int func_001914A0(Anm_L* a, int b);
+int cSkaNode_CheckType(Anm_L* a, int b);
 void Actor_RequestTeleport(Act_L* a, Mtx_L* m);
 void Root_SetWorldPlacement(Root_L* r, Plc_L* p);
 Plc_L* Root_ResolveWorldPlacement(Root_L* r);
 void* ModelCtx_FindNodeByName(Sys_L* s, Name_L* n);
-void* func_00190F40(void* p);
-int func_00190F30(void* p);
+void* cSkaParams_Skeleton(void* p);
+int cSkeleton_GetSkeletonData(void* p);
 void Motion_GetStartPlacement(Plc_L* out, void* node, int k);
 void VecPair_Copy(Plc_L* d, Plc_L* s);
 void Root_BaseConstruct(Plc_L* p);
 void World_PushObjectFromAction(void* w, void* p);
 void MotionTokens_Init(void* p);
-void func_0018A8C0(void* p);
-void func_0018A890(void* p);
-void func_0018A710(void* d, void* s);
-void func_0018A700(void* p, int v);
+void cArray_cTimedEvent_ctor_void(void* p);
+void cString16N_3_ctor_void(void* p);
+void cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(void* d, void* s);
+void cSkaPlaybackGroupId_ctor_int(void* p, int v);
 void MotionRequest_Construct(void* d, Name_L* n);
 void Actor_ResolveMotionSelection(Sel_L* sel, int* out, Y_L* y, void* model);
 float Model_GetFirstFloat(void* m);
@@ -132,17 +132,17 @@ V4_L* AnimRate_Init(V4_L* p, float f);
 V4_L* Vec4_Copy_18A350(V4_L* d, V4_L* s);
 void AnimEvent_Construct(Ev_L* e);
 signed char MotionRequest_GetMode(Sel_L* s);
-void* func_0018A2E0(Sel_L* s);
-float func_0018A2D0(Sel_L* s);
+void* cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(Sel_L* s);
+float cSkaRequestStream_AnimationPacket_GetDuration(Sel_L* s);
 float func_0018A2C0(Sel_L* s);
 void AnimCtl_InstallMotion(void* ctl, void* id, signed char mode, void* range, void* pair, void* m1, void* m2, void* x, float f0, float f1);
 void AnimEvent_dtor(void* p, int f);
 void func_001BE5A0(void* p, int f);
 void __destroy_array(void* p, void* dtor, int size, int n);
 void func_0018A210(void* p, int f);
-X_L* func_00190F90(X_L* x, Range_L* r, int a, void* b);
+X_L* cSkaAnimCheckpoints_ScheduleEvent(X_L* x, Range_L* r, int a, void* b);
 void* func_0018C6A0(Sys_L* s);
-void func_0018C620(Y_L* y, Anm_L* m);
+void nSka_GetPlaybackGroupId(Y_L* y, Anm_L* m);
 unsigned char AnimPriority_Helper3(void* bits, int index);
 void AnimPriority_Helper2(void* p, int index, int v);
 void AnimPriority_Helper1(void* p);
@@ -205,7 +205,7 @@ static inline float Recip_L(float v) { return v != 0.0f ? 1.0f / v : 3.4028235e3
 static inline float ClampY_L(float x, float z, float o) { float lo = z; float hi = o; float r; asm { max.s r, x, lo; min.s r, r, hi } return r; }
 static inline void RangeInitY_L(Range_L* r, float t, float z, float o) { float v; v = 0.0f; r->flag = 0; v = ClampY_L(t, z, o); r->hi = v; r->lo = v; }
 
-static inline X_L* XInit_L(X_L* x) { X_L* px = x; px->kind = 0; MotionTokens_Init(px->pairs); func_0018A8C0(px->tail); return px; }
+static inline X_L* XInit_L(X_L* x) { X_L* px = x; px->kind = 0; MotionTokens_Init(px->pairs); cArray_cTimedEvent_ctor_void(px->tail); return px; }
 static inline void XSet_L(X_L* x, int i, int id, void* a) { Pair_L* p = &x->pairs[i]; p->id = id; p->a = a; x->kind = 1; }
 static inline X_L* XSetR_L(X_L* x, int i, int id, void* a, unsigned char k) { Pair_L* p = &x->pairs[i]; p->id = id; p->a = a; x->kind = k; return x; }
 static inline void XDtor_L(X_L* x) { func_001BE5A0(x->tail, 0); __destroy_array(x->pairs, (void*)func_0018A210, 8, 7); }
@@ -220,7 +220,7 @@ static inline void PairSet_L(Pair_L* p, int id, void* a) { p->id = id & 0xFF; p-
 static inline X_L* XSetP_L(X_L* x, int i, int id, void* a) { PairSet_L(&x->pairs[i], id, a); x->kind = 1; return x; }
 static inline X_L* XSetQ_L(X_L* x, int i, int id, void* a) { Pair_L* pp = &x->pairs[i]; PairSet_L(pp, id, a); x->kind = 1; return x; }
 static inline X_L* XSetQR_L(X_L* x, int i, int id, void* a, unsigned char k) { Pair_L* pp = &x->pairs[i]; PairSet_L(pp, id, a); x->kind = k; return x; }
-static inline void SelAuto_L(Sel_L* s, int v, X_L* x) { s->mode = 2; func_0018A890(s->sub); s->f44 = v; s->f48 = 0; func_0018A710(&s->x, x); }
+static inline void SelAuto_L(Sel_L* s, int v, X_L* x) { s->mode = 2; cString16N_3_ctor_void(s->sub); s->f44 = v; s->f48 = 0; cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(&s->x, x); }
 static inline X_L* Set5P_L(X_L* x, int a, int b, int c, int d, int e, void* act)
 {
     return XSetQ_L(XSetQ_L(XSetQ_L(XSetQ_L(XSetP_L(x, 0, a, act), 1, b, act), 3, c, act), 5, d, act), 6, e, act);
@@ -253,7 +253,7 @@ static inline void Install_L(Act_L* a, Sel_L* sel, Rate_L* r)
     a->sys.anim.v.z = r->z;
     a->sys.anim.v.w = r->w;
     a->sys.anim.b5 = 1;
-    func_0018A700(&y, -1);
+    cSkaPlaybackGroupId_ctor_int(&y, -1);
     Actor_ResolveMotionSelection(sel, &out, &y, an->model);
     if (out) {
         V4_L* p;
@@ -265,7 +265,7 @@ static inline void Install_L(Act_L* a, Sel_L* sel, Rate_L* r)
         an->b5 = 0;
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
-        AnimCtl_InstallMotion(an, (void*)out, MotionRequest_GetMode(sel), &vec, &y, &e1, &e2, func_0018A2E0(sel), func_0018A2D0(sel), func_0018A2C0(sel));
+        AnimCtl_InstallMotion(an, (void*)out, MotionRequest_GetMode(sel), &vec, &y, &e1, &e2, cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(sel), cSkaRequestStream_AnimationPacket_GetDuration(sel), func_0018A2C0(sel));
         AnimEvent_dtor(&e2, -1);
         AnimEvent_dtor(&e1, -1);
     }
@@ -286,7 +286,7 @@ static inline void DirectP_L(Act_L* a, Name_L* n, int mode, int i0, int i1, int 
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
         ctl = func_0018C6A0(sys);
-        func_0018C620(&y, m);
+        nSka_GetPlaybackGroupId(&y, m);
         AnimCtl_InstallMotion(ctl, m, mode, &r, &y, &e1, &e2, px, -1.0f, 0.0f);
         AnimEvent_dtor(&e2, -1);
         AnimEvent_dtor(&e1, -1);
@@ -449,7 +449,7 @@ static inline void StartPlc_L(Plc_L* out, Act_L* a, Name_L* n)
     void* nd = ModelCtx_FindNodeByName(s, n);
     if (nd) {
         Plc_L t;
-        Motion_GetStartPlacement(&t, nd, func_00190F30(func_00190F40(s->f10)));
+        Motion_GetStartPlacement(&t, nd, cSkeleton_GetSkeletonData(cSkaParams_Skeleton(s->f10)));
         VecPair_Copy(out, &t);
     } else {
         Root_BaseConstruct(out);
@@ -528,14 +528,14 @@ static inline void BlkA_L(Act_L* actor, Name_L* name, int id0, int id1, float sp
     XInit_L(&x);
     { X_L* q = Set5P_L(&x, id0, id1, 0x68, 0x69, 0x6A, actor);
     RangeInitY_L(&rg, 0.5f, 0.0f, 1.0f);
-    px = func_00190F90(q, &rg, 0x67, actor); }
+    px = cSkaAnimCheckpoints_ScheduleEvent(q, &rg, 0x67, actor); }
     {
         Sel_L sel;
         ps = &sel;
         ps->mode = 0;
         MotionRequest_Construct(ps->sub, name);
         ps->f48 = 1;
-        func_0018A710(&ps->x, px);
+        cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(&ps->x, px);
         ps->f98 = speed;
         ps->f9C = 0;
         RateDef_L(&r);
@@ -554,15 +554,15 @@ static inline void BlkB_L(Act_L* actor, int anchor, int id0, int id1, float spee
     XInit_L(&x);
     { X_L* q = Set5P_L(&x, id0, id1, 0x68, 0x69, 0x6A, actor);
     RangeInitY_L(&rg, 0.5f, 0.0f, 1.0f);
-    px = func_00190F90(q, &rg, 0x67, actor); }
+    px = cSkaAnimCheckpoints_ScheduleEvent(q, &rg, 0x67, actor); }
     {
         Sel_L sel;
         ps = &sel;
         ps->mode = 1;
-        func_0018A890(ps->sub);
+        cString16N_3_ctor_void(ps->sub);
         ps->f40 = anchor;
         ps->f48 = 1;
-        func_0018A710(&ps->x, px);
+        cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(&ps->x, px);
         ps->f98 = speed;
         ps->f9C = 0;
         RateDef_L(&r);
@@ -610,7 +610,7 @@ static inline void Mot_L(Sys_L* sys, Anm_L* m, int mode, Rate_L* r, X_L* px)
     AnimEvent_Construct(&e1);
     AnimEvent_Construct(&e2);
     ctl = func_0018C6A0(sys);
-    func_0018C620(&y, m);
+    nSka_GetPlaybackGroupId(&y, m);
     AnimCtl_InstallMotion(ctl, m, mode, r, &y, &e1, &e2, px, -1.0f, 0.0f);
     AnimEvent_dtor(&e2, -1);
     AnimEvent_dtor(&e1, -1);
@@ -734,7 +734,7 @@ static inline void DP31b_L(Act_L* a, Name_L* n, int id)
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
         ctl = func_0018C6A0(sys);
-        func_0018C620(&y, m);
+        nSka_GetPlaybackGroupId(&y, m);
         AnimCtl_InstallMotion(ctl, m, 1, &r, &y, &e1, &e2, px, -1.0f, 0.0f);
         AnimEvent_dtor(&e2, -1);
         AnimEvent_dtor(&e1, -1);
@@ -750,7 +750,7 @@ static inline void Mot1_L(Sys_L* sys, Anm_L* m, Rate_L* r, X_L* px)
     AnimEvent_Construct(&e1);
     AnimEvent_Construct(&e2);
     ctl = func_0018C6A0(sys);
-    func_0018C620(&y, m);
+    nSka_GetPlaybackGroupId(&y, m);
     AnimCtl_InstallMotion(ctl, m, 1, r, &y, &e1, &e2, px, -1.0f, 0.0f);
     AnimEvent_dtor(&e2, -1);
     AnimEvent_dtor(&e1, -1);
@@ -894,10 +894,10 @@ extern "C" void Actor_HandleObjectAction(Act_L* actor, Msg_L* msg)
             }
             if (anchor != -1) {
                 anim = ModelCtx_GetAnchorById(actor->sys.lib, anchor);
-                anim = func_001914A0(anim, 0) ? anim : 0;
+                anim = cSkaNode_CheckType(anim, 0) ? anim : 0;
             } else {
                 anim = Motion_Lookup(actor->sys.lib, &name);
-                anim = func_001914A0(anim, 0) ? anim : 0;
+                anim = cSkaNode_CheckType(anim, 0) ? anim : 0;
             }
             key = anim ? (int*)(anim->f24 + 0x24) : &D_0049D048;
             if (*key == D_0049D040) {

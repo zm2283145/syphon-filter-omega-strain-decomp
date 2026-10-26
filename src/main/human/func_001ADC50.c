@@ -6,14 +6,14 @@
 
 #include "types.h"
 
-void* func_001ADC50(char* self) {
+void* cSkaSystem_RequestTransition_CrossFadeDuration(char* self) {
     return self + 60;
 }
 
-void* func_001ADC60(char* self) {
+void* cSkaSystem_RequestTransition_CrossFadeOutDuration(char* self) {
     return self + 76;
 }
 
-void* func_001ADC70(char* self) {
+void* cSkaSystem_RequestTransition_EndOfTransitionCallback(char* self) {
     return self + 92;
 }

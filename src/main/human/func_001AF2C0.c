@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-int func_001AF2C0(Iter* a, Iter* b) {
+int cArray_cSkeletonCenterOfMassContributionPtr_ConstIterator_opNe(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 
-Iter* func_001AF2E0(Iter* it) {
+Iter* cArray_cSkeletonCenterOfMassContributionPtr_ConstIterator_opInc(Iter* it) {
     it->p++;
     return it;
 }

@@ -16,7 +16,7 @@ static inline unsigned char busyA430(unsigned char s)
     return r;
 }
 struct TA430 { char pad[0x30]; OA430* obj; };
-extern "C" unsigned char func_003EA430(TA430* self)
+extern "C" unsigned char cGobjController_WantsToBeActive(TA430* self)
 {
     OA430* o = self->obj;
     unsigned char r;

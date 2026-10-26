@@ -12,7 +12,7 @@
 extern "C" {
 void Mem_Free(int pool, void* p, char* file, int line);
 }
-extern "C" void func_003EBF10(void* node)
+extern "C" void cSfxBundle_opDelete(void* node)
 {
     AllocGuard guard;
     Mem_Free(0, node, "specfx.cc", 0xE9);

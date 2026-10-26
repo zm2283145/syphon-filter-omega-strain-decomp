@@ -85,20 +85,20 @@ typedef struct { int a[0x28]; } H3BC;
 typedef struct { char pad[0x14C]; unsigned char b14c; } T3BC;
 typedef struct { int a; char name[0x94]; T3BC* f98; } S3BC;
 typedef struct { char pad[0x16C]; int f16c; unsigned char b170; char p171[3]; char f174[0x3C]; float m[24]; } O3BC;
-extern void func_0036D630(O3BC*);
-extern void func_00377C30(char*);
+extern void cHogFile_ctor(O3BC*);
+extern void cVU1Model_ctor(char*);
 extern void FileMan_FindMember(S3BC*);
 extern void FileMan_LoadMemberSync(S3BC*, int*, int);
 extern void Hog_OpenInMemory(O3BC*, char*, int, int);
 extern char* strchr(const char*, int);
-extern void func_0036E540(H3BC*, char*, O3BC*, int);
+extern void cFileMan_ctor_charP_cHogFileR_bool(H3BC*, char*, O3BC*, int);
 extern void Model_Load(char*, H3BC*, int);
 extern void FileMan_Release(H3BC*, int);
 O3BC* SkyLayer_Construct(O3BC* o, S3BC* src, int arg) {
     H3BC h;
-    func_0036D630(o);
+    cHogFile_ctor(o);
     o->f16c = 0;
-    func_00377C30(o->f174);
+    cVU1Model_ctor(o->f174);
     o->m[0] = 0.0f; o->m[1] = 0.0f; o->m[2] = 0.0f; o->m[3] = 0.0f;
     o->m[4] = 0.0f; o->m[5] = 0.0f; o->m[6] = 0.0f; o->m[7] = 0.0f;
     o->m[8] = 0.0f; o->m[9] = 0.0f; o->m[10] = 0.0f; o->m[11] = 0.0f;
@@ -113,7 +113,7 @@ O3BC* SkyLayer_Construct(O3BC* o, S3BC* src, int arg) {
     {
         char* name = src->name;
         strncpy(strchr(name, '.'), ".VUM", 4);
-        func_0036E540(&h, name, o, 0);
+        cFileMan_ctor_charP_cHogFileR_bool(&h, name, o, 0);
     }
     Model_Load(o->f174, &h, arg);
     FileMan_Release(&h, -1);

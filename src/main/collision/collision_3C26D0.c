@@ -48,23 +48,23 @@ extern int D_00542D48;
 extern int D_00542D1C;
 extern int D_004937C0[];
 extern int D_004937D0[];
-extern void func_0013B260(int s);
+extern void std_vector_deleter_cCollisionFace_clear(int s);
 extern void Los_BuildSegmentBound(float r, Bnd26* b, V4* from, V4* to);
 extern void Los_GatherCandidates(int g, int s, Bnd26* b, int a3);
 extern V4* Vec4_GetZero(void);
 extern void Vec4_Assign(V4* d, V4* s);
 extern void Vec4_SetOrigin(V4* d);
 extern void Vec4_Copy(V4* d, V4* s);
-extern void func_0013B0C0(void* p);
-extern void func_0013B0D0(void* p);
+extern void cCollisionModel_FaceLocator_ctor(void* p);
+extern void cCollisionModel_FaceProperties_ctor(void* p);
 extern void Los_TraceWithWater(Q26* q, int s);
-extern void func_003C3880(Q26* q, int s);
+extern void cCollisionProbe_Ray_DetectForCollision_cArrayR_3(Q26* q, int s);
 extern void Los_TraceTriangles(Q26* q, int s);
 extern void Col_TraceFloorTriangles(Q26* q, int s);
 extern void* Ptr_Identity(void* p);
 extern void Col_ReconstructSourceTriangle(Tri26* t, void* p);
-extern void func_00139BB0(void* d, void* s);
-extern void func_00139BA0(void* d, void* s);
+extern void cCollisionModel_FaceProperties_opAssign(void* d, void* s);
+extern void cCollisionModel_FaceLocator_opAssign(void* d, void* s);
 
 static inline void Tri_Init(Tri26* t) {
     V4* p;
@@ -74,8 +74,8 @@ static inline void Tri_Init(Tri26* t) {
         p++;
     } while (p != t->v + 3);
     Ptr_Identity(&t->n);
-    func_0013B0D0(t->part40);
-    func_0013B0C0(t->part60);
+    cCollisionModel_FaceProperties_ctor(t->part40);
+    cCollisionModel_FaceLocator_ctor(t->part60);
 }
 static inline unsigned char HasCtx(Q26* q) { return q->b62 != 0; }
 static inline void SetMpg26(int a) {
@@ -93,7 +93,7 @@ static inline void Q_Init(Q26* q, V4* to, V4* from) {
     Vec4_Assign(&q->a, Vec4_GetZero());
     Vec4_SetOrigin(&org);
     Vec4_Assign(&q->b, &org);
-    func_0013B0C0(q->part30);
+    cCollisionModel_FaceLocator_ctor(q->part30);
     Vec4_Assign(&q->to, to);
     Vec4_Assign(&q->from, from);
     q->b60 = 0;
@@ -134,7 +134,7 @@ unsigned char Los_TraceImmediate(V4* out, Tri26* tri, V4* from, V4* to, int g, u
             return 0;
     }
     s = D_00542CC8;
-    func_0013B260(s);
+    std_vector_deleter_cCollisionFace_clear(s);
     Los_BuildSegmentBound(0.01f, &bnd, from, to);
     if (D_00542D38 != D_00542D48) {
         int i = D_00542D38;
@@ -170,7 +170,7 @@ unsigned char Los_TraceImmediate(V4* out, Tri26* tri, V4* from, V4* to, int g, u
     }
     if (HasCtx(&q)) {
         if (under) Los_TraceWithWater(&q, s);
-        else func_003C3880(&q, s);
+        else cCollisionProbe_Ray_DetectForCollision_cArrayR_3(&q, s);
     } else {
         if (under) Los_TraceTriangles(&q, s);
         else Col_TraceFloorTriangles(&q, s);
@@ -185,8 +185,8 @@ unsigned char Los_TraceImmediate(V4* out, Tri26* tri, V4* from, V4* to, int g, u
         Vec4_Copy(&tri->v[2], &t.v[2]);
         Vec4_Copy(&tri->n, &t.n);
         tri->flag50 = t.flag50;
-        func_00139BB0(tri->part40, t.part40);
-        func_00139BA0(tri->part60, t.part60);
+        cCollisionModel_FaceProperties_opAssign(tri->part40, t.part40);
+        cCollisionModel_FaceLocator_opAssign(tri->part60, t.part60);
         tri->flag51 = t.flag51;
         tri->flag52 = t.flag52;
         res = 1;
@@ -217,7 +217,7 @@ extern void* D_00542CD8;
 extern VObj_3C2A80* D_00542CE0;
 extern void* D_00542D00;
 void func_00139DF0(void* p, int f);
-void func_001810D0(void* p, int f);
+void std_vector_deleter_cVector_dtor(void* p, int f);
 void HumanColBufB_Dtor(void* p, int f);
 }
 static inline void A3_3C2A80(void* p) { if (p) func_00139DF0(p, 0); }
@@ -226,11 +226,11 @@ static inline void A1_3C2A80(void* p) { if (p) A2_3C2A80(p); }
 static inline void B3_3C2A80(void* p) { if (p) HumanColBufB_Dtor(p, 0); }
 static inline void B2_3C2A80(void* p) { if (p) B3_3C2A80(p); }
 static inline void B1_3C2A80(void* p) { if (p) B2_3C2A80(p); }
-static inline void C3_3C2A80(void* p) { if (p) func_001810D0(p, 0); }
+static inline void C3_3C2A80(void* p) { if (p) std_vector_deleter_cVector_dtor(p, 0); }
 static inline void C2_3C2A80(void* p) { if (p) C3_3C2A80(p); }
 static inline void C1_3C2A80(void* p) { if (p) C2_3C2A80(p); }
 
-extern "C" void func_003C2A80(void)
+extern "C" void nCollision_UnInitStatics(void)
 {
     void* p;
     if ((p = D_00542CC8) != 0) { { AllocGuard g; A1_3C2A80(p); Mem_Free(0, p, D_004BD0A0, 0x41); } D_00542CC8 = 0; }
@@ -251,14 +251,14 @@ static inline void merge_flush_func_003C2A80(void) {}
 extern "C" {
 extern char D_004D9140[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
-void func_001361E0(void* p);
-int func_001361D0(int* n);
+void std_vector_cCollisionFace_ctor(void* p);
+int cArrayCapacity_Int(int* n);
 void Vector_Reserve_139920_Thunk(void* p, int n);
 void HumanColBufB_Init(void* p);
 void HumanColBufB_Reserve(void* p, int n);
-void func_003C3120(void* p, int* n, int k);
-void func_003C3110(void* p);
-void func_003C06B0(int a);
+void cArray_cGOBJPtr_ctor(void* p, int* n, int k);
+void cArray_FixedCapacity_cGOBJPtr_2_ctor(void* p);
+void cCollisionProbe_SphereSweptRay_InitStatics(int a);
 }
 struct ScrA { int w[3]; unsigned char bC; };
 struct ScrB { void* vt; int w[4]; int x[3]; };
@@ -291,8 +291,8 @@ extern "C" void ColScratch_Init(int a0, int a1, int a2, int a3) {
         ScrA* p = (ScrA*)AllocL(0x10, 0x2E);
         if (p) {
             int n = a0;
-            func_001361E0(p);
-            Vector_Reserve_139920_Thunk(p, func_001361D0(&n));
+            std_vector_cCollisionFace_ctor(p);
+            Vector_Reserve_139920_Thunk(p, cArrayCapacity_Int(&n));
             p->bC = 1;
         }
         D_00542CC8 = p;
@@ -301,8 +301,8 @@ extern "C" void ColScratch_Init(int a0, int a1, int a2, int a3) {
         ScrA* p = (ScrA*)AllocL(0x10, 0x31);
         if (p) {
             int n = a0;
-            func_001361E0(p);
-            Vector_Reserve_139920_Thunk(p, func_001361D0(&n));
+            std_vector_cCollisionFace_ctor(p);
+            Vector_Reserve_139920_Thunk(p, cArrayCapacity_Int(&n));
             p->bC = 1;
         }
         D_00542CD0 = p;
@@ -312,7 +312,7 @@ extern "C" void ColScratch_Init(int a0, int a1, int a2, int a3) {
         if (p) {
             int n = a1;
             HumanColBufB_Init(p);
-            HumanColBufB_Reserve(p, func_001361D0(&n));
+            HumanColBufB_Reserve(p, cArrayCapacity_Int(&n));
             p->bC = 1;
         }
         D_00542CD8 = p;
@@ -322,12 +322,12 @@ extern "C" void ColScratch_Init(int a0, int a1, int a2, int a3) {
         if (p) {
             int n = a2;
             p->vt = D_004D9140;
-            func_003C3120(p->w, &n, 1);
-            func_003C3110(p->x);
+            cArray_cGOBJPtr_ctor(p->w, &n, 1);
+            cArray_FixedCapacity_cGOBJPtr_2_ctor(p->x);
         }
         D_00542CE0 = p;
     }
-    func_003C06B0(a3);
+    cCollisionProbe_SphereSweptRay_InitStatics(a3);
 }
 #undef D_00542CC8 /* merge_units */
 #undef D_00542CD0 /* merge_units */

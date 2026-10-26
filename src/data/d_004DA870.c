@@ -3,17 +3,17 @@
 extern void ActorSoundEvent_Fire();
 extern void Event_PackHeader();
 extern void Message_GetScriptTypeKey();
-extern void func_00177E20();
+extern void cCBData_IsReferencing();
+extern void cHumanTimeBasedCallback_dtor();
+extern void cTurnOnWeaponPickupMsg_Clone();
 extern void func_001A0720();
-extern void func_001B9560();
-extern void func_001B96B0();
 
 void *D_004DA870[8] = {
-    0, 0, &func_001B9560, &func_00177E20,
+    0, 0, &cHumanTimeBasedCallback_dtor, &cCBData_IsReferencing,
     &ActorSoundEvent_Fire, 0, 0, 0,
 };
 
 void *D_004DA890[8] = {
-    0, 0, &func_001A0720, &func_001B96B0,
+    0, 0, &func_001A0720, &cTurnOnWeaponPickupMsg_Clone,
     &Event_PackHeader, &Message_GetScriptTypeKey, 0, 0,
 };

@@ -11,7 +11,7 @@
 #include "trivial_dtor.h"
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_0017D7F0)
+DEFINE_TRIVIAL_DTOR(cHermiteSplineWithScaledDuration_float_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0017D7F0 */
 
@@ -42,7 +42,7 @@ struct W {
     W() {}
     W& operator=(const W& o) { __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(q) : "r"(this), "r"(&o) : "memory"); return *this; }
 } __attribute__((aligned(16)));
-extern "C" float func_0017DC50(void* c);
+extern "C" float cHermiteSplineWithScaledDuration_cVector_Duration(void* c);
 #if 0 /* merge_units */
 extern "C" void Curve_Sample(V* out, void* c, float t);
 #endif /* merge_units */
@@ -86,7 +86,7 @@ extern "C" bool VectorCurve_Advance(VC* self, float dt, float x)
     }
     if (self->NotZero()) {
         V tmp;
-        Curve_Sample(&tmp, self->curve, func_0017DC50(self->curve) - self->t);
+        Curve_Sample(&tmp, self->curve, cHermiteSplineWithScaledDuration_cVector_Duration(self->curve) - self->t);
         { void* xx = &tmp; /* dead on purpose: retail keeps this addiu */ }
         self->v20 = (W&)tmp;
         self->Changed();
@@ -109,10 +109,10 @@ static inline void merge_flush_func_0017D8E0(void) {}
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
 int Vec4_Add(char *, char *, char *);                          
-int func_0017DBF0(int);                             
-int func_0017DC00(float, char *, int);                     
-int func_0017DC30(int);                             
-int func_0017DC40(char * , int);                       
+int cHermiteSplineControlPoint_cVector_Tangent(int);                             
+int opMul(float, char *, int);                     
+int cHermiteSplineControlPoint_cVector_Position(int);                             
+int cArray_FixedSize_cHermiteSplineControlPoint_cVector_2_opIndex(char * , int);                       
 
 void Curve_Sample(char *arg0, char * arg1, float farg0) {
     int sp90[4];
@@ -134,12 +134,12 @@ void Curve_Sample(char *arg0, char * arg1, float farg0) {
     temp_f22 = var_f20 * var_f20;
     temp_f21 = temp_f22 * var_f20;
     temp_f23 = 3.0f * temp_f22;
-    func_0017DC00(1.0f + ((2.0f * temp_f21) - temp_f23), sp70, func_0017DC30(func_0017DC40(arg1, 0)));
-    func_0017DC00((-2.0f * temp_f21) + temp_f23, sp60, func_0017DC30(func_0017DC40(arg1, 1)));
+    opMul(1.0f + ((2.0f * temp_f21) - temp_f23), sp70, cHermiteSplineControlPoint_cVector_Position(cArray_FixedSize_cHermiteSplineControlPoint_cVector_2_opIndex(arg1, 0)));
+    opMul((-2.0f * temp_f21) + temp_f23, sp60, cHermiteSplineControlPoint_cVector_Position(cArray_FixedSize_cHermiteSplineControlPoint_cVector_2_opIndex(arg1, 1)));
     Vec4_Add(sp80, sp70, sp60);
-    func_0017DC00(var_f20 + (temp_f21 - (2.0f * temp_f22)), sp50, func_0017DBF0(func_0017DC40(arg1, 0)));
+    opMul(var_f20 + (temp_f21 - (2.0f * temp_f22)), sp50, cHermiteSplineControlPoint_cVector_Tangent(cArray_FixedSize_cHermiteSplineControlPoint_cVector_2_opIndex(arg1, 0)));
     Vec4_Add(sp90, sp80, sp50);
-    func_0017DC00(temp_f21 - temp_f22, sp40, func_0017DBF0(func_0017DC40(arg1, 1)));
+    opMul(temp_f21 - temp_f22, sp40, cHermiteSplineControlPoint_cVector_Tangent(cArray_FixedSize_cHermiteSplineControlPoint_cVector_2_opIndex(arg1, 1)));
     Vec4_Add(arg0, sp90, sp40);
 }
 /* merge_units: generate this block's code under its own pragmas */

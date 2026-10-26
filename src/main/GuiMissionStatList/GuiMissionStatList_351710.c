@@ -12,16 +12,16 @@ typedef struct Elem5C {
     char tail[0x10];       /* 0x4C */
 } Elem5C;
 
-extern void func_00329930(Elem5C* dst, Elem5C* src);
-extern void func_003517B0(void* dst, void* src);
+extern void cString_opAssign(Elem5C* dst, Elem5C* src);
+extern void cArray_StatsRequirement_opAssign(void* dst, void* src);
 
 /* Copies [first, last) to dest element by element; returns the end of dest. */
-Elem5C* func_00351710(Elem5C* first, Elem5C* last, Elem5C* dest) {
+Elem5C* std_msl_copy_MissionStats_copy(Elem5C* first, Elem5C* last, Elem5C* dest) {
     for (; first < last; first++, dest++) {
-        func_00329930(dest, first);
+        cString_opAssign(dest, first);
         dest->flag = first->flag;
         dest->data = first->data;
-        func_003517B0(dest->tail, first->tail);
+        cArray_StatsRequirement_opAssign(dest->tail, first->tail);
     }
     return dest;
 }

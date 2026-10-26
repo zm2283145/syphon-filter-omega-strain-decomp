@@ -4,7 +4,7 @@ extern R D_005141C0[];
 extern Info D_0048BD90[];
 extern void *memcpy(void *, const void *, unsigned int);
 extern int func_002BAD48(int);
-int func_002BADC0(int i, char *src, int blk)
+int _sceMcpWriteUserClustOnCache(int i, char *src, int blk)
 {
     Info *p = &D_0048BD90[i];
     int sec = blk + p->base;

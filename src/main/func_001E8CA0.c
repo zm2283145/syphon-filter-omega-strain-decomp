@@ -9,15 +9,15 @@ extern int RelNode_HasChildren(RNode* n);
 extern unsigned char Relation_FindDescendant(RNode* n, RNode* t);
 extern int func_001E8F60(RIt* a, RIt* b);
 extern RIt* func_001E8F80(RIt* it);
-extern RIt func_001E8FA0(RVec* v);
+extern RIt std_vector_cTreeNode_cSkaSystemPtrPtr_end(RVec* v);
 extern RIt* func_001E8FC0(RIt* dst, const RIt& src);
 extern RIt func_001E8FD0(RVec* v);
 extern int func_001E8FE0(RVec* v);
 static inline bool NotEmpty(RVec* v) { return !func_001E8FE0(v); }
-extern int func_001E8FF0(RIt* a, RIt* b);
+extern int cArray_cTreeNode_cSkaSystemPtrPtr_ConstIterator_opNe(RIt* a, RIt* b);
 extern RIt* func_001E9010(RIt* it);
 extern RNode** func_001E9030(RIt* w);
-extern void func_001E9040(RIt* out, RVec* v);
+extern void cArray_cTreeNode_cSkaSystemPtrPtr_End_void_2(RIt* out, RVec* v);
 extern void func_001E9060(RIt* out, RVec* v);
 unsigned char Relation_SameHierarchy(RNode* n, RNode* t);
 }
@@ -28,8 +28,8 @@ static inline bool Check(RNode* n, RNode* t) {
         bool found = 0;
         RIt it, end;
         func_001E9060(&it, &n->children);
-        func_001E9040(&end, &n->children);
-        while (func_001E8FF0(&it, &end)) {
+        cArray_cTreeNode_cSkaSystemPtrPtr_End_void_2(&end, &n->children);
+        while (cArray_cTreeNode_cSkaSystemPtrPtr_ConstIterator_opNe(&it, &end)) {
             if (Relation_FindDescendant(*func_001E9030(&it), t)) { found = 1; break; }
             func_001E9010(&it);
         }
@@ -49,7 +49,7 @@ static inline unsigned char Up1(RNode* p, RNode* t) {
 }
 
 static inline void ItBegin(RIt* it, RVec* v) { func_001E8FC0(it, func_001E8FD0(v)); }
-static inline void ItEnd(RIt* it, RVec* v) { func_001E8FC0(it, func_001E8FA0(v)); }
+static inline void ItEnd(RIt* it, RVec* v) { func_001E8FC0(it, std_vector_cTreeNode_cSkaSystemPtrPtr_end(v)); }
 static inline bool Search(RNode* n, RNode* t) {
     if (n == t) return 1;
     if (NotEmpty(&n->children)) {

@@ -3,7 +3,7 @@
 extern char D_0058805C[];
 extern int Newlib_SysFstat(int, int);
 
-int func_00124678(int a0, int a1, int a2) {
+int Newlib_FstatR(int a0, int a1, int a2) {
     int s0, s1, v0, v1;
 
     s0 = a0;

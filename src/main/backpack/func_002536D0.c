@@ -17,7 +17,7 @@ typedef struct { char pad[0x94]; int v; } Obj_002536D0;
 struct S_002536D0;
 typedef struct { char pad[0x5C]; void (*f)(struct S_002536D0* p, int a); } VT_002536D0;
 typedef struct S_002536D0 { VT_002536D0* vt; char pad4[8]; int id; char pad10[0x54]; Ent_002536D0 e[3]; int count; int b; int c; int d; char pad2f0; unsigned char f; char pad2f2[10]; Obj_002536D0* obj; } S_002536D0;
-extern "C" void func_002536D0(S_002536D0* p) {
+extern "C" void cBackpack_Unpack(S_002536D0* p) {
     int i; Ent_002536D0* e; int j; Sub_002536D0* s; int k;
     p->count = R8_002536D0();
     p->b = R8_002536D0();

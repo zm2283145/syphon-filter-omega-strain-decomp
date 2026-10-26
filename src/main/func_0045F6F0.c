@@ -13,7 +13,7 @@ extern void Event_Send(EventMsg*, void*, int);
 extern void FileMan_Release(void*, int);
 extern void cMessage_dtor(EventMsg*, int);
 /* Clears the pending flag and broadcasts the stored command as an immediate event. */
-void func_0045F6F0(S* s)
+void GuiEndGameAwards_StopPlayback(S* s)
 {
     EventMsg msg;
     s->pending = 0;

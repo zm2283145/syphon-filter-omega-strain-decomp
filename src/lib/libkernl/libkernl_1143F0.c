@@ -11,7 +11,7 @@ extern int D_004E6040[];
 extern int D_004E6080[];
 extern int sceSifCallRpc(void *cd, int fno, int mode, void *send, int ssize, void *recv, int rsize, void *endf, void *endp);
 
-int func_001143F0(int a0)
+int sceSifAllocIopHeap(int a0)
 {
     if (D_00486258 < 0) return 0;
     D_004E6080[0] = a0;
@@ -21,7 +21,7 @@ int func_001143F0(int a0)
 /* merge_units: end func_001143F0 */
 
 /* merge_units: begin func_00114460 */
-int func_00114460(int a0, int a1, int a2)
+int sceSifAllocSysMemory(int a0, int a1, int a2)
 {
     if (D_00486258 < 0) return 0;
     D_004E6080[0] = a1;
@@ -33,7 +33,7 @@ int func_00114460(int a0, int a1, int a2)
 /* merge_units: end func_00114460 */
 
 /* merge_units: begin func_001144E0 */
-int func_001144E0(int a0)
+int sceSifFreeSysMemory(int a0)
 {
     if (D_00486258 < 0) return 0;
     D_004E6080[0] = a0;

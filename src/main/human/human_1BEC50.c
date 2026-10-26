@@ -5,4 +5,4 @@
 
 /* Copy a range of 60-byte elements by assignment. */
 DEFINE_COPY_ELEMENT(Elem60, 60)
-DEFINE_RANGE_COPY_ASSIGN(func_001BEC50, Elem60, func_001BECC0)
+DEFINE_RANGE_COPY_ASSIGN(std_msl_copy_cSkaSliderValue_copy, Elem60, cSplinedMotion_Scalar0To1_opAssign)

@@ -113,15 +113,15 @@ struct V332AC0 { E332AC0* data; int count; };
 struct A332AC0 { char pad[0xB08]; int bits[1]; };
 extern "C" {
 extern V332AC0 g_UnlockRows;
-E332AC0** func_003305C0(V332AC0* v);
+E332AC0** std_vector_deleter_Record_data(V332AC0* v);
 void PtrVec_PushBack_1C1080(void* vec, int* v);
 }
 static inline bool Neq332AC0(E332AC0* a, E332AC0* b) { return !(a == b); }
 /* Collects the values of every table entry whose bit is set in the agent's flag array. */
 extern "C" void AgentData_GetUnlockedWeapons(A332AC0* a, void* out)
 {
-    E332AC0* it = *func_003305C0(&g_UnlockRows);
-    E332AC0* end = *func_003305C0(&g_UnlockRows) + g_UnlockRows.count;
+    E332AC0* it = *std_vector_deleter_Record_data(&g_UnlockRows);
+    E332AC0* end = *std_vector_deleter_Record_data(&g_UnlockRows) + g_UnlockRows.count;
     for (; Neq332AC0(it, end); it++) {
         int id = it->id;
         if ((a->bits[id / 32] >> (id & 31)) & 1) {
@@ -192,14 +192,14 @@ struct A32E60 { int p0, p4; int stats[1]; };
 extern "C" {
 extern char D_00532AD0[];
 extern int D_00532AD4;
-E32E60** func_00330820(void* v);
+E32E60** std_vector_deleter_RatingRecord_data(void* v);
 int Loc_FindKeyThunk(const char* key);
 }
 static inline bool Neq32E60(E32E60* a, E32E60* b) { return !(a == b); }
 extern "C" bool cAgentData_HasRating(A32E60* self, const char* key)
 {
-    E32E60* first = *func_00330820(D_00532AD0);
-    E32E60* last = *func_00330820(D_00532AD0) + D_00532AD4;
+    E32E60* first = *std_vector_deleter_RatingRecord_data(D_00532AD0);
+    E32E60* last = *std_vector_deleter_RatingRecord_data(D_00532AD0) + D_00532AD4;
     int k = Loc_FindKeyThunk(key);
     for (; Neq32E60(first, last); first++) {
         if (k == first->id)

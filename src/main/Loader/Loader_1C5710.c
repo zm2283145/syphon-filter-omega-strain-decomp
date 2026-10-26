@@ -10,7 +10,7 @@
 #include "event_toggle_send.h"
 
 /* Post the "on" event and set the state flag. */
-DEFINE_EVENT_TOGGLE_SEND(ParticleGob_Enable, g_cEnableMsgClass, D_004E0880, func_003FF930, 1)
+DEFINE_EVENT_TOGGLE_SEND(ParticleGob_Enable, g_cEnableMsgClass, D_004E0880, cEnableMsg_SendEnabled, 1)
 #pragma pop /* merge_units */
 /* merge_units: end func_001C5710 */
 
@@ -20,8 +20,8 @@ typedef struct { char pad[0x60]; int f60; } G1C5;
 typedef struct { void* vt; char pad[0x1C]; unsigned char b20; char pad2[0x19F]; } M1C5;
 typedef struct { char pad[0x190]; } R1C5;
 extern void cPARTICLE_GOBJ_v10(G1C5*);
-extern int func_00394170(G1C5*);
-extern int func_00394140(G1C5*, int*);
+extern int cPARTICLE_GOBJ_EventHappened(G1C5*);
+extern int cPARTICLE_GOBJ_GetEvent(G1C5*, int*);
 extern int* SpecFx_GetEffectDef(int);
 extern int g_VideoFrameCounter;
 extern void SoundRequest_Ctor(R1C5*, int, char*, int, int);
@@ -40,8 +40,8 @@ void ParticleGob_Update(G1C5* g) {
     R1C5 req;
     M1C5 msg;
     cPARTICLE_GOBJ_v10(g);
-    if (!func_00394170(g)) return;
-    if ((unsigned char)func_00394140(g, x) != 1) return;
+    if (!cPARTICLE_GOBJ_EventHappened(g)) return;
+    if ((unsigned char)cPARTICLE_GOBJ_GetEvent(g, x) != 1) return;
     if (g->f60 != *SpecFx_GetEffectDef(9)) return;
     if (g_VideoFrameCounter & 7) return;
     SoundRequest_Ctor(&req, 0, "O_GLASS_BREAK_S", 0, 0);

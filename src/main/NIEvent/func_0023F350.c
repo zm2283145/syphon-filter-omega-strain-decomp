@@ -14,12 +14,12 @@ typedef struct {
 } Obj;
 extern char D_004DC190[];
 extern void cGOBJ_ctor(Obj* self, int* id, int a2, int a3);
-extern void func_0023F660(Part* p);
-extern void func_0023F640(Part* p);
-extern void func_0023F620(Part* p);
+extern void std_vector_cNIEventBasePtr_ctor(Part* p);
+extern void std_vector_VectorKey_ctor(Part* p);
+extern void std_vector_VisKey_ctor(Part* p);
 
 /* Constructor: base GOBJ init, then three enabled parts and unit scale. */
-Obj* func_0023F350(Obj* self, int a2, int a3)
+Obj* cNIEventBase_ctor(Obj* self, int a2, int a3)
 {
     Part* pa;
     Part* pb;
@@ -28,13 +28,13 @@ Obj* func_0023F350(Obj* self, int a2, int a3)
     cGOBJ_ctor(self, &id, a2, a3);
     self->vtable = D_004DC190;
     pa = &self->a;
-    func_0023F660(pa);
+    std_vector_cNIEventBasePtr_ctor(pa);
     pa->enabled = 1;
     pb = &self->b;
-    func_0023F640(pb);
+    std_vector_VectorKey_ctor(pb);
     pb->enabled = 1;
     pc = &self->c;
-    func_0023F620(pc);
+    std_vector_VisKey_ctor(pc);
     pc->enabled = 1;
     self->scale = 1.0f;
     return self;

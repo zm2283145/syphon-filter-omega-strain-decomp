@@ -11,7 +11,7 @@ extern int D_00598618;
 unsigned int D_00497D78[1] = { 0x0 };
 extern int Medius_TerminateString(char *, int);
 extern int Net_SendLocked(int, int, int, int, int, int, void *);
-int func_0046A718(char *a, int b)
+int MediusGetIgnoreList(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -25,7 +25,7 @@ int func_0046A718(char *a, int b)
 /* merge_units: begin func_0046A7B8 */
 extern int D_00598620;
 int D_00497D7C = 0;
-int func_0046A7B8(char *a, int b)
+int MediusAddToIgnoreList(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -39,7 +39,7 @@ int func_0046A7B8(char *a, int b)
 /* merge_units: begin func_0046A858 */
 extern int D_00598628;
 unsigned int D_00497D80[1] = { 0x0 };
-int func_0046A858(char *a, int b)
+int MediusRemoveFromIgnoreList(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -53,7 +53,7 @@ int func_0046A858(char *a, int b)
 /* merge_units: begin func_0046A8F8 */
 extern int D_00598630;
 int D_00497D84 = 0;
-int func_0046A8F8(char *a, int b)
+int MediusGetPolicy(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -66,7 +66,7 @@ int func_0046A8F8(char *a, int b)
 
 /* merge_units: begin func_0046A998 */
 extern int D_005984E4;
-int func_0046A998(char *a)
+int MediusSendPlayerReport(char *a)
 {
     Medius_TerminateString(a, 0x11);
     if (D_00497CC0 != 1) return -0xF;
@@ -77,7 +77,7 @@ int func_0046A998(char *a)
 
 /* merge_units: begin func_0046AA18 */
 extern int D_005984E0;
-int func_0046AA18(char *a)
+int MediusSendWorldReport(char *a)
 {
     Medius_TerminateString(a, 0x11);
     Medius_TerminateString(a + 0x1C, 0x40);
@@ -89,7 +89,7 @@ int func_0046AA18(char *a)
 
 /* merge_units: begin func_0046AAA0 */
 extern int D_005984E8;
-int func_0046AAA0(char *a)
+int MediusSendEndGameReport(char *a)
 {
     Medius_TerminateString(a, 0x11);
     Medius_TerminateString(a + 0x18, 0x40);
@@ -103,7 +103,7 @@ int func_0046AAA0(char *a)
 /* merge_units: begin func_0046AB38 */
 extern int D_0059863C;
 unsigned int D_00497D88[1] = { 0x0 };
-int func_0046AB38(char *a, int b)
+int MediusGetAnnouncements(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);

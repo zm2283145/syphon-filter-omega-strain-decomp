@@ -10,12 +10,12 @@ extern "C" {
 int FileMan_FindMember(File_3C50* f);
 int FileMan_GetSize(File_3C50* f);
 int FileMan_LoadMemberSync(File_3C50* f, char** buf, int size);
-void func_0036DEC0(File_3C50* f);
+void cFileMan_Close(File_3C50* f);
 void* Mem_Alloc(int a, int size, char* file, int line);
-void func_00146020(List_3C50* l);
-void func_00146000(List_3C50* list, Buf_3C50* buf);
+void std_vector_charPtr_ctor_void(List_3C50* l);
+void std_vector_charPtr_push_back_charPR(List_3C50* list, Buf_3C50* buf);
 extern char D_0049EE88;
-char* func_001C3C50(Self_3C50* self, File_3C50* f);
+char* cLoader_AllocateAndFillAnimationBuffer(Self_3C50* self, File_3C50* f);
 }
 static inline void MemCopy_3C50(void* dst, void* src, int n0)
 {
@@ -53,7 +53,7 @@ static inline void MemCopy_3C50(void* dst, void* src, int n0)
         .set reorder
     }
 }
-char* func_001C3C50(Self_3C50* self, File_3C50* f)
+char* cLoader_AllocateAndFillAnimationBuffer(Self_3C50* self, File_3C50* f)
 {
     Buf_3C50 buf;
     Buf_3C50 tmp;
@@ -66,16 +66,16 @@ char* func_001C3C50(Self_3C50* self, File_3C50* f)
         if (buf.p) {
             tmp = buf;
             r = FileMan_LoadMemberSync(f, &tmp.p, size);
-            func_0036DEC0(f);
+            cFileMan_Close(f);
             if (!(r & 0xFF)) {
                 { char* dst; char* src = tmp.p; dst = buf.p; if (src != dst) MemCopy_3C50(dst, src, size); }
                 if (!self->list) {
                     List_3C50* l;
                     { AllocGuard g; l = (List_3C50*)Mem_Alloc(0, 0x10, &D_0049EE88, 0xF1); }
-                    if (l) { func_00146020(l); l->owned = 1; }
+                    if (l) { std_vector_charPtr_ctor_void(l); l->owned = 1; }
                     self->list = l;
                 }
-                func_00146000(self->list, &buf);
+                std_vector_charPtr_push_back_charPR(self->list, &buf);
             }
         }
     }

@@ -2,7 +2,7 @@
 #pragma mpwc_relax on
 int Event_Construct(char **, char *);
 int NetRead_Float(float *);
-int func_00281E90(char *, int);
+int cNetMsg_GetString(char *, int);
 int Loc_LookupText(char *);
 int func_0012F2C0(char *);
 void HudTimer_Start_Thunk(int, int, float);
@@ -20,7 +20,7 @@ void cNetTimerMsg_NetReceive(void) {
     sl.f40[0] = &D_004DC310;
     sl.s[0] = 0;
     NetRead_Float(&sl.f);
-    func_00281E90(sl.s, 16);
+    cNetMsg_GetString(sl.s, 16);
     text = sl.s[0] ? Loc_LookupText(sl.s) : 0;
     HudTimer_Start_Thunk(func_0012F2C0(&g_Game), text, sl.f);
     sl.f40[0] = &D_004DCF10;

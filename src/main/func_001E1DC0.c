@@ -18,9 +18,9 @@ extern signed char D_004E9F98;
 extern int D_004F4FD0;
 extern SurfE6 D_004E9FA0;
 extern unsigned char D_004E9FA2;
-extern void func_00131BC0(void);
+extern void cCollisionModel_FaceProperties_dtor(void);
 extern void __register_global_object(void*, void*, void*);
-extern char* func_00183AF0(SurfOwnerE6* owner, int* key);
+extern char* cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_3(SurfOwnerE6* owner, int* key);
 
 /* Returns the surface entry for an index, or a static default for old formats. */
 typedef struct { SurfOwnerE6* owner; } SurfRefE6;
@@ -33,11 +33,11 @@ SurfE6* Col_DefaultSurface(SurfCtxE6* ctx, int index)
         if (D_004E9F98 == 0) {
             D_004E9FA0.a = 0;
             D_004E9FA2 = 0;
-            __register_global_object(&D_004E9FA0, func_00131BC0, &D_004F4FD0);
+            __register_global_object(&D_004E9FA0, cCollisionModel_FaceProperties_dtor, &D_004F4FD0);
             D_004E9F98 = 1;
         }
         return &D_004E9FA0;
     }
     key[0] = owner->key;
-    return (SurfE6*)(func_00183AF0(owner, key) + index * 16);
+    return (SurfE6*)(cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_3(owner, key) + index * 16);
 }

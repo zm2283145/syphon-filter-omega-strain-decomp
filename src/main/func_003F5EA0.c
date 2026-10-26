@@ -4,7 +4,7 @@ typedef struct { int m0; E5EA0* base; int head; int count; int size; } T5EA0;
 #pragma bool off
 #pragma opt_propagation off
 static inline int empty5EA0(T5EA0* q) { return q->count == 0; }
-E5EA0* func_003F5EA0(T5EA0* q)
+E5EA0* voBufGetTag(T5EA0* q)
 {
     int e = empty5EA0(q);
     if (e)

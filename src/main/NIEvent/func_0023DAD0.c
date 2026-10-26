@@ -13,24 +13,24 @@ typedef struct NodeObj {
     PtrVec kids;        /* 0x9C */
 } NodeObj;
 
-extern int func_0023DA80(PtrVec* v);
-extern int func_0023DA90(PtrVec* v);
-extern int* func_0023DAA0(PtrVec* v, int i);
-extern int* func_0023DAB0(PtrVec* v, int i);
-extern int func_0023DAC0(NodeObj* o);
+extern int std_vector_cNIEventBasePtr_size(PtrVec* v);
+extern int cArray_cNIEventBasePtr_Size(PtrVec* v);
+extern int* cArray_cNIEventBasePtr_opIndex(PtrVec* v, int i);
+extern int* std_vector_imp_cNIEventBasePtr_1_opIndex(PtrVec* v, int i);
+extern int cGOBJ_IsStreaming(NodeObj* o);
 extern int GameObject_IsCollisionEnabled(NodeObj* o);
-extern int func_0023D810(NodeObj* o, int flag);
+extern int cNIEventBase_NumChildrenActive(NodeObj* o, int flag);
 
 #define COUNTS(o, flag) (!(flag) || (o)->state == 3 || (o)->state == 1 || (o)->state == 6)
 
-int func_0023DAD0(NodeObj* self, int flag);
+int cNIEventBase_NumActiveInTree(NodeObj* self, int flag);
 
 static inline int L1(NodeObj* pp, int flag)
 {
     if (pp->parent) {
-        return func_0023DAD0(pp->parent, flag);
+        return cNIEventBase_NumActiveInTree(pp->parent, flag);
     } else {
-        return func_0023D810(pp, flag);
+        return cNIEventBase_NumChildrenActive(pp, flag);
     }
 }
 
@@ -44,14 +44,14 @@ static inline int L2(NodeObj* p, int flag)
         if (GameObject_IsCollisionEnabled(p)) {
             if (COUNTS(p, flag)) m++;
         }
-        for (k = 0; k < func_0023DA90(&p->kids); k++) {
-            m += func_0023D810(*(NodeObj**)func_0023DAA0(&p->kids, k), flag);
+        for (k = 0; k < cArray_cNIEventBasePtr_Size(&p->kids); k++) {
+            m += cNIEventBase_NumChildrenActive(*(NodeObj**)cArray_cNIEventBasePtr_opIndex(&p->kids, k), flag);
         }
         return m;
     }
 }
 
-int func_0023DAD0(NodeObj* self, int flag)
+int cNIEventBase_NumActiveInTree(NodeObj* self, int flag)
 {
     if (self->parent) {
         return L2(self->parent, flag);
@@ -59,19 +59,19 @@ int func_0023DAD0(NodeObj* self, int flag)
         int n = 0;
         int ok;
         int j;
-        ok = self->f2D != 0 && self->f2C != 0 && !(func_0023DAC0(self) != 0);
+        ok = self->f2D != 0 && self->f2C != 0 && !(cGOBJ_IsStreaming(self) != 0);
         if (ok) {
             if (COUNTS(self, flag)) n++;
         }
-        for (j = 0; j < func_0023DA80(&self->kids); j++) {
-            NodeObj* g = *(NodeObj**)func_0023DAB0(&self->kids, j);
+        for (j = 0; j < std_vector_cNIEventBasePtr_size(&self->kids); j++) {
+            NodeObj* g = *(NodeObj**)std_vector_imp_cNIEventBasePtr_1_opIndex(&self->kids, j);
             int m = 0;
             int k;
             if (GameObject_IsCollisionEnabled(g)) {
                 if (COUNTS(g, flag)) m++;
             }
-            for (k = 0; k < func_0023DA90(&g->kids); k++) {
-                m += func_0023D810(*(NodeObj**)func_0023DAA0(&g->kids, k), flag);
+            for (k = 0; k < cArray_cNIEventBasePtr_Size(&g->kids); k++) {
+                m += cNIEventBase_NumChildrenActive(*(NodeObj**)cArray_cNIEventBasePtr_opIndex(&g->kids, k), flag);
             }
             n += m;
         }

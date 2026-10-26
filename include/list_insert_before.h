@@ -34,7 +34,7 @@ struct ListInsertFlag {
 };
 
 struct ListNodeHolder;
-extern "C" void func_00139060(ListNodeHolder* holder);
+extern "C" void details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void(ListNodeHolder* holder);
 
 struct ListNodeHolder {
     int* alloc;
@@ -42,7 +42,7 @@ struct ListNodeHolder {
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~ListNodeHolder()
     {
         if (node) {
-            func_00139060(this);
+            details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void(this);
             ListIntNode* p = node;
             if (p) {
                 AllocGuard guard;

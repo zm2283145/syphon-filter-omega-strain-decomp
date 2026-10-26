@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-Rel* func_00427000(Rel* r) {
+Rel* std_vector_cArray_tTextElementPtr_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

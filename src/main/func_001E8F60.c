@@ -17,7 +17,7 @@ Iter* func_001E8F80(Iter* it) {
     return it;
 }
 
-void func_001E8FA0(Iter* out, PtrVec* v) {
+void std_vector_cTreeNode_cSkaSystemPtrPtr_end(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
 

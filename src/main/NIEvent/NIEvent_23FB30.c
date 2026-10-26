@@ -13,7 +13,7 @@
 #define PACK_PRE(e) MP_I(e, 0x1C) = 0x40;
 #define PACK_BODY(e, b) MP_I(b, 8) = MP_I(e, 0x24);
 
-DEFINE_MESSAGE_PACK_PRE(func_0023FB30, 12, D_004F7C40, PACK_PRE, PACK_BODY)
+DEFINE_MESSAGE_PACK_PRE(cNIShuttle_Pack, 12, D_004F7C40, PACK_PRE, PACK_BODY)
 #pragma pop /* merge_units */
 /* merge_units: end func_0023FB30 */
 
@@ -38,14 +38,14 @@ typedef struct { char pad[0x140]; VObj_23FBB0* obj; } LightP_23FBB0;
 extern "C" {
 extern char D_004DBED0[];
 extern char D_004DC190[];
-extern void func_002402A0(void* p, int f);
-extern void func_0023F3F0(void* p, int f);
-extern void func_0023F460(void* p, int f);
-extern void func_0023F4D0(void* p, int f);
+extern void std_vector_deleter_FloatKey_dtor(void* p, int f);
+extern void cArray_VisKey_dtor(void* p, int f);
+extern void cArray_VectorKey_dtor(void* p, int f);
+extern void cArray_cNIEventBasePtr_dtor(void* p, int f);
 extern void cGOBJ_dtor(void* p, int f);
 extern void operator_delete(void* p);
 }
-static inline void L4_23FBB0(void* p) { if (p) func_002402A0(p, 0); }
+static inline void L4_23FBB0(void* p) { if (p) std_vector_deleter_FloatKey_dtor(p, 0); }
 static inline void L3_23FBB0(void* p) { if (p) L4_23FBB0(p); }
 static inline void L2_23FBB0(void* p) { if (p) L3_23FBB0(p); }
 static inline void L2b_23FBB0(void* p) { if (p) L2_23FBB0(p); }
@@ -55,9 +55,9 @@ static inline void Base_23FBB0(Light_23FBB0* l)
 {
     if (l) {
         l->vt = D_004DC190;
-        func_0023F3F0(l->mC4, -1);
-        func_0023F460(l->mAC, -1);
-        func_0023F4D0(l->m9C, -1);
+        cArray_VisKey_dtor(l->mC4, -1);
+        cArray_VectorKey_dtor(l->mAC, -1);
+        cArray_cNIEventBasePtr_dtor(l->m9C, -1);
         cGOBJ_dtor(l, 0);
     }
 }

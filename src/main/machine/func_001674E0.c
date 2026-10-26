@@ -8,10 +8,10 @@ int Alloc_Unlock();
 int Archive_Open();                   
 char * Mem_Alloc(int, int, char *, int);                      
 int func_0027B680();                            
-char * func_0027B900(char * , int, char *);              
+char * cHudNetLobby_ctor(char * , int, char *);              
 int FileMan_FindMember();                             
 int FileMan_Release();                            
-int func_0036E4B0();                    
+int cFileMan_ctor_charP_cFileIOP_bool();                    
 int sprintf();                           
 extern char D_0048B2F8;
 extern char D_0049C390;
@@ -20,7 +20,7 @@ extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
 
 #pragma opt_common_subs off
-void func_001674E0(char * arg0) {
+void cMachine_CreateNetworkLobbyScreen(char * arg0) {
     int spE0[36];
     int sp40[40];
     int temp_s0;
@@ -28,7 +28,7 @@ void func_001674E0(char * arg0) {
 
     if (F_(arg0, 0x27C, int) == NULL) {
         sprintf(spE0, "%s\\COMMON\\IALOBBYN.HOG", &D_0048B2F8);
-        func_0036E4B0(sp40, spE0, 0, 0);
+        cFileMan_ctor_charP_cFileIOP_bool(sp40, spE0, 0, 0);
         if (!(FileMan_FindMember(sp40) & 0xFF)) {
             temp_s0 = Archive_Open(&D_004FFB8C, spE0, 0, 0);
             if (g_ProfileLockEnabled != 0) {
@@ -41,7 +41,7 @@ void func_001674E0(char * arg0) {
             }
             g_ProfileLockDepth -= 1;
             if (var_s2 != NULL) {
-                var_s2 = (char *)(func_0027B900(var_s2, temp_s0, "IALOBBYN"));
+                var_s2 = (char *)(cHudNetLobby_ctor(var_s2, temp_s0, "IALOBBYN"));
             }
             F_(arg0, 0x27C, int) = (int)(var_s2);
             F_(F_(arg0, 0x27C, int), 0x56, signed char) = 1;

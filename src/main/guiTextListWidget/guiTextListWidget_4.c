@@ -87,8 +87,8 @@ extern "C" {
 void String_CopyCtor(void* d, const void* s);
 extern char D_004BF5C0[];
 extern char D_004BF618[];
-void func_00422F10(TextListEntry* d, unsigned int n, const TextListEntry* v);
-void func_00422F80(TextListEntry* f, TextListEntry* l, TextListEntry* d);
+void std_fill_n_Item_int_fill_n(TextListEntry* d, unsigned int n, const TextListEntry* v);
+void std_copy_backward_Item_copy_backward(TextListEntry* f, TextListEntry* l, TextListEntry* d);
 }
 
 typedef struct Vec22 {
@@ -98,8 +98,8 @@ typedef struct Vec22 {
 } Vec22;
 
 extern "C" {
-void func_00422ED0(Vec22* a, Vec22* b);
-void func_00423000(Vec22* v, int flag);
+void std_swap_vectordeleterR_vectordeleterR_50(Vec22* a, Vec22* b);
+void std_vector_deleter_Item_dtor(Vec22* v, int flag);
 }
 
 static inline void construct(TextListEntry* p, const TextListEntry* v)
@@ -112,7 +112,7 @@ static inline void construct(TextListEntry* p, const TextListEntry* v)
 }
 
 #define T TextListEntry
-extern "C" void func_00422A50(Vec22* v, T* pos, unsigned int n, const T* value)
+extern "C" void std_vector_imp_Item_insert(Vec22* v, T* pos, unsigned int n, const T* value)
 {
     if (n == 0)
         return;
@@ -144,9 +144,9 @@ extern "C" void func_00422A50(Vec22* v, T* pos, unsigned int n, const T* value)
             }
             if (end - (after - n) <= value && value < end)
                 value += n;
-            func_00422F80(pos, pos + (after - n), end);
+            std_copy_backward_Item_copy_backward(pos, pos + (after - n), end);
         }
-        func_00422F10(pos, n, value);
+        std_fill_n_Item_int_fill_n(pos, n, value);
     } else {
         Vec22 tmp;
         T* dst;
@@ -186,8 +186,8 @@ extern "C" void func_00422A50(Vec22* v, T* pos, unsigned int n, const T* value)
             construct(dst, src);
             (*tcount)++;
         }
-        func_00422ED0(&tmp, v);
-        func_00423000(&tmp, -1);
+        std_swap_vectordeleterR_vectordeleterR_50(&tmp, v);
+        std_vector_deleter_Item_dtor(&tmp, -1);
     }
 }
 #pragma pop /* merge_units */

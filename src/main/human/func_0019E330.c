@@ -40,7 +40,7 @@ V* Placement_GetPosition(void* p);
 void Quat_Assign(V* d, V* s);
 void Vec4_Copy(V* d, V* s);
 V* Vec4_Assign(V* d, const V* s);
-V* func_0019E660(V* v, float w);
+V* cVector_SetW(V* v, float w);
 void NpcAi_GroundActor(Actor* a, int b, int c, float z);
 void Actor_NetPoseCorrection(Actor* self);
 }
@@ -81,7 +81,7 @@ static inline float GroundZ(const V& n, float x, float y) { float h = 0.0f; if (
 static inline void SetN(Body* b, const V& v) { b->n = v; }
 static inline float Abs(float x) { float r = 0.0f; asm { abs.s r, x } return r; }
 static inline float Clamp(float v, float lo, float hi) { float r = 0.0f; asm { max.s r, v, lo; min.s r, r, hi } return r; }
-static inline V AsDir(const V& v) { V t; V* r = func_0019E660(Vec4_Assign(&t, &v), 0.0f); return *r; }
+static inline V AsDir(const V& v) { V t; V* r = cVector_SetW(Vec4_Assign(&t, &v), 0.0f); return *r; }
 
 void Actor_NetPoseCorrection(Actor* self)
 {

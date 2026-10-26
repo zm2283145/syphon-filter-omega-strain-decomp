@@ -13,7 +13,7 @@
 typedef struct { int unk0; int items[1]; } Arr4;
 static inline Iter Iter_Make(int* p) { Iter it; it.p = p; return it; }
 /* Stores an iterator to the first element (at +4) into out. */
-void func_00163F60(Iter* out, Arr4* a) { Iter it = Iter_Make(a->items); out->p = it.p; }
+void std_list_cPathSystemRequestPtr_end_void_2(Iter* out, Arr4* a) { Iter it = Iter_Make(a->items); out->p = it.p; }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00163F60(void) {}
 #pragma pop /* merge_units */
@@ -27,7 +27,7 @@ static inline void merge_flush_func_00163F60(void) {}
  */
 
 
-Word* func_00163F90(Word* dst, Word* src) {
+Word* cConstLListIterator_cPathSystemRequestPtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }

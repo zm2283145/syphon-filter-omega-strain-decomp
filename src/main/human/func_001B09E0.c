@@ -10,7 +10,7 @@
 extern int PtrVec_Insert(PtrVec*, int*, int, int);
 
 /* push_back: insert one value at end(). */
-int func_001B09E0(PtrVec* v, int value) {
+int std_vector_cSkeletonCenterOfMassContributionPtr_push_back(PtrVec* v, int value) {
     int count = v->count;
     int* data = v->data;
 

@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern int func_0027D438(int);
+extern int sce_sync(int);
 
-int func_0027C540(void) {
-    return func_0027D438(1);
+int sceNetcnfifCheck(void) {
+    return sce_sync(1);
 }

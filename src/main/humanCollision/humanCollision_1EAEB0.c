@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-Word* func_001EAEB0(Word* dst, Word* src) {
+Word* cBitArray_19_opAssign(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
@@ -28,7 +28,7 @@ typedef struct F1 { unsigned char v; } F1;
 typedef struct EA { V4 a; V4 b; V4 c; F1 f; float g; V4 d; V4 e; } EA;
 /* GCC-style volatile lq/sq quad copy (c57da idiom): keeps the unfolded addiu address regs */
 static inline void V4_Copy(V4* d, const V4* s) { __int128 q; __asm__ volatile("lq %0, 0(%2); sq %0, 0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
-EA* func_001EAEC0(EA* d, const EA* s)
+EA* cCollisionEdge_opAssign(EA* d, const EA* s)
 {
     V4_Copy(&d->a, &s->a);
     V4_Copy(&d->b, &s->b);
@@ -53,7 +53,7 @@ EA* func_001EAEC0(EA* d, const EA* s)
 #include "loose00_types.h"
 
 /* 16-byte copy. */
-Quad* func_001EAF30(Quad* d, Quad* s) {
+Quad* cHumanCollisionRoutine_cIntermediateLedgeSearchInfo_cMasks_opAssign(Quad* d, Quad* s) {
     d->a = s->a;
     d->b = s->b;
     d->c = s->c;

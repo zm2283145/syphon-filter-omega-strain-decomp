@@ -4,17 +4,17 @@ extern void Message_GetScriptTypeKey();
 extern void cNetCreateBlastMsg_Clone();
 extern void cNetCreateBlastMsg_Serialize();
 extern void cNetCreateBlastMsg_dtor();
-extern void func_002C79E0();
-extern void func_002C79F0();
+extern void netCreateNPC_GetMsgType();
+extern void netCreatePlayer_GetMsgType();
 
 void *D_004DE130[6] = {
     0, 0, &cNetCreateBlastMsg_dtor, &cNetCreateBlastMsg_Clone,
     &cNetCreateBlastMsg_Serialize, &Message_GetScriptTypeKey,
 };
 
-void *D_004DE148[4] __attribute__((aligned(8))) = { 0, 0, &func_002C79E0, 0 };
+void *D_004DE148[4] __attribute__((aligned(8))) = { 0, 0, &netCreatePlayer_GetMsgType, 0 };
 
-void *D_004DE158[4] __attribute__((aligned(8))) = { 0, 0, &func_002C79F0, 0 };
+void *D_004DE158[4] __attribute__((aligned(8))) = { 0, 0, &netCreateNPC_GetMsgType, 0 };
 
 int D_004DE168[6] __attribute__((aligned(8))) = {
     0, 0, 0, 0,

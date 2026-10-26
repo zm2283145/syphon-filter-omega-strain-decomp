@@ -11,7 +11,7 @@
 #include "buf_holder_dtor.h"
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_0032D640)
+DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_GuiWidgetPtr_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0032D640 */
 
@@ -25,7 +25,7 @@ DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_0032D640)
 
 #include "types.h"
 
-Rel* func_0032D730(Rel* r) {
+Rel* std_vector_GuiWidgetPtr_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
@@ -39,9 +39,9 @@ Rel* func_0032D730(Rel* r) {
 typedef struct { char p0[0x14]; char set[1]; } Mgr32D750;
 extern void* Gui_GetScreenStack(void);
 extern Mgr32D750* Gui_GetScreenList(void);
-extern void func_002A88C0(int* it, void* set, int* key);
-extern void func_002A88B0(int* it, void* set);
-extern int func_002A8890(int* a, int* b);
+extern void cLList_GuiWidgetPtr_Find(int* it, void* set, int* key);
+extern void cLList_GuiWidgetPtr_End(int* it, void* set);
+extern int opNe_cLListIteratorR_cLListIteratorR_6(int* a, int* b);
 /* Returns o when it is the root widget or is registered with the manager, else 0. */
 void* GuiMessageBox_ValidateTarget_32D750(void* o)
 {
@@ -53,9 +53,9 @@ int end[1];
     if (o == Gui_GetScreenStack()) return o;
     key[0] = (int)o;
     m = Gui_GetScreenList();
-    func_002A88C0(it, m->set, key);
-    func_002A88B0(end, m->set);
-    return func_002A8890(it, end) ? o : 0;
+    cLList_GuiWidgetPtr_Find(it, m->set, key);
+    cLList_GuiWidgetPtr_End(end, m->set);
+    return opNe_cLListIteratorR_cLListIteratorR_6(it, end) ? o : 0;
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0032D750 */

@@ -6,9 +6,9 @@
 #include "types.h"
 #include "AgentData_types.h"
 
-extern int func_003371B0(ByteVec* v, char* pos, int n, int value);
+extern int std_vector_pod_eAchievementState_insert(ByteVec* v, char* pos, int n, int value);
 
 /* push_back(value) */
-int func_00336BD0(ByteVec* v, int value) {
-    return func_003371B0(v, v->data + v->count, 1, value);
+int std_vector_eAchievementState_push_back(ByteVec* v, int value) {
+    return std_vector_pod_eAchievementState_insert(v, v->data + v->count, 1, value);
 }

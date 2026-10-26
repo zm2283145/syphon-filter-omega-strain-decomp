@@ -1,5 +1,5 @@
 #include "types.h"
-extern void func_001F3940(void* s);
+extern void cLList_cSkaTransBLENDPtr_ctor(void* s);
 #pragma optimization_level 1
-void* func_001F3900(void* s) { func_001F3940(s); return s; }
+void* cSkaInitListOfPointers_cSkaTransBLEND_ctor(void* s) { cLList_cSkaTransBLENDPtr_ctor(s); return s; }
 #pragma optimization_level reset

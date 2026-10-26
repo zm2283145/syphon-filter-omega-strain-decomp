@@ -15,7 +15,7 @@ typedef struct {
     int val2;       /* 0x1044 */
     int x1048;      /* 0x1048 */
 } S_CD10;
-void func_0025CD10(S_CD10* s)
+void XLib_NewStrip(S_CD10* s)
 {
     int v;
     int i;

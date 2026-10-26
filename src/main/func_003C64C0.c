@@ -2,7 +2,7 @@
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
 #pragma push
 #pragma opt_common_subs off
-V4* func_003C64C0(V4* a, V4* b) {
+V4* cLineSegment_Transform(V4* a, V4* b) {
     char* pv1;
     char* pv0;
     asm {

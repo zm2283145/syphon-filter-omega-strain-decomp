@@ -12,13 +12,13 @@ extern char D_004BDC18[];
 extern char D_004BDC28[];
 void Mem_Free(int,void*,char*,int);
 void FileHal_Dtor(void*,int);
-void func_0036DEC0(void*);
+void cFileMan_Close(void*);
 void FileMan_Release(void*,int);
 void Resource_Construct(void*);
 void Script_PrintWarning(char*,...);
 void Script_SaveSymbolMarks();
 void FileMan_Open(void*,char*,int);
-void func_003DDC30(void*,void*);
+void cScriptInterpreter_exportData(void*,void*);
 }
 struct TypeRec { char pad[0x34]; void (*init)(int); };
 struct Registry { int n; int count; TypeRec** data; };
@@ -28,7 +28,7 @@ struct Stream {
  void* file; int size; char hog[0x9C]; void* owned; int a8,ac,b0,b4; unsigned char ready; char pad[3];
  Stream() { Resource_Construct(hog); file=0;size=0; }
  __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~Stream() {
-  func_0036DEC0(hog);
+  cFileMan_Close(hog);
   { void* p=file; if(p) { { AllocGuard g; FileHal_Dtor(p,-1); Mem_Free(0,p,D_004BDC28,0x45); } file=0; } }
   size=0;
   { void* p=owned; if(p) { AllocGuard g; Mem_Free(0,p,D_004BDC18,0x4B); } }
@@ -45,7 +45,7 @@ extern "C" int ScriptMgr_ExportSymbols(Self* self,int one,int two) {
   if(D_00559F18) {
    char* name="release.sss"; Stream s;
    FileMan_Open(&s,name,1);
-   if(s.ready) { func_003DDC30(self,&s);Script_PrintWarning("symbols exported to %s",name); }
+   if(s.ready) { cScriptInterpreter_exportData(self,&s);Script_PrintWarning("symbols exported to %s",name); }
    else Script_PrintWarning("couldn't export script symbols");
   }
  }

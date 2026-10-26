@@ -8,7 +8,7 @@
 #include "loose00_types.h"
 
 /* End pointer of an array of 0x1D0-byte records. */
-Elem1D0* func_001D7AD0(Vec1D0Array* v) {
+Elem1D0* std_vector_imp_cBone_end(Vec1D0Array* v) {
     int count;
     Elem1D0* data;
 
@@ -17,10 +17,10 @@ Elem1D0* func_001D7AD0(Vec1D0Array* v) {
     return data + count;
 }
 
-void func_001D7B00(Iter* out, void* self, Iter* src) {
+void std_vector_cBone_pointer2iterator(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }
 
-Elem1D0* func_001D7B10(Vec1D0Array* v) {
+Elem1D0* std_vector_imp_cBone_begin(Vec1D0Array* v) {
     return v->data;
 }

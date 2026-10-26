@@ -8,18 +8,18 @@
 
 extern "C" {
 extern RbTree D_00582720;
-void func_0042D100(TransferTimerIterator* result, RbTree* tree);
-TransferTimerIterator func_0042D0F0(RbTree* tree);
+void std_map_cString_cConsCommandPtr_begin(TransferTimerIterator* result, RbTree* tree);
+TransferTimerIterator std_map_cString_cConsCommandPtr_end_void_2(RbTree* tree);
 void func_0042D0E0(TransferTimerIterator* result, const TransferTimerIterator& source);
 void Tree_Successor(TransferTimerIterator* position);
-void func_00436C00(int* shared);
-void func_00436BA0(int* shared, short flags);
+void cNPCInfoObject_ctor(int* shared);
+void cNPCInfoObject_dtor(int* shared, short flags);
 cGOBJ* Object_LookupById(const GobjId* id);
-int func_004343E0(int* shared, unsigned int id);
-void func_00434600(int* shared, const GobjId* id, int peer);
+int cNPCInfoObject_GetOwner_uint(int* shared, unsigned int id);
+void cNPCInfoObject_SetOwner_cObjectIdR_int(int* shared, const GobjId* id, int peer);
 void func_004344C0(int* shared, const GobjId* id, int peer);
-void func_0042DA30(cGOBJ* object, int previousPeer, int nextPeer);
-void func_0042F760(RbTree* tree, TransferTimerIterator* position);
+void cNetObjectMgr_AddDeactivate(cGOBJ* object, int previousPeer, int nextPeer);
+void std_tree_pair_int_value_compare_erase_tree_5(RbTree* tree, TransferTimerIterator* position);
 }
 
 /* Expire transfer timers and retry ownership through the saved owner. */
@@ -30,28 +30,28 @@ extern "C" void func_0042CF30(void)
     GobjId key;
     TransferTimerIterator end;
     TransferTimerIterator begin;
-    func_0042D100(&begin, &D_00582720);
+    std_map_cString_cConsCommandPtr_begin(&begin, &D_00582720);
     position.node = begin.node;
     unsigned int now = retry_threshold();
-    func_00436C00(&shared);
+    cNPCInfoObject_ctor(&shared);
     TransferTimerNode* node;
-    while (func_0042D0E0(&end, func_0042D0F0(&D_00582720)),
+    while (func_0042D0E0(&end, std_map_cString_cConsCommandPtr_end_void_2(&D_00582720)),
            node = position.node, (node == end.node) ^ 1) {
         Tree_Successor(&position);
         if (node->deadline < now) {
             key.word = node->id.word;
             cGOBJ* object = Object_LookupById(&key);
             if (object) {
-                int peer = func_004343E0(&shared, node->id.word);
-                func_00434600(&shared, &((GobjEntry*)object)->id, -1);
+                int peer = cNPCInfoObject_GetOwner_uint(&shared, node->id.word);
+                cNPCInfoObject_SetOwner_cObjectIdR_int(&shared, &((GobjEntry*)object)->id, -1);
                 func_004344C0(&shared, &((GobjEntry*)object)->id, 0);
                 if (peer >= 0)
-                    func_0042DA30(object, 0, peer);
+                    cNetObjectMgr_AddDeactivate(object, 0, peer);
             }
             TransferTimerIterator erased;
             erased.node = node;
-            func_0042F760(&D_00582720, &erased);
+            std_tree_pair_int_value_compare_erase_tree_5(&D_00582720, &erased);
         }
     }
-    func_00436BA0(&shared, -1);
+    cNPCInfoObject_dtor(&shared, -1);
 }

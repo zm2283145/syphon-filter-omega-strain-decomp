@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_0031FC18(int a0, float f12) {
+void NellySetWFactorSase3200(int a0, float f12) {
     *(float*)((char*)a0 + 40) = f12;
 }

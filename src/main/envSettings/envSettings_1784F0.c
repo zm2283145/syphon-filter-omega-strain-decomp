@@ -31,31 +31,31 @@ extern "C" void cEnvSettings_v0C();
 extern "C" void cEnvSettings_v0E();
 extern "C" void cEnvSettings_v0F();
 extern "C" void GObj_GetID();
-extern "C" void func_0012ED00();
-extern "C" void func_0012ED30();
-extern "C" void func_0012ED40();
-extern "C" void func_0012ED50();
-extern "C" void func_0013E060();
-extern "C" void func_0013EE60();
+extern "C" void cSystem_SendCreated();
+extern "C" void cSystem_NetEnable();
+extern "C" void cSystem_NetDisable();
+extern "C" void cSystem_IsDeliverable();
+extern "C" void cGOBJ_GetFloorPlane();
+extern "C" void cGOBJ_GetBBox();
 extern "C" void func_00140E90();
 extern "C" void GObj_GetLifeState();
-extern "C" void func_00148870();
+extern "C" void cGOBJ_IsGeneratorCreated();
 extern "C" void Object_GetEye();
-extern "C" void func_00153860();
-extern "C" void func_0015BFB0();
-extern "C" void func_0015BFC0();
-extern "C" void func_0015BFD0();
-extern "C" void func_0015BFE0();
-extern "C" void func_0015BFF0();
-extern "C" void func_0015C000();
-extern "C" void func_0015C010();
-extern "C" void func_0015C020();
-extern "C" void func_0015C030();
-extern "C" void func_0015C040();
-extern "C" void func_0015C050();
-extern "C" void func_0015C080();
-extern "C" void func_0015C090();
-extern "C" void func_0015C0A0();
+extern "C" void cGOBJ_GetLosPosition();
+extern "C" void cGOBJ_HasHeadset();
+extern "C" void cGOBJ_SetStatus();
+extern "C" void cGOBJ_GetStatus();
+extern "C" void cGOBJ_GetChildList_void();
+extern "C" void cGOBJ_GetChildList_void_2();
+extern "C" void cGOBJ_ScaleBBox();
+extern "C" void cGOBJ_GetTargetPriority();
+extern "C" void cGOBJ_GetMovementState();
+extern "C" void cGOBJ_GetSubTargetAimAdjust();
+extern "C" void cGOBJ_GetNumSubTargets();
+extern "C" void cGOBJ_IsAimed();
+extern "C" void cGOBJ_InitNetwork();
+extern "C" void cGOBJ_IsNetworked();
+extern "C" void cGOBJ_CheckBullet();
 extern "C" void GObj_GetWorldMatrix();
 extern "C" void cNode_v3A();
 extern "C" void cGOBJ_v39();
@@ -93,7 +93,7 @@ extern "C" S_84F0* cEnvSettings_dtor(S_84F0* self, short flag)
     }
     return self;
 }
-void * const D_004D9E00[68] = { (void*)0x0, (void*)0x0, (void*)cEnvSettings_dtor, (void*)Object_HandleMessage, (void*)GObj_GetID, (void*)Object_GetAttachedOrSelf, (void*)func_0015C090, (void*)func_0012ED00, (void*)cNode_v06, (void*)cNode_v07, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)cEnvSettings_v0B, (void*)cEnvSettings_v0C, (void*)cNode_v0D, (void*)cEnvSettings_v0E, (void*)cEnvSettings_v0F, (void*)Actor_BaseLogicUpdate, (void*)Actor_BasePreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)cNode_v14, (void*)Object_Activate, (void*)Object_Deactivate, (void*)Node_SetFlag2C, (void*)Node_ClearFlag2C, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0015BFF0, (void*)func_0015BFE0, (void*)func_0013EE60, (void*)func_0015C000, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)cNode_v24, (void*)cNode_v25, (void*)cNode_v26, (void*)cNode_v27, (void*)cNode_v28, (void*)cNode_v29, (void*)cNode_v2A, (void*)cNode_v2B, (void*)func_0015C010, (void*)func_00153860, (void*)Object_GetEye, (void*)func_0015C020, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)Node_GetWorldMatrix, (void*)cGOBJ_v35, (void*)Node_GetLightRefPoint, (void*)PathObj_GetPosition, (void*)Node_GetComponentMatrix, (void*)cGOBJ_v39, (void*)cNode_v3A, (void*)GObj_GetWorldMatrix, (void*)func_0013E060, (void*)func_0015C080, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)GObj_GetLifeState, (void*)Controller_DeathNotice };
+void * const D_004D9E00[68] = { (void*)0x0, (void*)0x0, (void*)cEnvSettings_dtor, (void*)Object_HandleMessage, (void*)GObj_GetID, (void*)Object_GetAttachedOrSelf, (void*)cGOBJ_IsNetworked, (void*)cSystem_SendCreated, (void*)cNode_v06, (void*)cNode_v07, (void*)cSystem_NetEnable, (void*)cSystem_NetDisable, (void*)cSystem_IsDeliverable, (void*)cEnvSettings_v0B, (void*)cEnvSettings_v0C, (void*)cNode_v0D, (void*)cEnvSettings_v0E, (void*)cEnvSettings_v0F, (void*)Actor_BaseLogicUpdate, (void*)Actor_BasePreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)cNode_v14, (void*)Object_Activate, (void*)Object_Deactivate, (void*)Node_SetFlag2C, (void*)Node_ClearFlag2C, (void*)Node_GetFlag2C, (void*)cGOBJ_HasHeadset, (void*)cGOBJ_SetStatus, (void*)cGOBJ_GetStatus, (void*)cGOBJ_IsGeneratorCreated, (void*)cGOBJ_GetChildList_void_2, (void*)cGOBJ_GetChildList_void, (void*)cGOBJ_GetBBox, (void*)cGOBJ_ScaleBBox, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)cNode_v24, (void*)cNode_v25, (void*)cNode_v26, (void*)cNode_v27, (void*)cNode_v28, (void*)cNode_v29, (void*)cNode_v2A, (void*)cNode_v2B, (void*)cGOBJ_GetTargetPriority, (void*)cGOBJ_GetLosPosition, (void*)Object_GetEye, (void*)cGOBJ_GetMovementState, (void*)func_00140E90, (void*)cGOBJ_GetSubTargetAimAdjust, (void*)cGOBJ_GetNumSubTargets, (void*)cGOBJ_IsAimed, (void*)Node_GetWorldMatrix, (void*)cGOBJ_v35, (void*)Node_GetLightRefPoint, (void*)PathObj_GetPosition, (void*)Node_GetComponentMatrix, (void*)cGOBJ_v39, (void*)cNode_v3A, (void*)GObj_GetWorldMatrix, (void*)cGOBJ_GetFloorPlane, (void*)cGOBJ_InitNetwork, (void*)Actor_ApplyContactDamage, (void*)cGOBJ_CheckBullet, (void*)GObj_GetLifeState, (void*)Controller_DeathNotice };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001784F0(void) {}
 #pragma pop /* merge_units */
@@ -129,7 +129,7 @@ public:
 };
 #define VT(p) (*(void**)((char*)(p) + 4))
 #pragma opt_common_subs off
-extern "C" S_8580* func_00178580(S_8580* self, short flag)
+extern "C" S_8580* cAmbientLight_dtor(S_8580* self, short flag)
 {
     S_8580* s = self;
     if (s) {
@@ -148,7 +148,7 @@ extern "C" S_8580* func_00178580(S_8580* self, short flag)
     return s;
 }
 #pragma opt_common_subs reset
-void * const D_004D9F10[16] = { (void*)0x0, (void*)0x0, (void*)func_00178580, (void*)PointLightComp_Start, (void*)0x1479E0, (void*)func_00147A00, (void*)func_00147A10, (void*)func_001479A0, (void*)Light_GetCoronaSize, (void*)Light_GetCoronaFlag, (void*)Light_SetPosition, (void*)Light_Enable, (void*)Light_Disable, (void*)0x1479F0, (void*)0x0, (void*)0x0 };
+void * const D_004D9F10[16] = { (void*)0x0, (void*)0x0, (void*)cAmbientLight_dtor, (void*)PointLightComp_Start, (void*)0x1479E0, (void*)func_00147A00, (void*)func_00147A10, (void*)func_001479A0, (void*)Light_GetCoronaSize, (void*)Light_GetCoronaFlag, (void*)Light_SetPosition, (void*)Light_Enable, (void*)Light_Disable, (void*)0x1479F0, (void*)0x0, (void*)0x0 };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00178580(void) {}
 #pragma pop /* merge_units */
@@ -190,10 +190,10 @@ V4_178630* Vec4_SetFromVec3W(V4_178630* out, V3_178630* in, float w);
 void LevelLight_CreateDirectional(Light_178630* l, int a, V4_178630* c);
 int IdMgr_FindCollision(int region, int id);
 void* World_GetActorArray(void);
-Vec_178630* func_001339A0(void* arr);
+Vec_178630* cObjList_cGOBJPtr_GetList(void* arr);
 void PtrVec_Begin(It_178630* out, Vec_178630* v);
 void PtrVec_End(It_178630* out, Vec_178630* v);
-void func_00133980(It_178630* out, It_178630* in);
+void cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(It_178630* out, It_178630* in);
 }
 static inline int Read_178630(Reader_178630* r) { int v = *(int*)r->cur; r->cur += 4; return v; }
 static inline void ReadInt_178630(Reader_178630* r, int* out) { *out = *(int*)r->cur; r->cur += 4; }
@@ -274,10 +274,10 @@ extern "C" EnvSettings_178630* cEnvSettings_ctor(EnvSettings_178630* obj, Reader
     }
     if (find) {
         void* arr = World_GetActorArray();
-        PtrVec_End(&te, func_001339A0(arr));
-        func_00133980(&end, &te);
-        PtrVec_Begin(&tb, func_001339A0(arr));
-        func_00133980(&it, &tb);
+        PtrVec_End(&te, cObjList_cGOBJPtr_GetList(arr));
+        cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(&end, &te);
+        PtrVec_Begin(&tb, cObjList_cGOBJPtr_GetList(arr));
+        cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(&it, &tb);
         while (Ne_178630(&it, &end)) {
             Actor_178630* a = *it.p;
             if (a->type == 5 && hi == (a->id & 0xFF0000) >> 16) {

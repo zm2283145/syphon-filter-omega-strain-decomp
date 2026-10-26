@@ -24,7 +24,7 @@ typedef struct {
     ListNode_383150* sentinelPrev;
     ListNode_383150* first;
 } List_383150;
-extern "C" List_383150* func_00383150(List_383150* self, short deleteFlag); /* gsynth: defined below */
+extern "C" List_383150* std_list_int_dtor(List_383150* self, short deleteFlag); /* gsynth: defined below */
 #pragma pop
 #pragma cplusplus on
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
@@ -34,11 +34,11 @@ extern "C" List_383150* func_00383150(List_383150* self, short deleteFlag); /* g
 
 extern "C" {
 int RemoveIntcHandler(int, int);                            
-int func_00381080(char * );                            
+int cTexMan_FlushTextures(char * );                            
 #if 0 /* merge_units */
-int func_00383150(char * , int);
+int std_list_int_dtor(char * , int);
 #endif /* merge_units */
-#define func_00383150(a0, a1) ((int)func_00383150((List_383150 *)(a0), (short)(a1))) /* merge_units */
+#define std_list_int_dtor(a0, a1) ((int)std_list_int_dtor((List_383150 *)(a0), (short)(a1))) /* merge_units */
                          
 int operator_delete(char * );                          
 extern char D_004BC2B8;
@@ -53,7 +53,7 @@ extern "C" char * TexMan_Destroy(char * arg0, long long arg1) {
     if (arg0 != NULL) {
         Alloc_Lock(5);
         RemoveIntcHandler(5, F_(arg0, 0x490, int));
-        func_00381080(arg0);
+        cTexMan_FlushTextures(arg0);
         temp_s2 = F_(arg0, 0x8, int);
         {
             AllocGuard g;
@@ -61,15 +61,15 @@ extern "C" char * TexMan_Destroy(char * arg0, long long arg1) {
         }
         temp_a0 = arg0 + 0x434;
         if (temp_a0 != NULL) {
-            func_00383150(temp_a0, 0);
+            std_list_int_dtor(temp_a0, 0);
         }
         temp_a0_2 = arg0 + 0x428;
         if (temp_a0_2 != NULL) {
-            func_00383150(temp_a0_2, 0);
+            std_list_int_dtor(temp_a0_2, 0);
         }
         temp_a0_3 = arg0 + 0x41C;
         if (temp_a0_3 != NULL) {
-            func_00383150(temp_a0_3, 0);
+            std_list_int_dtor(temp_a0_3, 0);
         }
         if (((long long) (arg1 << 0x30) >> 0x30) > 0) {
             operator_delete(arg0);
@@ -77,7 +77,7 @@ extern "C" char * TexMan_Destroy(char * arg0, long long arg1) {
     }
     return arg0;
 }
-#undef func_00383150 /* merge_units */
+#undef std_list_int_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00383020(void) {}
 #pragma pop /* merge_units */
@@ -101,7 +101,7 @@ int operator_delete(void* allocation);
 
 }
 
-extern "C" List_383150* func_00383150(List_383150* self, short deleteFlag)
+extern "C" List_383150* std_list_int_dtor(List_383150* self, short deleteFlag)
 {
     if (self) {
         if (self) {
@@ -138,9 +138,9 @@ extern char D_004BC2B8[];
 extern int D_00539328;
 extern int D_00539330;
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
-void func_00383660(void* self);
+void std_list_deleter_int_ctor(void* self);
 int AddIntcHandler(int cause, void* handler, int next);
-void func_00381FB0(void);
+void cTexMan_VIF1InterruptCB(void);
 int TexCache_LoadErrorTexture(void* self);
 }
 
@@ -214,9 +214,9 @@ struct TexCache {
 extern "C" TexCache* TexMan_Construct(TexCache* self, unsigned int base, int cap)
 {
     int i;
-    func_00383660(self->m41C);
-    func_00383660(self->m428);
-    func_00383660(self->m434);
+    std_list_deleter_int_ctor(self->m41C);
+    std_list_deleter_int_ctor(self->m428);
+    std_list_deleter_int_ctor(self->m434);
     self->base = base;
     self->size = 0x4000;
     self->cap = cap;
@@ -236,7 +236,7 @@ extern "C" TexCache* TexMan_Construct(TexCache* self, unsigned int base, int cap
     self->u14 = 0;
     self->u15 = 0;
     self->u16 = 1;
-    self->handler = AddIntcHandler(5, (void*)func_00381FB0, 0);
+    self->handler = AddIntcHandler(5, (void*)cTexMan_VIF1InterruptCB, 0);
     Alloc_Unlock(5);
     *(volatile int*)0x10003010 = 4;
     {

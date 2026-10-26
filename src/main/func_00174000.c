@@ -6,24 +6,24 @@
 
 #include "types.h"
 
-void func_00174000(Iter* out, void* self, Iter* src) {
+void std_vector_cObjectId_pointer2iterator(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }
 
-int* func_00174010(PtrVec* v) {
+int* std_vector_imp_cObjectId_end(PtrVec* v) {
     return v->data + v->count;
 }
 
-int func_00174030(Iter* a, Iter* b) {
+int cArray_cObjectId_Iterator_opNe(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 
-Iter* func_00174050(Iter* it) {
+Iter* cArray_cObjectId_Iterator_opInc(Iter* it) {
     it->p++;
     return it;
 }
 
-Word* func_00174070(Word* dst, Word* src) {
+Word* cArray_cObjectId_Iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
@@ -33,14 +33,14 @@ int ObjectKey_Equals(Word* a, Word* b) {
     return a->value == b->value;
 }
 
-int* func_001740A0(Iter* it) {
+int* cArray_cObjectId_Iterator_opMul(Iter* it) {
     return it->p;
 }
 
-void func_001740B0(Iter* out, PtrVec* v) {
+void cArray_cObjectId_End_void(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
 
-void func_001740D0(Iter* out, PtrVec* v) {
+void cArray_cObjectId_Begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }

@@ -12,11 +12,11 @@ int Vector_Reserve_139920_Thunk(int a0, int a1) {
     return Vector_Reserve_139920(a0, a1);
 }
 
-int func_001361D0(char* self) {
+int cArrayCapacity_Int(char* self) {
     return *(int*)(self + 0);
 }
 
-Rel* func_001361E0(Rel* r) {
+Rel* std_vector_cCollisionFace_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

@@ -8,7 +8,7 @@
 
 extern char D_00497E2C[];
 
-int func_004684F0(void) {
+int MediusGetSystemMessageCallback(void) {
     int tmp0;
 
     tmp0 = *(int*)D_00497E2C;

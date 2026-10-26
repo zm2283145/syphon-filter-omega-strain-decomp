@@ -17,22 +17,22 @@ typedef struct {
 } Save7560;
 extern char D_004DE148[];
 extern int D_0051EE70;
-extern void func_002E9A10(void);
-extern int func_002E9A98(void* f, void* buf, int size, int count);
-extern int func_002E9F08(int* out, void* fn);
-extern void func_002C7810(void);
-void func_002C7560(void)
+extern void NetRegisterMessageStart(void);
+extern int NetMessageField(void* f, void* buf, int size, int count);
+extern int NetRegisterApplicationMessage(int* out, void* fn);
+extern void netCreatePlayer_netCreatePlayerCallback(void);
+void netCreatePlayer_InitNet(void)
 {
     int handle;
     Save7560 f;
     f.vtable = D_004DE148;
-    func_002E9A10();
-    if (func_002E9A98(&f, &f.version, 4, 1) == 0 &&
-        func_002E9A98(&f, f.header, 4, 6) == 0 &&
-        func_002E9A98(&f, &f.count, 4, 1) == 0 &&
-        func_002E9A98(&f, f.ids, 2, 6) == 0 &&
-        func_002E9A98(&f, f.data, 1, 0x400) == 0 &&
-        func_002E9F08(&handle, func_002C7810) == 0)
+    NetRegisterMessageStart();
+    if (NetMessageField(&f, &f.version, 4, 1) == 0 &&
+        NetMessageField(&f, f.header, 4, 6) == 0 &&
+        NetMessageField(&f, &f.count, 4, 1) == 0 &&
+        NetMessageField(&f, f.ids, 2, 6) == 0 &&
+        NetMessageField(&f, f.data, 1, 0x400) == 0 &&
+        NetRegisterApplicationMessage(&handle, netCreatePlayer_netCreatePlayerCallback) == 0)
         D_0051EE70 = handle;
 }
 #pragma pop /* merge_units */
@@ -51,8 +51,8 @@ extern char D_004DE158[];
 extern char D_004DE168[];
 extern unsigned char D_005721D0;
 extern unsigned char D_005723C8;
-extern void func_002C6690(void* msg, int target);
-extern void func_003FA8C0(int target, int id, void* msg, int flag);
+extern void netCreateNPC_HandleNetNPCCreate(void* msg, int target);
+extern void cNetObj_AddHumanToQueue(int target, int id, void* msg, int flag);
 }
 
 struct V6 { float f[6]; };
@@ -80,7 +80,7 @@ struct Msg7630 : MsgMid {
     }
 };
 
-extern "C" int func_002C7630(void* self, int unused, int target, Msg7630* src)
+extern "C" int netCreateNPC_netCreateNPCCallback(void* self, int unused, int target, Msg7630* src)
 {
     if (!D_005723C8) {
         D_005723C8 = 1;
@@ -88,10 +88,10 @@ extern "C" int func_002C7630(void* self, int unused, int target, Msg7630* src)
     Msg7630* s = src;
     if (D_005721D0) {
         if (D_005721D0) {
-            func_002C6690(s, target);
+            netCreateNPC_HandleNetNPCCreate(s, target);
         } else {
             Msg7630* p = new Msg7630(*s);
-            func_003FA8C0(target, s->id, p, 0);
+            cNetObj_AddHumanToQueue(target, s->id, p, 0);
         }
     }
     D_005723C8 = 0;

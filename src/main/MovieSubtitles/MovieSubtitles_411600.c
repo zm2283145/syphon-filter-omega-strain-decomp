@@ -72,21 +72,21 @@ static inline void merge_flush_func_00411600(void) {}
 #pragma cplusplus on
 extern "C" {
 extern void * const D_004E08B8[];
-void func_0036AF40(void* self, int flags);
+void cFont_dtor(void* self, int flags);
 void operator_delete(void* p);
 }
 struct V411730 { char pad[0x8A74]; void* vtable; };
-extern "C" V411730* func_00411730(V411730* self, short deleteFlag)
+extern "C" V411730* cSubtitleFont_dtor(V411730* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004E08B8);
-        func_0036AF40(self, 0);
+        cFont_dtor(self, 0);
         if (deleteFlag > 0)
             operator_delete(self);
     }
     return self;
 }
-void * const D_004E08B8[3] = { (void*)0x0, (void*)0x0, (void*)func_00411730 };
+void * const D_004E08B8[3] = { (void*)0x0, (void*)0x0, (void*)cSubtitleFont_dtor };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00411730(void) {}
 #pragma pop /* merge_units */

@@ -12,13 +12,13 @@ typedef struct { int h; char data[1]; } M;
 extern M D_0051F8D8;
 extern unsigned int D_0048C450;
 extern unsigned int D_005983F0;
-extern int func_002DD968(E **, unsigned int);
-extern void func_002E2DD0(R *, unsigned int);
-extern unsigned char func_002E2F30(E *, unsigned int, unsigned char, unsigned char *, char *, int *);
-extern int func_002DE5E8(signed char, unsigned int, unsigned int, unsigned int, int, void *, R *);
-extern int func_002DE880(signed char, unsigned int, int, unsigned int, int, void *);
+extern int NetIGetObject(E **, unsigned int);
+extern void NetGetFilteredObjectTargetClients(R *, unsigned int);
+extern unsigned char CheckFieldsForUpdate(E *, unsigned int, unsigned char, unsigned char *, char *, int *);
+extern int NetSendTargetClientBitmask(signed char, unsigned int, unsigned int, unsigned int, int, void *, R *);
+extern int NetSendDmeMessage(signed char, unsigned int, int, unsigned int, int, void *);
 
-int func_002E31D0(unsigned int id, unsigned char type, unsigned char kind)
+int SendGroupedFieldUpdate(unsigned int id, unsigned char type, unsigned char kind)
 {
     H h;
     R r;
@@ -32,23 +32,23 @@ int func_002E31D0(unsigned int id, unsigned char type, unsigned char kind)
     len = 0;
     fl = 0;
     if (id >= 0x1000) return 0x17;
-    ret = func_002DD968(&e, id);
+    ret = NetIGetObject(&e, id);
     if (ret != 0) return ret;
     if (e == 0) return ret;
-    if (e->f1 != 0) func_002E2DD0(&r, id);
+    if (e->f1 != 0) NetGetFilteredObjectTargetClients(&r, id);
     m = &D_0051F8D8;
     *(int *)&h = 0;
     h.id = id;
     h.f0 = e->f0;
     len = 4;
-    h.f1 = func_002E2F30(e, id, kind, &fl, m->data, &len);
+    h.f1 = CheckFieldsForUpdate(e, id, kind, &fl, m->data, &len);
     m->h = *(int *)&h;
     e->f28 = 0;
     fl |= type;
     e->f24 = 0;
     if (h.f1 == 0) return 0;
-    if (e->f1 != 0) func_002DE5E8(fl, D_0048C450, 0, D_005983F0, len, m, &r);
-    else func_002DE880(fl, D_0048C450, -1, D_005983F0, len, m);
+    if (e->f1 != 0) NetSendTargetClientBitmask(fl, D_0048C450, 0, D_005983F0, len, m, &r);
+    else NetSendDmeMessage(fl, D_0048C450, -1, D_005983F0, len, m);
     return 0;
 }
 /* merge_units: end func_002E31D0 */
@@ -73,17 +73,17 @@ extern int D_0058806C;
 extern unsigned int D_005983F4;
 extern int (*D_00590218[])(int, unsigned int);
 #if 0 /* merge_units */
-extern int func_002DD968(E_002E3340 **, unsigned int);
+extern int NetIGetObject(E_002E3340 **, unsigned int);
 #endif /* merge_units */
-#define func_002DD968(a0, a1) (func_002DD968((E * *)(a0), (a1))) /* merge_units */
+#define NetIGetObject(a0, a1) (NetIGetObject((E * *)(a0), (a1))) /* merge_units */
 
-extern int func_002E51B8(unsigned int, S **);
-extern unsigned char func_002E6090(unsigned int);
+extern int NetGetConnInfo(unsigned int, S **);
+extern unsigned char NetClientIndexToClientIndexPacket(unsigned int);
 extern char *String_Copy(char *, const char *);
 extern void *memcpy(void *, const void *, unsigned int);
-extern int func_002DB188(int *, unsigned int, int);
+extern int NetIGetClient(int *, unsigned int, int);
 
-int func_002E3340(int to, unsigned int id)
+int NetISendObjectFullUpdate(int to, unsigned int id)
 {
     H_002E3340 h;
     R r;
@@ -101,20 +101,20 @@ int func_002E3340(int to, unsigned int id)
     e = 0;
     s = 0;
     if (id >= 0x1000) return 0x17;
-    func_002DD968(&e, id);
+    NetIGetObject(&e, id);
     if (e == 0) return 0xA;
-    ret = func_002E51B8(D_0048C450, &s);
+    ret = NetGetConnInfo(D_0048C450, &s);
     if (ret != 0) return ret;
     if (s == 0) return ret;
     if (e->f1 != 0) {
-        if (to == -1) func_002E2DD0(&r, id);
+        if (to == -1) NetGetFilteredObjectTargetClients(&r, id);
         else if (D_00590218[e->f1](to, id) == 0) return 0;
     }
     t = &D_0058DF98[e->f0];
     if (t == 0) return 0xA;
     if (e->f4 != -1 && e->f4 != s->self) return 8;
     off = 0x24;
-    h.f0 = func_002E6090(e->f8);
+    h.f0 = NetClientIndexToClientIndexPacket(e->f8);
     h.id = id;
     h.f6 = e->f4;
     h.f1 = e->f0;
@@ -138,30 +138,30 @@ int func_002E3340(int to, unsigned int id)
     if (to == -1) {
         memcpy(e->f20, e->f1C, t->size);
         for (j = 0; j < s->n; j++) {
-            func_002DB188(&ok, D_0048C450, j);
+            NetIGetClient(&ok, D_0048C450, j);
             if (ok != 0) e->f38[j] = D_0058806C;
         }
     } else {
         e->f38[to] = D_0058806C;
     }
-    if (e->f1 != 0 && to == -1) func_002DE5E8(0x50, D_0048C450, 0, D_005983F4, off, D_0051FAD8, &r);
-    else func_002DE880(0x50, D_0048C450, to, D_005983F4, off, D_0051FAD8);
+    if (e->f1 != 0 && to == -1) NetSendTargetClientBitmask(0x50, D_0048C450, 0, D_005983F4, off, D_0051FAD8, &r);
+    else NetSendDmeMessage(0x50, D_0048C450, to, D_005983F4, off, D_0051FAD8);
     return 0;
 }
-#undef func_002DD968 /* merge_units */
+#undef NetIGetObject /* merge_units */
 /* merge_units: end func_002E3340 */
 
 /* merge_units: begin func_002E3718 */
-extern int func_002E4190(int *, unsigned int);
-extern int func_002DD9F8(unsigned int, char **);
+extern int NetIDataStreamBytesFree(int *, unsigned int);
+extern int NetGetStreamChannel(unsigned int, char **);
 #if 0 /* merge_units */
-extern int func_002E51B8(unsigned int, char **);
+extern int NetGetConnInfo(unsigned int, char **);
 #endif /* merge_units */
-#define func_002E51B8(a0, a1) (func_002E51B8((a0), (S * *)(a1))) /* merge_units */
+#define NetGetConnInfo(a0, a1) (NetGetConnInfo((a0), (S * *)(a1))) /* merge_units */
 
-extern int func_002F5508(char *, void *, int);
-extern int func_002F56F8(char *, int);
-int func_002E3718(unsigned int id, void *data, int len)
+extern int rt_circ_buf_store(char *, void *, int);
+extern int rt_circ_buf_normalize(char *, int);
+int NetIAddToDataStream(unsigned int id, void *data, int len)
 {
     char *p = 0;
     char *e = 0;
@@ -170,22 +170,22 @@ int func_002E3718(unsigned int id, void *data, int len)
     if (id >= 0x800) return 0x17;
     if (data == 0) return 0x17;
     if (len <= 0) return 0x17;
-    r = func_002E4190(&avail, id);
+    r = NetIDataStreamBytesFree(&avail, id);
     if (r) return r;
     if (avail < len) return 0x1F;
-    r = func_002DD9F8(id, &e);
+    r = NetGetStreamChannel(id, &e);
     if (r) return r;
     if (e == 0) return r;
-    r = func_002E51B8(D_0048C450, &p);
+    r = NetGetConnInfo(D_0048C450, &p);
     if (r) return r;
     if (p == 0) return r;
     if (*(int *)(p + 0x400) != *(int *)(e + 0xC)) return 9;
-    if (func_002F5508(e + 0x2C, data, len)) return 0x1F;
-    func_002F56F8(e + 0x2C, 1);
+    if (rt_circ_buf_store(e + 0x2C, data, len)) return 0x1F;
+    rt_circ_buf_normalize(e + 0x2C, 1);
     memcpy(*(void **)(e + 0x10), *(void **)(e + 0x3C), *(int *)(e + 0x34));
     return 0;
 }
-#undef func_002E51B8 /* merge_units */
+#undef NetGetConnInfo /* merge_units */
 /* merge_units: end func_002E3718 */
 
 /* merge_units: begin func_002E3830 */
@@ -207,7 +207,7 @@ typedef struct {
 #define ABS(x) ((x) < 0 ? -(x) : (x))
 #define SQ(x) ((x) * (x))
 
-int func_002E3830(Cmp2E3830* c, void* pa, void* pb)
+int ElementErrorExceedsThreshold(Cmp2E3830* c, void* pa, void* pb)
 {
     int ret = 0;
     if (c == 0) return ret;
@@ -330,12 +330,12 @@ extern E_002E3DE0 D_0058DF98[];
 #define D_0058DF98 ((E_002E3DE0*)&D_0058DF98) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_002E3830(T_002E3DE0 *, int, int);
+extern int ElementErrorExceedsThreshold(T_002E3DE0 *, int, int);
 #endif /* merge_units */
-#define func_002E3830(a0, a1, a2) (func_002E3830((Cmp2E3830 *)(a0), (void *)(a1), (void *)(a2))) /* merge_units */
+#define ElementErrorExceedsThreshold(a0, a1, a2) (ElementErrorExceedsThreshold((Cmp2E3830 *)(a0), (void *)(a1), (void *)(a2))) /* merge_units */
 
 
-unsigned char func_002E3DE0(A *a, int k, unsigned char n)
+unsigned char GlobalFieldErrorExceedsThreshold(A *a, int k, unsigned char n)
 {
     Msg m; Msg *mp = &m;
     E_002E3DE0 *e;
@@ -364,28 +364,28 @@ unsigned char func_002E3DE0(A *a, int k, unsigned char n)
         return 0;
     }
     for (i = 0; i < t->f8; i++) {
-        if (func_002E3830(t, p, q)) return 1;
+        if (ElementErrorExceedsThreshold(t, p, q)) return 1;
         p += t->f4;
         q += t->f4;
     }
     return 0;
 }
 #undef D_0058DF98 /* merge_units */
-#undef func_002E3830 /* merge_units */
+#undef ElementErrorExceedsThreshold /* merge_units */
 /* merge_units: end func_002E3DE0 */
 
 /* merge_units: begin func_002E3F20 */
 typedef struct { unsigned char type, f1, cb, f3, f4, pad5; unsigned short size; unsigned short f8; unsigned short len; } H_002E3F20;
 typedef struct { H_002E3F20 h; char payload[4]; } Out;
-extern int func_002F59F8(void *, unsigned char *);
+extern int rt_circ_buf_is_wrapped(void *, unsigned char *);
 #if 0 /* merge_units */
-extern int func_002F56F8(void *, int);
+extern int rt_circ_buf_normalize(void *, int);
 #endif /* merge_units */
-#define func_002F56F8(a0, a1) (func_002F56F8((char *)(a0), (a1))) /* merge_units */
+#define rt_circ_buf_normalize(a0, a1) (rt_circ_buf_normalize((char *)(a0), (a1))) /* merge_units */
 
-extern int func_002F5918(void *, char **);
+extern int rt_circ_buf_get_start_used_ptr(void *, char **);
 
-int func_002E3F20(Out *out, unsigned int id, int len)
+int NetGetDataStreamPacket(Out *out, unsigned int id, int len)
 {
     char *e = 0;
     char *data = 0;
@@ -396,7 +396,7 @@ int func_002E3F20(Out *out, unsigned int id, int len)
     if (out == 0) return 0;
     if (len <= 0) return 0;
     if (id >= 0x800) return 0;
-    if (func_002DD9F8(id, &e) != 0 || e == 0) return 0;
+    if (NetGetStreamChannel(id, &e) != 0 || e == 0) return 0;
     h.type = id;
     h.f1 = e[5];
     h.cb = e[3];
@@ -409,34 +409,34 @@ int func_002E3F20(Out *out, unsigned int id, int len)
     h.size = sz;
     h.f8 = f8;
     out->h = h;
-    if (func_002F59F8(e + 0x2C, &flag)) return 0;
+    if (rt_circ_buf_is_wrapped(e + 0x2C, &flag)) return 0;
     if (flag) {
-        if (func_002F56F8(e + 0x2C, 1)) return 0;
+        if (rt_circ_buf_normalize(e + 0x2C, 1)) return 0;
         memcpy(*(void **)(e + 0x10), *(void **)(e + 0x3C), *(int *)(e + 0x34));
     }
-    if (func_002F5918(e + 0x2C, &data)) return 0;
+    if (rt_circ_buf_get_start_used_ptr(e + 0x2C, &data)) return 0;
     memcpy(out->payload, data, len);
     return len + 0xC;
 }
-#undef func_002F56F8 /* merge_units */
+#undef rt_circ_buf_normalize /* merge_units */
 /* merge_units: end func_002E3F20 */
 
 /* merge_units: begin func_002E4078 */
 extern int D_00590318[];
 extern int D_005983F8;
 #if 0 /* merge_units */
-extern int func_002E51B8(unsigned int, char **);
+extern int NetGetConnInfo(unsigned int, char **);
 #endif /* merge_units */
-#define func_002E51B8(a0, a1) (func_002E51B8((a0), (S * *)(a1))) /* merge_units */
+#define NetGetConnInfo(a0, a1) (NetGetConnInfo((a0), (S * *)(a1))) /* merge_units */
 
-extern int func_002DD9B0(unsigned char **, unsigned int);
-extern int func_002DDB30(int *, unsigned int);
+extern int NetIGetDataStream(unsigned char **, unsigned int);
+extern int NetIGetSessionMasterClientIndex(int *, unsigned int);
 #if 0 /* merge_units */
-extern void func_002DE880(int, unsigned int, int, int, int, unsigned char *);
+extern void NetSendDmeMessage(int, unsigned int, int, int, int, unsigned char *);
 #endif /* merge_units */
-#define func_002DE880(a0, a1, a2, a3, a4, a5) ((void)func_002DE880((signed char)(a0), (a1), (a2), (unsigned int)(a3), (a4), (void *)(a5))) /* merge_units */
+#define NetSendDmeMessage(a0, a1, a2, a3, a4, a5) ((void)NetSendDmeMessage((signed char)(a0), (a1), (a2), (unsigned int)(a3), (a4), (void *)(a5))) /* merge_units */
 
-void func_002E4078(int x, unsigned int id)
+void SendCloseDataStream(int x, unsigned int id)
 {
     unsigned char *e = 0;
     char *p = 0;
@@ -444,29 +444,29 @@ void func_002E4078(int x, unsigned int id)
     unsigned char b[1];
     if (id >= 0x1000) return;
     if (D_0048C450 >= 4) return;
-    if (func_002E51B8(D_0048C450, &p)) return;
+    if (NetGetConnInfo(D_0048C450, &p)) return;
     if (p == 0) return;
-    if (func_002DD9B0(&e, id)) return;
+    if (NetIGetDataStream(&e, id)) return;
     if (p == 0) return;
-    if (func_002DDB30(&st, D_0048C450)) return;
+    if (NetIGetSessionMasterClientIndex(&st, D_0048C450)) return;
     if (st < 0) return;
     if (st >= 0x100) return;
     if (D_00590318[e[3]] && *(int *)(p + 0x400) != st && x == -1) x = st;
     b[0] = id;
-    func_002DE880(0x50, D_0048C450, x, D_005983F8, 1, b);
+    NetSendDmeMessage(0x50, D_0048C450, x, D_005983F8, 1, b);
 }
-#undef func_002E51B8 /* merge_units */
-#undef func_002DE880 /* merge_units */
+#undef NetGetConnInfo /* merge_units */
+#undef NetSendDmeMessage /* merge_units */
 /* merge_units: end func_002E4078 */
 
 /* merge_units: begin func_002E4190 */
 #if 0 /* merge_units */
-extern int func_002DD9F8(unsigned int, unsigned char **);
+extern int NetGetStreamChannel(unsigned int, unsigned char **);
 #endif /* merge_units */
-#define func_002DD9F8(a0, a1) (func_002DD9F8((a0), (char * *)(a1))) /* merge_units */
+#define NetGetStreamChannel(a0, a1) (NetGetStreamChannel((a0), (char * *)(a1))) /* merge_units */
 
-extern int func_002F5898(unsigned char *, int *);
-int func_002E4190(int *out, unsigned int id)
+extern int rt_circ_buf_get_avail(unsigned char *, int *);
+int NetIDataStreamBytesFree(int *out, unsigned int id)
 {
     unsigned char *p = 0;
     int v = 0;
@@ -474,17 +474,17 @@ int func_002E4190(int *out, unsigned int id)
     if (out == 0) return 0x17;
     *out = 0;
     if (id >= 0x800) return 0x17;
-    r = func_002DD9F8(id, &p);
+    r = NetGetStreamChannel(id, &p);
     if (r) return r;
     if (p == 0) return 0;
     if (p[0] != 2) return 9;
     if (p[4]) return 9;
     if (p + 0x2C == 0) return 9;
-    if (func_002F5898(p + 0x2C, &v) == 0) {
+    if (rt_circ_buf_get_avail(p + 0x2C, &v) == 0) {
         *out = v;
         return 0;
     }
     return 9;
 }
-#undef func_002DD9F8 /* merge_units */
+#undef NetGetStreamChannel /* merge_units */
 /* merge_units: end func_002E4190 */

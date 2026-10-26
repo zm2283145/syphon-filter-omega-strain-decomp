@@ -4,20 +4,20 @@
 #pragma mpwc_relax on
 int Vec4_Assign(char *, int);                          
 int SkelNodes_GetAt(char * , int);                     
-int func_001AF3A0(char *, char *);                        
-int func_001AF3C0(char *);                               
-int func_001AF410(char *);                             
-int func_001AF420(char *, char * );                       
-int func_001AF450(char *, char * );                       
-int func_001AF5C0(char *, char *);                        
-int func_001AF5E0(char *);                               
+int cArray_cBone_Iterator_opNe(char *, char *);                        
+int cArray_cBone_Iterator_opInc(char *);                               
+int cArray_cBone_Iterator_opArrow(char *);                             
+int cArray_cBone_End(char *, char * );                       
+int cArray_cBone_Begin(char *, char * );                       
+int cArray_cSkeletonBBoxContributionPtr_ConstIterator_opNe(char *, char *);                        
+int cArray_cSkeletonBBoxContributionPtr_ConstIterator_opInc(char *);                               
 int BoundSphere_Set(int, int, float);                     
-int func_001AF6B0(int);                             
-float func_001AF6C0(int);                             
-int func_001AF6D0(int);                             
-int *func_001AF6E0(char *);                            
-int func_001AF6F0(char *, int);                          
-int func_001AF710(char *, int);                          
+int cSkeletonBBoxContribution_ContributionPointOffset(int);                             
+float cSkeletonBBoxContribution_ContributionPointRadius(int);                             
+int cSkeletonBBoxContribution_BoneIndex(int);                             
+int *cArray_cSkeletonBBoxContributionPtr_ConstIterator_opMul(char *);                            
+int cArray_cSkeletonBBoxContributionPtr_End(char *, int);                          
+int cArray_cSkeletonBBoxContributionPtr_Begin(char *, int);                          
 int BoundSphere_Reset(int);                               
 int SkelNode_GetBoundSphere(int);                             
 extern int D_004EE9D8;
@@ -38,23 +38,23 @@ void Human_ApplyBoundSpheres(char * arg0) {
     temp_s0 = D_004EE9D8;
     temp_s1 = arg0 + 0x2E50;
     if (F_(arg0, 0x2E64, unsigned char) != 0) {
-        func_001AF450(&sp5C, temp_s1 + 0x18);
-        func_001AF420(&sp58, temp_s1 + 0x18);
-        if (func_001AF3A0(&sp5C, &sp58) != 0) {
+        cArray_cBone_Begin(&sp5C, temp_s1 + 0x18);
+        cArray_cBone_End(&sp58, temp_s1 + 0x18);
+        if (cArray_cBone_Iterator_opNe(&sp5C, &sp58) != 0) {
             do {
-                BoundSphere_Reset(SkelNode_GetBoundSphere(func_001AF410(&sp5C)));
-                func_001AF3C0(&sp5C);
-            } while (func_001AF3A0(&sp5C, &sp58) != 0);
+                BoundSphere_Reset(SkelNode_GetBoundSphere(cArray_cBone_Iterator_opArrow(&sp5C)));
+                cArray_cBone_Iterator_opInc(&sp5C);
+            } while (cArray_cBone_Iterator_opNe(&sp5C, &sp58) != 0);
         }
-        func_001AF710(&sp54, temp_s0);
-        func_001AF6F0(&sp50, temp_s0);
-        if (func_001AF5C0(&sp54, &sp50) != 0) {
+        cArray_cSkeletonBBoxContributionPtr_Begin(&sp54, temp_s0);
+        cArray_cSkeletonBBoxContributionPtr_End(&sp50, temp_s0);
+        if (cArray_cSkeletonBBoxContributionPtr_ConstIterator_opNe(&sp54, &sp50) != 0) {
             do {
-                temp_s0_2 = SkelNode_GetBoundSphere(SkelNodes_GetAt(temp_s1 + 0x18, func_001AF6D0(*func_001AF6E0(&sp54))));
-                temp_f20 = func_001AF6C0(*func_001AF6E0(&sp54));
-                BoundSphere_Set(temp_s0_2, Vec4_Assign(sp40, func_001AF6B0(*func_001AF6E0(&sp54))), temp_f20);
-                func_001AF5E0(&sp54);
-            } while (func_001AF5C0(&sp54, &sp50) != 0);
+                temp_s0_2 = SkelNode_GetBoundSphere(SkelNodes_GetAt(temp_s1 + 0x18, cSkeletonBBoxContribution_BoneIndex(*cArray_cSkeletonBBoxContributionPtr_ConstIterator_opMul(&sp54))));
+                temp_f20 = cSkeletonBBoxContribution_ContributionPointRadius(*cArray_cSkeletonBBoxContributionPtr_ConstIterator_opMul(&sp54));
+                BoundSphere_Set(temp_s0_2, Vec4_Assign(sp40, cSkeletonBBoxContribution_ContributionPointOffset(*cArray_cSkeletonBBoxContributionPtr_ConstIterator_opMul(&sp54))), temp_f20);
+                cArray_cSkeletonBBoxContributionPtr_ConstIterator_opInc(&sp54);
+            } while (cArray_cSkeletonBBoxContributionPtr_ConstIterator_opNe(&sp54, &sp50) != 0);
         }
     }
 }

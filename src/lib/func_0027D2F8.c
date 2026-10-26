@@ -2,7 +2,7 @@ typedef struct { int currentCount; int maxCount; int initCount; int numWaitThrea
 extern int CreateSema(SemaParamD2F8 *);
 unsigned int D_0048B378[2] = { 0xFFFFFFFF, 0x0 };
 
-int func_0027D2F8(void)
+int sce_create_sema(void)
 {
     SemaParamD2F8 p;
     if ((*(volatile int*)D_0048B378) >= 0) return -1;

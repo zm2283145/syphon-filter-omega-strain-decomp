@@ -14,7 +14,7 @@ extern void Event_Construct(Msg* msg, void* name);
 extern void Event_Send(Msg* msg, void* target, int flags);
 extern void cMessage_dtor(Msg* msg, int flags);
 /* When enabled and the owner is valid, sends the player a timed message (60). */
-void func_0024AA70(void* self, int enable, Player* p)
+void cPlayerControls_HandleReloadButtonPress(void* self, int enable, Player* p)
 {
     Msg msg;
     if (enable && WeaponInv_AllowsAction(p->owner)) {

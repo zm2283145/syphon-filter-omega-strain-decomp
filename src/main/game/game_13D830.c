@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-Word* func_0013D830(Word* dst, Word* src) {
+Word* cConstLListIterator_cScenePtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
@@ -27,7 +27,7 @@ typedef struct { int value; } Handle;
 typedef struct { int unk0; int unk4; int value; } HSrc;
 
 /* Writes a handle holding the source's field at +8 to *out. */
-void func_0013D840(Handle* out, HSrc* s)
+void std_list_cScenePtr_begin(Handle* out, HSrc* s)
 {
     Handle h;
     Handle tmp;
@@ -43,7 +43,7 @@ void func_0013D840(Handle* out, HSrc* s)
 #include "loose00_types.h"
 
 /* Iterator from a node pointer (passed through the stack). */
-Iter* func_0013D870(Iter* out, int* node) {
+Iter* std_list_cScenePtr_generic_iterator_1_ctor(Iter* out, int* node) {
     int* volatile tmp = node; /* stored to the stack and reloaded */
 
     out->p = tmp;

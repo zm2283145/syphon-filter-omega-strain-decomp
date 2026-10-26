@@ -1,7 +1,7 @@
 typedef struct { unsigned char state; char name[0x11]; unsigned short port; int x14[2]; int x1C[2]; } E2E5AA8;
 extern E2E5AA8 D_00520358[];
 extern int String_CompareN(unsigned char *, char *, int);
-int func_002E5AA8(unsigned char *name, unsigned int *out, unsigned short *cnt)
+int NetFindEchoSlotForIP(unsigned char *name, unsigned int *out, unsigned short *cnt)
 {
     unsigned int i;
     int found = 0;

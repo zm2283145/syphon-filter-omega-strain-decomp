@@ -25,12 +25,12 @@ typedef struct {
 } Out_320688;
 
 extern int func_00323248(void);
-extern void func_00323550(Ctx_320688 *c);
-extern void func_003235B8(Ctx_320688 *c);
-extern void func_0031F3D8(void *st, void *in, int *a4, void *out, unsigned short len,
+extern void VU0Save(Ctx_320688 *c);
+extern void VU0Restore(Ctx_320688 *c);
+extern void NellyDecodeSase3200(void *st, void *in, int *a4, void *out, unsigned short len,
                           unsigned short *posE, unsigned char *b10, float *m1, float *m2, float *f);
 
-int func_00320688(Ctx_320688 *c, Buf_320688 *b, Out_320688 *o)
+int nciDecodeVoicePropSase3200(Ctx_320688 *c, Buf_320688 *b, Out_320688 *o)
 {
     float m1[12];
     float m2[16];
@@ -47,13 +47,13 @@ int func_00320688(Ctx_320688 *c, Buf_320688 *b, Out_320688 *o)
     if (b->b10 >= 8) return 0x17F7;
     if (b->b14 >= 8) return 0x17FC;
     c->cur = b;
-    if (func_00323248() == 3) func_00323550(c);
-    func_0031F3D8(c->st, b->in, &b->a4, b->out, b->len, &b->posE, &b->b10, m1, m2, &f);
+    if (func_00323248() == 3) VU0Save(c);
+    NellyDecodeSase3200(c->st, b->in, &b->a4, b->out, b->len, &b->posE, &b->b10, m1, m2, &f);
     if (o != 0) {
         o->f = f;
         for (i = 0; i < 12; i++) o->a[i] = m2[i];
         for (i = 0; i < 12; i++) o->b[i] = m1[i];
     }
-    if (func_00323248() == 3) func_003235B8(c);
+    if (func_00323248() == 3) VU0Restore(c);
     return 0;
 }

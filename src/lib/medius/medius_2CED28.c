@@ -11,7 +11,7 @@ extern char D_0048C3F4[];
 extern char D_0048C3F8[];
 extern char D_0048C3FC[];
 
-int func_002CED28(void) {
+int GlobalMediusTypeServerCreateGameCallback(void) {
     int v0;
     int cond;
 
@@ -26,7 +26,7 @@ ret:
     return v0;
 }
 
-int func_002CED58(void) {
+int GlobalMediusTypeServerCreateGameOnMeCallback(void) {
     int v0;
     int cond;
 
@@ -41,7 +41,7 @@ ret:
     return v0;
 }
 
-int func_002CED88(void) {
+int GlobalMediusTypeServerEndGameOnMeCallback(void) {
     int v0;
     int cond;
 
@@ -56,7 +56,7 @@ ret:
     return v0;
 }
 
-int func_002CEDB8(void) {
+int GlobalMediusTypeServerWorldStatusCallback(void) {
     int v0;
     int cond;
 

@@ -8,7 +8,7 @@
 #include "loose04_types.h"
 
 /* Initializes an empty vector header (also used as a member initializer by Resource_Construct). */
-L4OwnedVec* func_003EBEF0(L4OwnedVec* self) {
+L4OwnedVec* cFSHandle_ctor(L4OwnedVec* self) {
     self->vec.unk0 = 0;
     self->vec.data = 0;
     self->vec.count = 0;

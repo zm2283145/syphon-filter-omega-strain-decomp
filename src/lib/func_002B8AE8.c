@@ -1,7 +1,7 @@
 extern unsigned short D_00513DC0[];
 extern int func_002BB2D0(int, unsigned short *, unsigned int, int);
-extern unsigned int func_002B6D20(int, unsigned int, int *);
-int func_002B8AE8(int dev, unsigned int cl, int n, int *err)
+extern unsigned int _sceMcFatGetNextClust(int, unsigned int, int *);
+int _GetFreeEntrySize(int dev, unsigned int cl, int n, int *err)
 {
     int cnt = 0;
     *err = 0;
@@ -17,7 +17,7 @@ int func_002B8AE8(int dev, unsigned int cl, int n, int *err)
             p += 0x100;
             if (--n == 0) { int r = cnt + 1; if (i) r = cnt; return r; }
         }
-        cl = func_002B6D20(dev, cl, err);
+        cl = _sceMcFatGetNextClust(dev, cl, err);
         if (*err) return -1;
         if (cl == 0xFFFFFFFF) return cnt;
         cl &= 0x7FFFFFFF;

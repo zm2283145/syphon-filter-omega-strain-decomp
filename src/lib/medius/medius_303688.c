@@ -8,7 +8,7 @@
 
 extern int RtUdp_UpdateRegular(int);
 
-int func_00303688(int a0) {
+int rt_p2p_tick(int a0) {
     int v0, v1;
     int cond;
 

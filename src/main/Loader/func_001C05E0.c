@@ -6,11 +6,11 @@
 #include "types.h"
 #include "Loader_types.h"
 
-extern PtrVec* func_001C0700(PtrVec* v);
+extern PtrVec* std_vector_imp_cSkaNodePtr_1_ctor(PtrVec* v);
 
 /* Construct an empty vector that owns its elements. */
-LoaderOwnedVec* func_001C05E0(LoaderOwnedVec* self) {
-    func_001C0700(&self->vec);
+LoaderOwnedVec* cArray_cSkaNodePtr_ctor(LoaderOwnedVec* self) {
+    std_vector_imp_cSkaNodePtr_1_ctor(&self->vec);
     self->owns = 1;
     return self;
 }

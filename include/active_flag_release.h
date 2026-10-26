@@ -3,7 +3,7 @@
 
 /*
  * When the object's active flag (+0x80) is set: run the common stop
- * routine func_0033F0C0(self), hand the current manager object (if any)
+ * routine GuiMissionLobbyScreen_ExitLobbyScreen(self), hand the current manager object (if any)
  * to releaseFn, then clear the flag.
  */
 typedef struct ActiveFlagObj {
@@ -11,7 +11,7 @@ typedef struct ActiveFlagObj {
     unsigned char active;
 } ActiveFlagObj;
 
-extern void func_0033F0C0(ActiveFlagObj* self);
+extern void GuiMissionLobbyScreen_ExitLobbyScreen(ActiveFlagObj* self);
 extern void* DME_GetLobby(void);
 
 #define DEFINE_ACTIVE_FLAG_RELEASE(name, releaseFn)                           \
@@ -20,7 +20,7 @@ extern void* DME_GetLobby(void);
     {                                                                         \
         if (self->active) {                                                   \
             void* p;                                                          \
-            func_0033F0C0(self);                                              \
+            GuiMissionLobbyScreen_ExitLobbyScreen(self);                                              \
             p = DME_GetLobby();                                               \
             if (p)                                                            \
                 releaseFn(p);                                                 \

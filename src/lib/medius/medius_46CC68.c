@@ -8,11 +8,11 @@
 
 extern char D_00497D3C[];
 
-int func_0046CC68(void) {
+int MediusUniqueCallbackJoinGameRequestHandler(void) {
     return 196;
 }
 
-int func_0046CC70(void) {
+int MediusUniqueCallbackJoinGameResponseHandler(void) {
     int v0;
     int cond;
 

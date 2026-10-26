@@ -32,9 +32,9 @@ struct HuSelf {
 extern "C" {
 HuTarget* Object_LookupById(int* id);
 void WeaponInv_EquipItem(HuInv* inv, int id);
-void func_002D7ED0(HuSelf* s, HuTarget* t);
+void cNetPlayer_AimWeapon(HuSelf* s, HuTarget* t);
 }
-extern "C" void func_002D83C0(HuSelf* s)
+extern "C" void cNetPlayer_NextFrame(HuSelf* s)
 {
     HuTarget* t = 0;
     if (!s->ref) {
@@ -65,7 +65,7 @@ extern "C" void func_002D83C0(HuSelf* s)
                 t = 0;
         }
     }
-    func_002D7ED0(s, t);
+    cNetPlayer_AimWeapon(s, t);
 }
 
 

@@ -9,7 +9,7 @@ extern int GuiManager_FindOrLoad(void* a, const char* b, const char* c);
 extern void* Gui_GetScreenStack(void);
 extern void GuiStack_SwapScreens(void* a, int b, int c);
 /* Look up an entry and register it with `arg`. */
-void func_00340C00(int arg)
+void GuiAgentModify_NextScreen(int arg)
 {
     int entry;
     AgentPartCache_Unlock(g_AgentPartCache);

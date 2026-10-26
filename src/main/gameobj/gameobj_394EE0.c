@@ -36,7 +36,7 @@ typedef struct Obj394EE0 {
 } Obj394EE0;
 
 extern void* Fstream_GetLoader(void);
-extern void func_003EAA40(void* mgr, Res394EE0* r);
+extern void cFileStreamMan_IsStreamRequestDone(void* mgr, Res394EE0* r);
 extern int FileMan_ReadData(Res394EE0* r);
 extern void Hog_OpenInMemory(void* ctx, void* data, int size, int z);
 extern int String_CompareNoCase(char* a, char* b);
@@ -46,8 +46,8 @@ extern void Col_Load(void* c, Hog394EE0* h);
 extern void Object_Deactivate(Obj394EE0* o, int arg);
 extern void Model_Unload(Model394EE0* m);
 extern void* g_TextureMgr;
-extern void func_003814D0(void* mgr, Hog394EE0* h);
-extern void func_003C1790(void* c);
+extern void cTexMan_RemoveTextureHOG(void* mgr, Hog394EE0* h);
+extern void cCollisionModelMaster_UnLoad(void* c);
 
 static inline void LoadCol(void* c, Hog394EE0* h) { if (c) Col_Load(c, h); }
 static inline unsigned char Model_IsLoaded(Model394EE0* m) { return m->loaded != 0; }
@@ -59,14 +59,14 @@ void cVUM_GOBJ_Deactivate(Obj394EE0* o, int arg)
         if (r->b94 && Model_IsLoaded(o->model) && o->model->x28 == 0) {
             Model_Unload(o->model);
             if (!o->b1F2 && String_CompareNoCase(o->h1E4->name, o->h1E8->name) == 0)
-                func_003814D0(g_TextureMgr, o->h1E4);
-            if (o->col) func_003C1790(o->col);
+                cTexMan_RemoveTextureHOG(g_TextureMgr, o->h1E4);
+            if (o->col) cCollisionModelMaster_UnLoad(o->col);
             o->b2E = 1;
             if (o->b1F2 && o->x64 == 0) {
                 Res394EE0* r2 = o->res;
                 Hog_OpenInMemory(o->x74, r2->data, FileMan_ReadData(r2), 0);
                 Hog_Register(o->h1E4, o->h1E4->data, o->x74, 0);
-                func_003814D0(g_TextureMgr, o->h1E4);
+                cTexMan_RemoveTextureHOG(g_TextureMgr, o->h1E4);
             }
         }
         if (o->x60 && !Model_IsLoaded(o->model)) o->b2E = 1;
@@ -109,9 +109,9 @@ typedef struct Obj395050 {
     unsigned char b1F2;
 } Obj395050;
 #if 0 /* merge_units */
-extern void func_003EAA40(void* mgr, Res395050* r);
+extern void cFileStreamMan_IsStreamRequestDone(void* mgr, Res395050* r);
 #endif /* merge_units */
-#define func_003EAA40(a0, a1) (func_003EAA40((a0), (void *)(a1))) /* merge_units */
+#define cFileStreamMan_IsStreamRequestDone(a0, a1) (cFileStreamMan_IsStreamRequestDone((a0), (void *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int FileMan_ReadData(Res395050* r);
@@ -143,7 +143,7 @@ void cVUM_GOBJ_Activate(Obj395050* o, int arg)
     Res395050* r = o->res;
     if (r->flags & 4) {
         if (!Model_IsLoaded_00395050(o->model)) {
-            func_003EAA40(Fstream_GetLoader(), r);
+            cFileStreamMan_IsStreamRequestDone(Fstream_GetLoader(), r);
             r = o->res;
             Hog_OpenInMemory(o->x74, r->data, FileMan_ReadData(r), 0);
             if (String_CompareNoCase(o->h1E4->name, o->h1E8->name) == 0)
@@ -162,7 +162,7 @@ void cVUM_GOBJ_Activate(Obj395050* o, int arg)
     o->b2C = 1;
     Object_Activate(o, arg);
 }
-#undef func_003EAA40 /* merge_units */
+#undef cFileStreamMan_IsStreamRequestDone /* merge_units */
 #undef FileMan_ReadData /* merge_units */
 #undef Hog_Register /* merge_units */
 #undef Model_Load /* merge_units */

@@ -38,7 +38,7 @@ struct SkaClip : ClipBase {
     ~SkaClip() { vt = (void*)D_004DFC30; }
 };
 extern "C" float Math_FMod(float x, float y);
-extern "C" SkaClip* func_003B2C50(SkaClip* self, const SkaClip* o, unsigned char mode)
+extern "C" SkaClip* cSkaAnim_ctor_cSkaAnimR_eModifier(SkaClip* self, const SkaClip* o, unsigned char mode)
 {
     V u(Unit());
     self->vt = D_004DFC50;

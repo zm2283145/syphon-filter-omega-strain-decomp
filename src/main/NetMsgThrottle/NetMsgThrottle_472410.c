@@ -5,22 +5,22 @@ struct TENode_func_00472410 { TENode_func_00472410* left; TENode_func_00472410* 
 extern "C" {
 void* func_004728C0(void* t);
 void* func_00472880(void* t);
-void func_00472890(void* a, void* v);
-void func_00472820(void* a, TENode_func_00472410* n, int count);
-void func_00472740(TENode_func_00472410* n, int a, int b, char* file, int ln);
-void func_00471FF0(void* v, int flags);
+void cAllocator_pair_int_destroy_pairP_7(void* a, void* v);
+void cAllocator_node_deallocate_nodeP_uint_19(void* a, TENode_func_00472410* n, int count);
+void opDelete_nodeP_int_bool_charP_etc_19(TENode_func_00472410* n, int a, int b, char* file, int ln);
+void std_pair_int_sMsgTypeInfo_dtor(void* v, int flags);
 void func_00135C90(void* v, int flags);
-void func_00472410(void* t, TENode_func_00472410* x);
+void std_tree_pair_int_value_compare_destroy_nodeP_6(void* t, TENode_func_00472410* x);
 void operator_delete(void* p);
 }
 static inline void L2_func_00472410(void* t, TENode_func_00472410* g)
 {
     if (g->left)
-        func_00472410(t, g->left);
+        std_tree_pair_int_value_compare_destroy_nodeP_6(t, g->left);
     if (g->right)
-        func_00472410(t, g->right);
-    func_00472890(func_004728C0(t), (char*)g + 0xC);
-    func_00472820(func_00472880(t), g, 1);
+        std_tree_pair_int_value_compare_destroy_nodeP_6(t, g->right);
+    cAllocator_pair_int_destroy_pairP_7(func_004728C0(t), (char*)g + 0xC);
+    cAllocator_node_deallocate_nodeP_uint_19(func_00472880(t), g, 1);
 }
 static inline void L1_func_00472410(void* t, TENode_func_00472410* c)
 {
@@ -30,15 +30,15 @@ static inline void L1_func_00472410(void* t, TENode_func_00472410* c)
     if ((g = c->right) != 0)
         L2_func_00472410(t, g);
     func_004728C0(t);
-    func_00471FF0((char*)c + 0xC, -1);
+    std_pair_int_sMsgTypeInfo_dtor((char*)c + 0xC, -1);
     func_00472880(t);
     if (c)
-        func_00472740(c, 0, 0, "allocator.hh", 0x64);
+        opDelete_nodeP_int_bool_charP_etc_19(c, 0, 0, "allocator.hh", 0x64);
 }
 static inline void D3_func_00472410(void* p) { if (p) { if (p) func_00135C90(p, 0); } }
 static inline void D2_func_00472410(void* p) { if (p) D3_func_00472410(p); }
 static inline void D1_func_00472410(char* v) { if (v) D2_func_00472410(v + 4); }
-extern "C" void func_00472410(void* t, TENode_func_00472410* x)
+extern "C" void std_tree_pair_int_value_compare_destroy_nodeP_6(void* t, TENode_func_00472410* x)
 {
     TENode_func_00472410* c;
     if ((c = x->left) != 0)

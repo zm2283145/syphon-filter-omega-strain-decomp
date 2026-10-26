@@ -6,7 +6,7 @@
 
 #include "loose03_types.h"
 
-Quad* func_00397980(Quad* d, Quad* s) {
+Quad* _cdeque_imp_cSkaSystem_RequestPtr_1_generic_iterator_ctor(Quad* d, Quad* s) {
     d->a = s->a;
     d->b = s->b;
     d->c = s->c;
@@ -15,7 +15,7 @@ Quad* func_00397980(Quad* d, Quad* s) {
 }
 
 /* Point a cursor at a word buffer. */
-void func_003979B0(WordCursor* out, WordBuf* buf) {
+void _cdeque_deleter_common_int_begin(WordCursor* out, WordBuf* buf) {
     out->end = buf->data + buf->count;
     out->begin = buf->data;
     out->cur = out->begin + buf->count;

@@ -20,7 +20,7 @@
 #pragma cplusplus on
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_003B0CB0)
+DEFINE_TRIVIAL_DTOR(cSkaPlaybackItem_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003B0CB0 */
 
@@ -56,30 +56,30 @@ void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 extern char D_004BCFE8[];
 extern char D_004BCFF0[];
 Raw List_Begin(AnimGroup* g);
-void func_00396B10(LIt* out, const Raw& r);
-Raw func_00396B00(AnimGroup* g);
-void func_00396AF0(LIt* out, const Raw& r);
-float func_003ADEB0(Clip* c);
-void func_003ADEF0(VIt* out, IntVec* v);
-void func_003ADED0(VIt* out, IntVec* v);
-int func_003ADDA0(VIt* a, VIt* b);
-int func_003ADEC0(VIt* a);
-void func_003ADDC0(VIt* a);
-int func_003B1710(int e, Clip* c);
-void func_003B15B0(int e, Clip* c);
-void func_003B1590(IntVec* v, Clip* c);
-int func_00198B20(Clip* c);
-int func_003B1580(int x);
-int func_00290BB0(Raw* out, int n);
-void func_003B1510(IntVec* v, int a, int n);
-void func_003B14E0(float t, int* p);
-void func_003B1290(Contrib* c, Clip* clip, float w);
-void func_003B1260(AnimGroup* g, Contrib** c);
+void std_list_cSkaPlaybackGroupPtr_generic_iterator_ctor(LIt* out, const Raw& r);
+Raw std_list_cSkaPlaybackGroupPtr_end(AnimGroup* g);
+void cLListIterator_cSkaPlaybackGroupPtr_ctor(LIt* out, const Raw& r);
+float cSkaPlaybackItem_GetSummedWeight(Clip* c);
+void cArray_cSkaPlaybackItem_Begin(VIt* out, IntVec* v);
+void cArray_cSkaPlaybackItem_End(VIt* out, IntVec* v);
+int cArray_cSkaPlaybackItem_Iterator_opNe(VIt* a, VIt* b);
+int cArray_cSkaPlaybackItem_Iterator_opArrow(VIt* a);
+void cArray_cSkaPlaybackItem_Iterator_opInc(VIt* a);
+int cSkaPlaybackItem_HasSameAnimation(int e, Clip* c);
+void cSkaPlaybackItem_Accumulate(int e, Clip* c);
+void cArray_cSkaPlaybackItem_PushBackActual(IntVec* v, Clip* c);
+int cSkaPlaybackItem_GetAnimation(Clip* c);
+int cSkaAnim_IsLooping(int x);
+int cArrayCapacity_ctor(Raw* out, int n);
+void cArray_cSkaPlaybackItem_ctor(IntVec* v, int a, int n);
+void cSkaPlaybackGroup_cPlaybackPosWithHistory_ctor(float t, int* p);
+void cSkaPlaybackGroup_Add(Contrib* c, Clip* clip, float w);
+void std_list_cSkaPlaybackGroupPtr_push_back(AnimGroup* g, Contrib** c);
 }
 
 static inline void Contrib_Add(Contrib* c, float weight, Clip* clip)
 {
-    float w = func_003ADEB0(clip);
+    float w = cSkaPlaybackItem_GetSummedWeight(clip);
     bool found;
     VIt it;
     VIt end;
@@ -87,19 +87,19 @@ static inline void Contrib_Add(Contrib* c, float weight, Clip* clip)
     found = false;
     c->sum += w;
     c->wsum += weight * w;
-    func_003ADEF0(&it, &c->vec);
-    func_003ADED0(&end, &c->vec);
-    while (func_003ADDA0(&it, &end)) {
-        if (func_003B1710(func_003ADEC0(&it), clip)) {
-            func_003B15B0(func_003ADEC0(&it), clip);
+    cArray_cSkaPlaybackItem_Begin(&it, &c->vec);
+    cArray_cSkaPlaybackItem_End(&end, &c->vec);
+    while (cArray_cSkaPlaybackItem_Iterator_opNe(&it, &end)) {
+        if (cSkaPlaybackItem_HasSameAnimation(cArray_cSkaPlaybackItem_Iterator_opArrow(&it), clip)) {
+            cSkaPlaybackItem_Accumulate(cArray_cSkaPlaybackItem_Iterator_opArrow(&it), clip);
             found = true;
             break;
         }
-        func_003ADDC0(&it);
+        cArray_cSkaPlaybackItem_Iterator_opInc(&it);
     }
     if (!found) {
-        func_003B1590(&c->vec, clip);
-        c->f32 = c->f32 && func_003B1580(func_00198B20(clip));
+        cArray_cSkaPlaybackItem_PushBackActual(&c->vec, clip);
+        c->f32 = c->f32 && cSkaAnim_IsLooping(cSkaPlaybackItem_GetAnimation(clip));
     }
 }
 
@@ -107,10 +107,10 @@ static inline void Contrib_Init(Contrib* c, int id, float t)
 {
     Raw r;
     c->id = id;
-    func_003B1510(&c->vec, func_00290BB0(&r, 1), 1);
+    cArray_cSkaPlaybackItem_ctor(&c->vec, cArrayCapacity_ctor(&r, 1), 1);
     c->sum = 0;
     c->wsum = 0;
-    func_003B14E0(t, c->f20);
+    cSkaPlaybackGroup_cPlaybackPosWithHistory_ctor(t, c->f20);
     c->f2C = 0;
     c->f30 = 0;
     c->f31 = 0;
@@ -118,8 +118,8 @@ static inline void Contrib_Init(Contrib* c, int id, float t)
     c->f33 = 0;
 }
 
-static inline void LBegin(LIt* o, AnimGroup* g) { func_00396B10(o, List_Begin(g)); }
-static inline void LEnd(LIt* o, AnimGroup* g) { func_00396AF0(o, func_00396B00(g)); }
+static inline void LBegin(LIt* o, AnimGroup* g) { std_list_cSkaPlaybackGroupPtr_generic_iterator_ctor(o, List_Begin(g)); }
+static inline void LEnd(LIt* o, AnimGroup* g) { cLListIterator_cSkaPlaybackGroupPtr_ctor(o, std_list_cSkaPlaybackGroupPtr_end(g)); }
 static inline Contrib* Contrib_New(char* file, int line)
 {
     AllocGuard g;
@@ -148,10 +148,10 @@ extern "C" void AnimGroup_AddContribution(float weight, AnimGroup* g, Clip* clip
         { AllocGuard ag; c = (Contrib*)Mem_Alloc(0, sizeof(Contrib), D_004BCFF0, 0xFD); }
         if (c) {
             Contrib_Init(c, -1, g->unkC);
-            func_003B1290(c, clip, weight);
+            cSkaPlaybackGroup_Add(c, clip, weight);
         }
         t1 = c;
-        func_003B1260(g, &t1);
+        std_list_cSkaPlaybackGroupPtr_push_back(g, &t1);
     } else {
         LNode* n;
         LIt it2;
@@ -167,10 +167,10 @@ extern "C" void AnimGroup_AddContribution(float weight, AnimGroup* g, Clip* clip
         { AllocGuard ag; c = (Contrib*)Mem_Alloc(0, sizeof(Contrib), D_004BCFE8, 0x112); }
         if (c) {
             Contrib_Init(c, id, g->unkC);
-            func_003B1290(c, clip, weight);
+            cSkaPlaybackGroup_Add(c, clip, weight);
         }
         t2 = c;
-        func_003B1260(g, &t2);
+        std_list_cSkaPlaybackGroupPtr_push_back(g, &t2);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

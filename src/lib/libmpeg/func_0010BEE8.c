@@ -5,7 +5,7 @@
 typedef struct { int unk0; int x; int y; int x16; int y16; } Pos;
 
 /* Stores a position and its 1/16 scaled copy; returns 1. */
-int func_0010BEE8(Pos* p, int x, int y)
+int _RefImageInit(Pos* p, int x, int y)
 {
     p->x = x;
     p->y = y;

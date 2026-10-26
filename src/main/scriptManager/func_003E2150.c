@@ -27,41 +27,41 @@ extern char D_004BD4C0[];
 extern int D_004938D8;
 extern int D_004938E0;
 void Mem_Free(int, void*, char*, int);
-void func_0012F530(G_E2150* g, int f);
-void func_00136DA0(G_E2150* g);
+void cTimerDisable_dtor(G_E2150* g, int f);
+void cTimerDisable_ctor(G_E2150* g);
 void Script_ClearSchedules_3DFB20(void);
 void func_003E2640(It_E2150*, void*);
 void func_003E2630(It_E2150*, void*);
 void Tree_Successor(It_E2150*);
-void func_003E18A0(void*, int);
-void func_003E25C0(void*, int);
+void cArray_FuncDefPtr_dtor(void*, int);
+void cAssocArray_int_cArray_FuncDefPtrPtr_dtor(void*, int);
 void ActiveList_EraseMatching(void*, Pred_E2150);
-void func_003DC8A0(void*, int);
-void func_001633D0(int*, int, int, int*);
-void func_003E2520(FA_E2150*, unsigned int, int*);
-void** func_003E2510(PV_E2150*, int);
-void func_00175240(void*, int);
+void cScriptInterpreter_SymbolTable_dtor(void*, int);
+void nArray_InitSlots_intP_int_int_intR(int*, int, int, int*);
+void cArray_FixedCapacity_int_5000_ResizeActual(FA_E2150*, unsigned int, int*);
+void** std_vector_cGroupPtr_opIndex(PV_E2150*, int);
+void std_vector_deleter_cObjectId_dtor(void*, int);
 void ScriptStr_Release(Mgr_E2150*, void*);
 void PtrVec_Reserve(PV_E2150*, int);
 void Script_TrimSymbolsToMarks(void);
 void ObjectList_EraseRange_3E3320(int*, Mgr_E2150*, int*, int*);
 }
-struct G_E2150 { char c; G_E2150() { func_00136DA0(this); } __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~G_E2150() { func_0012F530(this, -1); } };
+struct G_E2150 { char c; G_E2150() { cTimerDisable_ctor(this); } __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~G_E2150() { cTimerDisable_dtor(this, -1); } };
 static inline int PNe_E2150(Node_E2150* a, Node_E2150* b) { return (a == b) ^ 1; }
 static inline bool ItEq_E2150(const It_E2150& a, const It_E2150& b) { return a.p == b.p; }
 static inline bool ItNe_E2150(const It_E2150& a, const It_E2150& b) { return !ItEq_E2150(a, b); }
 static inline Pred_E2150 MakePred_E2150(void** p) { Cmp_E2150 c; return Pred_E2150(c, p); }
-static inline void D3_E2150(void* p) { if (p) func_00175240(p, 0); }
+static inline void D3_E2150(void* p) { if (p) std_vector_deleter_cObjectId_dtor(p, 0); }
 static inline void D2_E2150(void* p) { if (p) D3_E2150(p); }
 static inline void D1_E2150(void* p) { if (p) D2_E2150(p); }
 static inline void D0_E2150(void* p) { if (p) D1_E2150(p); }
 static inline void* Back_E2150(PV_E2150* v) { return v->data[v->count - 1]; }
-static inline void DelL0_E2150(void* l) { G_E2150 g; func_003E18A0(l, -1); Mem_Free(0, l, D_004BD4C0, 0x7F); }
-static inline void DelM0_E2150(void* mp) { G_E2150 g; func_003E25C0(mp, -1); Mem_Free(0, mp, D_004BD4C0, 0x81); }
+static inline void DelL0_E2150(void* l) { G_E2150 g; cArray_FuncDefPtr_dtor(l, -1); Mem_Free(0, l, D_004BD4C0, 0x7F); }
+static inline void DelM0_E2150(void* mp) { G_E2150 g; cAssocArray_int_cArray_FuncDefPtrPtr_dtor(mp, -1); Mem_Free(0, mp, D_004BD4C0, 0x81); }
 static inline void DelL_E2150(void* l) { DelL0_E2150(l); }
 static inline void DelM_E2150(void* l) { DelM0_E2150(l); }
-static inline void DelO_E2150(void* p) { AllocGuard g; func_003DC8A0(p, -1); Mem_Free(0, p, D_004BD4C0, 0x88); }
-static inline void DelS_E2150(void* p) { AllocGuard g; if (p) { if (p) { if (p) { if (p) func_00175240(p, 0); } } } Mem_Free(0, p, D_004BD4C0, 0x92); }
+static inline void DelO_E2150(void* p) { AllocGuard g; cScriptInterpreter_SymbolTable_dtor(p, -1); Mem_Free(0, p, D_004BD4C0, 0x88); }
+static inline void DelS_E2150(void* p) { AllocGuard g; if (p) { if (p) { if (p) { if (p) std_vector_deleter_cObjectId_dtor(p, 0); } } } Mem_Free(0, p, D_004BD4C0, 0x92); }
 
 static inline void ListClear_E2150(Mgr_E2150* m)
 {
@@ -104,24 +104,24 @@ extern "C" void Script_Cleanup(Mgr_E2150* m)
         {
             void* p = o;
             AllocGuard g;
-            func_003DC8A0(p, -1);
+            cScriptInterpreter_SymbolTable_dtor(p, -1);
             Mem_Free(0, p, D_004BD4C0, 0x88);
         }
     }
     {
         unsigned int n = m->x4E64;
         if (n < 5001) {
-            func_001633D0(m->fa.a, m->fa.n, n - 1, &D_004938D8);
+            nArray_InitSlots_intP_int_int_intR(m->fa.a, m->fa.n, n - 1, &D_004938D8);
             m->fa.n = n;
         } else {
-            func_003E2520(&m->fa, 5000, &D_004938E0);
+            cArray_FixedCapacity_int_5000_ResizeActual(&m->fa, 5000, &D_004938E0);
         }
     }
     for (i = 0; i < m->objs.count; i++)
     {
-        void* p = *func_003E2510(&m->objs, i);
+        void* p = *std_vector_cGroupPtr_opIndex(&m->objs, i);
         AllocGuard g;
-        if (p) { if (p) { if (p) { if (p) func_00175240(p, 0); } } }
+        if (p) { if (p) { if (p) { if (p) std_vector_deleter_cObjectId_dtor(p, 0); } } }
         Mem_Free(0, p, D_004BD4C0, 0x92);
     }
     while (*(volatile int*)&m->strs.count > 0)

@@ -5,4 +5,4 @@
 DEFINE_MESSAGE_PACK_INLINE(GeneratorMessageBase_Pack, 0x14, D_004F56C8, BASE_BODY)
 
 #define PACK_TAIL(e, b) MP_H(b, 0x10) = MP_U(e, 0x28); MP_S(b, 8) = 3;
-DEFINE_MESSAGE_PACK_DERIVED(func_0021D370, 0x14, GeneratorMessageBase_Pack, PACK_TAIL)
+DEFINE_MESSAGE_PACK_DERIVED(cGeneratorMessage_Pack, 0x14, GeneratorMessageBase_Pack, PACK_TAIL)

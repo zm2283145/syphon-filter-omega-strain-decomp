@@ -12,6 +12,6 @@ int String_CStr_Thunk(int a0) {
     return String_CStr(a0);
 }
 
-void* func_002071B0(void* self) {
+void* details_compressed_pair_imp_rep_s_2_first_void(void* self) {
     return self;
 }

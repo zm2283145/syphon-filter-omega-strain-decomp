@@ -12,9 +12,9 @@ void* Camera_ConstructFov(void*, int*, int, float);
 void Object_Register(void*);
 void TargetVis_Register(void*, void*);
 void World_PushObjectFromAction(void*, void*);
-void func_00176F30(Obj132BC0*, void*);
+void cPlayer_SetCamera(Obj132BC0*, void*);
 void* ZoneTracker_Ctor(void*, int);
-void* func_0013D9F0(void);
+void* GetSceneManager(void);
 void List_PushBack_132E20(void*, void* const&);
 extern char D_0049A890[];
 extern char g_TargetVisMgr[];
@@ -56,7 +56,7 @@ extern "C" void World_SetupView(World132BC0* w)
     }
     w->d4 = o;
     Object_Register(w->d4);
-    func_00176F30(w->bc, w->c0);
+    cPlayer_SetCamera(w->bc, w->c0);
     w->bc->v58 = w->bc->v30;
     {
         AllocGuard g;
@@ -67,7 +67,7 @@ extern "C" void World_SetupView(World132BC0* w)
     w->d0 = o;
     {
         void* t = w->d0;
-        List_PushBack_132E20(func_0013D9F0(), t);
+        List_PushBack_132E20(GetSceneManager(), t);
     }
 }
 

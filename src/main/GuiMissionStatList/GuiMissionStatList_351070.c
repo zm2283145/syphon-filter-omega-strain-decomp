@@ -12,7 +12,7 @@
 #include "vector_release_dtor.h"
 
 extern "C" { char D_004BACC8[] = "allocator.hh"; }
-DEFINE_VECTOR_RELEASE_DTOR(func_00351070, func_00351F40, func_003510F0, D_004BACC8)
+DEFINE_VECTOR_RELEASE_DTOR(std_vector_deleter_StatsRequirement_dtor, std_vector_deleter_StatsRequirement_clear, opDelete_StatsRequirementP_int_bool_charP_etc, D_004BACC8)
 #pragma pop /* merge_units */
 /* merge_units: end func_00351070 */
 
@@ -24,15 +24,15 @@ DEFINE_VECTOR_RELEASE_DTOR(func_00351070, func_00351F40, func_003510F0, D_004BAC
 /* Allocator release(ptr, pool, destroy, file, line): destroy the element's member at +4, then Mem_Free under the guard. */
 extern "C" {
 void Mem_Free(int pool, void* allocation, char* file, int line);
-void* func_003511D0(void* self, short flags);
-void func_003510F0(void* allocation, int pool, int destroy, char* file, int line);
+void* cArray_StatType_dtor(void* self, short flags);
+void opDelete_StatsRequirementP_int_bool_charP_etc(void* allocation, int pool, int destroy, char* file, int line);
 }
-void func_003510F0(void* allocation, int pool, int destroy, char* file, int line)
+void opDelete_StatsRequirementP_int_bool_charP_etc(void* allocation, int pool, int destroy, char* file, int line)
 {
     AllocGuard guard;
     if (destroy) {
         if (allocation)
-            func_003511D0((char*)allocation + 4, -1);
+            cArray_StatType_dtor((char*)allocation + 4, -1);
     }
     Mem_Free(pool, allocation, file, line);
 }
@@ -44,6 +44,6 @@ void func_003510F0(void* allocation, int pool, int destroy, char* file, int line
 #pragma cplusplus on
 #include "base_dtor_chain.h"
 
-DEFINE_BASE_DTOR_CHAIN(func_003511D0, func_00351230)
+DEFINE_BASE_DTOR_CHAIN(cArray_StatType_dtor, std_vector_imp_StatType_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003511D0 */

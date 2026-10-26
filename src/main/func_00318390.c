@@ -8,7 +8,7 @@
 #include "loose02_types.h"
 
 /* Sets parameters unk30/unk34 and raises flag unk2A. */
-ParamBlock* func_00318390(ParamOwner* self, float a, float b) {
+ParamBlock* NellySetRoboticFactorSase3200(ParamOwner* self, float a, float b) {
     ParamBlock* params = self->params;
 
     params->unk34 = b;

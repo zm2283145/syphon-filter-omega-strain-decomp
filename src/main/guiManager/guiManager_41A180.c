@@ -70,8 +70,8 @@ struct O_41A2C0 {
 extern "C" {
 void String_CtorCStr_13B480(Str_41A2C0* s, char* c);
 void String_Dtor(Str_41A2C0* s, int f);
-void func_003B52B0(Str_41A2C0* out, Str_41A2C0* s, int a, int b);
-void func_002072B0(Str_41A2C0* out, Str_41A2C0* a, Str_41A2C0* b);
+void cString_Substr(Str_41A2C0* out, Str_41A2C0* s, int a, int b);
+void opAdd_cStringR_cStringR(Str_41A2C0* out, Str_41A2C0* a, Str_41A2C0* b);
 void String_AssignString(Str_41A2C0* d, Str_41A2C0* s);
 #if 0 /* merge_units */
 void GuiTextEditWidget_ClampCursor(O_41A2C0* o, int c);
@@ -90,13 +90,13 @@ extern "C" int GuiTextEditWidget_Insert(O_41A2C0* o, char* text)
         String_Dtor(&s, 0);
         return 0;
     }
-    func_003B52B0(&left, &o->str, 0, o->cursor);
-    func_003B52B0(&right, &o->str, o->cursor, -1);
+    cString_Substr(&left, &o->str, 0, o->cursor);
+    cString_Substr(&right, &o->str, o->cursor, -1);
     {
         Str_41A2C0 t1;
         Str_41A2C0 t2;
-        func_002072B0(&t1, &left, &s);
-        func_002072B0(&t2, &t1, &right);
+        opAdd_cStringR_cStringR(&t1, &left, &s);
+        opAdd_cStringR_cStringR(&t2, &t1, &right);
         String_AssignString(&o->str, &t2);
         String_Dtor(&t2, 0);
         String_Dtor(&t1, 0);
@@ -147,11 +147,11 @@ extern int D_00539228;
 extern int D_00539238;
 extern int D_0053923C;
 extern int g_DrawMode;
-void func_0025CD10(char* r);
-void func_0025CA40(char* r);
+void XLib_NewStrip(char* r);
+void XLib_NextBatchVert(char* r);
 void Vec4_Copy(void* d, V4* s);
 int* GuiBatch_AddVertexColor(void* out, V4* in);
-void func_003701B0(char* r);
+void XLib_DrawLines(char* r);
 void GuiTextWidget_Draw(Self* self);
 Scr* Gui_GetScreenStack(void);
 int IeText_GetCursorPos(int a, float* x, float* y, int d);
@@ -169,7 +169,7 @@ static inline V4 Pt(float x, float y) { return V4(x, y, 1.0f, 0.0f); }
 
 static inline void Vertex(V4* p, V4* c) {
     Ent* e;
-    func_0025CA40(g_Video);
+    XLib_NextBatchVert(g_Video);
     e = EntAt(D_00539210);
     Vec4_Copy(e->pos + (D_00539224 - 1) * 16, p);
     GuiBatch_AddVertexColor(e->c30 + (D_00539224 - 1) * 16, c);
@@ -221,12 +221,12 @@ extern "C" void GuiTextEditWidget_Draw(Self* self)
             e->c2C += D_00539224 * 16;
             e->c30 += D_00539224 * 16;
             e->c34 += D_00539224 * 16;
-            func_0025CD10(g_Video);
+            XLib_NewStrip(g_Video);
             D_00539224 = 0;
         }
         Vertex(&p[0], &D_005720E0);
         Vertex(&p[1], &D_005720E0);
-        func_003701B0(g_Video);
+        XLib_DrawLines(g_Video);
     }
     g_DrawMode = save;
     D_00538C68 = 1;

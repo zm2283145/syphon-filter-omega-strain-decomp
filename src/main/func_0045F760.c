@@ -34,7 +34,7 @@ extern void SoundAction_CtorVoice(void* action, int kind, int voice, int a, int 
 extern void SoundMsg_WrapAction(SoundMsg* msg, void* action);
 
 /* Stops the current voice line and starts a new one. */
-void func_0045F760(VoiceOwner* self, int voice) {
+void GuiEndGameAwards_StartPlayback(VoiceOwner* self, int voice) {
     SoundEventMsg stop;
     SoundMsg play;
     self->playing = 0;

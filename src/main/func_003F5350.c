@@ -13,7 +13,7 @@ extern void WaitSema(void* lock);
 extern void SignalSema(void* lock);
 
 /* Under the lock, adds n to both counters. */
-void func_003F5350(Counter48* c, int n) {
+void viBufEndPut(Counter48* c, int n) {
     WaitSema(c->lock);
     c->count += n;
     c->total += n;

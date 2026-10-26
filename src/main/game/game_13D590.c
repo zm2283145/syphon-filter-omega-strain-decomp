@@ -18,7 +18,7 @@
 extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
 
 /* push_back(value). */
-int func_0013D590(PtrVec* v, int value) {
+int cArray_tServerPtr_PushBackActual(PtrVec* v, int value) {
     int count;
     int* data;
 
@@ -27,7 +27,7 @@ int func_0013D590(PtrVec* v, int value) {
     return PtrVec_Insert(v, data + count, 1, value);
 }
 
-Unk0013D5B0* func_0013D5B0(Unk0013D5B0* self) {
+Unk0013D5B0* cDME_tServer_ctor(Unk0013D5B0* self) {
     self->unk10 = 3658;
     return self;
 }
@@ -40,7 +40,7 @@ Unk0013D5B0* func_0013D5B0(Unk0013D5B0* self) {
 #include "guarded_allocate.h"
 
 /* Allocate under the allocator guard. */
-DEFINE_GUARDED_ALLOCATE(func_0013D5C0)
+DEFINE_GUARDED_ALLOCATE(opNew_uint_int_charP_int)
 #pragma pop /* merge_units */
 /* merge_units: end func_0013D5C0 */
 
@@ -60,6 +60,6 @@ DEFINE_SHORT_STRING_ASSIGN(String_AssignString)
 #include "short_string_replace.h"
 
 /* Replace a range of a string with another string. */
-DEFINE_SHORT_STRING_REPLACE(func_0013D710)
+DEFINE_SHORT_STRING_REPLACE(std_basic_string_char_char_traits_char_replace_uint_uint_basicstringR)
 #pragma pop /* merge_units */
 /* merge_units: end func_0013D710 */

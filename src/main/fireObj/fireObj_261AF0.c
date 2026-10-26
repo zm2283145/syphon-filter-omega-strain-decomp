@@ -9,7 +9,7 @@
 #pragma cplusplus on
 #include "vt4_dtor.h"
 
-DEFINE_VT4_DTOR(func_00261AF0, D_004DC930)
+DEFINE_VT4_DTOR(cHudTargetsObserver_dtor, D_004DC930)
 #pragma pop /* merge_units */
 /* merge_units: end func_00261AF0 */
 
@@ -23,13 +23,13 @@ DEFINE_VT4_DTOR(func_00261AF0, D_004DC930)
 
 #include "types.h"
 
-void func_00261B40(void) {
+void cHudTargetsObserver_Update(void) {
 }
 
-void func_00261B50(void) {
+void cHudTargetsObserver_TargetAdded(void) {
 }
 
-void func_00261B60(void) {
+void cHudTargetsObserver_TargetRemoved(void) {
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00261B40 */

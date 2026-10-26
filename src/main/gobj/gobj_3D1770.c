@@ -12,13 +12,13 @@ extern int sceUsbKbInit(void* p);
 extern int sceUsbKbGetInfo(void* info);
 extern int sceUsbKbSetLEDStatus(int no, int s);
 extern int sceUsbKbSetLEDMode(int no, int m);
-extern int func_00223360(int mode, int* result);
-extern int func_00223278(int i, int a, int b);
-extern int func_00223FF0(int i);
-extern int func_002232C0(int i, unsigned int v);
-extern int func_00223310(int a, int b);
-extern int func_00223F80(int a, int b);
-void func_003D1770(T1770* kb)
+extern int sceUsbKbSync(int mode, int* result);
+extern int sceUsbKbSetRepeat(int i, int a, int b);
+extern int sceUsbKbClearRbuf(int i);
+extern int sceUsbKbSetCodeType(int i, unsigned int v);
+extern int sceUsbKbSetArrangement(int a, int b);
+extern int sceUsbKbSetReadMode(int a, int b);
+void cUSBKeybd_Init(T1770* kb)
 {
     int r;
     int i = kb->m0 ? 49999 : 0;
@@ -31,21 +31,21 @@ void func_003D1770(T1770* kb)
     }
     do {
         r = sceUsbKbGetInfo(kb->info);
-        func_00223360(0, &r);
+        sceUsbKbSync(0, &r);
     } while (!kb->m10 && ++i < 50000);
     if (kb->m10 && i < 50000) {
         r = sceUsbKbSetLEDStatus(0, 1);
-        func_00223360(0, &r);
+        sceUsbKbSync(0, &r);
         r = sceUsbKbSetLEDMode(0, 1);
-        func_00223360(0, &r);
-        func_00223278(0, 30, 2);
-        func_00223FF0(0);
+        sceUsbKbSync(0, &r);
+        sceUsbKbSetRepeat(0, 30, 2);
+        sceUsbKbClearRbuf(0);
         if (kb->m2 == 1)
-            func_002232C0(0, 0);
+            sceUsbKbSetCodeType(0, 0);
         else
-            func_002232C0(0, 1);
-        func_00223310(0, 0);
-        func_00223F80(0, 0);
+            sceUsbKbSetCodeType(0, 1);
+        sceUsbKbSetArrangement(0, 0);
+        sceUsbKbSetReadMode(0, 0);
         kb->m1 = 1;
     } else {
         kb->m1 = 0;
@@ -64,7 +64,7 @@ void func_003D1770(T1770* kb)
 
 #include "loose04_types.h"
 
-L4Bytes3* func_003D18D0(L4Bytes3* self) {
+L4Bytes3* cUSBKeybd_ctor(L4Bytes3* self) {
     self->unk00 = 0;
     self->unk01 = 0;
     self->unk02 = 0;
@@ -77,7 +77,7 @@ L4Bytes3* func_003D18D0(L4Bytes3* self) {
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" void operator_delete(void* allocation);
-extern "C" void func_003D1950();
+extern "C" void cCellAnimTexture_Reset();
 extern "C" void TexFrameAnim_Update();
 extern void * const D_004E0060[];
 extern const unsigned int D_004E0080[];
@@ -93,7 +93,7 @@ extern "C" VC_003D18F0* TexFrameAnim_dtor(VC_003D18F0* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004E0060[8] = { (void*)0x0, (void*)0x0, (void*)TexFrameAnim_Update, (void*)func_003D1950, (void*)TexFrameAnim_dtor, (void*)0x0, (void*)0x0, (void*)0x0 };
+void * const D_004E0060[8] = { (void*)0x0, (void*)0x0, (void*)TexFrameAnim_Update, (void*)cCellAnimTexture_Reset, (void*)TexFrameAnim_dtor, (void*)0x0, (void*)0x0, (void*)0x0 };
 const unsigned int D_004E0080[4] = { 0x0, 0x0, 0x0, 0x0 };
 #pragma pop /* merge_units */
 /* merge_units: end func_003D18F0 */

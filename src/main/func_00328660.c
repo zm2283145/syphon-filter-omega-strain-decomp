@@ -20,8 +20,8 @@ typedef struct {
 } Obj_328660;
 extern char D_004DE710[];
 extern void GuiWidget_ctor(void* self);
-extern void func_00328810(void* p);
-extern void func_0032A280(void* p);
+extern void std_vector_Section_ctor(void* p);
+extern void std_vector_deleter_Section_clear(void* p);
 static inline void Req_Init_328660(SoundRequest* p, int type, __int128 name, Voice_328660* voice, int x180) {
     int tmp; int* r = &tmp;
     p->type = type;
@@ -40,7 +40,7 @@ Obj_328660* GuiSlideShow_ctor(Obj_328660* o)
     GuiWidget_ctor(o);
     *(char**)o = D_004DE710;
     pa = o->a;
-    func_00328810(pa);
+    std_vector_Section_ctor(pa);
     pa[0xC] = 1;
     o->x6C = 0;
     o->x70 = 0;
@@ -55,7 +55,7 @@ Obj_328660* GuiSlideShow_ctor(Obj_328660* o)
     Resource_Construct(&p->b);
     Req_Init_328660(p, -1, -1, 0, 0);
     p->x186 = 0;
-    func_0032A280(pa);
+    std_vector_deleter_Section_clear(pa);
     o->x58 = -1;
     return o;
 }

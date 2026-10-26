@@ -16,18 +16,18 @@
 #include "loose04_types.h"
 
 extern char D_005724B0;
-extern int func_002EAD30(void* callback);
-extern int func_002EC4F8(void);
+extern int NetRequestServersOnSubnet(void* callback);
+extern int NetUpdate(void);
 extern int DME_AddGameAddress(int, int);
 
-/* Sets D_005724B0 to 3 and installs DME_AddGameAddress via func_002EAD30; falls back to func_002EC4F8 on failure. */
-int func_0042AEC0(void) {
+/* Sets D_005724B0 to 3 and installs DME_AddGameAddress via NetRequestServersOnSubnet; falls back to NetUpdate on failure. */
+int cDME_CreateServerList(void) {
     int ret;
 
     D_005724B0 = 3;
-    ret = func_002EAD30(DME_AddGameAddress);
+    ret = NetRequestServersOnSubnet(DME_AddGameAddress);
     if (ret == 0) {
-        ret = func_002EC4F8();
+        ret = NetUpdate();
     }
     return ret;
 }
@@ -39,11 +39,11 @@ int func_0042AEC0(void) {
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int func_002E9320(char *);                               
-int func_002E9480(char *);                               
-int func_002E94E0(char *, char *);                        
-int func_002EA4F0(char *, char *);                        
-int func_002EC168(int, int);                            
+int NetGetClientVersion(char *);                               
+int NetSetDefaultInitializeParams(char *);                               
+int NetInitialize(char *, char *);                        
+int NetRegisterMallocFreeCallbacks(char *, char *);                        
+int NetSetBufferSize(int, int);                            
 extern signed char D_00572418;
 extern signed char D_00572419;
 extern signed char D_0057241A;
@@ -56,7 +56,7 @@ extern signed char D_005724B0;
 extern char Sfo_Malloc;
 extern char sfo_malloc_2CA9B0;
 
-void func_0042AF00(void) {
+void cDME_Init(void) {
     int sp40[8];
     int sp20[8];
     int sp10[4];
@@ -66,13 +66,13 @@ void func_0042AF00(void) {
     D_00572419 = 0;
     D_0057241A = 0;
     D_0057241B = 0;
-    temp_v0 = func_002EA4F0(&Sfo_Malloc, &sfo_malloc_2CA9B0);
+    temp_v0 = NetRegisterMallocFreeCallbacks(&Sfo_Malloc, &sfo_malloc_2CA9B0);
     if (temp_v0 == 0) {
         if (temp_v0 == 0) {
-            func_002E9480(sp40);
-            if (func_002E94E0(sp40, sp20) == 0) {
-                func_002E9320(sp10);
-                if (func_002EC168(0x6000, 0x6000) == 0) {
+            NetSetDefaultInitializeParams(sp40);
+            if (NetInitialize(sp40, sp20) == 0) {
+                NetGetClientVersion(sp10);
+                if (NetSetBufferSize(0x6000, 0x6000) == 0) {
                     D_005724B0 = 1;
                 }
             } else {
@@ -90,14 +90,14 @@ void func_0042AF00(void) {
 /* merge_units: begin func_0042AFC0 */
 #pragma push /* merge_units */
 #if 0 /* merge_units */
-extern int func_002E9320(char* buffer);
+extern int NetGetClientVersion(char* buffer);
 #endif /* merge_units */
-#define func_002E9320(a0) (func_002E9320((a0))) /* merge_units */
+#define NetGetClientVersion(a0) (NetGetClientVersion((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_002EC168(int first, int second);
+extern int NetSetBufferSize(int first, int second);
 #endif /* merge_units */
-#define func_002EC168(a0, a1) (func_002EC168((a0), (a1))) /* merge_units */
+#define NetSetBufferSize(a0, a1) (NetSetBufferSize((a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern unsigned char D_005724B0;
@@ -106,15 +106,15 @@ extern unsigned char D_005724B0;
 
 
 /* Read the library version and update connection state when setup returns zero. */
-void func_0042AFC0(void)
+void cDME_Init_PostLobby(void)
 {
     char version[16];
-    func_002E9320(version);
-    if (!func_002EC168(0x6000, 0x6000))
+    NetGetClientVersion(version);
+    if (!NetSetBufferSize(0x6000, 0x6000))
         D_005724B0 = 1;
 }
-#undef func_002E9320 /* merge_units */
-#undef func_002EC168 /* merge_units */
+#undef NetGetClientVersion /* merge_units */
+#undef NetSetBufferSize /* merge_units */
 #undef D_005724B0 /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0042AFC0 */

@@ -11,7 +11,7 @@
 #include "humanCollision_types.h"
 
 /* Hit detail block of a line-of-sight result (0x70 bytes, copied by
- * func_00139B00 / func_0013AA30). */
+ * cCollisionFace_ctor_cCollisionFaceR / cLosResult_SetBlockingFace). */
 typedef struct LosHitInfo {
     Vec4 row0;                      /* 0x00 */
     Vec4 row1;                      /* 0x10 */
@@ -55,7 +55,7 @@ typedef struct Unk0013EE70 {
     int value;                      /* 0x08 */
 } Unk0013EE70;
 
-/* 0x24-byte record (copy func_001D7840, ctor Secondary_MotionRecordCtor). */
+/* 0x24-byte record (copy cSkaAnimDataIterator_opAssign, ctor Secondary_MotionRecordCtor). */
 typedef struct Rec24 {
     int unk00;                      /* 0x00 */
     int unk04;                      /* 0x04 */
@@ -90,7 +90,7 @@ typedef struct Unk001EB2F0 {
     int unk58;                      /* 0x58 */
 } Unk001EB2F0;
 
-/* Object built by func_00147910 (at least 0xD8 bytes). */
+/* Object built by cWeaponDB_ctor (at least 0xD8 bytes). */
 typedef struct Unk00147910 {
     char pad00[0x10];
     unsigned char unk10;            /* 0x10 */

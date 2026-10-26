@@ -3,7 +3,7 @@ extern int sceRead(int, void *, int);
 extern int sceClose(int);
 extern int atoi(const char *);
 
-int func_00102A90(void)
+int checkModelVersion(void)
 {
     char buf[256];
     char *p;

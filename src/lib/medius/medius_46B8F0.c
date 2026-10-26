@@ -76,13 +76,13 @@ typedef struct {
 void *memset(void *, int, size_t);
 size_t strlen(const char *);
 char *strncpy(char *, const char *, size_t);
-int func_002EA5B0(ConnParam *);
+int NetSetDefaultConnectParams(ConnParam *);
 
-void func_0046BA68(ConnSetup *o, const char *s1, const char *s2, int a3, int a4)
+void MediusSetDefaultConnectInParams(ConnSetup *o, const char *s1, const char *s2, int a3, int a4)
 {
     ConnParam p;
     memset(o, 0, 0x100);
-    func_002EA5B0(&p);
+    NetSetDefaultConnectParams(&p);
     o->b = p.b;
     o->f0 = 1;
     o->f34 = a4;

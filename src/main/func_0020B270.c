@@ -16,7 +16,7 @@ typedef struct {
 extern void MotionSlider_CopyChildren(Node24* dst, Node24* src);
 
 /* Copy: base part via MotionSlider_CopyChildren, then the remaining fields; returns dst. */
-Node24* func_0020B270(Node24* dst, Node24* src)
+Node24* cSkaTransBLEND_ctor_cSkaTransBLENDR(Node24* dst, Node24* src)
 {
     MotionSlider_CopyChildren(dst, src);
     dst->f10 = src->f10;

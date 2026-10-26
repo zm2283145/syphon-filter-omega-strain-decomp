@@ -17,7 +17,7 @@
 #pragma cplusplus on
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_001B4EF0)
+DEFINE_TRIVIAL_DTOR(cHumanCollisionRoutine_cFinalLedgeSearchInfo_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_001B4EF0 */
 
@@ -57,7 +57,7 @@ extern unsigned char g_IsMultiplayer;
 void Alloc_Lock(int);
 void Alloc_Unlock(int);
 void* Mem_Alloc(int, int, char*, int);
-void* func_002D6030(void*, void*, Act*);
+void* cNetNPC_ctor(void*, void*, Act*);
 void Npc_CreatePhysical(Act*);
 void Actor_InitComponents(Act*, int, int, void*);
 void Actor_v06(Act*);
@@ -67,9 +67,9 @@ void TargetVis_Register(char*, Act*);
 int Player_GetIndex(int);
 void NetGame_InitLocalSlot(int*, int);
 void NetMap_BindReceiver(int, int, Act*);
-void func_00436C00(int*);
-void func_004341F0(int*, int*);
-void func_00436BA0(int*, int);
+void cNPCInfoObject_ctor(int*);
+void cNPCInfoObject_SetActive(int*, int*);
+void cNPCInfoObject_dtor(int*, int);
 }
 static inline bool Ready(Act* a)
 {
@@ -108,7 +108,7 @@ extern "C" void Npc_Enable(Act* a)
                 m = Mem_Alloc(0, 0x220, D_0049D8D0, 0x4BA);
                 if (g_ProfileLockEnabled) Alloc_Unlock(9);
                 g_ProfileLockDepth--;
-                if (m) m = func_002D6030(m, a->p3584 ? a->p3584 : 0, a);
+                if (m) m = cNetNPC_ctor(m, a->p3584 ? a->p3584 : 0, a);
                 Actor_InitComponents(a, 4, 0, m);
             }
         }
@@ -125,9 +125,9 @@ extern "C" void Npc_Enable(Act* a)
         NetMap_BindReceiver(w, idx, a);
     }
     a->b3268 = 1;
-    func_00436C00(&loc);
-    func_004341F0(&loc, &a->wC);
-    func_00436BA0(&loc, -1);
+    cNPCInfoObject_ctor(&loc);
+    cNPCInfoObject_SetActive(&loc, &a->wC);
+    cNPCInfoObject_dtor(&loc, -1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001B4F40(void) {}

@@ -15,14 +15,14 @@
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-DEFINE_OWNED_BUFFER8_DTOR_MID(func_00336C50, D_004B99B8)
+DEFINE_OWNED_BUFFER8_DTOR_MID(std_vector_imp_eRequirementState_1_dtor, D_004B99B8)
 #pragma pop /* merge_units */
 /* merge_units: end func_00336C50 */
 
 /* merge_units: begin func_00336D40 */
 #pragma push /* merge_units */
 typedef struct { char a; char pad[7]; int n; char* p; } B3_336D40;
-void func_00336D40(B3_336D40* s)
+void cAgentData_tAchievement_Reset(B3_336D40* s)
 {
     int i;
     s->a = 0;

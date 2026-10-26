@@ -16,7 +16,7 @@
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-DEFINE_VTABLE_BASE_DTOR(func_001576F0, D_004E0F00, cMessage_dtor)
+DEFINE_VTABLE_BASE_DTOR(cNetTerrainActivation_dtor, D_004E0F00, cMessage_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_001576F0 */
 
@@ -37,11 +37,11 @@ public:
     virtual void Reset();
 };
 extern "C" void NpcAi_GetPlayerRecord(NPC_77B0* self, int a, int b);
-extern "C" int func_0015B060(NPC_77B0* self, int a);
+extern "C" int cNPC_GetEnabled(NPC_77B0* self, int a);
 extern "C" void cNPC_v2F(NPC_77B0* self, int a)
 {
     NpcAi_GetPlayerRecord(self, a, 0);
-    if (!func_0015B060(self, -1))
+    if (!cNPC_GetEnabled(self, -1))
         self->Reset();
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -89,9 +89,9 @@ public:
 typedef struct { char pad[0xC]; unsigned int id; char pad10[0x48]; G3Sub157* sub; } G3Gen157;
 extern "C" {
 extern unsigned char g_IsMultiplayer;
-void func_00436C00(int* t);
-int func_00434440(int* t, unsigned int* id);
-void func_00436BA0(int* t, int f);
+void cNPCInfoObject_ctor(int* t);
+int cNPCInfoObject_GetOwner_cObjectIdR(int* t, unsigned int* id);
+void cNPCInfoObject_dtor(int* t, int f);
 }
 static inline unsigned char G3IsA(G3Gen157* g) { unsigned char r = 0; if (g->sub && g->sub->IsA()) r = 1; return r; }
 static inline unsigned char G3IsB(G3Gen157* g) { unsigned char r = 0; if (g->sub && g->sub->IsB()) r = 1; return r; }
@@ -103,9 +103,9 @@ extern "C" void NpcAi_ActivateForPlayer(G3Npc157* n, G3Gen157* g)
             if (g) {
                 if (G3IsA(g) || G3IsB(g)) {
                     int tmp[1];
-                    func_00436C00(tmp);
-                    v = func_00434440(tmp, &g->id);
-                    func_00436BA0(tmp, -1);
+                    cNPCInfoObject_ctor(tmp);
+                    v = cNPCInfoObject_GetOwner_cObjectIdR(tmp, &g->id);
+                    cNPCInfoObject_dtor(tmp, -1);
                 } else {
                     v = ((g->id & 0x7F000000) >> 24) - 1;
                 }
@@ -128,9 +128,9 @@ extern "C" {
 extern int D_00494178;
 extern int D_005721A8;
 #if 0 /* merge_units */
-int func_0015B060(void* self, int a);
+int cNPC_GetEnabled(void* self, int a);
 #endif /* merge_units */
-#define func_0015B060(a0, a1) (func_0015B060((NPC_77B0 *)(a0), (a1))) /* merge_units */
+#define cNPC_GetEnabled(a0, a1) (cNPC_GetEnabled((NPC_77B0 *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 void NpcAi_GetPlayerRecord(void* self, int a, int b);
@@ -138,7 +138,7 @@ void NpcAi_GetPlayerRecord(void* self, int a, int b);
 #define NpcAi_GetPlayerRecord(a0, a1, a2) (NpcAi_GetPlayerRecord((NPC_77B0 *)(a0), (a1), (a2))) /* merge_units */
 
 void NetGame_InitLocalSlot(int* p, int v);
-void func_0042E180(void* ctl, int v);
+void cNetObjectMgr_AddActivate(void* ctl, int v);
 }
 typedef struct { char pad[0xC]; unsigned int flags; } Obj_7940;
 class NPC_7940 {
@@ -160,7 +160,7 @@ static inline int DefaultBody()
 }
 extern "C" void NpcAi_ActivateMultiplayer(NPC_7940* self, int v)
 {
-    int r = func_0015B060(self, -1);
+    int r = cNPC_GetEnabled(self, -1);
     if (v >= 0) {
         NpcAi_GetPlayerRecord(self, v, 1);
     } else {
@@ -174,9 +174,9 @@ extern "C" void NpcAi_ActivateMultiplayer(NPC_7940* self, int v)
         }
     }
     if (!r)
-        func_0042E180(self->ctl, v);
+        cNetObjectMgr_AddActivate(self->ctl, v);
 }
-#undef func_0015B060 /* merge_units */
+#undef cNPC_GetEnabled /* merge_units */
 #undef NpcAi_GetPlayerRecord /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00157940(void) {}

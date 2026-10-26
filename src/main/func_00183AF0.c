@@ -7,10 +7,10 @@
 #include "types.h"
 #include "loose00_types.h"
 
-extern int func_00183B60(void* self, int* it);
+extern int cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_6(void* self, int* it);
 
 /* Iterator dereferences (return *it). */
-int func_00183AF0(void* self, int* it) {
+int cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_3(void* self, int* it) {
     return it[0];
 }
 
@@ -19,18 +19,18 @@ unsigned char Triangle_GetSurface(Tri* t) {
     return t->b10 >> 1;
 }
 
-int func_00183B10(void* self, int* it) {
+int cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_4(void* self, int* it) {
     return it[0];
 }
 
-int func_00183B20(void* self, int* it) {
+int cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_5(void* self, int* it) {
     return it[0];
 }
 
-/* Pass a copy of the iterator to func_00183B60. */
-int func_00183B30(void* self, int* it) {
+/* Pass a copy of the iterator to cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_6. */
+int cCollisionModel_Data_GetFaceIndices(void* self, int* it) {
     int copy[1];
 
     copy[0] = it[0];
-    return func_00183B60(self, copy);
+    return cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_6(self, copy);
 }

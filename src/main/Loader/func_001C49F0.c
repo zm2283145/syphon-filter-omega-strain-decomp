@@ -9,16 +9,16 @@ struct V1C49F0 { unsigned int cap; unsigned int count; E1C49F0* data; };
 extern "C" {
 extern char D_0049F2C0[];
 extern char D_0049F358[];
-void func_001C5370(E1C49F0* d, const E1C49F0* s);
-void func_001C4EA0(E1C49F0* first, E1C49F0* last, E1C49F0* dlast);
-void func_001C4E40(E1C49F0* first, unsigned int n, const E1C49F0* value);
-void func_001C4E00(V1C49F0* a, V1C49F0* b);
+void std_vector_pod_int_ctor(E1C49F0* d, const E1C49F0* s);
+void std_copy_backward_cArray_int_copy_backward(E1C49F0* first, E1C49F0* last, E1C49F0* dlast);
+void std_fill_n_cArray_int_int_fill_n(E1C49F0* first, unsigned int n, const E1C49F0* value);
+void std_swap_vectordeleterR_vectordeleterR_11(V1C49F0* a, V1C49F0* b);
 void func_00139EE0(V1C49F0* v, int flags);
 }
 static inline void Construct1C49F0(E1C49F0* p, const E1C49F0* src)
 {
     if (p)
-        { func_001C5370(p, src); p->b = src->b; }
+        { std_vector_pod_int_ctor(p, src); p->b = src->b; }
 }
 
 extern "C" void Vector_Insert_1C49F0(V1C49F0* v, E1C49F0* pos, unsigned int n, const E1C49F0* value)
@@ -52,9 +52,9 @@ extern "C" void Vector_Insert_1C49F0(V1C49F0* v, E1C49F0* pos, unsigned int n, c
             }
             if (((E1C49F0*)((char*)data_ + off_)) - (after - n) <= value && value < ((E1C49F0*)((char*)data_ + off_)))
                 value += n;
-            func_001C4EA0(pos, pos + (after - n), ((E1C49F0*)((char*)data_ + off_)));
+            std_copy_backward_cArray_int_copy_backward(pos, pos + (after - n), ((E1C49F0*)((char*)data_ + off_)));
         }
-        func_001C4E40(pos, n, value);
+        std_fill_n_cArray_int_int_fill_n(pos, n, value);
     } else {
         V1C49F0 tmp;
         E1C49F0* dst;
@@ -94,7 +94,7 @@ extern "C" void Vector_Insert_1C49F0(V1C49F0* v, E1C49F0* pos, unsigned int n, c
             Construct1C49F0(dst, src);
             (*tcount)++;
         }
-        func_001C4E00(&tmp, v);
+        std_swap_vectordeleterR_vectordeleterR_11(&tmp, v);
         func_00139EE0(&tmp, -1);
     }
 }

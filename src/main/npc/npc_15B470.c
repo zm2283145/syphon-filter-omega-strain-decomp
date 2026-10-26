@@ -30,7 +30,7 @@ struct Msg_0023FF50 : ClonedMessageBase {
 extern "C" {
 char D_0049C050[] = "NetObjectMgr.hh";
 }
-DEFINE_MESSAGE_CLONE(func_0015B470, Msg_0023FF50, 0x28, D_0049C050, 0xE, CLONE_BODY)
+DEFINE_MESSAGE_CLONE(cSwitchControllersMsg_Clone, Msg_0023FF50, 0x28, D_0049C050, 0xE, CLONE_BODY)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0015B470(void) {}
 #pragma pop /* merge_units */
@@ -42,7 +42,7 @@ static inline void merge_flush_func_0015B470(void) {}
 extern "C" char D_004D9320[];
 extern "C" char D_004DFD80[];
 extern "C" char D_004E0840[];
-MSG_CLONE_BEGIN(func_0015B570, 0x30, "character.hh", 0x1C5)
+MSG_CLONE_BEGIN(cCharActionMsg_Bool_Clone, 0x30, "character.hh", 0x1C5)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);

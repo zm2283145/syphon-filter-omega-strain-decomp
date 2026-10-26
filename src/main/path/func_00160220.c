@@ -62,7 +62,7 @@ unsigned char NpcPath_SetSegment(Path* p, int seg);
 void NpcPath_HoldNode(Path* p, int node);
 int NpcPath_NextPatrolNode(int seg);
 unsigned char NpcRoute_Step(Path* p);
-void func_002D7BE0(Msg2* m, int a, Route* r);
+void cNetPathMsg_SendPath(Msg2* m, int a, Route* r);
 }
 static inline void Push(Route* r, int v) { r->nodes[r->count] = v; r->count++; }
 static inline void Construct(Msg* m, unsigned char kind, int id) { Event_Construct(m, D_004ED9B8); m->vt = D_004D9760; m->kind = kind; m->id = id; }
@@ -154,7 +154,7 @@ extern "C" void NpcPath_Update(Path* self)
                         m->f40 = -1.0f;
                         for (i = 0; i != 2; i++)
                             m->ids[i] = -1;
-                        func_002D7BE0(&m2, self->actor->f10, self->route);
+                        cNetPathMsg_SendPath(&m2, self->actor->f10, self->route);
                         m2.vt = D_004DE510;
                         cMessage_dtor(&m2, 0);
                     }

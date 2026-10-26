@@ -45,7 +45,7 @@ extern void __sinit(struct _reent *);                  /* __sinit */
 extern int __sfvwrite(FILE *, struct __suio *);           /* __sfvwrite */
 extern int __swsetup(FILE *);                            /* __swsetup */
 extern int _mbtowc_r(struct _reent *, wchar_t *, const char *, size_t, int *); /* _mbtowc_r */
-extern void *func_00125DC0(const void *, int, size_t);       /* memchr */
+extern void *Libc_Memchr(const void *, int, size_t);       /* memchr */
 extern size_t strlen(const char *);
 #define fflush fflush
 #define __sinit __sinit
@@ -53,7 +53,7 @@ extern size_t strlen(const char *);
 #define __sprint Newlib_SprintI
 #define __swsetup __swsetup
 #define _mbtowc_r _mbtowc_r
-#define memchr func_00125DC0
+#define memchr Libc_Memchr
 
 #define CHECK_INIT(fp) \
     do { if ((fp)->_data == 0) (fp)->_data = _REENT; if (!(fp)->_data->__sdidinit) __sinit((fp)->_data); } while (0)

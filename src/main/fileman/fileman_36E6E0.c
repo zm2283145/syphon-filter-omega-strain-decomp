@@ -11,7 +11,7 @@
 #include "buf_holder_dtor.h"
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR(func_0036E6E0)
+DEFINE_BUF_HOLDER_DTOR(std_vector_cXformNodePtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0036E6E0 */
 
@@ -71,8 +71,8 @@ struct Obj {
     VPAD1(a) virtual void SetR(const M& m); VPAD16(b) VPAD2(c) virtual void Upd();
     char pad4[0xC]; MP mat; unsigned char f50;
 };
-extern "C" void func_0036E7D0(Obj* o, MP* m);
-void func_0036E7D0(Obj* o, MP* m)
+extern "C" void cXformNode_Transform(Obj* o, MP* m);
+void cXformNode_Transform(Obj* o, MP* m)
 {
     M b;
     M a;
@@ -123,8 +123,8 @@ static inline void GQ2M(void* a, void* b) {
     __asm__ volatile("lqc2 vf1, 0x0(%1); vadd.xyzw vf2, vf1, vf1; vaddw.xyz vf3, vf0, vf0w; vmulx.w vf8, vf0, vf0x; vmulx.w vf9, vf0, vf0x; vmuly.xyzw vf5, vf1, vf2y; vmulz.xyzw vf6, vf1, vf2z; vmulx.xyzw vf4, vf1, vf2x; vmulx.w vf10, vf0, vf0x; vsubay.x ACC, vf3, vf5y; vmsubz.x vf8, vf3, vf6z; vsubw.x vf9, vf5, vf6w; vaddw.x vf10, vf6, vf5w; vaddw.y vf8, vf4, vf6w; vsubax.y ACC, vf3, vf4x; vmsubz.y vf9, vf3, vf6z; vsubw.y vf10, vf6, vf4w; vsubw.z vf8, vf4, vf5w; vaddw.z vf9, vf5, vf4w; vsubax.z ACC, vf3, vf4x; vmsuby.z vf10, vf3, vf5y; sqc2 vf0, 0x30(%0); sqc2 vf8, 0x0(%0); sqc2 vf9, 0x10(%0); sqc2 vf10, 0x20(%0)" : : "r"(a), "r"(b) : "memory");
 }
 static inline void GQX(void* d, void* s) { void* ss = s; __int128 qa, qb; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(ss) : "memory"); }
-extern "C" void func_0036E8F0(Obj* o, void* q);
-void func_0036E8F0(Obj* o, void* q)
+extern "C" void cXformNode_Rotate_cQuaternionR(Obj* o, void* q);
+void cXformNode_Rotate_cQuaternionR(Obj* o, void* q)
 {
     M b;
     M r;
@@ -148,8 +148,8 @@ void func_0036E8F0(Obj* o, void* q)
 #pragma always_inline on
 #pragma inline_depth(8)
 
-extern "C" void func_0036EA70(Obj* o, MP* m);
-void func_0036EA70(Obj* o, MP* m)
+extern "C" void cXformNode_Rotate_cMatrixR(Obj* o, MP* m);
+void cXformNode_Rotate_cMatrixR(Obj* o, MP* m)
 {
     M b;
     M a;
@@ -197,7 +197,7 @@ extern "C" void Xform_Translate(Xform* x, const V* d)
  */
 
 
-void* func_0036EC10(char* self) {
+void* cXformNode_GetMatrix_ParentRelative(char* self) {
     return self + 96;
 }
 #pragma pop /* merge_units */
@@ -209,16 +209,16 @@ void* func_0036EC10(char* self) {
 typedef struct { __int128 q[4]; } M36EC20;
 typedef struct { int p; } It36EC20;
 typedef struct { char pad[0x50]; unsigned char a50; char pad51[0xF]; M36EC20 m60; char padA0[4]; int lA4[3]; } S36EC20;
-extern void func_001CF100(It36EC20* it, void* c);
-extern void func_001CF0E0(It36EC20* it, void* c);
-extern int func_001CEF10(It36EC20* a, It36EC20* b);
-extern void** func_001CF0D0(It36EC20* it);
-extern void func_001CEF50(void* p);
-extern void func_001CEF30(It36EC20* it);
+extern void cArray_cXformNodePtr_Begin(It36EC20* it, void* c);
+extern void cArray_cXformNodePtr_End(It36EC20* it, void* c);
+extern int cArray_cXformNodePtr_ConstIterator_opNe(It36EC20* a, It36EC20* b);
+extern void** cArray_cXformNodePtr_ConstIterator_opMul(It36EC20* it);
+extern void cXformNode_SetNeedsUpdate(void* p);
+extern void cArray_cXformNodePtr_ConstIterator_opInc(It36EC20* it);
 
 #pragma opt_rotateloops off
 
-void func_0036EC20(S36EC20* o, M36EC20* src)
+void cXformNode_SetMatrix_ParentRelative(S36EC20* o, M36EC20* src)
 {
     It36EC20 b;
     It36EC20 e;
@@ -227,12 +227,12 @@ void func_0036EC20(S36EC20* o, M36EC20* src)
     if (!o->a50) {
         It36EC20* pe;
         o->a50 = 1;
-        func_001CF100(&b, o->lA4);
-        func_001CF0E0(&e, o->lA4);
+        cArray_cXformNodePtr_Begin(&b, o->lA4);
+        cArray_cXformNodePtr_End(&e, o->lA4);
         pe = &e;
-        while (func_001CEF10(&b, pe)) {
-            func_001CEF50(*func_001CF0D0(&b));
-            func_001CEF30(&b);
+        while (cArray_cXformNodePtr_ConstIterator_opNe(&b, pe)) {
+            cXformNode_SetNeedsUpdate(*cArray_cXformNodePtr_ConstIterator_opMul(&b));
+            cArray_cXformNodePtr_ConstIterator_opInc(&b);
         }
     }
 }
@@ -243,11 +243,11 @@ void func_0036EC20(S36EC20* o, M36EC20* src)
 
 /* merge_units: begin func_0036ECD0 */
 #pragma push /* merge_units */
-void* func_0036ECD0(void* self) {
+void* cXformNode_GetNode_void(void* self) {
     return self;
 }
 
-void* func_0036ECE0(void* self) {
+void* cXformNode_GetNode_void_2(void* self) {
     return self;
 }
 #pragma pop /* merge_units */

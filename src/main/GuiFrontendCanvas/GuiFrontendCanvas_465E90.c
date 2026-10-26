@@ -24,7 +24,7 @@ int GuiFrontendCanvas_IsType(void* self, const char* name) {
 #pragma cplusplus on
 #include "vtable_base_dtor.h"
 
-DEFINE_VTABLE_BASE_DTOR(func_00465EC0, D_004E1A20, GuiCanvas_PopAll)
+DEFINE_VTABLE_BASE_DTOR(GuiCommonCanvas_dtor, D_004E1A20, GuiCanvas_PopAll)
 #pragma pop /* merge_units */
 /* merge_units: end func_00465EC0 */
 

@@ -39,39 +39,39 @@ extern unsigned char D_00582778;
 extern int D_00582A68;
 extern int D_00582A78; extern int D_00582A80; extern int D_00582A88; extern int D_00582A90; extern int D_00582A98;
 extern unsigned char D_005827A0; extern unsigned char D_005827A8; extern unsigned char D_005827B0; extern unsigned char D_005827B8; extern unsigned char D_005827C0;
-int func_002EB650(P_432230** out, int key);
-void func_004355D0(L_432230* l);
-void func_00432B10(L_432230* l, T_432230* t);
-void func_00432F50(L_432230* l, T_432230* t, int key);
-void func_00432910(L_432230* l, T_432230* t, int key);
-void func_00432750(L_432230* l, T_432230* t, int key);
-void func_00432D00(L_432230* l, T_432230* t, int key);
+int NetGetObject(P_432230** out, int key);
+void cNPCInfoObject_Setup(L_432230* l);
+void cNPCInfoObject_DoPendingAdds(L_432230* l, T_432230* t);
+void cNPCInfoObject_DoPendingActivates(L_432230* l, T_432230* t, int key);
+void cNPCInfoObject_DoPendingDeactivates(L_432230* l, T_432230* t, int key);
+void cNPCInfoObject_DoPendingOwnership(L_432230* l, T_432230* t, int key);
+void cNPCInfoObject_DoPendingActiveTerrain(L_432230* l, T_432230* t, int key);
 #if 0 /* merge_units */
 void func_00432510(L_432230* l, T_432230* t, int key);
 #endif /* merge_units */
 #define func_00432510(a0, a1, a2) (func_00432510((int)(a0), (Ent_2750 *)(a1), (a2))) /* merge_units */
 
 Obj_432230* Object_LookupById(int* id);
-T_432230* func_004361C0(int* id, int f);
-void func_00432230(int unused, int key, int code);
+T_432230* cNPCInfoObject_Find(int* id, int f);
+void cNPCInfoObject_NPCInfoUpdateCallback(int unused, int key, int code);
 }
 
-void func_00432230(int unused, int key, int code)
+void cNPCInfoObject_NPCInfoUpdateCallback(int unused, int key, int code)
 {
     P_432230* p = 0;
-    int r = func_002EB650(&p, key);
+    int r = NetGetObject(&p, key);
     if (D_005827F8 && p && !r) {
         T_432230* t = p->f1C;
         if (code == -2 && p->f4 == NetLocalId()) {
             L_432230 lk;
             int i;
-            if (!D_00582778) func_004355D0(&lk);
+            if (!D_00582778) cNPCInfoObject_Setup(&lk);
             D_00582A68++;
-            func_00432B10(&lk, t);
-            func_00432F50(&lk, t, key);
-            func_00432910(&lk, t, key);
-            func_00432750(&lk, t, key);
-            func_00432D00(&lk, t, key);
+            cNPCInfoObject_DoPendingAdds(&lk, t);
+            cNPCInfoObject_DoPendingActivates(&lk, t, key);
+            cNPCInfoObject_DoPendingDeactivates(&lk, t, key);
+            cNPCInfoObject_DoPendingOwnership(&lk, t, key);
+            cNPCInfoObject_DoPendingActiveTerrain(&lk, t, key);
             func_00432510(&lk, t, key);
             for (i = 0; i < 29; i++, t++) {
                 int id2;
@@ -81,7 +81,7 @@ void func_00432230(int unused, int key, int code)
                     Obj_432230* o = Object_LookupById(&id);
                     if (o && o->f58 && !o->f58->v15()) {
                         id2 = t->id;
-                        T_432230* e = func_004361C0(&id2, 0);
+                        T_432230* e = cNPCInfoObject_Find(&id2, 0);
                         if (e) {
                             e->id = -1;
                             e->b4 = 0xFF;
@@ -117,16 +117,16 @@ struct Raw_2750 { int p; };
 extern "C" {
 void List_Erase(int*, char*, int*);
 Raw_2750 List_Begin(void*);
-Raw_2750 func_00432730(void*);
-void func_00432740(char**, const Raw_2750&);
-void func_00432720(char**, const Raw_2750&);
-void func_0015AF40(int*, char**);
+Raw_2750 std_list_tNPCInfoPtr_end(void*);
+void std_list_tNPCInfoPtr_generic_iterator_ctor(char**, const Raw_2750&);
+void cLListIterator_tNPCInfoPtr_ctor(char**, const Raw_2750&);
+void std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(int*, char**);
 extern char D_00582B30;
 extern unsigned char D_005721C0;
 extern unsigned char g_IsMultiplayer;
 }
-#define Begin_2750(o) func_00432740(o, List_Begin(&D_00582B30))
-#define End_2750(o) func_00432720(o, func_00432730(&D_00582B30))
+#define Begin_2750(o) std_list_tNPCInfoPtr_generic_iterator_ctor(o, List_Begin(&D_00582B30))
+#define End_2750(o) cLListIterator_tNPCInfoPtr_ctor(o, std_list_tNPCInfoPtr_end(&D_00582B30))
 static inline unsigned char IsHost_2510() { if (g_IsMultiplayer) return D_005721C0; return 1; }
 extern "C" void func_00432510(int d0, Ent_2750* tbl, int key) {
   if (IsHost_2510() && *(int*)&D_00582B30) {
@@ -160,7 +160,7 @@ extern "C" void func_00432510(int d0, Ent_2750* tbl, int key) {
                     int res;
                     int pos;
                     c = cur;
-                    func_0015AF40(&pos, &c);
+                    std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&pos, &c);
                     List_Erase(&res, &D_00582B30, &pos);
                 }
             }

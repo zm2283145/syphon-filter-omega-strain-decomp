@@ -10,7 +10,7 @@ extern char D_00497DBC[];
 extern char D_00497DC0[];
 extern char D_00497DC4[];
 
-int func_0046DA48(void) {
+int MediusUniqueCallbackChatToggleResponseHandler(void) {
     int v0;
     int cond;
 
@@ -25,11 +25,11 @@ ret:
     return v0;
 }
 
-int func_0046DA78(void) {
+int MediusUniqueCallbackTextFilterRequestHandler(void) {
     return 108;
 }
 
-int func_0046DA80(void) {
+int MediusUniqueCallbackTextFilterResponseHandler(void) {
     int v0;
     int cond;
 
@@ -44,7 +44,7 @@ ret:
     return v0;
 }
 
-int func_0046DAB0(void) {
+int MediusUniqueCallbackReassignGameMediusWorldIDHandler(void) {
     int v0;
     int cond;
 

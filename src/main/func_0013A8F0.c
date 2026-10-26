@@ -7,19 +7,19 @@
 #include "types.h"
 #include "loose00_types.h"
 
-unsigned char func_0013A8F0(unsigned char* self) {
+unsigned char cLosRequest_cCollisionModelList_Game_IsInUse(unsigned char* self) {
     return self[32];
 }
 
-ElemE0* func_0013A900(ElemE0Iter* it) {
+ElemE0* cArray_cLosRequest_cCollisionModelList_Game_Iterator_opArrow(ElemE0Iter* it) {
     return it->p;
 }
 
 /* End iterator of an array of 0xE0-byte records. */
-void func_0013A910(ElemE0Iter* out, VecE0Array* v) {
+void cArray_cLosRequest_cCollisionModelList_Game_End(ElemE0Iter* out, VecE0Array* v) {
     out->p = v->data + v->count;
 }
 
-void func_0013A930(Iter* out, PtrVec* v) {
+void cArray_cLosRequest_cCollisionModelList_Game_Begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }

@@ -19,11 +19,11 @@ extern char D_00587D90[];
 extern char D_00587DA0[];
 extern char D_00587DB0[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
-void* func_0013D5C0(int size, int pool, char* file, int line);
-void func_0016F7E0(void* dst, void* src);
-void func_00242E30(It_242FA0* out, char* l);
+void* opNew_uint_int_charP_int(int size, int pool, char* file, int line);
+void cObjectId_ctor_cObjectIdR(void* dst, void* src);
+void std_list_tCalloutPtr_begin(It_242FA0* out, char* l);
 void CalloutList_End(It_242FA0* out, char* l);
-void func_002426A0(It_242FA0* out, It_242FA0* in);
+void cLListIterator_tCalloutPtr_ctor(It_242FA0* out, It_242FA0* in);
 void CalloutList_PushBack(char* l, Ent_242FA0** v);
 void func_00243460(float f, int h);
 void func_00243480(int h, int v);
@@ -41,9 +41,9 @@ void HudTracker_Attach(int d, Ent_242FA0* e, int id);
 int IeElement_Create(int a);
 void IeElement_Fade(float f, int c);
 
-static inline void BeginI_(It_242FA0* out, char* l) { It_242FA0 t; func_00242E30(&t, l); func_002426A0(out, &t); }
+static inline void BeginI_(It_242FA0* out, char* l) { It_242FA0 t; std_list_tCalloutPtr_begin(&t, l); cLListIterator_tCalloutPtr_ctor(out, &t); }
 static inline void Begin_(It_242FA0* out, char* l) { BeginI_(out, l); }
-static inline void EndI_(It_242FA0* out, char* l) { It_242FA0 t; CalloutList_End(&t, l); func_002426A0(out, &t); }
+static inline void EndI_(It_242FA0* out, char* l) { It_242FA0 t; CalloutList_End(&t, l); cLListIterator_tCalloutPtr_ctor(out, &t); }
 static inline void End_(It_242FA0* out, char* l) { EndI_(out, l); }
 
 #pragma opt_dead_assignments off
@@ -71,14 +71,14 @@ int Hud_ShowCallout(char* o, float scale, float fade, int* key, int a2, int id, 
         if (g_ProfileLockEnabled) Alloc_Unlock(9);
         g_ProfileLockDepth--;
         if (e) {
-            func_0016F7E0(e, key);
+            cObjectId_ctor_cObjectIdR(e, key);
             e->f4 = scale;
             e->x18 = kind;
             if (big) {
                 void* m;
                 int h;
                 e->c = IeElement_Create(D_004F7DB0);
-                m = func_0013D5C0(0x90, 0, D_004A7518, 0x8E);
+                m = opNew_uint_int_charP_int(0x90, 0, D_004A7518, 0x8E);
                 if (m) m = (void*)HudCalloutTracker_Construct(m, e->c, key);
                 e->d = (int)m;
                 h = func_002434A0(e->c);
@@ -91,13 +91,13 @@ int Hud_ShowCallout(char* o, float scale, float fade, int* key, int a2, int id, 
                 if (kind) {
                     void* m;
                     e->c = IeElement_Create(D_004F7DAC);
-                    m = func_0013D5C0(0x90, 0, D_004A7510, 0x9E);
+                    m = opNew_uint_int_charP_int(0x90, 0, D_004A7510, 0x9E);
                     if (m) m = (void*)HudTracker_Construct(m, e->c, key);
                     e->d = (int)m;
                 } else {
                     void* m;
                     e->c = IeElement_Create(D_004F7D90);
-                    m = func_0013D5C0(0x90, 0, D_004A7508, 0xA3);
+                    m = opNew_uint_int_charP_int(0x90, 0, D_004A7508, 0xA3);
                     if (m) m = (void*)HudTracker_Construct(m, e->c, key);
                     e->d = (int)m;
                 }

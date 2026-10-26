@@ -22,21 +22,21 @@ extern int D_0048C474;
 extern unsigned char D_0048C4AC;
 extern int D_0048C4B0;
 extern unsigned short D_0058C0B0;
-extern int func_002E51F0(unsigned int, Ctx **);
-extern int func_002E5550(unsigned int, int);
-extern int func_002DD268(int, int);
-int __attribute__((weak, section(".dtors_drop"))) func_002DF708(void) { return 0; }
-extern int func_00303990(int, int);
-extern int func_00314550(int, int, int *);
-extern int func_00314A98(int);
+extern int NetCreateConnInfo(unsigned int, Ctx **);
+extern int NetSetSessionMasterClientIndex(unsigned int, int);
+extern int NetSetPeerToPeerHostChangeCallback(int, int);
+int __attribute__((weak, section(".dtors_drop"))) NetIEnableUDP(void) { return 0; }
+extern int rt_p2p_set_max_peers(int, int);
+extern int NetStreamMediaEnableOnConnection(int, int, int *);
+extern int NetStreamMediaDisableOnConnection(int);
 extern void *memset(void *, int, unsigned int);
 extern char *strncpy(char *, const char *, unsigned int);
-extern int func_00303348(int, UpnpInfo *, void *);
-extern void func_002E6120(void);
-extern int func_002DDAC8(unsigned int *);
-extern int func_002E4A30(void);
+extern int rt_p2p_connect(int, UpnpInfo *, void *);
+extern void p2p_connect_cb(void);
+extern int NetIGetLocalTime(unsigned int *);
+extern int NetIUpdate(void);
 
-int func_002E0760(Cfg *cfg, List *list, Res *res)
+int NetConnect_PeerToPeerUDP(Cfg *cfg, List *list, Res *res)
 {
     UpnpInfo info;
     Info cb;
@@ -67,11 +67,11 @@ int func_002E0760(Cfg *cfg, List *list, Res *res)
         res->f4 = 0x17;
         return 0x17;
     }
-    r0 = func_002E51F0(0, &ctx);
+    r0 = NetCreateConnInfo(0, &ctx);
     res->f4 = r0;
     if (r0 != 0) return r0;
     if (ctx == 0) return r0;
-    func_002E5550(0, 0x100);
+    NetSetSessionMasterClientIndex(0, 0x100);
     c = ctx;
     c->x43C = ver;
     f4 = cfg->f4;
@@ -96,13 +96,13 @@ int func_002E0760(Cfg *cfg, List *list, Res *res)
         int y = cfg->fC8;
         /* scheduling barrier (emits no code): loads fC8 before fC4 */
         __asm__ volatile("" ::: "memory");
-        r = func_002DD268(cfg->fC4, y);
+        r = NetSetPeerToPeerHostChangeCallback(cfg->fC4, y);
     }
-    if (r == 0 && D_0048C4AC == 0) r = func_002DF708();
-    if (func_00303990(D_0048C4B0, ctx->x444) != 0) return 0x25;
-    if (r == 0 && cfg->fD0 == 1) r = func_00314550(0, cfg->f4, &cfg->fCC);
+    if (r == 0 && D_0048C4AC == 0) r = NetIEnableUDP();
+    if (rt_p2p_set_max_peers(D_0048C4B0, ctx->x444) != 0) return 0x25;
+    if (r == 0 && cfg->fD0 == 1) r = NetStreamMediaEnableOnConnection(0, cfg->f4, &cfg->fCC);
     if (r != 0) {
-        func_00314A98(0);
+        NetStreamMediaDisableOnConnection(0);
         ctx->x438 = 3;
         if (D_0048C468 != 0) {
             memset(&cb, 0, sizeof cb);
@@ -131,18 +131,18 @@ int func_002E0760(Cfg *cfg, List *list, Res *res)
     }
     if (info.pa == 0) info.pa = D_0058C0B0;
     if (info.pb == 0) info.pb = D_0058C0B0;
-    if (func_00303348(D_0048C4B0, &info, func_002E6120) != 0) return 0x25;
+    if (rt_p2p_connect(D_0048C4B0, &info, p2p_connect_cb) != 0) return 0x25;
     if (cfg->fA4 != 0) goto ok;
-    func_002DDAC8(&t);
+    NetIGetLocalTime(&t);
     deadline = t + 30000;
     while (ctx->x438 == 2) {
-        func_002DDAC8(&t);
+        NetIGetLocalTime(&t);
         if (deadline < t) {
             res->f4 = 0xE;
             ctx->x438 = 0;
             return 0xE;
         }
-        func_002E4A30();
+        NetIUpdate();
     }
     if (ctx->x400 == 0x100 || ctx->x438 == 3) {
         res->f4 = 3;

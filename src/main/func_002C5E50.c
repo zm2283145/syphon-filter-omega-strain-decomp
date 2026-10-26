@@ -12,7 +12,7 @@ typedef struct {
 } Rec64;
 
 /* Rec64 copy (assignment). */
-Rec64* func_002C5E50(Rec64* dst, Rec64* src) {
+Rec64* cPathNavigatorTransfer_opAssign(Rec64* dst, Rec64* src) {
     Q q0; Q q1; Q q2; Q q3;
     float f40, f44;
     int i48, i4C, i50, i54, i58, i5C;

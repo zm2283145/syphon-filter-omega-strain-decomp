@@ -30,7 +30,7 @@ int Newlib_SysKill(int cmd, int arg)
 
 extern int Newlib_Errno(void);
 
-int func_0010D960(void) {
+int Libc_Stat(void) {
     int tmp0;
 
     tmp0 = Newlib_Errno();
@@ -38,7 +38,7 @@ int func_0010D960(void) {
     return -1;
 }
 
-int func_0010D988(void) {
+int Libc_Unlink(void) {
     int tmp0;
 
     tmp0 = Newlib_Errno();

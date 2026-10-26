@@ -5,7 +5,7 @@
 
 #include "ska_types.h"
 
-void* func_003B2630(char* self) {
+void* cVector_Z_void_2(char* self) {
     return self + 8;
 }
 
@@ -14,7 +14,7 @@ int ClipHeader_HasAxisZ(SkaClipFlags* clip) {
     return 0U < clip->axisZ;
 }
 
-void* func_003B2650(char* self) {
+void* cVector_Y_void_2(char* self) {
     return self + 4;
 }
 
@@ -28,7 +28,7 @@ int ClipHeader_HasAxisX(SkaClipFlags* clip) {
     return 0U < clip->axisX;
 }
 
-void* func_003B2680(void* self) {
+void* cVector_X_void_2(void* self) {
     return self;
 }
 

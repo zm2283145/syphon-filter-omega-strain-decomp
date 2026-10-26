@@ -8,6 +8,6 @@
 #include "loose00_types.h"
 
 /* True when the type byte at +0x24 is 3. */
-int func_00184470(Unk00184470* self) {
+int cMoveMsg_Template_HasDeltaPosition(Unk00184470* self) {
     return self->type == 3;
 }

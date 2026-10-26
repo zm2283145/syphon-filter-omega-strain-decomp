@@ -90,12 +90,12 @@ typedef struct {
     unsigned char done;
 } ClipCursor_00190C70;
 extern unsigned int Math_TruncFloatSat(float);
-extern float* func_00190E60(void*);
-extern int func_00190EA0(void*);
-extern int func_00190EB0(void*);
-extern int func_00190F00(void*);
-extern void* func_00190F10(ClipCursor_00190C70*);
-void func_00190C70(ClipCursor_00190C70* c) {
+extern float* cSkaAnimData_DataStart(void*);
+extern int cSkaAnimData_GetFrameSize(void*);
+extern int cSkaAnimData_IsLooping(void*);
+extern int cSkaAnimData_GetFrameCount(void*);
+extern void* cPointer_cSkaAnimData_opArrow(ClipCursor_00190C70*);
+void cSkaAnimDataIterator_GotoStartAnimFrame(ClipCursor_00190C70* c) {
     float len;
     unsigned int frames;
     int stride;
@@ -105,8 +105,8 @@ void func_00190C70(ClipCursor_00190C70* c) {
     int i1;
     c->t = 0.0f;
     c->done = 0;
-    len = func_00190F00(func_00190F10(c));
-    if (func_00190EB0(func_00190F10(c))) {
+    len = cSkaAnimData_GetFrameCount(cPointer_cSkaAnimData_opArrow(c));
+    if (cSkaAnimData_IsLooping(cPointer_cSkaAnimData_opArrow(c))) {
         while (c->t >= len) {
             c->t -= len;
         }
@@ -114,13 +114,13 @@ void func_00190C70(ClipCursor_00190C70* c) {
         c->t = len;
         c->done = 1;
     }
-    frames = func_00190F00(func_00190F10(c));
-    stride = func_00190EA0(func_00190F10(c));
+    frames = cSkaAnimData_GetFrameCount(cPointer_cSkaAnimData_opArrow(c));
+    stride = cSkaAnimData_GetFrameSize(cPointer_cSkaAnimData_opArrow(c));
     c->i10 = 0;
-    base = func_00190E60(func_00190F10(c));
+    base = cSkaAnimData_DataStart(cPointer_cSkaAnimData_opArrow(c));
     idx = Math_TruncFloatSat(c->t);
-    i0 = idx * func_00190EA0(func_00190F10(c));
-    if (func_00190EB0(func_00190F10(c))) {
+    i0 = idx * cSkaAnimData_GetFrameSize(cPointer_cSkaAnimData_opArrow(c));
+    if (cSkaAnimData_IsLooping(cPointer_cSkaAnimData_opArrow(c))) {
         i1 = (idx < frames - 1) ? i0 + stride : 0;
     } else {
         i1 = (idx < frames) ? i0 + stride : i0;

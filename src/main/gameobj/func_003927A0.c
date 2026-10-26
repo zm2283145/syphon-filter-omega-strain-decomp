@@ -11,7 +11,7 @@ void* Skel_Find(void* tab, Q3927A0* key);
 void ModelCtx_Init(void* ctx, Prm3927A0* p);
 void Skel_ApplyScalePreset(Def3927A0* d, int preset);
 }
-/* 16-byte block copy loop (lq/sq), as in func_00392260. */
+/* 16-byte block copy loop (lq/sq), as in cMan_dtor. */
 static inline void QMove_3927A0(void* d0, void* s, int n0) {
     int n = n0; __int128 t; void* d = d0;
     asm {

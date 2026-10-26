@@ -13,7 +13,7 @@
 extern "C" {
 static const unsigned int dat_00493C28[2] = { 0x1, 0x0 };
 static const unsigned int dat_00493C30[4] = { 0x0, 0x0, 0x0, 0x0 };
-TUNode* func_0040CFF0(TUTree* t, TUNode* parent, bool left, bool first,
+TUNode* std_tree_pair_cObjectId_value_compare_insert_node_at(TUTree* t, TUNode* parent, bool left, bool first,
                  const unsigned int* v);
 }
 extern "C" void ObjMap_Insert(TUPair* ret, TUTree* t, const unsigned int* v)
@@ -36,7 +36,7 @@ extern "C" void ObjMap_Insert(TUPair* ret, TUTree* t, const unsigned int* v)
         }
     }
     if (!y || y->key < *v) {
-        ret->it = func_0040CFF0(t, parent, left, first, v);
+        ret->it = std_tree_pair_cObjectId_value_compare_insert_node_at(t, parent, left, first, v);
         ret->ok = (*(bool*)dat_00493C28);
     } else {
         ret->it = y;
@@ -51,6 +51,6 @@ extern "C" void ObjMap_Insert(TUPair* ret, TUTree* t, const unsigned int* v)
 #pragma cplusplus on
 #include "tree_erase3.h"
 
-DEFINE_TREE_ERASE3(func_0040CD10, 0xC, func_0040D2D0, func_0040D2B0, func_0040D2C0, func_0040D210, func_0040D160, D_004BECF0, 0x64)
+DEFINE_TREE_ERASE3(std_tree_pair_cObjectId_value_compare_destroy, 0xC, std_tree_pair_cObjectId_value_compare_alloc, std_tree_pair_cObjectId_value_compare_node_alloc, cAllocator_pair_cObjectId_destroy, cAllocator_node_deallocate_nodeP_uint_11, opDelete_nodeP_int_bool_charP_etc_10, D_004BECF0, 0x64)
 #pragma pop /* merge_units */
 /* merge_units: end func_0040CD10 */

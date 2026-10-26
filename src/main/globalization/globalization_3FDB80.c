@@ -30,7 +30,7 @@ static inline void merge_flush_func_003FDB80(void) {}
 int Alloc_Lock(int);                                    
 int Alloc_Unlock(int);                                  
 int PtrVector_Resize(char *, int, int *);                
-int func_003FEEE0(int, int);                            
+int std_vector_deleter_1_dtor(int, int);                            
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
 extern int D_0055CA50;
@@ -39,7 +39,7 @@ extern int D_0055CA80;
 extern int D_0055D460;
 extern int D_0055D468;
 
-void func_003FDBB0(void) {
+void nGlobalization_UnloadLevelStrings(void) {
     int sp2C;
     int temp_s0;
 
@@ -50,7 +50,7 @@ void func_003FDBB0(void) {
         }
         g_ProfileLockDepth += 1;
         if ((temp_s0 != 0) && (temp_s0 != 0) && (temp_s0 != 0)) {
-            func_003FEEE0(temp_s0, 0);
+            std_vector_deleter_1_dtor(temp_s0, 0);
         }
         Mem_Free(0, temp_s0, "globalization.cc", 0x9B);
         if (g_ProfileLockEnabled != 0) {

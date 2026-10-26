@@ -105,7 +105,7 @@ static inline bool LedgeDC(Act* a)
 }
 
 struct VT { float x, y, z, w; VT() {} VT(const VT& o) { Vec4_Assign((V4*)this, (V4*)&o); } };
-extern "C" VT func_001A3170(Ledge* l, float dt);
+extern "C" VT cHumanCollisionRoutine_PredictNextVelocity(Ledge* l, float dt);
 
 extern "C" void Actor_UpdateJumpApex(Act* a, float dt)
 {
@@ -124,7 +124,7 @@ extern "C" void Actor_UpdateJumpApex(Act* a, float dt)
                     if (!skip) {
                         float h;
                         Ledge* l = a->ledge;
-                        VT t70 = l ? func_001A3170(l, dt) : *(VT*)Vec4_Assign((V4*)&(const VT&)VT(), Vec4_GetZero());
+                        VT t70 = l ? cHumanCollisionRoutine_PredictNextVelocity(l, dt) : *(VT*)Vec4_Assign((V4*)&(const VT&)VT(), Vec4_GetZero());
                         h = t70.z;
                         V4 t60 = a->GetE4();
                         if (h <= a->f34D8) Actor_CatchLedgeInAir(a);

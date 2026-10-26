@@ -31,7 +31,7 @@ extern char g_ActorActionMsgClass[];
 extern char D_004E0840[];
 extern char D_004E0100[];
 int Net_GetClock(int);
-V* func_00151780(Mtx*, int);
+V* cMatrix_GetAxis(Mtx*, int);
 float Math_Atan2f(float, float);
 void Event_Construct(void*, void*);
 void Event_Send(void*, void*, int);
@@ -55,8 +55,8 @@ struct Msg : MsgBase { char pad2c[4]; Payload p;
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~Msg() { vt = D_004E0100; }
 };
 static inline float Yaw(Mtx& m) {
-    V r0 = *func_00151780(&m, 0);
-    V r1 = *func_00151780(&m, 1);
+    V r0 = *cMatrix_GetAxis(&m, 0);
+    V r1 = *cMatrix_GetAxis(&m, 1);
     float a = r1.z; float b = r0.z; if (b < a) { float x = r0.x; return Math_Atan2f(r0.y, x); }
     return Math_Atan2f(-r1.x, r1.y);
 }

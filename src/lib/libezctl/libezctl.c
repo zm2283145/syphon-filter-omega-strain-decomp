@@ -123,7 +123,7 @@ int ezNetCtlPreloadModemCnf(char *name)
 }
 
 /* RPC function 5, no arguments; returns the reply word (role unknown). */
-int func_00353130(void)
+int ezNetCtlUpInterface(void)
 {
     int *res = (int *)ezNetCtl_rpcBuf;
     if (!ezNetCtl_rpcBound) {
@@ -137,7 +137,7 @@ int func_00353130(void)
 
 /* RPC function 6, no arguments; returns the reply word (role unknown;
  * used by SFOLobby_Config). */
-int func_003531B8(void)
+int ezNetCtlDownInterface(void)
 {
     int *res = (int *)ezNetCtl_rpcBuf;
     if (!ezNetCtl_rpcBound) {

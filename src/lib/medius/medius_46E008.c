@@ -9,7 +9,7 @@
 int D_00497CB4 = 0;
 int D_00497CB8 = 0;
 
-int func_0046E008(void) {
+int MediusUniqueCallbackTicketListResponseHandler(void) {
     int v0;
     int cond;
 
@@ -24,11 +24,11 @@ ret:
     return v0;
 }
 
-int func_0046E038(void) {
+int MediusUniqueCallbackTicketItemRequestHandler(void) {
     return 56;
 }
 
-int func_0046E040(void) {
+int MediusUniqueCallbackTicketItemResponseHandler(void) {
     int v0;
     int cond;
 

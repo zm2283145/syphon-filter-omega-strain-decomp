@@ -19,11 +19,11 @@ extern char g_WeaponDatabase[];
 extern int Global_ReloadWeapons(void);
 extern int WeaponDb_LoadReloadVariant(int);
 extern int Resource_Construct(void*);
-extern int func_003CC1D0(void*);
+extern int cDB_ctor(void*);
 
 /* Constructor: base init, sub-object at +0x1C, then clear the fields. */
-Unk00147910* func_00147910(Unk00147910* self) {
-    func_003CC1D0(self);
+Unk00147910* cWeaponDB_ctor(Unk00147910* self) {
+    cDB_ctor(self);
     Resource_Construct(&self->unk1C);
     self->unk14 = 0;
     self->unk18 = 0;

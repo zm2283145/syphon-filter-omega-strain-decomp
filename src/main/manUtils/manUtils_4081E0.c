@@ -78,12 +78,12 @@ DEFINE_MESSAGE_PACK(cDamageMsg_v02, 0x18, D_005716F8, PACK_BODY)
 /* merge_units: begin func_00408470 */
 #pragma push /* merge_units */
 typedef struct { int a; int b; unsigned char ready; } O470;
-extern int func_004084D0(O470* o, const char* name, unsigned char* out);
+extern int cMaterialPropertiesTable_Lookup_charP_ucharR(O470* o, const char* name, unsigned char* out);
 unsigned char MaterialProps_Find(O470* o, const char* name) {
     unsigned char r = 0;
     if (!o->ready || !name || !*name)
         return 0;
-    func_004084D0(o, name, &r);
+    cMaterialPropertiesTable_Lookup_charP_ucharR(o, name, &r);
     return r;
 }
 #pragma pop /* merge_units */

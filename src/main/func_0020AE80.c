@@ -1,6 +1,6 @@
 #include "types.h"
-extern void func_0020AEA0(void);
-/* Wrapper around func_0020AEA0. */
+extern void compressed_pair_cAllocator_cSkaTransBLEND_int_swap(void);
+/* Wrapper around compressed_pair_cAllocator_cSkaTransBLEND_int_swap. */
 #pragma optimization_level 1
-void func_0020AE80(void) { func_0020AEA0(); }
+void Metrowerks_swap_compressedpairR_compressedpairR_2(void) { compressed_pair_cAllocator_cSkaTransBLEND_int_swap(); }
 #pragma optimization_level reset

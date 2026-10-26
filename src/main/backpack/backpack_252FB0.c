@@ -132,8 +132,8 @@ extern int PickupMenuEntry_ctor;
 extern void PickupMenu_AddEntry(Item_253070* it, int kind, int id, int flag);
 extern Widget_253070* PickupMenu_FindElement(void* root, char* name);
 extern int Backpack_ListItems(Owner_253070* o, int* out, int a, int n);
-extern int func_00255E50(Owner_253070* o);
-extern int func_00255D90(Owner_253070* o);
+extern int cBackpack_BodyIsPickupable(Owner_253070* o);
+extern int cBackpack_BodyHasDisguise(Owner_253070* o);
 extern int IeNode_FindChild(void* root, char* name);
 extern void IeElement_EvaluateAt(Widget_253070* w, float v);
 extern void IeElement_Fade(Widget_253070* w, float v);
@@ -226,8 +226,8 @@ extern "C" Self_253070* PickupMenu_Build(Self_253070* self, void* root, Owner_25
         it++;
         self->count++;
     }
-    a = optA && func_00255E50(self->owner);
-    b = optA && func_00255D90(self->owner);
+    a = optA && cBackpack_BodyIsPickupable(self->owner);
+    b = optA && cBackpack_BodyHasDisguise(self->owner);
     if (self->count + a + b < 5 && Owner_Get2E8(self->owner) > 0) {
         PickupMenu_AddEntry(it, 2, -1, optB);
         it++;

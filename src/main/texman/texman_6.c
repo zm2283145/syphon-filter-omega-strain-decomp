@@ -14,16 +14,16 @@
 #include "types.h"
 #include "texman_types.h"
 
-Word* func_00382EA0(Word* dst, Word* src) {
+Word* cLListIterator_int_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_00382EB0(Iter* out, Tree* t) {
+void std_list_deleter_int_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-TexListIter* func_00382EC0(TexListIter* it, TexListNode* node) {
+TexListIter* std_list_deleter_int_generic_iterator_ctor_nodeP(TexListIter* it, TexListNode* node) {
     it->node = node;
     return it;
 }
@@ -54,7 +54,7 @@ static inline int BlockShift(int bpp)
 {
     return (bpp == 32 || bpp == 24) ? 6 : (bpp == 16) ? 7 : (bpp == 8) ? 8 : 9;
 }
-extern "C" int func_00382ED0(TexMan* self, int w, int h, int bpp)
+extern "C" int cTexMan_AllocStaticVram(TexMan* self, int w, int h, int bpp)
 {
     int last = self->last;
     if (last == self->used) {

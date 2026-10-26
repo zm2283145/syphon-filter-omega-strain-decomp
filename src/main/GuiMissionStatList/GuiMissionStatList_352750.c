@@ -14,14 +14,14 @@
 struct Tag352750 { char c; };
 struct V352750 { int capacity; int count; char* data; };
 extern "C" {
-void func_00352910(V352750* self, char* first, char* last, Tag352750 tag);
-V352750* func_00352750(V352750* self, V352750* src);
+void std_vector_pod_StatType_do_assign(V352750* self, char* first, char* last, Tag352750 tag);
+V352750* std_vector_pod_StatType_opAssign(V352750* self, V352750* src);
 }
-V352750* func_00352750(V352750* self, V352750* src)
+V352750* std_vector_pod_StatType_opAssign(V352750* self, V352750* src)
 {
     if (self != src) {
         Tag352750 tag;
-        func_00352910(self, src->data, src->data + src->count, tag);
+        std_vector_pod_StatType_do_assign(self, src->data, src->data + src->count, tag);
     }
     return self;
 }
@@ -33,16 +33,16 @@ V352750* func_00352750(V352750* self, V352750* src)
 typedef struct { char unused; } Alloc;
 typedef struct { int begin; int end; int cap; } Vec;
 typedef struct { int unk0; int count; int data; } Src;
-extern void func_003527F0(Vec* self, int first, int last, Alloc alloc);
+extern void std_vector_pod_StatType_init(Vec* self, int first, int last, Alloc alloc);
 
 /* Copy-constructs a range container from src's [data, data+count). */
-Vec* func_003527A0(Vec* self, Src* src)
+Vec* std_vector_pod_StatType_ctor(Vec* self, Src* src)
 {
     Alloc alloc;
     self->begin = 0;
     self->end = 0;
     self->cap = 0;
-    func_003527F0(self, src->data, src->data + src->count, alloc);
+    std_vector_pod_StatType_init(self, src->data, src->data + src->count, alloc);
     return self;
 }
 #pragma pop /* merge_units */

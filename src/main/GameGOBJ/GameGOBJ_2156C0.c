@@ -92,14 +92,14 @@ extern char D_004A45D0[], D_004A45E0[], D_004A45F0[], D_004A4600[], D_004A4610[]
 extern char D_004A4620[], D_004A4630[];
 extern int D_0048A9C0;
 void PathObj_Ctor(Lift_215700* self, int a, Reader_215700* r);
-void func_00215F30(void* v);
-void func_00146020(void* v);
-void func_001C10A0(void* v);
-void func_00173910(void* v);
+void std_vector_cGameGOBJPtr_ctor(void* v);
+void std_vector_charPtr_ctor_void(void* v);
+void std_vector_int_ctor_void(void* v);
+void std_vector_cHotboxPtr_ctor(void* v);
 void Resource_Construct(void* m);
 void Lift_CreateInfoObject(Lift_215700* self);
 int func_00211DA0(void);
-void func_002EC2A8(int a);
+void NetFreeObject(int a);
 void* Mem_Alloc(int heap, int size, char* file, int line);
 void SoundAction_CtorVoice(void* act, int kind, char* name, void* owner, int b);
 void PtrVector_Resize(void* v, int n, const void* fill);
@@ -129,10 +129,10 @@ extern "C" Lift_215700* Lift_Ctor(Lift_215700* self, int a, Reader_215700* r)
     char buf[20];
     PathObj_Ctor(self, a, r);
     self->vtbl = D_004DB040;
-    { Vec_215700* v = &self->colls; func_00215F30(v); v->flag = 1; }
-    { Vec_215700* v = &self->names; func_00146020(v); v->flag = 1; }
-    { Vec_215700* v = &self->ints; func_001C10A0(v); v->flag = 1; }
-    { Vec_215700* v = &self->vD; func_00173910(v); v->flag = 1; }
+    { Vec_215700* v = &self->colls; std_vector_cGameGOBJPtr_ctor(v); v->flag = 1; }
+    { Vec_215700* v = &self->names; std_vector_charPtr_ctor_void(v); v->flag = 1; }
+    { Vec_215700* v = &self->ints; std_vector_int_ctor_void(v); v->flag = 1; }
+    { Vec_215700* v = &self->vD; std_vector_cHotboxPtr_ctor(v); v->flag = 1; }
     self->state = 0;
     {
         Act_215700* p = &self->snd[0];
@@ -197,7 +197,7 @@ extern "C" Lift_215700* Lift_Ctor(Lift_215700* self, int a, Reader_215700* r)
                     State_215700* q = self->prev;
                     if (q) {
                         if (q->bC) {
-                            func_002EC2A8(func_00211DA0());
+                            NetFreeObject(func_00211DA0());
                         } else {
                             AllocGuard g;
                             Mem_Free(0, q, D_004A4550, 0xB83);

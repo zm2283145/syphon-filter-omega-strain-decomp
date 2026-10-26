@@ -282,7 +282,7 @@ static inline void merge_flush_func_003CC4B0(void) {}
 
 /* merge_units: begin func_003CC500 */
 #pragma push /* merge_units */
-int func_003CC500(void) {
+int cGobjController_Enemy_int(void) {
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */

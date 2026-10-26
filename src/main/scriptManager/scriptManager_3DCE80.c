@@ -20,7 +20,7 @@
 #pragma cplusplus on
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR(func_003DCE80)
+DEFINE_BUF_HOLDER_DTOR(std_vector_SubScriptPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003DCE80 */
 
@@ -41,13 +41,13 @@ extern char D_004BD4C0[];
 extern Mgr_CF70* D_00554F30;
 void* Mem_Alloc(int pool, int size, char* file, int line);
 char* Str_Duplicate(char*);
-Def_CF70* func_003E0CE0(int, char*);
-void func_003D9210(V_CF70*, int, const E_CF70&);
-void func_003E2F60(V_CF70*, int, const E_CF70&);
-void func_003D91F0(Mgr_CF70*, Def_CF70**);
+Def_CF70* cScriptInterpreter_findEnum(int, char*);
+void cArray_EnumField_ctor(V_CF70*, int, const E_CF70&);
+void std_vector_imp_EnumField_resize(V_CF70*, int, const E_CF70&);
+void std_vector_EnumDefPtr_push_back(Mgr_CF70*, Def_CF70**);
 }
-inline void V_CF70::init(int n, const E_CF70& e) { func_003D9210(this, n, e); }
-inline void V_CF70::resize(int n, const E_CF70& e) { func_003E2F60(this, n, e); }
+inline void V_CF70::init(int n, const E_CF70& e) { cArray_EnumField_ctor(this, n, e); }
+inline void V_CF70::resize(int n, const E_CF70& e) { std_vector_imp_EnumField_resize(this, n, e); }
 static inline Def_CF70* NewDef_CF70(char* name, int count, int id)
 {
     Def_CF70* n;
@@ -63,13 +63,13 @@ static inline Def_CF70* NewDef_CF70(char* name, int count, int id)
     }
     return n;
 }
-extern "C" Def_CF70* func_003DCF70(int ctx, char* name, E_CF70* data, int count)
+extern "C" Def_CF70* cScriptInterpreter_considerEnum(int ctx, char* name, E_CF70* data, int count)
 {
     int i;
-    Def_CF70* d = func_003E0CE0(ctx, name);
+    Def_CF70* d = cScriptInterpreter_findEnum(ctx, name);
     if (!d) {
         d = NewDef_CF70(name, count, D_00554F30->count + 10);
-        func_003D91F0(D_00554F30, &d);
+        std_vector_EnumDefPtr_push_back(D_00554F30, &d);
     } else if (!d->v.x4 && count) {
         d->v.resize(count, E_CF70());
     }
@@ -117,16 +117,16 @@ void* Mem_Alloc(int, int, char*, int);
 #define Mem_Alloc(a0, a1, a2, a3) (Mem_Alloc((a0), (a1), (a2), (a3))) /* merge_units */
 
 Scr_D2D0* ScriptDesc_Find(Mgr_D2D0*, Def_D2D0*);
-Scr_D2D0* func_003D5EB0(Scr_D2D0*, char*, void*, int);
+Scr_D2D0* FuncDef_ctor_charP_voidP_intP(Scr_D2D0*, char*, void*, int);
 void PtrVector_Resize(PVec_D2D0*, int, int*);
-void func_003D7910(void*, Scr_D2D0**);
-int** func_003DD780(PVec_D2D0*, int);
-void func_003E3140(Map_D2D0*, const Cmp_D2D0&, const Al_D2D0&);
-RIt_D2D0 func_003E2E60(Map_D2D0*, int*);
+void std_vector_FuncDefPtr_push_back(void*, Scr_D2D0**);
+int** cArray_intPtr_opIndex_int(PVec_D2D0*, int);
+void std_tree_pair_int_value_compare_cAllocator_pair_ctor_valuecompareR_cAllocatorR_2(Map_D2D0*, const Cmp_D2D0&, const Al_D2D0&);
+RIt_D2D0 std_tree_pair_int_value_compare_cAllocator_pair_find_intR(Map_D2D0*, int*);
 RIt_D2D0 func_003DD770(Map_D2D0*);
 void func_003DD760(CIt_D2D0*, RIt_D2D0*);
 char* func_003E2DA0(Map_D2D0*, int*);
-void func_003D8380(Lst_D2D0*);
+void std_vector_FuncDefPtr_ctor(Lst_D2D0*);
 }
 
 static inline void End_D2D0(CIt_D2D0* e, Map_D2D0* m) { func_003DD760(e, &func_003DD770(m)); }
@@ -169,7 +169,7 @@ extern "C" Scr_D2D0* Script_LinkDefinition(Mgr_D2D0* tab, Def_D2D0* def, void* c
             n = (Scr_D2D0*)Mem_Alloc(0, 0x44, D_004BD4C0, 0xAE4);
         }
         if (n)
-            n = func_003D5EB0(n, def->name, ctx, def->x78);
+            n = FuncDef_ctor_charP_voidP_intP(n, def->name, ctx, def->x78);
         s = n;
         n->x24 = def->x6C;
         s->x28 = def->xC;
@@ -185,9 +185,9 @@ extern "C" Scr_D2D0* Script_LinkDefinition(Mgr_D2D0* tab, Def_D2D0* def, void* c
             int** p = &s->vec.data[(unsigned int)i];
             *p = Tab_Push(tab, def->args[i]);
         }
-        func_003D7910(D_00554F20, &s);
+        std_vector_FuncDefPtr_push_back(D_00554F20, &s);
         if (s->b41) {
-            key = **func_003DD780(&s->vec, 1);
+            key = **cArray_intPtr_opIndex_int(&s->vec, 1);
             if (!tab->map) {
                 Map_D2D0* m;
                 {
@@ -195,12 +195,12 @@ extern "C" Scr_D2D0* Script_LinkDefinition(Mgr_D2D0* tab, Def_D2D0* def, void* c
                     m = (Map_D2D0*)Mem_Alloc(0, 0x10, D_004BD4C0, 0xAF9);
                 }
                 if (m) {
-                    func_003E3140(m, Cmp_D2D0(), Al_D2D0());
+                    std_tree_pair_int_value_compare_cAllocator_pair_ctor_valuecompareR_cAllocatorR_2(m, Cmp_D2D0(), Al_D2D0());
                 }
                 tab->map = m;
             }
             {
-                RIt_D2D0 r1 = func_003E2E60(tab->map, &key);
+                RIt_D2D0 r1 = std_tree_pair_int_value_compare_cAllocator_pair_find_intR(tab->map, &key);
                 it = r1;
                 End_D2D0(&e, tab->map);
                 if (it.p == e.p) {
@@ -211,14 +211,14 @@ extern "C" Scr_D2D0* Script_LinkDefinition(Mgr_D2D0* tab, Def_D2D0* def, void* c
                         l = (Lst_D2D0*)Mem_Alloc(0, 0x10, D_004BD4C0, 0xAFF);
                     }
                     if (l) {
-                        func_003D8380(l);
+                        std_vector_FuncDefPtr_ctor(l);
                         l->bC = 1;
                     }
                     *slot = l;
-                    t2 = func_003E2E60(tab->map, &key);
+                    t2 = std_tree_pair_int_value_compare_cAllocator_pair_find_intR(tab->map, &key);
                     it = t2;
                 }
-                func_003D7910(it.p->list, &s);
+                std_vector_FuncDefPtr_push_back(it.p->list, &s);
             }
         }
     }

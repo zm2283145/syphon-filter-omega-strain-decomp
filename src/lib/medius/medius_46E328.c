@@ -9,7 +9,7 @@
 extern char D_005984C0[];
 extern char D_005984C4[];
 
-int func_0046E328(void) {
+int MediusUniqueCallbackFileListFilesResponseHandler(void) {
     int v0;
     int cond;
 
@@ -24,11 +24,11 @@ ret:
     return v0;
 }
 
-int func_0046E358(void) {
+int MediusUniqueCallbackFileUpdateAttributesRequestHandler(void) {
     return 472;
 }
 
-int func_0046E360(void) {
+int MediusUniqueCallbackFileUpdateAttributesResponseHandler(void) {
     int v0;
     int cond;
 

@@ -15,12 +15,12 @@ extern "C" {
 void Receiver_Construct(M22D4F0*, void*);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void* func_001005E0(void* p, void* ctor, int dtor, int size, int n);
-void func_00222B60(void*);
-void func_0022D3C0(M22D4F0*);
-void func_0022DBC0(void*);
+void std_list_deleter_cSafePtr_cGOBJ_ctor(void*);
+void cTargetManager_Reset(M22D4F0*);
+void std_list_deleter_LosReqElem_ctor(void*);
 extern char D_004DB850[];
 extern char D_004F77A8[];
-TargetSlot* func_0022D630(TargetSlot* self);
+TargetSlot* cTargetManager_LosElem_ctor(TargetSlot* self);
 }
 #pragma push
 
@@ -33,14 +33,14 @@ extern "C" M22D4F0* TargetVisMgr_ctor(M22D4F0* m) {
     void* p;
     Receiver_Construct(m, D_004F77A8);
     m->vt = D_004DB850;
-    func_0022DBC0(m->a110);
-    func_00222B60(m->a11C);
+    std_list_deleter_LosReqElem_ctor(m->a110);
+    std_list_deleter_cSafePtr_cGOBJ_ctor(m->a11C);
     for (i = 0, off = 0; i < 29; i++, off += 4) {
         n = 29 - i;
         { AllocGuard g; p = Mem_Alloc(0, (n << 4) + 0x10, "targetManager.cc", 0x2B); }
-        *(void**)((char*)m + off + 0x20) = func_001005E0(p, (void*)func_0022D630, 0, 0x10, n);
+        *(void**)((char*)m + off + 0x20) = func_001005E0(p, (void*)cTargetManager_LosElem_ctor, 0, 0x10, n);
     }
-    func_0022D3C0(m);
+    cTargetManager_Reset(m);
     return m;
 }
 #pragma pop
@@ -56,7 +56,7 @@ extern "C" M22D4F0* TargetVisMgr_ctor(M22D4F0* m) {
  */
 
 /* Constructor: clears the slot. */
-TargetSlot* func_0022D630(TargetSlot* self) {
+TargetSlot* cTargetManager_LosElem_ctor(TargetSlot* self) {
     self->unk4 = 0;
     self->unk0 = 0;
     self->unkC = 0;

@@ -19,7 +19,7 @@ extern void LobbyArray_Init(Slot* slot, int a, int b, int c);
 extern char* String_Copy(char* dst, const char* src);
 
 /* Game state constructor: builds the slots, clears the data block and sets defaults. */
-Game* func_00453E20(Game* self)
+Game* SFOLobby_ctor(Game* self)
 {
     LobbyArray_ctor(&self->slots[0]);
     LobbyArray_ctor(&self->slots[1]);

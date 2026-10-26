@@ -19,7 +19,7 @@ typedef union HotboxScriptArg {
 typedef struct cHotbox {
     void* vtable;          /* 0x00 */
     char pad04[0x60 - 0x04];
-    PtrVec unk60;          /* 0x60: vector filled by func_00171C40 */
+    PtrVec unk60;          /* 0x60: vector filled by cHotbox_AddTarget */
     char pad6C[0x90 - 0x6C];
     int type;              /* 0x90: zone type (9 = crouch zone) */
     char pad94[0x98 - 0x94];

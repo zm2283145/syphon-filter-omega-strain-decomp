@@ -22,8 +22,8 @@ extern V4 D_004E1D90;
 V* Vec4_GetZero(void);
 void Vec4_Assign(V* d, const void* s);
 void Vec4_SetOrigin(V* v);
-void func_0013B0C0(V* v);
-T* func_001EEBD0(T* o);
+void cCollisionModel_FaceLocator_ctor(V* v);
+T* cCollisionProbe_Ray_defctor(T* o);
 }
 static inline V4* Vec4_Zero(void) {
     if (!D_004E1D88) {
@@ -39,7 +39,7 @@ static inline void VF0(void* d) { asm volatile { .set noreorder
  sqc2 vf0, 0x0(d)
  .set reorder } }
 static inline void Cp1(void* d, const void* s) { __int128 t; __asm__ volatile("lq %0, 0(%1); sq %0, 0(%2)" : "=r"(t) : "r"(s), "r"(d) : "memory"); }
-T* func_001EEBD0(T* o_)
+T* cCollisionProbe_Ray_defctor(T* o_)
 {
     V4* z;
     T* o;
@@ -60,7 +60,7 @@ T* func_001EEBD0(T* o_)
     Vec4_Assign(&o->v10, Vec4_GetZero());
     Vec4_SetOrigin(&p);
     Vec4_Assign(&o->v20, &p);
-    func_0013B0C0(&o->v30);
+    cCollisionModel_FaceLocator_ctor(&o->v30);
     Vec4_Assign(&o->v40, z);
     Vec4_Assign(&o->v50, &t);
     o->b60 = 0;

@@ -1,5 +1,5 @@
 typedef struct { unsigned int sec; unsigned int usec; } TimeD4;
-int func_003063D0(TimeD4* t, unsigned int* out)
+int rt_time_timestamp_to_msecs(TimeD4* t, unsigned int* out)
 {
     if (t == 0) return 2;
     if (out == 0) return 2;

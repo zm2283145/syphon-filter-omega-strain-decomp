@@ -1,13 +1,13 @@
 #pragma cplusplus on
 #include "types.h"
 extern "C" void operator_delete(void* allocation);
-extern "C" void func_001F3DC0(void* m, int flags);
-extern "C" void func_001ADB90(void* m, int flags);
-extern "C" void* func_001F3E10(void* self, short deleteFlag)
+extern "C" void cSkaBlendSequenceExtents_dtor(void* m, int flags);
+extern "C" void cPointer_cSkaNode_dtor(void* m, int flags);
+extern "C" void* cSkaBlendSequenceItem_dtor(void* self, short deleteFlag)
 {
     if (self) {
-        func_001F3DC0((char*)self + 4, -1);
-        func_001ADB90(self, -1);
+        cSkaBlendSequenceExtents_dtor((char*)self + 4, -1);
+        cPointer_cSkaNode_dtor(self, -1);
         if (deleteFlag > 0)
             operator_delete(self);
     }

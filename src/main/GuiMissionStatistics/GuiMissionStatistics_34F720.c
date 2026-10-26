@@ -13,18 +13,18 @@
 /* Deleting destructor: nested member at 0x4C, then the base destructor. */
 extern "C" {
 void operator_delete(void* allocation);
-void* func_00351070(void* self, short deleteFlag);
+void* std_vector_deleter_StatsRequirement_dtor(void* self, short deleteFlag);
 void* String_Dtor(void* self, short deleteFlag);
-void* func_0034F720(void* self, short deleteFlag);
+void* MissionStats_dtor(void* self, short deleteFlag);
 }
-void* func_0034F720(void* self, short deleteFlag)
+void* MissionStats_dtor(void* self, short deleteFlag)
 {
     if (self) {
         char* m = (char*)self + 0x4C;
         if (m) {
             if (m) {
                 if (m)
-                    func_00351070(m, 0);
+                    std_vector_deleter_StatsRequirement_dtor(m, 0);
             }
         }
         if (self)
@@ -42,7 +42,7 @@ void* func_0034F720(void* self, short deleteFlag)
 #pragma cplusplus on
 #include "member_dtor_chain.h"
 
-DEFINE_MEMBER_DTOR_CHAIN(func_0034F7A0, func_00351070)
+DEFINE_MEMBER_DTOR_CHAIN(cArray_StatsRequirement_dtor, std_vector_deleter_StatsRequirement_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0034F7A0 */
 
@@ -56,11 +56,11 @@ DEFINE_MEMBER_DTOR_CHAIN(func_0034F7A0, func_00351070)
 
 #include "loose03_types.h"
 
-extern int func_0034F900(FlaggedRel*);
+extern int std_vector_imp_StatsRequirement_ctor(FlaggedRel*);
 
 /* FlaggedRel constructor. */
-FlaggedRel* func_0034F810(FlaggedRel* self) {
-    func_0034F900(self);
+FlaggedRel* cArray_StatsRequirement_ctor(FlaggedRel* self) {
+    std_vector_imp_StatsRequirement_ctor(self);
     self->unk0C = 1;
     return self;
 }
@@ -72,7 +72,7 @@ FlaggedRel* func_0034F810(FlaggedRel* self) {
 #pragma cplusplus on
 #include "base_dtor_chain.h"
 
-DEFINE_BASE_DTOR_CHAIN(func_0034F840, func_00351070)
+DEFINE_BASE_DTOR_CHAIN(std_vector_StatsRequirement_dtor, std_vector_deleter_StatsRequirement_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0034F840 */
 
@@ -81,6 +81,6 @@ DEFINE_BASE_DTOR_CHAIN(func_0034F840, func_00351070)
 #pragma cplusplus on
 #include "direct_base_dtor.h"
 
-DEFINE_DIRECT_BASE_DTOR(func_0034F8A0, func_00351070)
+DEFINE_DIRECT_BASE_DTOR(std_vector_imp_StatsRequirement_dtor, std_vector_deleter_StatsRequirement_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0034F8A0 */

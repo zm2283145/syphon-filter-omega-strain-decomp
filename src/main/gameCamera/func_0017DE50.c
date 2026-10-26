@@ -23,10 +23,10 @@ int Random_Next_Thunk(void) {
     return Random_Next();
 }
 
-float func_0017DE80(char* self) {
+float cCameraShake_cPulsedShakeMagnitude_GetCurrVal(char* self) {
     return *(float*)(self + 8);
 }
 
-void* func_0017DE90(char* self) {
+void* cSplinedMotion_float_GetCurrVal(char* self) {
     return self + 8;
 }

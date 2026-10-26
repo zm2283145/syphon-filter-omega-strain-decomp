@@ -3,7 +3,7 @@
 #pragma inline_depth(8)
 #pragma opt_propagation off
 #include "tstr_types.h"
-/* func_003C79F0: vector<E>::insert(pos, n, value) for the 0x60-byte human collision buffer
+/* std_vector_imp_cCollisionEdge_insert: vector<E>::insert(pos, n, value) for the 0x60-byte human collision buffer
  * element of Vector_Reserve_1EF6C0 (Vector_Reserve_1EF6C0.c): in-place shift/fill, or grow, copy
  * and swap. */
 /* Quadword member copies: lq/sq through volatile asm, as in Vector_Reserve_1EF6C0.c (no C form keeps
@@ -44,9 +44,9 @@ struct V1EF6C0 { unsigned int cap; unsigned int count; E1EF6C0* data; };
 extern "C" {
 extern char D_004BD0B0[];
 extern char D_004A0548[];
-void func_001EF890(V1EF6C0* a, V1EF6C0* b);
+void std_swap_vectordeleterR_vectordeleterR_13(V1EF6C0* a, V1EF6C0* b);
 void HumanColBufB_Dtor(V1EF6C0* a, int f);
-void func_003C79F0(V1EF6C0* v, E1EF6C0* pos, unsigned int n, const E1EF6C0* value);
+void std_vector_imp_cCollisionEdge_insert(V1EF6C0* v, E1EF6C0* pos, unsigned int n, const E1EF6C0* value);
 }
 inline void* operator new(unsigned int, void* p) { return p; }
 static inline void Construct(E1EF6C0* p, const E1EF6C0* s)
@@ -55,7 +55,7 @@ static inline void Construct(E1EF6C0* p, const E1EF6C0* s)
 }
 static inline void Fill(E1EF6C0* p, unsigned int n, const E1EF6C0* v) { for (; n; --n, ++p) *p = *v; }
 #define T E1EF6C0
-extern "C" void func_003C79F0(V1EF6C0* v, T* pos, unsigned int n, const T* value)
+extern "C" void std_vector_imp_cCollisionEdge_insert(V1EF6C0* v, T* pos, unsigned int n, const T* value)
 {
     unsigned int mx;
     if (n == 0)
@@ -133,7 +133,7 @@ extern "C" void func_003C79F0(V1EF6C0* v, T* pos, unsigned int n, const T* value
             Construct(dst, src);
             tmp.count++;
         }
-        func_001EF890(&tmp, v);
+        std_swap_vectordeleterR_vectordeleterR_13(&tmp, v);
         HumanColBufB_Dtor(&tmp, -1);
     }
 }

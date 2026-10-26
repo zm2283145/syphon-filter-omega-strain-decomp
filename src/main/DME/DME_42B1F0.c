@@ -37,16 +37,16 @@ extern int D_0057242C;
 extern int D_00572430;
 extern char D_00572468;
 extern void Net_ResetSession(void);
-extern int func_002EC340(void);
-extern int func_002EC6A0(int);
-extern int func_002EC738(int);
-extern int func_00437BF0(void);
+extern int NetFreeAllObjects(void);
+extern int NetLeave(int);
+extern int NetDisconnect(int);
+extern int cHeadSet_ShutdownAudio(void);
 
 void Net_CleanupGame(void) {
     D_00497540 = 1;
-    func_00437BF0();
-    func_002EC6A0(0);
-    func_002EC738(0);
+    cHeadSet_ShutdownAudio();
+    NetLeave(0);
+    NetDisconnect(0);
     Net_ResetSession();
 }
 
@@ -71,7 +71,7 @@ void Net_ResetSession(void) {
     D_00572430 = 0;
 }
 
-int func_0042B2D0(void) {
+int cDME_Restart(void) {
     int ret;
 
     D_005721D0 = 0;
@@ -79,7 +79,7 @@ int func_0042B2D0(void) {
     D_00572408 = 1;
     D_00572400 = 0;
     D_00497540 = 0;
-    ret = func_002EC340();
+    ret = NetFreeAllObjects();
     D_005721B8 = 1;
     return ret;
 }
@@ -100,7 +100,7 @@ int PlayerSlots_Get(void);
 }
 
 /* Average nonzero peer samples and cap the result with the retail NaN behavior. */
-extern "C" float func_0042B320(int peer)
+extern "C" float cDME_GetConnectionStatus(int peer)
 {
     float sum = 0.0f;
     int count = 0;
@@ -140,8 +140,8 @@ typedef struct NetSessCfg_r8 {
     void* cb34;
     int pad[7];
 } NetSessCfg_r8;
-extern void func_00437F90(void);
-extern void func_00438240(void);
+extern void cHeadSet_AudioRecordCallback(void);
+extern void cHeadSet_AudioPlayCallback(void);
 static inline void MemClear_r8(void* d0, int n0) { int n = n0; void* dst = d0;
     asm {
         .set noreorder
@@ -179,8 +179,8 @@ void func_0042B420(NetSessCfg_r8* sess)
     sess->unk10 = 1;
     sess->unk04 = 1;
     sess->unk0C = 1;
-    sess->cb34 = func_00438240;
-    sess->cb2C = func_00437F90;
+    sess->cb34 = cHeadSet_AudioPlayCallback;
+    sess->cb2C = cHeadSet_AudioRecordCallback;
     sess->unk08 = 2;
     sess->unk14 = 1;
     sess->unk20 = 2;

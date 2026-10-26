@@ -33,11 +33,11 @@ struct W_414F00 {
     C_414F00* comp;
 };
 extern "C" {
-void func_002A89A0(LIt_414F00* out, List_414F00* list);
-void func_0028C0A0(LIt_414F00* out, List_414F00* list);
-void func_0028C090(LIt_414F00* out, LIt_414F00* in);
-void func_00415160(LIt_414F00* out, LIt_414F00* in);
-LIt_414F00* func_0015AF40(LIt_414F00* out, LIt_414F00* in);
+void std_list_GuiWidgetPtr_begin(LIt_414F00* out, List_414F00* list);
+void std_list_GuiWidgetPtr_end(LIt_414F00* out, List_414F00* list);
+void cLListIterator_GuiWidgetPtr_ctor_listR(LIt_414F00* out, LIt_414F00* in);
+void std_list_GuiWidgetPtr_generic_iterator_opCast(LIt_414F00* out, LIt_414F00* in);
+LIt_414F00* std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(LIt_414F00* out, LIt_414F00* in);
 void List_InsertBefore(LIt_414F00* out, List_414F00* list, LIt_414F00* pos, W_414F00** v);
 int GuiWidget_SendEvent(W_414F00* a, W_414F00* b, int msg, int c, int d);
 void GuiWidget_ClearAwake(W_414F00* w);
@@ -58,24 +58,24 @@ extern "C" void GuiCanvas_PushScreen(W_414F00* o, W_414F00* w, int pri)
     LIt_414F00 pos3;
 
     if (w == 0 || (w->flags & 8)) return;
-    func_002A89A0(&beginTmp, &o->children);
-    func_0028C090(&first, &beginTmp);
+    std_list_GuiWidgetPtr_begin(&beginTmp, &o->children);
+    cLListIterator_GuiWidgetPtr_ctor_listR(&first, &beginTmp);
     it = first;
-    func_0028C0A0(&endTmp, &o->children);
-    func_0028C090(&last, &endTmp);
+    std_list_GuiWidgetPtr_end(&endTmp, &o->children);
+    cLListIterator_GuiWidgetPtr_ctor_listR(&last, &endTmp);
     while (it.node != last.node) {
         if (pri < it.Get()->pri) break;
         it.Next();
-        func_0028C0A0(&endTmp, &o->children);
-        func_0028C090(&last, &endTmp);
+        std_list_GuiWidgetPtr_end(&endTmp, &o->children);
+        cLListIterator_GuiWidgetPtr_ctor_listR(&last, &endTmp);
     }
     if ((w->flags & 2) && GuiWidget_SendEvent(o, w, 0x10, 2, 0) == 0)
         GuiWidget_SendEvent(w, o, 0x10, 2, 0);
     w->parent = o;
     w->pri = pri;
     pos.node = it.node;
-    func_00415160(&pos2, &pos);
-    List_InsertBefore(&res, &o->children, func_0015AF40(&pos3, &pos2), &w);
+    std_list_GuiWidgetPtr_generic_iterator_opCast(&pos2, &pos);
+    List_InsertBefore(&res, &o->children, std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&pos3, &pos2), &w);
     GuiWidget_ClearAwake(w);
     w->comp->Show();
     GuiWidget_SendEvent(o, w, 0x18, 0, 0);

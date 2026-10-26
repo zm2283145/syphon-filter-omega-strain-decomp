@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-Rel* func_003D8F40(Rel* r) {
+Rel* std_vector_imp_FieldDefPtr_1_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

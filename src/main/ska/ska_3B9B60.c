@@ -33,7 +33,7 @@ typedef struct Quad4 {
 } Quad4;
 
 /* Swaps two 16-byte records word by word. */
-void func_003B9B80(Quad4* x, Quad4* y) {
+void _cdeque_deleter_common_int_swap(Quad4* x, Quad4* y) {
     int t;
     if (x == y) return;
     t = x->a; x->a = y->a; y->a = t;
@@ -52,7 +52,7 @@ unsigned int D_004BCEE8[2] = { 0x0, 0x0 };
 extern signed char D_00542C90;
 
 /* Lazily initialised constant: 0x1800000 - 1 (guarded function-local static). */
-int func_003B9BD0(void) {
+int _cdeque_deleter_common_int_max_size(void) {
     int size[1];
     int ref;
 

@@ -13,7 +13,7 @@
 
 /* Destroy a vector through its allocator, optionally delete. */
 extern "C" { char D_004BF888[] = "allocator.hh"; }
-DEFINE_VECTOR_RELEASE_DTOR(func_00428090, func_00428B10, func_00428110, D_004BF888)
+DEFINE_VECTOR_RELEASE_DTOR(std_vector_deleter_tTextElement_dtor, std_vector_deleter_tTextElement_clear, opDelete_tTextElementP_int_bool_charP_etc, D_004BF888)
 #pragma pop /* merge_units */
 /* merge_units: end func_00428090 */
 
@@ -23,7 +23,7 @@ DEFINE_VECTOR_RELEASE_DTOR(func_00428090, func_00428B10, func_00428110, D_004BF8
 #include "guarded_destroy_release.h"
 
 /* Destroy and free an allocation under the allocator guard. */
-DEFINE_GUARDED_DESTROY_RELEASE(func_00428110, String_Dtor_138350)
+DEFINE_GUARDED_DESTROY_RELEASE(opDelete_tTextElementP_int_bool_charP_etc, String_Dtor_138350)
 #pragma pop /* merge_units */
 /* merge_units: end func_00428110 */
 

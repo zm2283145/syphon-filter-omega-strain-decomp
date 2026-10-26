@@ -5,11 +5,11 @@
 
 #include "npc_types.h"
 
-void func_0015AF30(Word* dst, Word* src) {
+void std_list_cActiveListItemPtr_generic_iterator_opCast(Word* dst, Word* src) {
     dst->value = src->value;
 }
 
-Word* func_0015AF40(Word* dst, Word* src) {
+Word* std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }

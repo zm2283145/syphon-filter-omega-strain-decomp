@@ -9,7 +9,7 @@
 #include "types.h"
 #include "grid16_flag_test.h"
 
-DEFINE_GRID16_FLAG_TEST(func_00455C50, D_004EE620)
+DEFINE_GRID16_FLAG_TEST(TeamEnemy_int_int_3, D_004EE620)
 #pragma pop /* merge_units */
 /* merge_units: end func_00455C50 */
 

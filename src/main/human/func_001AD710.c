@@ -17,7 +17,7 @@ struct QV7 {
 
 struct SA7 { int a; int b; int pad[2]; QV7 c; QV7 e; };
 
-extern "C" SA7* func_001AD710(SA7* d, const SA7* s)
+extern "C" SA7* cInteractParams_ctor_cInteractParamsR(SA7* d, const SA7* s)
 {
     d->a = s->a;
     d->b = s->b;

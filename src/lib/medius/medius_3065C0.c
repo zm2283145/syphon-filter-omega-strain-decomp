@@ -1,7 +1,7 @@
 #include "types.h"
 
-extern int func_003069E0(int);
+extern int rt_time_platform_get_date_time(int);
 
-int func_003065C0(int a0) {
-    return func_003069E0(a0);
+int rt_time_get_date_time(int a0) {
+    return rt_time_platform_get_date_time(a0);
 }

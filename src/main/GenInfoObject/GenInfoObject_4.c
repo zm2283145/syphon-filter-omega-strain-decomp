@@ -14,15 +14,15 @@
 
 #include "types.h"
 
-extern int func_00439670(void);
-extern int func_0043B410(Map* m, int node);     /* frees a subtree */
+extern int cGenInfoObject_Setup(void);
+extern int std_tree_pair_tGenInfoPtr_value_compare_destroy(Map* m, int node);     /* frees a subtree */
 
-void func_0043B180(Iter* out, PtrVec* v) {
+void std_list_tGenInfoPtr_begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 
-int func_0043B190(int a0) {
-    func_00439670();
+int cGenInfoObject_ctor(int a0) {
+    cGenInfoObject_Setup();
     return a0;
 }
 
@@ -31,7 +31,7 @@ void Map_Clear(Map* m) {
     int root = m->head;
 
     if (root != 0) {
-        func_0043B410(m, root);
+        std_tree_pair_tGenInfoPtr_value_compare_destroy(m, root);
         m->count = 0;
         m->head = 0;
         m->hp = &m->head;
@@ -46,6 +46,6 @@ void Map_Clear(Map* m) {
 #include "tree_erase_iter.h"
 
 extern "C" { char D_004BFDB0[] = "allocator.hh"; }
-DEFINE_TREE_ERASE_ITER(func_0043B200, func_0013C800, D_004BFDB0, 0x64)
+DEFINE_TREE_ERASE_ITER(std_tree_pair_tGenInfoPtr_value_compare_erase, std_red_black_tree_1_balance_erase, D_004BFDB0, 0x64)
 #pragma pop /* merge_units */
 /* merge_units: end func_0043B200 */

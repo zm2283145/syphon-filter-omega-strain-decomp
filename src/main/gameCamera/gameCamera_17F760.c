@@ -12,7 +12,7 @@
 
 /* merge_units: begin func_0017F760 */
 #pragma push /* merge_units */
-/* func_0017F760: sub-object ctor (2 x {V4 p,q}) filled from two by-pointer V4s. Hand-matched (auto1 family seed).
+/* cHermiteSpline_cQuaternion_ctor_cQuaternionR_cQuaternionR: sub-object ctor (2 x {V4 p,q}) filled from two by-pointer V4s. Hand-matched (auto1 family seed).
  * The empty asm block is a scheduling barrier reproducing retail order. */
 #pragma cplusplus on
 inline void* operator new(unsigned int, void* p) { return p; }
@@ -21,7 +21,7 @@ struct E_F5E0 { V4_F5E0 p; V4_F5E0 q; E_F5E0() {} };
 struct M_F5E0 { E_F5E0 e[2]; };
 #pragma opt_rotateloops off
 #pragma opt_unroll_loops off
-extern "C" M_F5E0* func_0017F760(M_F5E0* m, const V4_F5E0* a, const V4_F5E0* b)
+extern "C" M_F5E0* cHermiteSpline_cQuaternion_ctor_cQuaternionR_cQuaternionR(M_F5E0* m, const V4_F5E0* a, const V4_F5E0* b)
 {
     V4_F5E0 tb; V4_F5E0 ta;
     V4_F5E0* pa; E_F5E0* pe; V4_F5E0* pb;
@@ -50,7 +50,7 @@ static inline void merge_flush_func_0017F760(void) {}
 /* merge_units: begin func_0017F7F0 */
 #pragma push /* merge_units */
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
-V4 func_0017F7F0(V4* b, float s) {
+V4 cQuaternion_opMul_float(V4* b, float s) {
     V4 l0;
     V4* q1 = &l0;
     asm {
@@ -73,7 +73,7 @@ static inline void merge_flush_func_0017F7F0(void) {}
 #pragma push /* merge_units */
 #pragma opt_propagation off
 #pragma opt_common_subs off
-ZERO_QUAD_STORE(func_0017F820)
+ZERO_QUAD_STORE(cQuaternion_GetZero)
 #pragma opt_common_subs reset
 #pragma opt_propagation reset
 #pragma pop /* merge_units */

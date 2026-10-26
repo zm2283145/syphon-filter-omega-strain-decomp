@@ -6,8 +6,8 @@ extern int DeleteSema(int);
 extern int TerminateThread(int);
 extern int DeleteThread(int);
 extern int scePrintf(const char *, ...);
-extern void func_002BB738(void);
-int func_002B4E50(void)
+extern void _sceMcCoreEnd(void);
+int sceMc2End(void)
 {
     if (D_0048BD88 == 0) return 0x81018001;
     if (D_00506644) return 0x81010010;
@@ -17,7 +17,7 @@ int func_002B4E50(void)
         if (TerminateThread(D_00506B60.x0) < 0) scePrintf("libmc2: TerminateTread faild\n");
         DeleteThread(D_00506B60.x0);
     }
-    func_002BB738();
+    _sceMcCoreEnd();
     D_0048BD88 = 0;
     return 0;
 }

@@ -15,7 +15,7 @@
 #pragma cplusplus on
 
 /* Destroy an object list: erase all nodes, optionally delete. */
-DEFINE_OBJ_LIST_DTOR(func_002740F0)
+DEFINE_OBJ_LIST_DTOR(std_list_cHudTargetsObserverPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_002740F0 */
 
@@ -24,6 +24,6 @@ DEFINE_OBJ_LIST_DTOR(func_002740F0)
 #pragma cplusplus on
 
 /* Destroy an object list: erase all nodes, optionally delete. */
-DEFINE_OBJ_LIST_DTOR(func_00274170)
+DEFINE_OBJ_LIST_DTOR(std_list_cHudTargetInfoPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00274170 */

@@ -20,7 +20,7 @@ typedef struct cTankTurret {
     char pad00[0x2C];
     float accel;          /* 0x2C: written by SetTurretAccel */
     char pad30[0x64 - 0x30];
-    int unk64;            /* 0x64: cleared by func_00286560 */
+    int unk64;            /* 0x64: cleared by cTurret_Reset */
     void* weaponDef;      /* 0x68: weapon definition looked up from weaponId */
     int weaponId;         /* 0x6C */
 } cTankTurret;

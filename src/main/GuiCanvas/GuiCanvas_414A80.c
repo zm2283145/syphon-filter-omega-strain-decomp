@@ -95,17 +95,17 @@ struct O_414BE0 { char pad[0x20]; W_414BE0* f20; char pad24[4]; int f28; N_414BE
 extern "C" {
 extern char D_0055A300[];
 int List_Erase(...);
-int func_0015AF40(...);
-int func_002A8890(...);
-int func_002A88B0(...);
-int func_002CCDE0(...);
-int func_002CCDF0(...);
-int* func_002CCE10(...);
-int func_002CCE20(...);
-int func_002CCE30(...);
-int func_002CCE40(...);
-int func_0028C0A0(...);
-int func_0028C090(...);
+int std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(...);
+int opNe_cLListIteratorR_cLListIteratorR_6(...);
+int cLList_GuiWidgetPtr_End(...);
+int cLListIterator_GuiWidgetPtr_ctor_cLListIteratorR(...);
+int cLListIterator_GuiWidgetPtr_opInc(...);
+int* cLListIterator_GuiWidgetPtr_opMul(...);
+int cLListIterator_GuiWidgetPtr_opAssign(...);
+int cLList_GuiWidgetPtr_Begin(...);
+int cLListIterator_GuiWidgetPtr_ctor_void(...);
+int std_list_GuiWidgetPtr_end(...);
+int cLListIterator_GuiWidgetPtr_ctor_listR(...);
 void Pad_ResetHeldMask(void* p);
 void GuiWidget_SendEvent(void* a, void* b, int kind, int v, int f);
 void GuiCanvas_PopScreen(O_414BE0* o, W_414BE0* w);
@@ -135,42 +135,42 @@ void GuiCanvas_PopScreen(O_414BE0* o, W_414BE0* w)
     W_414BE0* c;
     if (w == 0) return;
     if (o->b60) {
-        func_002CCE40(&it1);
-        func_002CCE30(&tmp1, o->l54);
-        func_002CCE20(&it1, &tmp1);
-        func_002A88B0(&end1, o->l54);
-        if (func_002A8890(&it1, &end1) != 0) {
+        cLListIterator_GuiWidgetPtr_ctor_void(&it1);
+        cLList_GuiWidgetPtr_Begin(&tmp1, o->l54);
+        cLListIterator_GuiWidgetPtr_opAssign(&it1, &tmp1);
+        cLList_GuiWidgetPtr_End(&end1, o->l54);
+        if (opNe_cLListIteratorR_cLListIteratorR_6(&it1, &end1) != 0) {
 loop_1:
-            if ((void*)*func_002CCE10(&it1) != (void*)w) {
-                func_002CCDF0(&it1);
-                func_002A88B0(&end1, o->l54);
-                if (func_002A8890(&it1, &end1) != 0) goto loop_1;
+            if ((void*)*cLListIterator_GuiWidgetPtr_opMul(&it1) != (void*)w) {
+                cLListIterator_GuiWidgetPtr_opInc(&it1);
+                cLList_GuiWidgetPtr_End(&end1, o->l54);
+                if (opNe_cLListIteratorR_cLListIteratorR_6(&it1, &end1) != 0) goto loop_1;
             }
         }
-        func_002CCDE0(&r1, &it1);
-        func_0028C0A0(&e2a, o->l54);
-        func_0028C090(&e3a, &e2a);
+        cLListIterator_GuiWidgetPtr_ctor_cLListIteratorR(&r1, &it1);
+        std_list_GuiWidgetPtr_end(&e2a, o->l54);
+        cLListIterator_GuiWidgetPtr_ctor_listR(&e3a, &e2a);
         if ((int)r1 != e3a) {
             t1 = r1;
-            func_0015AF40(&x1, &t1);
+            std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&x1, &t1);
             List_Erase(&y1, o->l54, &x1);
         }
     }
-    func_002CCE40(&it2);
-    func_002CCE30(&tmp2, &o->f28);
-    func_002CCE20(&it2, &tmp2);
-    func_002A88B0(&end2, &o->f28);
-    if (func_002A8890(&it2, &end2) != 0) {
+    cLListIterator_GuiWidgetPtr_ctor_void(&it2);
+    cLList_GuiWidgetPtr_Begin(&tmp2, &o->f28);
+    cLListIterator_GuiWidgetPtr_opAssign(&it2, &tmp2);
+    cLList_GuiWidgetPtr_End(&end2, &o->f28);
+    if (opNe_cLListIteratorR_cLListIteratorR_6(&it2, &end2) != 0) {
 loop_2:
-        if ((void*)*func_002CCE10(&it2) != (void*)w) {
-            func_002CCDF0(&it2);
-            func_002A88B0(&end2, &o->f28);
-            if (func_002A8890(&it2, &end2) != 0) goto loop_2;
+        if ((void*)*cLListIterator_GuiWidgetPtr_opMul(&it2) != (void*)w) {
+            cLListIterator_GuiWidgetPtr_opInc(&it2);
+            cLList_GuiWidgetPtr_End(&end2, &o->f28);
+            if (opNe_cLListIteratorR_cLListIteratorR_6(&it2, &end2) != 0) goto loop_2;
         }
     }
-    func_002CCDE0(&r2, &it2);
-    func_0028C0A0(&e2b, &o->f28);
-    func_0028C090(&e3b, &e2b);
+    cLListIterator_GuiWidgetPtr_ctor_cLListIteratorR(&r2, &it2);
+    std_list_GuiWidgetPtr_end(&e2b, &o->f28);
+    cLListIterator_GuiWidgetPtr_ctor_listR(&e3b, &e2b);
     if ((int)r2 == e3b) return;
     w->f1C = 0;
     hp = &o->f2C;
@@ -179,7 +179,7 @@ loop_2:
     if (c) {
         if (c->flags & 8) c->f44->v6();
         t2 = r2;
-        func_0015AF40(&x2, &t2);
+        std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&x2, &t2);
         List_Erase(&y2, &o->f28, &x2);
     }
     GuiWidget_SendEvent(o, w, 0x19, 0, 0);

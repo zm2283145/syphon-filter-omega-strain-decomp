@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-void func_001651B0(PtrVec* a, PtrVec* b) {
+void std_swap_vectordeleterR_vectordeleterR_4(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;
         int* p;
@@ -23,6 +23,6 @@ void func_001651B0(PtrVec* a, PtrVec* b) {
 }
 
 /* Vector clear: resets the element count. */
-void func_001651F0(PtrVec* v) {
+void std_vector_deleter_cBox_clear(PtrVec* v) {
     v->count = 0;
 }

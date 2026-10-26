@@ -6,7 +6,7 @@
 
 /* merge_units: begin func_002E1118 */
 extern void *memset(void *, int, unsigned int);
-int func_002E1118(int *p)
+int NetISetDefaultIncomingClientParams(int *p)
 {
     if (p == 0) return 0x17;
     memset(p, 0, 0x74);
@@ -19,9 +19,9 @@ int func_002E1118(int *p)
 typedef struct { int a; int err; } R2E1158;
 extern int D_0048C458;
 extern unsigned char D_0048C4AC;
-extern int func_002E56D0(unsigned char *);
-extern void func_002E1248(int *, R2E1158 *);
-int func_002E1158(int *req, R2E1158 *res)
+extern int NetIsPeerToPeerHost(unsigned char *);
+extern void NetSetIncomingClient(int *, R2E1158 *);
+int NetIIncomingClient(int *req, R2E1158 *res)
 {
     unsigned char st = 0;
     unsigned char ready;
@@ -45,9 +45,9 @@ int func_002E1158(int *req, R2E1158 *res)
         res->err = 0x1A;
         return 0x1A;
     }
-    res->err = func_002E56D0(&st);
+    res->err = NetIsPeerToPeerHost(&st);
     if (res->err == 0) {
-        if (st == 1) func_002E1248(req, res);
+        if (st == 1) NetSetIncomingClient(req, res);
     }
     return res->err;
 }

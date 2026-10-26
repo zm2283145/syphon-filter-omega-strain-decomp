@@ -10,7 +10,7 @@ extern "C" {
 int Mem_Alloc(...);                        
 int App_GetInstance(...);                                  
 int FrontEndScene_LoadSkeletons(...);                               
-int func_0022A040(...);                       
+int CCI_Screen_ScreenInit(...);                       
 int MotionManager_Init(...);                                  
 extern unsigned char g_ProfileLockEnabled;
 extern int D_00543790;
@@ -36,7 +36,7 @@ extern "C" void FrontEndScene_Init(FrontEndScene* self) {
     /* barrier: empty arm keeps the label (and its padding nop) before the store */
     if (characters == 0) asm { .set reorder } 
     self->characters = (void*)characters;
-    func_0022A040(self->characters, self->archives);
+    CCI_Screen_ScreenInit(self->characters, self->archives);
 }
 #pragma pop
 #pragma pop

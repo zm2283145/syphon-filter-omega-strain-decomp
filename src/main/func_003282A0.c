@@ -1,7 +1,7 @@
 #pragma cplusplus on
 extern "C" void operator_delete(void*);
 extern "C" void String_Dtor(void*, short);
-extern "C" void* func_003282A0(void* self, short del)
+extern "C" void* GuiSlideShow_Slide_dtor(void* self, short del)
 {
     if (self) {
         char* m = (char*)self + 0x10;

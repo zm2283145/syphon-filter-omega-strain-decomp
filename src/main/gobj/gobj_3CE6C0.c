@@ -24,7 +24,7 @@ extern void FrameTreeEntry_Construct(Entry12* out, Key* key, KeyPair* pair);
 extern void FrameTree_Find(InsertResult* out, void* self, Entry12* entry);
 
 /* Builds an entry from copies of key and pair and inserts a copy of it into self. */
-void func_003CE6C0(void* self, Key* key, KeyPair* pair)
+void cAssocMultiArray_int_cSafePtr_cGOBJ_Add(void* self, Key* key, KeyPair* pair)
 {
     KeyPair pairCopy;
     Entry12 entry;

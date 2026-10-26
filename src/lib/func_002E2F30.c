@@ -5,9 +5,9 @@ typedef struct { unsigned char b0; unsigned char b1; unsigned char b2; unsigned 
 extern S2E2F30 D_0058DF98[];
 extern unsigned int D_0058806C;
 extern void *memcpy(void *, const void *, unsigned int);
-extern int func_002E3DE0(Q2E2F30 *, int, int);
+extern int GlobalFieldErrorExceedsThreshold(Q2E2F30 *, int, int);
 
-int func_002E2F30(Q2E2F30 *q, int a1, unsigned char force, unsigned char *flags, unsigned char *out, unsigned int *len)
+int CheckFieldsForUpdate(Q2E2F30 *q, int a1, unsigned char force, unsigned char *flags, unsigned char *out, unsigned int *len)
 {
     unsigned char n = 0;
     S2E2F30 *s;
@@ -45,7 +45,7 @@ int func_002E2F30(Q2E2F30 *q, int a1, unsigned char force, unsigned char *flags,
             }
             src = q->x1C + s->vals[i];
             dst = q->x20 + s->vals[i];
-            if (!func_002E3DE0(q, a1, i)) continue;
+            if (!GlobalFieldErrorExceedsThreshold(q, a1, i)) continue;
         }
         if (510 - *len < e->a * e->b + 1) continue;
         *out++ = i;

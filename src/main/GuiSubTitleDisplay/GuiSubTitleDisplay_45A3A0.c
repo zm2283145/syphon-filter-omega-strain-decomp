@@ -157,7 +157,7 @@ typedef struct {
 } Settings0045A700;
 extern Settings0045A700* Options_SetDefaults(Settings0045A700* s);
 /* Initialise with defaults, then override three fields. */
-void func_0045A700(Settings0045A700* s)
+void cGameOptions_LoadDefaults(Settings0045A700* s)
 {
     Settings0045A700 def;
     Options_SetDefaults(&def);

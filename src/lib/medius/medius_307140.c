@@ -1,6 +1,6 @@
 typedef struct { int type; char pad[0x18]; int f1C; int f20; int f24; int f28; int f2C; int f30; int f34; int f38; int f3C; char pad2[0x4C]; int f8C; } ScfEnt;
 typedef struct { int f0; ScfEnt *ent; char pad[0x24]; unsigned int count; } ScfTbl;
-int func_00307140(ScfTbl *t, unsigned int idx, int which, int *out)
+int rt_udp_get_buffer_size(ScfTbl *t, unsigned int idx, int which, int *out)
 {
     ScfEnt *e;
     int v;

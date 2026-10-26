@@ -16,11 +16,11 @@
  */
 
 
-int* func_0015DD80(PtrVec* v, int i) {
+int* std_vector_int_opIndex_uint(PtrVec* v, int i) {
     return v->data + i;
 }
 
-Rel* func_0015DD90(Rel* r) {
+Rel* std_vector_cBox_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

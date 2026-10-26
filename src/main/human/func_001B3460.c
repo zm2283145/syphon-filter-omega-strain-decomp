@@ -57,18 +57,18 @@ float Math_Atan2f(float y, float x);
 float* History_At(char* h, int i);
 void ActorHeading_RetargetLast(char* h, float f);
 void MotionTokens_Init(void* p);
-void func_0018A8C0(void* p);
-void func_0018A890(void* p);
-void func_0018A710(void* d, void* s);
-void func_0018A700(void* p, int v);
+void cArray_cTimedEvent_ctor_void(void* p);
+void cString16N_3_ctor_void(void* p);
+void cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(void* d, void* s);
+void cSkaPlaybackGroupId_ctor_int(void* p, int v);
 void Actor_ResolveMotionSelection(Sel_L* sel, int* out, Y_L* y, void* model);
 float Model_GetFirstFloat(void* m);
 V4_L* AnimRate_Init(V4_L* p, float f);
 V4_L* Vec4_Copy_18A350(V4_L* d, V4_L* s);
 void AnimEvent_Construct(Ev_L* e);
 signed char MotionRequest_GetMode(Sel_L* s);
-void* func_0018A2E0(Sel_L* s);
-float func_0018A2D0(Sel_L* s);
+void* cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(Sel_L* s);
+float cSkaRequestStream_AnimationPacket_GetDuration(Sel_L* s);
 float func_0018A2C0(Sel_L* s);
 void AnimCtl_InstallMotion(void* ctl, int id, signed char mode, void* range, void* pair, void* m1, void* m2, void* x, float f0, float f1);
 void AnimEvent_dtor(void* p, int f);
@@ -206,14 +206,14 @@ static inline float GetY(V4* v) { return v->y; }
 static inline float GetZ(V4* v) { return v->z; }
 static inline float H180(V4* v) { return Math_Atan2f(GetY(v), GetX(v)); }
 static inline float H170(float* v) { return Math_Atan2f(-v[0], v[1]); }
-static inline X_L* XInit_L(X_L* x) { X_L* px = x; px->kind = 0; MotionTokens_Init(px->pairs); func_0018A8C0(px->tail); return px; }
+static inline X_L* XInit_L(X_L* x) { X_L* px = x; px->kind = 0; MotionTokens_Init(px->pairs); cArray_cTimedEvent_ctor_void(px->tail); return px; }
 static inline void XDtor_L(X_L* x) { func_001BE5A0(x->tail, 0); __destroy_array(x->pairs, (void*)func_0018A210, 8, 7); }
 static inline void XDtorN_L(X_L* p) {
     void* t = p->tail;
     if (t) { if (t) { if (t) func_001BE5A0(t, 0); } }
     if (p->pairs) __destroy_array(p->pairs, (void*)func_0018A210, 8, 7);
 }
-static inline void SelAuto_L(Sel_L* s, int v, X_L* x) { s->mode = 2; func_0018A890(s->sub); s->f44 = v; s->f48 = 3; func_0018A710(&s->x, x); }
+static inline void SelAuto_L(Sel_L* s, int v, X_L* x) { s->mode = 2; cString16N_3_ctor_void(s->sub); s->f44 = v; s->f48 = 3; cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(&s->x, x); }
 static inline void Install_L(Npc* a, Sel_L* sel)
 {
     int out;
@@ -224,7 +224,7 @@ static inline void Install_L(Npc* a, Sel_L* sel)
     Ev_L e2;
     Sys_L* sys = &a->sys;
     Anim_L* an = &sys->anim;
-    func_0018A700(&y, -1);
+    cSkaPlaybackGroupId_ctor_int(&y, -1);
     Actor_ResolveMotionSelection(sel, &out, &y, an->model);
     if (out) {
         V4_L* p;
@@ -236,7 +236,7 @@ static inline void Install_L(Npc* a, Sel_L* sel)
         an->b5 = 0;
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
-        AnimCtl_InstallMotion(an, out, MotionRequest_GetMode(sel), &vec, &y, &e1, &e2, func_0018A2E0(sel), func_0018A2D0(sel), func_0018A2C0(sel));
+        AnimCtl_InstallMotion(an, out, MotionRequest_GetMode(sel), &vec, &y, &e1, &e2, cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(sel), cSkaRequestStream_AnimationPacket_GetDuration(sel), func_0018A2C0(sel));
         AnimEvent_dtor(&e2, -1);
         AnimEvent_dtor(&e1, -1);
     }

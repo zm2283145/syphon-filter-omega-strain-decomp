@@ -35,11 +35,11 @@ extern int func_0030ECC0(UpnpE330 *u);
 extern int func_0030BA90(int *m, int flags, char *buf);
 extern int func_0030B5F0(char *a, char *b, char *host, unsigned short *port);
 extern int func_00310988(int *p, int kind, int arg);
-extern int func_002F5C98(UpCtxE330 *c, char *host, unsigned short port, AddrE330 *a);
+extern int rt_comm_create(UpCtxE330 *c, char *host, unsigned short port, AddrE330 *a);
 extern int func_00310C30(int h);
-extern int func_002F5DB0(int s);
+extern int rt_comm_destroy(int s);
 extern int Socket_WriteConnected(int s, char *buf, unsigned short len, short *written);
-extern int func_003060D8(void *p);
+extern int rt_time_get_time_stamp(void *p);
 int func_0030E330(UpnpE330 *u, int flags, int cb)
 {
     int r;
@@ -78,20 +78,20 @@ int func_0030E330(UpnpE330 *u, int flags, int cb)
         memset(&addr, 0, sizeof(addr));
         addr.b = 0x800;
         addr.a = 0;
-        if (func_002F5C98(u->ctx, host, port, &addr) != 0) {
+        if (rt_comm_create(u->ctx, host, port, &addr) != 0) {
             func_00310C30(u->ctx->conn);
             return 5;
         }
         sprintf(u->ctx->req, D_004B0158, u->ctx->path, host, port);
         if (Socket_WriteConnected(u->ctx->sock, u->ctx->req, strlen(u->ctx->req), &written) != 0
             || strlen(u->ctx->req) != written) {
-            func_002F5DB0(u->ctx->sock);
+            rt_comm_destroy(u->ctx->sock);
             func_00310C30(u->ctx->conn);
             return 8;
         }
     }
     u->state = 3;
-    func_003060D8(u->ctx->timer);
+    rt_time_get_time_stamp(u->ctx->timer);
     u->ctx->cb = cb;
     u->ctx->flags = flags;
     return 0;
@@ -119,7 +119,7 @@ int UPnP_GetStatusInfo(UpnpE588 *u, int arg, int cb)
     r = UPnP_SendSoapAction(u, D_004AFFB0, D_004AFF28);
     if (r == 0) {
         u->state = 4;
-        func_003060D8((char *)u->ctx + 0x10);
+        rt_time_get_time_stamp((char *)u->ctx + 0x10);
         u->ctx->cb = cb;
         u->ctx->arg = arg;
     }
@@ -152,7 +152,7 @@ int UPnP_GetExternalIPAddress(UpnpE588_0030E648 *u, int arg, int cb)
     r = UPnP_SendSoapAction(u, D_004AFFF0, D_004AFF28);
     if (r == 0) {
         u->state = 5;
-        func_003060D8((char *)u->ctx + 0x10);
+        rt_time_get_time_stamp((char *)u->ctx + 0x10);
         u->ctx->cb = cb;
         u->ctx->arg = arg;
     }
@@ -181,7 +181,7 @@ int UPnP_GetPortMappingNumberOfEntries(UpnpE708 *u, int arg, int cb)
     r = UPnP_SendQueryStateVariable(u, arg, "PortMappingNumberOfEntries");
     if (r == 0) {
         u->state = 6;
-        func_003060D8((char *)u->ctx + 0x10);
+        rt_time_get_time_stamp((char *)u->ctx + 0x10);
         u->ctx->cb = cb;
         u->ctx->arg = arg;
     }
@@ -215,7 +215,7 @@ int UPnP_AddPortMapping(UpnpE7C8 *u, int arg, int unused, int cb)
     r = UPnP_SendSoapAction(u, "AddPortMapping", u->ctx->buf);
     if (r == 0) {
         u->state = 7;
-        func_003060D8((char *)u->ctx + 0x10);
+        rt_time_get_time_stamp((char *)u->ctx + 0x10);
         u->ctx->cb1 = cb;
     }
     return r;

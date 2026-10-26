@@ -1,6 +1,6 @@
 typedef struct { int a; int b; char pad[0xF8]; } ScfSlot;
 typedef struct { int f0; int f4; int f8; int fC; ScfSlot slot[64]; } ScfSlotTbl;
-void func_00313688(ScfSlotTbl *t)
+void InitSequence(ScfSlotTbl *t)
 {
     unsigned int i;
     t->f0 = 1;

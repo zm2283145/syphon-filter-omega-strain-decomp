@@ -5,11 +5,11 @@ typedef struct { char pad[0x58]; A2V262* v; } A2P262;
 typedef struct { int pad0; A2P262* p; char b8; char pad9[7]; int f10; int n14; } A2S262;
 extern int D_0048B168;
 static const float dat_0048B140[2] = { 50.0f, 0.0f };
-extern "C" void* func_00262F20(void* p);
-extern "C" void func_00264720(A2S262* s, void* b);
-extern "C" void func_00262F30(A2S262* s, float dt);
-extern "C" void func_00264530(A2S262* s, void* b);
-extern "C" void func_00265790(A2S262* s, float f, int x);
+extern "C" void* details_compressed_pair_imp_cAllocator_TaserPoint_int_1_first(void* p);
+extern "C" void cAirTaser_PointsToLocal(A2S262* s, void* b);
+extern "C" void cAirTaser_AddWhipAction(A2S262* s, float dt);
+extern "C" void cAirTaser_PointsToWorld(A2S262* s, void* b);
+extern "C" void cAirTaser_SmoothLine(A2S262* s, float f, int x);
 extern "C" void HeldItem_UpdateReelIn(A2S262* s, float dt) {
     int n = s->n14;
     int i = 0;
@@ -18,18 +18,18 @@ extern "C" void HeldItem_UpdateReelIn(A2S262* s, float dt) {
     int buf[12];
     while (!!n && i < D_0048B168) {
         s->n14--;
-        func_00262F20(&s->f10);
+        details_compressed_pair_imp_cAllocator_TaserPoint_int_1_first(&s->f10);
         i++;
         n--;
     }
     if (n > 1) {
         s->p->v->f64(buf, 0, 0);
         po = out;
-        func_00264720(s, po);
-        if ((float)n < (*(float*)dat_0048B140)) func_00262F30(s, dt);
-        func_00264530(s, po);
+        cAirTaser_PointsToLocal(s, po);
+        if ((float)n < (*(float*)dat_0048B140)) cAirTaser_AddWhipAction(s, dt);
+        cAirTaser_PointsToWorld(s, po);
     }
-    func_00265790(s, 1.0f, 1);
+    cAirTaser_SmoothLine(s, 1.0f, 1);
     if (n == 0) s->b8 = 0;
 }
 

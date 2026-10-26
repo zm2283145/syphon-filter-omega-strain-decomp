@@ -15,7 +15,7 @@
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-DEFINE_VTABLE2_BASE_DTOR(func_0024FB50, D_004E0120, D_004E0840, cMessage_dtor)
+DEFINE_VTABLE2_BASE_DTOR(cCharActionMsg_ObjectId_Int_dtor, D_004E0120, D_004E0840, cMessage_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0024FB50 */
 

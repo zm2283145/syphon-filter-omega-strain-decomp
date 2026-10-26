@@ -1,5 +1,5 @@
 extern void *memset(void *, int, unsigned int);
-int func_002E0F50(int *p)
+int NetISetDefaultResolveAddrParams(int *p)
 {
     if (p == 0) return 0x17;
     memset(p, 0, 0x20);

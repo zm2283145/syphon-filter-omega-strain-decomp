@@ -32,15 +32,15 @@ extern "C" {
 extern CrateVec* g_BackpackList;
 extern char D_004A7B50[];
 extern char D_004F7F48[];
-void func_002569C0(void);
+void cBackpack_PurgeCrateSaves(void);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void CrateSnapshot_Init(Snapshot* s);
-Crate** func_00256D80(CrateVec* v, int i);
+Crate** std_vector_cBackpackPtr_opIndex(CrateVec* v, int i);
 void CrateSnapshotList_Append(void* list, Snapshot** s);
 void Backpack_SnapshotCrates(void);
 }
 
-/* byte/quadword copy macro (the copy loop of func_001C3C50.c); volatile here because retail
+/* byte/quadword copy macro (the copy loop of cLoader_AllocateAndFillAnimationBuffer.c); volatile here because retail
  * recomputes the index scaling after it (a non-volatile block lets MW keep i*4 in a saved register) */
 static inline void MemCopy(void* dst, void* src, int n)
 {
@@ -85,7 +85,7 @@ void Backpack_SnapshotCrates(void)
 {
     CrateVec* list = g_BackpackList;
     int i;
-    func_002569C0();
+    cBackpack_PurgeCrateSaves();
     for (i = 0; i < list->count; i++) {
         if (list->items[i]->state == 1) {
             SnapRef s;
@@ -100,7 +100,7 @@ void Backpack_SnapshotCrates(void)
             }
             CrateSnapshot_Init(s.p);
             {
-                Crate* c = *func_00256D80(list, i);
+                Crate* c = *std_vector_cBackpackPtr_opIndex(list, i);
                 Snapshot* d = s.p;
                 d->id = c->id;
             }
@@ -108,7 +108,7 @@ void Backpack_SnapshotCrates(void)
             s.p->f284 = list->items[i]->f2E4;
             s.p->f288 = list->items[i]->f2E8;
             s.p->f28C = list->items[i]->f2EC;
-            MemCopy(s.p->body, (*func_00256D80(list, i))->body, sizeof(s.p->body));
+            MemCopy(s.p->body, (*std_vector_cBackpackPtr_opIndex(list, i))->body, sizeof(s.p->body));
             CrateSnapshotList_Append(D_004F7F48, &s.p);
         }
     }

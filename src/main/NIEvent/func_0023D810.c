@@ -12,18 +12,18 @@ typedef struct NodeObj {
     PtrVec kids;        /* 0x9C */
 } NodeObj;
 
-extern int func_0023DA80(PtrVec* v);
-extern int func_0023DA90(PtrVec* v);
-extern int* func_0023DAA0(PtrVec* v, int i);
-extern int* func_0023DAB0(PtrVec* v, int i);
-extern int func_0023DAC0(NodeObj* o);
+extern int std_vector_cNIEventBasePtr_size(PtrVec* v);
+extern int cArray_cNIEventBasePtr_Size(PtrVec* v);
+extern int* cArray_cNIEventBasePtr_opIndex(PtrVec* v, int i);
+extern int* std_vector_imp_cNIEventBasePtr_1_opIndex(PtrVec* v, int i);
+extern int cGOBJ_IsStreaming(NodeObj* o);
 extern int GameObject_IsCollisionEnabled(NodeObj* o);
 
 #define COUNTS(o, flag) (!(flag) || (o)->state == 3 || (o)->state == 1 || (o)->state == 6)
 #pragma push
 #pragma opt_strength_reduction off
 
-int func_0023D810(NodeObj* self, int flag)
+int cNIEventBase_NumChildrenActive(NodeObj* self, int flag)
 {
     int total = 0; int ok;
     int i;
@@ -34,18 +34,18 @@ int func_0023D810(NodeObj* self, int flag)
         NodeObj* c = (NodeObj*)self->kids.data[i];
         int n = 0;
         int j;
-        ok = c->f2D != 0 && c->f2C != 0 && !(func_0023DAC0(c) != 0); if (ok) {
+        ok = c->f2D != 0 && c->f2C != 0 && !(cGOBJ_IsStreaming(c) != 0); if (ok) {
             if (COUNTS(c, flag)) n++;
         }
-        for (j = 0; j < func_0023DA80(&c->kids); j++) {
-            NodeObj* g = *(NodeObj**)func_0023DAB0(&c->kids, j);
+        for (j = 0; j < std_vector_cNIEventBasePtr_size(&c->kids); j++) {
+            NodeObj* g = *(NodeObj**)std_vector_imp_cNIEventBasePtr_1_opIndex(&c->kids, j);
             int m = 0;
             int k;
             if (GameObject_IsCollisionEnabled(g)) {
                 if (COUNTS(g, flag)) m++;
             }
-            for (k = 0; k < func_0023DA90(&g->kids); k++) {
-                m += func_0023D810(*(NodeObj**)func_0023DAA0(&g->kids, k), flag);
+            for (k = 0; k < cArray_cNIEventBasePtr_Size(&g->kids); k++) {
+                m += cNIEventBase_NumChildrenActive(*(NodeObj**)cArray_cNIEventBasePtr_opIndex(&g->kids, k), flag);
             }
             n += m;
         }

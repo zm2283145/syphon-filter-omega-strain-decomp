@@ -6,6 +6,6 @@
 #include "npc_types.h"
 
 /* vtable slot 0x15 (shared stub): returns 0. */
-int func_001535D0(void) {
+int cGobjController_IsNetNPC(void) {
     return 0;
 }

@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-void* func_003F9520(void* self) {
+void* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_11(void* self) {
     return self;
 }
 #pragma pop /* merge_units */
@@ -27,29 +27,29 @@ void* func_003F9520(void* self) {
 int String_CompareNoCase(int, int);
 int Hog_Unload(int);
 #if 0 /* merge_units */
-int func_003F9520(int);
+int details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_11(int);
 #endif /* merge_units */
-#define func_003F9520(a0) ((int)func_003F9520((void *)(a0))) /* merge_units */
+#define details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_11(a0) ((int)details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_11((void *)(a0))) /* merge_units */
 
-int func_003F95E0(int *, int);
-int func_003F95F0(int);
+int std_list_deleter_cHogFile_generic_iterator_ctor(int *, int);
+int std_list_deleter_cHogFile_tail(int);
 
 void ArchiveList_CloseNamed(int arg0, int arg1) {
     int sp4C;
     int var_s0;
 
-    var_s0 = F_(func_003F9520(arg0 + 4), 0x4, int);
-    func_003F95E0(&sp4C, func_003F95F0(arg0));
+    var_s0 = F_(details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_11(arg0 + 4), 0x4, int);
+    std_list_deleter_cHogFile_generic_iterator_ctor(&sp4C, std_list_deleter_cHogFile_tail(arg0));
     if (var_s0 != sp4C) {
         do {
             if (String_CompareNoCase(var_s0 + 8, arg1) == 0) {
                 Hog_Unload(var_s0 + 8);
             }
             var_s0 = F_(var_s0, 0x4, int);
-            func_003F95E0(&sp4C, func_003F95F0(arg0));
+            std_list_deleter_cHogFile_generic_iterator_ctor(&sp4C, std_list_deleter_cHogFile_tail(arg0));
         } while (var_s0 != sp4C);
     }
 }
-#undef func_003F9520 /* merge_units */
+#undef details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_11 /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003F9530 */

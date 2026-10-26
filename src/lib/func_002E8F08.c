@@ -2,9 +2,9 @@ typedef struct { int state; int x4; int x8; int xC; int id; int x14; int x18; un
 typedef struct { unsigned char b0; unsigned char b1; char pad2[2]; unsigned short x4; char pad6[2]; unsigned char b8; char pad9[3]; int xC; } M2E8F08;
 extern E2E8F08 D_005227F0[];
 extern void *Rt_MemoryAllocate(int);
-extern void func_002DD328(void *);
+extern void DmeFree(void *);
 
-int func_002E8F08(int id, int x, M2E8F08 *m, E2E8F08 **out)
+int NetFindMultiPacket(int id, int x, M2E8F08 *m, E2E8F08 **out)
 {
     E2E8F08 *e;
     unsigned int i;
@@ -27,8 +27,8 @@ int func_002E8F08(int id, int x, M2E8F08 *m, E2E8F08 **out)
             if (slot == -1) slot = i;
             break;
         default:
-            if (D_005227F0[i].p28) { func_002DD328(&D_005227F0[i].p28); D_005227F0[i].p28 = 0; }
-            if (D_005227F0[i].p24) { func_002DD328(&D_005227F0[i].p24); D_005227F0[i].p24 = 0; }
+            if (D_005227F0[i].p28) { DmeFree(&D_005227F0[i].p28); D_005227F0[i].p28 = 0; }
+            if (D_005227F0[i].p24) { DmeFree(&D_005227F0[i].p24); D_005227F0[i].p24 = 0; }
             D_005227F0[i].state = 0;
             if (slot == -1) slot = i;
             break;
@@ -49,8 +49,8 @@ int func_002E8F08(int id, int x, M2E8F08 *m, E2E8F08 **out)
         e->p28 = Rt_MemoryAllocate(m->xC);
         e->p24 = Rt_MemoryAllocate(m->x4);
         if (!e->p28 || !e->p24) {
-            if (e->p28) { func_002DD328(&e->p28); e->p28 = 0; }
-            if (e->p24) { func_002DD328(&e->p24); e->p24 = 0; }
+            if (e->p28) { DmeFree(&e->p28); e->p28 = 0; }
+            if (e->p24) { DmeFree(&e->p24); e->p24 = 0; }
             e->state = 0;
             return 22;
         }

@@ -1,3 +1,3 @@
 extern int D_00489738;
-extern int func_00123900(int r);
-int func_00123920(void) { return func_00123900(D_00489738); }
+extern int Newlib_CleanupR(int r);
+int Newlib_Cleanup(void) { return Newlib_CleanupR(D_00489738); }

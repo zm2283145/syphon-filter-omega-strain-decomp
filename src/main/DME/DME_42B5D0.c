@@ -5,7 +5,7 @@ int SoftFloat_DoubleSub(int a, long long b);
 long long SoftFloat_DoubleMultiply(long long a, long long b);
 int SoftFloat_IntToDouble(int v);
 unsigned int SoftFloat_DoubleToInt(int v);
-void func_002EBEC8(int* out, int a);
+void NetGetValidClientCount(int* out, int a);
 extern int D_00494180;
 extern int D_005721A8;
 extern unsigned char g_IsMultiplayer;
@@ -21,7 +21,7 @@ static inline int HostCount_42B5D0(void)
 {
     if (g_IsMultiplayer) {
         int n;
-        func_002EBEC8(&n, D_005721A8);
+        NetGetValidClientCount(&n, D_005721A8);
         return n;
     }
     return 1;

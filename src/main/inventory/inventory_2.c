@@ -15,7 +15,7 @@
 #include "types.h"
 
 /* swap(a, b) */
-void func_00471250(PtrVec* a, PtrVec* b) {
+void std_swap_vectordeleterR_vectordeleterR_53(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;
         int* p;
@@ -150,6 +150,6 @@ struct W_00471290 { int a; int b; char s[32]; int d; };
 union E_00471290 { W_00471290 w; struct { float f[11]; } c; };
 #define VIFC_ASSIGN(d, s) ((d)->w = (s)->w)
 #define VIFC_COPY(d, s) (*(d) = *(s))
-DEFINE_VECTOR_INSERT_FILL_CNT(ItemRegTable_Append, E_00471290, 0x22E8BA, 0x11745D, D_004C3360, D_004C33F0, 0x5C, func_00471960, void func_004719B0(ItemRegTable_Append_V* v, int flags);, func_004719B0(&tmp, -1), VIFC_ASSIGN, VIFC_COPY)
+DEFINE_VECTOR_INSERT_FILL_CNT(ItemRegTable_Append, E_00471290, 0x22E8BA, 0x11745D, D_004C3360, D_004C33F0, 0x5C, std_swap_vectordeleterR_vectordeleterR_54, void std_vector_deleter_tRecord_dtor(ItemRegTable_Append_V* v, int flags);, std_vector_deleter_tRecord_dtor(&tmp, -1), VIFC_ASSIGN, VIFC_COPY)
 #pragma pop /* merge_units */
 /* merge_units: end func_00471290 */

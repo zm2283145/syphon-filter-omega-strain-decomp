@@ -23,7 +23,7 @@ int* func_00415B20(L4Node** self) {
 }
 
 /* push_back on a list whose sentinel node is at +4. */
-L4Iter* func_00415B30(void* list, int value) {
+L4Iter* std_list_GuiWidgetPtr_push_back_GuiWidgetPR_2(void* list, int value) {
     L4Iter it[2];
 
     it[0].node = (L4Node*)((char*)list + 4);
@@ -79,10 +79,10 @@ extern int D_00538C64;
 extern char D_00538C68;
 extern int g_DrawMode;
 void List_Begin(LIt* out, void* list);
-void func_0028C0B0(LIt* out, LIt* in);
-void func_0028C0A0(LIt* out, void* list);
-void func_0028C090(LIt* out, LIt* in);
-void func_0037A1E0(char* r);
+void std_list_GuiWidgetPtr_generic_iterator_ctor(LIt* out, LIt* in);
+void std_list_GuiWidgetPtr_end(LIt* out, void* list);
+void cLListIterator_GuiWidgetPtr_ctor_listR(LIt* out, LIt* in);
+void XLib_ClearZBuffer(char* r);
 }
 
 #define SlotAt(i) ((Slot*)(g_Video + 0x1F0 + (i) * 0x110))
@@ -125,10 +125,10 @@ extern "C" void GuiFrontendCanvas_Draw(Self* self)
         D_00538C68 = 1;
         g_DrawMode = save | 4;
         List_Begin(&beginTmp, self->children);
-        func_0028C0B0(&first, &beginTmp);
-        for (it = first; func_0028C0A0(&endTmp, self->children), func_0028C090(&last, &endTmp), it.node != last.node; it.node = it.node->next) {
+        std_list_GuiWidgetPtr_generic_iterator_ctor(&first, &beginTmp);
+        for (it = first; std_list_GuiWidgetPtr_end(&endTmp, self->children), cLListIterator_GuiWidgetPtr_ctor_listR(&last, &endTmp), it.node != last.node; it.node = it.node->next) {
             if (it.node->value->flags & 2) {
-                func_0037A1E0(g_Video);
+                XLib_ClearZBuffer(g_Video);
                 it.node->value->d->Paint();
             }
         }

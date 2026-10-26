@@ -8,16 +8,16 @@ extern unsigned char D_004EE628;
 extern unsigned char D_005723C8;
 extern char D_0049C800[];
 void Mem_Free(int pool, void* p, char* file, int line);
-int func_002EB650(P_A580** out);
+int NetGetObject(P_A580** out);
 }
 #pragma define_section REENT_DTOR ".dtors_drop" far_absolute RX
 struct Reent_A580 { Reent_A580() { if (!D_005723C8) D_005723C8 = 1; } __declspec(weak) __declspec(REENT_DTOR) ~Reent_A580() { D_005723C8 = 0; } };
-extern "C" void func_0016A580(void)
+extern "C" void cTeam_TeamCreationCallback(void)
 {
     Reent_A580 r;
     {
         P_A580* p;
-        if (!func_002EB650(&p)) {
+        if (!NetGetObject(&p)) {
             void* old = D_004EE620;
             void* nv = p->data;
             if (old && !D_004EE628) {

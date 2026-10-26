@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-void* func_00459BA0(char* self) {
+void* details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_11(char* self) {
     return self + 4;
 }
 
-List* func_00459BB0(List* l) {
+List* std_list_deleter_TextAtom_ctor(List* l) {
     l->count = 0;
     l->first = l->last = &l->first;
     return l;

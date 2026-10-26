@@ -15,7 +15,7 @@ typedef struct { int pad; Node_3B8550* root; } Tree_3B8550;
 typedef struct { Node_3B8550* node; bool inserted; } Res_3B8550;
 extern "C" {
 int Name_Compare48(const char* a, const char* b, int n);
-Node_3B8550* func_003B99D0(Tree_3B8550* t, Node_3B8550* y, bool comp, bool leftmost, const char* key);
+Node_3B8550* std_tree_pair_cString16N_value_compare_cAllocator_pair_insert_node_at_nodeP_bool_bool_pairR_2(Tree_3B8550* t, Node_3B8550* y, bool comp, bool leftmost, const char* key);
 static bool D_00493508 = true;
 extern const bool D_00493510;
 }
@@ -44,7 +44,7 @@ extern "C" void MotionRegistry_MapInsert(Res_3B8550* out, Tree_3B8550* t, const 
         }
     }
     if (lb == 0 || Less_3B8550(lb->name, key)) {
-        out->node = func_003B99D0(t, y, comp, leftmost, key);
+        out->node = std_tree_pair_cString16N_value_compare_cAllocator_pair_insert_node_at_nodeP_bool_bool_pairR_2(t, y, comp, leftmost, key);
         out->inserted = D_00493508;
     } else {
         out->node = lb;
@@ -60,23 +60,23 @@ static inline void merge_flush_func_003B8550(void) {}
 #pragma push /* merge_units */
 typedef struct C6It_3B86D0 { Q q[2]; } C6It_3B86D0;
 typedef struct C6Arr_3B86D0 { int pad0; unsigned int state; int index; void** items; int result; int live; } C6Arr_3B86D0;
-extern void func_00397840(C6It_3B86D0*, C6Arr_3B86D0*, int);
+extern void std_deque_deleter_common_cSkaSystem_Request_make_iterator(C6It_3B86D0*, C6Arr_3B86D0*, int);
 extern void Array_DestroyRange(C6Arr_3B86D0*, C6It_3B86D0*, C6It_3B86D0*);
-extern void func_00396810(void*, int, int, char*, int);
-extern void func_003B92E0(C6Arr_3B86D0*);
+extern void opDelete_cSkaSystemRequestP_int_bool_charP_etc(void*, int, int, char*, int);
+extern void _cdeque_deleter_int_1_pop_front(C6Arr_3B86D0*);
 extern char D_004BC4D0[];
 void MotionArray_Clear(C6Arr_3B86D0* self) {
     C6It_3B86D0 first;
     C6It_3B86D0 last;
-    func_00397840(&last, self, self->live);
-    func_00397840(&first, self, 0);
+    std_deque_deleter_common_cSkaSystem_Request_make_iterator(&last, self, self->live);
+    std_deque_deleter_common_cSkaSystem_Request_make_iterator(&first, self, 0);
     Array_DestroyRange(self, &first, &last);
     self->live = 0;
     if (self->state > 1) {
         while (self->state > 2) {
             void* p = self->items[self->index];
-            if (p) func_00396810(p, 0, 0, D_004BC4D0, 100);
-            func_003B92E0(self);
+            if (p) opDelete_cSkaSystemRequestP_int_bool_charP_etc(p, 0, 0, D_004BC4D0, 100);
+            _cdeque_deleter_int_1_pop_front(self);
         }
         self->result = 4;
     } else {
@@ -96,30 +96,30 @@ extern void MotionArray_Clear(Deq_3B87A0*);
 #endif /* merge_units */
 #define MotionArray_Clear(a0) (MotionArray_Clear((void *)(a0))) /* merge_units */
 
-extern void* func_003AC450(Deq_3B87A0*);
+extern void* std_deque_deleter_common_cSkaSystem_Request_front(Deq_3B87A0*);
 extern void func_00397400(void*, int);
 #if 0 /* merge_units */
-extern void func_003B92E0(Deq_3B87A0*);
+extern void _cdeque_deleter_int_1_pop_front(Deq_3B87A0*);
 #endif /* merge_units */
-#define func_003B92E0(a0) (func_003B92E0((void *)(a0))) /* merge_units */
+#define _cdeque_deleter_int_1_pop_front(a0) (_cdeque_deleter_int_1_pop_front((void *)(a0))) /* merge_units */
 
-void func_003B87A0(Deq_3B87A0* self) {
+void std_deque_deleter_cSkaSystem_Request_pop_front(Deq_3B87A0* self) {
     if (self->size == 1) {
         MotionArray_Clear(self);
     } else {
-        func_00397400(func_003AC450(self), -1);
+        func_00397400(std_deque_deleter_common_cSkaSystem_Request_front(self), -1);
         self->size--;
         self->pos++;
         while (self->pos >= 0x10) {
             void* p = self->blocks[self->first];
-            if (p) func_00396810(p, 0, 0, D_004BC4D0, 100);
-            func_003B92E0(self);
+            if (p) opDelete_cSkaSystemRequestP_int_bool_charP_etc(p, 0, 0, D_004BC4D0, 100);
+            _cdeque_deleter_int_1_pop_front(self);
             self->pos -= 8;
         }
     }
 }
 #undef MotionArray_Clear /* merge_units */
-#undef func_003B92E0 /* merge_units */
+#undef _cdeque_deleter_int_1_pop_front /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003B87A0(void) {}
 #pragma pop /* merge_units */

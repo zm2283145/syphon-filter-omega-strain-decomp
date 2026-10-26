@@ -5,4 +5,4 @@
 
 /* Copy a range of 60-byte elements backward by assignment. */
 DEFINE_COPY_BACKWARD_ELEMENT(Elem60, 60)
-DEFINE_RANGE_COPY_BACKWARD_ASSIGN(func_001BF2E0, Elem60, func_001BECC0)
+DEFINE_RANGE_COPY_BACKWARD_ASSIGN(std_copy_backward_cSkaSliderValue_copy_backward, Elem60, cSplinedMotion_Scalar0To1_opAssign)

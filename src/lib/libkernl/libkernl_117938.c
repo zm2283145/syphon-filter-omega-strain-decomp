@@ -7,11 +7,11 @@
 /* merge_units: begin func_00117938 */
 extern int DIntr(void);
 extern int EIntr(void);
-extern int func_001178F0(int);
-int func_00117938(int a)
+extern int iGetTimerBaseTime(int);
+int GetTimerBaseTime(int a)
 {
     int s = DIntr();
-    int r = func_001178F0(a);
+    int r = iGetTimerBaseTime(a);
     if (s) EIntr();
     return r;
 }
@@ -21,21 +21,21 @@ int func_00117938(int a)
 typedef struct Alarm { struct Alarm *next; struct Alarm *prev; volatile int id; unsigned int flags; long long x10; long long x18; long long x20; int x28; } Alarm;
 typedef struct { unsigned long long a; int id; volatile int seq; volatile int cnt; Alarm *free; Alarm *head; volatile int cur; } TimCtl;
 extern TimCtl D_00487848;
-extern void func_00117008(Alarm *);
-extern long long func_001172E0(void);
-extern void func_00116DF0(long long);
+extern void UnlinkAlarm(Alarm *);
+extern long long iGetTimerSystemTime(void);
+extern void SetNextComp(long long);
 #if 0 /* merge_units */
 extern void EIntr(void);
 #endif /* merge_units */
 #define EIntr() ((void)EIntr()) /* merge_units */
 
-long long func_00117988(int id)
+long long iGetTimerCount(int id)
 {
     Alarm *a = (Alarm *)(((unsigned int)id >> 10) << 6);
     long long r;
     if (id < 0 || (id & 0x3FF) != a->id) return -1;
     r = a->x18;
-    if (a->flags & 1) r += func_001172E0() - a->x10;
+    if (a->flags & 1) r += iGetTimerSystemTime() - a->x10;
     return r;
 }
 #undef EIntr /* merge_units */

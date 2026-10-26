@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046E240(void) {
+int MediusUniqueCallbackFileCloseRequestHandler(void) {
     return 196;
 }

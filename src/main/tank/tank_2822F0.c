@@ -17,11 +17,11 @@ extern unsigned char D_005721D0;
 extern int D_005061D8;
 extern unsigned char* D_005061D0;
 void** NetMap_Lookup(int);
-Vec2822F0* func_00282550(void);
+Vec2822F0* cNetMsg_GetFuncList(void);
 }
 #pragma push
 #pragma opt_propagation off
-extern "C" int func_002822F0(int a0, int a1, int a2, Pk2822F0* arg) {
+extern "C" int cNetMsg_Callback(int a0, int a1, int a2, Pk2822F0* arg) {
     NetRecvGuard g;
     Pk2822F0* p = arg;
     if (D_005721D0) {
@@ -31,7 +31,7 @@ extern "C" int func_002822F0(int a0, int a1, int a2, Pk2822F0* arg) {
         obj = 0; if (e) obj = *e;
         idx = p->idx;
         if (idx < D_005061D8 && idx >= 0) {
-            Fn2822F0 fn = func_00282550()->data[(short)idx];
+            Fn2822F0 fn = cNetMsg_GetFuncList()->data[(short)idx];
             unsigned char* save = D_005061D0;
             D_005061D0 = p->data;
             fn(obj);
@@ -59,7 +59,7 @@ void printf(const char* format, ...);
 }
 #pragma push
 #pragma opt_propagation off
-extern "C" int func_002823E0(Msg2823E0* e, int a1, int* type, int a3, int a4, unsigned int size, void* buf) {
+extern "C" int cNetMsg_Pack(Msg2823E0* e, int a1, int* type, int a3, int a4, unsigned int size, void* buf) {
     int r = -1;
     if (size >= 0x10C && buf) {
         Buf2823E0* b = (Buf2823E0*)buf;
@@ -98,17 +98,17 @@ b->len = n;
 extern int PtrVec_Insert(PtrVec*, int*, int, int*);
 extern int PtrVec_PushBack_282530(PtrVec*, int*);
 #if 0 /* merge_units */
-extern PtrVec* func_00282550(void);
+extern PtrVec* cNetMsg_GetFuncList(void);
 #endif /* merge_units */
-#define func_00282550() ((PtrVec *)func_00282550()) /* merge_units */
+#define cNetMsg_GetFuncList() ((PtrVec *)cNetMsg_GetFuncList()) /* merge_units */
 
 
-/* Appends a value to the list from func_00282550 and hands out the next id from D_005061D8. */
+/* Appends a value to the list from cNetMsg_GetFuncList and hands out the next id from D_005061D8. */
 int NetMsgTable_Add(int value, int* outId) {
     int tmp;
 
     tmp = value;
-    PtrVec_PushBack_282530(func_00282550(), &tmp);
+    PtrVec_PushBack_282530(cNetMsg_GetFuncList(), &tmp);
     *outId = D_005061D8;
     D_005061D8 = D_005061D8 + 1;
     return *outId;
@@ -118,6 +118,6 @@ int NetMsgTable_Add(int value, int* outId) {
 int PtrVec_PushBack_282530(PtrVec* v, int* value) {
     return PtrVec_Insert(v, v->data + v->count, 1, value);
 }
-#undef func_00282550 /* merge_units */
+#undef cNetMsg_GetFuncList /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002824D0 */

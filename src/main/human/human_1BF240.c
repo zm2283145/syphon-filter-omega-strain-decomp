@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-void func_001BF240(PtrVec* a, PtrVec* b) {
+void std_swap_vectordeleterR_vectordeleterR_9(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;
         int* p;
@@ -35,11 +35,11 @@ void func_001BF240(PtrVec* a, PtrVec* b) {
 /* merge_units: begin func_001BF280 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x3C]; } G4_E3C;
-extern void func_001BECC0(G4_E3C* d, void* v);
-void func_001BF280(G4_E3C* p, unsigned int n, void* v)
+extern void cSplinedMotion_Scalar0To1_opAssign(G4_E3C* d, void* v);
+void std_fill_n_cSkaSliderValue_int_fill_n(G4_E3C* p, unsigned int n, void* v)
 {
     for (; n != 0; n--, p++) {
-        func_001BECC0(p, v);
+        cSplinedMotion_Scalar0To1_opAssign(p, v);
     }
 }
 #pragma pop /* merge_units */

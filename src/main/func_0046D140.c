@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046D140(void) {
+int MediusUniqueCallbackGetAnnouncementsRequestHandler(void) {
     return 44;
 }

@@ -26,7 +26,7 @@ extern void EIntr(void);
 #define D9_TADR ((volatile unsigned int *)0x1000D430)
 #define D9_SADR ((volatile unsigned int *)0x1000D480)
 
-void func_00109590(Mpeg9590 *mp)
+void dmaRefImage(Mpeg9590 *mp)
 {
     long *tag;
     int cnt;

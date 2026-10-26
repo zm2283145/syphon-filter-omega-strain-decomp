@@ -1,8 +1,8 @@
 #include "types.h"
 
 static const unsigned int dat_00490808[16] = { 0x11, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
-extern int func_002F4A38(int, int, int, int);
+extern int RSADecryptBlock(int, int, int, int);
 
-int func_002F4A10(int a0, int a1, int a2) {
-    return func_002F4A38(a0, (int)((char*)dat_00490808), a1, a2);
+int RSAEncryptBlock(int a0, int a1, int a2) {
+    return RSADecryptBlock(a0, (int)((char*)dat_00490808), a1, a2);
 }

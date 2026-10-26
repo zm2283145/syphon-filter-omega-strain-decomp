@@ -6,5 +6,5 @@
 
 #include "types.h"
 
-void func_0017D330(void) {
+void cSplinedMotion_cQuaternion_FixUpResultOfSplineEvaluation(void) {
 }

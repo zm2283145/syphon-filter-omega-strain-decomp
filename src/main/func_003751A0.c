@@ -6,22 +6,22 @@
 
 #include "loose03_types.h"
 
-float func_003751A0(Obj3751A0* self) {
+float XLib_GetZBuffMin(Obj3751A0* self) {
     return self->unk34;
 }
 
-float func_003751B0(Obj3751A0* self) {
+float XLib_GetZBuffMax(Obj3751A0* self) {
     return self->unk38;
 }
 
-float func_003751C0(Obj3751A0* self) {
+float XLib_GetGuardBandScaleY(Obj3751A0* self) {
     return self->unk78[self->unk88];
 }
 
-float func_003751E0(Obj3751A0* self) {
+float XLib_GetGuardBandScaleX(Obj3751A0* self) {
     return self->unk68[self->unk88];
 }
 
-void* func_00375200(char* self) {
+void* XLib_GetFullscreenWindow(char* self) {
     return self + 3968;
 }

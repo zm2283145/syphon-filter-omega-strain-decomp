@@ -39,8 +39,8 @@ void AgentPartCache_Unlock(char* c);
 void* Agent_GetSelected(void* a, int b);
 void AgentData_StoreAppearance(void* ag, Blk_0033FA80* b);
 void* DME_GetLobby(void);
-void func_002CBD40(void* a, Info_0033FA80* i);
-void func_004505E0(void* a, Info_0033FA80* i);
+void cGameFrontEnd_LobbySetAgentStats(void* a, Info_0033FA80* i);
+void SFOLobby_UpdateStats(void* a, Info_0033FA80* i);
 void GuiSaveAgentWidget_HandleEvent(Self_0033FA80* self);
 char* Loc_LookupText(char* key);
 void FrontEnd_OpenPopup(void* fe, int kind, char* a, char* b, Self_0033FA80* self, int c);
@@ -108,8 +108,8 @@ extern "C" int GuiAgentModify_HandleInput(Self_0033FA80* self, Ev_0033FA80* ev)
         if (DME_GetLobby()) {
             DME_GetLobby();
             Info_0033FA80 info = *(Info_0033FA80*)D_00585E90;
-            func_002CBD40(D_004FFC04, &info);
-            func_004505E0(DME_GetLobby(), &info);
+            cGameFrontEnd_LobbySetAgentStats(D_004FFC04, &info);
+            SFOLobby_UpdateStats(DME_GetLobby(), &info);
         }
         self->b4C = 1;
         GuiSaveAgentWidget_HandleEvent(self);

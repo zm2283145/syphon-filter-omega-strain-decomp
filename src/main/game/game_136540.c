@@ -17,20 +17,20 @@ extern void PtrVec_InitEmpty(Sub00136540* sub);
 #endif /* merge_units */
 #define PtrVec_InitEmpty(a0) ((void)PtrVec_InitEmpty((void *)(a0))) /* merge_units */
 
-extern int func_001361D0(void* src);
+extern int cArrayCapacity_Int(void* src);
 #if 0 /* merge_units */
 extern int PtrVec_Reserve_Thunk(Sub00136540* sub, int value);
 #endif /* merge_units */
 #define PtrVec_Reserve_Thunk(a0, a1) (PtrVec_Reserve_Thunk((int)(a0), (a1))) /* merge_units */
 
 /* Constructor. */
-Obj00136540* func_00136540(Obj00136540* obj, void* src)
+Obj00136540* cCollisionModelList_ctor(Obj00136540* obj, void* src)
 {
     Sub00136540* sub;
     obj->vtable = D_004D9140;
     sub = &obj->sub;
     PtrVec_InitEmpty(sub);
-    PtrVec_Reserve_Thunk(sub, func_001361D0(src));
+    PtrVec_Reserve_Thunk(sub, cArrayCapacity_Int(src));
     sub->flag = 1;
     obj->unk14 = 0;
     return obj;
@@ -64,7 +64,7 @@ Rel* PtrVec_InitEmpty(Rel* r) {
     return r;
 }
 
-Rel* func_001365E0(Rel* r) {
+Rel* std_vector_cNodePtr_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

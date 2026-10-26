@@ -28,8 +28,8 @@ void Event_Construct(void*, void*);
 void Event_Send(void*, void*, int);
 void cMessage_dtor(void*, int);
 void NpcPerception_FindRecord(RNode** out, void* map, AObj* key);
-void func_0016BB80(void*, void*);
-void func_0016BB90(void*, void*);
+void std_list_cTargetAwarenessPtr_end_void(void*, void*);
+void cLListIterator_cTargetAwarenessPtr_ctor(void*, void*);
 void List_PushBack_16CEE0(void* list, ARec* const* v);
 extern char D_0049C650[];
 extern int g_HumanActorClassKey;
@@ -66,7 +66,7 @@ static inline void SetId2(ARec* r, AObj* o) { r->id2 = o->id; }
 /* The end-iterator helpers nest three deep so its temp lands below the IdOf temp, as in retail. */
 /* Retail reserves an unused slot above the IdOf temp; a dead address-taken local reproduces it. */
 static inline void Set(ARec* r, AObj* o) { int u; int* pu = &u; r->obj = o; r->id = IdOf(o); }
-static inline void En2(void* recs, RNode** e) { void* s; func_0016BB80(&s, recs); func_0016BB90(e, &s); }
+static inline void En2(void* recs, RNode** e) { void* s; std_list_cTargetAwarenessPtr_end_void(&s, recs); cLListIterator_cTargetAwarenessPtr_ctor(e, &s); }
 static inline void En1(void* recs, RNode** e) { En2(recs, e); }
 static inline void En0(void* recs, RNode** e) { En1(recs, e); }
 

@@ -76,7 +76,7 @@ extern char g_Hud[];
 
 extern void GuiGameScreen_SetMenuReceiver(int, int);
 
-void func_00176160(void) {
+void cPlayer_SetMenuReceiver(void) {
     int a0, a1, v1;
     int cond;
 
@@ -104,7 +104,7 @@ extern Game_P_001761A0* g_Hud;
 #define g_Hud (*(Game_P_001761A0 **)&g_Hud) /* merge_units */
 
 extern void cPlayer_AddMenuChoice(void* p, int v);
-void func_001761A0(int unused, int v)
+void cPlayer_AddMenuChoice_2(int unused, int v)
 {
     void* p = g_Hud->player;
     if (p)
@@ -125,7 +125,7 @@ extern char g_Hud[];
 
 extern void GuiGameScreen_SelectMenuRow(int, int);
 
-void func_001761E0(void) {
+void cPlayer_SetMenuDefault(void) {
     int a0, a1, v1;
     int cond;
 
@@ -153,7 +153,7 @@ extern Game_P_00176220* g_Hud;
 #define g_Hud (*(Game_P_00176220 **)&g_Hud) /* merge_units */
 
 extern void cPlayer_SetMenuTitle(void* p, int v);
-void func_00176220(int unused, int v)
+void cPlayer_SetMenuTitle_2(int unused, int v)
 {
     void* p = g_Hud->player;
     if (p)
@@ -171,7 +171,7 @@ static inline void merge_flush_func_00176220(void) {}
 
 static inline Plr_P* AsPlayer_00176260(GObj_P* o) { Plr_P* p = o->ctl; return (p && p->kind == g_HumanActorClassKey) ? p : 0; }
 extern void cPlayer_LaunchChooseMenu(Plr_P* pl, Plr_P* who);
-void func_00176260(GObj_P* o)
+void cPlayer_LaunchChooseMenu_2(GObj_P* o)
 {
     Plr_P* pl = g_Hud->player;
     if (pl)

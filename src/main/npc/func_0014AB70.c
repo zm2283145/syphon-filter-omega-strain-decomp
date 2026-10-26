@@ -7,12 +7,12 @@
 
 extern Iter* List_InsertBefore(Iter* out, Tree* t, Iter* hint, int value);
 
-Word* func_0014AB70(Word* dst, Word* src) {
+Word* cLListIterator_cActiveListItemPtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_0014AB80(Iter* out, Tree* t) {
+void std_list_cActiveListItemPtr_end_void(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
@@ -24,54 +24,54 @@ Iter* NpcAi_AddToDeadList(Tree* t, int value) {
     return List_InsertBefore(&it[1], t, &it[0], value);
 }
 
-Word* func_0014ABC0(Word* dst, Word* src) {
+Word* std_list_cActiveListItemPtr_generic_iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-Word* func_0014ABD0(Word* dst, Word* src) {
+Word* cLListIterator_cNPCPtr_ctor_listR(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_0014ABE0(Iter* out, Tree* t) {
+void std_list_cNPCPtr_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-Word* func_0014ABF0(Word* dst, Word* src) {
+Word* cLListIterator_cNPCPtr_ctor_cLListIteratorR(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
 /* Iterator inequality. */
-int func_0014AC00(Word* a, Word* b) {
+int opNe_cLListIteratorR_cLListIteratorR(Word* a, Word* b) {
     return (0U < (unsigned int)(a->value ^ b->value));
 }
 
-void func_0014AC20(Iter* out, Tree* t) {
+void cLList_cNPCPtr_End(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
 /* Linked-list iterator increment: follow node->next (+4). */
-Iter* func_0014AC30(Iter* it) {
+Iter* cLListIterator_cNPCPtr_opInc(Iter* it) {
     it->p = (int*)it->p[1];
     return it;
 }
 
 /* Address of the node payload (+8). */
-int* func_0014AC50(Iter* it) {
+int* cLListIterator_cNPCPtr_opMul(Iter* it) {
     return it->p + 2;
 }
 
-float* func_0014AC60(float* dst, float* src) {
+float* cLListIterator_cNPCPtr_opAssign(float* dst, float* src) {
     *dst = *src;
     return dst;
 }
 
-void func_0014AC70(Iter* out, PtrVec* v) {
+void cLList_cNPCPtr_Begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 
-void* func_0014AC80(void* self) {
+void* cLListIterator_cNPCPtr_ctor_void(void* self) {
     return self;
 }

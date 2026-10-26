@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_002E6088(int a0) {
+int NetIsValidClientIndex(int a0) {
     return ((unsigned int)(a0) < (unsigned int)(256));
 }

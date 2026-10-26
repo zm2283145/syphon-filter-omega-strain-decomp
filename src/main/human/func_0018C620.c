@@ -7,7 +7,7 @@ static inline void Make_18C620(H_18C620* h, O_18C620* o)
     h->p = (*id == -1) ? o : 0;
     h->id = *id;
 }
-void func_0018C620(H_18C620* out, O_18C620* o)
+void nSka_GetPlaybackGroupId(H_18C620* out, O_18C620* o)
 {
     H_18C620 a;
     H_18C620 b;

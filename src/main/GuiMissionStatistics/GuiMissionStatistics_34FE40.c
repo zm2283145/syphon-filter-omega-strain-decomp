@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-Rel* func_0034FE40(Rel* r) {
+Rel* std_vector_MissionStats_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
@@ -28,7 +28,7 @@ Rel* func_0034FE40(Rel* r) {
 #pragma cplusplus on
 #include "direct_base_dtor.h"
 
-DEFINE_DIRECT_BASE_DTOR(func_0034FE60, func_003513B0)
+DEFINE_DIRECT_BASE_DTOR(std_vector_imp_MissionStats_dtor, std_vector_deleter_MissionStats_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0034FE60 */
 

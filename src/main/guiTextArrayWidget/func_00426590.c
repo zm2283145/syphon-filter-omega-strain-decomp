@@ -5,17 +5,17 @@
 
 extern "C" {
 extern char D_004BF790[];
-void func_004263C0(guiTextArrayWidget* self);
+void GuiTextArrayWidget_DestroyTextArray(guiTextArrayWidget* self);
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
-void func_004268C0(TextArrayRow* row);
+void std_vector_tTextElement_ctor(TextArrayRow* row);
 void String_CtorEmpty(void* string);
-void func_004268B0(Vec4* color);
-Vec4* func_00426890(Vec4* color, float x, float y, float z, float w);
+void tRGBA_ctor_void(Vec4* color);
+Vec4* tRGBA_ctor_float_float_float_float(Vec4* color, float x, float y, float z, float w);
 void SubtitleTrack_LoadCue(Vec4* destination, const Vec4* source);
-void func_00428000(TextArrayRow* row, unsigned int columns, const TextArrayCell* value);
+void std_vector_imp_tTextElement_resize(TextArrayRow* row, unsigned int columns, const TextArrayCell* value);
 void String_Dtor(void* string, int flags);
-void func_00426870(TextArrayStore* store, TextArrayRow** row);
-void func_00428090(TextArrayStore* store, int flags);
+void std_vector_cArray_tTextElementPtr_push_back(TextArrayStore* store, TextArrayRow** row);
+void std_vector_deleter_tTextElement_dtor(TextArrayStore* store, int flags);
 void operator_delete(void* allocation);
 }
 
@@ -39,7 +39,7 @@ static inline TextArrayRow* create_row(void)
         allocation = (TextArrayRow*)Mem_Alloc(0, sizeof(TextArrayRow), D_004BF790, 0x2B);
     }
     if (allocation) {
-        func_004268C0(allocation);
+        std_vector_tTextElement_ctor(allocation);
         allocation->owned = 1;
     }
     return allocation;
@@ -48,7 +48,7 @@ static inline TextArrayRow* create_row(void)
 /* Rebuild the requested rows with default cells and independently owned storage. */
 extern "C" void TextArrayCell_InitDefaults(guiTextArrayWidget* self, unsigned int columns, unsigned int rows)
 {
-    func_004263C0(self);
+    GuiTextArrayWidget_DestroyTextArray(self);
     if (!columns || !rows)
         return;
     for (unsigned int index = 0; index < rows; ++index) {
@@ -57,14 +57,14 @@ extern "C" void TextArrayCell_InitDefaults(guiTextArrayWidget* self, unsigned in
         Vec4 white;
         row = create_row();
         String_CtorEmpty(cell.string);
-        func_004268B0(&cell.color);
+        tRGBA_ctor_void(&cell.color);
         cell.flags = 0;
         cell.attribute = 0;
         cell.text = 0;
-        SubtitleTrack_LoadCue(&cell.color, func_00426890(&white, 1.0f, 1.0f, 1.0f, 1.0f));
-        func_00428000(row, columns, &cell);
+        SubtitleTrack_LoadCue(&cell.color, tRGBA_ctor_float_float_float_float(&white, 1.0f, 1.0f, 1.0f, 1.0f));
+        std_vector_imp_tTextElement_resize(row, columns, &cell);
         String_Dtor(cell.string, 0);
-        func_00426870(&self->store, &row);
+        std_vector_cArray_tTextElementPtr_push_back(&self->store, &row);
     }
 }
 
@@ -75,7 +75,7 @@ static inline void destroy_string(void* string)
 }
 
 /* Destroy the cell's string before optional cell deletion. */
-extern "C" TextArrayCell* func_004267B0(TextArrayCell* self, short deleteFlag)
+extern "C" TextArrayCell* GuiTextArrayWidget_tTextElement_dtor(TextArrayCell* self, short deleteFlag)
 {
     if (self) {
         destroy_string(self->string);
@@ -88,11 +88,11 @@ extern "C" TextArrayCell* func_004267B0(TextArrayCell* self, short deleteFlag)
 static inline void destroy_store(TextArrayStore* store)
 {
     if (store)
-        func_00428090(store, 0);
+        std_vector_deleter_tTextElement_dtor(store, 0);
 }
 
 /* Destroy the row-pointer store before optional object deletion. */
-extern "C" TextArrayStore* func_00426810(TextArrayStore* self, short deleteFlag)
+extern "C" TextArrayStore* std_vector_tTextElement_dtor(TextArrayStore* self, short deleteFlag)
 {
     if (self) {
         destroy_store(self);

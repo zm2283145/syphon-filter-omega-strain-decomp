@@ -14,11 +14,11 @@
 
 #include "loose03_types.h"
 
-extern int func_00354890(FlaggedRel*);
+extern int std_vector_imp_tAchievementInfo_ctor(FlaggedRel*);
 
 /* FlaggedRel constructor. */
-FlaggedRel* func_00354710(FlaggedRel* self) {
-    func_00354890(self);
+FlaggedRel* cArray_tAchievementInfo_ctor(FlaggedRel* self) {
+    std_vector_imp_tAchievementInfo_ctor(self);
     self->unk0C = 1;
     return self;
 }
@@ -34,7 +34,7 @@ struct E354740 { char c[0x14]; };
 struct O354740 { int x0; int count; E354740* data; };
 extern "C" {
 extern char D_004AA5B8[];
-void func_00354880(O354740* v);
+void details_compressed_pair_imp_cAllocator_tAchievementInfo_int_1_first(O354740* v);
 void Mem_Free(int pool, void* p, char* file, int line);
 void operator_delete(void* p);
 }
@@ -48,7 +48,7 @@ extern "C" O354740* func_00354740(O354740* self, short del)
                 E354740* p;
                 while (b < e) {
                     e--;
-                    func_00354880(self);
+                    details_compressed_pair_imp_cAllocator_tAchievementInfo_int_1_first(self);
                 }
                 self->count = 0;
                 p = self->data;

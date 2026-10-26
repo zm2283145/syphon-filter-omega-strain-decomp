@@ -65,7 +65,7 @@ extern "C" void GuiWidget_Deinit();
 extern "C" void GuiWidget_Init();
 extern "C" void GuiWidget_Load();
 extern void * const D_004E08D0[];
-void func_002CCD80(void* p, int f);
+void cLList_GuiWidgetPtr_dtor(void* p, int f);
 void GuiWidget_Destroy(T415F00* p, int f);
 void operator_delete(void* p);
 }
@@ -73,7 +73,7 @@ extern "C" T415F00* GuiCanvas_PopAll(T415F00* self, short flag) {
     if (self) {
         self->vt = ((char*)D_004E08D0);
         while (self->count) ((V415F00*)self)->s24(self->head->arg);
-        if (self->sub) func_002CCD80(self->sub, 0);
+        if (self->sub) cLList_GuiWidgetPtr_dtor(self->sub, 0);
         GuiWidget_Destroy(self, 0);
         if (flag > 0) operator_delete(self);
     }
@@ -149,7 +149,7 @@ GuiWidget4160A0* GuiCanvas_ctor(GuiWidget4160A0* self) {
 #pragma cplusplus on
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_00416110, func_002CCD00)
+DEFINE_BASE_DTOR_CHAIN(func_00416110, std_list_GuiWidgetPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00416110 */
 

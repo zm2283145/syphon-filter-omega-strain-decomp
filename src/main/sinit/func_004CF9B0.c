@@ -20,10 +20,10 @@ extern char Script_cMenuChoiceMsg_Who[];
 extern int Script_RegisterVariable();
 extern int Script_RegisterType();
 extern int Script_RegisterNative();
-extern int* func_002472F0(void);
+extern int* cMenuChoiceMsg_SOBJ_getClassId(void);
 extern char* cSystem_GetScriptTypeKeyPtr(void);
 
-void func_004CF9B0(void)
+void StaticInit_playerControls(void)
 {
     D_004A7540 = 0x3F91361E;
     D_004A7548 = 0x3F61A840;
@@ -48,9 +48,9 @@ void func_004CF9B0(void)
     D_004F7E40 = Script_RegisterVariable(D_004A7918, (int)&D_0048AEE0, D_00493890);
     D_004F7E48 = D_004A7930;
     D_004F7E50 = Script_RegisterType(D_004A7948, ScriptType_cMenuChoiceMsg_Init, 1, 0);
-    D_004F7E58 = *func_002472F0();
-    D_004F7E60 = Script_RegisterNative(*func_002472F0(), Script_cMenuChoiceMsg_Choice, D_00493888, D_004A7958, 1, func_002472F0());
-    D_004F7E68 = Script_RegisterNative(*func_002472F0(), Script_cMenuChoiceMsg_Who, cSystem_GetScriptTypeKeyPtr(), D_004A7960, 1, func_002472F0());
+    D_004F7E58 = *cMenuChoiceMsg_SOBJ_getClassId();
+    D_004F7E60 = Script_RegisterNative(*cMenuChoiceMsg_SOBJ_getClassId(), Script_cMenuChoiceMsg_Choice, D_00493888, D_004A7958, 1, cMenuChoiceMsg_SOBJ_getClassId());
+    D_004F7E68 = Script_RegisterNative(*cMenuChoiceMsg_SOBJ_getClassId(), Script_cMenuChoiceMsg_Who, cSystem_GetScriptTypeKeyPtr(), D_004A7960, 1, cMenuChoiceMsg_SOBJ_getClassId());
     if (!D_004EA0C8) {
         g_LosCheckService = D_004A7968;
         D_004EA0C8 = 1;

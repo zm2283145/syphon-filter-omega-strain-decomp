@@ -1,7 +1,7 @@
 #include "types.h"
 #include "npc_auth.h"
 typedef struct { char pad[0x30]; void* net; } Npc35A0;
-void func_002D35A0(Npc35A0* o, float v)
+void cNetNPC_SetTravelSpeed(Npc35A0* o, float v)
 {
     NetEvent_Send(o->net, 0x12, 8, *(volatile int*)&v, 0, 0, 0);
 }

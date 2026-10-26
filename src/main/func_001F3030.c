@@ -1,8 +1,8 @@
 #include "types.h"
 
-extern int* func_001F3050(void* obj);
+extern int* std_list_deleter_voidPtr_sz_void_2(void* obj);
 
-/* Returns the int pointed to by func_001F3050's result. */
-int func_001F3030(void* obj) {
-    return *func_001F3050(obj);
+/* Returns the int pointed to by std_list_deleter_voidPtr_sz_void_2's result. */
+int std_list_imp_voidPtr_size(void* obj) {
+    return *std_list_deleter_voidPtr_sz_void_2(obj);
 }

@@ -4,7 +4,7 @@ extern int sprintf(char *, const char *, ...);
 extern char *strstr(const char *, const char *);
 extern int atoi(const char *);
 extern char *strncpy(char *, const char *, unsigned int);
-int func_002F5A58(char *out, short n)
+int rt_comm_get_build_timestamp(char *out, short n)
 {
     M2F5A58 months = months_init;
     char mon[16];

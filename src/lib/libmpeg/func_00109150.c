@@ -1,7 +1,7 @@
 #define F(p, o, T) (*(T *)((char *)(p) + (o)))
 extern long UInt64_Multiply(long, long);
 
-void func_00109150(void *m, void *pic, long *pts, long *dts, long *flags)
+void _getPtsDtsFlags(void *m, void *pic, long *pts, long *dts, long *flags)
 {
     int base, n, f, odd;
 

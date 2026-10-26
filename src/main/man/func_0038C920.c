@@ -56,7 +56,7 @@ extern int D_005712F0[];
 extern __int128* D_005712F8[];
 extern char D_004BC318[], D_004BC328[], D_004BC330[];
 extern int MeshCache_FindSlot(PartCache* cache, __int128 name);
-extern void func_00400140(PartRec* r, int a, int b, int c, int d);
+extern void Parts_PartInit(PartRec* r, int a, int b, int c, int d);
 extern int Appearance_GetBodyKind(void* a);
 extern void Equip_SwapSlots(ActorModel* m, int a, int b);
 extern int strcmp(const char* a, const char* b);
@@ -87,8 +87,8 @@ void ActorModel_Setup(ActorModel* m)
         if (m->h22C0[n] == -1) m->h22C0[n] = 0;
         slot = MeshCache_FindSlot(&g_AgentPartCache, m->pairs[n].a);
         if (slot == -1) {
-            func_00400140(&m->recs[0][n], 0, 0, 0, 0);
-            func_00400140(&m->recs[1][n], 0, 0, 1, 0);
+            Parts_PartInit(&m->recs[0][n], 0, 0, 0, 0);
+            Parts_PartInit(&m->recs[1][n], 0, 0, 1, 0);
         } else {
             int j;
             for (j = 0; j < 2; j++) {

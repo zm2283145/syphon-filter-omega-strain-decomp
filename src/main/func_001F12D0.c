@@ -8,18 +8,18 @@
 #include "loose01_types.h"
 
 extern int String_CtorCStr_13B480(int, int);
-extern float func_001D10A0(float, float);
+extern float CLAMP_LOW(float, float);
 
-int func_001F12D0(int a0, int a1) {
+int cString_ctor_charP(int a0, int a1) {
     String_CtorCStr_13B480(a0, a1);
     return a0;
 }
 
 /* Sets a range with x = f(x, 0) and y = f(y, x). */
-Vec2f* func_001F1300(Vec2f* self, float x, float y) {
+Vec2f* cSkaAnimPlaybackRange_ctor(Vec2f* self, float x, float y) {
     self->x = x;
     self->y = y;
-    self->x = func_001D10A0(self->x, 0.0f);
-    self->y = func_001D10A0(self->y, self->x);
+    self->x = CLAMP_LOW(self->x, 0.0f);
+    self->y = CLAMP_LOW(self->y, self->x);
     return self;
 }

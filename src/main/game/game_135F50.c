@@ -20,7 +20,7 @@
 #pragma cplusplus on
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_00135F50, func_00135C90)
+DEFINE_BASE_DTOR_CHAIN(std_vector_deleter_cLosRequest_cCollisionModelList_Game_dtor, func_00135C90)
 #pragma pop /* merge_units */
 /* merge_units: end func_00135F50 */
 

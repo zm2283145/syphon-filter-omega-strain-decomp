@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int* func_0026EBD0(PtrVec* v, int i) {
+int* std_vector_cVUM_GOBJPtr_opIndex_uint_2(PtrVec* v, int i) {
     return v->data + i;
 }

@@ -36,12 +36,12 @@ static inline void merge_flush_func_00413800(void) {}
 
 
 /* Address of record `index`. */
-IfRec12* func_00413850(IfRecVec* v, int index) {
+IfRec12* std_vector_cString_opIndex(IfRecVec* v, int index) {
     return v->data + index;
 }
 
 /* Number of records. */
-int func_00413870(IfRecVec* v) {
+int cArray_cString_Size(IfRecVec* v) {
     return v->count;
 }
 /* merge_units: generate this block's code under its own pragmas */

@@ -79,7 +79,7 @@ Mtx44* Mtx_Transpose3x3(Mtx44* m) {
     return m;
 }
 
-int func_0013EE60(void) {
+int cGOBJ_GetBBox(void) {
     return 0;
 }
 
@@ -120,15 +120,15 @@ typedef struct { int a, b, c, d; } DbMap;
 typedef struct { float f; DbObj* o; } DbPair;
 typedef struct { char* p; } DbIt;
 extern "C" {
-extern void func_0013F800(DbMap* m, void* cmp, void* alloc);
-extern void func_0013F180(DbPair* p, float* f, DbObj** o);
+extern void std_tree_pair_float_value_compare_ctor(DbMap* m, void* cmp, void* alloc);
+extern void std_pair_float_cGOBJPtr_ctor(DbPair* p, float* f, DbObj** o);
 extern void SceneDrawMap_Insert(DbIt* out, DbMap* m, DbPair* kv);
-extern void func_0013F170(DbIt* out, DbMap* m);
-extern void func_0013F120(DbIt* out, DbMap* m);
-extern int func_0013F100(DbIt* a, DbIt* b);
-extern DbObj** func_0013F160(DbIt* it);
+extern void cAssocMultiArray_float_cGOBJPtr_Begin(DbIt* out, DbMap* m);
+extern void cAssocMultiArray_float_cGOBJPtr_End(DbIt* out, DbMap* m);
+extern int cAssocMultiArray_float_cGOBJPtr_Iterator_opNe(DbIt* a, DbIt* b);
+extern DbObj** cAssocMultiArray_float_cGOBJPtr_Iterator_opMul(DbIt* it);
 extern void TreeIter_Increment(DbIt* it);
-extern void func_0013F090(DbMap* m, short del);
+extern void cAssocMultiArray_float_cGOBJPtr_dtor(DbMap* m, short del);
 }
 
 extern "C" void World_DrawBuckets(DbWorld* w, int sorted)
@@ -149,26 +149,26 @@ extern "C" void World_DrawBuckets(DbWorld* w, int sorted)
         DbIt it;
         DbIt e;
         DbObj** p;
-        func_0013F800(&m, cmp, alloc);
+        std_tree_pair_float_value_compare_ctor(&m, cmp, alloc);
         for (p = w->items; p != w->items + w->count; p++) {
             DbObj* q = *p;
             float d = q->depth;
             o = q;
             f = d;
-            func_0013F180(&tmp, &f, &o);
+            std_pair_float_cGOBJPtr_ctor(&tmp, &f, &o);
             kv.f = tmp.f;
             kv.o = tmp.o;
             SceneDrawMap_Insert(&res, &m, &kv);
         }
-        func_0013F170(&it, &m);
-        func_0013F120(&e, &m);
-        while (func_0013F100(&it, &e)) {
-            DbObj* d = *func_0013F160(&it);
+        cAssocMultiArray_float_cGOBJPtr_Begin(&it, &m);
+        cAssocMultiArray_float_cGOBJPtr_End(&e, &m);
+        while (cAssocMultiArray_float_cGOBJPtr_Iterator_opNe(&it, &e)) {
+            DbObj* d = *cAssocMultiArray_float_cGOBJPtr_Iterator_opMul(&it);
             d->Draw();
             TreeIter_Increment(&it);
-            func_0013F120(&e, &m);
+            cAssocMultiArray_float_cGOBJPtr_End(&e, &m);
         }
-        func_0013F090(&m, -1);
+        cAssocMultiArray_float_cGOBJPtr_dtor(&m, -1);
     }
 }
 #pragma pop /* merge_units */

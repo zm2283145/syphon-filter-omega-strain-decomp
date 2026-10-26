@@ -16,7 +16,7 @@ typedef struct {
 extern char D_00537F80[];
 extern u64_t* DmaPacket_Reserve(void* q, int a, int b, int c, int d, int e);
 
-void func_0037A1E0(R1E0* o)
+void XLib_ClearZBuffer(R1E0* o)
 {
     unsigned int tbp = o->tbp[o->cur];
     GsQ* q = (GsQ*)DmaPacket_Reserve(D_00537F80, 1, 1, 8, 0, 1);

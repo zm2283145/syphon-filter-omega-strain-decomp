@@ -7,20 +7,20 @@ extern SBBBB0 D_00518A08[];
 extern PBBBB0 D_00518A40;
 extern char D_0051AAC0[];
 extern int D_0048C09C;
-extern int func_0026A8C8(int);
+extern int sceDbcGetConnection(int);
 extern void *memset(void *, int, unsigned int);
 extern int sceDbcSendData3(int, int, void *, void *, void *);
-extern void func_002BB660(void);
-extern E2BB520 *func_002BB520(int);
+extern void sceMc2SifCallback(void);
+extern E2BB520 *SyncDma(int);
 extern char D_004AC248[];
 extern int scePrintf(const char *, ...);
 extern void *memcpy(void *, const void *, unsigned int);
 extern void SyncDCache(void *, void *);
-int func_002BC2D8(int i, char *buf, int sec, int n)
+int _sceMcCoreWritePage(int i, char *buf, int sec, int n)
 {
     int l;
     unsigned int size;
-    if (func_0026A8C8(D_00518A08[i].sock) == 3) return 0;
+    if (sceDbcGetConnection(D_00518A08[i].sock) == 3) return 0;
     size = D_00518A08[i].s.x8 * n;
     if (size > 0x2000) {
         scePrintf(D_004AC248);
@@ -41,7 +41,7 @@ int func_002BC2D8(int i, char *buf, int sec, int n)
     memset(D_0051AAC0, 0, 0x100);
     SyncDCache(D_0051AAC0, D_0051AAC0 + 0xFF);
     D_0048C09C = 2;
-    while (sceDbcSendData3(D_00518A08[i].sock, D_0048C09C, &l, &D_00518A40, func_002BB660) != 1);
-    if (func_002BB520(D_00518A08[i].sock)->x8 == 0) return 0;
+    while (sceDbcSendData3(D_00518A08[i].sock, D_0048C09C, &l, &D_00518A40, sceMc2SifCallback) != 1);
+    if (SyncDma(D_00518A08[i].sock)->x8 == 0) return 0;
     return n;
 }

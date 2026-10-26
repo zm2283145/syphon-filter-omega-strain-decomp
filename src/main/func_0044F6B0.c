@@ -1,6 +1,6 @@
 #include "types.h"
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-int func_0044F700();                                  
+int SFOLobbyList_CompactList();                                  
 
 #pragma opt_common_subs off
 void LobbyArray_Free(int arg0) {
@@ -14,6 +14,6 @@ void LobbyArray_Free(int arg0) {
             }
             F_(arg0, 0x4, int) = 0;
         }
-        func_0044F700();
+        SFOLobbyList_CompactList();
     }
 }

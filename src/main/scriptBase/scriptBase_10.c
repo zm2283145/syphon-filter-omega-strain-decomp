@@ -18,7 +18,7 @@
 extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
 
 /* push_back: inserts one value at the end. */
-int func_003D8C30(PtrVec* v, int value) {
+int std_vector_VarDefPtr_push_back(PtrVec* v, int value) {
     return PtrVec_Insert(v, v->data + v->count, 1, value);
 }
 #pragma pop /* merge_units */
@@ -33,12 +33,12 @@ int func_003D8C30(PtrVec* v, int value) {
 int Alloc_Lock(int);                                    
 int Alloc_Unlock(int);                                  
 char * Mem_Alloc(int, int, char *, int);                      
-int func_00290BB0(char *, int);                          
-int func_003D7E90();                                  
-int func_003D8E10(char * , void **);                   
-int func_003D8E30(char * );                            
-int func_003D8E80(char * , int, int);                    
-int func_003D8EF0(char * , int, int);                    
+int cArrayCapacity_ctor(char *, int);                          
+int cScriptBase_checkInitTypes();                                  
+int std_vector_ClassDefPtr_push_back(char * , void **);                   
+int cArray_int_ctor(char * );                            
+int cArray_MemberFuncPtr_ctor(char * , int, int);                    
+int cArray_FieldDefPtr_ctor(char * , int, int);                    
 int strrchr(char * , int);                             
 extern char D_00499C71;
 extern char D_004BD3B0;
@@ -55,7 +55,7 @@ int Script_RegisterType(char * arg0, int arg1, signed char arg2, signed char arg
     char * var_s4;
 
     var_s4 = arg0;
-    func_003D7E90();
+    cScriptBase_checkInitTypes();
     temp_v0 = strrchr(var_s4, 0x3A);
     if (temp_v0 != 0) {
         var_s4 = (char *)(temp_v0 + 1);
@@ -73,9 +73,9 @@ int Script_RegisterType(char * arg0, int arg1, signed char arg2, signed char arg
     }
     g_ProfileLockDepth -= 1;
     if (temp_s0 != NULL) {
-        func_003D8EF0(temp_s0 + 4, func_00290BB0(sl.f64, 5), 1);
-        func_003D8E80(temp_s0 + 0x14, func_00290BB0(&sl.f60, 5), 1);
-        func_003D8E30(temp_s0 + 0x24);
+        cArray_FieldDefPtr_ctor(temp_s0 + 4, cArrayCapacity_ctor(sl.f64, 5), 1);
+        cArray_MemberFuncPtr_ctor(temp_s0 + 0x14, cArrayCapacity_ctor(&sl.f60, 5), 1);
+        cArray_int_ctor(temp_s0 + 0x24);
         F_(temp_s0, 0x0, int) = (int)(var_s4);
         F_(temp_s0, 0x34, int) = arg1;
         F_(temp_s0, 0x3C, signed char) = 0;
@@ -88,7 +88,7 @@ int Script_RegisterType(char * arg0, int arg1, signed char arg2, signed char arg
     sl.f6C = temp_s0;
     F_(temp_s0, 0x38, int) = (int) (F_(D_00554F28, 0x4, int) + 0x64);
     F_(sl.f6C, 0x44, signed char) = 1;
-    func_003D8E10(D_00554F28, &sl.f6C);
+    std_vector_ClassDefPtr_push_back(D_00554F28, &sl.f6C);
     return F_(sl.f6C, 0x38, int);
 }
 #pragma pop

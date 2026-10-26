@@ -8,6 +8,6 @@
 #include "loose02_types.h"
 
 /* Scales a value by the owner's scale factor. */
-float func_003182E0(ParamOwner* self, float* value) {
+float VoiceFontVoicing(ParamOwner* self, float* value) {
     return *value * self->scale;
 }

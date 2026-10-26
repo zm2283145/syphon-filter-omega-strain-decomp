@@ -113,10 +113,10 @@ typedef struct { int x0; int* args; char pad[0x44]; } SrvCtx;
 typedef struct { char pad[0x14]; void* init; unsigned char pending; char pad19[3]; void* owner; } SrvVar;
 typedef struct { int x0; int count; SrvVar** vars; } SrvScript;
 extern char D_00555070[];
-extern void func_003D5EB0(SrvCtx*, void*, SrvScript*, void*);
-extern void func_003E03F0(void*, void*);
+extern void FuncDef_ctor_charP_voidP_intP(SrvCtx*, void*, SrvScript*, void*);
+extern void cScriptInterpreter_setInstructionPtr(void*, void*);
 extern void Script_Interpret(void*, SrvCtx*);
-extern void func_003D5DD0(SrvCtx*, int);
+extern void FuncDef_dtor(SrvCtx*, int);
 #pragma opt_strength_reduction off
 void Script_RunVarInitializers(SrvScript* s)
 {
@@ -131,12 +131,12 @@ void Script_RunVarInitializers(SrvScript* s)
             if (init) {
                 SrvCtx ctx;
                 int arg[1];
-                func_003D5EB0(&ctx, "bogusfoobar", s, init);
+                FuncDef_ctor_charP_voidP_intP(&ctx, "bogusfoobar", s, init);
                 arg[0] = 4;
                 ctx.args = arg;
-                func_003E03F0(D_00555070, init);
+                cScriptInterpreter_setInstructionPtr(D_00555070, init);
                 Script_Interpret(D_00555070, &ctx);
-                func_003D5DD0(&ctx, -1);
+                FuncDef_dtor(&ctx, -1);
             }
         }
     }

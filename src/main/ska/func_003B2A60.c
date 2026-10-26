@@ -38,7 +38,7 @@ struct SkaClip : ClipBase {
 };
 extern "C" float Math_Sin(float);
 extern "C" float Math_Cos(float);
-extern "C" SkaClip* func_003B2A60(SkaClip* self, SkaClip* src, int a, const float* ang, signed char s)
+extern "C" SkaClip* cSkaAnim_ctor_cSkaAnimR_eModifier_cEulerAngleTR_eAxisOfMotion(SkaClip* self, SkaClip* src, int a, const float* ang, signed char s)
 {
     float hx = 0.5f * ang[0];
     float hy = 0.5f * ang[1];

@@ -7,7 +7,7 @@ extern "C" {
 void operator_delete(void* allocation);
 void* String_Dtor(void* self, short deleteFlag);
 }
-extern "C" void* func_00361DF0(void* self, short deleteFlag)
+extern "C" void* GuiAgentInfo_AgentInfo_dtor(void* self, short deleteFlag)
 {
     if (self) {
         char* a = (char*)self + 0x3C;

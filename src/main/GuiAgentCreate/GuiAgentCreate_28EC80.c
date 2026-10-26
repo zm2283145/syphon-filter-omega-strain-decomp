@@ -77,13 +77,13 @@ void* GuiWidget_FindChildByName(Self_0028ED60* self, char* name);
 #endif /* merge_units */
 #define GuiWidget_FindChildByName(a0, a1) ((void *)GuiWidget_FindChildByName((S_28EC80 *)(a0), (a1))) /* merge_units */
 
-void func_00290BC0(void);
+void ManRenderWrapper(void);
 #if 0 /* merge_units */
 void GuiTextWidget_SetText(W_0028ED60* w, char* s, int a);
 #endif /* merge_units */
 #define GuiTextWidget_SetText(a0, a1, a2) (GuiTextWidget_SetText((void *)(a0), (a1), (a2))) /* merge_units */
 
-void func_002888C0(Aw_0028ED60* a);
+void std_vector_charPtr_ctor_void_2(Aw_0028ED60* a);
 #if 0 /* merge_units */
 void* Agent_GetSelected(void* a, int b);
 #endif /* merge_units */
@@ -91,7 +91,7 @@ void* Agent_GetSelected(void* a, int b);
 
 void AgentData_FilterAwards(void* ag, Aw_0028ED60* a);
 void AgentPartCache_Lock(void* p, Aw_0028ED60* a);
-void func_002887C0(Aw_0028ED60* a, int flags);
+void std_vector_charPtr_dtor_void_2(Aw_0028ED60* a, int flags);
 }
 static inline W_0028ED60* FindAs_0028ED60(Self_0028ED60* self, char* name, char* type)
 {
@@ -106,7 +106,7 @@ extern "C" void GuiAgentCreate_Init(Self_0028ED60* self)
     w = FindAs_0028ED60(self, "playercharacter", D_004A9BF0);
     if (w) {
         D_00506390 = self;
-        w->f48 = (void*)func_00290BC0;
+        w->f48 = (void*)ManRenderWrapper;
     }
     self->f48 = GuiWidget_FindChildByName(self, "createagent_grp");
     self->f4C = FindAs_0028ED60(self, D_004A9988, D_004A9870);
@@ -116,11 +116,11 @@ extern "C" void GuiAgentCreate_Init(Self_0028ED60* self)
     self->f54 = FindAs_0028ED60(self, "beard", D_004A9870);
     if (self->f5C)
         GuiTextWidget_SetText(self->f5C, D_004A9A40, 0);
-    func_002888C0(&a);
+    std_vector_charPtr_ctor_void_2(&a);
     a.bC = 1;
     AgentData_FilterAwards(Agent_GetSelected(g_Game, -1), &a);
     AgentPartCache_Lock(g_AgentPartCache, &a);
-    func_002887C0(&a, -1);
+    std_vector_charPtr_dtor_void_2(&a, -1);
 }
 #undef GuiWidget_FindChildByName /* merge_units */
 #undef GuiTextWidget_SetText /* merge_units */
@@ -136,7 +136,7 @@ static inline void merge_flush_func_0028ED60(void) {}
 #include "base_dtor_chain.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_0028EFC0, func_002886D0)
+DEFINE_BASE_DTOR_CHAIN(func_0028EFC0, std_vector_imp_charPtr_1_dtor_void_2)
 #pragma pop /* merge_units */
 /* merge_units: end func_0028EFC0 */
 

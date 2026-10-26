@@ -4,4 +4,4 @@
 #include "guarded_allocate.h"
 
 /* Allocate under the allocator guard. */
-DEFINE_GUARDED_ALLOCATE(func_00398320)
+DEFINE_GUARDED_ALLOCATE(opNewArray)

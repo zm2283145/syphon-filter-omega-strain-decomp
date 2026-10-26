@@ -6,27 +6,27 @@
 
 /* merge_units: begin func_00306158 */
 typedef struct { int sec; int usec; } ScfTime;
-extern int func_003064E0(void *in, ScfTime *tv);
-#define SCF_TIME_CONV(name, conv) extern int conv(ScfTime *tv, void *out); int name(void *in, void *out) { ScfTime tv; int ret = 2; if (in == 0) return ret; if (out == 0) return ret; ret = func_003064E0(in, &tv); if (ret != 0) return ret; return conv(&tv, out); }
-SCF_TIME_CONV(func_00306158, func_003063D0)
+extern int rt_time_elapsed_timestamp(void *in, ScfTime *tv);
+#define SCF_TIME_CONV(name, conv) extern int conv(ScfTime *tv, void *out); int name(void *in, void *out) { ScfTime tv; int ret = 2; if (in == 0) return ret; if (out == 0) return ret; ret = rt_time_elapsed_timestamp(in, &tv); if (ret != 0) return ret; return conv(&tv, out); }
+SCF_TIME_CONV(rt_time_elapsed_msecs, rt_time_timestamp_to_msecs)
 /* merge_units: end func_00306158 */
 
 /* merge_units: begin func_003061A8 */
-SCF_TIME_CONV(func_003061A8, func_00306440)
+SCF_TIME_CONV(rt_time_elapsed_usecs, rt_time_timestamp_to_usecs)
 /* merge_units: end func_003061A8 */
 
 /* merge_units: begin func_003061F8 */
-extern int func_003060C0(ScfTime *tv);
-extern int func_003060F0(ScfTime *tv, unsigned int *elapsed);
-int func_003061F8(unsigned int ms)
+extern int rt_time_start(ScfTime *tv);
+extern int rt_time_elapsed(ScfTime *tv, unsigned int *elapsed);
+int rt_time_delay(unsigned int ms)
 {
     ScfTime tv;
     unsigned int el = 0;
     int r;
-    r = func_003060C0(&tv);
+    r = rt_time_start(&tv);
     if (r != 0) return r;
     while (el < ms) {
-        r = func_003060F0(&tv, &el);
+        r = rt_time_elapsed(&tv, &el);
         if (r != 0) return r;
     }
     return 0;

@@ -15,7 +15,7 @@
 #pragma push /* merge_units */
 typedef struct { char c[128]; } Name_198760;
 typedef struct { int a; Name_198760 name; short s84; int i88; int i8C; int i90; unsigned char b94; int i98; } S_198760;
-S_198760* func_00198760(S_198760* d, S_198760* s); /* gsynth: defined below */typedef struct { int a[4]; } C5Dq;
+S_198760* cFileMan_opAssign(S_198760* d, S_198760* s); /* gsynth: defined below */typedef struct { int a[4]; } C5Dq;
 typedef struct { char pad[0x3C]; C5Dq sel; } C5Motion;
 float MotionCtrl_GetSelectorMetric(C5Motion* m, void* arg); /* gsynth: defined below */
 /* Actor_UpdateAnimationEvents (0x00197E00), mw38 MATCH.
@@ -33,15 +33,15 @@ extern "C" {
 void Resource_Construct(void* s);
 void FileMan_Release(void* s, int flag);
 #if 0 /* merge_units */
-void* func_00198760(void* d, const void* s);
+void* cFileMan_opAssign(void* d, const void* s);
 #endif /* merge_units */
-#define func_00198760(a0, a1) ((void *)func_00198760((S_198760 *)(a0), (S_198760 *)(a1))) /* merge_units */
+#define cFileMan_opAssign(a0, a1) ((void *)cFileMan_opAssign((S_198760 *)(a0), (S_198760 *)(a1))) /* merge_units */
 
 void Vec4_Copy(void* d, const void* s);
 }
 struct FStr {
     int a; char d[0x98];
-    FStr& operator=(const FStr& o) { func_00198760(this, &o); return *this; }
+    FStr& operator=(const FStr& o) { cFileMan_opAssign(this, &o); return *this; }
 };
 struct H { int v; };
 struct HObj { int q[3]; int id; };
@@ -318,7 +318,7 @@ extern "C" void Actor_UpdateAnimationEvents(ActorX* a)
         }
     }
 }
-#undef func_00198760 /* merge_units */
+#undef cFileMan_opAssign /* merge_units */
 #undef MotionCtrl_GetSelectorMetric /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00197E00(void) {}
@@ -327,7 +327,7 @@ static inline void merge_flush_func_00197E00(void) {}
 
 /* merge_units: begin func_00198760 */
 #pragma push /* merge_units */
-S_198760* func_00198760(S_198760* d, S_198760* s)
+S_198760* cFileMan_opAssign(S_198760* d, S_198760* s)
 {
     d->a = s->a;
     d->name = s->name;
@@ -354,7 +354,7 @@ extern void func_00198BE0(C5DqIt* out, C5Dq* d);
 extern int func_00198880(C5DqIt* a, C5DqIt* b);
 extern void* func_00198BD0(C5DqIt* it);
 extern void* func_00198BC0(void* p);
-extern float func_00198900(void* p, void* arg);
+extern float cSkaPlaybackList_FreezePlayback_cSkaPlaybackGroupIdR_bool(void* p, void* arg);
 extern void DequeIter_Next(C5DqIt* it);
 float MotionCtrl_GetSelectorMetric(C5Motion* m, void* arg) {
     float sum = 0.0f;
@@ -363,7 +363,7 @@ float MotionCtrl_GetSelectorMetric(C5Motion* m, void* arg) {
     func_00198C40(&it, &m->sel);
     func_00198BE0(&end, &m->sel);
     while (func_00198880(&it, &end)) {
-        sum += func_00198900(func_00198BC0(func_00198BD0(&it)), arg);
+        sum += cSkaPlaybackList_FreezePlayback_cSkaPlaybackGroupIdR_bool(func_00198BC0(func_00198BD0(&it)), arg);
         DequeIter_Next(&it);
     }
     return sum;

@@ -61,7 +61,7 @@ void* Mem_Alloc(int heap, int size, char* file, int line);
 
 void NetStream_ReadObject(void* out);
 void* cTank_SetTurret(void* mem, void* a, void* b, void* c, int d, void* t);
-void func_00284870(void* t);
+void cTurret_NetUnpack(void* t);
 }
 typedef struct { char pad[0x144]; float f; } O_002842F0;
 inline void* operator new(unsigned int, void* p) { return p; }
@@ -73,7 +73,7 @@ static inline char R8_002842F0(void) { return *D_005061D0++; }
 static inline void* New_002842F0(int size, int line) { AllocGuard g; return Mem_Alloc(0, size, D_004A93D0, line); }
 static inline void Del_002842F0(void* p, int line) { AllocGuard g; Mem_Free(0, p, D_004A93D0, line); }
 #pragma opt_propagation off
-extern "C" void func_002842F0(T_002842F0* t) {
+extern "C" void cTank_NetUnpack(T_002842F0* t) {
     void* x0; void* x1; void* x2; void* x3; void* x4; void* x5; void* x6;
     char n = R8_002842F0();
     unsigned char hasTurret = R8_002842F0() != 0;
@@ -97,7 +97,7 @@ extern "C" void func_002842F0(T_002842F0* t) {
         m = New_002842F0(0x70, 0x1EA);
         if (m) m = cTank_SetTurret(m, a, b, c, 0, t);
         t->turret = m;
-        func_00284870(t->turret);
+        cTurret_NetUnpack(t->turret);
     }
 }
 #undef Mem_Alloc /* merge_units */

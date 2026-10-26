@@ -19,14 +19,14 @@ struct CxCaList {int count;void*unused;CxCaLink*head;};
 struct CxCaManager {char pad[0x2C];CxCaList cache;};
 struct CxCaIt {CxCaLink*link;CxCaReq*Req(){return link->req;}};
 extern "C" {
-void func_0015F770(CxCaIt*,CxCaList*);
-void func_0015F760(CxCaIt*,CxCaIt*);
-void func_0015F750(CxCaIt*,CxCaList*);
+void std_list_cPathSystemRequestPtr_begin_void(CxCaIt*,CxCaList*);
+void cLListIterator_cPathSystemRequestPtr_ctor(CxCaIt*,CxCaIt*);
+void std_list_cPathSystemRequestPtr_end_void(CxCaIt*,CxCaList*);
 }
 static inline CxCaActor* CxCa_Get(CxCaReq*req){bool isNull;bool ok;CxCaActor*actor;actor=req->actor;isNull=!actor;ok=true;if(!isNull)if(actor->serial!=req->serial)ok=false;return ok?actor:0;}
-static inline void CxCa_Begin0(CxCaIt*out,CxCaList*l){CxCaIt temp;func_0015F770(&temp,l);func_0015F760(out,&temp);}
+static inline void CxCa_Begin0(CxCaIt*out,CxCaList*l){CxCaIt temp;std_list_cPathSystemRequestPtr_begin_void(&temp,l);cLListIterator_cPathSystemRequestPtr_ctor(out,&temp);}
 static inline CxCaIt CxCa_Begin(CxCaList*l){CxCaIt out;CxCa_Begin0(&out,l);return out;}
-static inline void CxCa_End0(CxCaIt*out,CxCaList*l){CxCaIt temp;func_0015F750(&temp,l);func_0015F760(out,&temp);}
+static inline void CxCa_End0(CxCaIt*out,CxCaList*l){CxCaIt temp;std_list_cPathSystemRequestPtr_end_void(&temp,l);cLListIterator_cPathSystemRequestPtr_ctor(out,&temp);}
 static inline CxCaLink* CxCa_End(CxCaList*l){CxCaIt out;CxCa_End0(&out,l);return out.link;}
 /* VU equality uses its MAC flags after a four-cycle latency. */
 static inline int CxCa_Equal(CxCaV4*a,CxCaV4*b){
@@ -87,7 +87,7 @@ extern char g_NpcRouteMgr[];
 extern void* Service_Lookup(void*, void*);
 extern CxPathNode* NpcPath_GetNode(int);
 extern int NpcRoute_Request(void*,void*,int,int,int,int,int,int,long long);
-int func_0015F9B0(CxPathFollower* self,int start,int destination,int useRegion) {
+int cPathNavigator_Request_int_int_cVectorP(CxPathFollower* self,int start,int destination,int useRegion) {
     int region=-1;
     void* manager=Service_Lookup(g_Game,g_NpcRouteMgr);
     if(useRegion && destination>=0) region=NpcPath_GetNode(destination)->region;

@@ -1,4 +1,4 @@
-// func_001828E0: transform box by inverse node/transform matrices, union results.
+// nCollision_GetTransformedCollectorObject_RelativeToObjectWithXform_cBoxR_cBoxR_cGOBJP_cXformP: transform box by inverse node/transform matrices, union results.
 // GQ = lq/sq 128-bit copy idiom (asm only to pin register choice).
 #pragma cplusplus on
 #include "types.h"
@@ -85,7 +85,7 @@ static inline void BoxUnion(Box* out, Box* b)
     }
 }
 
-extern "C" void func_001828E0(Box* out, Box* in, Owner* o, Xf* xf)
+extern "C" void nCollision_GetTransformedCollectorObject_RelativeToObjectWithXform_cBoxR_cBoxR_cGOBJP_cXformP(Box* out, Box* in, Owner* o, Xf* xf)
 {
     Box tmp;
     M44 m1, m2, m3;

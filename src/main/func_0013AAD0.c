@@ -12,7 +12,7 @@ void LosResult_SetStatus(LosResult* self, char value) {
 }
 
 /* Clear flag bytes +0x40/+0x42 and words +0x60/+0x64. */
-Unk0013AAE0* func_0013AAE0(Unk0013AAE0* self) {
+Unk0013AAE0* cCollisionFace_ctor_void(Unk0013AAE0* self) {
     self->unk40 = 0;
     self->unk42 = 0;
     self->unk60 = 0;

@@ -7,7 +7,7 @@
 #include "types.h"
 
 /* Swaps the contents of two vectors. */
-void func_00241A50(PtrVec* a, PtrVec* b) {
+void std_swap_vectordeleterR_vectordeleterR_21(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;
         int* p;
@@ -23,14 +23,14 @@ void func_00241A50(PtrVec* a, PtrVec* b) {
     }
 }
 
-void func_00241A90(char* self) {
+void std_vector_deleter_FloatKey_clear(char* self) {
     *(int*)(self + 4) = 0;
 }
 
-void func_00241AA0(char* self) {
+void std_vector_deleter_VectorKey_clear(char* self) {
     *(int*)(self + 4) = 0;
 }
 
-void func_00241AB0(char* self) {
+void std_vector_deleter_VisKey_clear(char* self) {
     *(int*)(self + 4) = 0;
 }

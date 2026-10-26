@@ -6,6 +6,6 @@
 #include "types.h"
 
 /* Clear the element count. */
-void func_001C4F10(PtrVec* v) {
+void std_vector_deleter_cString4_clear(PtrVec* v) {
     v->count = 0;
 }

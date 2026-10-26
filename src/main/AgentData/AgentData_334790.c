@@ -64,7 +64,7 @@ extern char *D_004926D0;
 extern char D_005329A0[];
 extern char D_004B92B0[];
 void FrontEnd_FlushMessages(void *p);
-int func_00334780(void);
+int cBitArray_224_NumChunks(void);
 int AgentFile_EncodeName(const char *in, char *out, int digit, unsigned int max);
 int MemCardWrap_Write(Mc4110 *mc, char *name, void *buf, int size, int flag);
 int MemCardWrap_Read(Mc4110 *mc, char *name, void *buf, int size);
@@ -135,7 +135,7 @@ extern "C" int AgentData_Load(A4110 *self, char *name, int digit)
             }
             if (*(int *)self->pad00 >= 0xB) RBuf4110(self->stats, 0x38);
             else RBuf4110(self->stats, 0x1C);
-            for (a = 0; a < func_00334780(); a++) self->objectiveBits[a] = RInt4110();
+            for (a = 0; a < cBitArray_224_NumChunks(); a++) self->objectiveBits[a] = RInt4110();
             RBuf4110(self->name8AC, 0x10);
             RBuf4110(self->b8CC, 0x10);
             RBuf4110(self->b8BC, 0x10);
@@ -429,7 +429,7 @@ extern char D_00532998[];
 extern char D_004B92B8[];
 extern char D_004B92C0[];
 extern V D_005329F0;
-E **func_003305C0(V *v);
+E **std_vector_deleter_Record_data(V *v);
 void *Loc_GetStoredKey(void *name);
 int Awards_MatchKeyPattern(void *agent, char *a, void *name, int c);
 unsigned char AgentData_IsObjectiveComplete(void *agent, void *name);
@@ -437,7 +437,7 @@ void func_00299500(IV *v);
 char *Loc_LookupText(void *name);
 int Loc_FindKeyThunk(int k);
 int Awards_ResolveUnlock(int k);
-void func_00337F90(IV *v, Item *pos, int n, Item *val);
+void std_vector_imp_tRequirementInfo_insert(IV *v, Item *pos, int n, Item *val);
 }
 static inline bool Neq(E *a, E *b) { return !(a == b); }
 extern "C" void AgentData_GetLevelObjectives(void *agent, char *s, IV *out)
@@ -464,8 +464,8 @@ extern "C" void AgentData_GetLevelObjectives(void *agent, char *s, IV *out)
     D_00532990[i] = 0;
     sprintf(D_00532998, D_004B92B8, D_00532990);
     pat = D_00532998;
-    it = *func_003305C0(&D_005329F0);
-    end = *func_003305C0(&D_005329F0) + D_005329F0.count;
+    it = *std_vector_deleter_Record_data(&D_005329F0);
+    end = *std_vector_deleter_Record_data(&D_005329F0) + D_005329F0.count;
     for (; Neq(it, end); it++) {
         name = Loc_GetStoredKey(it->name);
         if (Awards_MatchKeyPattern(agent, pat, name, '*') && !Awards_MatchKeyPattern(agent, D_004B92C0, name, '*')) {
@@ -479,7 +479,7 @@ extern "C" void AgentData_GetLevelObjectives(void *agent, char *s, IV *out)
             item.a = 0;
             item.b = 0;
             item.c = 0;
-            func_00337F90(out, &out->data[out->count], 1, &item);
+            std_vector_imp_tRequirementInfo_insert(out, &out->data[out->count], 1, &item);
         }
     }
 }
@@ -518,8 +518,8 @@ extern "C" void AgentData_CountObjectives(void *agent, char *s, Stats *st)
     D_00532990[i] = 0;
     sprintf(D_00532998, D_004B92B8, D_00532990);
     pat = D_00532998;
-    it = *func_003305C0(&D_005329F0);
-    end = *func_003305C0(&D_005329F0) + D_005329F0.count;
+    it = *std_vector_deleter_Record_data(&D_005329F0);
+    end = *std_vector_deleter_Record_data(&D_005329F0) + D_005329F0.count;
     for (; Neq(it, end); it++) {
         void *name = Loc_GetStoredKey(it->name);
         if (Awards_MatchKeyPattern(agent, pat, name, '*') && !Awards_MatchKeyPattern(agent, D_004B92C0, name, '*')) {

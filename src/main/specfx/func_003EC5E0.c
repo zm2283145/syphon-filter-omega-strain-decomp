@@ -12,9 +12,9 @@ public:
 struct NC5E0 { int m0; NC5E0* next; OC5E0** data; };
 extern "C" {
 void List_Begin(int* out, void* list);
-void func_003EC6B0(NC5E0** out, int* in);
-void func_003EC6A0(int* out, void* list);
-void func_003EC690(NC5E0** out, int* in);
+void std_list_tItemPtr_generic_iterator_ctor(NC5E0** out, int* in);
+void std_list_tItemPtr_end(int* out, void* list);
+void cLListIterator_tItemPtr_ctor(NC5E0** out, int* in);
 }
 extern "C" void Effect_Draw(void* self)
 {
@@ -24,7 +24,7 @@ extern "C" void Effect_Draw(void* self)
     int t2;
     NC5E0* n;
     List_Begin(&t1, self);
-    func_003EC6B0(&it, &t1);
-    for (n = it; func_003EC6A0(&t2, self), func_003EC690(&e, &t2), n != e; n = n->next)
+    std_list_tItemPtr_generic_iterator_ctor(&it, &t1);
+    for (n = it; std_list_tItemPtr_end(&t2, self), cLListIterator_tItemPtr_ctor(&e, &t2), n != e; n = n->next)
         (*n->data)->v4();
 }

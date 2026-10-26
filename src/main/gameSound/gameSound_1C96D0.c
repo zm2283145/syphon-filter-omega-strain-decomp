@@ -118,10 +118,10 @@ extern Arc1C98D0* Archive_Open(void* a, char* name, int b, int c);
 extern char* Loc_GetLanguageSuffix(void);
 extern int Hog_FindFileNoCase(Arc1C98D0* a, char* name, int c);
 extern int Hog_GetMemberOffset(Arc1C98D0* a, int idx);
-extern void func_003A7330(int, int, int);
+extern void snd_SetVAGStreamChannelRange(int, int, int);
 extern void snd_InitVAGStreaming(int, int, int, int);
-extern void func_003A8240(void);
-extern int func_003F9600(void* a, char* name);
+extern void snd_ResolveBankXREFS(void);
+extern int cHogList_Get(void* a, char* name);
 extern int snd_BankLoadByLoc(int loc, int size);
 extern signed char D_0048A330;
 
@@ -135,9 +135,9 @@ int SoundMgr_LoadLevel(char* arg0) {
 
     snd_InitVAGStreaming(4, 0xE000, 1, 1);
     D_0048A330 = 1;
-    func_003A7330(1, 0, 1);
-    func_003A7330(2, 2, 2);
-    func_003A7330(0xE, 2, 2);
+    snd_SetVAGStreamChannelRange(1, 0, 1);
+    snd_SetVAGStreamChannelRange(2, 2, 2);
+    snd_SetVAGStreamChannelRange(0xE, 2, 2);
     sprintf(snd, "%s\\%s\\SND.HOG", D_0048B2F8, g_LevelDirName);
     sprintf(vag, "%s\\%s\\SNDVAG.HOG%s", D_0048B2F8, g_LevelDirName, Loc_GetLanguageSuffix());
     sprintf(vagloc, "ZMEDIA\\SNDVAG%s.HOG", Loc_GetLanguageSuffix());
@@ -158,13 +158,13 @@ int SoundMgr_LoadLevel(char* arg0) {
         }
         ArchiveList_CloseNamed(fs, snd);
         Archive_Open(fs, vag, 1, 0);
-        F_(arg0, 0x54A8, int) = func_003F9600(fs, vag);
+        F_(arg0, 0x54A8, int) = cHogList_Get(fs, vag);
         Archive_Open(fs, vagloc, 1, 0);
-        F_(arg0, 0x54AC, int) = func_003F9600(fs, vagloc);
+        F_(arg0, 0x54AC, int) = cHogList_Get(fs, vagloc);
         Archive_Open(fs, music, 1, 0);
-        F_(arg0, 0x54B0, int) = func_003F9600(fs, music);
+        F_(arg0, 0x54B0, int) = cHogList_Get(fs, music);
     }
-    func_003A8240();
+    snd_ResolveBankXREFS();
     while (snd_FlushSoundCommands()) {
     }
     return 1;
@@ -179,7 +179,7 @@ static inline void merge_flush_func_001C98D0(void) {}
 #define NULL 0
 #pragma mpwc_relax on
 int Global_SetReverb(int, int, int);                        
-int func_003A6D10(int, int);                              
+int snd_SetReverbType(int, int);                              
 int snd_SetPlaybackMode(int, int);                          
 int snd_SetMasterVolumeDucker(int, int *);                          
 extern char * g_OptionsRecord;
@@ -224,7 +224,7 @@ void SoundMgr_Init(char * arg0) {
     F_(temp_v0, 0x244, signed char) = 0;
     F_(temp_v0, 0x240, int) = 0;
     snd_SetPlaybackMode(F_(g_OptionsRecord, 0x14, int), var_a1);
-    func_003A6D10(1, 4);
+    snd_SetReverbType(1, 4);
     Global_SetReverb(1, 0xB21, 0xB21);
     sl.f10 = 2;
     sl.f24[0] = 0;

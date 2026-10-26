@@ -8,7 +8,7 @@ extern void cNPC_RequestAction(Obj2D3* self, int a, int b);
 extern void NetEvent_Send(void* owner, int type, int size, unsigned char a, int b, int c, int d);
 
 /* Applies the change locally (unless suppressed by the global flags) and broadcasts it. */
-void func_002D3900(Obj2D3* self, int a, int b)
+void cNetNPC_RequestAction(Obj2D3* self, int a, int b)
 {
     if (g_IsMultiplayer ? D_005721C0 : 1)
         cNPC_RequestAction(self, a, b);

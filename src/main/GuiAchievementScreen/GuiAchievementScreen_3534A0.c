@@ -150,7 +150,7 @@ extern void String_Dtor(String* s, int flag);
 
 
 /* Sets the kind, name and two parameters of the object. */
-void func_00353790(Obj353* o, char kind, const char* name, int a, int b)
+void GuiAchievementScreen_SetInfo(Obj353* o, char kind, const char* name, int a, int b)
 {
     String tmp;
     o->kind = kind;
@@ -177,13 +177,13 @@ void func_00353790(Obj353* o, char kind, const char* name, int a, int b)
 
 extern int Agent_GetSelected(void* agents, int index);
 extern char g_Game[];       /* agent list */
-extern void func_00299510(void*);
+extern void std_vector_deleter_tAchievementInfo_clear(void*);
 extern int AgentData_GetAwardRows(int agent, int a1, void* a2);
 extern void GuiPersonnelScreen_Wake(GuiAchievementScreen*);  /* GuiPersonnelScreen slot 5 */
 
 /* GuiAchievementScreen vtable slot 5: refresh unk6C, pass it with unk7C to the selected agent, then call GuiPersonnelScreen_Wake. */
 void GuiAchievementScreen_Wake(GuiAchievementScreen* self) {
-    func_00299510(self->unk6C);
+    std_vector_deleter_tAchievementInfo_clear(self->unk6C);
     AgentData_GetAwardRows(Agent_GetSelected(g_Game, -1), self->unk7C, self->unk6C);
     GuiPersonnelScreen_Wake(self);
 }

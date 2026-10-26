@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern void func_00392BF0(void*);
+extern void cSKM_GOBJ_Init(void*);
 
 void Npc_ResetTime(void* self) {
-    func_00392BF0(self);
+    cSKM_GOBJ_Init(self);
 }

@@ -13,14 +13,14 @@ extern void Mtx_MakeAxisRotation(M4*, float, float, float, float);
 extern void Event_Construct(Msg* m, void* type);
 extern int TeleportMsg_IsMode3(Msg* m);
 extern void* func_00133EC0(void* obj);
-extern void func_0015A400(V4* out, void* v);
+extern void cVector_Copy_WSet0(V4* out, void* v);
 extern void Vec4_CopyAsPoint(V4* out, void* v);
 extern void Mtx_SetRotationTranslation(void* data, void* obj, V4* v);
 extern void Event_Send(Msg* m, void* target, int immediate);
 extern void cMessage_dtor(Msg* m, int flags);
-void func_00436C00(int* shared);
-int func_004340C0(int* shared, void* id);
-void func_00436BA0(int* shared, short flags);
+void cNPCInfoObject_ctor(int* shared);
+int cNPCInfoObject_IsActiveOnRemote(int* shared, void* id);
+void cNPCInfoObject_dtor(int* shared, short flags);
 void Actor_BasePreLogic(struct Npc* self, float dt);
 void Npc_PreUpdate(struct Npc* self, float dt);
 }
@@ -28,7 +28,7 @@ void Npc_PreUpdate(struct Npc* self, float dt);
 /* Npc_PreUpdate: when a net-owned NPC's target marker is not ready yet and
  * the local record is in sync, teleports the NPC to the marker (angle +
  * position) with a TeleportMsg and pushes the matrix to its model, then runs
- * the base pre-logic. Message/matrix code as in func_002D40A0. */
+ * the base pre-logic. Message/matrix code as in cNetNPC_Activate. */
 typedef struct Tgt { char p0[0x40]; float ang; float px, py, pz; } Tgt;
 struct Slot { char p0[0xB0]; int busy; };
 struct Model { VPAD1(a) virtual void SetMatrix(M4* m); };
@@ -52,9 +52,9 @@ extern "C" void Npc_PreUpdate(Npc* self, float dt)
     if (a && Idle(self)) b = 1;
     if (!b && !self->b14 && self->tgt) {
         int shared;
-        func_00436C00(&shared);
+        cNPCInfoObject_ctor(&shared);
         void* idp = &self->id;
-        if (func_004340C0(&shared, idp)) {
+        if (cNPCInfoObject_IsActiveOnRemote(&shared, idp)) {
             V4 pos;
             float ang;
             M4 mtx;
@@ -83,7 +83,7 @@ extern "C" void Npc_PreUpdate(Npc* self, float dt)
                     m->vtable = D_004D9360;
                     m->b24 = 2;
                     if (TeleportMsg_IsMode3(m)) {
-                        func_0015A400(&a2, func_00133EC0(&mtx));
+                        cVector_Copy_WSet0(&a2, func_00133EC0(&mtx));
                         v = &a2;
                     } else {
                         Vec4_CopyAsPoint(&b2, func_00133EC0(&mtx));
@@ -98,7 +98,7 @@ extern "C" void Npc_PreUpdate(Npc* self, float dt)
             }
             self->model->SetMatrix(&mtx);
         }
-        func_00436BA0(&shared, -1);
+        cNPCInfoObject_dtor(&shared, -1);
     }
     Actor_BasePreLogic(self, dt);
 }

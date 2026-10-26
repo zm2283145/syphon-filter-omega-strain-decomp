@@ -101,7 +101,7 @@ static inline void merge_flush_func_0024FCD0(void) {}
 
 /* merge_units: begin func_0024FD20 */
 #pragma push /* merge_units */
-void func_0024FD20(V4* a, V4* b, V4* c) {
+void cVector_VU0PostRotate(V4* a, V4* b, V4* c) {
     asm {
         lqc2 vf8, 0x0(c)
         lqc2 vf4, 0x0(b)

@@ -30,7 +30,7 @@ AnimEvent* AnimEvent_Copy(AnimEvent* self, AnimEvent* src) {
     return self;
 }
 
-int* func_001ADFE0(int* self, int value) {
+int* cPointer_cSkaNode_ctor_cSkaNodeP(int* self, int value) {
     *self = value;
     return self;
 }

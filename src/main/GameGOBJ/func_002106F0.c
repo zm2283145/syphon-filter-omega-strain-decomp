@@ -3,7 +3,7 @@
 #define NULL 0
 #pragma mpwc_relax on
 int Object_LookupById(int *);                     
-int func_002EB650(void **, int);                    
+int NetGetObject(void **, int);                    
 extern unsigned char D_005723C8;
 
 #pragma push
@@ -16,7 +16,7 @@ void func_002106F0(int d0, int arg1) {
     if (D_005723C8 == 0) {
         D_005723C8 = 1;
     }
-    if (func_002EB650(sl.f38, arg1) == 0) {
+    if (NetGetObject(sl.f38, arg1) == 0) {
         temp_s0 = F_(sl.f38[0], 0x1C, int);
         sl.f34 = F_(temp_s0, 0x0, int);
         temp_v0 = Object_LookupById(&sl.f34);

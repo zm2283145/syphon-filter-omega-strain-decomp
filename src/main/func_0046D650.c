@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046D650(void) {
+int MediusUniqueCallbackGetMyClansRequestHandler(void) {
     return 48;
 }

@@ -13,26 +13,26 @@
 int String_Reserve(char *, int);                           
 int FileMan_LoadMemberSync(char *, int *, int);                     
 char * func_0036DD80(char *);                           
-int func_0036DEC0(char *);                               
+int cFileMan_Close(char *);                               
 int FileMan_FindMember(char *);                             
 int FileMan_Release(char *, int);                            
-int func_0036E4B0(char *, int, int, int);                    
+int cFileMan_ctor_charP_cFileIOP_bool(char *, int, int, int);                    
 extern int D_00543658;
 extern int D_00543660;
 extern unsigned char D_00543668;
 extern char D_00543680;
 extern char D_005436A0;
 
-int func_003CBE90(int arg0) {
+int cSFOini_Load(int arg0) {
     int sp10[40];
 
     if (D_00543668 == 0) {
-        func_0036E4B0(sp10, arg0, 0, 0);
+        cFileMan_ctor_charP_cFileIOP_bool(sp10, arg0, 0, 0);
         if (!(FileMan_FindMember(sp10) & 0xFF)) {
             D_00543660 = F_(func_0036DD80(sp10), 0x2C, int);
             D_00543658 = 0;
             FileMan_LoadMemberSync(sp10, &D_00543658, 0);
-            func_0036DEC0(sp10);
+            cFileMan_Close(sp10);
             D_00543668 = 1;
             String_Reserve(&D_00543680, 0x40);
             String_Reserve(&D_005436A0, 0x40);
@@ -53,9 +53,9 @@ block_5:
 typedef struct { unsigned int word; unsigned int length; char* data; } SBF70L;
 typedef struct { unsigned char isLong : 1; unsigned char len : 7; char buf[11]; } SBF70S;
 typedef struct { union { SBF70L l; SBF70S s; } u; } SBF70;
-extern int func_003CBFB0(const SBF70* self, const char* s, unsigned int pos, unsigned int n);
+extern int std_basic_string_char_char_traits_char_find_charP_uint_uint(const SBF70* self, const char* s, unsigned int pos, unsigned int n);
 static inline unsigned char SBF70_ShortLen(const SBF70* s) { return s->u.s.len; }
-int func_003CBF70(const SBF70* self, const SBF70* str, unsigned int pos)
+int std_basic_string_char_char_traits_char_find_basicstringR_uint(const SBF70* self, const SBF70* str, unsigned int pos)
 {
     const char* d;
     unsigned int n;
@@ -66,14 +66,14 @@ int func_003CBF70(const SBF70* self, const SBF70* str, unsigned int pos)
         d = str->u.l.data;
         n = str->u.l.length;
     }
-    return func_003CBFB0(self, d, pos, n);
+    return std_basic_string_char_char_traits_char_find_charP_uint_uint(self, d, pos, n);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003CBF70 */
 
 /* merge_units: begin func_003CBFB0 */
 #pragma push /* merge_units */
-int func_003CBFB0(const SBF70* self, const char* s, unsigned int pos, unsigned int n)
+int std_basic_string_char_char_traits_char_find_charP_uint_uint(const SBF70* self, const char* s, unsigned int pos, unsigned int n)
 {
     const char* d;
     unsigned int size;
@@ -121,9 +121,9 @@ extern void FileMan_LoadMemberSync(void* src, int* out, int z);
 #define FileMan_LoadMemberSync(a0, a1, a2) ((void)FileMan_LoadMemberSync((char *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_0036DEC0(void* src);
+extern void cFileMan_Close(void* src);
 #endif /* merge_units */
-#define func_0036DEC0(a0) ((void)func_0036DEC0((char *)(a0))) /* merge_units */
+#define cFileMan_Close(a0) ((void)cFileMan_Close((char *)(a0))) /* merge_units */
 
 unsigned char FileMan_LoadFile(TC060* self, void* src)
 {
@@ -131,7 +131,7 @@ unsigned char FileMan_LoadFile(TC060* self, void* src)
         self->mC = FileMan_GetSize(src);
         self->m8 = 0;
         FileMan_LoadMemberSync(src, &self->m8, 0);
-        func_0036DEC0(src);
+        cFileMan_Close(src);
         self->m4 = self->m8;
         self->m0 = 1;
         return 1;
@@ -140,6 +140,6 @@ unsigned char FileMan_LoadFile(TC060* self, void* src)
 }
 #undef FileMan_FindMember /* merge_units */
 #undef FileMan_LoadMemberSync /* merge_units */
-#undef func_0036DEC0 /* merge_units */
+#undef cFileMan_Close /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003CC060 */

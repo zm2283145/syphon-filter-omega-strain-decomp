@@ -52,11 +52,11 @@ extern char D_004DAE10[];
 extern void GuiWidget_Update(Self*, float);
 extern Ent* PlayerSlots_Get(int);
 extern void Player_HandleLeftGame(Ent*);
-extern void func_001B2D20(Ent*);
+extern void cHuman_CheckForChangedWeapons(Ent*);
 extern int Appearance_GetBodyKind(void*);
-extern void func_00391020(void*, int);
+extern void cMan_AddDisguise(void*, int);
 extern void SoundRequest_Ctor(SoundRequest* req, int kind, void* name, int a, int b);
-extern void func_0020F190(SoundMsg* msg, SoundRequest* req, Ent* e);
+extern void cPlaySoundMsg_ctor_netPlaySoundMsgR(SoundMsg* msg, SoundRequest* req, Ent* e);
 extern void Event_Send(SoundMsg* msg, void* target, int flags);
 #if 0 /* merge_units */
 extern void FileMan_Release(void* part, int flags);
@@ -85,7 +85,7 @@ extern "C" void GuiEquipmentModify_Update(Self* self, float dt) {
         e = PlayerSlots_Get(i);
         if (!e) continue;
         if (!e->b14) Player_HandleLeftGame(e);
-        func_001B2D20(e);
+        cHuman_CheckForChangedWeapons(e);
         if (e->f78() == 3) {
             D_00506508++;
             self->hud->flags |= 2;
@@ -99,11 +99,11 @@ extern "C" void GuiEquipmentModify_Update(Self* self, float dt) {
         D_00506518[i] = 1;
         if (self->x80) {
             int a = g_AgentPartCache.t[Appearance_GetBodyKind(e->xA0)][i];
-            if (a) func_00391020(e->x60, a);
+            if (a) cMan_AddDisguise(e->x60, a);
         }
         if (i != 0) {
             SoundRequest_Ctor(&req, 4, D_0048BAA0[i], 0, 0);
-            func_0020F190(&msg, &req, e);
+            cPlaySoundMsg_ctor_netPlaySoundMsgR(&msg, &req, e);
             msg.flag = 1;
             Event_Send(&msg, g_Game, 0);
             msg.vtbl = D_004DAE10;

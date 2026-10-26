@@ -18,9 +18,9 @@
 
 
 extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
-extern OwnedVec* func_003DF3D0(OwnedVec* v);
+extern OwnedVec* std_vector_imp_cObjectId_ctor(OwnedVec* v);
 
-int* func_003DF350(PtrVec* v, int i) {
+int* std_vector_StringPtr_opIndex(PtrVec* v, int i) {
     return v->data + i;
 }
 
@@ -28,17 +28,17 @@ int* Script_GetStringTableEntry(PtrVec* v, int i) {
     return v->data + i;
 }
 
-int* func_003DF370(PtrVec* v, int i) {
+int* cArray_intPtr_opIndex_int_2(PtrVec* v, int i) {
     return v->data + i;
 }
 
 /* push_back: inserts one value at the end. */
-int func_003DF380(PtrVec* v, int value) {
+int std_vector_cGroupPtr_push_back(PtrVec* v, int value) {
     return PtrVec_Insert(v, v->data + v->count, 1, value);
 }
 
-OwnedVec* func_003DF3A0(OwnedVec* v) {
-    func_003DF3D0(v);
+OwnedVec* cArray_cObjectId_ctor(OwnedVec* v) {
+    std_vector_imp_cObjectId_ctor(v);
     v->unk0C = 1;
     return v;
 }
@@ -50,14 +50,14 @@ static inline void merge_flush_func_003DF350(void) {}
 /* merge_units: begin func_003DF3D0 */
 #pragma push /* merge_units */
 /* Clears the three PtrVec words. */
-OwnedVec* func_003DF3D0(OwnedVec* v) {
+OwnedVec* std_vector_imp_cObjectId_ctor(OwnedVec* v) {
     v->unk0 = 0;
     v->count = 0;
     v->data = 0;
     return v;
 }
 
-int* func_003DF3F0(PtrVec* v, int i) {
+int* cArray_FuncDefPtr_opIndex(PtrVec* v, int i) {
     return v->data + i;
 }
 /* merge_units: generate this block's code under its own pragmas */

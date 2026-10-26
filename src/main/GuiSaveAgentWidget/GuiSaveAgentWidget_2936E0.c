@@ -22,7 +22,7 @@ extern int GuiWidget_BaseWake(GuiWidget* self);
 extern void GuiWidget_ctor(GuiWidget* self);
 
 /* GuiSaveAgentWidget vtable slot 5: own update, then the base widget's. */
-int func_002936E0(GuiSaveAgentWidget* self) {
+int GuiAgentDirectoryWidget_onWake(GuiSaveAgentWidget* self) {
     AgentOpen_BuildSlotList(self);
     return GuiWidget_BaseWake(&self->base.base);
 }
@@ -46,7 +46,7 @@ GuiSaveAgentWidget* GuiSaveAgentWidget_ctor(GuiSaveAgentWidget* self, unsigned c
 #include "vtable_base_dtor.h"
 
 /* Derived destructor: restore vtable, run base destructor, optionally delete. */
-DEFINE_VTABLE_BASE_DTOR(func_00293770, D_004E1220, GuiWidget_Destroy)
+DEFINE_VTABLE_BASE_DTOR(GuiSaveAgentWidget_dtor, D_004E1220, GuiWidget_Destroy)
 #pragma pop /* merge_units */
 /* merge_units: end func_00293770 */
 
@@ -63,7 +63,7 @@ extern "C" void GuiAgentLoad_Wake();
 extern "C" void GuiAgentLoad_Update();
 extern "C" void GuiAgentLoad_GetClassName();
 extern "C" void GuiAgentLoad_IsType();
-extern "C" void func_00293890();
+extern "C" void GuiSaveAgentWidget_SaveDone();
 extern "C" void GuiWidget_FocusPrev();
 extern "C" void GuiWidget_FocusNext();
 extern "C" void GuiWidget_FocusLast();
@@ -97,6 +97,6 @@ extern "C" Vtable3Object* GuiAgentLoad_dtor(Vtable3Object* self, short deleteFla
     }
     return self;
 }
-void * const D_004DD400[24] = { (void*)0x0, (void*)0x0, (void*)GuiAgentLoad_dtor, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiAgentLoad_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiAgentLoad_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiAgentLoad_Update, (void*)GuiAgentLoad_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiAgentLoad_GetClassName, (void*)GuiAgentLoad_IsType, (void*)func_00293890 };
+void * const D_004DD400[24] = { (void*)0x0, (void*)0x0, (void*)GuiAgentLoad_dtor, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiAgentLoad_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiAgentLoad_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiAgentLoad_Update, (void*)GuiAgentLoad_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiAgentLoad_GetClassName, (void*)GuiAgentLoad_IsType, (void*)GuiSaveAgentWidget_SaveDone };
 #pragma pop /* merge_units */
 /* merge_units: end func_002937D0 */

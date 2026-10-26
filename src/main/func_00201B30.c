@@ -6,9 +6,9 @@
 
 #include "types.h"
 
-extern int func_00201B60(int, int);
+extern int std_vector_imp_cSkaBlendSequenceItem_opAssign(int, int);
 
-int func_00201B30(int a0, int a1) {
-    func_00201B60(a0, a1);
+int std_vector_cSkaBlendSequenceItem_opAssign(int a0, int a1) {
+    std_vector_imp_cSkaBlendSequenceItem_opAssign(a0, a1);
     return a0;
 }

@@ -42,7 +42,7 @@ int String_Dtor(int, int);
                             
 int operator_delete(int);                             
 
-int func_00267740(int arg0, long long arg1) {
+int cMaterialProperties_MatPropInfo_dtor(int arg0, long long arg1) {
     int temp_a0;
     int temp_a0_2;
 

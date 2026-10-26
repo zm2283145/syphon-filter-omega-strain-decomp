@@ -19,7 +19,7 @@
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-DEFINE_TREE_ERASE3(func_003FC240, 0xC, func_003FC810, func_003FC7F0, func_003FC800, func_003FC750, func_003FC6A0, D_004BE3A0, 0x64)
+DEFINE_TREE_ERASE3(std_tree_pair_int_value_compare_cAllocator_pair_destroy_nodeP_3, 0xC, func_003FC810, func_003FC7F0, cAllocator_pair_int_destroy_pairP_2, cAllocator_node_deallocate_nodeP_uint_7, opDelete_nodeP_int_bool_charP_etc_6, D_004BE3A0, 0x64)
 #pragma pop /* merge_units */
 /* merge_units: end func_003FC240 */
 
@@ -83,7 +83,7 @@ char D_004BE370[] = "tree::insert length error\n";
 extern "C" {
 char D_004BE390[] = "allocator.hh";
 }
-DEFINE_TREE_INSERT_V8X(FrameTree_Insert_3FC520, TIV_003FC520, D_004BE370, D_004BE390, 0x5C, func_0013CD40)
+DEFINE_TREE_INSERT_V8X(FrameTree_Insert_3FC520, TIV_003FC520, D_004BE370, D_004BE390, 0x5C, std_red_black_tree_1_balance_insert)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003FC520(void) {}
 #pragma pop /* merge_units */

@@ -7,6 +7,6 @@
 #include "loose03_types.h"
 
 /* GIF/VIF style tag: 0x11004000 | (count << 4). */
-int func_003C6420(int a0, int count) {
+int cVU0Man_GetWritableMemory(int a0, int count) {
     return (count << 4) | 0x11004000;
 }

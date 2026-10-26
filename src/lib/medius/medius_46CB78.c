@@ -8,7 +8,7 @@
 
 extern char D_00497D24[];
 
-int func_0046CB78(void) {
+int MediusUniqueCallbackAnonymousLoginResponseHandler(void) {
     int v0;
     int cond;
 
@@ -23,6 +23,6 @@ ret:
     return v0;
 }
 
-int func_0046CBA8(void) {
+int MediusUniqueCallbackCreateGameRequestHandler0(void) {
     return 176;
 }

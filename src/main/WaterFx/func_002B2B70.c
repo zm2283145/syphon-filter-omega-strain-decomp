@@ -31,7 +31,7 @@ struct WaterFx {
 
 extern "C" {
 extern char D_004ABFF0[];
-void *func_0013D5C0(int size, int pool, char *file, int line);
+void *opNew_uint_int_charP_int(int size, int pool, char *file, int line);
 WaterFxRecord *WaterFxRecord_Construct(void *p);
 void WaterFx_InitSplash(void *a, Vec4_2B2B70 *pos, float f, float g);
 void WaterFx_PointSplash(WaterFx *fx, Vec4_2B2B70 *pos, float a, float b);
@@ -54,7 +54,7 @@ void WaterFx_PointSplash(WaterFx *fx, Vec4_2B2B70 *pos, float a, float b)
         if (fx->recs[i] == 0) {
             void *p;
             slot = i;
-            p = func_0013D5C0(0xA0, 0, D_004ABFF0, 0x1AA);
+            p = opNew_uint_int_charP_int(0xA0, 0, D_004ABFF0, 0x1AA);
             if (p) p = WaterFxRecord_Construct(p);
             fx->recs[slot] = (WaterFxRecord *)p;
             fx->count++;

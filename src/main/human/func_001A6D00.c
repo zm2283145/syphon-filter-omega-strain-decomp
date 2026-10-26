@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-int func_001A6D00(Iter* a, Iter* b) {
+int cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opNe(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 
-Iter* func_001A6D20(Iter* it) {
+Iter* cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opInc(Iter* it) {
     it->p++;
     return it;
 }

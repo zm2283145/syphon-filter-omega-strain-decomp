@@ -6,7 +6,7 @@
 
 /* merge_units: begin func_00103D08 */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-void func_00103D08(signed char *arg0, int arg1) {
+void memclr(signed char *arg0, int arg1) {
     int var_v0;
     signed char *var_a0;
 

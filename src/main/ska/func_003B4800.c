@@ -3,11 +3,11 @@ typedef struct { Q q[3]; } Name48_4800;
 typedef struct { Name48_4800 key; int val; } Pair_4800;
 typedef struct { char pad[0x24]; Tree tree; char vec[4]; int count; } Self_4800;
 typedef struct { int node; char ins; } Res_4800;
-extern void func_003B4990(Iter* out, Tree* t);
-extern void func_003B4980(Iter* out, Iter* in);
+extern void std_map_cString16N_3_int_cAllocator_pair_end_void_2(Iter* out, Tree* t);
+extern void cAssocArray_cString16N_3_int_Iterator_ctor(Iter* out, Iter* in);
 extern void Tree_Compare(Iter* out, Tree* t, Name48_4800* key);
-extern void func_003B83D0(Res_4800* out, Tree* t, Pair_4800* v);
-extern int func_003B4960(void* v, int* value);
+extern void std_tree_pair_cString16N_value_compare_cAllocator_pair_insert_one_pairR(Res_4800* out, Tree* t, Pair_4800* v);
+extern int std_vector_cSkaNodePtr_push_back(void* v, int* value);
 extern int D_004BCD60;
 static inline void QCopy_4800(void* d0, void* s0) { int n = 3; __int128 t; void* s = s0; void* d = d0;
     asm {
@@ -33,8 +33,8 @@ void ModelNames_Insert(int* out, Self_4800* self, Name48_4800* name, int value)
         Iter f;
         Iter e;
         Iter* pc;
-        func_003B4990(&e, &self->tree);
-        func_003B4980(&e2, &e);
+        std_map_cString16N_3_int_cAllocator_pair_end_void_2(&e, &self->tree);
+        cAssocArray_cString16N_3_int_Iterator_ctor(&e2, &e);
         Tree_Compare(&f, &self->tree, name);
         if (ItCopy_4800(&c, &f)->p == e2.p) {
             Res_4800 r;
@@ -47,8 +47,8 @@ void ModelNames_Insert(int* out, Self_4800* self, Name48_4800* name, int value)
             p.val = n;
             QCopy_4800(&q, &p);
             q.val = p.val;
-            func_003B83D0(&r, &self->tree, &q);
-            func_003B4960(self->vec, &value);
+            std_tree_pair_cString16N_value_compare_cAllocator_pair_insert_one_pairR(&r, &self->tree, &q);
+            std_vector_cSkaNodePtr_push_back(self->vec, &value);
             *out = self->count - 1;
         } else {
             *out = D_004BCD60;

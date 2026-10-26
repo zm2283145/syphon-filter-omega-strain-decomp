@@ -15,7 +15,7 @@ struct S {
 extern "C" { extern signed char D_004E1D88; extern V D_004E1D90; }
 static inline const V& Zero() { if (!D_004E1D88) { D_004E1D90.x = 0.0f; D_004E1D88 = 1; D_004E1D90.y = 0.0f; D_004E1D90.z = 0.0f; D_004E1D90.w = 0.0f; } return D_004E1D90; }
 static inline V Unit() { V l0; V* q1 = &l0; asm { sqc2 vf0, 0x0(q1) } return l0; }
-extern "C" S* func_00190A00(S* p)
+extern "C" S* cSkaAnimDataSample_ctor_void(S* p)
 {
     p->a = 0;
     p->v10 = Zero();

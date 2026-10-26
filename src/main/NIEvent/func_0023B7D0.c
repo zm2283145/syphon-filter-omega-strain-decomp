@@ -74,7 +74,7 @@ float Vec4_GetX(V4_B7D0* v);
 float Vec4_GetY(V4_B7D0* v);
 float Vec4_GetZ(V4_B7D0* v);
 void Mtx_MakeAxisRotation(M4_B7D0* m, float x, float y, float z, float a);
-void func_001D3E20(M4_B7D0* m);
+void cMatrix_ctor_void(M4_B7D0* m);
 void Mtx_Multiply(M4_B7D0* a, M4_B7D0* b);
 int NiEvent_HandlePlayMsg(Self_B7D0* self, Msg_B7D0* ev);
 int cNIEventOBJ_v01(Self_B7D0* self, Msg_B7D0* ev);
@@ -101,12 +101,12 @@ static inline void BuildRot_B7D0(Self_B7D0* o, M4_B7D0* pm)
     Mtx_MakeAxisRotation(pm, Vec4_GetX(&ax1), Vec4_GetY(&ax1), Vec4_GetZ(&ax1), ang);
     bng = Rad_B7D0(o->ry.val);
     ax2.Set(0.0f, 1.0f, 0.0f, 0.0f);
-    func_001D3E20(&m1);
+    cMatrix_ctor_void(&m1);
     MakeRot_B7D0(&m1, ax2, bng);
     Mtx_Multiply(pm, &m1);
     cng = Rad_B7D0(o->rz.val);
     ax3.Set(0.0f, 0.0f, 1.0f, 0.0f);
-    func_001D3E20(&m2);
+    cMatrix_ctor_void(&m2);
     MakeRot_B7D0(&m2, ax3, cng);
     Mtx_Multiply(pm, &m2);
 }

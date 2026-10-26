@@ -60,10 +60,10 @@ static inline void merge_flush_func_003C8C70(void) {}
 
 /* merge_units: begin func_003C8DE0 */
 #pragma push /* merge_units */
-char* func_003C92D0(char** self); /* gsynth: defined below */
+char* std_list_deleter_tQueuedMessage_generic_iterator_opMul(char** self); /* gsynth: defined below */
 typedef struct G6N3C { struct G6N3C* prev; struct G6N3C* next; } G6N3C;
-void func_003C92E0(G6N3C** pp, int n); /* gsynth: defined below */
-void func_003C9340(Iter* out, PtrVec* v); /* gsynth: defined below */
+void std_advance_listdeleterR_int(G6N3C** pp, int n); /* gsynth: defined below */
+void std_list_deleter_tQueuedMessage_begin(Iter* out, PtrVec* v); /* gsynth: defined below */
 #pragma cplusplus on
 #define CMSG_NO_PROTOS
 #include "cmessage.h"
@@ -95,19 +95,19 @@ extern QNode* D_005435E8;
 extern unsigned char D_005721C0;
 extern unsigned char g_IsMultiplayer;
 #if 0 /* merge_units */
-QEntry* func_003C92D0(QNode**);
+QEntry* std_list_deleter_tQueuedMessage_generic_iterator_opMul(QNode**);
 #endif /* merge_units */
-#define func_003C92D0(a0) ((QEntry *)func_003C92D0((char * *)(a0))) /* merge_units */
+#define std_list_deleter_tQueuedMessage_generic_iterator_opMul(a0) ((QEntry *)std_list_deleter_tQueuedMessage_generic_iterator_opMul((char * *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_003C92E0(QNode**,int);
+void std_advance_listdeleterR_int(QNode**,int);
 #endif /* merge_units */
-#define func_003C92E0(a0, a1) (func_003C92E0((G6N3C * *)(a0), (a1))) /* merge_units */
+#define std_advance_listdeleterR_int(a0, a1) (std_advance_listdeleterR_int((G6N3C * *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_003C9340(QNode**,int*);
+void std_list_deleter_tQueuedMessage_begin(QNode**,int*);
 #endif /* merge_units */
-#define func_003C9340(a0, a1) (func_003C9340((Iter *)(a0), (PtrVec *)(a1))) /* merge_units */
+#define std_list_deleter_tQueuedMessage_begin(a0, a1) (std_list_deleter_tQueuedMessage_begin((Iter *)(a0), (PtrVec *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
 void ObjectList_EraseRange_3C9EA0(int*,int*,int*,int*);
@@ -115,7 +115,7 @@ void ObjectList_EraseRange_3C9EA0(int*,int*,int*,int*);
 #define ObjectList_EraseRange_3C9EA0(a0, a1, a2, a3) (ObjectList_EraseRange_3C9EA0((a0), (a1), (a2), (a3))) /* merge_units */
 
 }
-static inline QEntry* PendAt2(int i) { QNode* it; func_003C9340(&it, &D_005435C0); func_003C92E0(&it, i); return func_003C92D0(&it); }
+static inline QEntry* PendAt2(int i) { QNode* it; std_list_deleter_tQueuedMessage_begin(&it, &D_005435C0); std_advance_listdeleterR_int(&it, i); return std_list_deleter_tQueuedMessage_generic_iterator_opMul(&it); }
 static inline QEntry* PendAt(int i) { return PendAt2(i); }
 /* pos is assigned twice: the first assignment orders the hoisted &D_005435E4
    ahead of &e->target in the loop preheader, the second keeps its stack store
@@ -175,9 +175,9 @@ extern "C" int MsgQueue_Pump(void) {
 }
 #undef D_005435C4 /* merge_units */
 #undef D_005435C8 /* merge_units */
-#undef func_003C92D0 /* merge_units */
-#undef func_003C92E0 /* merge_units */
-#undef func_003C9340 /* merge_units */
+#undef std_list_deleter_tQueuedMessage_generic_iterator_opMul /* merge_units */
+#undef std_advance_listdeleterR_int /* merge_units */
+#undef std_list_deleter_tQueuedMessage_begin /* merge_units */
 #undef ObjectList_EraseRange_3C9EA0 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003C8DE0(void) {}
@@ -194,7 +194,7 @@ static inline void merge_flush_func_003C8DE0(void) {}
 
 
 /* Returns the address 8 bytes into the object pointed to by *self. */
-char* func_003C92D0(char** self) {
+char* std_list_deleter_tQueuedMessage_generic_iterator_opMul(char** self) {
     return *self + 8;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -204,7 +204,7 @@ static inline void merge_flush_func_003C92D0(void) {}
 
 /* merge_units: begin func_003C92E0 */
 #pragma push /* merge_units */
-void func_003C92E0(G6N3C** pp, int n)
+void std_advance_listdeleterR_int(G6N3C** pp, int n)
 {
     if (n >= 0) {
         while (n > 0) { *pp = (*pp)->next; n--; }
@@ -220,7 +220,7 @@ static inline void merge_flush_func_003C92E0(void) {}
 /* merge_units: begin func_003C9340 */
 #pragma push /* merge_units */
 /* begin(): iterator at the first element. */
-void func_003C9340(Iter* out, PtrVec* v) {
+void std_list_deleter_tQueuedMessage_begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 /* merge_units: generate this block's code under its own pragmas */

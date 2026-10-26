@@ -8,11 +8,11 @@
 #include "loose00_types.h"
 
 /* Iterator dereference (returns *it). */
-int func_00182260(void* self, int* it) {
+int cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_2(void* self, int* it) {
     return it[0];
 }
 
-int func_00182270(IntPair* self) {
+int cCollisionModelMaster_GetData(IntPair* self) {
     return self->a;
 }
 

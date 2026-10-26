@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046D9D0(void) {
+int MediusUniqueCallbackLadderPositionFastRequestHandler(void) {
     return 48;
 }

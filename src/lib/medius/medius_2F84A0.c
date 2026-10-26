@@ -1,12 +1,12 @@
 #include "types.h"
 
-extern int func_002F7D68(int);
+extern int GetKeyMaster(int);
 
-void func_002F84A0(int a0, int a1) {
+void KM_SetLocalClientID(int a0, int a1) {
     int s0, v0;
 
     s0 = a1;
-    v0 = func_002F7D68(a0);
+    v0 = GetKeyMaster(a0);
     if (v0 != 0) {
     *(int*)((char*)v0 + 20) = s0;
     goto L002F84BC;

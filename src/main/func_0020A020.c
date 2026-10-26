@@ -9,11 +9,11 @@ typedef struct PackedWord {
     unsigned int value : 31;
 } PackedWord;
 
-extern PackedWord* func_002071B0(void* obj);
+extern PackedWord* details_compressed_pair_imp_rep_s_2_first_void(void* obj);
 
-/* Returns the 31-bit value field of func_002071B0's result. */
-unsigned int func_0020A020(void* obj) {
-    return func_002071B0(obj)->value;
+/* Returns the 31-bit value field of details_compressed_pair_imp_rep_s_2_first_void's result. */
+unsigned int std_basic_string_char_char_traits_char_long_cap(void* obj) {
+    return details_compressed_pair_imp_rep_s_2_first_void(obj)->value;
 }
 
 #pragma pop

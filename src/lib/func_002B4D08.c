@@ -7,15 +7,15 @@ extern int D_00506644;
 extern T2B4D08 D_00506B60;
 extern char D_00506B80[];
 extern char D_004E9B70[];
-extern void func_002B5BA8(void);
-extern int func_002B4E50(void);
-extern void func_002BB690(void);
-extern void func_002BA9E8(void);
-extern void func_002B69A0(void);
+extern void basic_thread(void);
+extern int sceMc2End(void);
+extern void _sceMcCoreInit(void);
+extern void _sceMcpInit(void);
+extern void _sceMcFatInit(void);
 extern int CreateThread(TP2B4D08* p);
 extern int StartThread(int th, void* arg);
 
-int func_002B4D08(int mode)
+int sceMc2Init(int mode)
 {
     TP2B4D08 tp;
     SemaParam sp;
@@ -34,23 +34,23 @@ int func_002B4D08(int mode)
     sp.maxCount = 1;
     D_00506B60.x8 = CreateSema(&sp);
     if (D_00506B60.x8 < 0) {
-        func_002B4E50();
+        sceMc2End();
         return 0x81018003;
     }
     D_00506644 = 0;
-    tp.func = func_002B5BA8;
+    tp.func = basic_thread;
     tp.stack = D_00506B80;
     tp.stack_size = 0xC000;
     tp.gp_reg = D_004E9B70;
     tp.initial_priority = 1;
     D_00506B60.x0 = CreateThread(&tp);
     if (D_00506B60.x0 < 0) {
-        func_002B4E50();
+        sceMc2End();
         return 0x81018004;
     }
-    func_002BB690();
-    func_002BA9E8();
-    func_002B69A0();
+    _sceMcCoreInit();
+    _sceMcpInit();
+    _sceMcFatInit();
     StartThread(D_00506B60.x0, 0);
     return 0;
 }

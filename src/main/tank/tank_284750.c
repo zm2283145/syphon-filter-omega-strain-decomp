@@ -10,7 +10,7 @@
 /* merge_units: begin func_00284750 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x18]; float a[6]; char pad30[0x20]; float b; char pad54[0x18]; int c; } S_00284D80;
-void func_00284D80(S_00284D80* p); /* gsynth: defined below */
+void cTurret_NetPack(S_00284D80* p); /* gsynth: defined below */
 #pragma cplusplus on
 extern unsigned char* D_005061D0;
 static inline void W16_00284750(int v) { short s = v; *D_005061D0++ = s; *D_005061D0++ = s >> 8; }
@@ -21,32 +21,32 @@ static inline int R32_00284750(void) { unsigned short lo = R16_00284750(); retur
 static inline float RF_00284750(void) { int i = R32_00284750(); return *(float*)&i; }
 typedef struct { void* a; void* b; void* c; } P_00284750;
 typedef struct { char pad[0x64]; P_00284750* s0; P_00284750* s1; P_00284750* turret; unsigned char b70; } T_00284750;
-extern "C" void func_00282020(void* o);
+extern "C" void cNetMsg_PutGOBJ(void* o);
 #if 0 /* merge_units */
-extern "C" void func_00284D80(P_00284750* p);
+extern "C" void cTurret_NetPack(P_00284750* p);
 #endif /* merge_units */
-#define func_00284D80(a0) (func_00284D80((S_00284D80 *)(a0))) /* merge_units */
+#define cTurret_NetPack(a0) (cTurret_NetPack((S_00284D80 *)(a0))) /* merge_units */
 
-extern "C" void func_00284750(T_00284750* t) {
+extern "C" void cTank_NetPack(T_00284750* t) {
     bool n = t->s0 && t->s1;
     bool tu = t->turret != 0;
     *D_005061D0++ = n;
     *D_005061D0++ = tu;
     *D_005061D0++ = t->b70;
     if (n) {
-        func_00282020(t->s0->a);
-        func_00282020(t->s0->b);
-        func_00282020(t->s1->a);
-        func_00282020(t->s1->b);
+        cNetMsg_PutGOBJ(t->s0->a);
+        cNetMsg_PutGOBJ(t->s0->b);
+        cNetMsg_PutGOBJ(t->s1->a);
+        cNetMsg_PutGOBJ(t->s1->b);
     }
     if (tu) {
-        func_00282020(t->turret->a);
-        func_00282020(t->turret->b);
-        func_00282020(t->turret->c);
-        func_00284D80(t->turret);
+        cNetMsg_PutGOBJ(t->turret->a);
+        cNetMsg_PutGOBJ(t->turret->b);
+        cNetMsg_PutGOBJ(t->turret->c);
+        cTurret_NetPack(t->turret);
     }
 }
-#undef func_00284D80 /* merge_units */
+#undef cTurret_NetPack /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00284750(void) {}
 #pragma pop /* merge_units */
@@ -61,7 +61,7 @@ static inline int R32_00284870(void) { unsigned short lo = R16_00284870(); retur
 static inline float RF_00284870(void) { int i = R32_00284870(); return *(float*)&i; }
 typedef struct { char pad[0x18]; float a[6]; char pad30[0x20]; float b; char pad54[0x14]; void* w; int id; } S_00284870;
 static inline void SetW_00284870(S_00284870* p, int id) { void* db = g_WeaponDatabase; p->id = id; p->w = WeaponDb_Get(db, id); }
-void func_00284870(S_00284870* p) {
+void cTurret_NetUnpack(S_00284870* p) {
     p->a[0] = RF_00284870();
     p->a[1] = RF_00284870();
     p->a[2] = RF_00284870();
@@ -83,7 +83,7 @@ static inline void W16_00284D80(int v) { short s = v; *D_005061D0++ = s; *D_0050
 static inline void W32_00284D80(int v) { W16_00284D80((unsigned short)v); W16_00284D80(v >> 16); }
 static inline void WF_00284D80(float f) { W32_00284D80(*(int*)&f); }
 
-void func_00284D80(S_00284D80* p) {
+void cTurret_NetPack(S_00284D80* p) {
     WF_00284D80(p->a[0]);
     WF_00284D80(p->a[1]);
     WF_00284D80(p->a[2]);
@@ -101,7 +101,7 @@ static inline void merge_flush_func_00284D80(void) {}
 /* merge_units: begin func_002852F0 */
 #pragma push /* merge_units */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-int func_002852F0(int arg0) {
+int cTank_GetHitpoints(int arg0) {
     return F_(F_(arg0, 0x60, int), 0x40, float);
 }
 /* merge_units: generate this block's code under its own pragmas */

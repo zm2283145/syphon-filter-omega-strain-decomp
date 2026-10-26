@@ -385,7 +385,7 @@ typedef struct Dev100 {
     void* port; /* 0x100 */
 } Dev100;
 
-extern void func_0026BB28(void* port, int count, unsigned char* cmd, int len, unsigned char* data);
+extern void sceVibSetActParam(void* port, int count, unsigned char* cmd, int len, unsigned char* data);
 
 /* Sends command 3 with two data bytes built from the flags. */
 void Pad_SetVibration(Dev100* dev, int on, int mode) {
@@ -394,7 +394,7 @@ void Pad_SetVibration(Dev100* dev, int on, int mode) {
     cmd = 3;
     data[0] = (on != 0) + ((mode << 1) & 0xFE);
     data[1] = (mode & 0x80) != 0;
-    func_0026BB28(dev->port, 1, &cmd, 2, data);
+    sceVibSetActParam(dev->port, 1, &cmd, 2, data);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00369920 */

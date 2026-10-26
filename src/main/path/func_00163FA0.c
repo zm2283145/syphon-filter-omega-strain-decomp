@@ -2,4 +2,4 @@
 #include "iter_return_copy.h"
 
 /* Return the begin iterator. */
-DEFINE_ITER_BEGIN(func_00163FA0)
+DEFINE_ITER_BEGIN(std_list_cPathSystemRequestPtr_begin_void_2)

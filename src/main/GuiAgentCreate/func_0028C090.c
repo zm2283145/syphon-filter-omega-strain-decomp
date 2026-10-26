@@ -6,16 +6,16 @@
 
 #include "types.h"
 
-Word* func_0028C090(Word* dst, Word* src) {
+Word* cLListIterator_GuiWidgetPtr_ctor_listR(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_0028C0A0(Iter* out, Tree* t) {
+void std_list_GuiWidgetPtr_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-Word* func_0028C0B0(Word* dst, Word* src) {
+Word* std_list_GuiWidgetPtr_generic_iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }

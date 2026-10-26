@@ -31,9 +31,9 @@ extern void Event_Construct(Evt22E320* e, void* type);
 extern void MsgQueue_QueueClone(Evt22E320* e, void* obj, int a, int b);
 extern void cMessage_dtor(Evt22E320* e, int f);
 extern char D_0055C7A0[];
-extern void func_001BB080(Node22E320** out, void* map, int* key);
-extern void func_0021D360(void* out, void* map);
-extern void func_0021D350(Node22E320** out, void* in);
+extern void std_tree_pair_int_value_compare_find_intR(Node22E320** out, void* map, int* key);
+extern void std_map_int_netSystemField_end(void* out, void* map);
+extern void cAssocArray_int_netSystemField_Iterator_ctor(Node22E320** out, void* in);
 extern char D_004DB890[];
 extern char D_004F7940[];
 extern unsigned char D_005721D0;
@@ -56,10 +56,10 @@ int tmp[1];
         e.vt = D_004DB890;
         e.f24 = a->id2;
         k[0] = a->id;
-        func_001BB080(it, D_0055C7A0, k);
+        std_tree_pair_int_value_compare_find_intR(it, D_0055C7A0, k);
         n = it[0];
-        func_0021D360(tmp, D_0055C7A0);
-        func_0021D350(end, tmp);
+        std_map_int_netSystemField_end(tmp, D_0055C7A0);
+        cAssocArray_int_netSystemField_Iterator_ctor(end, tmp);
         if (Eq22E320(n, end[0]) ^ 1) MsgQueue_QueueClone(&e, n->val, 0, 0);
         e.vt = D_004DB890;
         cMessage_dtor(&e, 0);
@@ -74,7 +74,7 @@ static inline void merge_flush_func_0022E320(void) {}
 
 /* merge_units: begin func_0022E420 */
 #pragma push /* merge_units */
-extern int func_002E9A10(void* reg);
+extern int NetRegisterMessageStart(void* reg);
 extern int Event_UnpackHeader(void* desc);
 extern int NetMsg_RegisterType(void* type, int version, void* factory);
 extern char D_004F7950[];
@@ -83,7 +83,7 @@ unsigned char cNotifyCheckpointMsg_NetRegister(void* reg)
 {
     long long file;
     unsigned char ok = 0;
-    if (func_002E9A10(reg) == 0 && Event_UnpackHeader(&file) != 0 &&
+    if (NetRegisterMessageStart(reg) == 0 && Event_UnpackHeader(&file) != 0 &&
         NetMsg_RegisterType(D_004F7950, 2, cNotifyCheckpointMsg_NetReceive) == 0)
         ok = 1;
     return ok;

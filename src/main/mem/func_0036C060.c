@@ -1,6 +1,6 @@
 #include "types.h"
 
-int func_0036C060(int a0, int a1) {
+int cMemBin_FindBin(int a0, int a1) {
     int at, v0;
     int cond;
 

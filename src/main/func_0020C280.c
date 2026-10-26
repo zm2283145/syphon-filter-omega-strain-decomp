@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern int func_0020C290(int);
+extern int details_compressed_pair_imp_cAllocator_cSkaSwitchItem_int_1_first_void_2(int);
 
-int func_0020C280(int a0) {
-    return func_0020C290(a0);
+int std_vector_deleter_cSkaSwitchItem_alloc_void_2(int a0) {
+    return details_compressed_pair_imp_cAllocator_cSkaSwitchItem_int_1_first_void_2(a0);
 }

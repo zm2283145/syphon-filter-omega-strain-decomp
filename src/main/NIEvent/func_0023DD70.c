@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-extern int func_0023DAD0(void* self, int flag);
+extern int cNIEventBase_NumActiveInTree(void* self, int flag);
 
-/* True when index is below the count returned by func_0023DAD0(self, 1). */
-int func_0023DD70(void* self, int index) {
-    int count = func_0023DAD0(self, 1);
+/* True when index is below the count returned by cNIEventBase_NumActiveInTree(self, 1). */
+int cNIEventBase_AreVUMsActive(void* self, int index) {
+    int count = cNIEventBase_NumActiveInTree(self, 1);
     return index < count;
 }

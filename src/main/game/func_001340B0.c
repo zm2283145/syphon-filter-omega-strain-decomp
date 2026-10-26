@@ -10,19 +10,19 @@ void* Physical_GetPositionPtr(char* self) {
     return self + 16;
 }
 
-void func_001340C0(Iter* out, PtrVec* v) {
+void cArray_cHumanPtr_Begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 
-Word* func_001340D0(Word* dst, Word* src) {
+Word* cArray_cHumanPtr_ConstIterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_001340E0(Iter* out, PtrVec* v) {
+void cArray_cHumanPtr_End(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
 
-void* func_00134100(char* self) {
+void* cObjList_cHumanPtr_GetList(char* self) {
     return self + 4;
 }

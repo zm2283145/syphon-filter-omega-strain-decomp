@@ -49,8 +49,8 @@ extern char D_00538C68;
 extern V4_0025EC20 D_00539170;
 extern long long D_004BC1B0;
 void Renderer_BindTexture(void* m, int idx);
-void func_0025CD10(void* s);
-void func_0025CA40(void* s);
+void XLib_NewStrip(void* s);
+void XLib_NextBatchVert(void* s);
 void Vec4_Copy(V4_0025EC20* d, V4_0025EC20* s);
 void GuiBatch_AddVertexColor(V4_0025EC20* d, V4_0025EC20* s);
 float GuiBatch_AddVertexUV(void);
@@ -80,7 +80,7 @@ static inline void Emit_0025EC20(const V4c_0025EC20& pos, const V4c_0025EC20& co
     V4_0025EC20 tmp;
     Ent_0025EC20* e;
     float u;
-    func_0025CA40(g_Video);
+    XLib_NextBatchVert(g_Video);
     e = &RS_0025EC20->ents[D_00539210.f10];
     Vec4_Copy(&e->pos[D_00539224 - 1], (V4_0025EC20*)&pos);
     GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], (V4_0025EC20*)&col);
@@ -140,7 +140,7 @@ extern "C" void VisionFx_DrawNoiseTiles(Arg_0025EC20* a)
     e->c2C += D_00539224;
     e->c30 += D_00539224;
     e->c34 += D_00539224;
-    func_0025CD10(g_Video);
+    XLib_NewStrip(g_Video);
     D_00539224 = 0;
     for (; y > -hh; y -= a->dy) {
         for (x = -hw; x < hw; x += a->dx) {

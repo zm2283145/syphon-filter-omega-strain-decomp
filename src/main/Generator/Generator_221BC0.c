@@ -23,8 +23,8 @@ int strlen(const char *);
 #define NULL 0
 extern "C" {
 int cGOBJ_dtor(char *, int);
-int func_00135D80(char *, int);
-int func_00177B80(char *, int);
+int std_vector_int_dtor(char *, int);
+int std_list_cSafePtr_cGOBJ_dtor(char *, int);
 int Player_ClearRecentTargets(int *, char *, int *, char **);
 int operator_delete(char *);
 extern char D_004A4A90;
@@ -54,26 +54,26 @@ extern "C" void cGenerator_v17();
 extern "C" void cGenerator_v18();
 extern "C" void cGenerator_v3D();
 extern "C" void GObj_GetID();
-extern "C" void func_0012ED50();
-extern "C" void func_0013E060();
-extern "C" void func_0013EE60();
+extern "C" void cSystem_IsDeliverable();
+extern "C" void cGOBJ_GetFloorPlane();
+extern "C" void cGOBJ_GetBBox();
 extern "C" void func_00140E90();
 extern "C" void GObj_GetLifeState();
-extern "C" void func_00148870();
+extern "C" void cGOBJ_IsGeneratorCreated();
 extern "C" void Object_GetEye();
-extern "C" void func_00153860();
-extern "C" void func_0015BFB0();
-extern "C" void func_0015BFC0();
-extern "C" void func_0015BFD0();
-extern "C" void func_0015BFE0();
-extern "C" void func_0015BFF0();
-extern "C" void func_0015C000();
-extern "C" void func_0015C010();
-extern "C" void func_0015C020();
-extern "C" void func_0015C030();
-extern "C" void func_0015C040();
-extern "C" void func_0015C050();
-extern "C" void func_0015C0A0();
+extern "C" void cGOBJ_GetLosPosition();
+extern "C" void cGOBJ_HasHeadset();
+extern "C" void cGOBJ_SetStatus();
+extern "C" void cGOBJ_GetStatus();
+extern "C" void cGOBJ_GetChildList_void();
+extern "C" void cGOBJ_GetChildList_void_2();
+extern "C" void cGOBJ_ScaleBBox();
+extern "C" void cGOBJ_GetTargetPriority();
+extern "C" void cGOBJ_GetMovementState();
+extern "C" void cGOBJ_GetSubTargetAimAdjust();
+extern "C" void cGOBJ_GetNumSubTargets();
+extern "C" void cGOBJ_IsAimed();
+extern "C" void cGOBJ_CheckBullet();
 extern "C" void GObj_GetWorldMatrix();
 extern "C" void cNode_v3A();
 extern "C" void cGOBJ_v39();
@@ -114,18 +114,18 @@ extern "C" char *cGenerator_dtor(char *arg0, long long arg1) {
             Mem_Free(0, temp_s2, &D_004A4A90, 0x23C);
         }
         temp_a0 = arg0 + 0x9C;
-        if (temp_a0 != NULL) func_00177B80(temp_a0, 0);
+        if (temp_a0 != NULL) std_list_cSafePtr_cGOBJ_dtor(temp_a0, 0);
         temp_a0 = arg0 + 0x90;
-        if (temp_a0 != NULL) func_00177B80(temp_a0, 0);
+        if (temp_a0 != NULL) std_list_cSafePtr_cGOBJ_dtor(temp_a0, 0);
         temp_a0 = arg0 + 0x74;
-        if (temp_a0 != NULL) func_00135D80(temp_a0, -1);
+        if (temp_a0 != NULL) std_vector_int_dtor(temp_a0, -1);
         cGOBJ_dtor(arg0, 0);
         if (((long long)(arg1 << 0x30) >> 0x30) > 0) operator_delete(arg0);
     }
     return arg0;
 }
 #pragma pop
-void * const D_004DB680[68] = { (void*)0x0, (void*)0x0, (void*)cGenerator_dtor, (void*)cGenerator_v01, (void*)GObj_GetID, (void*)Object_GetAttachedOrSelf, (void*)cGenerator_v04, (void*)cGenerator_v05, (void*)cGenerator_v06, (void*)cGenerator_v07, (void*)cGenerator_v08, (void*)cGenerator_v09, (void*)func_0012ED50, (void*)cGenerator_v0B, (void*)cGenerator_v0C, (void*)cNode_v0D, (void*)cGenerator_v0E, (void*)cGenerator_v0F, (void*)cGenerator_v10, (void*)cGenerator_v11, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)cNode_v14, (void*)cGenerator_v15, (void*)cGenerator_v16, (void*)cGenerator_v17, (void*)cGenerator_v18, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0015BFF0, (void*)func_0015BFE0, (void*)func_0013EE60, (void*)func_0015C000, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)cNode_v24, (void*)cNode_v25, (void*)cNode_v26, (void*)cNode_v27, (void*)cNode_v28, (void*)cNode_v29, (void*)cNode_v2A, (void*)cNode_v2B, (void*)func_0015C010, (void*)func_00153860, (void*)Object_GetEye, (void*)func_0015C020, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)Node_GetWorldMatrix, (void*)cGOBJ_v35, (void*)Node_GetLightRefPoint, (void*)PathObj_GetPosition, (void*)Node_GetComponentMatrix, (void*)cGOBJ_v39, (void*)cNode_v3A, (void*)GObj_GetWorldMatrix, (void*)func_0013E060, (void*)cGenerator_v3D, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)GObj_GetLifeState, (void*)Controller_DeathNotice };
+void * const D_004DB680[68] = { (void*)0x0, (void*)0x0, (void*)cGenerator_dtor, (void*)cGenerator_v01, (void*)GObj_GetID, (void*)Object_GetAttachedOrSelf, (void*)cGenerator_v04, (void*)cGenerator_v05, (void*)cGenerator_v06, (void*)cGenerator_v07, (void*)cGenerator_v08, (void*)cGenerator_v09, (void*)cSystem_IsDeliverable, (void*)cGenerator_v0B, (void*)cGenerator_v0C, (void*)cNode_v0D, (void*)cGenerator_v0E, (void*)cGenerator_v0F, (void*)cGenerator_v10, (void*)cGenerator_v11, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)cNode_v14, (void*)cGenerator_v15, (void*)cGenerator_v16, (void*)cGenerator_v17, (void*)cGenerator_v18, (void*)Node_GetFlag2C, (void*)cGOBJ_HasHeadset, (void*)cGOBJ_SetStatus, (void*)cGOBJ_GetStatus, (void*)cGOBJ_IsGeneratorCreated, (void*)cGOBJ_GetChildList_void_2, (void*)cGOBJ_GetChildList_void, (void*)cGOBJ_GetBBox, (void*)cGOBJ_ScaleBBox, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)cNode_v24, (void*)cNode_v25, (void*)cNode_v26, (void*)cNode_v27, (void*)cNode_v28, (void*)cNode_v29, (void*)cNode_v2A, (void*)cNode_v2B, (void*)cGOBJ_GetTargetPriority, (void*)cGOBJ_GetLosPosition, (void*)Object_GetEye, (void*)cGOBJ_GetMovementState, (void*)func_00140E90, (void*)cGOBJ_GetSubTargetAimAdjust, (void*)cGOBJ_GetNumSubTargets, (void*)cGOBJ_IsAimed, (void*)Node_GetWorldMatrix, (void*)cGOBJ_v35, (void*)Node_GetLightRefPoint, (void*)PathObj_GetPosition, (void*)Node_GetComponentMatrix, (void*)cGOBJ_v39, (void*)cNode_v3A, (void*)GObj_GetWorldMatrix, (void*)cGOBJ_GetFloorPlane, (void*)cGenerator_v3D, (void*)Actor_ApplyContactDamage, (void*)cGOBJ_CheckBullet, (void*)GObj_GetLifeState, (void*)Controller_DeathNotice };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00221BC0(void) {}
 #pragma pop /* merge_units */
@@ -204,17 +204,17 @@ extern int D_005721A8;
 extern unsigned char D_005721C0;
 extern unsigned char g_IsMultiplayer;
 void cGOBJ_ctor(Gen_221D20* o, int* id, int kind, void* info);
-Rel_221D20* func_001365E0(Rel_221D20* r);
-void func_00222B60(List_221D20* l);
+Rel_221D20* std_vector_cNodePtr_ctor(Rel_221D20* r);
+void std_list_deleter_cSafePtr_cGOBJ_ctor(List_221D20* l);
 void* Mem_Alloc(int heap, int size, char* file, int line);
 void PtrVector_Resize(Rel_221D20* v, int n, int* fill);
 int IdMgr_FindCollision(int region, int id);
 void ZoneMgr_Associate(int found, Gen_221D20* o, int a, int b);
 int LosRegion_FindGlobal(V4_221D20* p);
-void func_002EBBA0(int s, int* out);
+void NetGetPeerToPeerHostClientIndex(int s, int* out);
 void NetMap_BindReceiver(int id, int owner, Gen_221D20* o);
-void func_0043B190(void* ctx);
-void func_004398E0(void* ctx, int* id, int n);
+void cGenInfoObject_ctor(void* ctx);
+void cGenInfoObject_Add(void* ctx, int* id, int n);
 int Net_GetClock(int a);
 }
 static inline int Read_221D20(Reader_221D20* r) { int v = *(int*)r->cur; r->cur += 4; return v; }
@@ -241,7 +241,7 @@ static inline void* New_221D20(int size, int line)
     return Mem_Alloc(0, size, D_004A4A90, line);
 }
 static inline char* ReadStrA_221D20(Reader_221D20* r) { char* s = ReadStr_221D20(r); Align_221D20(r); return s; }
-static inline int HostId_221D20(void) { int t; func_002EBBA0(D_005721A8, &t); return t; }
+static inline int HostId_221D20(void) { int t; NetGetPeerToPeerHostClientIndex(D_005721A8, &t); return t; }
 static inline V4_221D20* GetPos_221D20(Xf_221D20* x)
 {
     if (x->dirty) x->Update();
@@ -265,11 +265,11 @@ extern "C" Gen_221D20* cGenerator_ctor(Gen_221D20* self, Reader_221D20* r)
     self->f60 = 0;
     {
         RelFlag_221D20* rf = &self->r74;
-        func_001365E0(&rf->rel);
+        std_vector_cNodePtr_ctor(&rf->rel);
         rf->flag = 1;
     }
-    func_00222B60(&self->list90);
-    func_00222B60(&self->list9C);
+    std_list_deleter_cSafePtr_cGOBJ_ctor(&self->list90);
+    std_list_deleter_cSafePtr_cGOBJ_ctor(&self->list9C);
     m.r[0].w = 0.0f;
     m.r[3].w = 1.0f;
     m.r[1].w = 0.0f;
@@ -353,8 +353,8 @@ extern "C" Gen_221D20* cGenerator_ctor(Gen_221D20* self, Reader_221D20* r)
         self->maskCC = act ? 0xFF : 0;
         NetMap_BindReceiver(self->id10, HostId_221D20(), self);
         if (g_IsMultiplayer ? D_005721C0 : 1) {
-            func_0043B190(&ctx);
-            func_004398E0(&ctx, &id, -1);
+            cGenInfoObject_ctor(&ctx);
+            cGenInfoObject_Add(&ctx, &id, -1);
         }
         D_004F56B8 = Net_GetClock(1) + 0xFA;
     }

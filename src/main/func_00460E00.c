@@ -4,7 +4,7 @@ int FileMan_Release(int, int);
 int func_00461DC0(int, int);                            
 int operator_delete(int);                             
 
-int func_00460E00(int arg0, long long arg1) {
+int cQuipList_dtor(int arg0, long long arg1) {
     if (arg0 != 0) {
         if ((arg0 + 0x20) != 0) {
             FileMan_Release(arg0 + 0x104, -1);

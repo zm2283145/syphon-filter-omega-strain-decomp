@@ -5,7 +5,7 @@
 unsigned int D_0048B250[4] = { 0x0, 0x0, 0x0, 0x0 };
 extern char D_004FBB88;
 
-int func_0026B1F0(void) {
+int scePad2Init(void) {
     char *var_a0;
 
     (*(int*)D_0048B250) = 1;

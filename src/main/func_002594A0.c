@@ -31,12 +31,12 @@ extern float D_0048AFE8;
 extern float D_0048AFE0;
 int *func_002596D0(void *);
 int *func_002596A0(void *);
-Iter func_002596C0(void *, int *const &);
-int func_0025A880(V4 *, V4 *, float, float);
-int func_0025AA20(V4 *, V4 *, V4 *, float);
+Iter std_list_cAreaEffectPtr_generic_iterator_ctor(void *, int *const &);
+int ClipSegmentToZRange(V4 *, V4 *, float, float);
+int SegmentIntersectsSphere(V4 *, V4 *, V4 *, float);
 }
-static inline Iter Begin() { return func_002596C0(D_004F8040, func_002596D0(D_004F8040)); }
-static inline Iter End() { return func_002596C0(D_004F8040, func_002596A0(D_004F8040)); }
+static inline Iter Begin() { return std_list_cAreaEffectPtr_generic_iterator_ctor(D_004F8040, func_002596D0(D_004F8040)); }
+static inline Iter End() { return std_list_cAreaEffectPtr_generic_iterator_ctor(D_004F8040, func_002596A0(D_004F8040)); }
 #pragma opt_rotateloops off
 extern "C" Smoke *SmokeVolumes_BlockSight(V4 *a, V4 *b)
 {
@@ -55,10 +55,10 @@ extern "C" Smoke *SmokeVolumes_BlockSight(V4 *a, V4 *b)
                 ratio = s->f60 / D_0048AFE8;
             k = s->def->fC8 * ratio;
             float h = D_0048AFE0 * (1.0f + ratio) / 2.0f;
-            if (func_0025A880(&p0, &q0, s->pos.z, s->pos.z + h)) {
+            if (ClipSegmentToZRange(&p0, &q0, s->pos.z, s->pos.z + h)) {
                 V4 c = s->pos;
                 c.z += D_0048AFE0 / 2.0f;
-                hit = func_0025AA20(&p0, &q0, &c, k);
+                hit = SegmentIntersectsSphere(&p0, &q0, &c, k);
             }
             if (hit) return (Smoke *)*it.p;
         }

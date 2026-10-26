@@ -11,7 +11,7 @@
 #pragma push /* merge_units */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 int Object_LookupById(int *);
-int func_002EB650(void **);
+int NetGetObject(void **);
 extern unsigned char D_005723C8;
 #define CLR_(b, o) { (void)*(volatile int*)((char*)(b) + (o)); F_(b, o, int) = 0; }
 #pragma push
@@ -24,7 +24,7 @@ void func_00212040(void) {
     if (D_005723C8 == 0) {
         D_005723C8 = 1;
     }
-    if (func_002EB650((void**)sl.buf) == 0) {
+    if (NetGetObject((void**)sl.buf) == 0) {
         temp_v0 = F_(sl.buf[0], 0x1C, int);
         sl.id[0] = F_(temp_v0, 0x10, unsigned short) | (F_(temp_v0, 0xE, unsigned short) << 0x10);
         temp_v0_2 = Object_LookupById(sl.id);
@@ -47,13 +47,13 @@ typedef struct { int priority; int count; int flags; unsigned char attr; } Prm_0
 typedef struct { int x0; int x4; char pad8[4]; unsigned char xC; char padD[0x20 - 0xD]; int x20; int x24; int x28; int x2C; } Rec_002120D0;
 extern int D_004F5478;
 extern char D_004A4580[];
-extern int func_002E9B60(void);
-extern int func_002E9BE8(int* out, int off, int size, int count, int type, Prm_002120D0* prm);
-extern int func_002E9CD0(int* out, const char* name, int size);
-extern int func_002E9D88(int handle, void* f1, void* f2, void* f3);
-extern unsigned char func_002129A0(Rec_002120D0* r);
-extern void func_00211DE0(void);
-extern void func_00211DB0(void);
+extern int NetRegisterObjectStart(void);
+extern int NetObjectField(int* out, int off, int size, int count, int type, Prm_002120D0* prm);
+extern int NetRegisterStructure(int* out, const char* name, int size);
+extern int NetRegisterRemoteObjectCallback(int handle, void* f1, void* f2, void* f3);
+extern unsigned char cPathedGOBJ_RegisterPathedGobj(Rec_002120D0* r);
+extern void cElevatorGOBJ_ElevatorCreationCallback(void);
+extern void cElevatorGOBJ_ElevatorUpdateCallback(void);
 extern void func_00212040(void);
 void NetElevatorInfo_NetRegister(void)
 {
@@ -75,14 +75,14 @@ void NetElevatorInfo_NetRegister(void)
     prm.count = 1;
     prm.attr = 0x40;
     prm.flags = 0;
-    if (func_002E9B60() == 0 &&
-        func_002129A0(&rec) &&
-        (r = &rec, func_002E9BE8(&db, (char*)&rec.x20 - (char*)r, 4, 4, 1, &prm) == 0) &&
-        func_002E9BE8(&db, (char*)p24 - (char*)r, 4, 4, 1, &prm) == 0 &&
-        func_002E9BE8(&db, (char*)p2C - (char*)r, 4, 4, 1, &prm) == 0 &&
-        func_002E9CD0(&handle, D_004A4580, 0x30) == 0) {
+    if (NetRegisterObjectStart() == 0 &&
+        cPathedGOBJ_RegisterPathedGobj(&rec) &&
+        (r = &rec, NetObjectField(&db, (char*)&rec.x20 - (char*)r, 4, 4, 1, &prm) == 0) &&
+        NetObjectField(&db, (char*)p24 - (char*)r, 4, 4, 1, &prm) == 0 &&
+        NetObjectField(&db, (char*)p2C - (char*)r, 4, 4, 1, &prm) == 0 &&
+        NetRegisterStructure(&handle, D_004A4580, 0x30) == 0) {
         D_004F5478 = handle;
-        func_002E9D88(handle, func_00211DE0, func_00211DB0, func_00212040);
+        NetRegisterRemoteObjectCallback(handle, cElevatorGOBJ_ElevatorCreationCallback, cElevatorGOBJ_ElevatorUpdateCallback, func_00212040);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

@@ -12,9 +12,9 @@ extern int D_004E2400;
 extern int WaitSema(int);
 extern int WakeupThread(int);
 extern int RotateThreadReadyQueue(int);
-extern int func_0010D0D0(int);
-extern int func_0010F350(const char *, ...);
-void func_0010DE60(RingDE60 *r)
+extern int SuspendThread_2(int);
+extern int kprintf(const char *, ...);
+void topThread(RingDE60 *r)
 {
     for (;;) {
         unsigned int i;
@@ -29,10 +29,10 @@ void func_0010DE60(RingDE60 *r)
             RotateThreadReadyQueue(r->q[i].arg);
             break;
         case 2:
-            func_0010D0D0(r->q[i].arg);
+            SuspendThread_2(r->q[i].arg);
             break;
         default:
-            func_0010F350("## internel error in libkernl.a!\n");
+            kprintf("## internel error in libkernl.a!\n");
             break;
         }
     }
@@ -48,9 +48,9 @@ extern int D_004E2408[2];
 extern char D_004E2000[];
 extern char D_004E9B70[];
 #if 0 /* merge_units */
-extern void func_0010DE60(void *);
+extern void topThread(void *);
 #endif /* merge_units */
-#define func_0010DE60(a0) (func_0010DE60((RingDE60 *)(a0))) /* merge_units */
+#define topThread(a0) (topThread((RingDE60 *)(a0))) /* merge_units */
 
 extern int CreateSema(SemaParamDF38 *);
 extern int CreateThread(ThreadParamDF38 *);
@@ -67,7 +67,7 @@ int func_0010DF38(void)
     sp.max_count = 0xFF;
     D_004E2400 = CreateSema(&sp);
     if (D_004E2400 < 0) return -1;
-    tp.func = func_0010DE60;
+    tp.func = topThread;
     tp.stack = D_004E2000;
     tp.stack_size = 0x400;
     tp.gp_reg = D_004E9B70;
@@ -83,7 +83,7 @@ int func_0010DF38(void)
     ChangeThreadPriority(GetThreadId(), 1);
     return D_00486198;
 }
-#undef func_0010DE60 /* merge_units */
+#undef topThread /* merge_units */
 /* merge_units: end func_0010DF38 */
 
 /* merge_units: begin func_0010E010 */
@@ -124,7 +124,7 @@ extern QE0A8 D_004E2408;
 #endif /* merge_units */
 #define D_004E2408 (*(QE0A8*)&D_004E2408) /* merge_units */
 
-int func_0010E0A8(unsigned int c)
+int iRotateThreadReadyQueue(unsigned int c)
 {
     int i;
     if (c >= 0x80 || D_00486198 == 0) return -1;
@@ -147,7 +147,7 @@ extern QE128 D_004E2408;
 #define D_004E2408 (*(QE128*)&D_004E2408) /* merge_units */
 
 extern int iSuspendThread(int);
-int func_0010E128(int tid)
+int iSuspendThread_2(int tid)
 {
     register int v0 __asm__("$2");
     unsigned int t;
@@ -174,9 +174,9 @@ extern int CreateSema(SemaParamE1C0 *);
 #endif /* merge_units */
 #define CreateSema(a0) (CreateSema((SemaParamDF38 *)(a0))) /* merge_units */
 
-extern int func_00117C68(int, int);
-extern int func_00117E18(int, int (*)(int, int, int, int), int);
-extern int func_0010E288(int, int, int, int);
+extern int TimerUSec2BusClock(int, int);
+extern int SetTimerAlarm(int, int (*)(int, int, int, int), int);
+extern int _DelayThreadHandler(int, int, int, int);
 int DelayThread(int a)
 {
     SemaParamE1C0 sp;
@@ -188,7 +188,7 @@ int DelayThread(int a)
     sp.init_count = 0;
     sema = CreateSema(&sp);
     if (sema < 0) return 0x80008003;
-    r = func_00117E18(func_00117C68(0, a), func_0010E288, sema);
+    r = SetTimerAlarm(TimerUSec2BusClock(0, a), _DelayThreadHandler, sema);
     if (r < 0) {
         DeleteSema(sema);
         return r;

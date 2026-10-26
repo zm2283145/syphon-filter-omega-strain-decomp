@@ -7,7 +7,7 @@
 #include "types.h"
 
 /* False for 0, -80 and -104; true otherwise. */
-int func_002FE8B0(int code) {
+int rt_msg_client_is_valid_channel(int code) {
     int result = 0;
 
     if (code != 0 && code != -80) {

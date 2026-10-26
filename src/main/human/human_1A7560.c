@@ -32,9 +32,9 @@ void* Root_GetParent(void*);
 void* Root_GetWorldPlacement(void*);
 void Transform_SetOrientation(Plc*, void*);
 void Placement_Invert(Plc*);
-void func_00132840(V*);
+void cQuaternion_ctor_void(V*);
 void Quat_Multiply(V*, V*, V*);
-void func_00132800(V*, V*);
+void cQuaternion_ctor_cQuaternionR(V*, V*);
 void Root_GetWorldPose(struct S* s);
 void Root_RefreshWorldCache(void*);
 char* Root_Identity(void*);
@@ -104,9 +104,9 @@ void Root_GetWorldPose(S* s)
         Plc* p = &s->w;
         V r;
         V q;
-        func_00132840(&q);
+        cQuaternion_ctor_void(&q);
         Quat_Multiply(&q, &pi->rot, &p->rot);
-        func_00132800(&r, &q);
+        cQuaternion_ctor_cQuaternionR(&r, &q);
         p->rot = r;
         QRot(&p->pos, &pi->rot);
         VAdd3(&pi->pos, &p->pos);
@@ -150,7 +150,7 @@ static inline char* GetWorld(void* r) {
     }
     return Root_Identity(r) + 0x50;
 }
-void func_001A76A0(Obj* o)
+void cSkaAnimAnchor_TreeNode_UpdateDeltaPos(Obj* o)
 {
     if (o->dirty) {
         char* v = GetWorld(o->root);

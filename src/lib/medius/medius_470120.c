@@ -6,7 +6,7 @@
 
 /* merge_units: begin func_00470120 */
 extern int sprintf(char* buf, const char* fmt, ...);
-int func_00470120(int a, int b, int unused, char* buf)
+int iCreateAndAllocateMessageID(int a, int b, int unused, char* buf)
 {
     sprintf(buf, "%s.%d", a, b);
     return 0;
@@ -16,7 +16,7 @@ int func_00470120(int a, int b, int unused, char* buf)
 /* merge_units: begin func_00470150 */
 extern char* strncpy(char* d, const char* s, int n);
 extern int atoi(const char* s);
-int func_00470150(char* s, char* out, int* a, int* b)
+int iGetMessageIDValues(char* s, char* out, int* a, int* b)
 {
     char* p = s;
     int n = 0;

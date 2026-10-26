@@ -65,7 +65,7 @@ struct Rec5F20 {
     float fE4;
 };
 
-extern "C" Rec5F20* func_002C5F20(Rec5F20* d, Rec5F20* s)
+extern "C" Rec5F20* cNpcTransfer_opAssign(Rec5F20* d, Rec5F20* s)
 {
     int i;
 

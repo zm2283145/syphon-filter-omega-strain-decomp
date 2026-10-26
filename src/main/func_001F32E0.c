@@ -8,13 +8,13 @@
 #include "loose01_types.h"
 
 extern int Motion_Lookup(int, int);
-extern int func_001ADFE0(Unk1F32E0*, int);
-extern void func_001F3340(int, ObjVec*);
-extern ObjVec* func_001F3730(ObjVec*);
+extern int cPointer_cSkaNode_ctor_cSkaNodeP(Unk1F32E0*, int);
+extern void cSkaInitListOfPointers_cSkaTransBLEND_CopyPointerContentsToArray(int, ObjVec*);
+extern ObjVec* cArray_cSkaTransBLEND_ctor_void(ObjVec*);
 
-Unk1F32E0* func_001F32E0(Unk1F32E0* self, int a1, int a2, int a3) {
-    func_001ADFE0(self, Motion_Lookup(a2, a1));
-    func_001F3730(&self->list);
-    func_001F3340(a3, &self->list);
+Unk1F32E0* cSkaSwitchItem_ctor_cString16NR_cSkaAnimationSetR_cSkaInitListOfPointersR(Unk1F32E0* self, int a1, int a2, int a3) {
+    cPointer_cSkaNode_ctor_cSkaNodeP(self, Motion_Lookup(a2, a1));
+    cArray_cSkaTransBLEND_ctor_void(&self->list);
+    cSkaInitListOfPointers_cSkaTransBLEND_CopyPointerContentsToArray(a3, &self->list);
     return self;
 }

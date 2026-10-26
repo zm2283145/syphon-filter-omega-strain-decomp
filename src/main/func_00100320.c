@@ -13,7 +13,7 @@ extern void FlushCache(int mode);
 extern void *memset(void *, int, unsigned int);
 extern void FunctionList_CallEach(void *start, void *end, int a, int b);
 
-int func_00100320(const char *path, char *buf)
+int mwLoadOverlay(const char *path, char *buf)
 {
     int ret = 0;
     int size = 0;

@@ -11,14 +11,14 @@ typedef struct { int ret; int size; char name[0xFC]; char data[0xFC]; } RpcBuf;
 extern RpcCd D_004E63C0;
 extern RpcBuf D_004E61C0;
 extern int sceSifCallRpc(void *cd, int fno, int mode, void *send, int ssize, void *recv, int rsize, void *endf, void *endp);
-extern int func_001148B8(void);
-extern int func_001149B8(void);
+extern int _lf_bind(void);
+extern int _lf_version(void);
 extern void *memcpy(void *, const void *, unsigned int);
 
-int func_00114A80(int id, int size, void *data, int *out)
+int _sceSifLoadModuleBuffer(int id, int size, void *data, int *out)
 {
-    if (func_001148B8() < 0) return -0x10000;
-    if (func_001149B8() != 0) return -0x10004;
+    if (_lf_bind() < 0) return -0x10000;
+    if (_lf_version() != 0) return -0x10004;
     D_004E61C0.ret = id;
     if (data != 0) {
         if (size > 0xFC) {
@@ -39,8 +39,8 @@ int func_00114A80(int id, int size, void *data, int *out)
 /* merge_units: begin func_00114C88 */
 int sceSifStopModule(int id, int size, void *data, int *out)
 {
-    if (func_001148B8() < 0) return -0x10000;
-    if (func_001149B8() != 0) return -0x10004;
+    if (_lf_bind() < 0) return -0x10000;
+    if (_lf_version() != 0) return -0x10004;
     D_004E61C0.ret = id;
     if (data != 0) {
         if (size > 0xFC) {
@@ -71,8 +71,8 @@ extern int sceSifBindRpc(RpcCd *cd, unsigned int id, int mode);
 extern char *strncpy(char *, const char *, unsigned int);
 int sceSifUnloadModule(int a0)
 {
-    if (func_001148B8() < 0) return -0x10000;
-    if (func_001149B8() != 0) return -0x10004;
+    if (_lf_bind() < 0) return -0x10000;
+    if (_lf_version() != 0) return -0x10004;
     D_004E61C0[0] = a0;
     if (sceSifCallRpc(&D_004E63C0, 8, 0, D_004E61C0, 4, D_004E61C0, 4, 0, 0) < 0) return -0x10001;
     return D_004E61C0[0];
@@ -89,8 +89,8 @@ extern RpcBuf_00114F20 D_004E61C0;
 
 int sceSifSearchModuleByName(const char *name)
 {
-    if (func_001148B8() < 0) return -0x10000;
-    if (func_001149B8() != 0) return -0x10004;
+    if (_lf_bind() < 0) return -0x10000;
+    if (_lf_version() != 0) return -0x10004;
     strncpy(D_004E61C0.name, name, 0xFC);
     D_004E61C0.name[0xFB] = 0;
     if (sceSifCallRpc(&D_004E63C0, 9, 0, &D_004E61C0, 0x200, &D_004E61C0, 4, 0, 0) < 0) return -0x10001;
@@ -105,10 +105,10 @@ extern int D_004E61C0[];
 #endif /* merge_units */
 #define D_004E61C0 ((int*)&D_004E61C0) /* merge_units */
 
-int func_00114FC0(int a0)
+int sceSifSearchModuleByAddress(int a0)
 {
-    if (func_001148B8() < 0) return -0x10000;
-    if (func_001149B8() != 0) return -0x10004;
+    if (_lf_bind() < 0) return -0x10000;
+    if (_lf_version() != 0) return -0x10004;
     D_004E61C0[0] = a0;
     if (sceSifCallRpc(&D_004E63C0, 10, 0, D_004E61C0, 4, D_004E61C0, 4, 0, 0) < 0) return -0x10001;
     return D_004E61C0[0];

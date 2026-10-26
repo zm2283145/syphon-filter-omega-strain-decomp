@@ -34,7 +34,7 @@ public:
 };
 extern "C" void func_0017CA90(void* p, int n);
 extern "C" void* Mem_PlacementNew(int kind, void* p);
-extern "C" void func_0017CA00(void* p, float s, void* a, void* b, void* c, float* r);
+extern "C" void cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_floatR_floatR_etc(void* p, float s, void* a, void* b, void* c, float* r);
 static inline int B5kIsZero(float f) { return 0.0f == f; }
 extern "C" void Curve_Retarget_364920(B5kObj* o) {
     unsigned char flag = 0;
@@ -47,7 +47,7 @@ extern "C" void Curve_Retarget_364920(B5kObj* o) {
         func_0017CA90(&o->b18, -1);
         p = Mem_PlacementNew(0x18, &o->b18);
         if (p) {
-            func_0017CA00(p, o->scale, &o->b8, &o->bc, &o->b10, &r);
+            cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_floatR_floatR_etc(p, o->scale, &o->b8, &o->bc, &o->b10, &r);
         }
     } else if ((B5kIsZero(o->cur) ^ 1)) {
         float r = o->GetRate();

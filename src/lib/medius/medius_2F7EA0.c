@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_002F7EA0(int a0, int a1) {
+int AppendKeyChain(int a0, int a1) {
     int v0;
     int cond;
 

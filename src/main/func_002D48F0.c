@@ -1,4 +1,4 @@
-/* func_002D48F0: NPC attack driver: send the "aim at target point" action,
+/* cNetNPC_AimFire: NPC attack driver: send the "aim at target point" action,
  * fire a burst shot while burst rounds and the shot timer allow, otherwise
  * start a new burst (3..10 rounds) after the burst delay; then send the
  * "track target" action with the target id. */
@@ -36,13 +36,13 @@ extern "C" {
 void MsgQueue_QueueClone(void*, void*, int, int);
 Actor* AiController_GetActor(Self*);
 int Weapon_CanAttack(void*);
-int func_002D4760(Self*);
-void func_002D48F0(Self* s, Tgt* t);
+int cNetNPC_WeaponShoot(Self*);
+void cNetNPC_AimFire(Self* s, Tgt* t);
 }
 /* GCC-style volatile lq/sq quad copy */
 static inline void V4_Copy(V4* d, V4* s) { __int128 q; __asm__ volatile("lq %0, 0(%2); sq %0, 0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
 
-void func_002D48F0(Self* s, Tgt* t)
+void cNetNPC_AimFire(Self* s, Tgt* t)
 {
     {
         V4 p = t->AimPoint(-1);
@@ -59,7 +59,7 @@ void func_002D48F0(Self* s, Tgt* t)
         cMessage_dtor(&m, 0);
     }
     if (s->burst > 0) {
-        if (Weapon_CanAttack(AiController_GetActor(s)->inv) && s->shotWait <= 0.0f && func_002D4760(s)) {
+        if (Weapon_CanAttack(AiController_GetActor(s)->inv) && s->shotWait <= 0.0f && cNetNPC_WeaponShoot(s)) {
             s->burst--;
             s->shotWait = s->shotDelay;
         }

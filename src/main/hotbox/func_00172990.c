@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int* func_00172990(PtrVec* v, int i) {
+int* std_vector_cGOBJPtr_opIndex(PtrVec* v, int i) {
     return v->data + i;
 }
 

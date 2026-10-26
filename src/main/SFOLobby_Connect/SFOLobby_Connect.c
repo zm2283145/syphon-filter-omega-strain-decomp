@@ -18,14 +18,14 @@ extern int Lobby_GetTime(void);
 extern int SFOLobby_SetError(SFOLobby*, int, char*, int);
 extern void SFOLobby_CallUpdateHook(SFOLobby*, int, int);
 extern int SFOLobby_Poll(SFOLobby*, int, int, int);
-extern int func_0046AF60(void*, void*);
+extern int MediusGetMyIP(void*, void*);
 extern int D_00497890;              /* reply timeout */
 extern char D_004C0E78[];           /* "1" */
 extern char D_004C0E80[];           /* "SFOLobby_Connect.cc" */
-extern char func_00446D00[];
+extern char SFOLobby_Callback_GetMyIP[];
 #pragma push
 #pragma opt_common_subs off
-/* Asks the server for the own IP address; the reply callback func_00446D00 stores
+/* Asks the server for the own IP address; the reply callback SFOLobby_Callback_GetMyIP stores
  * it in myIp and sets gotMyIp. */
 int SFOLobby_RequestMyIp(SFOLobby* s)
 {
@@ -34,7 +34,7 @@ int SFOLobby_RequestMyIp(SFOLobby* s)
     String_Copy(req.messageId, D_004C0E78);
     String_Copy(req.sessionKey, s->sessionKey);
     memset(s->myIp, 0, 0x14);
-    s->requestResult = func_0046AF60(&req, func_00446D00);
+    s->requestResult = MediusGetMyIP(&req, SFOLobby_Callback_GetMyIP);
     if (s->requestResult != 0) return 0;
     s->gotMyIp = 0;
     s->waitStart = Lobby_GetTime();
@@ -59,7 +59,7 @@ int SFOLobby_RequestMyIp(SFOLobby* s)
 #pragma push /* merge_units */
 extern int D_00497728;              /* connect timeout */
 extern int D_00497740;              /* connect attempts */
-void func_00447220(void);
+void SFOLobby_Callback_MediusConnect(void);
 #if 0 /* merge_units */
 void SFOLobby_CallUpdateHook(void* a, int b, int c);
 #endif /* merge_units */
@@ -67,8 +67,8 @@ void SFOLobby_CallUpdateHook(void* a, int b, int c);
 
 
 
-void func_0046BA68(LobbyConnectParams* cfg, int a, char* host, int port, int c);
-int func_004689F8(LobbyConnectParams* cfg, int* out);
+void MediusSetDefaultConnectInParams(LobbyConnectParams* cfg, int a, char* host, int port, int c);
+int MediusConnect(LobbyConnectParams* cfg, int* out);
 int Lobby_GetTime(void);
 #if 0 /* merge_units */
 int SFOLobby_Poll(SFOLobby* self, int a, int b, int c);
@@ -83,7 +83,7 @@ int SFOLobby_SetError(SFOLobby* self, int code, char* file, int line);
 
 
 /* Connects to the directory server dirServer:dirPort, retrying up to D_00497740 times;
- * the connect callback func_00447220 sets connHandle and gotConnect. */
+ * the connect callback SFOLobby_Callback_MediusConnect sets connHandle and gotConnect. */
 int SFOLobby_ConnectDir(SFOLobby* self)
 {
     LobbyConnectParams cfg;
@@ -93,16 +93,16 @@ int SFOLobby_ConnectDir(SFOLobby* self)
     tries = 0;
     memset(&cfg, 0, 0x100);
     memset(out, 0, 8);
-    func_0046BA68(&cfg, 0, self->dirServer, self->dirPort, 1);
+    MediusSetDefaultConnectInParams(&cfg, 0, self->dirServer, self->dirPort, 1);
     cfg.timeout = D_00497728;
-    cfg.onConnect = func_00447220;
+    cfg.onConnect = SFOLobby_Callback_MediusConnect;
     cfg.unkF8 = 0;
     cfg.unkFC = 0;
     cfg.info.serverKey = self->serverKey; self->connHandle = -1;
     while (tries < D_00497740 && self->connHandle == -1) {
         SFOLobby_CallUpdateHook(self, 0, 0);
         tries++;
-        self->requestResult = func_004689F8(&cfg, out);
+        self->requestResult = MediusConnect(&cfg, out);
         if (self->requestResult == 0) {
             self->gotConnect = 0;
             self->waitStart = Lobby_GetTime();
@@ -132,20 +132,20 @@ int SFOLobby_ConnectDir(SFOLobby* self)
 #pragma mpwc_relax on
 int String_Copy();
 int SFOLobby_SetError();
-int func_00468F78();
+int MediusUpdateClientState();
 #if 0 /* merge_units */
 extern char D_004C0E80;             /* "SFOLobby_Connect.cc" */
 #endif /* merge_units */
 #define D_004C0E80 (*(char*)&D_004C0E80) /* merge_units */
 
 #pragma opt_common_subs off
-/* Sends the session key with flag (func_00468F78). */
+/* Sends the session key with flag (MediusUpdateClientState). */
 int SFOLobby_UpdateClientState(SFOLobby * self, int flag) {
     struct { int sessionKey[5]; int flag[3]; } sl;
     memset(sl.sessionKey, 0, 0x18);
     String_Copy(sl.sessionKey, self->sessionKey);
     sl.flag[0] = flag;
-    self->requestResult = func_00468F78(sl.sessionKey);
+    self->requestResult = MediusUpdateClientState(sl.sessionKey);
     if (self->requestResult != 0) {
         SFOLobby_SetError(self, 0xD, &D_004C0E80, 0x2D1);
         return 0;
@@ -160,10 +160,10 @@ int SFOLobby_UpdateClientState(SFOLobby * self, int flag) {
 #pragma push /* merge_units */
 #pragma mpwc_relax on
 int SFOLobby_SetError(SFOLobby * , int, char *, int);
-int func_00468CD0();
-/* Disconnects (func_00468CD0) and forgets the connection. */
+int MediusDisconnect();
+/* Disconnects (MediusDisconnect) and forgets the connection. */
 int SFOLobby_DisconnectLobbyServer(SFOLobby *self) {
-    self->requestResult = func_00468CD0();
+    self->requestResult = MediusDisconnect();
     if (self->requestResult != 0) {
         SFOLobby_SetError(self, 0x2B, &D_004C0E80, 0x2A0);
         return 0;
@@ -179,9 +179,9 @@ int SFOLobby_DisconnectLobbyServer(SFOLobby *self) {
 #pragma push /* merge_units */
 #pragma mpwc_relax on
 
-/* Disconnects (func_00468CD0) and forgets the connection. */
+/* Disconnects (MediusDisconnect) and forgets the connection. */
 int SFOLobby_DisconnectAuthServer(SFOLobby *self) {
-    self->requestResult = func_00468CD0();
+    self->requestResult = MediusDisconnect();
     if (self->requestResult != 0) {
         SFOLobby_SetError(self, 0x2C, &D_004C0E80, 0x288);
         return 0;
@@ -195,12 +195,12 @@ int SFOLobby_DisconnectAuthServer(SFOLobby *self) {
 
 /* merge_units: begin func_0044CA90 */
 #pragma push /* merge_units */
-extern int func_004690A0(void*, void*);
-extern char func_00447470[];
+extern int MediusSessionEnd(void*, void*);
+extern char SFOLobby_Callback_SessionEnd[];
 #pragma push
 #pragma opt_common_subs off
 #pragma opt_loop_invariants off
-/* Request answered into reply380 (callback func_00447470); fails on a negative status. */
+/* Request answered into reply380 (callback SFOLobby_Callback_SessionEnd); fails on a negative status. */
 int SFOLobby_EndSession(SFOLobby* s)
 {
     struct { char messageId[0x15]; char sessionKey[0x11]; } req;
@@ -208,7 +208,7 @@ int SFOLobby_EndSession(SFOLobby* s)
     memset(&s->reply380, 0, 0x1C);
     String_Copy(req.messageId, D_004C0E78);
     String_Copy(req.sessionKey, s->sessionKey);
-    s->requestResult = func_004690A0(&req, func_00447470);
+    s->requestResult = MediusSessionEnd(&req, SFOLobby_Callback_SessionEnd);
     if (s->requestResult != 0) {
         SFOLobby_SetError(s, 0x12, D_004C0E80, 0x25F);
         return 0;
@@ -235,11 +235,11 @@ int SFOLobby_EndSession(SFOLobby* s)
 
 /* merge_units: begin func_0044CBE0 */
 #pragma push /* merge_units */
-extern int func_00469000(void*, void*);
-extern char func_004471B0[];
+extern int MediusSessionBegin(void*, void*);
+extern char SFOLobby_Callback_SessionBegin[];
 #pragma push
 #pragma opt_common_subs off
-/* Request answered into reply350 (callback func_004471B0); fails unless MediusSuccess. */
+/* Request answered into reply350 (callback SFOLobby_Callback_SessionBegin); fails unless MediusSuccess. */
 int SFOLobby_BeginSession(SFOLobby* s)
 {
     struct { char messageId[0x18]; int flag; } req;
@@ -247,7 +247,7 @@ int SFOLobby_BeginSession(SFOLobby* s)
     memset(&s->reply350, 0, 0x30);
     String_Copy(req.messageId, D_004C0E78);
     req.flag = 1;
-    s->requestResult = func_00469000(&req, func_004471B0);
+    s->requestResult = MediusSessionBegin(&req, SFOLobby_Callback_SessionBegin);
     if (s->requestResult != 0) {
         SFOLobby_SetError(s, 0x11, D_004C0E80, 0x222);
         return 0;
@@ -273,12 +273,12 @@ int SFOLobby_BeginSession(SFOLobby* s)
 
 /* merge_units: begin func_0044CD20 */
 #pragma push /* merge_units */
-extern int func_0046BFF0(void*, void*, void*);
-extern char func_00447130[];
-extern char func_00447070[];
-/* Two-part list request (callbacks func_00447130 -> reply17CC and
- * func_00447070 -> reply18EC); waits until both lists report their end. */
-int func_0044CD20(SFOLobby* s)
+extern int MediusGetUniverseInformation(void*, void*, void*);
+extern char SFOLobby_Callback_UniverseNews[];
+extern char SFOLobby_Callback_UniverseStatusList[];
+/* Two-part list request (callbacks SFOLobby_Callback_UniverseNews -> reply17CC and
+ * SFOLobby_Callback_UniverseStatusList -> reply18EC); waits until both lists report their end. */
+int SFOLobby_UniverseInformationRequest(SFOLobby* s)
 {
     struct { char messageId[0x18]; int f18; int f1C; int f20; } req;
     memset(&req, 0, sizeof(req));
@@ -288,7 +288,7 @@ int func_0044CD20(SFOLobby* s)
     req.f18 = 3;
     req.f1C = 2;
     req.f20 = s->unk26A4;
-    s->requestResult = func_0046BFF0(&req, func_00447130, func_00447070);
+    s->requestResult = MediusGetUniverseInformation(&req, SFOLobby_Callback_UniverseNews, SFOLobby_Callback_UniverseStatusList);
     if (s->requestResult != 0) {
         return 0;
     }
@@ -311,26 +311,26 @@ int func_0044CD20(SFOLobby* s)
 #pragma push /* merge_units */
 extern int Net_ParseIPv4(char*);
 #if 0 /* merge_units */
-extern int func_004689F8(void*, void*);
+extern int MediusConnect(void*, void*);
 #endif /* merge_units */
-#define func_004689F8(a0, a1) (func_004689F8((void *)(a0), (void *)(a1))) /* merge_units */
+#define MediusConnect(a0, a1) (MediusConnect((void *)(a0), (void *)(a1))) /* merge_units */
 
-extern int func_00468F78(void*);
+extern int MediusUpdateClientState(void*);
 extern int SFOLobby_RequestAccountInfo(SFOLobby*, int);
-extern void func_00449A00(SFOLobby*);
-extern void func_00452F30(SFOLobby*, int, LobbyPlayerInfo*);
-extern void func_004505E0(SFOLobby*, LobbyPlayerInfo*);
+extern void SFOLobby_CellGetInfo(SFOLobby*);
+extern void SFOLobby_StatsCallback(SFOLobby*, int, LobbyPlayerInfo*);
+extern void SFOLobby_UpdateStats(SFOLobby*, LobbyPlayerInfo*);
 extern void SFOLobby_CacheAccount(SFOLobby*, int, char*, int, LobbyPlayerInfo*);
-extern void func_00449800(SFOLobby*, int);
+extern void SFOLobby_CellUpdateMemberList(SFOLobby*, int);
 extern LobbyPlayerInfo D_00585E90;  /* own player info */
 #if 0 /* merge_units */
-void func_00447220(); /* gsynth: address taken */
+void SFOLobby_Callback_MediusConnect(); /* gsynth: address taken */
 #endif /* merge_units */
-#define func_00447220() (func_00447220()) /* merge_units */
+#define SFOLobby_Callback_MediusConnect() (SFOLobby_Callback_MediusConnect()) /* merge_units */
 
-#define func_00447220 ((char *)func_00447220) /* merge_units */
-extern char func_00447D80[];
-extern char func_00447D70[];
+#define SFOLobby_Callback_MediusConnect ((char *)SFOLobby_Callback_MediusConnect) /* merge_units */
+extern char SFOLobby_Callback_RemoteClientConnect[];
+extern char SFOLobby_Callback_RemoteClientDisconnect[];
 /* Sends the session key (same request as SFOLobby_UpdateClientState with flag 1). */
 static inline unsigned char Login_CE60(SFOLobby* s)
 {
@@ -338,7 +338,7 @@ static inline unsigned char Login_CE60(SFOLobby* s)
     memset(&req, 0, sizeof(req));
     String_Copy(req.sessionKey, s->sessionKey);
     req.flag = 1;
-    s->requestResult = func_00468F78(&req);
+    s->requestResult = MediusUpdateClientState(&req);
     if (s->requestResult != 0) {
         SFOLobby_SetError(s, 0xD, D_004C0E80, 0x2D1);
         return 0;
@@ -365,13 +365,13 @@ int SFOLobby_ConnectLobby(SFOLobby* s)
     req.info.sessionKey = s->loginReply.connectInfo.sessionKey;
     req.info.accessKey = s->loginReply.connectInfo.accessKey;
     req.timeout = D_00497728;
-    req.onConnect = func_00447220;
-    req.unkF8 = func_00447D80;
-    req.unkFC = func_00447D70;
+    req.onConnect = SFOLobby_Callback_MediusConnect;
+    req.unkF8 = SFOLobby_Callback_RemoteClientConnect;
+    req.unkFC = SFOLobby_Callback_RemoteClientDisconnect;
     while (n < D_00497740 && s->connHandle == -1) {
         SFOLobby_CallUpdateHook(s, 0, 0);
         n++;
-        s->requestResult = func_004689F8(&req, buf);
+        s->requestResult = MediusConnect(&req, buf);
         if (s->requestResult == 0) {
             s->gotConnect = 0;
             s->waitStart = Lobby_GetTime();
@@ -393,24 +393,24 @@ int SFOLobby_ConnectLobby(SFOLobby* s)
     }
     {
         unsigned char ok = SFOLobby_RequestAccountInfo(s, s->accountId);
-        func_00449A00(s);
+        SFOLobby_CellGetInfo(s);
         info = ok ? &s->accountInfoReply.info : &D_00585E90;
     }
-    func_00452F30(s, 0, info);
+    SFOLobby_StatsCallback(s, 0, info);
     info->wE8 = s->unk2484;
     info->ip = Net_ParseIPv4(s->myIp);
     info->wEC = 0;
     info->bF9 = 0;
     info->wF0 = 0;
     info->bF8 = 5;
-    func_004505E0(s, info);
+    SFOLobby_UpdateStats(s, info);
     SFOLobby_CacheAccount(s, s->accountId, s->accountInfoReply.accountName, info->ip, info);
-    func_00449800(s, 1);
+    SFOLobby_CellUpdateMemberList(s, 1);
     return 1;
 }
-#undef func_00447220 /* merge_units */
-#undef func_004689F8 /* merge_units */
-#undef func_00447220 /* merge_units */
+#undef SFOLobby_Callback_MediusConnect /* merge_units */
+#undef MediusConnect /* merge_units */
+#undef SFOLobby_Callback_MediusConnect /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0044CE60 */
 
@@ -432,7 +432,7 @@ int SFOLobby_SetError(SFOLobby* self, int code, char* file, int line);
 #define SFOLobby_SetError(a0, a1, a2, a3) (SFOLobby_SetError((a0), (a1), (a2), (a3))) /* merge_units */
 
 /* Connects to the authentication server authServer:authPort, retrying up to D_00497740 times;
- * the connect callback func_00447220 sets connHandle and gotConnect. */
+ * the connect callback SFOLobby_Callback_MediusConnect sets connHandle and gotConnect. */
 int SFOLobby_ConnectAuth(SFOLobby* self)
 {
     LobbyConnectParams cfg;
@@ -442,16 +442,16 @@ int SFOLobby_ConnectAuth(SFOLobby* self)
     tries = 0;
     memset(&cfg, 0, 0x100);
     memset(out, 0, 8);
-    func_0046BA68(&cfg, 0, self->authServer, self->authPort, 1);
+    MediusSetDefaultConnectInParams(&cfg, 0, self->authServer, self->authPort, 1);
     cfg.timeout = D_00497728;
-    cfg.onConnect = func_00447220;
+    cfg.onConnect = SFOLobby_Callback_MediusConnect;
     cfg.unkF8 = 0;
     cfg.unkFC = 0;
     cfg.info.serverKey = self->serverKey;
     while (tries < D_00497740 && self->connHandle == -1) {
         SFOLobby_CallUpdateHook(self, 0, 0);
         tries++;
-        self->requestResult = func_004689F8(&cfg, out);
+        self->requestResult = MediusConnect(&cfg, out);
         if (self->requestResult == 0) {
             self->gotConnect = 0;
             self->waitStart = Lobby_GetTime();
@@ -478,7 +478,7 @@ int SFOLobby_ConnectAuth(SFOLobby* self)
 
 /* merge_units: begin func_0044D3D0 */
 #pragma push /* merge_units */
-extern int func_0046BEB0(void*, void*);
+extern int MediusSetLocalizationParams(void*, void*);
 extern char func_00445F40[];
 #pragma push
 #pragma opt_common_subs off
@@ -491,7 +491,7 @@ int func_0044D3D0(SFOLobby* s)
     req.z = s->unk26A4;
     String_Copy(req.messageId, D_004C0E78);
     String_Copy(req.sessionKey, s->sessionKey);
-    s->requestResult = func_0046BEB0(&req, func_00445F40);
+    s->requestResult = MediusSetLocalizationParams(&req, func_00445F40);
     if (s->requestResult != 0) {
         SFOLobby_SetError(s, 1, D_004C0E80, 0x68);
         return 0;
@@ -530,10 +530,10 @@ extern int SFOLobby_BeginSession(SFOLobby*);
 #endif /* merge_units */
 #define SFOLobby_BeginSession(a0) (SFOLobby_BeginSession((a0))) /* merge_units */
 
-extern int func_004688D8(char*);
+extern int MediusGetMySessionKey(char*);
 
 
-extern void func_004691D8(R44D*);
+extern void MediusDnasSignature(R44D*);
 #if 0 /* merge_units */
 extern int SFOLobby_RequestMyIp(SFOLobby*);
 #endif /* merge_units */
@@ -554,7 +554,7 @@ int SFOLobby_Authenticate(SFOLobby* o) {
     LobbyArray_Clear(&o->pool118);
     if (!SFOLobby_ConnectAuth(o)) return 0;
     if (!SFOLobby_BeginSession(o)) return 0;
-    o->requestResult = func_004688D8(o->sessionKey);
+    o->requestResult = MediusGetMySessionKey(o->sessionKey);
     if (o->requestResult) {
         SFOLobby_SetError(o, 0x13, D_004C0E80, 0x25);
         return 0;
@@ -570,7 +570,7 @@ int SFOLobby_Authenticate(SFOLobby* o) {
         }
         rec.passwordLen = o->passwordLen;
         memcpy(rec.password, o->password, 0x20);
-        func_004691D8(&rec);
+        MediusDnasSignature(&rec);
     }
     SFOLobby_RequestMyIp(o);
     if (!func_0044D3D0(o)) return 0;

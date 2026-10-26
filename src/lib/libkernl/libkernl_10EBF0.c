@@ -3,10 +3,10 @@ extern double SoftFloat_DoubleSub(double, double);
 extern double SoftFloat_DoubleMultiply(double, double);
 extern double SoftFloat_DoubleDivide(double, double);
 extern unsigned long func_0011B970(double);
-extern int func_0010EB58(unsigned long);
-extern int func_0010F350(const char *, ...);
+extern int ftoi(unsigned long);
+extern int kprintf(const char *, ...);
 extern void (*D_004861A4)(int);
-void func_0010EBF0(double x)
+void printfloat(double x)
 {
     int e = 0;
     int n;
@@ -25,12 +25,12 @@ void func_0010EBF0(double x)
             e++;
         }
     }
-    n = func_0010EB58(func_0011B970(SoftFloat_DoubleMultiply(x, 1000000.0)));
-    func_0010F350("0.%d", n);
+    n = ftoi(func_0011B970(SoftFloat_DoubleMultiply(x, 1000000.0)));
+    kprintf("0.%d", n);
     if (e >= 0)
-        func_0010F350("e+%d", e);
+        kprintf("e+%d", e);
     else
-        func_0010F350("e%d", e);
+        kprintf("e%d", e);
 }
 
 

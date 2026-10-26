@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_001960A0(Iter* a, Iter* b) {
+int opNe_cObjectIdR_cObjectIdR(Iter* a, Iter* b) {
     return a->p != b->p;
 }

@@ -29,7 +29,7 @@ static inline void Del36D680(int* f)
     FileHal_Dtor(f, -1);
     Mem_Free(0, f, D_004BBF90, 0x235);
 }
-extern "C" int func_0036D680(S36D680* o)
+extern "C" int cFileMan_OpenFile(S36D680* o)
 {
     unsigned char open = 1;
     int err = 0;
@@ -62,7 +62,7 @@ extern "C" int func_0036D680(S36D680* o)
 #pragma push /* merge_units */
 typedef struct { char pad[0x14C]; unsigned char a14C; } C36D880;
 typedef struct { unsigned int flags; char pad[0x94]; C36D880* a98; } S36D880;
-int func_0036D880(S36D880* o)
+int cFileMan_IsClientMemAllocated(S36D880* o)
 {
     if (o->flags & 2) {
         if (o->a98->a14C == 2) return 1;
@@ -93,7 +93,7 @@ int FileMan_PollRead(S36D8E0* o)
 
 /* merge_units: begin func_0036D950 */
 #pragma push /* merge_units */
-extern int func_0036CAC0(void* target, int id, int value, int flag);
+extern int cHogFile_Stream_int_voidP_bool(void* target, int id, int value, int flag);
 
 typedef struct { unsigned int flags; char pad[0x80]; short id; char pad2[0x12]; void* target; } Obj;
 
@@ -102,7 +102,7 @@ unsigned char FileMan_ReadMember(Obj* self, int* value)
 {
     unsigned char result = 0;
     if (self->flags & 2) {
-        func_0036CAC0(self->target, self->id, *value, 1);
+        cHogFile_Stream_int_voidP_bool(self->target, self->id, *value, 1);
         result = 1;
     }
     return result;
@@ -118,9 +118,9 @@ typedef struct { unsigned int flags; char pad[0x80]; short idx; H36D990 h; char*
 extern "C" {
 int FileHal_Read(void* f, void* buf, int size, int off);
 #if 0 /* merge_units */
-int func_0036CAC0(void* f, int idx, void* buf, int off);
+int cHogFile_Stream_int_voidP_bool(void* f, int idx, void* buf, int off);
 #endif /* merge_units */
-#define func_0036CAC0(a0, a1, a2, a3) (func_0036CAC0((a0), (a1), (int)(a2), (a3))) /* merge_units */
+#define cHogFile_Stream_int_voidP_bool(a0, a1, a2, a3) (cHogFile_Stream_int_voidP_bool((a0), (a1), (int)(a2), (a3))) /* merge_units */
 
 int Hog_GetEntrySize(void* f, int idx);
 char* Hog_GetMemberInPlace(void* f, int idx);
@@ -157,7 +157,7 @@ extern "C" int FileMan_LoadMemberSync(S36D990* o, char** out, int size)
                 *out = Get(h);
             } else {
                 if (!*out) *out = (char*)Alloc36D990(sz, 0x176);
-                if (func_0036CAC0(o->a98, o->idx, *out, 0)) err = 4;
+                if (cHogFile_Stream_int_voidP_bool(o->a98, o->idx, *out, 0)) err = 4;
             }
         } else {
             *out = Hog_GetMemberInPlace(d, o->idx);
@@ -170,7 +170,7 @@ extern "C" int FileMan_LoadMemberSync(S36D990* o, char** out, int size)
     }
     return err;
 }
-#undef func_0036CAC0 /* merge_units */
+#undef cHogFile_Stream_int_voidP_bool /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0036D990 */
 
@@ -180,7 +180,7 @@ typedef struct { char* p0; int p4; char* p8; unsigned char c; } H36DC60;
 typedef struct { char pad[0x14C]; unsigned char mode; } D36DC60;
 typedef struct { unsigned int flags; char pad[0x80]; short idx; H36DC60 h; char* a98; } S36DC60;
 int FileHal_ReadAll(void*, void*);
-char* func_0036CAB0(void*);
+char* cHogFile_GetStream(void*);
 void Hog_ReadEntry(void*, int, int);
 #if 0 /* merge_units */
 char* Hog_GetMemberInPlace(void*, int);
@@ -198,7 +198,7 @@ char* FileMan_ReadData(S36DC60* o)
         if (d->mode == 2) {
             if (h->c) return Get_0036DC60(h);
             Hog_ReadEntry(d, o->idx, 0);
-            return func_0036CAB0(o->a98);
+            return cHogFile_GetStream(o->a98);
         }
         return Hog_GetMemberInPlace(d, o->idx);
     }
@@ -233,7 +233,7 @@ extern "C" int Hog_GetMemberOffset(Arc_36DDC0*, int);
 
 static inline int Off(Arc_36DDC0* a, int idx) { return a->f148->f10 + Hog_GetMemberOffset(a, idx); }
 
-extern "C" int func_0036DDC0(FME_36DDC0* f)
+extern "C" int cFileMan_GetCDSector(FME_36DDC0* f)
 {
     if (f->flags & 2) {
         int s = Off(f->a98, f->h84) / 2048;
@@ -280,7 +280,7 @@ int FileMan_GetSize(char * arg0) {
 extern int FileHal_Close(int halFile);
 
 /* If the entry has an open file (flag bit 0), pass its HAL file to FileHal_Close. */
-void func_0036DEC0(FileManEntry* entry) {
+void cFileMan_Close(FileManEntry* entry) {
     if (entry->flags & 1) {
         FileHal_Close(entry->halFile);
     }
@@ -294,9 +294,9 @@ typedef struct { char p0[0x14C]; unsigned char ready; } Y36DEF0;
 typedef struct { unsigned int flags; char p4[0x80]; short h84; char p86[0x12]; Y36DEF0* y; } X36DEF0;
 extern short Hog_FindFileNoCase(Y36DEF0* y, void* p, int z);
 #if 0 /* merge_units */
-extern int func_0036D680(X36DEF0* x);
+extern int cFileMan_OpenFile(X36DEF0* x);
 #endif /* merge_units */
-#define func_0036D680(a0) ((int)func_0036D680((void *)(a0))) /* merge_units */
+#define cFileMan_OpenFile(a0) ((int)cFileMan_OpenFile((void *)(a0))) /* merge_units */
 
 /* Polls the stream state: 1 idle, 2 not ready, 3 failed open, 0 opened, 5 nothing to do. */
 int FileMan_FindMember(X36DEF0* x)
@@ -312,10 +312,10 @@ int FileMan_FindMember(X36DEF0* x)
         }
         return r;
     }
-    if (x->flags & 1) { int r = func_0036D680(x); return r; }
+    if (x->flags & 1) { int r = cFileMan_OpenFile(x); return r; }
     return 5;
 }
-#undef func_0036D680 /* merge_units */
+#undef cFileMan_OpenFile /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0036DEF0 */
 
@@ -335,7 +335,7 @@ static inline char* Data(F36DFB0* f)
     if (*(int*)f & 1) return f->a98;
     return 0;
 }
-int func_0036DFB0(F36DFB0* d, const char* name, F36DFB0* s)
+int cFileMan_EncodeFilename_charP_cFileManR(F36DFB0* d, const char* name, F36DFB0* s)
 {
     if ((unsigned char)Kind(s) == 1) {
         int c = (*(int*)s & 4) != 0;
@@ -370,7 +370,7 @@ extern char* strncpy(char* d, const char* s, unsigned int n);
 #endif /* merge_units */
 #define strncpy(a0, a1, a2) (strncpy((a0), (a1), (int)(a2))) /* merge_units */
 
-int func_0036E140(Hog_36E1B0* h, const char* name, int arg, int opt) {
+int cFileMan_EncodeFilename_charP_cFileIOP_bool(Hog_36E1B0* h, const char* name, int arg, int opt) {
     h->flags = 0;
     strncpy(h->name, name, 0x80);
     h->f98 = arg;

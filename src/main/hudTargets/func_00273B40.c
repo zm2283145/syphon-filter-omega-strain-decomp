@@ -15,15 +15,15 @@ class OObj { public: int x; virtual void Update(int a); };
 extern "C" {
 int Mem_Free(...);
 int String_Dtor(...);
-int func_002731A0(...);
-int func_002731B0(...);
-int func_002731C0(...);
-int func_002731D0(...);
-int func_002731E0(...);
+int cLListIterator_cHudTargetsObserverPtr_ctor(...);
+int std_list_cHudTargetsObserverPtr_end(...);
+int std_list_cHudTargetsObserverPtr_generic_iterator_ctor(...);
+int std_list_cHudTargetInfoPtr_end_void_2(...);
+int cLListIterator_cHudTargetInfoPtr_ctor_listR(...);
 int List_Begin(...);
-int func_00273EF0(...);
-int func_00273EE0(...);
-int func_0015AF40(...);
+int std_list_cHudTargetInfoPtr_generic_iterator_ctor(...);
+int std_list_cHudTargetInfoPtr_generic_iterator_opCast(...);
+int std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(...);
 int List_Erase(...);
 int HudRadar_SetMeter(float, char*, int);
 int HudTracker_Kill(...);
@@ -36,14 +36,14 @@ extern char* g_Hud;
 void HudTargets_Update(Mgr* mgr, int arg);
 }
 
-static inline void beg0(It* o, char* l) { It r; List_Begin(&r, l); func_00273EF0(o, &r); }
-static inline void end0(It* o, char* l) { It r; func_002731D0(&r, l); func_002731E0(o, &r); }
-static inline void beg2(It* o, char* l) { It r; List_Begin(&r, l); func_002731C0(o, &r); }
-static inline void end1(It* o, char* l) { It r; func_002731B0(&r, l); func_002731A0(o, &r); }
+static inline void beg0(It* o, char* l) { It r; List_Begin(&r, l); std_list_cHudTargetInfoPtr_generic_iterator_ctor(o, &r); }
+static inline void end0(It* o, char* l) { It r; std_list_cHudTargetInfoPtr_end_void_2(&r, l); cLListIterator_cHudTargetInfoPtr_ctor_listR(o, &r); }
+static inline void beg2(It* o, char* l) { It r; List_Begin(&r, l); std_list_cHudTargetsObserverPtr_generic_iterator_ctor(o, &r); }
+static inline void end1(It* o, char* l) { It r; std_list_cHudTargetsObserverPtr_end(&r, l); cLListIterator_cHudTargetsObserverPtr_ctor(o, &r); }
 static inline void clr18(char* a) { int r; char* f; char* l; l = a + 0x1C; f = F_(a, 0x20, char*); Player_ClearRecentTargets(&r, a + 0x18, &f, &l); }
 static inline void clr24(char* a) { int r; char* f; char* l; l = a + 0x28; f = F_(a, 0x2C, char*); ObjectList_EraseRange(&r, a + 0x24, &f, &l); }
-static inline void er2(char* l, It* a, It* o) { It c; It b; func_00273EE0(&b, a); List_Erase(&c, l, &b); func_00273EF0(o, &c); }
-static inline void er(char* l, It* it, It* out) { It o; It a; func_0015AF40(&a, it); er2(l, &a, &o); out->p = o.p; }
+static inline void er2(char* l, It* a, It* o) { It c; It b; std_list_cHudTargetInfoPtr_generic_iterator_opCast(&b, a); List_Erase(&c, l, &b); std_list_cHudTargetInfoPtr_generic_iterator_ctor(o, &c); }
+static inline void er(char* l, It* it, It* out) { It o; It a; std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&a, it); er2(l, &a, &o); out->p = o.p; }
 static inline void Beg0(It* o, char* l) { beg0(o, l); }
 static inline void End0(It* o, char* l) { end0(o, l); }
 static inline void Beg2(It* o, char* l) { beg2(o, l); }

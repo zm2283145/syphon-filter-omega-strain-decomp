@@ -12,6 +12,6 @@ int* ParticleRandom_QwordAt(ParticleSlotTable* t, int index) {
 }
 
 /* Element index of a pointer vector. */
-int func_00398B00(PtrVec* v, int index) {
+int cTexMan_GetHalTexture(PtrVec* v, int index) {
     return v->data[index];
 }

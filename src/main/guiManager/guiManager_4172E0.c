@@ -12,7 +12,7 @@
 #include "base_dtor_chain.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_004172E0, String_Dtor)
+DEFINE_BASE_DTOR_CHAIN(GuiAnimationTrack_dtor, String_Dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_004172E0 */
 
@@ -23,13 +23,13 @@ DEFINE_BASE_DTOR_CHAIN(func_004172E0, String_Dtor)
 
 typedef struct { char pad[4]; VSlots67* ctl; char p1[0x1C]; void* res; } Obj_417340;
 extern "C" void IeElement_SetShown(void*, int);
-extern "C" void func_003E8DC0(void*, int);
+extern "C" void cInterfaceElement_Render(void*, int);
 
 extern "C" void GuiInterfaceDecorator_Draw(Obj_417340* o)
 {
     if (o->res) {
         IeElement_SetShown(o->res, 1);
-        func_003E8DC0(o->res, 0);
+        cInterfaceElement_Render(o->res, 0);
         IeElement_SetShown(o->res, 0);
     }
     o->ctl->slot10();

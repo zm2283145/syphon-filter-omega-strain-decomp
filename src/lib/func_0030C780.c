@@ -116,9 +116,9 @@ int func_0030BC98(void* c, unsigned char* ok);
 int func_00310C90(void* h, char* name, int a, int b);
 int func_00310D20(void* h, void* out);
 int func_00310C30(void* h);
-void func_002F5DB0(void* p);
+void rt_comm_destroy(void* p);
 int UPnP_SendSoapAction(void* c, char* a, char* b);
-void func_003060D8(void* p);
+void rt_time_get_time_stamp(void* p);
 int String_CompareN(const char* a, const char* b, int n);
 char* strncpy(char* d, const char* s, unsigned int n);
 long strtol(const char* s, char** e, int base);
@@ -178,7 +178,7 @@ int func_0030C780(Conn_30C780* c)
     }
     func_00310C30(c->req->h);
     c->req->h = 0;
-    func_002F5DB0(c->req->p0);
+    rt_comm_destroy(c->req->p0);
     c->req->p0 = 0;
     memset(&c->req->status, 0, 0x100C);
     { Req_30C780* q = c->req;
@@ -186,7 +186,7 @@ int func_0030C780(Conn_30C780* c)
         if (r != 0) {
             r = UPnP_SendSoapAction(c, "GetStatusInfo", D_004AFF28);
             if (r == 0) {
-                func_003060D8(c->req->x10);
+                rt_time_get_time_stamp(c->req->x10);
                 goto out;
             }
             { Req_30C780* q2 = c->req; q2->cb(c, r, q2->flags, st); }
@@ -244,7 +244,7 @@ int func_0030CA90(Conn_30CA90* c)
     }
     func_00310C30(c->req->h);
     c->req->h = 0;
-    func_002F5DB0(c->req->p0);
+    rt_comm_destroy(c->req->p0);
     c->req->p0 = 0;
     memset(&c->req->status, 0, 0x100C);
     { Req_30CA90* q = c->req;
@@ -252,7 +252,7 @@ int func_0030CA90(Conn_30CA90* c)
         if (r != 0) {
             r = UPnP_SendSoapAction(c, "GetExternalIPAddress", D_004AFF28);
             if (r == 0) {
-                func_003060D8(c->req->x10);
+                rt_time_get_time_stamp(c->req->x10);
                 goto out;
             }
             { Req_30CA90* q2 = c->req; q2->cb(c, r, q2->flags, c->name); }
@@ -364,7 +364,7 @@ int func_0030CD00(Conn_30CD00* c)
 done:
     func_00310C30(c->req->h);
     c->req->h = 0;
-    func_002F5DB0(c->req->p0);
+    rt_comm_destroy(c->req->p0);
     c->req->p0 = 0;
     memset(&c->req->status, 0, 0x100C);
     { Req_30CD00* q5 = c->req;
@@ -373,7 +373,7 @@ done:
             sprintf(q5->buf, "<NewPortMappingIndex>%d</NewPortMappingIndex>", q5->idx);
             { Req_30CD00* q6 = c->req; q6->idx++; r = UPnP_SendSoapAction(c, (char *)D_004B0088, q6->buf); }
             if (r == 0) {
-                func_003060D8(c->req->x10);
+                rt_time_get_time_stamp(c->req->x10);
                 goto out;
             }
             { Req_30CD00* q7 = c->req;

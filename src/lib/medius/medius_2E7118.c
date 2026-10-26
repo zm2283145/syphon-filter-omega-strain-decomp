@@ -21,12 +21,12 @@ extern E2E7118 D_0058D188[];
 extern unsigned short D_0058D178;
 extern char D_005880A0[];
 extern unsigned int D_005983DC;
-extern int func_002E52D8(unsigned int, int, void **);
-extern int func_002DDB08(void *);
-extern int func_002DDAC8(int *);
+extern int NetGetClientInfo(unsigned int, int, void **);
+extern int NetIGetTime(void *);
+extern int NetIGetLocalTime(int *);
 extern int Net_IpToString(void *, void *);
 extern int Net_SendTyped(signed char, int, int, int, unsigned int, int, void *);
-int func_002E7118(unsigned int slot, int unused, int id, P2E7118 *p)
+int PingPacketHandler(unsigned int slot, int unused, int id, P2E7118 *p)
 {
     M2E7118 m;
     char buf[16];
@@ -39,19 +39,19 @@ int func_002E7118(unsigned int slot, int unused, int id, P2E7118 *p)
         if (slot >= 4) goto done;
         if (id == 0x100) goto done;
         q = 0;
-        if (func_002E52D8(slot, id, &q) != 0) goto done;
+        if (NetGetClientInfo(slot, id, &q) != 0) goto done;
         if (q == 0) goto done;
         if (*(unsigned char *)((char *)q + 0x28) != 1) goto done;
-        func_002DDB08(&m);
+        NetIGetTime(&m);
         m.b4 = p->b4;
         m.b5 = 0;
         Net_SendTyped(-0x80, slot, id, 0, D_005983DC, 8, &m);
         goto done;
     }
-    func_002DDAC8(&t);
+    NetIGetLocalTime(&t);
     cb = D_0058D188[p->b4].fC;
     if (cb == 0) goto done;
-    func_002DDAC8(&t);
+    NetIGetLocalTime(&t);
     dt = t - D_0058D188[p->b4].f10;
     Net_IpToString(buf, &D_0058D188[p->b4]);
     Net_IpToString(D_005880A0, &D_0058D188[p->b4]);
@@ -69,23 +69,23 @@ done:
 /* merge_units: begin func_002E7328 */
 typedef struct { int busy; unsigned int n; int a; int len; char p[0x10]; int tm; unsigned char *map; char *data; } T2E7328;
 typedef struct { unsigned char type, sub; unsigned short len; unsigned short x; unsigned short idx; char p[8]; int off; char payload[4]; } H2E7328;
-extern int func_002E8F08(int, int, H2E7328 *, T2E7328 **);
+extern int NetFindMultiPacket(int, int, H2E7328 *, T2E7328 **);
 extern void *memcpy(void *, const void *, unsigned int);
-extern void func_00306018(int *);
+extern void rt_time_get_local(int *);
 extern void NetMsg_GetCallback(unsigned char, unsigned char, void (**)(int, int, int, char *));
-extern void func_002DD328(void *);
-int func_002E7328(int a, int b, int c, H2E7328 *h)
+extern void DmeFree(void *);
+int PacketFragmentPacketHandler(int a, int b, int c, H2E7328 *h)
 {
     T2E7328 *t = 0;
     void (*cb)(int, int, int, char *);
     int done = 1;
     unsigned int i;
     if (h == 0) return -1;
-    if (func_002E8F08(a, c, h, &t) != 0) return h->len + 0x14;
+    if (NetFindMultiPacket(a, c, h, &t) != 0) return h->len + 0x14;
     if (t == 0) return h->len + 0x14;
     memcpy(t->data + h->off, h->payload, h->len);
     t->len += h->len;
-    func_00306018(&t->tm);
+    rt_time_get_local(&t->tm);
     t->map[h->idx] = 1;
     for (i = 0; i < t->n; i++) {
         if (t->map[i] == 0) {
@@ -98,11 +98,11 @@ int func_002E7328(int a, int b, int c, H2E7328 *h)
         NetMsg_GetCallback(h->type, h->sub, &cb);
         if (cb) cb(a, b, c, t->data);
         if (t->data) {
-            func_002DD328(&t->data);
+            DmeFree(&t->data);
             t->data = 0;
         }
         if (t->map) {
-            func_002DD328(&t->map);
+            DmeFree(&t->map);
             t->map = 0;
         }
         t->busy = 0;

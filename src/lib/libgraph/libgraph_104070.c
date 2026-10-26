@@ -7,10 +7,10 @@
 /* merge_units: begin func_00104070 */
 typedef struct { volatile int chcr; int p0[3]; volatile unsigned int madr; int p1[3]; volatile unsigned int qwc; int p2[3]; volatile unsigned int tadr; } DmaChan;
 extern void sceDmaSync(DmaChan *);
-extern unsigned int func_00103CE0(void *);
+extern unsigned int CheckAddress(void *);
 void sceDmaSend(DmaChan *d, void *tag)
 {
-    unsigned int a = func_00103CE0(tag);
+    unsigned int a = CheckAddress(tag);
     int c;
     sceDmaSync(d);
     if (d->tadr != 0xFFFFFFFF) d->tadr = a;
@@ -23,7 +23,7 @@ void sceDmaSend(DmaChan *d, void *tag)
 /* merge_units: begin func_001040D8 */
 void sceDmaSendN(DmaChan *d, void *addr, int qwc)
 {
-    unsigned int a = func_00103CE0(addr);
+    unsigned int a = CheckAddress(addr);
     int c;
     sceDmaSync(d);
     if (d->madr != 0xFFFFFFFF) d->madr = a;
@@ -36,7 +36,7 @@ void sceDmaSendN(DmaChan *d, void *addr, int qwc)
 /* merge_units: begin func_00104150 */
 void sceDmaSendI(DmaChan *d, void *addr, int qwc)
 {
-    unsigned int a = func_00103CE0(addr);
+    unsigned int a = CheckAddress(addr);
     int c;
     sceDmaSync(d);
     if (d->madr != 0xFFFFFFFF) d->madr = a;
@@ -68,7 +68,7 @@ void sceDmaRecv(DmaChan41C8 *d)
 /* merge_units: begin func_00104210 */
 void sceDmaRecvN(DmaChan *d, void *addr, int qwc)
 {
-    unsigned int a = func_00103CE0(addr);
+    unsigned int a = CheckAddress(addr);
     int c;
     sceDmaSync(d);
     if (d->madr != 0xFFFFFFFF) d->madr = a;
@@ -84,7 +84,7 @@ void sceDmaRecvN(DmaChan *d, void *addr, int qwc)
 /* merge_units: begin func_00104290 */
 void sceDmaRecvI(DmaChan *d, void *addr, int qwc)
 {
-    unsigned int a = func_00103CE0(addr);
+    unsigned int a = CheckAddress(addr);
     int c;
     sceDmaSync(d);
     if (d->madr != 0xFFFFFFFF) d->madr = a;

@@ -10,7 +10,7 @@ struct V {
     V operator*(float k) const { V t; V* q = &t; __int128 tt = 0; const V* p = this; asm { .set noreorder; lqc2 vf1, 0x0(p); mfc1 tt, k; qmtc2.ni tt, vf2; vmulx.xyzw vf1, vf1, vf2x; sqc2 vf1, 0x0(q); .set reorder } return t; }
 } __attribute__((aligned(16)));
 struct M { V r[4]; };
-extern "C" V func_003A5E30(const M* m, float x, float y, float z)
+extern "C" V cWind_GetTurbulence_float_float_float(const M* m, float x, float y, float z)
 {
     V a;
     { V t = m->r[1] * x; a = t; }

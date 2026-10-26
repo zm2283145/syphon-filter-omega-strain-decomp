@@ -18,10 +18,10 @@ struct VC003EC3E0 { char vpad[20]; virtual int v0(...); };
 extern "C" {
 int List_Erase(...);                     
 int List_Begin(...);                          
-int func_0015AF40(...);                      
-int func_003EC3B0(...);                        
-int func_003EC3C0(...);                          
-int func_003EC3D0(...);                      
+int std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(...);                      
+int cLListIterator_cSfxSchedulerPtr_ctor(...);                        
+int std_list_cSfxSchedulerPtr_end(...);                          
+int std_list_cSfxSchedulerPtr_generic_iterator_ctor(...);                      
 extern char D_0055C0A8;
 }
 extern "C" void EffectService_ReleaseAll(void) {
@@ -37,10 +37,10 @@ extern "C" void EffectService_ReleaseAll(void) {
     char * var_s0;
 
     List_Begin(&sp28, &D_0055C0A8);
-    func_003EC3D0(&sp38, &sp28);
+    std_list_cSfxSchedulerPtr_generic_iterator_ctor(&sp38, &sp28);
     var_s0 = sp38;
-    func_003EC3C0(&sp24, &D_0055C0A8);
-    func_003EC3B0(&sp3C, &sp24);
+    std_list_cSfxSchedulerPtr_end(&sp24, &D_0055C0A8);
+    cLListIterator_cSfxSchedulerPtr_ctor(&sp3C, &sp24);
     if ((int)(var_s0) != (int)(sp3C)) {
         do {
             temp_a0 = (char *)(F_(var_s0, 0x8, int));
@@ -50,10 +50,10 @@ extern "C" void EffectService_ReleaseAll(void) {
             temp_v0 = var_s0;
             var_s0 = (char *)(F_(var_s0, 0x4, int));
             sp34 = temp_v0;
-            func_0015AF40(&sp2C, &sp34);
+            std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&sp2C, &sp34);
             List_Erase(&sp30, &D_0055C0A8, &sp2C);
-            func_003EC3C0(&sp24, &D_0055C0A8);
-            func_003EC3B0(&sp3C, &sp24);
+            std_list_cSfxSchedulerPtr_end(&sp24, &D_0055C0A8);
+            cLListIterator_cSfxSchedulerPtr_ctor(&sp3C, &sp24);
         } while ((int)(var_s0) != (int)(sp3C));
     }
 }
@@ -81,10 +81,10 @@ extern "C" void EffectService_UpdateAll(float dt) {
     char * var_s0;
 
     List_Begin(&sp48, &D_0055C0A8);
-    func_003EC3D0(&sp58, &sp48);
+    std_list_cSfxSchedulerPtr_generic_iterator_ctor(&sp58, &sp48);
     var_s0 = sp58;
-    func_003EC3C0(&sp44, &D_0055C0A8);
-    func_003EC3B0(&sp5C, &sp44);
+    std_list_cSfxSchedulerPtr_end(&sp44, &D_0055C0A8);
+    cLListIterator_cSfxSchedulerPtr_ctor(&sp5C, &sp44);
     if ((int)(var_s0) != (int)(sp5C)) {
         do {
             obj = F_(var_s0, 0x8, VC003EC4C0 *);
@@ -96,13 +96,13 @@ extern "C" void EffectService_UpdateAll(float dt) {
                 temp_v0 = var_s0;
                 var_s0 = (char *)(F_(var_s0, 0x4, int));
                 sp54 = temp_v0;
-                func_0015AF40(&sp4C, &sp54);
+                std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&sp4C, &sp54);
                 List_Erase(&sp50, &D_0055C0A8, &sp4C);
             } else {
                 var_s0 = (char *)(F_(var_s0, 0x4, int));
             }
-            func_003EC3C0(&sp44, &D_0055C0A8);
-            func_003EC3B0(&sp5C, &sp44);
+            std_list_cSfxSchedulerPtr_end(&sp44, &D_0055C0A8);
+            cLListIterator_cSfxSchedulerPtr_ctor(&sp5C, &sp44);
         } while ((int)(var_s0) != (int)(sp5C));
     }
 }

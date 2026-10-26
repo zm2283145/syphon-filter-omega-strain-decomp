@@ -36,25 +36,25 @@ typedef struct TexRegistry {
     TexEntry** entries;             /* 0x08 */
 } TexRegistry;
 
-/* Generic 4-word record built by func_00379760. */
+/* Generic 4-word record built by tIRGBA_ctor. */
 typedef struct Words4 {
     int a, b, c, d;
 } Words4;
 
-/* 2-word pair (func_0032EEC0). */
+/* 2-word pair (cAgentData_tParTimes_ctor). */
 typedef struct Pair {
     int first;
     int second;
 } Pair;
 
-/* Vector of 8-byte elements (func_0032EEA0). */
+/* Vector of 8-byte elements (cArray_tParTimes_PushBackActual). */
 typedef struct PairVec {
     int unk00;
     int count;                      /* 0x04 */
     Pair* data;                     /* 0x08 */
 } PairVec;
 
-/* Vector of 24-byte elements (func_0032E3C0). */
+/* Vector of 24-byte elements (std_vector_imp_Record_end). */
 typedef struct Elem24 {
     char pad[0x18];
 } Elem24;
@@ -75,7 +75,7 @@ typedef struct Float6 {
     float v[6];
 } Float6;
 
-/* 20-byte slot built by func_003BB340 (array of 6 inside Manager37F9D0). */
+/* 20-byte slot built by cUserFrameEnv_ctor (array of 6 inside Manager37F9D0). */
 typedef struct Slot20 {
     int unk00;                      /* 0x00 = -1 */
     int unk04;                      /* 0x04 = -1 */
@@ -84,7 +84,7 @@ typedef struct Slot20 {
     unsigned char unk10;            /* 0x10 */
 } Slot20;
 
-/* Object constructed by func_0037F9D0 (8 x 272-byte sub-objects at +0x1F0). */
+/* Object constructed by XLib_ctor (8 x 272-byte sub-objects at +0x1F0). */
 typedef struct Manager37F9D0 {
     int unk00;                      /* 0x00 = -1 */
     char pad004[0x1EC];
@@ -96,7 +96,7 @@ typedef struct Manager37F9D0 {
     char pad1060[0x8];
     Slot20 slots[6];                /* 0x1068 */
     char pad10E0[0x28];
-    List unk1108;                   /* 0x1108 list header, initialized by func_0037FE80 */
+    List unk1108;                   /* 0x1108 list header, initialized by std_list_deleter_tDataDelRec_ctor */
 } Manager37F9D0;
 
 /* GUI widget base built by GuiWidget_ctor (0x48 bytes; layout copied minimally). */
@@ -121,7 +121,7 @@ typedef struct GuiPersonnelScreen {
     int unk68;                      /* 0x68 = 1 */
 } GuiPersonnelScreen;
 
-/* Member at +0x70 of GuiMissionStatistics (built by func_0034FE40). */
+/* Member at +0x70 of GuiMissionStatistics (built by std_vector_MissionStats_ctor). */
 typedef struct Member34FE40 {
     char pad00[0xC];
     unsigned char unk0C;            /* 0x0C */
@@ -256,7 +256,7 @@ typedef struct Obj4147A0 {
     Obj4147A0Inner* unk2C;          /* 0x2C */
 } Obj4147A0;
 
-/* Object built by func_0036D630 (sub-object at +0x80 from FileHal_CtorDefault, FileHalPS2.cc). */
+/* Object built by cHogFile_ctor (sub-object at +0x80 from FileHal_CtorDefault, FileHalPS2.cc). */
 typedef struct Obj36D630 {
     char pad000[0x80];
     char unk80[0xC8];               /* 0x80 */
@@ -270,29 +270,29 @@ typedef struct Obj36D630 {
     unsigned char unk168;           /* 0x168 */
 } Obj36D630;
 
-/* Named entry built by func_0036E4B0 / func_0036E540 (follows fileman.cc). */
+/* Named entry built by cFileMan_ctor_charP_cFileIOP_bool / cFileMan_ctor_charP_cHogFileR_bool (follows fileman.cc). */
 typedef struct NamedEntry36E4B0 {
     unsigned int flags;             /* 0x00 bit0/bit1 = kind, bit2 = optional flag */
     char name[128];                 /* 0x04 */
     char pad84[0x4];
-    char unk88[0x10];               /* 0x88 built by func_003EBEF0 */
+    char unk88[0x10];               /* 0x88 built by cFSHandle_ctor */
     int unk98;                      /* 0x98 */
 } NamedEntry36E4B0;
 
-/* Record cleared by func_00377C30 (11 words + flag byte). */
+/* Record cleared by cVU1Model_ctor (11 words + flag byte). */
 typedef struct Rec377C30 {
     int unk[11];                    /* 0x00..0x28 */
     unsigned char unk2C;            /* 0x2C = 1 */
 } Rec377C30;
 
-/* Object (vtable D_004DF6A0) holding a 3x4 matrix at +0x10: slot 8 (func_0036FFB0)
+/* Object (vtable D_004DF6A0) holding a 3x4 matrix at +0x10: slot 8 (cXform_GetMatrix_ParentRelative)
  * returns its address, slot 12 (Mtx44_SetRows123FromMtx34_370000) sets it. */
 typedef struct Obj370000 {
     char pad00[0x10];
     Mtx34 mtx;                      /* 0x10 */
 } Obj370000;
 
-/* Word buffer described by capacity/count/data (func_003979B0 source). */
+/* Word buffer described by capacity/count/data (_cdeque_deleter_common_int_begin source). */
 typedef struct WordBuf {
     int capacity;                   /* 0x00 */
     int unk04;                      /* 0x04 */
@@ -300,7 +300,7 @@ typedef struct WordBuf {
     int* data;                      /* 0x0C */
 } WordBuf;
 
-/* Cursor set over a WordBuf (func_003979B0). */
+/* Cursor set over a WordBuf (_cdeque_deleter_common_int_begin). */
 typedef struct WordCursor {
     int* end;                       /* 0x00 data + count */
     int* begin;                     /* 0x04 */
@@ -322,7 +322,7 @@ typedef struct Obj37A1C0 {
     int unk20;                      /* 0x20 */
 } Obj37A1C0;
 
-/* 12-byte member copied by func_003527A0. */
+/* 12-byte member copied by std_vector_pod_StatType_ctor. */
 typedef struct Member3527A0 {
     int unk00;
     int unk04;
@@ -331,17 +331,17 @@ typedef struct Member3527A0 {
 
 /* Member at +4 of Rec352320. */
 typedef struct Member352320 {
-    Member3527A0 unk00;             /* 0x00 copied by func_003527A0 */
+    Member3527A0 unk00;             /* 0x00 copied by std_vector_pod_StatType_ctor */
     unsigned char unk0C;            /* 0x0C */
 } Member352320;
 
-/* Record copied by func_00352320. */
+/* Record copied by MissionStats_StatsRequirement_ctor. */
 typedef struct Rec352320 {
     int unk00;                      /* 0x00 */
     Member352320 unk04;             /* 0x04 */
 } Rec352320;
 
-/* Object with a two-entry float table indexed by unk88 (func_003751C0). */
+/* Object with a two-entry float table indexed by unk88 (XLib_GetGuardBandScaleY). */
 typedef struct Obj3751A0 {
     char pad00[0x34];
     float unk34;                    /* 0x34 */
@@ -352,7 +352,7 @@ typedef struct Obj3751A0 {
     int unk88;                      /* 0x88 index into unk68/unk78 */
 } Obj3751A0;
 
-/* Object read by the func_00372AC0 accessor group. */
+/* Object read by the cSceneLight_GetFalloffAngleCos accessor group. */
 typedef struct Obj372AC0 {
     char pad00[0x10];
     float unk10;                    /* 0x10 */
@@ -386,7 +386,7 @@ typedef struct Counted {
     int count;                      /* 0x04 */
 } Counted;
 
-/* Byte + two words, cleared by func_0034F920. */
+/* Byte + two words, cleared by MissionStats_StatData_ctor. */
 typedef struct Rec34F920 {
     unsigned char unk00;            /* 0x00 */
     int unk04;                      /* 0x04 */

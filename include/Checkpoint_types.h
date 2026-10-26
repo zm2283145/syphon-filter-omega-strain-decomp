@@ -30,6 +30,6 @@ extern int ScriptFilter_Dispatch(void* filter, int a1, int a2);
 
 /* Script object handle -> object (identity in retail). */
 extern int GObj_IdentityB(int handle);
-extern int func_00175FA0(int handle);
+extern int cPlayer_SOBJ_convert(int handle);
 
 #endif

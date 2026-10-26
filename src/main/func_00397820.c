@@ -7,11 +7,11 @@
 #include "loose03_types.h"
 
 /* Address 8 bytes past the iterator position (payload of a tree node). */
-void* func_00397820(Iter* it) {
+void* cLListIterator_cSkaPlaybackGroupPtr_opMul(Iter* it) {
     return it->p + 2;
 }
 
 /* begin() */
-void func_00397830(Iter* out, PtrVec* v) {
+void cLList_cSkaPlaybackGroupPtr_Begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }

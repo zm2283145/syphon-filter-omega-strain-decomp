@@ -9,7 +9,7 @@
 
 /* merge_units: begin func_0017F980 */
 #pragma push /* merge_units */
-Rel* func_0017F9B0(Rel* r); /* gsynth: defined below */
+Rel* std_vector_imp_cVector_ctor(Rel* r); /* gsynth: defined below */
 /*
  * Matched functions (byte-identical with the retail executable).
  * Original translation unit not identified yet; functions are named by address
@@ -18,18 +18,18 @@ Rel* func_0017F9B0(Rel* r); /* gsynth: defined below */
 
 
 #if 0 /* merge_units */
-extern Rel* func_0017F9B0(Rel*);
+extern Rel* std_vector_imp_cVector_ctor(Rel*);
 #endif /* merge_units */
-#define func_0017F9B0(a0) (func_0017F9B0((a0))) /* merge_units */
+#define std_vector_imp_cVector_ctor(a0) (std_vector_imp_cVector_ctor((a0))) /* merge_units */
 
 
 /* Clears the three words and sets byte +0xC. */
-Rel* func_0017F980(Rel* r) {
-    func_0017F9B0(r);
+Rel* cArray_cVector_ctor(Rel* r) {
+    std_vector_imp_cVector_ctor(r);
     *((char*)r + 12) = 1;
     return r;
 }
-#undef func_0017F9B0 /* merge_units */
+#undef std_vector_imp_cVector_ctor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0017F980(void) {}
 #pragma pop /* merge_units */
@@ -39,7 +39,7 @@ static inline void merge_flush_func_0017F980(void) {}
 #pragma push /* merge_units */
 extern char D_004DA330[]; /* vtable */
 
-Rel* func_0017F9B0(Rel* r) {
+Rel* std_vector_imp_cVector_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
@@ -47,7 +47,7 @@ Rel* func_0017F9B0(Rel* r) {
 }
 
 /* Sets the vtable pointer. */
-char* func_0017F9D0(char* self) {
+char* cCollisionRoutine_cBox_ctor(char* self) {
     *(char**)self = D_004DA330;
     return self;
 }

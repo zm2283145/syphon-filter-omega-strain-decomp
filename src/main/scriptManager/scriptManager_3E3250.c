@@ -2,22 +2,22 @@
 #pragma cplusplus on
 #include "tree_insert_unique_kt.h"
 
-struct func_003E3250_N { func_003E3250_N* left; func_003E3250_N* right; unsigned int parentAndColor; int key; };
-struct func_003E3250_T { unsigned int count; func_003E3250_N* root; };
-struct func_003E3250_P { func_003E3250_N* it; bool ok; };
+struct std_tree_pair_int_value_compare_insert_one_pairR_N { std_tree_pair_int_value_compare_insert_one_pairR_N* left; std_tree_pair_int_value_compare_insert_one_pairR_N* right; unsigned int parentAndColor; int key; };
+struct std_tree_pair_int_value_compare_insert_one_pairR_T { unsigned int count; std_tree_pair_int_value_compare_insert_one_pairR_N* root; };
+struct std_tree_pair_int_value_compare_insert_one_pairR_P { std_tree_pair_int_value_compare_insert_one_pairR_N* it; bool ok; };
 extern "C" {
 static const unsigned int dat_00493900[2] = { 0x1, 0x0 };
 static const unsigned int dat_00493908[2] = { 0x0, 0x0 };
-func_003E3250_N* func_003E3DF0(func_003E3250_T* t, func_003E3250_N* parent, bool left, bool first,
+std_tree_pair_int_value_compare_insert_one_pairR_N* std_tree_pair_int_value_compare_insert_node_at_nodeP_bool_bool_pairR_2(std_tree_pair_int_value_compare_insert_one_pairR_T* t, std_tree_pair_int_value_compare_insert_one_pairR_N* parent, bool left, bool first,
                  const int* v);
 }
-extern "C" void func_003E3250(func_003E3250_P* ret, func_003E3250_T* t, const int* v)
+extern "C" void std_tree_pair_int_value_compare_insert_one_pairR(std_tree_pair_int_value_compare_insert_one_pairR_P* ret, std_tree_pair_int_value_compare_insert_one_pairR_T* t, const int* v)
 {
     bool left = true;
     bool first = left;
-    func_003E3250_N* y = 0;
-    func_003E3250_N* parent = (func_003E3250_N*)&t->root;
-    func_003E3250_N* x = t->root;
+    std_tree_pair_int_value_compare_insert_one_pairR_N* y = 0;
+    std_tree_pair_int_value_compare_insert_one_pairR_N* parent = (std_tree_pair_int_value_compare_insert_one_pairR_N*)&t->root;
+    std_tree_pair_int_value_compare_insert_one_pairR_N* x = t->root;
     while (x) {
         parent = x;
         if (*v < x->key) {
@@ -31,7 +31,7 @@ extern "C" void func_003E3250(func_003E3250_P* ret, func_003E3250_T* t, const in
         }
     }
     if (!y || y->key < *v) {
-        ret->it = func_003E3DF0(t, parent, left, first, v);
+        ret->it = std_tree_pair_int_value_compare_insert_node_at_nodeP_bool_bool_pairR_2(t, parent, left, first, v);
         ret->ok = (*(bool*)dat_00493900);
     } else {
         ret->it = y;

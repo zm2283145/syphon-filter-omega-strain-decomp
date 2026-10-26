@@ -91,7 +91,7 @@ static inline void merge_flush_func_0012FD60(void) {}
 
 /* merge_units: begin func_0012FF50 */
 #pragma push /* merge_units */
-void func_0012FF50(int a0) {
+void cGameSystem_EndMovie(int a0) {
     int v1;
     int cond;
 

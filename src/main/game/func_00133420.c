@@ -80,13 +80,13 @@ extern unsigned char g_IsMultiplayer;
 extern int D_00489BC0;
 float World_GetElapsedTime(World_133420* w);
 void Hud_Update(Hud_133420* h, float dt);
-void func_00178440(EnvBlend_133420* e, float dt);
+void cEnvMan_NextFrame(EnvBlend_133420* e, float dt);
 void Fog_ComputeTerms(char* fog);
 void* World_GetActorArray(void);
-PtrVec* func_001339A0(void* arr);
+PtrVec* cObjList_cGOBJPtr_GetList(void* arr);
 void PtrVec_Begin(Iter* out, PtrVec* v);
 void PtrVec_End(Iter* out, PtrVec* v);
-Iter* func_00133980(Iter* out, Iter* in);
+Iter* cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(Iter* out, Iter* in);
 void World_PhysicsTraversal(float dt);
 void Actor_UpdateStealthLight(void);
 void ActorWorld_FlushPending(void);
@@ -142,7 +142,7 @@ extern "C" int World_UpdateFrame(World_133420* self)
         Hud_Update(self->hud, dt);
         return 1;
     }
-    func_00178440(self->env, dt);
+    cEnvMan_NextFrame(self->env, dt);
     {
         EnvVec3_133420 tmp;
         EnvVec3_133420* c = Color(self->env, &tmp);
@@ -185,18 +185,18 @@ extern "C" int World_UpdateFrame(World_133420* self)
     {
         void* arr = World_GetActorArray();
         Iter it, end, tb, te;
-        PtrVec_Begin(&tb, func_001339A0(arr));
-        func_00133980(&it, &tb);
-        PtrVec_End(&te, func_001339A0(arr));
-        func_00133980(&end, &te);
+        PtrVec_Begin(&tb, cObjList_cGOBJPtr_GetList(arr));
+        cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(&it, &tb);
+        PtrVec_End(&te, cObjList_cGOBJPtr_GetList(arr));
+        cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(&end, &te);
         while (Ne(&it, &end)) {
             Actor_133420* a = (Actor_133420*)*it.p;
             a->Think(dt);
             if (Live(a))
                 a->Update(dt);
             it.p++;
-            PtrVec_End(&te, func_001339A0(arr));
-            func_00133980(&end, &te);
+            PtrVec_End(&te, cObjList_cGOBJPtr_GetList(arr));
+            cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(&end, &te);
         }
     }
     World_PhysicsTraversal(dt);

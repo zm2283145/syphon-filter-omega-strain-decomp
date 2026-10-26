@@ -1,9 +1,9 @@
 #pragma cplusplus on
 #include "types.h"
 
-/* ska clip copies (siblings of func_003B36C0): rotate the source clip's quaternion by the euler
- * angles, flip the direction flags and set the playback sub-range - func_003B2E10 from a frame range
- * normalised by the animation length, func_003B3240 as a sub-range of the source clip's range
+/* ska clip copies (siblings of cSkaAnim_ctor_cSkaAnimR_bool_bool_float_etc): rotate the source clip's quaternion by the euler
+ * angles, flip the direction flags and set the playback sub-range - cSkaAnim_ctor_cSkaAnimR_bool_bool_cSkaAnimPlaybackRangeR_etc from a frame range
+ * normalised by the animation length, cSkaAnim_ctor_cSkaAnimR_bool_bool_cSkaAnimPlaybackRangeNormalizedR_etc as a sub-range of the source clip's range
  * (mirrored when the clip runs backwards). */
 #include "alloc_guard.h"
 #pragma always_inline on
@@ -22,7 +22,7 @@ struct V {
 } __attribute__((aligned(16)));
 static inline float Clamp01(float x) { float r = 0.0f; float hi = 1.0f; float lo = 0.0f; asm { max.s r, x, lo; min.s r, r, hi } return r; }
 static inline float ClampLo(float x, float lo) { float r = 0.0f; float hi = 1.0f; asm { max.s r, x, lo; min.s r, r, hi } return r; }
-/* same clamps with the bounds declared in the other order (func_003B3240's register choice) */
+/* same clamps with the bounds declared in the other order (cSkaAnim_ctor_cSkaAnimR_bool_bool_cSkaAnimPlaybackRangeNormalizedR_etc's register choice) */
 static inline float Sat01(float x) { float r = 0.0f; float lo = 0.0f; float hi = 1.0f; asm { max.s r, x, lo; min.s r, r, hi } return r; }
 static inline float SatLo(float x, float lo) { float r = 0.0f; float hi = 1.0f; asm { max.s r, x, lo; min.s r, r, hi } return r; }
 
@@ -59,7 +59,7 @@ struct SkaClip : ClipBase {
 };
 extern "C" float Math_Sin(float);
 extern "C" float Math_Cos(float);
-extern "C" SkaClip* func_003B2E10(SkaClip* self, SkaClip* src, bool a, bool b, float g, const float* range, const float* ang, int id, signed char s, unsigned char mode)
+extern "C" SkaClip* cSkaAnim_ctor_cSkaAnimR_bool_bool_cSkaAnimPlaybackRangeR_etc(SkaClip* self, SkaClip* src, bool a, bool b, float g, const float* range, const float* ang, int id, signed char s, unsigned char mode)
 {
     float hx = 0.5f * ang[0];
     float hy = 0.5f * ang[1];
@@ -121,7 +121,7 @@ extern "C" SkaClip* func_003B2E10(SkaClip* self, SkaClip* src, bool a, bool b, f
     return self;
 }
 
-extern "C" SkaClip* func_003B3240(SkaClip* self, SkaClip* src, bool a, bool b, float g, const float* range, const float* ang, int id, signed char s, unsigned char mode)
+extern "C" SkaClip* cSkaAnim_ctor_cSkaAnimR_bool_bool_cSkaAnimPlaybackRangeNormalizedR_etc(SkaClip* self, SkaClip* src, bool a, bool b, float g, const float* range, const float* ang, int id, signed char s, unsigned char mode)
 {
     float hx = 0.5f * ang[0];
     float hy = 0.5f * ang[1];

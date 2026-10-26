@@ -3,9 +3,9 @@ extern void* Service_Lookup(void* a, void* b);
 extern void WeaponDb_UnloadWpnHog(int);
 extern char* App_GetInstance(void);
 extern void SoundMgr_UnloadLevel(void*);
-extern void func_002C9C80(void*, int);
+extern void cGameFrontEnd_CloseCharacter(void*, int);
 extern void FrontEnd_UnloadZeusHog(void*);
-extern void func_003D1700(void*);
+extern void cUSBKeybd_SetAsciiMode(void*);
 extern unsigned char* DME_GetLobby(void);
 extern char* strncpy(char*, const char*, int);
 extern char D_004ACF48[];
@@ -52,7 +52,7 @@ void FrontEnd_SuspendGui(Obj9860* self, unsigned char mode)
 {
     if (self->f37 == 0) {
         { char* q = App_GetInstance(); q[0x278] = 1; }
-        func_003D1700(D_0055A700);
+        cUSBKeybd_SetAsciiMode(D_0055A700);
         switch (mode) {
         case 0: {
             void* svc;
@@ -79,7 +79,7 @@ void FrontEnd_SuspendGui(Obj9860* self, unsigned char mode)
 
         FrontEnd_UnloadZeusHog(self);
         WeaponDb_UnloadWpnHog(g_WeaponDatabase);
-        func_002C9C80(self, 1);
+        cGameFrontEnd_CloseCharacter(self, 1);
         self->f37 = 1;
         self->f28 = 0;
         self->f38 = mode;

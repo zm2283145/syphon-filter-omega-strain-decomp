@@ -11,7 +11,7 @@ typedef struct Human3468 {
 extern int ItemInv_Any(int handle);
 
 /* True when neither flag is set and ItemInv_Any(handle) returns 0 (as a byte). */
-int func_001A3730(Human3468* h) {
+int cHuman_CanPackBeDeleted(Human3468* h) {
     int result = !(h->flagA != 0 || h->flagB != 0);
     if (result) {
         result = (unsigned char)ItemInv_Any(h->handle) == 0;

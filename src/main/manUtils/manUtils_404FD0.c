@@ -56,15 +56,15 @@ extern int D_00571300;
 void Libc_Strcat(char* d, char* s);
 void Resource_Construct(MC_File* f);
 void FileMan_Release(void* f, int del);
-void func_0036E140(MC_File* f, char* name, int a, int b);
+void cFileMan_EncodeFilename_charP_cFileIOP_bool(MC_File* f, char* name, int a, int b);
 void* Fstream_GetLoader(void);
 void Fstream_ReleaseNoCallback(void* m, MC_File* f, int a);
 void Tex_Release(int lib, int h, int keep);
 void operator_delete(void* p);
-MC_State* func_00404FD0(MC_State* s, short del);
+MC_State* Monster_dtor(MC_State* s, short del);
 }
 /* Mesh/texture cache destructor: releases cached LOD meshes and textures, frees buffers. */
-MC_State* func_00404FD0(MC_State* s, short del)
+MC_State* Monster_dtor(MC_State* s, short del)
 {
     MC_File fm;
     char name[32];
@@ -81,13 +81,13 @@ MC_State* func_00404FD0(MC_State* s, short del)
                 int h = l->h;
                 if (h != l[-1].h && h != 0) {
                     name[14] = j + '0';
-                    func_0036E140(&fm, name, 0, 0);
+                    cFileMan_EncodeFilename_charP_cFileIOP_bool(&fm, name, 0, 0);
                     Fstream_ReleaseNoCallback(Fstream_GetLoader(), &fm, 1);
                 }
             }
             if (s->lods[i][0].h) {
                 name[14] = '0';
-                func_0036E140(&fm, name, 0, 0);
+                cFileMan_EncodeFilename_charP_cFileIOP_bool(&fm, name, 0, 0);
                 Fstream_ReleaseNoCallback(Fstream_GetLoader(), &fm, 1);
             }
         }
@@ -160,7 +160,7 @@ static inline void merge_flush_func_00404FD0(void) {}
 #pragma inline_depth(8)
 struct V { float x, y, z, w; };
 struct M;
-extern "C" void func_001D3E20(M*);
+extern "C" void cMatrix_ctor_void(M*);
 extern "C" void Mtx_MakeAxisRotation(M*, float, float, float, float);
 struct M {
     union { float m[4][4]; __int128 q[4]; };
@@ -178,12 +178,12 @@ void Resource_Construct(File* f);
 #define Resource_Construct(a0) (Resource_Construct((MC_File *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_0036E140(File* f, const char* path, int a, int b);
+void cFileMan_EncodeFilename_charP_cFileIOP_bool(File* f, const char* path, int a, int b);
 #endif /* merge_units */
-#define func_0036E140(a0, a1, a2, a3) (func_0036E140((MC_File *)(a0), (char *)(a1), (a2), (a3))) /* merge_units */
+#define cFileMan_EncodeFilename_charP_cFileIOP_bool(a0, a1, a2, a3) (cFileMan_EncodeFilename_charP_cFileIOP_bool((MC_File *)(a0), (char *)(a1), (a2), (a3))) /* merge_units */
 
 int FileMan_FindMember(File* f);
-void func_0036DEC0(File* f);
+void cFileMan_Close(File* f);
 #if 0 /* merge_units */
 void FileMan_Release(File* f, int flags);
 #endif /* merge_units */
@@ -215,7 +215,7 @@ extern char D_00493A60;
 extern char D_0055D510[];
 extern char D_0055D950[];
 }
-static inline void RotMul(M* a, const V& ax, float ang) { M rot; func_001D3E20(&rot); Mtx_MakeAxisRotation(&rot, ax.x, ax.y, ax.z, ang); Mtx_Multiply(a, &rot); }
+static inline void RotMul(M* a, const V& ax, float ang) { M rot; cMatrix_ctor_void(&rot); Mtx_MakeAxisRotation(&rot, ax.x, ax.y, ax.z, ang); Mtx_Multiply(a, &rot); }
 static inline M* TransCopy(M* d, const M* s) { M tmp; return Mtx_Copy(d, Matrix_TransposeInPlace(Mtx_Copy(&tmp, s))); }
 #pragma push
 #pragma opt_rotateloops off
@@ -253,7 +253,7 @@ extern "C" void ManUtils_LoadSKL(Man* self)
     {
         File f;
         Resource_Construct(&f);
-        func_0036E140(&f, D_004BE8C0, 0, 0);
+        cFileMan_EncodeFilename_charP_cFileIOP_bool(&f, D_004BE8C0, 0, 0);
         if ((unsigned char)FileMan_FindMember(&f)) {
             char buf[0x80];
             sprintf(buf, D_004BE770, f.name);
@@ -262,14 +262,14 @@ extern "C" void ManUtils_LoadSKL(Man* self)
         }
         int size = FileMan_GetSize(&f);
         Appearance_PackText(D_0055D510, FileMan_ReadData(&f), size);
-        func_0036DEC0(&f);
+        cFileMan_Close(&f);
         FileMan_Release(&f, -1);
     }
 next1:;
     {
         File f;
         Resource_Construct(&f);
-        func_0036E140(&f, D_004BE8E0, 0, 0);
+        cFileMan_EncodeFilename_charP_cFileIOP_bool(&f, D_004BE8E0, 0, 0);
         if ((unsigned char)FileMan_FindMember(&f)) {
             char buf[0x80];
             sprintf(buf, D_004BE770, f.name);
@@ -278,13 +278,13 @@ next1:;
         }
         int size = FileMan_GetSize(&f);
         Appearance_PackText(D_0055D950, FileMan_ReadData(&f), size);
-        func_0036DEC0(&f);
+        cFileMan_Close(&f);
         FileMan_Release(&f, -1);
     }
 }
 #pragma pop
 #undef Resource_Construct /* merge_units */
-#undef func_0036E140 /* merge_units */
+#undef cFileMan_EncodeFilename_charP_cFileIOP_bool /* merge_units */
 #undef FileMan_Release /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_004053B0(void) {}

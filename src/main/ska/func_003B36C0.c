@@ -39,7 +39,7 @@ struct SkaClip : ClipBase {
 extern "C" float Math_Sin(float);
 extern "C" float Math_Cos(float);
 extern "C" float Math_FMod(float, float);
-extern "C" SkaClip* func_003B36C0(SkaClip* self, SkaClip* src, bool a, bool b, float f, float g, const float* ang, int id, signed char s, unsigned char mode)
+extern "C" SkaClip* cSkaAnim_ctor_cSkaAnimR_bool_bool_float_etc(SkaClip* self, SkaClip* src, bool a, bool b, float f, float g, const float* ang, int id, signed char s, unsigned char mode)
 {
     float hx = 0.5f * ang[0];
     float hy = 0.5f * ang[1];

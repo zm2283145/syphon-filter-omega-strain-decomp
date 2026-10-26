@@ -1,8 +1,8 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 int Exit(int);                               
-int func_00116788();                                  
+int TerminateLibrary();                                  
 
 void Newlib_SysExit(int arg0) {
-    func_00116788();
+    TerminateLibrary();
     Exit(arg0);
 }

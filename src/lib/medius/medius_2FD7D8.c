@@ -6,15 +6,15 @@
 
 /* merge_units: begin func_002FD7D8 */
 extern unsigned char D_004908EC;
-extern int func_002FE860(unsigned short, char **);
-int func_002FD7D8(unsigned short id, int v)
+extern int rt_msg_client_get_valid_connection(unsigned short, char **);
+int rt_msg_client_iset_send_aggregation_time(unsigned short id, int v)
 {
     char *p = 0;
     unsigned int i;
     char **pp;
     int r;
     if (D_004908EC != 1) return 5;
-    r = func_002FE860(id, &p);
+    r = rt_msg_client_get_valid_connection(id, &p);
     if (r) return r;
     pp = (char **)(p + 0x78);
     for (i = 0; i < 2; i++, pp++)
@@ -24,17 +24,17 @@ int func_002FD7D8(unsigned short id, int v)
 /* merge_units: end func_002FD7D8 */
 
 /* merge_units: begin func_002FD860 */
-extern int func_00301988(char *, unsigned short);
+extern int rt_msg_set_u2byte(char *, unsigned short);
 extern int NetConn_BufferMessage(int, int, int, char *, int, int);
-int func_002FD860(unsigned short id, int x)
+int rt_msg_client_iset_server_send_aggregation_time(unsigned short id, int x)
 {
     char buf[16];
     char *p = 0;
     int r;
     if (D_004908EC != 1) return 5;
-    r = func_002FE860(id, &p);
+    r = rt_msg_client_get_valid_connection(id, &p);
     if (r) return r;
-    if (func_00301988(buf, x)) return 7;
+    if (rt_msg_set_u2byte(buf, x)) return 7;
     return NetConn_BufferMessage(*(int *)(p + 0x80), 0xE, 0xFFFF, buf, 2, 0);
 }
 /* merge_units: end func_002FD860 */
@@ -42,7 +42,7 @@ int func_002FD860(unsigned short id, int x)
 /* merge_units: begin func_002FD8F0 */
 extern void *memset(void *, int, unsigned long);
 typedef struct { int x0; char p4[0x14]; short x18; short p1a; int p1c; int x20, x24, x28, x2C, x30; short x34; short p36; int p38; int x3C, x40, x44, x48; } S2FD8F0;
-int func_002FD8F0(S2FD8F0 *s)
+int rt_msg_client_iset_default_connect_options(S2FD8F0 *s)
 {
     if (s == 0) return 2;
     memset(s, 0, 0x4C);

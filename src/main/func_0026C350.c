@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-Word* func_0026C350(Word* dst, Word* src) {
+Word* cConstLListIterator_cHudTargetInfoPtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }

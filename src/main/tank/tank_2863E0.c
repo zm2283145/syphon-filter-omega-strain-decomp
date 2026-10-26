@@ -26,7 +26,7 @@ void Object_Register(Obj_63E0* o);
 int NetMap_BindReceiver(int id, int owner, Obj_63E0* o);
 }
 static inline int NetHostOk_63E0(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
-extern "C" void func_002863E0(Obj_63E0* o, int arg1)
+extern "C" void cTank_init(Obj_63E0* o, int arg1)
 {
     o->f60 = arg1;
     o->f6C = 0;
@@ -53,7 +53,7 @@ static inline void merge_flush_func_002863E0(void) {}
 
 /* merge_units: begin func_00286520 */
 #pragma push /* merge_units */
-void func_00286520(int a0, int a1) {
+void cTurret_SetEnemy(int a0, int a1) {
     int loc[1];
     int v1;
     int cond;

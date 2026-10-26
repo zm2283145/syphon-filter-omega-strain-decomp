@@ -33,13 +33,13 @@ int NetMsg_AllocTables(unsigned int n, unsigned int a, unsigned int b)
 
 /* merge_units: begin func_00305908 */
 extern int D_004912F4, D_004912F0, D_004912EC, D_004912F8;
-extern int func_002FB3C0(int *pp);
-int func_00305908(void)
+extern int rt_memory_free(int *pp);
+int rt_parse_shutdown(void)
 {
-    if (D_004912F4) func_002FB3C0(&D_004912F4);
-    if (D_004912F0) func_002FB3C0(&D_004912F0);
-    if (D_004912EC) func_002FB3C0(&D_004912EC);
-    if (D_004912F8) func_002FB3C0(&D_004912F8);
+    if (D_004912F4) rt_memory_free(&D_004912F4);
+    if (D_004912F0) rt_memory_free(&D_004912F0);
+    if (D_004912EC) rt_memory_free(&D_004912EC);
+    if (D_004912F8) rt_memory_free(&D_004912F8);
     D_004912E8 = 0;
     return 0;
 }

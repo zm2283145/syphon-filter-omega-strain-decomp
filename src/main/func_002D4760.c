@@ -16,7 +16,7 @@ int WeaponInv_GetClip(void*, int);
 }
 /* GCC-style volatile lq/sq quad copy (c57da idiom): keeps the unfolded address registers */
 static inline void V4_Copy(V4* d, V4* s) { __int128 q; __asm__ volatile("lq %0, 0(%2); sq %0, 0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
-extern "C" int func_002D4760(Self* self)
+extern "C" int cNetNPC_WeaponShoot(Self* self)
 {
     if (self->ref) {
         int id = self->ref[2];

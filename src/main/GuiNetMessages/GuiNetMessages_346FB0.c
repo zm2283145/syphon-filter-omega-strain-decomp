@@ -34,7 +34,7 @@ extern void GuiScreen_SetFocus(int, int);
 extern char D_004BA338[];
 }
 extern "C" void GuiWidget_SendEvent(O346*, W346*, int, int, int);
-extern "C" void func_00346FB0(O346* self, I346* info) {
+extern "C" void GuiNetMessages_MessageSelected(O346* self, I346* info) {
     S346 s;
     char buf[0x80];
     int b0, b1, b2;

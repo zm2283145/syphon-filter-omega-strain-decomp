@@ -8,6 +8,6 @@
 
 extern char D_004F78E8[];
 
-int func_0022C640(void) {
+int TargSettings_SOBJ_getClassId(void) {
     return (int)D_004F78E8;
 }

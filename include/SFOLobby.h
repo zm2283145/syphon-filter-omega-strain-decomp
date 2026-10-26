@@ -65,7 +65,7 @@ enum MediusPlayerStatus {
 enum SFOLobbyState {
     SFOLOBBY_STATE_0 = 0,
     SFOLOBBY_STATE_NETWORK = 1,     /* network configuration (SFOLobby_EnterNetworkState .. SFOLobby_LeaveNetworkState) */
-    SFOLOBBY_STATE_ONLINE = 4,      /* per-frame update runs (func_00442700) */
+    SFOLOBBY_STATE_ONLINE = 4,      /* per-frame update runs (SFOLobby_MissionScreenIntel) */
     SFOLOBBY_STATE_5 = 5,
     SFOLOBBY_STATE_CONTACTS = 6,    /* buddy list (SFOLobby_EnterContactsState .. SFOLobby_LeaveContactsState) */
     SFOLOBBY_STATE_7 = 7,
@@ -88,7 +88,7 @@ typedef struct LobbyIdReply {
     int id;                         /* 0x1C -1 = none */
 } LobbyIdReply;
 
-/* One buddy-list reply record (callback func_00446830). */
+/* One buddy-list reply record (callback SFOLobby_Callback_GetBuddyList). */
 typedef struct LobbyBuddyReply {
     char messageId[0x15];           /* 0x00 */
     char pad15[3];
@@ -104,14 +104,14 @@ typedef struct LobbyBuddyReply {
 
 
 
-/* buddyList element (0x50 bytes), built by the buddy-list reply callback func_00446830. */
+/* buddyList element (0x50 bytes), built by the buddy-list reply callback SFOLobby_Callback_GetBuddyList. */
 typedef struct LobbyBuddyEntry {
     int accountId;                  /* 0x00 */
     char name[0x20];                /* 0x04 */
     int location;                   /* 0x24 1 = in a game world, 2 = in a chat world, 3 = elsewhere/offline */
     int f28;                        /* 0x28 */
     char* f2C;                      /* 0x2C */
-    int f30;                        /* 0x30 copied from the buddy's game (func_0044F0C0) */
+    int f30;                        /* 0x30 copied from the buddy's game (SFOLobby_FindGameData) */
     int f34;                        /* 0x34 */
     int f38;                        /* 0x38 */
     int f3C;                        /* 0x3C */
@@ -121,7 +121,7 @@ typedef struct LobbyBuddyEntry {
     int f4C;                        /* 0x4C */
 } LobbyBuddyEntry;
 
-/* Account id lookup by name (SFOLobby_LookupAccountId, callback func_00446E00). */
+/* Account id lookup by name (SFOLobby_LookupAccountId, callback SFOLobby_Callback_AccountGetID). */
 typedef struct LobbyAccountIdReply {
     char messageId[0x15];           /* 0x00 */
     char pad15[3];
@@ -147,7 +147,7 @@ typedef struct LobbyPlayerInfo {
     unsigned char bF8, bF9;         /* 0xF8 */
 } LobbyPlayerInfo;
 
-/* Account info by id (SFOLobby_RequestAccountInfo, callback func_00446DB0). */
+/* Account info by id (SFOLobby_RequestAccountInfo, callback SFOLobby_Callback_GetPlayerInfo). */
 typedef struct LobbyAccountInfoReply {
     char head[0x1C];                /* 0x00 */
     char accountName[0x2C];         /* 0x1C */
@@ -155,7 +155,7 @@ typedef struct LobbyAccountInfoReply {
     char pad144[4];
 } LobbyAccountInfoReply;
 
-/* accountCache element (0x140 bytes; SFOLobby_CacheAccount adds/updates, func_00450A00 finds). */
+/* accountCache element (0x140 bytes; SFOLobby_CacheAccount adds/updates, SFOLobby_FindAgentData finds). */
 typedef struct LobbyAccountEntry {
     int accountId;                  /* 0x00 */
     char name[0x20];                /* 0x04 */
@@ -201,12 +201,12 @@ typedef struct LobbyConnectInfo {
     LobbyKey11 accessKey;           /* 0x89 */
 } LobbyConnectInfo;
 
-/* Connect parameters passed to func_004689F8 (0x100 bytes). */
+/* Connect parameters passed to MediusConnect (0x100 bytes). */
 typedef struct LobbyConnectParams {
     LobbyConnectInfo info;          /* 0x00 */
     char pad9C[0xF0 - 0x9C];
     int timeout;                    /* 0xF0 */
-    void* onConnect;                /* 0xF4 func_00447220 */
+    void* onConnect;                /* 0xF4 SFOLobby_Callback_MediusConnect */
     void* unkF8;                    /* 0xF8 */
     void* unkFC;                    /* 0xFC */
 } LobbyConnectParams;
@@ -223,7 +223,7 @@ typedef struct LobbyLoginReply {
 } LobbyLoginReply;
 
 /* Universe list entry (0x210 bytes), built from a MediusUniverseVariableInformationResponse
- * by func_00447070 or as a single dummy entry by SFOLobby_StartNetwork. */
+ * by SFOLobby_Callback_UniverseStatusList or as a single dummy entry by SFOLobby_StartNetwork. */
 typedef struct LobbyUniverseEntry {
     char name[0x80];                /* 0x000 */
     char hostName[0x80];            /* 0x080 */
@@ -236,63 +236,63 @@ typedef struct LobbyUniverseEntry {
 
 typedef struct SFOLobby {
     LobbyArray array00;                     /* 0x0 freed on shutdown; contents not identified */
-    LobbyArray inbox;                       /* 0x1C pending invites/messages (LobbyInboxEntry); answered by func_00450F30 */
+    LobbyArray inbox;                       /* 0x1C pending invites/messages (LobbyInboxEntry); answered by SFOLobby_MessageAck */
     LobbyArray array38;                     /* 0x38 */
     LobbyArray array54;                     /* 0x54 */
     LobbyArray pool70;                      /* 0x70 elem 0x114 bytes */
-    LobbyArray list8C;                      /* 0x8C refreshed every few seconds while mode == 0 (func_004516E0) */
+    LobbyArray list8C;                      /* 0x8C refreshed every few seconds while mode == 0 (SFOLobby_LobbyScreenIntel) */
     LobbyArray listA8;                      /* 0xA8 refreshed while mode == 1 (func_00450B30) */
     LobbyArray poolC4;                      /* 0xC4 elem 0x50 bytes */
-    LobbyArray buddyList;                   /* 0xE0 LobbyBuddyEntry (0x50), filled by the buddy-list reply callback func_00446830 */
+    LobbyArray buddyList;                   /* 0xE0 LobbyBuddyEntry (0x50), filled by the buddy-list reply callback SFOLobby_Callback_GetBuddyList */
     LobbyArray accountCache;                /* 0xFC LobbyAccountEntry (0x140) keyed by account id (SFOLobby_CacheAccount) */
     LobbyArray pool118;                     /* 0x118 elem 0x2C bytes */
     LobbyArray pool134;                     /* 0x134 elem 0x50 bytes */
     LobbyArray pool150;                     /* 0x150 elem 0x50 bytes; copy of buddyList */
-    char sessionBlock[1];                   /* 0x16C start of the 0x950-byte block cleared by the reset (func_004537D0) */
+    char sessionBlock[1];                   /* 0x16C start of the 0x950-byte block cleared by the reset (SFOLobby_ResetConnectionFlags) */
     char pad016D[0x174 - 0x16D];
     int rangeStart;                         /* 0x174 nonnegative lower bound */
     int rangeEnd;                           /* 0x178 at least rangeStart */
     unsigned char unk17C;                   /* 0x17C while clear (and D_00585FA8 set) list refreshes are skipped (func_0044FA40) */
     char pad017D[0x180 - 0x17D];
-    int connHandle;                         /* 0x180 connection handle from the connect callback func_00447220; -1 = none */
-    int gotConnect;                         /* 0x184 set when func_00447220 fires */
+    int connHandle;                         /* 0x180 connection handle from the connect callback SFOLobby_Callback_MediusConnect; -1 = none */
+    int gotConnect;                         /* 0x184 set when SFOLobby_Callback_MediusConnect fires */
     int gotReply188;                        /* 0x188 func_00445F40 */
     int gotLogin;                           /* 0x18C login reply SFOLobby_OnAccountLogin */
-    int gotReply190;                        /* 0x190 func_004474C0 */
+    int gotReply190;                        /* 0x190 SFOLobby_Callback_AccountLogout */
     int gotReply194;                        /* 0x194 */
-    int gotReply198;                        /* 0x198 func_00447270 (reply314) */
-    int gotReply19C;                        /* 0x19C func_00447130 (reply17CC) */
-    int gotReply1A0;                        /* 0x1A0 func_00447070 (reply18EC) */
-    int gotReply1A4;                        /* 0x1A4 func_004471B0 (reply350) */
-    int gotReply1A8;                        /* 0x1A8 func_00447470 (reply380) */
-    int gotReply1AC;                        /* 0x1AC func_00446EA0 (reply39C) */
-    int gotReply1B0;                        /* 0x1B0 func_00446E50 (reply400) */
+    int gotReply198;                        /* 0x198 SFOLobby_Callback_AccountRegistration (reply314) */
+    int gotReply19C;                        /* 0x19C SFOLobby_Callback_UniverseNews (reply17CC) */
+    int gotReply1A0;                        /* 0x1A0 SFOLobby_Callback_UniverseStatusList (reply18EC) */
+    int gotReply1A4;                        /* 0x1A4 SFOLobby_Callback_SessionBegin (reply350) */
+    int gotReply1A8;                        /* 0x1A8 SFOLobby_Callback_SessionEnd (reply380) */
+    int gotReply1AC;                        /* 0x1AC SFOLobby_Callback_GetLocations (reply39C) */
+    int gotReply1B0;                        /* 0x1B0 SFOLobby_Callback_PickLocation (reply400) */
     int gotReply1B4;                        /* 0x1B4 */
     int gotReply1B8;                        /* 0x1B8 SFOLobby_OnGetPolicy (reply484) */
     int gotReply1BC;                        /* 0x1BC SFOLobby_OnSettings (reply5A4) */
-    int gotReply1C0;                        /* 0x1C0 func_00446FD0 (reply9B0) */
-    int gotAccountId;                       /* 0x1C4 func_00446E00 (accountIdReply) */
-    int gotAccountInfo;                     /* 0x1C8 func_00446DB0 (accountInfoReply) */
+    int gotReply1C0;                        /* 0x1C0 SFOLobby_Callback_JoinChannel (reply9B0) */
+    int gotAccountId;                       /* 0x1C4 SFOLobby_Callback_AccountGetID (accountIdReply) */
+    int gotAccountInfo;                     /* 0x1C8 SFOLobby_Callback_GetPlayerInfo (accountInfoReply) */
     char pad01CC[0x1D0 - 0x1CC];
-    int gotReply1D0;                        /* 0x1D0 func_00446D60 (replyFD8) */
+    int gotReply1D0;                        /* 0x1D0 SFOLobby_Callback_TextFilter (replyFD8) */
     char pad01D4[0x1F4 - 0x1D4];
     int gotReply1F4;                        /* 0x1F4 */
-    int gotReply1F8;                        /* 0x1F8 func_00446F80 (reply1B1C) */
-    int gotReply1FC;                        /* 0x1FC func_00447020 (reply1B3C) */
-    int gotReply200;                        /* 0x200 func_00446F30 (reply1BCC) */
-    int gotMyIp;                            /* 0x204 func_00446D00 */
-    int gotReply208;                        /* 0x208 func_00446CC0 */
+    int gotReply1F8;                        /* 0x1F8 SFOLobby_Callback_CreateChannel (reply1B1C) */
+    int gotReply1FC;                        /* 0x1FC SFOLobby_Callback_FindChannel (reply1B3C) */
+    int gotReply200;                        /* 0x200 SFOLobby_Callback_ChannelInfo (reply1BCC) */
+    int gotMyIp;                            /* 0x204 SFOLobby_Callback_GetMyIP */
+    int gotReply208;                        /* 0x208 SFOLobby_Callback_UpdateStats */
     int gotReply20C;                        /* 0x20C func_00446B40 (reply1D08) */
     int gotReply210;                        /* 0x210 */
     char pad0214[0x21C - 0x214];
     int gotReply21C;                        /* 0x21C */
     char pad0220[0x22C - 0x220];
-    int gotReply22C;                        /* 0x22C func_00446740 */
+    int gotReply22C;                        /* 0x22C SFOLobby_Callback_GetBuddyInvitations */
     int gotReply230;                        /* 0x230 func_004466B0 */
     char pad0234[0x238 - 0x234];
-    int gotReply238;                        /* 0x238 func_004466F0 */
+    int gotReply238;                        /* 0x238 SFOLobby_Callback_RemoveFromBuddyList */
     char pad023C[0x240 - 0x23C];
-    int reply238Ok;                         /* 0x240 func_004466F0: reply status was MediusSuccess */
+    int reply238Ok;                         /* 0x240 SFOLobby_Callback_RemoveFromBuddyList: reply status was MediusSuccess */
     char pad0244[0x24C - 0x244];
     int requestResult;                      /* 0x24C return code of the last Medius request call; nonzero = failed to send */
     LobbyLoginReply loginReply;             /* 0x250 */
@@ -302,7 +302,7 @@ typedef struct SFOLobby {
     LobbyReply reply350;                    /* 0x350 0x30-byte reply */
     char pad036C[0x380 - 0x36C];
     LobbyReply reply380;                    /* 0x380 */
-    char reply39C[0x5C];                    /* 0x39C lobby list record (func_00446EA0); memset as 0x64 bytes */
+    char reply39C[0x5C];                    /* 0x39C lobby list record (SFOLobby_Callback_GetLocations); memset as 0x64 bytes */
     int reply39CStatus;                     /* 0x3F8 */
     signed char reply39CEnd;                /* 0x3FC end-of-list byte */
     char pad03FD[0x400 - 0x3FD];
@@ -344,13 +344,13 @@ typedef struct SFOLobby {
     char reply1B1C[0x20];                   /* 0x1B1C */
     char reply1B3C[0x90];                   /* 0x1B3C */
     char reply1BCC[0x64];                   /* 0x1BCC */
-    char reply1C30[0xBC];                   /* 0x1C30 copied by func_0044E280 */
+    char reply1C30[0xBC];                   /* 0x1C30 copied by SFOLobby_Callback_JoinGame */
     char pad1CEC[0x1D08 - 0x1CEC];
     char reply1D08[0x18C];                  /* 0x1D08 */
     char pad1E94[0x1E98 - 0x1E94];
     int list8CTime;                         /* 0x1E98 time of the last list8C refresh */
     int listA8Time;                         /* 0x1E9C time of the last listA8 refresh */
-    int mode;                               /* 0x1EA0 selects which list is refreshed (func_004516E0) */
+    int mode;                               /* 0x1EA0 selects which list is refreshed (SFOLobby_LobbyScreenIntel) */
     int unk1EA4;                            /* 0x1EA4 initial capacity of outList23EC (SFOLobby_EnterContactsState) */
     int unk1EA8;                            /* 0x1EA8 > 0: network already started (SFOLobby_EnterNetworkState) */
     int list8CId;                           /* 0x1EAC id sent with the list8C refresh request */
@@ -375,8 +375,8 @@ typedef struct SFOLobby {
     unsigned char unk23D5;                  /* 0x23D5 */
     char pad23D6[0x23D8 - 0x23D6];
     LobbyArray* netConfigList;              /* 0x23D8 network configurations (0x13C0-byte entries, SFOLobby_ListNetConfigs); this and the following lists are caller-supplied */
-    LobbyArray* universeList;               /* 0x23DC 0x210-byte entries: name, host name +0x80, port +0x100, description +0x104 (func_00447070) */
-    LobbyArray* lobbyList;                  /* 0x23E0 entries: world id, name +4 (func_00446EA0) */
+    LobbyArray* universeList;               /* 0x23DC 0x210-byte entries: name, host name +0x80, port +0x100, description +0x104 (SFOLobby_Callback_UniverseStatusList) */
+    LobbyArray* lobbyList;                  /* 0x23E0 entries: world id, name +4 (SFOLobby_Callback_GetLocations) */
     char pad23E4[0x23E8 - 0x23E4];
     LobbyArray* outBuddyList;               /* 0x23E8 receives a copy of buddyList */
     LobbyArray* outList23EC;                /* 0x23EC */
@@ -385,14 +385,14 @@ typedef struct SFOLobby {
     LobbyArray* outUsageList;               /* 0x23F8 "USAGE" entries (SFOLobby_OnGetPolicy) */
     LobbyArray* outList23FC;                /* 0x23FC other entries (SFOLobby_OnGetPolicy) */
     LobbyArray* outList2400;                /* 0x2400 SFOLobby_OnSettings */
-    LobbyArray* outList2404;                /* 0x2404 func_00447130 */
+    LobbyArray* outList2404;                /* 0x2404 SFOLobby_Callback_UniverseNews */
     char busy;                              /* 0x2408 */
     unsigned char inUpdateHook;             /* 0x2409 set while the update hook runs (SFOLobby_CallUpdateHook) */
     char pad240A[0x2410 - 0x240A];
     int waitStart;                          /* 0x2410 start time of the current wait loop */
     int unk2414;                            /* 0x2414 */
     char sessionKey[0x11];                  /* 0x2418 Medius session key copied into every request */
-    char myIp[0x14];                        /* 0x2429 own IP address string (func_00446D00) */
+    char myIp[0x14];                        /* 0x2429 own IP address string (SFOLobby_Callback_GetMyIP) */
     char accountName[0x43];                 /* 0x243D */
     int accountId;                          /* 0x2480 own account id (login reply); -1 = none */
     int unk2484;                            /* 0x2484 -1 = none */

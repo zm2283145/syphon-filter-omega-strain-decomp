@@ -17,14 +17,14 @@ typedef struct {
 
 extern void WaitSema(int);
 extern void SignalSema(int);
-extern int func_003F48B0(ReqQueue* q, Req* r);
+extern int viBufModifyPts(ReqQueue* q, Req* r);
 
-int func_003F4770(ReqQueue* q, Req* r)
+int viBufPutTs(ReqQueue* q, Req* r)
 {
     int ret = 0;
     WaitSema(q->lock);
     if (q->count < q->cap) {
-        func_003F48B0(q, r);
+        viBufModifyPts(q, r);
         if (r->a >= 0 || r->b >= 0) {
             q->reqs[q->head].a = r->a;
             q->reqs[q->head].b = r->b;

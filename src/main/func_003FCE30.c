@@ -1,11 +1,11 @@
 #include "types.h"
-extern void func_003FCD20(void* self, short del);
+extern void std_tree_pair_int_value_compare_cAllocator_pair_dtor(void* self, short del);
 extern void operator_delete(void* p);
-void* func_003FCE30(void* self, short del)
+void* cAssocArray_int_cSafePtr_cGOBJ_dtor(void* self, short del)
 {
     if (self) {
         if (self)
-            func_003FCD20(self, -1);
+            std_tree_pair_int_value_compare_cAllocator_pair_dtor(self, -1);
         if (del > 0)
             operator_delete(self);
     }

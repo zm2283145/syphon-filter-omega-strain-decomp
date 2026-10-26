@@ -3,4 +3,4 @@
 #include "types.h"
 #include "object_list_erase_file.h"
 
-DEFINE_OBJECT_LIST_ERASE_ONE_FILE(func_00266860, D_004A8280)
+DEFINE_OBJECT_LIST_ERASE_ONE_FILE(std_list_deleter_TaserPulse_erase_listdeleter, D_004A8280)

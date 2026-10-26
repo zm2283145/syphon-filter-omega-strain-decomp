@@ -11,7 +11,7 @@
 #include "buf_holder_dtor.h"
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_00173810)
+DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_cHotboxPtr_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00173810 */
 
@@ -27,13 +27,13 @@ DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_00173810)
 #include "loose00_types.h"
 
 extern int PtrVec_Reserve(int, int);
-extern int func_00173970(LinkList* list);
+extern int details_compressed_pair_imp_cAllocator_voidPtr_int_1_first(LinkList* list);
 
 int PtrVec_Reserve_Thunk_173900(int a0, int a1) {
     return PtrVec_Reserve(a0, a1);
 }
 
-Rel* func_00173910(Rel* r) {
+Rel* std_vector_cHotboxPtr_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
@@ -43,7 +43,7 @@ Rel* func_00173910(Rel* r) {
 /* List constructor: empty, sentinel node at +4 linked to itself. */
 LinkList* LinkList_Ctor(LinkList* list) {
     list->count = 0;
-    func_00173970(list);
+    details_compressed_pair_imp_cAllocator_voidPtr_int_1_first(list);
     list->sentinel.prev = &list->sentinel;
     list->sentinel.next = &list->sentinel;
     return list;

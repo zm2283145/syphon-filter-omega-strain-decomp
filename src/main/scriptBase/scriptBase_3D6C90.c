@@ -56,7 +56,7 @@ static inline char* Dup(char* s)
     }
     return p;
 }
-extern "C" void func_003D6D00(S6D00* self, int n, char** names, int* vals, int x40, int base)
+extern "C" void ClassDef_init(S6D00* self, int n, char** names, int* vals, int x40, int base)
 {
     int i;
     int zero;
@@ -98,13 +98,13 @@ void Alloc_Lock(int id);
 void Alloc_Unlock(int id);
 void operator_delete(void* p);
 void* func_0013A040(void* self, short f);
-void* func_003D7280(void* self, short f);
-void* func_003D7190(void* self, short f);
+void* std_vector_MemberFuncPtr_dtor(void* self, short f);
+void* std_vector_FieldDefPtr_dtor(void* self, short f);
 }
 
 struct Item { void* data; };
 struct ItemVec { int a; int count; };
-extern "C" Item** func_003D7370(ItemVec* v, int i);
+extern "C" Item** std_vector_FieldDefPtr_opIndex_uint_2(ItemVec* v, int i);
 
 struct Owner {
     void* data;
@@ -115,7 +115,7 @@ struct Owner {
 };
 
 /* Destructor: frees the owned buffer and every item (each under the allocator lock), then destroys members. */
-extern "C" Owner* func_003D6F40(Owner* self, short flag)
+extern "C" Owner* ClassDef_dtor(Owner* self, short flag)
 {
     if (self) {
         void* d = self->data;
@@ -127,7 +127,7 @@ extern "C" Owner* func_003D6F40(Owner* self, short flag)
             Alloc_Unlock(9);
         g_ProfileLockDepth--;
         for (int i = 0; i < self->items.count; i++) {
-            Item* it = *func_003D7370(&self->items, i);
+            Item* it = *std_vector_FieldDefPtr_opIndex_uint_2(&self->items, i);
             AllocGuard g;
             if (it) {
                 void* p = it->data;
@@ -147,10 +147,10 @@ extern "C" Owner* func_003D6F40(Owner* self, short flag)
             func_0013A040(m, -1);
         m = self->m14;
         if (m)
-            func_003D7280(m, -1);
+            std_vector_MemberFuncPtr_dtor(m, -1);
         m = &self->items;
         if (m)
-            func_003D7190(m, -1);
+            std_vector_FieldDefPtr_dtor(m, -1);
         if (flag > 0)
             operator_delete(self);
     }

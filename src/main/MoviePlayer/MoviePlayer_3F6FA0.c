@@ -12,7 +12,7 @@ extern volatile int D_0055C210;
 extern volatile int D_0055C218;
 extern int sceGsSyncV(int);
 
-void func_003F6FA0(int id)
+void startDisplay(int id)
 {
     if (!D_0055C740) {
         while (sceGsSyncV(0) == id) {
@@ -28,16 +28,16 @@ void func_003F6FA0(int id)
 #pragma push /* merge_units */
 extern volatile int D_0055C220;
 extern char D_0055C460[];
-extern void func_003F5E80(void* p);
+extern void voBufDecCount(void* p);
 /* sync + ei (enable interrupts) have no C equivalent */
 static inline void EI3F7010(void) { asm { sync }
     asm { ei } }
 #pragma push
 #pragma optimization_level 3
-int func_003F7010(void)
+int handler_endimage(void)
 {
     if (D_0055C220) {
-        func_003F5E80(D_0055C460);
+        voBufDecCount(D_0055C460);
         D_0055C220 = 0;
     }
     asm { .set reorder } /* scheduling barrier: keeps the beqz delay slot empty and the label padded */
@@ -68,12 +68,12 @@ extern volatile unsigned char D_0055C740;
 
 extern char D_00571CF0[];
 extern int sceGsSyncPath(int, int);
-extern void func_00103B60(unsigned long draw, short cx, short cy, short half);
+extern void sceGsSetHalfOffset(unsigned long draw, short cx, short cy, short half);
 extern void* sceDmaGetChan(int);
 extern void sceDmaSend(void* d, void* tag);
-extern int* func_003F5EA0(T5EA0* q);
+extern int* voBufGetTag(T5EA0* q);
 extern void MovieSubtitles_PatchVblank(void* db, int i, int j);
-extern void func_001036B0(void* p, int);
+extern void sceGsSwapDBuff(void* p, int);
 
 /* sync + ei (enable interrupts) have no C equivalent */
 static inline void EI3F7060(void) { asm { sync }
@@ -89,7 +89,7 @@ int MoviePlayer_PresentVblank(void)
         D_0055C218++;
         r = sceGsSyncPath(1, 0);
         if (r == 0) {
-            int* buf = func_003F5EA0(&D_0055C460);
+            int* buf = voBufGetTag(&D_0055C460);
             unsigned long dma;
             T5EA0* q;
             void* d;
@@ -109,19 +109,19 @@ int MoviePlayer_PresentVblank(void)
                 dma = (a & 0x0FFFFFFF) | 0x20000000;
             }
             if (!D_0055C740)
-                func_00103B60(dma, 0x800, 0x800, field ^ 1);
+                sceGsSetHalfOffset(dma, 0x800, 0x800, field ^ 1);
             d = sceDmaGetChan(2);
             q = &D_0055C460;
             { int h = q->head; idx = (q->size + (h - q->count)) % q->size; }
             if (field == 0 && *buf == 2) {
                 MovieSubtitles_PatchVblank(D_00571CF0, idx, 0);
-                func_001036B0(D_0055C230, 0);
+                sceGsSwapDBuff(D_0055C230, 0);
                 sceGsSyncPath(0, 0);
                 sceDmaSend(d, (char*)buf + 0x40);
                 *buf = 1;
             } else if (field == 1 && *buf == 1) {
                 MovieSubtitles_PatchVblank(D_00571CF0, idx, 1);
-                func_001036B0(D_0055C230, 1);
+                sceGsSwapDBuff(D_0055C230, 1);
                 sceGsSyncPath(0, 0);
                 sceDmaSend(d, (char*)buf + 0x26740);
                 *buf = 0;
@@ -149,17 +149,17 @@ extern int D_0053820C;
 extern int D_00538210;
 extern GTag D_004939F0;
 extern GTag D_00493A00;
-extern void func_00104430(VifPk* pk, u_int base);
-extern void func_00104440(VifPk* pk);
-extern void func_001044A8(VifPk* pk, int a, int b, int c);
-extern void func_001045B8(VifPk* pk, int a, int b, int c);
-extern void func_00104648(VifPk* pk, u_long128 tag);
-extern void func_00104708(VifPk* pk, int reg, u_long64 data);
-extern void func_00104660(VifPk* pk);
-extern u_long64* func_00104630(VifPk* pk, int n);
-extern void func_00104520(VifPk* pk, u_int addr, int size, int a, int b, int c);
-extern void func_00104450(VifPk* pk);
-u_long128* func_003F72D0(void* buf, u_long128* tex, int skip, int w, int h)
+extern void sceGifPkInit(VifPk* pk, u_int base);
+extern void sceGifPkReset(VifPk* pk);
+extern void sceGifPkCnt(VifPk* pk, int a, int b, int c);
+extern void sceGifPkEnd(VifPk* pk, int a, int b, int c);
+extern void sceGifPkOpenGifTag(VifPk* pk, u_long128 tag);
+extern void sceGifPkAddGsAD(VifPk* pk, int reg, u_long64 data);
+extern void sceGifPkCloseGifTag(VifPk* pk);
+extern u_long64* sceGifPkReserve(VifPk* pk, int n);
+extern void sceGifPkRef(VifPk* pk, u_int addr, int size, int a, int b, int c);
+extern void sceGifPkTerminate(VifPk* pk);
+u_long128* setImageTag(void* buf, u_long128* tex, int skip, int w, int h)
 {
     GTag tagA;
     GTag tagB;
@@ -172,30 +172,30 @@ u_long128* func_003F72D0(void* buf, u_long128* tex, int skip, int w, int h)
     th = D_00538210;
     tagA = D_004939F0;
     tagB = D_00493A00;
-    func_00104430(&pk, ((u_int)buf & 0x0FFFFFFF) | 0x20000000);
-    func_00104440(&pk);
+    sceGifPkInit(&pk, ((u_int)buf & 0x0FFFFFFF) | 0x20000000);
+    sceGifPkReset(&pk);
     if (!skip) {
         int i, j;
         int nx, ny;
-        func_001044A8(&pk, 0, 0, 0);
-        func_00104648(&pk, tagA.q);
-        func_00104708(&pk, 0x50, ((u_long64)(((tw + 63) & ~63) * ((th + 31) & ~31) * sizeof(short) / 64) << 32) | ((u_long64)12 << 48));
-        func_00104708(&pk, 0x52, (u_long64)16 | ((u_long64)16 << 32));
-        func_00104660(&pk);
+        sceGifPkCnt(&pk, 0, 0, 0);
+        sceGifPkOpenGifTag(&pk, tagA.q);
+        sceGifPkAddGsAD(&pk, 0x50, ((u_long64)(((tw + 63) & ~63) * ((th + 31) & ~31) * sizeof(short) / 64) << 32) | ((u_long64)12 << 48));
+        sceGifPkAddGsAD(&pk, 0x52, (u_long64)16 | ((u_long64)16 << 32));
+        sceGifPkCloseGifTag(&pk);
         nx = w >> 4;
         ny = h >> 4;
         for (i = 0; i < nx; i++) {
             for (j = 0; j < ny; j++) {
                 u_long64* p;
-                func_001044A8(&pk, 0, 0, 0);
-                func_00104648(&pk, tagA.q);
-                func_00104708(&pk, 0x51, ((u_long64)(u_int)(i * 16) << 32) | ((u_long64)(u_int)(j * 16) << 48));
-                func_00104708(&pk, 0x53, 0);
-                func_00104660(&pk);
-                p = func_00104630(&pk, 4);
+                sceGifPkCnt(&pk, 0, 0, 0);
+                sceGifPkOpenGifTag(&pk, tagA.q);
+                sceGifPkAddGsAD(&pk, 0x51, ((u_long64)(u_int)(i * 16) << 32) | ((u_long64)(u_int)(j * 16) << 48));
+                sceGifPkAddGsAD(&pk, 0x53, 0);
+                sceGifPkCloseGifTag(&pk);
+                p = sceGifPkReserve(&pk, 4);
                 p[0] = 0x40 | ((u_long64)2 << 58);
                 p[1] = 0;
-                func_00104520(&pk, (u_int)tex & 0x0FFFFFFF, 0x40, 0, 0, 0);
+                sceGifPkRef(&pk, (u_int)tex & 0x0FFFFFFF, 0x40, 0, 0, 0);
                 tex += 0x40;
             }
         }
@@ -207,19 +207,19 @@ u_long128* func_003F72D0(void* buf, u_long128* tex, int skip, int w, int h)
     } else {
         x0 = 0x6C00; y0 = 0x7880; dx = 0x2800; dy = 0xF00;
     }
-    func_001045B8(&pk, 0, 0, 0);
+    sceGifPkEnd(&pk, 0, 0, 0);
     ret = pk.cur - 1;
-    func_00104648(&pk, tagB.q);
-    func_00104708(&pk, 0x3F, 0);
-    func_00104708(&pk, 0x14, 0x60);
-    func_00104708(&pk, 0x06, (u_long64)(((tw + 63) & ~63) * ((th + 31) & ~31) * sizeof(short) / 64) | ((u_long64)12 << 14) | ((u_long64)10 << 26) | ((u_long64)10 << 30) | ((u_long64)1 << 35));
-    func_00104708(&pk, 0x00, 0x116);
-    func_00104708(&pk, 0x03, 0x80008);
-    func_00104708(&pk, 0x05, (u_long64)x0 | ((u_long64)y0 << 16));
-    func_00104708(&pk, 0x03, (u_long64)(x1 + 8) | ((u_long64)(y1 + 8) << 16));
-    func_00104708(&pk, 0x05, (u_long64)(x0 + dx) | ((u_long64)(y0 + dy) << 16));
-    func_00104660(&pk);
-    func_00104450(&pk);
+    sceGifPkOpenGifTag(&pk, tagB.q);
+    sceGifPkAddGsAD(&pk, 0x3F, 0);
+    sceGifPkAddGsAD(&pk, 0x14, 0x60);
+    sceGifPkAddGsAD(&pk, 0x06, (u_long64)(((tw + 63) & ~63) * ((th + 31) & ~31) * sizeof(short) / 64) | ((u_long64)12 << 14) | ((u_long64)10 << 26) | ((u_long64)10 << 30) | ((u_long64)1 << 35));
+    sceGifPkAddGsAD(&pk, 0x00, 0x116);
+    sceGifPkAddGsAD(&pk, 0x03, 0x80008);
+    sceGifPkAddGsAD(&pk, 0x05, (u_long64)x0 | ((u_long64)y0 << 16));
+    sceGifPkAddGsAD(&pk, 0x03, (u_long64)(x1 + 8) | ((u_long64)(y1 + 8) << 16));
+    sceGifPkAddGsAD(&pk, 0x05, (u_long64)(x0 + dx) | ((u_long64)(y0 + dy) << 16));
+    sceGifPkCloseGifTag(&pk);
+    sceGifPkTerminate(&pk);
     return ret;
 }
 #pragma pop /* merge_units */
@@ -228,7 +228,7 @@ u_long128* func_003F72D0(void* buf, u_long128* tex, int skip, int w, int h)
 /* merge_units: begin func_003F76C0 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x50004]; int count; } T76C0;
-int func_003F76C0(T76C0* t, int n)
+int readBufEndGet(T76C0* t, int n)
 {
     int k = t->count < n ? t->count : n;
     t->count -= k;
@@ -240,7 +240,7 @@ int func_003F76C0(T76C0* t, int n)
 /* merge_units: begin func_003F7710 */
 #pragma push /* merge_units */
 typedef struct { char data[0x50000]; int head; int count; int size; } T7710;
-int func_003F7710(T7710* t, char** out)
+int readBufBeginGet(T7710* t, char** out)
 {
     int c = t->count;
     if (c)
@@ -253,7 +253,7 @@ int func_003F7710(T7710* t, char** out)
 /* merge_units: begin func_003F7770 */
 #pragma push /* merge_units */
 typedef struct { char data[0x50000]; int head; int count; int size; } T7770;
-int func_003F7770(T7770* t, int n)
+int readBufEndPut(T7770* t, int n)
 {
     int size = t->size;
     int k = size - t->count < n ? size - t->count : n;
@@ -267,7 +267,7 @@ int func_003F7770(T7770* t, int n)
 /* merge_units: begin func_003F77F0 */
 #pragma push /* merge_units */
 typedef struct { char data[0x50000]; int head; int count; int size; } T77F0;
-int func_003F77F0(T77F0* t, char** out)
+int readBufBeginPut(T77F0* t, char** out)
 {
     int f = t->size - t->count;
     if (f)
@@ -286,7 +286,7 @@ int func_003F77F0(T77F0* t, char** out)
  */
 
 
-void func_003F7830(void) {
+void readBufDelete(void) {
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003F7830 */
@@ -296,7 +296,7 @@ void func_003F7830(void) {
 typedef struct { char pad[0x50000]; int unk50000; int unk50004; int capacity; } BigBuf;
 
 /* Resets the large buffer's counters and sets its capacity to 0x50000. */
-void func_003F7840(BigBuf* self)
+void readBufCreate(BigBuf* self)
 {
     self->unk50004 = 0;
     self->unk50000 = 0;
@@ -313,7 +313,7 @@ extern void Cd_Read(int pos, int blocks, void* data, PlayParams* params);
 extern void Cd_Sync(int a);
 
 /* Submits size bytes (in 2 KB blocks) of data to the active stream and advances its cursor; returns size or 0. */
-int func_003F7870(Stream3F7* s, void* data, int size)
+int strFileRead(Stream3F7* s, void* data, int size)
 {
     int result = 0;
     if (s->active) {
@@ -336,15 +336,15 @@ int func_003F7870(Stream3F7* s, void* data, int size)
 /* merge_units: begin func_003F78F0 */
 #pragma push /* merge_units */
 typedef struct { unsigned char active; char pad1[3]; int f4; int pad8; void* handle; int pad10; char sub[4]; } S78F0;
-extern void func_00114558(void* h);
-extern void func_0036DEC0(void* p);
-int func_003F78F0(S78F0* s) {
+extern void sceSifFreeIopHeap(void* h);
+extern void cFileMan_Close(void* p);
+int strFileClose(S78F0* s) {
     if (s->active) {
         if (s->f4 && s->handle) {
-            func_00114558(s->handle);
+            sceSifFreeIopHeap(s->handle);
             s->handle = 0;
         }
-        func_0036DEC0(s->sub);
+        cFileMan_Close(s->sub);
     }
     return 1;
 }
@@ -363,21 +363,21 @@ typedef struct FileInfo {
     char file[4];
 } FileInfo;
 
-extern void func_0036DFB0(void* file, char* name, char* src);
+extern void cFileMan_EncodeFilename_charP_cFileManR(void* file, char* name, char* src);
 extern int FileMan_FindMember(void* file);
 extern int FileMan_GetSize(void* file);
-extern int func_001143F0(int size);
-extern int func_0036DDC0(void* file);
+extern int sceSifAllocIopHeap(int size);
+extern int cFileMan_GetCDSector(void* file);
 
 /* Opens the file named at src+4 and caches its size/buffer/handle; returns success. */
-unsigned char func_003F7950(FileInfo* self, char* src) {
-    func_0036DFB0(self->file, src + 4, src);
+unsigned char strFileOpen(FileInfo* self, char* src) {
+    cFileMan_EncodeFilename_charP_cFileManR(self->file, src + 4, src);
     self->ok = (unsigned char)FileMan_FindMember(self->file) == 0;
     if (self->ok) {
         self->size = FileMan_GetSize(self->file);
         self->open = 1;
-        self->buffer = func_001143F0(0x40010);
-        self->handle = func_0036DDC0(self->file);
+        self->buffer = sceSifAllocIopHeap(0x40010);
+        self->handle = cFileMan_GetCDSector(self->file);
     } else {
         self->open = 0;
         self->buffer = 0;
@@ -409,7 +409,7 @@ static inline void Kick_3F79F0(void* tag, int qwc)
     *(volatile int*)0x1000A000 = 0x181;
     while (*(volatile int*)0x1000A000 & 0x100) {
     }
-}void func_003F79F0(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+}void ClearVram(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
     unsigned long* p = (unsigned long*)0x70000000;
     *p++ = 0x8009 | ((unsigned long)0x10000000 << 32);
@@ -442,8 +442,8 @@ static inline void Kick_3F79F0(void* tag, int qwc)
 #pragma push /* merge_units */
 typedef unsigned int u32;
 extern char D_0055C540;
-void func_003F6BE0(void* q, char** p1, int* n1, char** p2, int* n2);
-void func_003F6B00(void* q, int n);
+void audioDecBeginPut(void* q, char** p1, int* n1, char** p2, int* n2);
+void audioDecEndPut(void* q, int n);
 void* memcpy(void* d, const void* s, unsigned int n);
 
 struct Hdr_F7BD0 {
@@ -453,7 +453,7 @@ struct Hdr_F7BD0 {
     int size;
 };
 
-int func_003F7BD0(void* self, struct Hdr_F7BD0* h, char* ring)
+int cMoviePlayer_PcmCallback(void* self, struct Hdr_F7BD0* h, char* ring)
 {
     char* p1;
     char* p2;
@@ -481,7 +481,7 @@ int func_003F7BD0(void* self, struct Hdr_F7BD0* h, char* ring)
     len = h->size - 4;
     first = (first < len) ? first : len;
     second = len - first;
-    func_003F6BE0(&D_0055C540, &p1, &n1, &p2, &n2);
+    audioDecBeginPut(&D_0055C540, &p1, &n1, &p2, &n2);
     {
         a = n1;
         d2 = p2;
@@ -505,7 +505,7 @@ int func_003F7BD0(void* self, struct Hdr_F7BD0* h, char* ring)
             }
         }
     }
-    func_003F6B00(&D_0055C540, total);
+    audioDecEndPut(&D_0055C540, total);
     return total > 0;
 }
 #pragma pop /* merge_units */
@@ -517,11 +517,11 @@ typedef unsigned long u64_7D90;
 typedef struct { char pad[8]; char* src; unsigned int len; long f10; long f18; } Pkt_7D90;
 typedef struct { char data[0x50008]; int end; } Ring_7D90;
 extern char D_0055C480[];
-extern void func_003F5D50(void* s, int* a, int* sz, int* b, int* bsz);
-extern void func_003F5C90(void* s, long a, long b, int c, int n);
-extern void func_003F5D40(void* s, int n);
+extern void videoDecBeginPut(void* s, int* a, int* sz, int* b, int* bsz);
+extern void videoDecPutTs(void* s, long a, long b, int c, int n);
+extern void videoDecEndPut(void* s, int n);
 extern void* memcpy(void* d, const void* s, unsigned int n);
-int func_003F7D90(void* self, Pkt_7D90* p, Ring_7D90* r)
+int cMoviePlayer_VideoCallback(void* self, Pkt_7D90* p, Ring_7D90* r)
 {
     int sz;
     unsigned int n1;
@@ -537,7 +537,7 @@ int func_003F7D90(void* self, Pkt_7D90* p, Ring_7D90* r)
     n1 = (unsigned int)((char*)r + r->end - src);
     n1 = n1 < len ? n1 : len;
     n2 = len - n1;
-    func_003F5D50(D_0055C480, &a, &asz, &b, &bsz);
+    videoDecBeginPut(D_0055C480, &a, &asz, &b, &bsz);
     total = n1 + n2;
     sz = asz;
     d1 = (char*)(((unsigned int)a & 0x0FFFFFFF) | 0x20000000);
@@ -560,8 +560,8 @@ int func_003F7D90(void* self, Pkt_7D90* p, Ring_7D90* r)
         }
     }
     if (total > 0)
-        func_003F5C90(D_0055C480, p->f10, p->f18, a, total);
-    func_003F5D40(D_0055C480, total);
+        videoDecPutTs(D_0055C480, p->f10, p->f18, a, total);
+    videoDecEndPut(D_0055C480, total);
     return total > 0;
 }
 #pragma pop /* merge_units */
@@ -572,7 +572,7 @@ int func_003F7D90(void* self, Pkt_7D90* p, Ring_7D90* r)
 extern void RotateThreadReadyQueue(int code);
 
 /* Never returns: repeatedly calls RotateThreadReadyQueue(5) (halt/exit loop). */
-void func_003F7F80(void) {
+void cMoviePlayer_DefMain(void) {
     for (;;) {
         RotateThreadReadyQueue(5);
     }
@@ -610,7 +610,7 @@ void Subtitles_SelectTrack(int value)
 extern int D_0055C5B0;
 extern int D_0055C5B8;
 
-void func_003F7FD0(int a, int b) {
+void cMoviePlayer_SetMovieDims(int a, int b) {
     D_0055C5B0 = a;
     D_0055C5B8 = b;
 }
@@ -620,7 +620,7 @@ void func_003F7FD0(int a, int b) {
 /* merge_units: begin func_003F7FF0 */
 #pragma push /* merge_units */
 extern void RotateThreadReadyQueue();
-void func_003F7FF0(void)
+void cMoviePlayer_SwitchThread(void)
 {
     RotateThreadReadyQueue(5);
 }
@@ -649,52 +649,52 @@ extern char D_0055C540[];
 #endif /* merge_units */
 #define D_0055C540 ((char*)&D_0055C540) /* merge_units */
 
-int func_0010A3B0(Hdr3F8000* h, int p, int n, Buf3F8000* b, int x);
+int sceMpegDemuxPssRing(Hdr3F8000* h, int p, int n, Buf3F8000* b, int x);
 #if 0 /* merge_units */
 void RotateThreadReadyQueue(int n);
 #endif /* merge_units */
 #define RotateThreadReadyQueue(a0) (RotateThreadReadyQueue((a0))) /* merge_units */
 
-void func_003F5CD0(char* p, int n);
-void func_003F5CF0(char* p);
-int func_003F6000(char* p);
+void videoDecSetState(char* p, int n);
+void videoDecAbort(char* p);
+int voBufIsFull(char* p);
 void func_003F6A20(char* p);
 int func_003F6A90(char* p);
-void func_003F6D20(char* p);
-void func_003F6DC0(char* p);
-void func_003F6E60(char* p);
-void func_003F6F90(void);
+void audioDecStart(char* p);
+void audioDecResume(char* p);
+void audioDecPause(char* p);
+void endDisplay(void);
 #if 0 /* merge_units */
-void func_003F6FA0(int n);
+void startDisplay(int n);
 #endif /* merge_units */
-#define func_003F6FA0(a0) (func_003F6FA0((a0))) /* merge_units */
+#define startDisplay(a0) (startDisplay((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_003F76C0(Buf3F8000* b, int n);
+void readBufEndGet(Buf3F8000* b, int n);
 #endif /* merge_units */
-#define func_003F76C0(a0, a1) ((void)func_003F76C0((T76C0 *)(a0), (a1))) /* merge_units */
+#define readBufEndGet(a0, a1) ((void)readBufEndGet((T76C0 *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-int func_003F7710(Buf3F8000* b, int* out);
+int readBufBeginGet(Buf3F8000* b, int* out);
 #endif /* merge_units */
-#define func_003F7710(a0, a1) (func_003F7710((T7710 *)(a0), (char * *)(a1))) /* merge_units */
+#define readBufBeginGet(a0, a1) (readBufBeginGet((T7710 *)(a0), (char * *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_003F7770(Buf3F8000* b, int n);
+void readBufEndPut(Buf3F8000* b, int n);
 #endif /* merge_units */
-#define func_003F7770(a0, a1) ((void)func_003F7770((T7770 *)(a0), (a1))) /* merge_units */
+#define readBufEndPut(a0, a1) ((void)readBufEndPut((T7770 *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-int func_003F77F0(Buf3F8000* b, int* out);
+int readBufBeginPut(Buf3F8000* b, int* out);
 #endif /* merge_units */
-#define func_003F77F0(a0, a1) (func_003F77F0((T77F0 *)(a0), (char * *)(a1))) /* merge_units */
+#define readBufBeginPut(a0, a1) (readBufBeginPut((T77F0 *)(a0), (char * *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-int func_003F7870(void* s, int p, int n);
+int strFileRead(void* s, int p, int n);
 #endif /* merge_units */
-#define func_003F7870(a0, a1, a2) (func_003F7870((Stream3F7 *)(a0), (void *)(a1), (a2))) /* merge_units */
+#define strFileRead(a0, a1, a2) (strFileRead((Stream3F7 *)(a0), (void *)(a1), (a2))) /* merge_units */
 
-void func_003F8000(Ply3F8000* self, Hdr3F8000* hdr, Buf3F8000* buf, void* strm)
+void cMoviePlayer_ReadMpeg(Ply3F8000* self, Hdr3F8000* hdr, Buf3F8000* buf, void* strm)
 {
     int p1;
     int p2;
@@ -702,53 +702,53 @@ void func_003F8000(Ply3F8000* self, Hdr3F8000* hdr, Buf3F8000* buf, void* strm)
     if (self->f18C > 0x800) {
         if (hdr->f8 > 10) {
             if (self->f232) {
-                func_003F6F90();
-                if (self->f236) func_003F6E60(D_0055C540);
+                endDisplay();
+                if (self->f236) audioDecPause(D_0055C540);
                 self->f232 = 0;
                 self->f231 = 1;
             }
             if (self->f233) {
-                func_003F6FA0(1);
-                if (self->f236) func_003F6DC0(D_0055C540);
+                startDisplay(1);
+                if (self->f236) audioDecResume(D_0055C540);
                 self->f233 = 0;
                 self->f231 = 0;
             }
-            if (self->f235) func_003F5CF0(D_0055C480);
+            if (self->f235) videoDecAbort(D_0055C480);
         }
-        n = func_003F77F0(buf, &p1);
+        n = readBufBeginPut(buf, &p1);
         if (self->f188 > 0 && n >= 0x10000) {
-            n = func_003F7870(strm, p1, 0x10000);
-            func_003F7770(buf, n);
+            n = strFileRead(strm, p1, 0x10000);
+            readBufEndPut(buf, n);
             self->f188 -= n;
         }
         RotateThreadReadyQueue(5);
-        n = func_003F7710(buf, &p2);
+        n = readBufBeginGet(buf, &p2);
         if (n > 0) {
-            n = func_0010A3B0(hdr, p2, n, buf, buf->f50008);
-            func_003F76C0(buf, n);
+            n = sceMpegDemuxPssRing(hdr, p2, n, buf, buf->f50008);
+            readBufEndGet(buf, n);
             self->f18C -= n;
         }
         func_003F6A20(D_0055C540);
-        if (!self->f230 && func_003F6000(D_0055C460)) {
+        if (!self->f230 && voBufIsFull(D_0055C460)) {
             int ok = self->f236 ? func_003F6A90(D_0055C540) : 1;
             if (ok) {
-                func_003F6FA0(1);
-                if (self->f236) func_003F6D20(D_0055C540);
+                startDisplay(1);
+                if (self->f236) audioDecStart(D_0055C540);
                 self->f230 = 1;
             }
         }
     } else {
-        func_003F5CD0(D_0055C480, 3);
+        videoDecSetState(D_0055C480, 3);
     }
 }
 #undef D_0055C540 /* merge_units */
 #undef RotateThreadReadyQueue /* merge_units */
-#undef func_003F6FA0 /* merge_units */
-#undef func_003F76C0 /* merge_units */
-#undef func_003F7710 /* merge_units */
-#undef func_003F7770 /* merge_units */
-#undef func_003F77F0 /* merge_units */
-#undef func_003F7870 /* merge_units */
+#undef startDisplay /* merge_units */
+#undef readBufEndGet /* merge_units */
+#undef readBufBeginGet /* merge_units */
+#undef readBufEndPut /* merge_units */
+#undef readBufBeginPut /* merge_units */
+#undef strFileRead /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003F8000 */
 
@@ -773,22 +773,22 @@ extern char D_0055C540[];
 
 extern "C" {
 extern void MovieSubtitles_Update(void* p);
-extern int func_003F5CE0(void* p);
+extern int videoDecGetState(void* p);
 #if 0 /* merge_units */
-extern void func_003F8000(Sys3F82* s, void* r, int a, void* b);
+extern void cMoviePlayer_ReadMpeg(Sys3F82* s, void* r, int a, void* b);
 #endif /* merge_units */
-#define func_003F8000(a0, a1, a2, a3) (func_003F8000((Ply3F8000 *)(a0), (Hdr3F8000 *)(a1), (Buf3F8000 *)(a2), (a3))) /* merge_units */
+#define cMoviePlayer_ReadMpeg(a0, a1, a2, a3) (cMoviePlayer_ReadMpeg((Ply3F8000 *)(a0), (Hdr3F8000 *)(a1), (Buf3F8000 *)(a2), (a3))) /* merge_units */
 
-extern bool func_003F5AE0(void* p);
-extern bool func_003F5A80(void* p);
+extern bool videoDecFlush(void* p);
+extern bool videoDecIsFlushed(void* p);
 #if 0 /* merge_units */
 extern void RotateThreadReadyQueue(int n);
 #endif /* merge_units */
 #define RotateThreadReadyQueue(a0) (RotateThreadReadyQueue((a0))) /* merge_units */
 
-extern void func_003F6F90(void);
-extern void func_003F6CD0(void* p);
-extern void func_003F8390(Sys3F82* s);
+extern void endDisplay(void);
+extern void audioDecReset(void* p);
+extern void cMoviePlayer_Purge(Sys3F82* s);
 extern void MoviePlayer_Start(Sys3F82* s);
 bool MoviePlayer_Update(Sys3F82* s);
 }
@@ -800,25 +800,25 @@ bool MoviePlayer_Update(Sys3F82* s)
         if (s->f234) {
             s->done = 1;
         }
-        if (func_003F5CE0(D_0055C480) != 3) {
-            func_003F8000(s, D_0055C480, s->f30, s->part58);
+        if (videoDecGetState(D_0055C480) != 3) {
+            cMoviePlayer_ReadMpeg(s, D_0055C480, s->f30, s->part58);
         } else if (!s->f231) {
             s->done = 1;
         }
         if (s->done) {
-            while (!func_003F5AE0(D_0055C480)) {
+            while (!videoDecFlush(D_0055C480)) {
                 RotateThreadReadyQueue(5);
             }
-            while (!func_003F5A80(D_0055C480) && func_003F5CE0(D_0055C480) != 3) {
+            while (!videoDecIsFlushed(D_0055C480) && videoDecGetState(D_0055C480) != 3) {
                 RotateThreadReadyQueue(5);
             }
-            func_003F6F90();
+            endDisplay();
             if (s->f236) {
-                func_003F6CD0(D_0055C540);
+                audioDecReset(D_0055C540);
             }
         }
         if (s->f234) {
-            func_003F8390(s);
+            cMoviePlayer_Purge(s);
             MoviePlayer_Start(s);
             s->f234 = 0;
             s->done = 0;
@@ -827,7 +827,7 @@ bool MoviePlayer_Update(Sys3F82* s)
     return !s->done;
 }
 #undef D_0055C540 /* merge_units */
-#undef func_003F8000 /* merge_units */
+#undef cMoviePlayer_ReadMpeg /* merge_units */
 #undef RotateThreadReadyQueue /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003F8220 */

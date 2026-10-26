@@ -16,9 +16,9 @@ struct Self92260 {
 extern "C" {
 extern char D_004BC310[];
 void Mem_Free(int pool, void* p, char* file, int line);
-void func_0038E030(Self92260* self);
+void cMan_GetTextureIDs(Self92260* self);
 void ActorModel_Setup(Self92260* self, int flag);
-void func_0038C820(Self92260* self);
+void cMan_FreeMan(Self92260* self);
 void operator_delete(void* p);
 }
 
@@ -38,7 +38,7 @@ static inline void QMove_392260(void* d0, void* s, int n0) {
     }
 }
 
-extern "C" Self92260* func_00392260(Self92260* self, short flag)
+extern "C" Self92260* cMan_dtor(Self92260* self, short flag)
 {
     if (self) {
         App92260* s = self->saved;
@@ -50,10 +50,10 @@ extern "C" Self92260* func_00392260(Self92260* self, short flag)
                 Mem_Free(0, p, D_004BC310, 0x11F);
             }
             self->saved = 0;
-            func_0038E030(self);
+            cMan_GetTextureIDs(self);
             ActorModel_Setup(self, 1);
         }
-        func_0038C820(self);
+        cMan_FreeMan(self);
         if (flag > 0) operator_delete(self);
     }
     return self;

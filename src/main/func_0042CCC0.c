@@ -11,9 +11,9 @@ extern void Event_Construct(Evt0042CCC0* e, void* type);
 extern void MsgQueue_QueueClone(Evt0042CCC0* e, void* obj, int a, int b);
 extern void cMessage_dtor(Evt0042CCC0* e, int f);
 extern char D_0055C7A0[];
-extern void func_001BB080(Node0042CCC0** out, void* map, int* key);
-extern void func_0021D360(void* out, void* map);
-extern void func_0021D350(Node0042CCC0** out, void* in);
+extern void std_tree_pair_int_value_compare_find_intR(Node0042CCC0** out, void* map, int* key);
+extern void std_map_int_netSystemField_end(void* out, void* map);
+extern void cAssocArray_int_netSystemField_Iterator_ctor(Node0042CCC0** out, void* in);
 extern char D_004E0EA0[];
 extern char D_00582680[];
 extern unsigned char D_005721D0;
@@ -36,10 +36,10 @@ extern "C" int cNetActivateAndControlMsg_NetReceive(int a0, int a1, int a2, Arg0
         e.vt = D_004E0EA0;
         e.f2C = a->a8;
         k[0] = a->a4;
-        func_001BB080(it, D_0055C7A0, k);
+        std_tree_pair_int_value_compare_find_intR(it, D_0055C7A0, k);
         n = it[0];
-        func_0021D360(tmp, D_0055C7A0);
-        func_0021D350(end, tmp);
+        std_map_int_netSystemField_end(tmp, D_0055C7A0);
+        cAssocArray_int_netSystemField_Iterator_ctor(end, tmp);
         if (Eq0042CCC0(n, end[0]) ^ 1) {
             Obj0042CCC0* o = n->val;
             if (o) {

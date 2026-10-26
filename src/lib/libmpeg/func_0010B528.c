@@ -6,7 +6,7 @@ typedef struct { char pad[0x8C]; int flag; long value; } Packet; /* long is 64-b
 typedef struct { char pad[0x40]; Packet* packet; } Ctx;
 
 /* Stores a 64-bit value into the context's packet and marks it valid; always returns 1. */
-int func_0010B528(Ctx* ctx, long value)
+int sceMpegSetDefaultPtsGap(Ctx* ctx, long value)
 {
     Packet* p = ctx->packet;
     p->flag = 1;

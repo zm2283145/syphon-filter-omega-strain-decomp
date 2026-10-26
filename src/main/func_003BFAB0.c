@@ -26,10 +26,10 @@ struct V4p { float x, y, z, w; } __attribute__((aligned(16)));
 struct UvX { char pad[0x10]; };
 struct UvY { char pad[0x10]; };
 struct CTri;
-extern "C" void func_00139B00(CTri* d, const CTri* s);
-/* the copy constructor is the out-of-line func_00139B00 */
+extern "C" void cCollisionFace_ctor_cCollisionFaceR(CTri* d, const CTri* s);
+/* the copy constructor is the out-of-line cCollisionFace_ctor_cCollisionFaceR */
 struct CTri {
-    CTri(const CTri& o) { func_00139B00(this, &o); }
+    CTri(const CTri& o) { cCollisionFace_ctor_cCollisionFaceR(this, &o); }
     V4p v[4];
     UvX uv;
     unsigned char b50, b51, b52;
@@ -44,18 +44,18 @@ float Vec4_GetY(const V4* v);
 V4 Vec4_Scale(const V4* v, float k);
 V4 Vec4_Add(const V4* a, const V4* b);
 void Vec4_Copy(void* d, const void* s);
-void func_003B26E0(V4* v);
-float* func_003B2680(V4* v);
-float* func_003B2650(V4* v);
-float* func_003B2630(V4* v);
-void func_00139BB0(UvX* d, const UvX* s);
-void func_00139BA0(UvY* d, const UvY* s);
+void cVector_SetZero(V4* v);
+float* cVector_X_void_2(V4* v);
+float* cVector_Y_void_2(V4* v);
+float* cVector_Z_void_2(V4* v);
+void cCollisionModel_FaceProperties_opAssign(UvX* d, const UvX* s);
+void cCollisionModel_FaceLocator_opAssign(UvY* d, const UvY* s);
 void func_003C01D0(CMesh* m);
 void func_003C01B0(CTri* t, int i, V4* v);
 void func_003C0020(CTri* t);
-void func_00139B00(CTri* d, const CTri* s);
+void cCollisionFace_ctor_cCollisionFaceR(CTri* d, const CTri* s);
 void func_003BFFF0(CMesh* m, CTri* t);
-void func_00131B70(CTri* t, int flag);
+void cCollisionFace_dtor(CTri* t, int flag);
 void func_003BFAB0(CTri* q, CMesh* mesh, int idx, V4* v, float h);
 }
 
@@ -68,7 +68,7 @@ static inline V4 ClipEdge(const V4* a, const V4* b, float h)
         float t = (h - Vec4_GetY(a)) / Vec4_GetY(&d);
         Vec4_Copy(&r, &Vec4_Add(a, &Vec4_Scale(&d, t)));
     } else {
-        func_003B26E0(&r);
+        cVector_SetZero(&r);
     }
     return r;
 }
@@ -80,8 +80,8 @@ static inline void AssignTri(CTri* d, const CTri* s)
     Vec4_Copy(&d->v[2], &s->v[2]);
     Vec4_Copy(&d->v[3], &s->v[3]);
     d->b50 = s->b50;
-    func_00139BB0(&d->uv, &s->uv);
-    func_00139BA0(&d->uv2, &s->uv2);
+    cCollisionModel_FaceProperties_opAssign(&d->uv, &s->uv);
+    cCollisionModel_FaceLocator_opAssign(&d->uv2, &s->uv2);
     d->b51 = s->b51;
     d->b52 = s->b52;
 }
@@ -90,9 +90,9 @@ static inline void EmitQuad(CTri* q, CMesh* mesh, V4* out)
 {
     int i;
     for (i = 0; i < 4; i++) {
-        float inv = 1.0f / *func_003B2650(&out[i]);
-        *func_003B2680(&out[i]) *= inv;
-        *func_003B2630(&out[i]) *= inv;
+        float inv = 1.0f / *cVector_Y_void_2(&out[i]);
+        *cVector_X_void_2(&out[i]) *= inv;
+        *cVector_Z_void_2(&out[i]) *= inv;
     }
     func_003C01B0(q, 0, &out[0]);
     func_003C01B0(q, 1, &out[1]);
@@ -105,7 +105,7 @@ static inline void EmitQuad(CTri* q, CMesh* mesh, V4* out)
         func_003C01B0(&t, 2, &out[3]);
         func_003C0020(&t);
         func_003BFFF0(mesh, &t);
-        func_00131B70(&t, -1);
+        cCollisionFace_dtor(&t, -1);
     }
 }
 
@@ -114,9 +114,9 @@ static inline void Finish(CTri* q, CMesh* mesh, V4* out, int n)
     int i;
     if (n == 3) {
         for (i = 0; i < 3; i++) {
-            float inv = 1.0f / *func_003B2650(&out[i]);
-            *func_003B2680(&out[i]) *= inv;
-            *func_003B2630(&out[i]) *= inv;
+            float inv = 1.0f / *cVector_Y_void_2(&out[i]);
+            *cVector_X_void_2(&out[i]) *= inv;
+            *cVector_Z_void_2(&out[i]) *= inv;
             func_003C01B0(q, i, &out[i]);
         }
         func_003C0020(q);

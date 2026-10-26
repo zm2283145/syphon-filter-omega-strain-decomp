@@ -9,11 +9,11 @@ extern char D_004E5F00[];
 extern int D_004E5440[];
 extern int D_0048623C;
 extern int D_00486248;
-extern int func_001111B0(int);
-extern void func_001111E0(void);
+extern int _sceFsWaitS(int);
+extern void _sceFsSigSema(void);
 extern void func_001112E0(void);
-extern int func_001114E8(void);
-extern Fd *func_00110CB0(void);
+extern int _fs_version(void);
+extern Fd *new_iob(void);
 extern int CreateSema(Sema *);
 extern int DeleteSema(int);
 extern int WaitSema(int);
@@ -34,16 +34,16 @@ int sceOpen(const char *name, int flags, ...)
 
     p = &D_004E4800;
     va_start(ap, flags);
-    func_001111B0(0);
+    _sceFsWaitS(0);
     if (D_0048623C == 0)
         func_001112E0();
-    if (func_001114E8()) {
-        func_001111E0();
+    if (_fs_version()) {
+        _sceFsSigSema();
         return 0xFFFEFFFC;
     }
-    fd = func_00110CB0();
+    fd = new_iob();
     if (!fd) {
-        func_001111E0();
+        _sceFsSigSema();
         return -19;
     }
     mode = *(int *)ap;
@@ -66,11 +66,11 @@ int sceOpen(const char *name, int flags, ...)
     p->x8 = 4;
     if (sceSifCallRpc(D_004E5F00, 0, 0, &D_004E4800, 0x418, D_004E5440, 4, 0, 0) < 0) {
         DeleteSema(sid);
-        func_001111E0();
+        _sceFsSigSema();
         return -11;
     }
     ok = *(int *)((int)D_004E5440 | 0x20000000);
-    func_001111E0();
+    _sceFsSigSema();
     if (!ok) {
         DeleteSema(sid);
         return -11;

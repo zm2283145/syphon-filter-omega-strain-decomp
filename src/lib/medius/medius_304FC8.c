@@ -9,7 +9,7 @@ typedef struct {
 typedef struct { unsigned int magic; } UpnpMsg;
 extern int RtUdp_SendToPeerEndpoint(UpnpObj *o, int peer, unsigned char type, void *data, unsigned short len);
 
-int func_00304FC8(UpnpObj *o)
+int rt_p2p_complete_connection(UpnpObj *o)
 {
     UpnpMsg m;
     int i;

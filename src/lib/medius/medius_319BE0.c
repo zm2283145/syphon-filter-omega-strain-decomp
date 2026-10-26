@@ -1,4 +1,4 @@
-int func_00319BE0(int* a, int n, int v)
+int SelectOutCellCB(int* a, int n, int v)
 {
     int i;
     int found = 0;

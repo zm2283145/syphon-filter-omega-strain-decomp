@@ -49,10 +49,10 @@ extern unsigned char D_005724B0;
 extern void DME_OnConnectResult(void);
 extern void DME_OnClientConnect(void);
 extern void DME_OnClientDisconnect(void);
-extern void func_00437F90(void);
-extern void func_00438240(void);
-extern void func_002E98C0(int a, int b, int c);
-extern int func_002EA6F0(NetHostGameCfg* cfg);
+extern void cHeadSet_AudioRecordCallback(void);
+extern void cHeadSet_AudioPlayCallback(void);
+extern void NetSetSendAggregationInterval(int a, int b, int c);
+extern int NetSetDefaultHostPeerToPeerParams(NetHostGameCfg* cfg);
 extern int NetGame_Create(NetHostGameCfg* cfg, DmeGameOut* out);
 static inline void MemClear_h5(void* d0, int n0) { int n = n0; void* dst = d0;
     asm {
@@ -92,20 +92,20 @@ void Net_CreateGame(void)
     NetHostGameCfg cfg;
     int err;
     if (D_00494198 == 0x10) {
-        func_002E98C0(0, 0x5A, 0x5A);
+        NetSetSendAggregationInterval(0, 0x5A, 0x5A);
     } else {
-        func_002E98C0(0, 0x3C, 0x3C);
+        NetSetSendAggregationInterval(0, 0x3C, 0x3C);
     }
-    err = func_002EA6F0(&cfg);
+    err = NetSetDefaultHostPeerToPeerParams(&cfg);
     cfg.onConnectResult = DME_OnConnectResult;
     cfg.port = (*(int*)D_00494180);
     cfg.onClientConnect = DME_OnClientConnect;
     cfg.onClientDisconnect = DME_OnClientDisconnect;
     MemClear_h5(&cfg.sess, 0x54);
-    cfg.sess.cb34 = func_00438240;
+    cfg.sess.cb34 = cHeadSet_AudioPlayCallback;
     cfg.sess.unk10 = 1;
     cfg.sess.unk04 = 1;
-    cfg.sess.cb2C = func_00437F90;
+    cfg.sess.cb2C = cHeadSet_AudioRecordCallback;
     cfg.sess.unk0C = 1;
     cfg.sess.unk14 = 1;
     cfg.sess.unk08 = 2;
@@ -147,8 +147,8 @@ typedef struct NetJoinCfg {
 } NetJoinCfg;
 extern char D_004BF9B8[]; /* "F_TO_CONNECT" */
 extern void DME_OnHostDisconnect(void);
-extern int func_002EA5B0(NetJoinCfg* cfg);
-extern int func_002EA648(NetJoinCfg* cfg, DmeGameOut* out);
+extern int NetSetDefaultConnectParams(NetJoinCfg* cfg);
+extern int NetConnect(NetJoinCfg* cfg, DmeGameOut* out);
 extern void* memcpy(void* d, const void* s, unsigned int n);
 extern int Gui_GetScreenStack(void);
 extern void GuiWidget_SendEvent(int a, int b, int c, int d, int e);
@@ -190,11 +190,11 @@ int Net_ConnectGame(void* addr)
     NetJoinCfg cfg;
     int err;
     if (D_00494198 == 0x10) {
-        func_002E98C0(0, 0x5A, 0x5A);
+        NetSetSendAggregationInterval(0, 0x5A, 0x5A);
     } else {
-        func_002E98C0(0, 0x3C, 0x3C);
+        NetSetSendAggregationInterval(0, 0x3C, 0x3C);
     }
-    func_002EA5B0(&cfg);
+    NetSetDefaultConnectParams(&cfg);
     cfg.mode = 4;
     memcpy(cfg.addr, addr, 0x9C);
     cfg.onConnectResult = DME_OnConnectResult;
@@ -202,10 +202,10 @@ int Net_ConnectGame(void* addr)
     cfg.onClientDisconnect = DME_OnClientDisconnect;
     cfg.onHostDisconnect = DME_OnHostDisconnect;
     MemClear_n1(&cfg.sess, 0x54);
-    cfg.sess.cb34 = func_00438240;
+    cfg.sess.cb34 = cHeadSet_AudioPlayCallback;
     cfg.sess.unk10 = 1;
     cfg.sess.unk04 = 1;
-    cfg.sess.cb2C = func_00437F90;
+    cfg.sess.cb2C = cHeadSet_AudioRecordCallback;
     cfg.sess.unk0C = 1;
     cfg.sess.unk14 = 1;
     cfg.sess.unk08 = 2;
@@ -214,7 +214,7 @@ int Net_ConnectGame(void* addr)
     cfg.sess.unk24 = 0x10;
     cfg.sess.unk1C = 0x1F40;
     cfg.sess.unk28 = 0x1F40;
-    err = func_002EA648(&cfg, &out);
+    err = NetConnect(&cfg, &out);
     if (err) {
         D_005721A8 = out.handle;
         D_005724B0 = DME_STATE_DISCONNECTED;
@@ -251,14 +251,14 @@ typedef struct NetJoinByNameCfg {
     int tail[4];
 } NetJoinByNameCfg;
 #if 0 /* merge_units */
-extern int func_002EA5B0(NetJoinByNameCfg* cfg);
+extern int NetSetDefaultConnectParams(NetJoinByNameCfg* cfg);
 #endif /* merge_units */
-#define func_002EA5B0(a0) (func_002EA5B0((NetJoinCfg *)(a0))) /* merge_units */
+#define NetSetDefaultConnectParams(a0) (NetSetDefaultConnectParams((NetJoinCfg *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_002EA648(NetJoinByNameCfg* cfg, DmeGameOut* out);
+extern int NetConnect(NetJoinByNameCfg* cfg, DmeGameOut* out);
 #endif /* merge_units */
-#define func_002EA648(a0, a1) (func_002EA648((NetJoinCfg *)(a0), (a1))) /* merge_units */
+#define NetConnect(a0, a1) (NetConnect((NetJoinCfg *)(a0), (a1))) /* merge_units */
 
 extern char* strncpy(char* d, const char* s, unsigned int n);
 /* same layout as NetworkGameAddress */
@@ -301,11 +301,11 @@ int Net_ConnectGameByName(DmeGameAddress* host)
     NetJoinByNameCfg cfg;
     int err;
     if (D_00494198 == 0x10) {
-        func_002E98C0(0, 0x5A, 0x5A);
+        NetSetSendAggregationInterval(0, 0x5A, 0x5A);
     } else {
-        func_002E98C0(0, 0x3C, 0x3C);
+        NetSetSendAggregationInterval(0, 0x3C, 0x3C);
     }
-    func_002EA5B0(&cfg);
+    NetSetDefaultConnectParams(&cfg);
     cfg.mode = 4;
     cfg.unk08 = 2;
     cfg.unk0C = 1;
@@ -316,10 +316,10 @@ int Net_ConnectGameByName(DmeGameAddress* host)
     cfg.onClientDisconnect = DME_OnClientDisconnect;
     cfg.onHostDisconnect = DME_OnHostDisconnect;
     MemClear_n1_0042ACD0(&cfg.sess, 0x54);
-    cfg.sess.cb34 = func_00438240;
+    cfg.sess.cb34 = cHeadSet_AudioPlayCallback;
     cfg.sess.unk10 = 1;
     cfg.sess.unk04 = 1;
-    cfg.sess.cb2C = func_00437F90;
+    cfg.sess.cb2C = cHeadSet_AudioRecordCallback;
     cfg.sess.unk0C = 1;
     cfg.sess.unk14 = 1;
     cfg.sess.unk08 = 2;
@@ -328,7 +328,7 @@ int Net_ConnectGameByName(DmeGameAddress* host)
     cfg.sess.unk24 = 0x10;
     cfg.sess.unk1C = 0x1F40;
     cfg.sess.unk28 = 0x1F40;
-    err = func_002EA648(&cfg, &out);
+    err = NetConnect(&cfg, &out);
     if (err) {
         D_005721A8 = out.handle;
         D_005724B0 = DME_STATE_DISCONNECTED;
@@ -338,7 +338,7 @@ int Net_ConnectGameByName(DmeGameAddress* host)
     }
     return err;
 }
-#undef func_002EA5B0 /* merge_units */
-#undef func_002EA648 /* merge_units */
+#undef NetSetDefaultConnectParams /* merge_units */
+#undef NetConnect /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0042ACD0 */

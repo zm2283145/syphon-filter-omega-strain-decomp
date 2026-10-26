@@ -1,4 +1,4 @@
-int func_003018B8(unsigned char *src, unsigned char *dst)
+int rt_msg_get_byte(unsigned char *src, unsigned char *dst)
 {
     int ret = 2;
     if (src == 0) return ret;

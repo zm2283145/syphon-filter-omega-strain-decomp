@@ -14,6 +14,6 @@ int func_00159570(Word* self) {
     return self->value;
 }
 
-void func_00159580(Iter* out, PtrVec* v) {
+void std_list_cNPCPtr_begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }

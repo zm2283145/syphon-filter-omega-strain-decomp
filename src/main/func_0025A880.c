@@ -11,7 +11,7 @@ static inline V4_A880 Sub_A880(V4_A880* a, V4_A880* b) {
     return *p;
 }
 #pragma opt_common_subs off
-int func_0025A880(V4_A880* a, V4_A880* b, float lo, float hi) {
+int ClipSegmentToZRange(V4_A880* a, V4_A880* b, float lo, float hi) {
     V4_A880 d = Sub_A880(b, a);
     float t;
     float z;

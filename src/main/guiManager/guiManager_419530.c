@@ -16,13 +16,13 @@
 
 struct VC00419530 { virtual int v0(); virtual int v1(...); };
 extern "C" {
-int func_002CCE50(...);                      
+int std_list_GuiWidgetPtr_push_back_GuiWidgetPR(...);                      
 }
 extern "C" void GuiManager_AddWidget(int arg0, char * arg1) {
     void **temp_a0;
 
     if (!(F_(arg1, 0x14, unsigned short) & 1)) {
-        func_002CCE50(arg0 + 0x14, &arg1);
+        std_list_GuiWidgetPtr_push_back_GuiWidgetPR(arg0 + 0x14, &arg1);
         temp_a0 = (void **)(F_(arg1, 0x44, int));
         ((VC00419530 *)(temp_a0))->v1();
     }
@@ -37,17 +37,17 @@ typedef struct { int size; int pad; Node419590* first; } List419590;
 typedef struct { char p[0x14]; List419590 a; List419590 b; char s[0x10]; } Obj419590;
 extern void GuiManager_UnloadRoot(Obj419590* o, void* item, int f);
 extern void String_Dtor(void* p, int f);
-extern void func_002CCD80(void* p, int f);
-extern void func_00419660(Obj419590* p, int f);
+extern void cLList_GuiWidgetPtr_dtor(void* p, int f);
+extern void std_map_cString_cFontPtr_dtor(Obj419590* p, int f);
 extern void operator_delete(void* p);
 Obj419590* GuiManager_dtor(Obj419590* self, short del)
 {
     if (self) {
         while (self->a.size) GuiManager_UnloadRoot(self, self->a.first->item, 1);
         if (self->s) String_Dtor(self->s, 0);
-        if (&self->b) func_002CCD80(&self->b, 0);
-        if (&self->a) func_002CCD80(&self->a, 0);
-        if (self) func_00419660(self, -1);
+        if (&self->b) cLList_GuiWidgetPtr_dtor(&self->b, 0);
+        if (&self->a) cLList_GuiWidgetPtr_dtor(&self->a, 0);
+        if (self) std_map_cString_cFontPtr_dtor(self, -1);
         if (del > 0) operator_delete(self);
     }
     return self;

@@ -22,23 +22,23 @@ extern char D_0055C480[];
 extern char D_0055C540[];
 extern char D_00571CF0[];
 extern int D_0055C530;
-extern void func_003F7830(void* device);
-extern void func_003F6030(void* obj);
+extern void readBufDelete(void* device);
+extern void voBufDelete(void* obj);
 extern void TerminateThread(int sema);
 extern void DeleteThread(int sema);
 extern void DisableDmac(int channel);
 extern void RemoveDmacHandler(int channel, int handler);
 extern void sceGsSyncVCallback(int arg);
-extern void func_003F5D00(void* obj);
-extern void func_003F6EB0(void* obj);
-extern void func_003F78F0(void* part);
-extern void func_003A6C60(void);
+extern void videoDecDelete(void* obj);
+extern void audioDecDelete(void* obj);
+extern void strFileClose(void* part);
+extern void snd_CloseMovieSound(void);
 extern void SubtitleTrack_Destroy(void* obj);
 
 /* Shuts the subsystem down: stops the device, releases semaphores and handlers, clears the DMA flag. */
-void func_003F8390(Sys3F83* sys) {
-    func_003F7830(sys->device);
-    func_003F6030(D_0055C460);
+void cMoviePlayer_Purge(Sys3F83* sys) {
+    readBufDelete(sys->device);
+    voBufDelete(D_0055C460);
     TerminateThread(sys->sema50);
     DeleteThread(sys->sema50);
     TerminateThread(sys->sema54);
@@ -46,11 +46,11 @@ void func_003F8390(Sys3F83* sys) {
     DisableDmac(2);
     RemoveDmacHandler(2, D_0055C530);
     sceGsSyncVCallback(0);
-    func_003F5D00(D_0055C480);
-    func_003F6EB0(D_0055C540);
-    func_003F78F0(sys->part58);
+    videoDecDelete(D_0055C480);
+    audioDecDelete(D_0055C540);
+    strFileClose(sys->part58);
     *(volatile unsigned int*)0x1000E000 &= ~2;
-    func_003A6C60();
+    snd_CloseMovieSound();
     SubtitleTrack_Destroy(D_00571CF0);
 }
 #pragma pop /* merge_units */
@@ -116,25 +116,25 @@ extern int D_00538204;
 extern int D_0055C748;
 extern int D_0055C750;
 extern char D_004E9B70[];
-extern void func_003F79F0(int a, int b, int c, int d);
-extern void func_00382ED0(int a, int b, int c, int d);
+extern void ClearVram(int a, int b, int c, int d);
+extern void cTexMan_AllocStaticVram(int a, int b, int c, int d);
 extern int strlen(const char* s);
 extern char* strncpy(char* d, const char* s, int n);
 extern void String_Copy(char* d, const char* s);
-extern void func_0036E310(Obj8450* o, char* path, void* p);
+extern void cFileMan_ctor_charP_cFileManR(Obj8450* o, char* path, void* p);
 extern void FileMan_Release(Obj8450* o, int f);
 extern void MovieSubtitles_Load(void* a, Obj8450* o, int b);
 extern void Alloc_Lock(int id);
 extern int GetThreadId(void);
 extern void ChangeThreadPriority(int tid, int prio);
-extern void func_00103418(void* db, int psm, short w, short h, int ztest, int zpsm, int clear);
+extern void sceGsSetDefDBuff(void* db, int psm, short w, short h, int ztest, int zpsm, int clear);
 extern void FlushCache(int a);
-extern void func_003F7840(int a);
-extern void func_0010AF48(void);
-extern void func_003F5D80(void* a, int b, int c, int d, int e, int f, int g, int h);
+extern void readBufCreate(int a);
+extern void sceMpegInit(void);
+extern void videoDecCreate(void* a, int b, int c, int d, int e, int f, int g, int h);
 extern void func_003F6ED0(void* a, int b, int c, int d);
-extern void func_003F5D60(void* a, int b, int c, void* d, int e);
-extern void func_003F6040(void* a, unsigned int b, int c, int d);
+extern void videoDecSetStream(void* a, int b, int c, void* d, int e);
+extern void voBufCreate(void* a, unsigned int b, int c, int d);
 extern int CreateThread(ThreadParam8450* tp);
 extern void StartThread(int tid, void* arg);
 #if 0 /* merge_units */
@@ -145,13 +145,13 @@ extern void sceGsSyncVCallback(void* f);
 
 extern int AddDmacHandler(int a, void* f, int b);
 extern void EnableDmac(int a);
-extern int func_003F7950(void* a, void* b);
-extern void func_003F7D90(void);
-extern void func_003F7BD0(void);
-extern void func_003F7F80(void);
-extern void func_003F5A10(void);
+extern int strFileOpen(void* a, void* b);
+extern void cMoviePlayer_VideoCallback(void);
+extern void cMoviePlayer_PcmCallback(void);
+extern void cMoviePlayer_DefMain(void);
+extern void videoDecMain(void);
 extern void MoviePlayer_PresentVblank(void);
-extern void func_003F7010(void);
+extern void handler_endimage(void);
 void MoviePlayer_Start(Sys8450* s)
 {
     char path[0x80];
@@ -161,26 +161,26 @@ void MoviePlayer_Start(Sys8450* s)
     char* name;
     int n;
     D_0055C740 = (g_Video & 4) != 0;
-    func_003F79F0(0, 0, 0, 0x80);
-    func_00382ED0(g_TextureMgr, 0x2D0, 0x240, 0x20);
+    ClearVram(0, 0, 0, 0x80);
+    cTexMan_AllocStaticVram(g_TextureMgr, 0x2D0, 0x240, 0x20);
     name = s->name;
     len = strlen(name);
     strncpy(path, name, len);
     String_Copy(path + len - 3, D_004BE1D8);
-    func_0036E310(&obj, path, s->part190);
+    cFileMan_ctor_charP_cFileManR(&obj, path, s->part190);
     MovieSubtitles_Load(D_00571CF0, &obj, s->f22C);
     *(volatile int*)0x10003010 = 0;
     Alloc_Lock(5);
     ChangeThreadPriority(GetThreadId(), 5);
     if (D_0055C740) {
-        func_00103418(D_0055C230, 0, D_00538200, D_00538204, 0, 0, 1);
+        sceGsSetDefDBuff(D_0055C230, 0, D_00538200, D_00538204, 0, 0, 1);
     } else {
-        func_00103418(D_0055C230, 0, D_00538200, D_00538204 / 2, 0, 0, 1);
+        sceGsSetDefDBuff(D_0055C230, 0, D_00538200, D_00538204 / 2, 0, 0, 1);
     }
     FlushCache(0);
     *(volatile unsigned int*)0x1000E000 |= 3;
     *(volatile unsigned int*)0x1000E010 = 4;
-    func_003F7840(s->f30);
+    readBufCreate(s->f30);
     n = 2;
     switch (D_0055C748) {
     case 0:
@@ -193,15 +193,15 @@ void MoviePlayer_Start(Sys8450* s)
         n = 4;
         break;
     }
-    func_0010AF48();
-    func_003F5D80(D_0055C480, s->f18, 0x1CA200, s->f38, s->f10, 0x100, s->f48, 0x200);
+    sceMpegInit();
+    videoDecCreate(D_0055C480, s->f18, 0x1CA200, s->f38, s->f10, 0x100, s->f48, 0x200);
     func_003F6ED0(D_0055C540, s->f20, 0xC000, n);
-    func_003F5D60(D_0055C480, 0, 0, func_003F7D90, s->f30);
+    videoDecSetStream(D_0055C480, 0, 0, cMoviePlayer_VideoCallback, s->f30);
     if (s->f236) {
-        func_003F5D60(D_0055C480, (unsigned char)n, D_0055C750, func_003F7BD0, s->f30);
+        videoDecSetStream(D_0055C480, (unsigned char)n, D_0055C750, cMoviePlayer_PcmCallback, s->f30);
     }
-    func_003F6040(D_0055C460, (s->f0 & 0x0FFFFFFF) | 0x20000000, s->f8, 2);
-    tp.entry = func_003F7F80;
+    voBufCreate(D_0055C460, (s->f0 & 0x0FFFFFFF) | 0x20000000, s->f8, 2);
+    tp.entry = cMoviePlayer_DefMain;
     tp.stack = s->f28;
     tp.stackSize = 0x800;
     tp.initPriority = 5;
@@ -209,7 +209,7 @@ void MoviePlayer_Start(Sys8450* s)
     tp.option = 0;
     s->f54 = CreateThread(&tp);
     StartThread(s->f54, 0);
-    tp.entry = func_003F5A10;
+    tp.entry = videoDecMain;
     tp.stack = s->f40;
     tp.stackSize = 0x4000;
     tp.initPriority = 5;
@@ -218,9 +218,9 @@ void MoviePlayer_Start(Sys8450* s)
     s->f50 = CreateThread(&tp);
     StartThread(s->f50, D_0055C480);
     sceGsSyncVCallback(MoviePlayer_PresentVblank);
-    D_0055C530 = AddDmacHandler(2, func_003F7010, 0);
+    D_0055C530 = AddDmacHandler(2, handler_endimage, 0);
     EnableDmac(2);
-    if (!func_003F7950(s->part58, s->part190)) {
+    if (!strFileOpen(s->part58, s->part190)) {
         s->f235 = 1;
     }
     s->f188 = s->f60;

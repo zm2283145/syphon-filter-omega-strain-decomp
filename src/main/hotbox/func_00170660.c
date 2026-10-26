@@ -9,21 +9,21 @@ struct HotMsg { CMSG_HEADER; int action; int code; int value; int who; };
 struct HotboxV { VPAD32(a) VPAD32(b) VPAD2(c) virtual int Test(void*); };
 extern "C" {
 void List_Erase(void*,void*,void*);
-void func_0015AF40(void*,void*);
+void std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(void*,void*);
 void HotboxTracker_LinkBox(void*,void*);
-void func_00170C40(void*,void*);
-int func_00170C50(void*,void*);
-void func_00170C70(void*,void*);
-void func_00170C80(void*);
-int* func_00170CA0(void*);
-void func_00170CB0(void*,void*);
-void func_00170CC0(void*,void*);
-void func_00170CD0(void*);
-void func_00170CE0(void*,void*);
-void func_00170CF0(void*,void*);
-void func_00170D00(void*,void*);
-void func_00170D10(void*,void*);
-void func_00170D20(void*,void*);
+void cLListIterator_cHotboxPtr_ctor_cLListIteratorR(void*,void*);
+int opNe_cLListIteratorR_cLListIteratorR_2(void*,void*);
+void cLList_cHotboxPtr_End(void*,void*);
+void cLListIterator_cHotboxPtr_opInc(void*);
+int* cLListIterator_cHotboxPtr_opMul(void*);
+void cLListIterator_cHotboxPtr_opAssign(void*,void*);
+void cLList_cHotboxPtr_Begin(void*,void*);
+void cLListIterator_cHotboxPtr_ctor_void(void*);
+void std_list_cHotboxPtr_generic_iterator_ctor(void*,void*);
+void std_list_cHotboxPtr_generic_iterator_opCast(void*,void*);
+void std_list_cHotboxPtr_begin(void*,void*);
+void cLListIterator_cHotboxPtr_ctor_listR(void*,void*);
+void std_list_cHotboxPtr_end_void(void*,void*);
 extern char D_004D9940[],g_HotboxList[],D_004EE698[];
 extern unsigned char D_005721C0,g_IsMultiplayer;
 }
@@ -86,13 +86,13 @@ extern "C" void Hotbox_UpdateTracker(HotboxReceiver* arg0, void* arg1, void* arg
     if (arg2 == 0) {
         arg2 = arg0->unk28;
     }
-    func_00170D20(&sp140, &g_HotboxList);
-    func_00170D10(&sp170, &sp140);
-    func_00170D00(&sp13C, arg2);
-    func_00170D10(&sp16C, &sp13C);
+    std_list_cHotboxPtr_end_void(&sp140, &g_HotboxList);
+    cLListIterator_cHotboxPtr_ctor_listR(&sp170, &sp140);
+    std_list_cHotboxPtr_begin(&sp13C, arg2);
+    cLListIterator_cHotboxPtr_ctor_listR(&sp16C, &sp13C);
     sp17C = sp16C;
-    func_00170D20(&sp138, arg2);
-    func_00170D10(&sp164, &sp138);
+    std_list_cHotboxPtr_end_void(&sp138, arg2);
+    cLListIterator_cHotboxPtr_ctor_listR(&sp164, &sp138);
     sp168.p = sp164;
     sp178 = sp168;
     if (sp178.p != sp17C.p) {
@@ -134,10 +134,10 @@ block_19:
                 Event_Send(&spE0, temp_s2, 0);
                 spE0.vtable = D_004D9940;
                 cMessage_dtor(&spE0, 0);
-                func_0015AF40(&sp144, &sp17C);
-                func_00170CF0(&sp130, &sp144);
+                std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&sp144, &sp17C);
+                std_list_cHotboxPtr_generic_iterator_opCast(&sp130, &sp144);
                 List_Erase(&sp134, arg2, &sp130);
-                func_00170CE0(&sp148, &sp134);
+                std_list_cHotboxPtr_generic_iterator_ctor(&sp148, &sp134);
                 sp160.p = sp148;
                 sp17C = sp160;
             } else {
@@ -145,12 +145,12 @@ block_19:
             }
         } while (sp178.p != sp17C.p);
     }
-    func_00170D20(&sp12C, &g_HotboxList);
-    func_00170D10(&sp158, &sp12C);
+    std_list_cHotboxPtr_end_void(&sp12C, &g_HotboxList);
+    cLListIterator_cHotboxPtr_ctor_listR(&sp158, &sp12C);
     sp15C.p = sp158;
     sp114 = sp15C;
-    func_00170D00(&sp128, &g_HotboxList);
-    func_00170D10(&sp154, &sp128);
+    std_list_cHotboxPtr_begin(&sp128, &g_HotboxList);
+    cLListIterator_cHotboxPtr_ctor_listR(&sp154, &sp128);
     sp17C = sp154;
     var_a0 = sp17C.p;
     if (var_a0 != sp114.p) {
@@ -158,24 +158,24 @@ block_19:
             sp174 = (cHotbox*)var_a0->value;
             var_v1 = Active((SfGameObject*)sp174);
             if ((var_v1 != 0) && (((HotboxV*)sp174)->Test(arg1) != 0)) {
-                func_00170D20(&sp124, arg2);
-                func_00170D10(&sp14C, &sp124);
-                func_00170CD0(&sp120);
-                func_00170CC0(&sp11C, arg2);
-                func_00170CB0(&sp120, &sp11C);
-                func_00170C70(&sp118, arg2);
-                if (func_00170C50(&sp120, &sp118) != 0) {
+                std_list_cHotboxPtr_end_void(&sp124, arg2);
+                cLListIterator_cHotboxPtr_ctor_listR(&sp14C, &sp124);
+                cLListIterator_cHotboxPtr_ctor_void(&sp120);
+                cLList_cHotboxPtr_Begin(&sp11C, arg2);
+                cLListIterator_cHotboxPtr_opAssign(&sp120, &sp11C);
+                cLList_cHotboxPtr_End(&sp118, arg2);
+                if (opNe_cLListIteratorR_cLListIteratorR_2(&sp120, &sp118) != 0) {
 loop_40:
-                    int found=*func_00170CA0(&sp120);
+                    int found=*cLListIterator_cHotboxPtr_opMul(&sp120);
                     if (found != (int)sp174) {
-                        func_00170C80(&sp120);
-                        func_00170C70(&sp118, arg2);
-                        if (func_00170C50(&sp120, &sp118) != 0) {
+                        cLListIterator_cHotboxPtr_opInc(&sp120);
+                        cLList_cHotboxPtr_End(&sp118, arg2);
+                        if (opNe_cLListIteratorR_cLListIteratorR_2(&sp120, &sp118) != 0) {
                             goto loop_40;
                         }
                     }
                 }
-                func_00170C40(&sp150, &sp120);
+                cLListIterator_cHotboxPtr_ctor_cLListIteratorR(&sp150, &sp120);
                 if (sp150 == sp14C) {
                     if (g_IsMultiplayer != 0) {
                         if (g_IsMultiplayer != 0) {

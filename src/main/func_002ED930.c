@@ -7,6 +7,6 @@
 #include "types.h"
 
 /* Returns the address 16 bytes into the object. */
-char* func_002ED930(char* self) {
+char* GridGetName(char* self) {
     return self + 16;
 }

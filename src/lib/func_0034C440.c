@@ -7,7 +7,7 @@ extern void *memcpy(void *d, const void *s, unsigned int n);
 extern unsigned int sceSifSetDma(DmaC440 *d, int n);
 extern int sceSifDmaStat(unsigned int id);
 extern int printf(const char *fmt, ...);
-int func_0034C440(int a, int b, CdC440 *cd, void *data, int len)
+int sceBInetSend(int a, int b, CdC440 *cd, void *data, int len)
 {
     BufC440 *p;
     DmaC440 dma;

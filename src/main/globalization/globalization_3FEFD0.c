@@ -7,13 +7,13 @@
 /* merge_units: begin func_003FEFD0 */
 #pragma push /* merge_units */
 #include "types.h"
-extern void func_003FDEE0(void* self, short del);
+extern void std_vector_imp_1_dtor(void* self, short del);
 extern void operator_delete(void* p);
-void* func_003FEFD0(void* self, short del)
+void* cArray_1_dtor(void* self, short del)
 {
     if (self) {
         if (self)
-            func_003FDEE0(self, 0);
+            std_vector_imp_1_dtor(self, 0);
         if (del > 0)
             operator_delete(self);
     }
@@ -54,7 +54,7 @@ void cMessage_ctor5(MsgFF140*, void*, PkFF140*);
 void** NetMap_Lookup(int);
 void MsgQueue_QueueClone(MsgFF140*, void*, int, int);
 void cMessage_dtor(MsgFF140*, int);
-int func_003FF140(int a, int b, int c, PkFF140* p0) {
+int cCharActionMsg_NetCharActionReq(int a, int b, int c, PkFF140* p0) {
     MsgFF140 msg;
     PkFF140* p;
     if (!D_005723C8) D_005723C8 = 1;

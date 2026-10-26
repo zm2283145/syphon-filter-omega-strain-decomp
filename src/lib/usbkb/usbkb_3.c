@@ -12,7 +12,7 @@ extern S30A0 D_004F5780;
 extern unsigned char D_004F5880[];
 extern char D_004F5820[];
 extern char D_004F58C0[];
-extern void func_00223400(void);
+extern void rpccall_end(void);
 extern void WaitSema(int);
 extern int sceSifCallRpc(void *cd, int fno, int mode, void *send, int ssize, void *recv, int rsize, void *endf, void *endp);
 extern int scePrintf(const char *, ...);
@@ -26,7 +26,7 @@ int sceUsbKbSetLEDMode(int a, unsigned int b)
     D_004F5880[0] = a;
     D_004F5880[1] = b;
     WaitSema(D_0048AB18);
-    r = sceSifCallRpc(D_004F5820, 5, 1, D_004F5880, 0x10, D_004F58C0, 0x10, func_00223400, 0);
+    r = sceSifCallRpc(D_004F5820, 5, 1, D_004F5880, 0x10, D_004F58C0, 0x10, rpccall_end, 0);
     if (r) {
         scePrintf("sceUsbKbSetLEDMode: sceSifCallRpc -> %d
 ", r);
@@ -42,7 +42,7 @@ int sceUsbKbSetLEDMode(int a, unsigned int b)
 /* merge_units: begin func_00223278 */
 typedef struct { char pad[0x14]; int f14; int f18; int f1c; char pad2[0x18]; } E223278;
 extern E223278* D_004F5784;
-int func_00223278(int i, int a, int b)
+int sceUsbKbSetRepeat(int i, int a, int b)
 {
     E223278* e;
     int off;

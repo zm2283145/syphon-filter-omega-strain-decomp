@@ -4,7 +4,7 @@ typedef struct RSAKey { char b[64]; } RSAKey;
 extern void *memset(void *, int, unsigned int);
 extern void LargeInt_Add(LargeInt *a, LargeInt *b);
 
-void func_002FA0F8(RSAKey *a, RSAKey *b)
+void KM_RSAAdjust(RSAKey *a, RSAKey *b)
 {
     LargeInt x, y;
     memset((char *)&x + 64, 0, 64);

@@ -51,7 +51,7 @@ static const float dat_0048A198[2] = { 0.0f, 0.0f };
 static const float dat_0048A1A0[2] = { 0.0f, 0.0f };
 extern char D_004DA380[];   /* CurveChannel base vtable */
 extern char D_004DA840[];   /* AnimChannel vtable */
-extern void func_001BB100(int*, int, int);
+extern void std_tree_pair_cString_value_compare_find_cStringR_2(int*, int, int);
 
 /* AnimChannel constructor: zero scalars, constant segment, wrapping off. */
 AnimChannel* AnimChannel_Construct(AnimChannel* self) {
@@ -68,24 +68,24 @@ AnimChannel* AnimChannel_Construct(AnimChannel* self) {
     return self;
 }
 
-int func_001AF120(int* self) {
+int cAssocArray_cString_cSkaAnimationSetPtr_Iterator_opMul(int* self) {
     return *self + 24;
 }
 
-int func_001AF130(Iter* a, Iter* b) {
+int cAssocArray_cString_cSkaAnimationSetPtr_Iterator_opNe(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 
-void func_001AF150(Iter* out, Tree* t) {
+void cAssocArray_cString_cSkaAnimationSetPtr_End(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
 /* Tree lookup wrapper returning the found iterator through out. */
-void func_001AF160(int* out) {
+void cAssocArray_cString_cSkaAnimationSetPtr_Find(int* out) {
     int it[1];
     int a1, a2;
 
-    func_001BB100(it, a1, a2);
+    std_tree_pair_cString_value_compare_find_cStringR_2(it, a1, a2);
     *out = it[0];
 }
 /* merge_units: generate this block's code under its own pragmas */

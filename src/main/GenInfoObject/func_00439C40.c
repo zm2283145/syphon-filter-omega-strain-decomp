@@ -10,7 +10,7 @@
 extern GioListPos* List_InsertBefore(GioListPos* result, void* list, GioListPos* pos, int value);
 
 /* push_back on a list whose sentinel node is at +4. */
-GioListPos* func_00439C40(void* list, int value) {
+GioListPos* std_list_tGenInfoPtr_push_back(void* list, int value) {
     GioListPos end;
     GioListPos result;
 

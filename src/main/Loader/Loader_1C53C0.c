@@ -7,7 +7,7 @@ extern "C" {
 extern char D_0049AE50[];
 }
 #pragma opt_common_subs off
-extern "C" void func_001C53C0(PRVec_1C53C0* v, int* first, int* last)
+extern "C" void std_vector_pod_int_init_uintP_uintP_forwarditeratortag(PRVec_1C53C0* v, int* first, int* last)
 {
     v->count = v->cap = last - first;
     if (v->count > 0x1800000) {

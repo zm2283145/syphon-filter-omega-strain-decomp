@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_001A7DE0(void* self) {
+void* cJointInfo_Limits_InJointSpace(void* self) {
     return self;
 }

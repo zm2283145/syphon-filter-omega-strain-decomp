@@ -3,7 +3,7 @@ extern int DIntr(void);
 extern void EIntr(void);
 extern int DeleteSema(int);
 
-int func_0027D350(void)
+int sce_delete_sema(void)
 {
     int s = DIntr();
     int sem = D_0048B378;

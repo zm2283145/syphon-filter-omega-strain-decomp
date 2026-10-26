@@ -10,14 +10,14 @@ extern char D_00492CE0[];
 extern char D_005335D8[];
 extern int Libc_Malloc(int);
 
-int func_00357D40(void) {
+int sceInsockGetErrnoMode(void) {
     int tmp0;
 
     tmp0 = *(int*)D_00492CE0;
     return tmp0;
 }
 
-int func_00357D50(void) {
+int my_malloc(void) {
     int a0, v0;
     int cond;
 

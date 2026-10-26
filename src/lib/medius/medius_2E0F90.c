@@ -9,13 +9,13 @@ extern int D_0048C4B0;
 extern G D_00520300;
 extern C D_005202E8;
 extern void (*D_00520338)(G *);
-extern int func_002DF708(void);
-void __attribute__((weak, section(".dtors_drop"))) func_002E0F00(int *p0) { }
+extern int NetIEnableUDP(void);
+void __attribute__((weak, section(".dtors_drop"))) NetISetNATServiceAddr(int *p0) { }
 extern char *strncpy(char *, const char *, unsigned int);
-extern int func_00302968(int, A *, void *);
-extern void func_002E6298(void);
+extern int rt_p2p_resolve_address(int, A *, void *);
+extern void p2p_resolve_cb(void);
 
-int func_002E0F90(O *o, Res *res)
+int NetIResolveAddr(O *o, Res *res)
 {
     A a;
     int r;
@@ -38,11 +38,11 @@ int func_002E0F90(O *o, Res *res)
         goto ok;
     }
     if (D_0048C4AC == 0) {
-        r = func_002DF708();
+        r = NetIEnableUDP();
         res->f4 = r;
         if (r != 0) return r;
     }
-    if (o->f8 == 3) func_002E0F00(&o->f8);
+    if (o->f8 == 3) NetISetNATServiceAddr(&o->f8);
     if (D_005202E8.f0 != 3) {
 bad:
         res->f4 = 0x17;
@@ -51,7 +51,7 @@ bad:
     D_00520338 = o->f4;
     strncpy(a.name, D_005202E8.name, 0x10);
     a.port = D_005202E8.port;
-    if (func_00302968(D_0048C4B0, &a, func_002E6298) != 0) {
+    if (rt_p2p_resolve_address(D_0048C4B0, &a, p2p_resolve_cb) != 0) {
         res->f4 = 0x25;
         return 0x25;
     }

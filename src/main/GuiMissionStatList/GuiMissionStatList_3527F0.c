@@ -17,7 +17,7 @@ extern char D_004BAC78[];
 }
 static inline void Cp3527F0(char* d, const char* f, const char* l) { memcpy(d, f, l - f); }
 /* Byte vector constructed from the range [first, last). */
-extern "C" void func_003527F0(V3527F0* v, char* first, char* last)
+extern "C" void std_vector_pod_StatType_init(V3527F0* v, char* first, char* last)
 {
     v->count = v->cap = last - first;
     if (v->count > 0x6000000) {
@@ -43,7 +43,7 @@ extern char D_004BACB8[];
 }
 static inline void Cp352910(char* d, const char* f, const char* l) { memcpy(d, f, l - f); }
 /* Byte vector assign(first, last): grows the buffer when needed, then copies. */
-extern "C" void func_00352910(V352910* v, char* first, char* last)
+extern "C" void std_vector_pod_StatType_do_assign(V352910* v, char* first, char* last)
 {
     unsigned int n = last - first;
     if (v->cap < n) {

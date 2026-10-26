@@ -15,17 +15,17 @@
 union V4_29A0 { float f[4]; __int128 q; };
 struct E_29A0 { V4_29A0 p; V4_29A0 q; E_29A0() {} };
 struct M_29A0 { E_29A0 e[2]; };
-extern "C" M_29A0* func_001B29A0(M_29A0* m, const V4_29A0* a, const V4_29A0* b, const V4_29A0* c, const V4_29A0* d); /* gsynth: defined below */
+extern "C" M_29A0* cHermiteSpline_cVector_ctor_cVectorR_cVectorR_cVectorR_cVectorR(M_29A0* m, const V4_29A0* a, const V4_29A0* b, const V4_29A0* c, const V4_29A0* d); /* gsynth: defined below */
 #pragma pop
 typedef struct { float x, y, z, w; } B8V_1B28E0;
 typedef struct { char pad[0x40]; float s; float inv; } B8S_1B28E0;
 extern void Vec4_Scale(B8V_1B28E0* out, B8V_1B28E0* in, float s);
 #if 0 /* merge_units */
-extern void func_001B29A0(B8S_1B28E0* p, int a, B8V_1B28E0* b, int c, B8V_1B28E0* d);
+extern void cHermiteSpline_cVector_ctor_cVectorR_cVectorR_cVectorR_cVectorR(B8S_1B28E0* p, int a, B8V_1B28E0* b, int c, B8V_1B28E0* d);
 #endif /* merge_units */
-#define func_001B29A0(a0, a1, a2, a3, a4) ((void)func_001B29A0((void *)(a0), (void *)(a1), (void *)(a2), (void *)(a3), (void *)(a4))) /* merge_units */
+#define cHermiteSpline_cVector_ctor_cVectorR_cVectorR_cVectorR_cVectorR(a0, a1, a2, a3, a4) ((void)cHermiteSpline_cVector_ctor_cVectorR_cVectorR_cVectorR_cVectorR((void *)(a0), (void *)(a1), (void *)(a2), (void *)(a3), (void *)(a4))) /* merge_units */
 
-void func_001B28E0(void* pv, int a, B8V_1B28E0* b, int c, B8V_1B28E0* d) {
+void cHermiteSplineWithScaledDuration_cVector_Reset(void* pv, int a, B8V_1B28E0* b, int c, B8V_1B28E0* d) {
     B8V_1B28E0 v1;
     B8V_1B28E0 v2;
     float s;
@@ -35,13 +35,13 @@ void func_001B28E0(void* pv, int a, B8V_1B28E0* b, int c, B8V_1B28E0* d) {
         s = ((B8S_1B28E0*)pv)->s;
         Vec4_Scale(&v1, b, s);
         Vec4_Scale(&v2, d, s);
-        func_001B29A0(p, a, &v1, c, &v2);
+        cHermiteSpline_cVector_ctor_cVectorR_cVectorR_cVectorR_cVectorR(p, a, &v1, c, &v2);
         p->s = s;
         inv = (s != 0.0f) ? 1.0f / s : 0.0f;
         p->inv = inv;
     }
 }
-#undef func_001B29A0 /* merge_units */
+#undef cHermiteSpline_cVector_ctor_cVectorR_cVectorR_cVectorR_cVectorR /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001B28E0(void) {}
 #pragma pop /* merge_units */
@@ -59,7 +59,7 @@ inline void* operator new(unsigned int, void* p) { return p; }
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-extern "C" M_29A0* func_001B29A0(M_29A0* m, const V4_29A0* a, const V4_29A0* b, const V4_29A0* c, const V4_29A0* d)
+extern "C" M_29A0* cHermiteSpline_cVector_ctor_cVectorR_cVectorR_cVectorR_cVectorR(M_29A0* m, const V4_29A0* a, const V4_29A0* b, const V4_29A0* c, const V4_29A0* d)
 {
     { E_29A0* e = m->e; E_29A0* end = m->e + 2; do { new (e) E_29A0; } while (++e != end); }
     E_29A0* e1 = &m->e[1];
@@ -83,7 +83,7 @@ static inline void merge_flush_func_001B29A0(void) {}
 #pragma cplusplus on
 struct V4_1B2A00 { __int128 q; V4_1B2A00() {} };
 extern "C" {
-void func_0017CC60(void* p, int f);
+void cHermiteSplineWithScaledDuration_cVector_dtor(void* p, int f);
 void* Mem_PlacementNew(unsigned int size, void* p);
 void Curve_SetTangents(void* c, V4_1B2A00* a, V4_1B2A00* b, V4_1B2A00* d, V4_1B2A00* e, float t);
 }
@@ -113,7 +113,7 @@ extern "C" void VecCurve_Reset(Obj_1B2A00* o, const V4_1B2A00* a)
     V4Copy(d, a);
     {
         V4_1B2A00 r = Get_(o);
-        func_0017CC60(o->curve, -1);
+        cHermiteSplineWithScaledDuration_cVector_dtor(o->curve, -1);
         void* cv = Mem_PlacementNew(0x50, o->curve);
         if (cv) Curve_SetTangents(cv, &o->a, &o->b, &o->c, &r, o->t);
     }

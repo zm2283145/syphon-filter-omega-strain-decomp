@@ -93,7 +93,7 @@ extern "C" void VoiceQueue_Fire(Self_4610F0* self)
 extern char D_004F2CC0[];
 
 /* Address of 12-byte element `i`. */
-char* func_00461220(Vec12* v, int i) {
+char* cArray_tQuip_opIndex(Vec12* v, int i) {
     return v->data + i * 12;
 }
 

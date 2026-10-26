@@ -15,10 +15,10 @@ struct R1C4770 { N1C4770* node; unsigned char inserted; };
 extern "C" {
 static const unsigned int dat_00489BF8[2] = { 0x1, 0x0 };
 static const unsigned int dat_00489C00[2] = { 0 };
-int func_0013C310(const K1C4770* a, const K1C4770* b);
+int std_basic_string_char_char_traits_char_compare_basicstringR(const K1C4770* a, const K1C4770* b);
 N1C4770* Tree_Insert_13C570(T1C4770* t, N1C4770* parent, bool left, bool leftmost, const K1C4770* k); }
-static inline int K1C4770_less(const K1C4770* a, const K1C4770* b) { int r = func_0013C310(a, b) < 0; return r; }
-extern "C" void func_0013C130(R1C4770* out, T1C4770* t, const K1C4770* k)
+static inline int K1C4770_less(const K1C4770* a, const K1C4770* b) { int r = std_basic_string_char_char_traits_char_compare_basicstringR(a, b) < 0; return r; }
+extern "C" void std_tree_pair_cString_value_compare_insert_one_pairR(R1C4770* out, T1C4770* t, const K1C4770* k)
 {
     N1C4770* j;
     N1C4770* y;
@@ -63,7 +63,7 @@ extern "C" void func_0013C130(R1C4770* out, T1C4770* t, const K1C4770* k)
  */
 
 
-Map* func_0013C250(Map* m, unsigned char* cmp) {
+Map* std_tree_pair_cString_value_compare_ctor_valuecompareR_cAllocatorR_2(Map* m, unsigned char* cmp) {
     m->count = 0;
     m->head = 0;
     m->cmp = *cmp;
@@ -79,22 +79,22 @@ Map* func_0013C250(Map* m, unsigned char* cmp) {
 #pragma bool off
 struct It_0013C270 { void* n; };
 static inline int ItEq(void* a, It_0013C270* b) { return a == b->n; }
-extern "C" { void func_0013C4A0(It_0013C270* r, void* t, int k); void func_0013C300(It_0013C270* r, void* t);
-void func_0013C2F0(It_0013C270* r, It_0013C270* s); void func_0013C6F0(void* t, It_0013C270* it); }
-extern "C" void func_0013C270(void* t, int k)
+extern "C" { void std_tree_pair_cString_value_compare_find_cStringR(It_0013C270* r, void* t, int k); void std_map_cString_cConsCommandPtr_end_void(It_0013C270* r, void* t);
+void cAssocArray_cString_cConsCommandPtr_Iterator_ctor(It_0013C270* r, It_0013C270* s); void std_tree_pair_cString_value_compare_erase(void* t, It_0013C270* it); }
+extern "C" void cKeyedRegistry_cString_cConsCommand_Unregister(void* t, int k)
 {
     It_0013C270 c;
     It_0013C270 a;
     It_0013C270 x;
     It_0013C270 e;
     void* n;
-    func_0013C4A0(&a, t, k);
+    std_tree_pair_cString_value_compare_find_cStringR(&a, t, k);
     n = a.n;
-    func_0013C300(&e, t);
-    func_0013C2F0(&c, &e);
+    std_map_cString_cConsCommandPtr_end_void(&e, t);
+    cAssocArray_cString_cConsCommandPtr_Iterator_ctor(&c, &e);
     if (ItEq(n, &c) ^ 1) {
         x.n = n;
-        func_0013C6F0(t, &x);
+        std_tree_pair_cString_value_compare_erase(t, &x);
     }
 }
 #pragma bool reset

@@ -25,7 +25,7 @@ int strlen(const char *);
 #pragma cplusplus on
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR(func_00397F80)
+DEFINE_BUF_HOLDER_DTOR(std_vector_intPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00397F80 */
 
@@ -40,12 +40,12 @@ extern char D_004BC640[];
 extern char D_004BC650[];
 int strstr(char* s, char* t);
 void Libc_Strcat(char* s, char* t);
-void* func_00398320(unsigned int size, int pool, char* file, int line);
-Rel* func_00398450(Rel* r);
-void* func_003983E0(void* self);
-int func_00398430(PtrVec* v, int* value);
-int func_00398300(PtrVec* v, int* value);
-int** func_00171EC0(void* v);
+void* opNewArray(unsigned int size, int pool, char* file, int line);
+Rel* std_vector_cEffectRequestPtr_ctor(Rel* r);
+void* cArray_intPtr_ctor(void* self);
+int std_vector_intPtr_push_back(PtrVec* v, int* value);
+int cArray_intPtr_PushBackActual(PtrVec* v, int* value);
+int** std_vector_pod_int_data(void* v);
 }
 
 struct Tbl {
@@ -58,7 +58,7 @@ struct Ent {
     unsigned char flag;
 };
 extern "C" Tbl* volatile D_0053BB58;
-extern "C" int func_003982E0(Tbl* v, Ent* const& value);
+extern "C" int std_vector_cEffectRequestPtr_push_back(Tbl* v, Ent* const& value);
 
 static inline void* New398(int size, int line)
 {
@@ -68,10 +68,10 @@ static inline void* New398(int size, int line)
 
 static inline void EntInit(Ent* e, char* name, int value)
 {
-    func_003983E0(&e->v);
-    e->name = (char*)func_00398320(strlen(name) + 1, 0, D_004BC650, 0x119C);
+    cArray_intPtr_ctor(&e->v);
+    e->name = (char*)opNewArray(strlen(name) + 1, 0, D_004BC650, 0x119C);
     String_Copy(e->name, name);
-    func_00398300(&e->v, &value);
+    cArray_intPtr_PushBackActual(&e->v, &value);
 }
 
 extern "C" void ParticleLib_Request(void* self, const char* name, int value)
@@ -86,21 +86,21 @@ extern "C" void ParticleLib_Request(void* self, const char* name, int value)
     if (!D_0053BB58) {
         Tbl* t = (Tbl*)New398(0x10, 0x11AE);
         if (t) {
-            func_00398450((Rel*)&t->v);
+            std_vector_cEffectRequestPtr_ctor((Rel*)&t->v);
             t->flag = 1;
         }
         D_0053BB58 = t;
     }
     for (i = 0; i < D_0053BB58->v.count; i++) {
         if (!strcmp(((Ent*)D_0053BB58->v.data[i])->name, buf)) {
-            func_00398430(&((Ent*)(*func_00171EC0(D_0053BB58))[i])->v, &value);
+            std_vector_intPtr_push_back(&((Ent*)(*std_vector_pod_int_data(D_0053BB58))[i])->v, &value);
             return;
         }
     }
     e = (Ent*)New398(0x14, 0x11B7);
     if (e)
         EntInit(e, buf, value);
-    t = e; func_003982E0(D_0053BB58, t);
+    t = e; std_vector_cEffectRequestPtr_push_back(D_0053BB58, t);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00398070(void) {}

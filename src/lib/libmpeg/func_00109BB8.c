@@ -6,7 +6,7 @@ typedef struct {
     unsigned int addr;
 } DmaChunk;
 
-int func_00109BB8(int ch, DmaChunk *s)
+int _ch4dma(int ch, DmaChunk *s)
 {
     REG(0x1000E010) = 0x10;
     if (s->cnt == 0) {

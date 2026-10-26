@@ -73,10 +73,10 @@ extern char D_004E0B40[];
 extern char D_004E09B0[];
 extern int D_00572130;
 ChildIterator List_Begin(ChildList* list);
-void func_0028C0B0(ChildIterator* result, const ChildIterator& source);
-ChildIterator func_0028C0A0(ChildList* list);
-void func_0028C090(ChildIterator* result, const ChildIterator& source);
-void func_002CCD80(ChildList* list, int flags);
+void std_list_GuiWidgetPtr_generic_iterator_ctor(ChildIterator* result, const ChildIterator& source);
+ChildIterator std_list_GuiWidgetPtr_end(ChildList* list);
+void cLListIterator_GuiWidgetPtr_ctor_listR(ChildIterator* result, const ChildIterator& source);
+void cLList_GuiWidgetPtr_dtor(ChildList* list, int flags);
 #if 0 /* merge_units */
 void String_Dtor(void* string, int flags);
 #endif /* merge_units */
@@ -94,14 +94,14 @@ static inline void destroy_owned(GuiOwnedObject* object, int line)
 
 static inline bool has_child(ChildNode* node, ChildList* list, ChildIterator* end)
 {
-    func_0028C090(end, func_0028C0A0(list));
+    cLListIterator_GuiWidgetPtr_ctor_listR(end, std_list_GuiWidgetPtr_end(list));
     return node != end->node;
 }
 
 static inline void destroy_children(ChildList* list)
 {
     if (list)
-        func_002CCD80(list, 0);
+        cLList_GuiWidgetPtr_dtor(list, 0);
 }
 
 static inline void destroy_name(void* name)
@@ -127,7 +127,7 @@ extern "C" TraversalWidget* GuiWidget_Destroy(TraversalWidget* self, short delet
         GuiOwnedObject* child;
         ChildNode* node;
         *(void**)self = D_004E0B40;
-        func_0028C0B0(&begin, List_Begin(&self->children));
+        std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, List_Begin(&self->children));
         node = begin.node;
         while (has_child(node, &self->children, &end)) {
             child = (GuiOwnedObject*)node->widget;
@@ -256,6 +256,6 @@ GuiWidget* GuiWidget_ctor(GuiWidget* self) {
 #include "base_dtor_chain.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_0041F740, func_002CCD00)
+DEFINE_BASE_DTOR_CHAIN(func_0041F740, std_list_GuiWidgetPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0041F740 */

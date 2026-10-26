@@ -14,7 +14,7 @@ struct VObj {
 };
 
 /* Calls the object's virtual method at vtable +0x90 with (a, 0). */
-extern "C" void func_00392BF0(VObj* obj, int a)
+extern "C" void cSKM_GOBJ_Init(VObj* obj, int a)
 {
     obj->Method90(a, 0);
 }

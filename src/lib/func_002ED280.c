@@ -7,8 +7,8 @@ extern S2ED280 D_0058DF98[];
 extern E2ED280 D_00590358[];
 extern unsigned int D_00525408[];
 extern char *strncpy(char *, const char *, unsigned int);
-void func_002ED168(S2ED280 *s, S2ED280 *u, int base);
-int func_002ED280(int *out, const char *name, int a)
+void RegisterChildStructure(S2ED280 *s, S2ED280 *u, int base);
+int NetIRegisterStructure(int *out, const char *name, int a)
 {
     S2ED280 *s;
     E2ED280 *e;
@@ -28,7 +28,7 @@ int func_002ED280(int *out, const char *name, int a)
         e = &D_00590358[D_00525408[i]];
         if (e != 0) {
             if (e->kind >= 16) {
-                func_002ED168(s, &D_0058DF98[e->kind - 16], e->off);
+                RegisterChildStructure(s, &D_0058DF98[e->kind - 16], e->off);
             } else {
                 s->vals[s->cnt] = e->off;
                 s->objs[s->cnt] = e;

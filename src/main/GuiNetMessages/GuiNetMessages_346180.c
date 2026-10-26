@@ -8,10 +8,10 @@
 #pragma push /* merge_units */
 #include "types.h"
 typedef struct { char pad[0x3C]; } G3E_00346180;
-extern void func_001BECC0(G3E_00346180* p, int x);
+extern void cSplinedMotion_Scalar0To1_opAssign(G3E_00346180* p, int x);
 void func_00346180(G3E_00346180* p, int n, int x) {
     for (; n != 0; n--) {
-        func_001BECC0(p, x);
+        cSplinedMotion_Scalar0To1_opAssign(p, x);
         p++;
     }
 }
@@ -25,9 +25,9 @@ typedef struct Rec3C {
 } Rec3C;
 
 #if 0 /* merge_units */
-extern void func_001BECC0(Rec3C*, Rec3C*);
+extern void cSplinedMotion_Scalar0To1_opAssign(Rec3C*, Rec3C*);
 #endif /* merge_units */
-#define func_001BECC0(a0, a1) (func_001BECC0((G3E_00346180 *)(a0), (int)(a1))) /* merge_units */
+#define cSplinedMotion_Scalar0To1_opAssign(a0, a1) (cSplinedMotion_Scalar0To1_opAssign((G3E_00346180 *)(a0), (int)(a1))) /* merge_units */
 
 
 /* Copies [first, last) backwards ending at destEnd; returns the new destination begin. */
@@ -35,11 +35,11 @@ Rec3C* func_003461E0(Rec3C* first, Rec3C* last, Rec3C* destEnd) {
     while (last > first) {
         Rec3C* src = --last;
         Rec3C* dst = --destEnd;
-        func_001BECC0(dst, src);
+        cSplinedMotion_Scalar0To1_opAssign(dst, src);
     }
     return destEnd;
 }
-#undef func_001BECC0 /* merge_units */
+#undef cSplinedMotion_Scalar0To1_opAssign /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003461E0 */
 

@@ -17,7 +17,7 @@ struct QV7 {
 
 struct SB7 { float x, y, z; int pad; QV7 c; QV7 e; };
 
-extern "C" SB7* func_001D7CE0(SB7* d, const SB7* s)
+extern "C" SB7* cJointInfo_opAssign(SB7* d, const SB7* s)
 {
     d->x = s->x;
     d->y = s->y;

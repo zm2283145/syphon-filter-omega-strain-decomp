@@ -8,7 +8,7 @@
 
 extern int func_00357178(int);
 
-int func_00358530(int a0) {
+int conv_port_to_inet(int a0) {
     int v0;
     int cond;
 
@@ -25,7 +25,7 @@ ret:
     return v0;
 }
 
-int func_00358558(int a0) {
+int conv_port_from_inet(int a0) {
     int tmp0;
 
     tmp0 = func_00357178((a0 & 65535));

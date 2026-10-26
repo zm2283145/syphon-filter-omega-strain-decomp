@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_00357130(void) {
+void lpc10Init(void) {
 
 }

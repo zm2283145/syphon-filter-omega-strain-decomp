@@ -19,7 +19,7 @@ extern "C" MessageAllocator::Node* func_00430A50(
 }
 
 /* Release a pending-message node through the caller's allocator context. */
-extern "C" void func_00430BC0(
+extern "C" void opDelete_nodeP_int_bool_charP_etc_14(
     MessageAllocator::Node* node, int pool, int flags, char* file, int line)
 {
     MessageAllocator::release(node, pool, flags, file, line);

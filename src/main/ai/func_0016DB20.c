@@ -5,11 +5,11 @@
 
 #include "types.h"
 
-Word* func_0016DB20(Word* dst, Word* src) {
+Word* std_list_cTargetAwarenessPtr_generic_iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_0016DB30(Word* dst, Word* src) {
+void std_list_cTargetAwarenessPtr_generic_iterator_opCast(Word* dst, Word* src) {
     dst->value = src->value;
 }

@@ -12,7 +12,7 @@
 #include "base_dtor_chain.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_00424D10, func_0013B340)
+DEFINE_BASE_DTOR_CHAIN(func_00424D10, std_vector_imp_int_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00424D10 */
 
@@ -89,11 +89,11 @@ extern int D_00539228;
 extern int D_00539238;
 extern int D_0053923C;
 extern int g_DrawMode;
-void func_0025CD10(char* r);
-void func_0025CA40(char* r);
+void XLib_NewStrip(char* r);
+void XLib_NextBatchVert(char* r);
 void Vec4_Copy(void* d, V4* s);
 int* GuiBatch_AddVertexColor(void* out, V4* in);
-void func_003701B0(char* r);
+void XLib_DrawLines(char* r);
 void Renderer_FlushBatch(char* r);
 }
 
@@ -107,14 +107,14 @@ static inline V4 Pt(const float& x, const float& y) { return V4(x, y, 1.0f, 0.0f
 
 static inline void Vertex(V4* p, V4* c) {
     Ent* e;
-    func_0025CA40(g_Video);
+    XLib_NextBatchVert(g_Video);
     e = EntAt(D_00539210);
     Vec4_Copy(e->pos + (D_00539224 - 1) * 16, p);
     GuiBatch_AddVertexColor(e->c30 + (D_00539224 - 1) * 16, c);
     D_005381F8 = 0x200000000LL;
 }
 
-extern "C" void func_00424F60(Rect* rect, V4* colorp, int alt)
+extern "C" void RenderOutline(Rect* rect, V4* colorp, int alt)
 {
     float r[4];
     int save = g_DrawMode;
@@ -159,7 +159,7 @@ extern "C" void func_00424F60(Rect* rect, V4* colorp, int alt)
             e->c2C += D_00539224 * 16;
             e->c30 += D_00539224 * 16;
             e->c34 += D_00539224 * 16;
-            func_0025CD10(g_Video);
+            XLib_NewStrip(g_Video);
             D_00539224 = 0;
         }
         Vertex(&p[0], colorp);
@@ -168,7 +168,7 @@ extern "C" void func_00424F60(Rect* rect, V4* colorp, int alt)
         Vertex(&p[3], colorp);
         Vertex(&p[0], colorp);
         if (alt) Renderer_FlushBatch(g_Video);
-        else func_003701B0(g_Video);
+        else XLib_DrawLines(g_Video);
     }
     g_DrawMode = save;
     D_00538C64--;

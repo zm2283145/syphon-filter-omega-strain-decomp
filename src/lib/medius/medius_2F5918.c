@@ -13,13 +13,13 @@ typedef struct {
     unsigned char *buf;
     int flag;
 } Ring2F5918;
-extern int func_002F5818(Ring2F5918 *r, unsigned int *avail);
-int func_002F5918(Ring2F5918 *r, unsigned char **out)
+extern int rt_circ_buf_get_used(Ring2F5918 *r, unsigned int *avail);
+int rt_circ_buf_get_start_used_ptr(Ring2F5918 *r, unsigned char **out)
 {
     int ret = 2;
     unsigned int avail = 0;    if (r != 0) {
         if (out != 0) {
-            ret = func_002F5818(r, &avail);
+            ret = rt_circ_buf_get_used(r, &avail);
             if (ret != 0) return ret;
             if (avail != 0) {
                 *out = r->buf + r->rd;
@@ -40,15 +40,15 @@ typedef struct {
     unsigned char *buf;
     int flag;
 } Ring2F5988;
-extern int func_002F5898(Ring2F5988 *r, unsigned int *avail);
+extern int rt_circ_buf_get_avail(Ring2F5988 *r, unsigned int *avail);
 /* Returns a pointer to the ring buffer's write position if space is free. */
-int func_002F5988(Ring2F5988 *r, unsigned char **out)
+int rt_circ_buf_get_start_avail_ptr(Ring2F5988 *r, unsigned char **out)
 {
     int ret = 2;
     unsigned int avail = 0;
     if (r != 0) {
         if (out != 0) {
-            ret = func_002F5898(r, &avail);
+            ret = rt_circ_buf_get_avail(r, &avail);
             if (ret != 0) return ret;
             if (avail != 0) {
                 *out = r->buf + r->wr;
@@ -70,7 +70,7 @@ typedef struct {
     int flag;
 } Ring2F59F8;
 /* Reports whether the ring buffer is full (read position caught up with a non-empty buffer). */
-int func_002F59F8(Ring2F59F8 *r, unsigned char *full)
+int rt_circ_buf_is_wrapped(Ring2F59F8 *r, unsigned char *full)
 {
     int ret = 2;
     int valid = r != 0;

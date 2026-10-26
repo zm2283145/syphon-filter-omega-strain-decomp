@@ -14,7 +14,7 @@ int cMessage_ctor(...);
 extern char D_004D9180;
 extern unsigned char g_ProfileLockEnabled;
 }
-extern "C" char * func_001386B0(char * arg0) {
+extern "C" char * cLosRequestMessage_Clone(char * arg0) {
     char * temp_s0;
 
     {

@@ -15,17 +15,17 @@
 #include "types.h"
 
 /* begin(): iterator at the leftmost node. */
-void func_0042EAF0(Iter* out, Tree* t) {
+void std_tree_pair_int_value_compare_begin_void_3(Iter* out, Tree* t) {
     out->p = t->leftmost;
 }
 
 /* begin(): iterator at the leftmost node. */
-void func_0042EB00(Iter* out, Tree* t) {
+void std_map_int_cMessagePtr_begin(Iter* out, Tree* t) {
     out->p = t->leftmost;
 }
 
 /* begin(): iterator at the leftmost node. */
-void func_0042EB10(Iter* out, Tree* t) {
+void std_tree_pair_int_value_compare_begin_void_4(Iter* out, Tree* t) {
     out->p = t->leftmost;
 }
 #pragma pop /* merge_units */
@@ -71,14 +71,14 @@ extern "C" {
 extern RbTree D_00582700;
 extern char D_004BFB00[];
 #if 0 /* merge_units */
-void func_0042EAF0(TransferReferenceIterator* result, RbTree* tree);
+void std_tree_pair_int_value_compare_begin_void_3(TransferReferenceIterator* result, RbTree* tree);
 #endif /* merge_units */
-#define func_0042EAF0(a0, a1) (func_0042EAF0((Iter *)(a0), (Tree *)(a1))) /* merge_units */
+#define std_tree_pair_int_value_compare_begin_void_3(a0, a1) (std_tree_pair_int_value_compare_begin_void_3((Iter *)(a0), (Tree *)(a1))) /* merge_units */
 
-TransferReferenceIterator func_0042DA20(RbTree* tree);
-void func_0042DA10(TransferReferenceIterator* result, const TransferReferenceIterator& source);
+TransferReferenceIterator std_map_int_tNetActivateTerrainObjectPtr_end(RbTree* tree);
+void cAssocArray_int_tNetActivateTerrainObjectPtr_Iterator_ctor(TransferReferenceIterator* result, const TransferReferenceIterator& source);
 void Tree_Successor(TransferReferenceIterator* position);
-void func_0042F510(RbTree* tree, TransferReferenceIterator* position);
+void std_tree_pair_int_value_compare_erase_tree_4(RbTree* tree, TransferReferenceIterator* position);
 void Mem_Free(int pool, void* allocation, char* file, int line);
 void func_0042CF30(void);
 }
@@ -117,12 +117,12 @@ static inline void erase_reference(TransferReferenceNode* node)
 {
     TransferReferenceIterator erased;
     erased.node = node;
-    func_0042F510(&D_00582700, &erased);
+    std_tree_pair_int_value_compare_erase_tree_4(&D_00582700, &erased);
 }
 
 static inline void assign_end(TransferReferenceIterator* result, RbTree* tree)
 {
-    func_0042DA10(result, func_0042DA20(tree));
+    cAssocArray_int_tNetActivateTerrainObjectPtr_Iterator_ctor(result, std_map_int_tNetActivateTerrainObjectPtr_end(tree));
 }
 
 static inline void reference_end(TransferReferenceIterator* result)
@@ -131,14 +131,14 @@ static inline void reference_end(TransferReferenceIterator* result)
 }
 
 /* Release completed transfers and stale references, then process transfer timers. */
-extern "C" void func_0042EB20(void)
+extern "C" void cNetObjectMgr_NextFrame(void)
 {
     TransferReferenceIterator position;
     TransferReferenceIterator end;
     TransferReferenceIterator begin;
     cGOBJ* object;
     TransferReferenceNode* node;
-    func_0042EAF0(&begin, &D_00582700);
+    std_tree_pair_int_value_compare_begin_void_3(&begin, &D_00582700);
     position.node = begin.node;
     while (reference_end(&end),
            node = position.node, (node == end.node) ^ 1) {
@@ -166,7 +166,7 @@ extern "C" void func_0042EB20(void)
     }
     func_0042CF30();
 }
-#undef func_0042EAF0 /* merge_units */
+#undef std_tree_pair_int_value_compare_begin_void_3 /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0042EB20 */
 
@@ -226,12 +226,12 @@ extern "C" void ObjMap_Find_42EF70(TransferTimerIterator* result, RbTree* tree, 
 #pragma push /* merge_units */
 #include "NetObjectMgr_types.h"
 
-extern void func_00430210(RbTree* tree, void* node);
+extern void std_tree_pair_int_value_compare_destroy_nodeP_5(RbTree* tree, void* node);
 
 /* Clears the tree: erases all nodes from the root down, then resets the header. */
-void func_0042EFF0(RbTree* tree) {
+void std_tree_pair_int_value_compare_clear_void_2(RbTree* tree) {
     if (tree->root != 0) {
-        func_00430210(tree, tree->root);
+        std_tree_pair_int_value_compare_destroy_nodeP_5(tree, tree->root);
         tree->count = 0;
         tree->root = 0;
         tree->leftmost = &tree->root;

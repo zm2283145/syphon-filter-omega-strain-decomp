@@ -10,12 +10,12 @@ typedef struct { int ret; int size; char name[0xFC]; char data[0xFC]; } RpcBuf;
 extern RpcCd D_004E63C0;
 extern RpcBuf D_004E61C0;
 extern int sceSifCallRpc(void *cd, int fno, int mode, void *send, int ssize, void *recv, int rsize, void *endf, void *endp);
-extern int func_001148B8(void);
-extern int func_001149B8(void);
+extern int _lf_bind(void);
+extern int _lf_version(void);
 extern char *strncpy(char *, const char *, unsigned int);
-int func_00115448(int id, void *out, unsigned int size)
+int sceSifGetIopAddr(int id, void *out, unsigned int size)
 {
-    if (func_001148B8() < 0) return -0x10000;
+    if (_lf_bind() < 0) return -0x10000;
     if (size >= 3) goto invalid;
         D_004E61C0.ret = id;
         D_004E61C0.size = size;
@@ -33,9 +33,9 @@ success:
 /* merge_units: end func_00115448 */
 
 /* merge_units: begin func_00115538 */
-int func_00115538(int id, void *in, int size)
+int sceSifSetIopAddr(int id, void *in, int size)
 {
-    if (func_001148B8() < 0) return -0x10000;
+    if (_lf_bind() < 0) return -0x10000;
     D_004E61C0.ret = id;
     D_004E61C0.size = size;
     if (size == 0) *(unsigned char *)D_004E61C0.name = *(unsigned char *)in;
@@ -51,18 +51,18 @@ int func_00115538(int id, void *in, int size)
 typedef struct { unsigned long psize:8; unsigned long dsize:24; int dest; unsigned int cmd; int opt; int length,mode; char args[80]; } ResetPacket5618;
 typedef struct { void *src; unsigned int dest; int size,attr; } Dma5618;
 extern ResetPacket5618 D_004E6400;
-extern int func_00118310(int,int);
+extern int sceSifExecNotifyHandler(int,int);
 extern void sceSifStopDma(void);
 extern unsigned int sceSifGetReg(unsigned int);
-extern void func_0010FB10(void *,int);
+extern void sceSifWriteBackDCache(void *,int);
 extern int sceSifSetReg(unsigned int,unsigned int);
 extern int sceSifSetDma(Dma5618 *,int);
-int func_00115618(char *args,int mode)
+int sceSifResetIop(char *args,int mode)
 {
  Dma5618 dma;
  int n;
  unsigned int dest;
- func_00118310(0,0);func_00118310(1,0);
+ sceSifExecNotifyHandler(0,0);sceSifExecNotifyHandler(1,0);
  sceSifStopDma();dest=sceSifGetReg(0x80000000);
  D_004E6400.mode=mode;
  for(n=0;args[n];n++)D_004E6400.args[n]=args[n];
@@ -72,7 +72,7 @@ int func_00115618(char *args,int mode)
  D_004E6400.dsize=0;
  D_004E6400.psize=0x68;
  dma.src=&D_004E6400;dma.dest=dest;dma.size=0x68;dma.attr=0x44;
- func_0010FB10(&D_004E6400,0x68);
+ sceSifWriteBackDCache(&D_004E6400,0x68);
  sceSifSetReg(4,0x40000);
  if(sceSifSetDma(&dma,1)){
   sceSifSetReg(4,0x10000);sceSifSetReg(4,0x20000);
@@ -89,6 +89,6 @@ extern unsigned int sceSifGetReg(int);
 #endif /* merge_units */
 #define sceSifGetReg(a0) (sceSifGetReg((unsigned int)(a0))) /* merge_units */
 
-int func_00115770(void) { if (sceSifGetReg(4) & 0x10000) return 1; return 0; }
+int sceSifIsAliveIop(void) { if (sceSifGetReg(4) & 0x10000) return 1; return 0; }
 #undef sceSifGetReg /* merge_units */
 /* merge_units: end func_00115770 */

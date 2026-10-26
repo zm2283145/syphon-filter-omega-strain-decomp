@@ -6,13 +6,13 @@
 #include "types.h"
 #include "particle_types.h"
 
-extern void func_003A5E30(int a0, int a1, float x, float y, float z);
+extern void cWind_GetTurbulence_float_float_float(int a0, int a1, float x, float y, float z);
 
-/* Unpacks the vector v and forwards to func_003A5E30. */
-void func_003A5E20(int a0, int a1, float* v) {
+/* Unpacks the vector v and forwards to cWind_GetTurbulence_float_float_float. */
+void cWind_GetTurbulence_cVectorR(int a0, int a1, float* v) {
     float y = v[1];
     float z = v[2];
     float x = v[0];
 
-    func_003A5E30(a0, a1, x, y, z);
+    cWind_GetTurbulence_float_float_float(a0, a1, x, y, z);
 }

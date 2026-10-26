@@ -8,7 +8,7 @@
 extern float D_004E1BEC;
 extern float D_004E1BF0;
 extern volatile float D_004E1BF4;
-float func_0031BC70(float* prev, float a, float b, float cur, float d)
+float MidFramePv(float* prev, float a, float b, float cur, float d)
 {
     float r;
     float lo = D_004E1BEC;
@@ -33,25 +33,25 @@ float func_0031BC70(float* prev, float a, float b, float cur, float d)
 /* merge_units: begin func_0031BD50 */
 #include "types.h"
 
-extern float func_00319DC0(int, int);
-extern int func_0031A1E0(int, int, int, int);
-extern int func_0031DE38(float);
+extern float HammingWindowNormSC(int, int);
+extern int GetFrameSpCBM(int, int, int, int);
+extern int NellyAdaptiveWindow(float);
 
-float func_0031BD50(int a0, int a1, int a2, int a3, float f12) {
+float GetWindowedSpeech(int a0, int a1, int a2, int a3, float f12) {
     int tmp0;
     int tmp4;
 
-    tmp0 = func_0031DE38(f12);
+    tmp0 = NellyAdaptiveWindow(f12);
     *(int*)((char*)a2) = tmp0;
-    func_0031A1E0(a0, a3, tmp0, a1);
+    GetFrameSpCBM(a0, a3, tmp0, a1);
     tmp4 = *(int*)(char*)a2;
-    return func_00319DC0(a1, tmp4);
+    return HammingWindowNormSC(a1, tmp4);
 }
 /* merge_units: end func_0031BD50 */
 
 /* merge_units: begin func_0031BDB8 */
 extern float D_004E1BE0;
-float func_0031BDB8(float a, float b, float c, float d)
+float MidEstPitch(float a, float b, float c, float d)
 {
     float r, hi;
     if (b <= a * 1.25f && a * D_004E1BE0 <= b) {
@@ -70,14 +70,14 @@ float func_0031BDB8(float a, float b, float c, float d)
 
 /* merge_units: begin func_0031BE68 */
 /* sqrtf is expanded inline by gcc (sqrt.s + NaN fallback call); alias the libcall to the retail sqrtf. */
-__asm__("sqrtf = func_00121B48");
+__asm__("sqrtf = Libc_Sqrtf");
 float sqrtf(float);
-float func_00317780(float* a, float* b, int n);
-float func_0031AB38(float a, float b, float c, float* out);
+float DotProd(float* a, float* b, int n);
+float QuadraticPeak(float a, float b, float c, float* out);
 extern float D_004E1D2C[];
 extern float D_004E1BB4;
 
-float func_0031BE68(float rate, float scale, float* buf, int n, float* out) {
+float TDPitchRefine(float rate, float scale, float* buf, int n, float* out) {
     float vals[3];
     float best;
     float v;
@@ -114,7 +114,7 @@ float func_0031BE68(float rate, float scale, float* buf, int n, float* out) {
     j = 0;
     i = lo;
     do {
-        v = func_00317780(buf, &buf[i], n - i);
+        v = DotProd(buf, &buf[i], n - i);
         i++;
         if (v > best) {
             bi = j;
@@ -128,14 +128,14 @@ float func_0031BE68(float rate, float scale, float* buf, int n, float* out) {
     } while (i <= hi);
     pk = bi + lo;
     if (lo < pk && pk < hi) {
-        res = (float)pk + func_0031AB38(vals[0], best, vals[2], out);
+        res = (float)pk + QuadraticPeak(vals[0], best, vals[2], out);
     } else {
         res = (float)pk;
         *out = best;
     }
     m = n - pk;
-    e = func_00317780(buf, buf, m);
-    e = e * func_00317780(&buf[pk], &buf[pk], m);
+    e = DotProd(buf, buf, m);
+    e = e * DotProd(&buf[pk], &buf[pk], m);
     *out = *out / sqrtf(e + D_004E1BB4);
     return res;
 }

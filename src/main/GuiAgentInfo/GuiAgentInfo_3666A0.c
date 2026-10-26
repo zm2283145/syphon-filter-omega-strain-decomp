@@ -50,6 +50,6 @@ void func_003666A0(String* str, int a, int b) {
 
 /* Erase a range from a vector of 60-byte elements. */
 DEFINE_ERASE_ELEMENT(Elem60, 60)
-DEFINE_VECTOR_ERASE_DESTROY(func_003666F0, Elem60, func_001BEC50, func_001AEF70)
+DEFINE_VECTOR_ERASE_DESTROY(func_003666F0, Elem60, std_msl_copy_cSkaSliderValue_copy, cSkaSliderValue_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003666F0 */

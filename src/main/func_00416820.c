@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_00416820(void) {
+int GuiDecorator_Load(void) {
     return 1;
 }

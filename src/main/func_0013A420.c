@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose00_types.h"
 
-extern int func_0013A320(Map* m, int root);
+extern int std_tree_pair_cString_value_compare_destroy_nodeP(Map* m, int root);
 
 /* Map clear: destroy all nodes and reset to empty. */
 void Map_Clear_13A420(Map* m) {
@@ -15,7 +15,7 @@ void Map_Clear_13A420(Map* m) {
 
     root = m->head;
     if (root != 0) {
-        func_0013A320(m, root);
+        std_tree_pair_cString_value_compare_destroy_nodeP(m, root);
         m->count = 0;
         m->head = 0;
         m->hp = &m->head;

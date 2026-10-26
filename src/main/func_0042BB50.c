@@ -20,8 +20,8 @@ extern int D_00542D48;
 extern int D_00582578;
 extern char* D_005825D0;
 extern unsigned short D_005825D4;
-int func_00320670(int h, char** io);
-void func_00321638(int h, unsigned char* done);
+int nciDecodeSase3200(int h, char** io);
+void nciDecodeNeedsInputSase3200(int h, unsigned char* done);
 
 /* inline-asm block copy (hand-written in the original) */
 static inline void Copy_BB50(void* d0, void* s0, int n0)
@@ -104,7 +104,7 @@ static inline void Pop_BB50(unsigned char* cnt, int* act, long** out, long** q)
         **out = 0;
     }
 }
-int func_0042BB50(char* buf)
+int cNellyMoser_nmsMultiDecode(char* buf)
 {
     int total = 0;
     unsigned char done;
@@ -122,14 +122,14 @@ int func_0042BB50(char* buf)
     D_00542D48 = -1;
     D_0058261E = 0;
     for (;;) {
-        if ((unsigned short)func_00320670(D_00582578, &D_005825D0))
+        if ((unsigned short)nciDecodeSase3200(D_00582578, &D_005825D0))
             return 0;
         len = D_005825D4;
         if (len) {
             Copy_BB50(buf + total, D_005825D0, len * 2);
             total += D_005825D4 * 2;
         }
-        func_00321638(D_00582578, &done);
+        nciDecodeNeedsInputSase3200(D_00582578, &done);
         if (done)
             return total;
     }

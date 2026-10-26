@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_002DC288(int a0) {
+int GetCodecType(int a0) {
     int tmp0;
 
     tmp0 = *(int*)(char*)a0;

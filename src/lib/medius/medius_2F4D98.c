@@ -9,7 +9,7 @@
 extern char D_004AF128[];
 static void * const dat_00490888[2] = { (void*)D_004AF128, (void*)0x0 };
 
-int func_002F4D98(void) {
+int rt_audio_get_version_string_ptr(void) {
     int tmp0;
 
     tmp0 = *(int*)((char*)dat_00490888);

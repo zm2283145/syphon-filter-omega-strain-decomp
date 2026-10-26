@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_00163810(void* self) {
+void* cNodePickerParameters_ctor_void(void* self) {
     return self;
 }

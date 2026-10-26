@@ -2,9 +2,9 @@
 #pragma cplusplus on
 #include "types.h"
 struct IdVec_40E0;
-extern "C" int** func_001741A0(IdVec_40E0* v);
+extern "C" int** std_vector_deleter_cObjectId_data_void(IdVec_40E0* v);
 extern "C" 
-struct IdVec_40E0 { int cap; int count; int* data; int size() const { return count; } int* begin() { return *func_001741A0(this); } int* end() { return *func_001741A0(this) + count; } };
+struct IdVec_40E0 { int cap; int count; int* data; int size() const { return count; } int* begin() { return *std_vector_deleter_cObjectId_data_void(this); } int* end() { return *std_vector_deleter_cObjectId_data_void(this) + count; } };
 struct It_40E0 {
     int* p;
 };

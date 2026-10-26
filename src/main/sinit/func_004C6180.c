@@ -1,5 +1,5 @@
 #include "types.h"
-int func_0014A6A0();
+int cNPC_SOBJ_getClassId();
 int Script_SetPlayerBodies();
 int Script_SetPlayerInvulnerability();
 int Script_RestoreBody();
@@ -70,7 +70,7 @@ void StaticInit_RegisterPlayer(void) {
     D_004EE790 = D_004EE788;
     D_004EE798 = Script_RegisterNative(D_004EE788, Script_cPlayer_GetPlayerObject, cGOBJ_GetScriptTypeKeyPtr(), "GetPlayerObject", 1, &D_004EE788);
     D_004EE7A0 = Script_RegisterNative(D_004EE788, Script_cPlayer_SetInvulnerable, &D_00493880, "SetInvulnerable", 2, &D_004EE788, &D_00493878);
-    D_004EE7A8 = Script_RegisterNative(D_004EE788, Script_cPlayer_SwitchBodies, &D_00493880, "SwitchBodies", 2, &D_004EE788, func_0014A6A0());
+    D_004EE7A8 = Script_RegisterNative(D_004EE788, Script_cPlayer_SwitchBodies, &D_00493880, "SwitchBodies", 2, &D_004EE788, cNPC_SOBJ_getClassId());
     D_004EE7B0 = Script_RegisterNative(D_004EE788, Script_cPlayer_RestoreBody, &D_00493880, "RestoreBody", 1, &D_004EE788);
     D_004EE7B8 = Script_RegisterNative(D_004EE788, Script_cPlayer_LaunchChooseMenu, &D_00493880, "LaunchChooseMenu", 1, &D_004EE788);
     D_004EE7C0 = Script_RegisterNative(D_004EE788, Script_cPlayer_AddMenuChoice, &D_00493880, "AddMenuChoice", 2, &D_004EE788, &D_00493898);
@@ -88,9 +88,9 @@ void StaticInit_RegisterPlayer(void) {
     D_004EE820 = Script_RegisterNative_2(Script_PlayerAddItem, &D_00493880, "PlayerAddItem", 3, cGOBJ_GetScriptTypeKeyPtr(), &D_004938A0, &D_00493888);
     D_004EE828 = Script_RegisterNative_2(Script_PlayerRemoveItem, &D_00493880, "PlayerRemoveItem", 3, cGOBJ_GetScriptTypeKeyPtr(), &D_004938A0, &D_00493888);
     D_004EE830 = Script_RegisterNative_2(Script_PlayerGetItemCount, &D_00493888, "PlayerGetItemCount", 2, cGOBJ_GetScriptTypeKeyPtr(), &D_004938A0);
-    D_004EE838 = Script_RegisterNative_2(Script_SwitchBodies, &D_00493880, "SwitchBodies", 1, func_0014A6A0());
+    D_004EE838 = Script_RegisterNative_2(Script_SwitchBodies, &D_00493880, "SwitchBodies", 1, cNPC_SOBJ_getClassId());
     { int r29 = cGOBJ_GetScriptTypeKeyPtr();
-    D_004EE840 = Script_RegisterNative_2(Script_SwitchBodies_2, &D_00493880, "SwitchBodies", 2, r29, func_0014A6A0());
+    D_004EE840 = Script_RegisterNative_2(Script_SwitchBodies_2, &D_00493880, "SwitchBodies", 2, r29, cNPC_SOBJ_getClassId());
     D_004EE848 = Script_RegisterNative_2(Script_RestoreBody, &D_00493880, "RestoreBody", 1, cGOBJ_GetScriptTypeKeyPtr());
     D_004EE850 = Script_RegisterNative_2(Script_SetPlayerInvulnerability, &D_00493880, "SetPlayerInvulnerability", 1, &D_00493878);
     D_004EE858 = Script_RegisterNative_2(Script_SetPlayerBodies, &D_00493880, "SetPlayerBodies", 1, &D_00493878);

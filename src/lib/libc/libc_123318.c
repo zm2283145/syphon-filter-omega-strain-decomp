@@ -8,7 +8,7 @@
 
 extern char D_00489738[];
 
-void func_00123318(void) {
+void Newlib_EnvUnlock(void) {
 
 }
 

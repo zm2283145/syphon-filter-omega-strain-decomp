@@ -67,13 +67,13 @@ struct Out_7800 {
 extern "C" {
 extern float D_004A9330;
 unsigned char WeaponInv_GetHeldClass(int);
-Id_7800* func_0015AC90(Id_7800*, int);
-Id_7800* func_00247D50(Obj_7800*);
+Id_7800* cObjectId_ctor_uint(Id_7800*, int);
+Id_7800* cSystem_GetObjectID_void_2(Obj_7800*);
 void Quat_DampTowardIdentity(Q7*, int);
 void Camera_ApplyInput(Cam_7800* cam, Out_7800* out, Player_7800* pl, Q7* a3, Q7* t0, Q7* t1, Q7* t2);
 }
 struct HS_7800 { Obj_7800* obj; int id; };
-static inline void SetH(HS_7800* h, Obj_7800* o) { Id_7800 t; h->obj = o; h->id = (o ? func_00247D50(o) : func_0015AC90(&t, -1))->v; }
+static inline void SetH(HS_7800* h, Obj_7800* o) { Id_7800 t; h->obj = o; h->id = (o ? cSystem_GetObjectID_void_2(o) : cObjectId_ctor_uint(&t, -1))->v; }
 static inline void SetF(Out_7800* o, float a, float b, float c, float d) { o->fD14 = a; o->fD18 = b; o->fD1C = c; o->fD20 = d; }
 static inline bool Eq(int a, int b) { return a == b; }
 static inline bool HandleValid(Handle_7800* h) { return !h->obj || Eq(h->obj->id, h->id); }

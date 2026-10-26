@@ -25,7 +25,7 @@ int GuiAutoSaver_Wake(GuiWidget45F340* self) {
 }
 
 /* Looks up the named resource and, if found, registers it for this owner. */
-void func_0045F380(void* self) {
+void GuiEndGameAwards_Done(void* self) {
     int res;
 
     res = GuiFactory_CreateWidget(D_004C2460);

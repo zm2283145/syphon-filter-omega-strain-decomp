@@ -20,7 +20,7 @@ static inline void add3_(V4* d, V4* a, V4* b) {
 }
 #pragma push
 #pragma opt_common_subs off
-V4* func_001D56E0(V4* a, V4* b) {
+V4* cVector_InverseTranslate(V4* a, V4* b) {
     V4 n = neg4v_(b);
     add3_(a, a, &n);
     return a;

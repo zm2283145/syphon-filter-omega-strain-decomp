@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-void* func_003C13A0(char* self) {
+void* std_vector_deleter_cCollisionFace_data_void_2(char* self) {
     return self + 8;
 }
 
-void* func_003C13B0(char* self) {
+void* cCollisionEdge_Vertex1(char* self) {
     return self + 16;
 }

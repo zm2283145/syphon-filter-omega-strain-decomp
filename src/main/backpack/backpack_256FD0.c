@@ -67,9 +67,9 @@ extern BackpackRegistry*g_BackpackList;
 #endif /* merge_units */
 #define g_BackpackList (*(BackpackRegistry **)&g_BackpackList) /* merge_units */
 
-void Backpack_Destroy(BackpackEntry*);void Backpack_RestoreCrateSnapshots(void);void func_00170570(void);
+void Backpack_Destroy(BackpackEntry*);void Backpack_RestoreCrateSnapshots(void);void ResetInteractBoxes(void);
 static inline int Identity(int n){return n;}
-void Backpack_RemoveAll(void){BackpackRegistry*list=g_BackpackList;int i;for(i=0;i<list->count;i++){int offset=i<<2;int base=(int)list->items;BackpackEntry*p=*(BackpackEntry**)(base+offset);if(!p->active){i--;Backpack_Destroy(p);}}Backpack_RestoreCrateSnapshots();func_00170570();}
+void Backpack_RemoveAll(void){BackpackRegistry*list=g_BackpackList;int i;for(i=0;i<list->count;i++){int offset=i<<2;int base=(int)list->items;BackpackEntry*p=*(BackpackEntry**)(base+offset);if(!p->active){i--;Backpack_Destroy(p);}}Backpack_RestoreCrateSnapshots();ResetInteractBoxes();}
 #undef g_BackpackList /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002570C0(void) {}

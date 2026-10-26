@@ -16,17 +16,17 @@ extern char D_004BD1A8[];                   /* "system.cc" */
 extern char D_004DFDA0[];                   /* ListReceiver vtable */
 extern char D_004DFDE0[];                   /* Receiver vtable */
 void Mem_Free(int pool, void* p, char* file, int line);
-ListIter func_0013B160(void* l);            /* list end */
-void func_003CAB20(ListIter* out, const ListIter& in);
-ListIter func_003CAB30(void* l);            /* list begin */
-void func_003CAB40(ListIter* out, const ListIter& in);
+ListIter std_list_deleter_voidPtr_end_void(void* l);            /* list end */
+void cLListIterator_cSystemPtr_ctor(ListIter* out, const ListIter& in);
+ListIter std_list_cSystemPtr_begin(void* l);            /* list begin */
+void std_list_cSystemPtr_generic_iterator_ctor(ListIter* out, const ListIter& in);
 void ReceiverList_Dtor(void* p, int f);         /* object list dtor */
 void operator_delete(void* p);
 }
-struct EndIter : ListIter { EndIter(const ListIter& t) { func_003CAB40(this, t); } };
-struct BeginIter : ListIter { BeginIter(const ListIter& t) { func_003CAB20(this, t); } };
-static inline EndIter ListEnd0(void* l) { return EndIter(func_0013B160(l)); }
-static inline BeginIter ListBegin0(void* l) { return BeginIter(func_003CAB30(l)); }
+struct EndIter : ListIter { EndIter(const ListIter& t) { std_list_cSystemPtr_generic_iterator_ctor(this, t); } };
+struct BeginIter : ListIter { BeginIter(const ListIter& t) { cLListIterator_cSystemPtr_ctor(this, t); } };
+static inline EndIter ListEnd0(void* l) { return EndIter(std_list_deleter_voidPtr_end_void(l)); }
+static inline BeginIter ListBegin0(void* l) { return BeginIter(std_list_cSystemPtr_begin(l)); }
 static inline BeginIter ListBegin1(void* l) { return ListBegin0(l); }
 static inline BeginIter ListBegin(void* l) { return ListBegin1(l); }
 static inline EndIter ListEnd(void* l) { return ListEnd0(l); }

@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-Word* func_003AA230(Word* dst, Word* src) {
+Word* cConstLListIterator_cSkeletonDataBankEntryPtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
@@ -26,7 +26,7 @@ Word* func_003AA230(Word* dst, Word* src) {
 #include "iter_return_copy.h"
 
 /* Return the end iterator. */
-DEFINE_ITER_END(func_003AA240)
+DEFINE_ITER_END(std_list_cSkeletonDataBankEntryPtr_end_void)
 #pragma pop /* merge_units */
 /* merge_units: end func_003AA240 */
 
@@ -40,7 +40,7 @@ DEFINE_ITER_END(func_003AA240)
 
 
 /* Stores value into *dst; volatile mirrors the original stack temporary. */
-int* func_003AA270(int* dst, int value) {
+int* std_list_cSkeletonDataBankEntryPtr_generic_iterator_1_ctor(int* dst, int value) {
     volatile int tmp = value;
 
     *dst = tmp;
@@ -100,15 +100,15 @@ typedef struct SkNode { struct SkNode* prev; struct SkNode* next; SkEnt* e; } Sk
 typedef struct { SkNode* n; } SkIt;
 typedef struct { int pad; SkNode header; } SkList;
 extern "C" {
-extern void func_003AA500(SkIt* out, SkList* l);
-extern SkIt* func_003AA4F0(SkIt* dst, SkIt* src);
-extern void func_003AA4E0(SkIt* out, SkList* l);
+extern void std_list_cSkeletonDataBankEntryPtr_begin(SkIt* out, SkList* l);
+extern SkIt* cLListIterator_cSkeletonDataBankEntryPtr_ctor(SkIt* dst, SkIt* src);
+extern void std_list_cSkeletonDataBankEntryPtr_end_void_2(SkIt* out, SkList* l);
 extern void ObjectList_EraseRange(SkIt* out, SkList* l, SkIt* first, SkIt* last);
 void Skel_FreeAll(SkList* l);
 }
 
-static inline void SkBegin(SkIt* out, SkList* l) { SkIt b; func_003AA500(&b, l); func_003AA4F0(out, &b); }
-static inline void SkEnd(SkIt* out, SkList* l) { SkIt t; func_003AA4E0(&t, l); func_003AA4F0(out, &t); }
+static inline void SkBegin(SkIt* out, SkList* l) { SkIt b; std_list_cSkeletonDataBankEntryPtr_begin(&b, l); cLListIterator_cSkeletonDataBankEntryPtr_ctor(out, &b); }
+static inline void SkEnd(SkIt* out, SkList* l) { SkIt t; std_list_cSkeletonDataBankEntryPtr_end_void_2(&t, l); cLListIterator_cSkeletonDataBankEntryPtr_ctor(out, &t); }
 
 static inline void SkBegin2(SkIt* out, SkList* l) { SkBegin(out, l); }
 static inline void SkEnd2(SkIt* out, SkList* l) { SkEnd(out, l); }

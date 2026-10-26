@@ -1,7 +1,7 @@
 #pragma cplusplus on
 #pragma inline_depth(8)
 #include "types.h"
-/* func_0016ECC0: save an AI record: copy its 48-byte header out, the target
+/* cAiTargetTransfer_Get: save an AI record: copy its 48-byte header out, the target
  * id, and up to four queued entries (missing ones get the invalid id). */
 struct V {
     float x, y, z, w;
@@ -28,10 +28,10 @@ struct AiRec { char p0[0x30]; char list[0x10]; Handle h; };
 extern "C" {
 Obj* ActorRef_Copy(Handle* h);
 SWord List_Begin_16E880(void* list);
-It func_0016EFC0(int v);
-SWord func_0016EF90(void* list);
-It func_0016EF80(const SWord& w);
-void func_0016ECC0(void* dst, AiRec* src, int* id, SRec* recs);
+It std_list_cTargetAwarenessPtr_generic_iterator_1_ctor(int v);
+SWord std_list_cTargetAwarenessPtr_end_void_2(void* list);
+It cConstLListIterator_cTargetAwarenessPtr_ctor(const SWord& w);
+void cAiTargetTransfer_Get(void* dst, AiRec* src, int* id, SRec* recs);
 /* function-local static "invalid id" (-1) and its first-use guard; the
  * storage lives in retail .data/.bss, so the guarded init is spelled out. */
 extern int D_0049C588;
@@ -75,18 +75,18 @@ static inline int IsNullNV(void* p) { return (p != 0) ^ 1; }
 static inline int EqNV(int a, int b) { return (unsigned)(a ^ b) < 1; }
 static inline Obj* WGet(Handle* h) { bool ok = 1; if (!IsNullNV(h->object) && !EqNV(h->object->id, h->id)) ok = 0; unsigned char k = ok; return k ? h->object : 0; }
 
-void func_0016ECC0(void* dst, AiRec* src, int* id, SRec* recs)
+void cAiTargetTransfer_Get(void* dst, AiRec* src, int* id, SRec* recs)
 {
     It it;
     QCopy(dst, src, 0x30);
     if (WGet(&src->h)) *id = ActorRef_Copy(&src->h)->id; else { volatile int t = -1; *id = t; }
-    it = func_0016EFC0(List_Begin_16E880(src->list).v);
+    it = std_list_cTargetAwarenessPtr_generic_iterator_1_ctor(List_Begin_16E880(src->list).v);
     if (!D_004EE558) {
         D_0049C588 = -1;
         D_004EE558 = 1;
     }
     for (int i = 0; i < 4; i++) {
-        It end = func_0016EF80(func_0016EF90(src->list));
+        It end = cConstLListIterator_cTargetAwarenessPtr_ctor(std_list_cTargetAwarenessPtr_end_void_2(src->list));
         if (it.p != end.p) {
             recs[i] = *it.p->value;
             it.p = it.p->next;

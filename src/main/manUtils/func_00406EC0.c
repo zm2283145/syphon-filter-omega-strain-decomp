@@ -69,7 +69,7 @@ static inline void H2E_QZero(void* dd, int nn)
 }
 #pragma opt_propagation off
 /* Decodes a packed manifest: each slot is a table index or -1 followed by 16 raw bytes. */
-void func_00406EC0(H2E_Pack* dst, short* p)
+void SKL_UncompressSKL(H2E_Pack* dst, short* p)
 {
     int n;
     int i;

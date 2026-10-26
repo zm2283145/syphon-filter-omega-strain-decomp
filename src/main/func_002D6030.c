@@ -26,7 +26,7 @@ static inline void ResetFlags(Self2D6030* self, bool v) {
     self->f214.b1 = v;
     self->f214.b2 = v;
 }
-extern "C" Self2D6030* func_002D6030(Self2D6030* self, int id, Owner2D6030* owner)
+extern "C" Self2D6030* cNetNPC_ctor(Self2D6030* self, int id, Owner2D6030* owner)
 {
     cNPC_ctor(self, owner);
     self->vt = D_004DE2A0;

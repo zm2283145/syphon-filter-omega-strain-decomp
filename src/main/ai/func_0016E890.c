@@ -1,7 +1,7 @@
 #pragma cplusplus on
 #pragma inline_depth(8)
 #include "types.h"
-/* func_0016E890: load an AI record: copy its 48-byte header in, resolve the
+/* cAiTargetTransfer_Put: load an AI record: copy its 48-byte header in, resolve the
  * target handle (registering it for visibility when it has no controller),
  * and re-create up to four queued entries whose objects still exist. */
 struct V {
@@ -38,7 +38,7 @@ extern char D_0049C650[];
 extern char g_TargetVisMgr[];
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
-void func_0016E890(void* src, AiRec* dst, int* hid, SRec* recs);
+void cAiTargetTransfer_Put(void* src, AiRec* dst, int* hid, SRec* recs);
 }
 /* quadword/byte block copy macro (asm: lq/sq and the alignment test) */
 static inline void QCopy(void* dst0, void* src0, int n0)
@@ -90,7 +90,7 @@ static inline int IsNullNV(void* p) { return (p != 0) ^ 1; }
 static inline int EqNV(int a, int b) { return (unsigned)(a ^ b) < 1; }
 static inline Obj* WGet(Handle* h) { bool ok = 1; if (!IsNullNV(h->object) && !EqNV(h->object->id, h->id)) ok = 0; unsigned char k = ok; return k ? h->object : 0; }
 
-void func_0016E890(void* src, AiRec* dst, int* hid, SRec* recs)
+void cAiTargetTransfer_Put(void* src, AiRec* dst, int* hid, SRec* recs)
 {
     QCopy(dst, src, 0x30);
     if (*hid != -1) {

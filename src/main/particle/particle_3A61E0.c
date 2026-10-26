@@ -12,7 +12,7 @@
 #include "base_dtor_chain.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_003A61E0, func_00135D10)
+DEFINE_BASE_DTOR_CHAIN(std_list_cParticleDefinitionPtr_dtor, std_vector_deleter_cArray_int_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003A61E0 */
 
@@ -22,16 +22,16 @@ DEFINE_BASE_DTOR_CHAIN(func_003A61E0, func_00135D10)
 
 /* Deleting destructor: destroy the member at +4, then delete. */
 extern "C" void operator_delete(void* allocation);
-extern "C" void* func_003A61E0(void* self, short deleteFlag);
+extern "C" void* std_list_cParticleDefinitionPtr_dtor(void* self, short deleteFlag);
 
 typedef struct { int pad0; int member; } Obj_3A6240;
 
-extern "C" Obj_3A6240* func_003A6240(Obj_3A6240* self, short deleteFlag)
+extern "C" Obj_3A6240* cParticleSystem_dtor(Obj_3A6240* self, short deleteFlag)
 {
     if (self) {
         void* m = &self->member;
         if (m)
-            func_003A61E0(m, 0);
+            std_list_cParticleDefinitionPtr_dtor(m, 0);
         if (deleteFlag > 0)
             operator_delete(self);
     }

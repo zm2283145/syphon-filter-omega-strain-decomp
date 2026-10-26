@@ -3,10 +3,10 @@
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
-int func_001069F0(char *);                             
+int _pictureData0(char *);                             
 int func_0010BD90();                          
 
-int func_001089E0(char *arg0) {
+int _decPicture(char *arg0) {
     int temp_v0;
     char * var_s1;
 
@@ -29,7 +29,7 @@ int func_001089E0(char *arg0) {
         func_0010BD90(arg0, "unknown picture sutructure");
         break;
     }
-    temp_v0 = func_001069F0(arg0);
+    temp_v0 = _pictureData0(arg0);
     if (temp_v0 != 0) {
         F_(var_s1, 0x28, int) = 1;
     }

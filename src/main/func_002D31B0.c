@@ -2,7 +2,7 @@
 #include "npc_auth.h"
 typedef struct { unsigned char f0 : 1; unsigned char f1 : 1; unsigned char f2 : 1; } Bits31B0;
 typedef struct { char pad[0x30]; void* net; char pad2[0x10D]; Bits31B0 bits; } Npc31B0;
-void func_002D31B0(Npc31B0* o, unsigned char v)
+void cNetNPC_DeactivateDead(Npc31B0* o, unsigned char v)
 {
     if (NpcAuth_IsLocal())
         NetEvent_Send(o->net, 0x18, 4, v, 0, 0, 0);

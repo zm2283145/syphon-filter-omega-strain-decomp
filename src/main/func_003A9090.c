@@ -25,9 +25,9 @@ struct MNode : XV { char pad4[0xC]; M m; unsigned char dirty; char pad51[0x150 -
 struct NIt { MNode* p; NIt() {} NIt(const NIt& o) : p(o.p) {} };
 struct NVec; struct NIt;
 extern "C" {
-MNode* func_001D7B10(NVec* v);
-MNode* func_001D7AD0(NVec* v);
-void func_001D7B00(NIt* out, NVec* v, MNode* const& p);
+MNode* std_vector_imp_cBone_begin(NVec* v);
+MNode* std_vector_imp_cBone_end(NVec* v);
+void std_vector_cBone_pointer2iterator(NIt* out, NVec* v, MNode* const& p);
 void Ptr_Identity(V* v);
 V* Vec4_Copy(V* d, const V* s);
 void Mtx_Multiply4(V* v, M* m);
@@ -37,11 +37,11 @@ void Sphere_FromCenter(V* d, const V* c, const V* r);
 void Box_ExtendXYZ(Box* b, const V* v);
 void Vec4_Add(V* d, const V* a, const V* b);
 }
-static inline void Mk(NIt* r, NVec* v, MNode* p) { MNode* const& q = p; func_001D7B00(r, v, q); }
+static inline void Mk(NIt* r, NVec* v, MNode* p) { MNode* const& q = p; std_vector_cBone_pointer2iterator(r, v, q); }
 struct NVec {
     int x0;
-    NIt begin() { NIt r; Mk(&r, this, func_001D7B10(this)); return r; }
-    NIt end() { NIt r; Mk(&r, this, func_001D7AD0(this)); return r; }
+    NIt begin() { NIt r; Mk(&r, this, std_vector_imp_cBone_begin(this)); return r; }
+    NIt end() { NIt r; Mk(&r, this, std_vector_imp_cBone_end(this)); return r; }
 };
 static inline bool operator==(const NIt& a, const NIt& b) { MNode* y = b.p; MNode* x = a.p; return x == y; }
 static inline bool operator!=(const NIt& a, const NIt& b) { return !(a == b); }

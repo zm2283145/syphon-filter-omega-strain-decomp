@@ -7,6 +7,6 @@
 #include "types.h"
 #include "loose02_types.h"
 
-int func_002DC2A0(WordFields* self) {
+int GetDecodedFrameSize(WordFields* self) {
     return self->unk08;
 }

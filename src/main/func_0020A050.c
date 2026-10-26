@@ -7,12 +7,12 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern char* func_00209F60(void*);
+extern char* details_compressed_pair_imp_rep_s_2_first_void_2(void*);
 
-char* func_0020A050(void* self) {
-    return func_00209F60(self) + 8;
+char* std_basic_string_char_char_traits_char_long_pointer(void* self) {
+    return details_compressed_pair_imp_rep_s_2_first_void_2(self) + 8;
 }
 
-void* func_0020A070(void* self) {
+void* cAllocator_char_ctor(void* self) {
     return self;
 }

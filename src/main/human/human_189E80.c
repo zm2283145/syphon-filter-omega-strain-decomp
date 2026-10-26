@@ -15,7 +15,7 @@
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-DEFINE_VTABLE_BASE_DTOR(func_00189E80, D_004DA950, cMessage_dtor)
+DEFINE_VTABLE_BASE_DTOR(cCharEventMsg_dtor, D_004DA950, cMessage_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00189E80 */
 
@@ -45,7 +45,7 @@ static inline void D3_189F40(void* p) { if (p) func_001BE5A0(p, 0); }
 static inline void D2_189F40(void* p) { if (p) D3_189F40(p); }
 static inline void D1_189F40(void* p) { if (p) D2_189F40(p); }
 struct O_189F40 { int vt; char arr[0x38]; char m[4]; };
-extern "C" void* func_00189F40(O_189F40* self, short deleteFlag)
+extern "C" void* cSkaAnimCheckpoints_dtor(O_189F40* self, short deleteFlag)
 {
     if (self) {
         D1_189F40(self->m);

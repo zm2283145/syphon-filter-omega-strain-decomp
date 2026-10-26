@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_0017DBF0(char* self) {
+void* cHermiteSplineControlPoint_cVector_Tangent(char* self) {
     return self + 16;
 }

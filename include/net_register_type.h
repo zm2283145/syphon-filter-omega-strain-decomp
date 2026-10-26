@@ -3,7 +3,7 @@
 
 /*
  * Network message type registration: describe each payload field of a
- * prototype (func_002E9A98(desc, &field, size, count)) and register the
+ * prototype (NetMessageField(desc, &field, size, count)) and register the
  * type with its factory. Returns 1 on success.
  *   NETREG_BEGIN(name, Proto)   first check returns early
  *   NETREG_BEGIN_KEEP(name, Proto)  the base check result is kept and
@@ -11,9 +11,9 @@
  *   NETREG_FIELD(member, size, count)
  *   NETREG_END(typeSym, factory)
  */
-extern int func_002E9A10(void* reg);
+extern int NetRegisterMessageStart(void* reg);
 extern int Event_UnpackHeader(void* desc);
-extern int func_002E9A98(void* desc, void* field, int size, int count);
+extern int NetMessageField(void* desc, void* field, int size, int count);
 extern int NetMsg_RegisterType(void* type, int version, void* factory);
 
 #define NETREG_BEGIN(name, Proto)                                             \
@@ -21,7 +21,7 @@ extern int NetMsg_RegisterType(void* type, int version, void* factory);
     {                                                                         \
         struct { long long file; Proto p; } L;                                \
         unsigned char ok = 0;                                                 \
-        if (func_002E9A10(reg) == 0 && Event_UnpackHeader(&L.file) != 0
+        if (NetRegisterMessageStart(reg) == 0 && Event_UnpackHeader(&L.file) != 0
 
 #define NETREG_BEGIN_KEEP(name, Proto)                                        \
     unsigned char name(void* reg)                                             \
@@ -29,11 +29,11 @@ extern int NetMsg_RegisterType(void* type, int version, void* factory);
         struct { long long file; Proto p; } L;                                \
         int base;                                                             \
         unsigned char ok = 0;                                                 \
-        base = func_002E9A10(reg);                                            \
+        base = NetRegisterMessageStart(reg);                                            \
         if (base == 0 && Event_UnpackHeader(&L.file) != 0 && base == 0
 
 #define NETREG_FIELD(member, size, count)                                     \
-        && func_002E9A98(&L.file, &L.p.member, (size), (count)) == 0
+        && NetMessageField(&L.file, &L.p.member, (size), (count)) == 0
 
 #define NETREG_END(typeSym, factory)                                          \
         && NetMsg_RegisterType(typeSym, 2, factory) == 0)                     \

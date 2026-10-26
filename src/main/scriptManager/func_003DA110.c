@@ -19,24 +19,24 @@ void String_Copy(char* d, void* s);
 int String_CompareNoCase(char* a, char* b);
 void* memcpy(void* d, const void* s, unsigned int n);
 void Resource_Construct(void* h);
-void func_0036DEC0(void* h);
+void cFileMan_Close(void* h);
 void FileMan_Release(void* h, int f);
 void FileHal_Dtor(void* p, int f);
 int* FileMan_ReadData(void* h);
 int FileMan_GetSize(void* h);
 void PtrVector_Resize(void* v, int n, void* const& fill);
-void** func_003DC030(void* s, int id);
-void func_003DC040(void* v, void* p);
-void** func_003DC060(void* v, int i);
-void** func_003DC070(void* v, int i);
-void func_00146000(void* v, void* p);
+void** cArray_VarDefPtr_opIndex(void* s, int id);
+void std_vector_SubScriptPtr_push_back(void* v, void* p);
+void** std_vector_SubScriptPtr_opIndex(void* v, int i);
+void** std_vector_intPtr_opIndex(void* v, int i);
+void std_vector_charPtr_push_back_charPR(void* v, void* p);
 struct TypeRec* ScriptType_GetRecord(int id);
 int Script_ResolveType(void* s, int t);
 void* SubScript_ctor(void* p, int id, char* name);
-void func_003DC5A0(void* s, char* name, u8 b, char* name2, int n, char** strs, int* ints, int idx);
-void func_003DC540(void* s, char* name, int idx, void* recs, int n);
-void func_003DC720(void* s, void* rec, int idx);
-void func_003DC7F0(void* s, char* name, int a, int* p, int* arr, u8 reload, int idx);
+void cScriptInterpreter_SymbolTable_addClass(void* s, char* name, u8 b, char* name2, int n, char** strs, int* ints, int idx);
+void cScriptInterpreter_SymbolTable_addEnum(void* s, char* name, int idx, void* recs, int n);
+void cScriptInterpreter_SymbolTable_addFunc(void* s, void* rec, int idx);
+void cScriptInterpreter_SymbolTable_addVar(void* s, char* name, int a, int* p, int* arr, u8 reload, int idx);
 }
 
 struct Vec { int cap; int count; void** data; int pad; void*& operator[](unsigned int i) { return data[i]; } };
@@ -96,7 +96,7 @@ struct ScriptFile {
     ScriptFile(char* name, int sz) { Resource_Construct(hog); file = 0; size = sz; Open(name, 0); }
     void Open(char* name, int mode);
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~ScriptFile() {
-        func_0036DEC0(hog);
+        cFileMan_Close(hog);
         if (file) {
             DelG_3DA110(file, D_004BDC28, 0x45);
             file = 0;
@@ -185,7 +185,7 @@ extern "C" u8 Script_Load(Script* s, int size, char* name)
             n = s->v20.count;
             i = 0; if (0 < n) do {
                 if (s->v20[i]) {
-                    DelU_3DA110(*func_003DC070(&s->v20, i), D_004BD4C0, 0xBED);
+                    DelU_3DA110(*std_vector_intPtr_opIndex(&s->v20, i), D_004BD4C0, 0xBED);
                 }
             } while (++i < n);
 
@@ -209,7 +209,7 @@ extern "C" u8 Script_Load(Script* s, int size, char* name)
                     strs[j] = f->ReadString();
                     ints[j] = f->ReadInt();
                 } while (++j < cnt);
-                func_003DC5A0(s, tname, b, tname2, cnt, strs, ints, i);
+                cScriptInterpreter_SymbolTable_addClass(s, tname, b, tname2, cnt, strs, ints, i);
                 j = 0; if (0 < cnt) do {
                     DelU_3DA110(strs[j], D_004BD4C0, 0xC0A);
                 } while (++j < cnt);
@@ -230,13 +230,13 @@ extern "C" u8 Script_Load(Script* s, int size, char* name)
                                         j = 0; if (0 < cnt) do {
                         char* str = f->ReadString();
                         recs[j * 3 + 1] = (int)str;
-                        func_00146000(&s->v70, &str);
+                        std_vector_charPtr_push_back_charPR(&s->v70, &str);
                         recs[j * 3] = f->ReadInt();
                     } while (++j < cnt);
-                    func_003DC540(s, fname, i, recs, cnt);
+                    cScriptInterpreter_SymbolTable_addEnum(s, fname, i, recs, cnt);
                     DelU_3DA110(recs, D_004BD4C0, 0xC2E);
                 } else {
-                    func_003DC540(s, fname, i, 0, 0);
+                    cScriptInterpreter_SymbolTable_addEnum(s, fname, i, 0, 0);
                 }
                 DelU_3DA110(fname, D_004BD4C0, 0xC33);
             } while (++i < n);
@@ -263,7 +263,7 @@ extern "C" u8 Script_Load(Script* s, int size, char* name)
                     int cnt = s->v50.count;
                     int j;
                     for (j = 0; !sub && j < cnt; j++) {
-                        if (String_CompareNoCase((*(SubScript**)func_003DC060(&s->v50, j))->name, sname) == 0) {
+                        if (String_CompareNoCase((*(SubScript**)std_vector_SubScriptPtr_opIndex(&s->v50, j))->name, sname) == 0) {
                             sub = (SubScript*)s->v50[j];
                             sub->id = id;
                             DelU_3DA110(sname, D_004BD4C0, 0xC5B);
@@ -274,7 +274,7 @@ extern "C" u8 Script_Load(Script* s, int size, char* name)
                     void* p = New_3DA110(0x6C, D_004BD4C0, 0xC61);
                     if (p) p = SubScript_ctor(p, id, sname);
                     sub = (SubScript*)p;
-                    func_003DC040(&s->v50, &sub);
+                    std_vector_SubScriptPtr_push_back(&s->v50, &sub);
                 }
             } while (++i < nSubs);
 
@@ -300,13 +300,13 @@ extern "C" u8 Script_Load(Script* s, int size, char* name)
                     memcpy(arr, f->cur, cnt * sizeof(int));
                     f->cur += cnt;
                 }
-                func_003DC7F0(s, gname, a, isNull ? 0 : &s->x88[idx], arr, reload, i);
+                cScriptInterpreter_SymbolTable_addVar(s, gname, a, isNull ? 0 : &s->x88[idx], arr, reload, i);
                 DelU_3DA110(gname, D_004BD4C0, 0xC85);
             } while (++i < nGlobals);
             Del_3DA110(oldGlobals, D_004BD4C0, 0xC8A);
 
             { int i = 0; if (0 < nSubs) do {
-                void** p = func_003DC030(s, ((SubScript*)s->v50[i])->id);
+                void** p = cArray_VarDefPtr_opIndex(s, ((SubScript*)s->v50[i])->id);
                 **(void***)((char*)*p + 0xC) = s->v50[i];
             } while (++i < nSubs); }
 
@@ -356,7 +356,7 @@ extern "C" u8 Script_Load(Script* s, int size, char* name)
                 }
                 rec.x78 = isNull ? 0 : &s->x84[idx];
                 if (rec.count < 2 || !rec.x78) rec.x19 = 0;
-                func_003DC720(s, &rec, i);
+                cScriptInterpreter_SymbolTable_addFunc(s, &rec, i);
                 DelU_3DA110(rec.name, D_004BD4C0, 0xCDF);
             } while (++i < nRecs);
         }

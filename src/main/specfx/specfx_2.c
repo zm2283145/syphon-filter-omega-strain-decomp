@@ -20,7 +20,7 @@ int List_Erase(...);
 extern int D_0055C090;
 typedef struct { int f0; char p4[4]; int f8; } PS0_003EC130;
 }
-extern "C" void func_003EC130(int d0, PS0_003EC130 *arg1) {
+extern "C" void cSfxScheduler_ClearItemList(int d0, PS0_003EC130 *arg1) {
     int sp3C;
     char * sp38;
     char * temp_a0;

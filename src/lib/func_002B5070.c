@@ -1,6 +1,6 @@
 extern int D_00506B60;
 extern void ChangeThreadPriority(int h, int n);
-int func_002B5070(int n)
+int sceMc2ChangeThreadPriority(int n)
 {
     if (n <= 0)
         return 0x81010016;

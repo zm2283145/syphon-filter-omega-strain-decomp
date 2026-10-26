@@ -24,7 +24,7 @@ extern void FileMan_Release(void*, int);
 extern void cMessage_dtor(EventMsg*, int);
 
 /* Clears the pending flag and sends an immediate event message for the target. */
-void func_00327020(ObjF4* o) {
+void GuiSlideShow_StopPlayback(ObjF4* o) {
     EventMsg msg;
     o->pending = 0;
     SoundEvent_Ctor(&msg, o->target, 0);

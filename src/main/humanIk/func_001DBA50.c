@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern void func_001DF650(int, int, int);
+extern void std_tree_pair_cWeaponSlotPair_value_compare_insert_one(int, int, int);
 
-void func_001DBA50(int a0, int a1, int a2) {
-    func_001DF650(a0, a1, a2);
+void std_map_cWeaponSlotPair_cIkTarget_LeftRight_insert(int a0, int a1, int a2) {
+    std_tree_pair_cWeaponSlotPair_value_compare_insert_one(a0, a1, a2);
 }

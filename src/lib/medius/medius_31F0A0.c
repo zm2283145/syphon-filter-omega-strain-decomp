@@ -1,5 +1,5 @@
 #include "types.h"
-void func_0031F0A0(float* k, float* p)
+void reflectionToLpc(float* k, float* p)
 {
     float tmp[16];
     float *q, *t;

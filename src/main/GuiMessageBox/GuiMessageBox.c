@@ -25,7 +25,7 @@ const unsigned int D_004AB580[4] = { 0x0, 0x0, 0x0, 0x0 };
 extern void GuiTextWidget_SetText(void* widget, const char* text, int flags);
 
 /* Sets the title/body text of the current label, using "" for null strings. */
-void func_002A7DF0(LabelSet* set, const char* title, const char* body) {
+void GuiMessageBox_SetMessageText(LabelSet* set, const char* title, const char* body) {
     Label14* label = &set->labels[set->current];
     if (label->title) {
         GuiTextWidget_SetText(label->title, title ? title : ((char*)D_004AB580), 0);
@@ -168,7 +168,7 @@ extern "C" void GuiMessageBox_Setup(S7E* self, int mode, char* t1, char* t2, int
 typedef struct { char pad[0x14]; unsigned short flags; } E2A8390;
 typedef struct { E2A8390* e; char pad[0x10]; } Ent2A8390;
 typedef struct { char pad[0x54]; int sel; Ent2A8390 ent[3]; } S2A8390;
-void func_002A8390(S2A8390* s, int sel)
+void GuiMessageBox_SetActiveMessageBox(S2A8390* s, int sel)
 {
     int i;
     for (i = 0; i < 3; i++) {

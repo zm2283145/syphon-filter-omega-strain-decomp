@@ -19,7 +19,7 @@ SoftwareDoubleBits SoftFloat_FloatToDouble(float value);
 SoftwareDoubleBits SoftFloat_DoubleMultiply(SoftwareDoubleBits first, SoftwareDoubleBits second);
 SoftwareDoubleBits SoftFloat_DoubleSub(SoftwareDoubleBits first, SoftwareDoubleBits second);
 unsigned int SoftFloat_DoubleToInt(SoftwareDoubleBits value);
-void func_002EBEC8(int* count, int game);
+void NetGetValidClientCount(int* count, int game);
 }
 
 static inline unsigned int retry_threshold(void)
@@ -35,7 +35,7 @@ static inline int player_count(void)
 {
     if (g_IsMultiplayer) {
         int count;
-        func_002EBEC8(&count, D_005721A8);
+        NetGetValidClientCount(&count, D_005721A8);
         return count;
     }
     return 1;

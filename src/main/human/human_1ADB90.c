@@ -16,7 +16,7 @@
 #pragma cplusplus on
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_001ADB90)
+DEFINE_TRIVIAL_DTOR(cPointer_cSkaNode_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_001ADB90 */
 
@@ -35,7 +35,7 @@ extern char D_004DA930[];
 struct M_1ADBE0 { void* vt; };
 struct O_1ADBE0 { char pad[0x5C]; M_1ADBE0 msg; };
 static inline void MDtor_1ADBE0(M_1ADBE0* m) { if (m) { m->vt = D_004DA930; cMessage_dtor(m, 0); } }
-extern "C" void* func_001ADBE0(O_1ADBE0* self, short deleteFlag)
+extern "C" void* cSkaSystem_RequestTransition_dtor(O_1ADBE0* self, short deleteFlag)
 {
     if (self) {
         MDtor_1ADBE0(&self->msg);

@@ -7,7 +7,7 @@
 /* merge_units: begin func_00305E10 */
 typedef struct { int status; int f4; int f8; int fC; int f10; int f14; int f18; int pad[5]; } ScfThStat;
 extern int ReferThreadStatus(int id, ScfThStat *st);
-int func_00305E10(int *out)
+int rt_thread_count_get_active_count(int *out)
 {
     ScfThStat st;
     int cnt = 0;
@@ -25,7 +25,7 @@ int func_00305E10(int *out)
 /* merge_units: end func_00305E10 */
 
 /* merge_units: begin func_00305E98 */
-int func_00305E98(int *out)
+int rt_thread_count_get_remenant_count(int *out)
 {
     ScfThStat st;
     int cnt = 0;
@@ -52,7 +52,7 @@ extern int ReferThreadStatus(int id, Info5f30 *info);
 #define ReferThreadStatus(a0, a1) (ReferThreadStatus((a0), (ScfThStat *)(a1))) /* merge_units */
 
 
-int func_00305F30(int id, Info5f30 *out, unsigned int size, int *len)
+int rt_thread_count_get_thread_info(int id, Info5f30 *out, unsigned int size, int *len)
 {
     Info5f30 info;
     if (len == 0) return 2;
@@ -72,9 +72,9 @@ int func_00305F30(int id, Info5f30 *out, unsigned int size, int *len)
 /* merge_units: begin func_00306018 */
 #include "types.h"
 
-extern int func_00306030(int);
+extern int rt_time_get_msecs(int);
 
-int func_00306018(int a0) {
-    return func_00306030(a0);
+int rt_time_get_local(int a0) {
+    return rt_time_get_msecs(a0);
 }
 /* merge_units: end func_00306018 */

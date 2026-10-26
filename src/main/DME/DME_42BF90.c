@@ -43,8 +43,8 @@ extern char* D_005825B0;
 extern unsigned char* D_005825B8;
 extern int D_00542D48;
 extern int D_00582570;
-void func_0031E180(int h, unsigned short* out);
-void func_0031C3F0(int h, char** io);
+void nciGetVADVoiceActivity(int h, unsigned short* out);
+void nciEncodeSase3200(int h, char** io);
 
 static inline void Copy_BFD0(void* d0, void* s0, int n0)
 {
@@ -120,7 +120,7 @@ static inline void Clear_BFD0(void* d0, int n0)
     }
 }
 
-int func_0042BFD0(char* in, char* out, char* flag)
+int cNellyMoser_nmsEncode(char* in, char* out, char* flag)
 {
     int n;
     unsigned short got;
@@ -130,9 +130,9 @@ int func_0042BFD0(char* in, char* out, char* flag)
     D_005825C4 = 0;
     Copy_BFD0(D_005825B0, in, 0x140);
     D_00542D48 = -1;
-    func_0031C3F0(D_00582570, &D_005825B0);
+    nciEncodeSase3200(D_00582570, &D_005825B0);
     n = D_005825C2;
-    func_0031E180(D_00582570, &got);
+    nciGetVADVoiceActivity(D_00582570, &got);
     *flag = got != 0;
     if (got)
         Copy_BFD0(out, D_005825B8, n);
@@ -155,7 +155,7 @@ int func_0042BFD0(char* in, char* out, char* flag)
  */
 
 
-void func_0042C1D0(void) {
+void cNellyMoser_nmsDestroy(void) {
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0042C1D0 */

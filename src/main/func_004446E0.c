@@ -28,18 +28,18 @@ extern char D_00585E90[];
 int MGCLUpdate(void);
 void String_Copy(char*, char*);
 int Medius_SendServerReport(char*);
-void func_002EBC48(int*);
-void func_002EBCE0(int*);
-int func_002EBEC8(int*, int);
+void NetGetLocalTime(int*);
+void NetGetTime(int*);
+int NetGetValidClientCount(int*, int);
 int func_003A6BC0(void);
 void SFOLobby_Update(Mgr6E0*);
 int func_00453F30(int);
-void func_0046A998(Msg46A9*);
-void func_0046AA18(char*);
+void MediusSendPlayerReport(Msg46A9*);
+void MediusSendWorldReport(char*);
 void* memcpy(void*, const void*, unsigned int);
 void* memset(void*, int, unsigned int);
 
-int func_004446E0(int update)
+int SFOMGCL_Update(int update)
 {
     int status;
     int now;
@@ -48,7 +48,7 @@ int func_004446E0(int update)
     int ret;
 
     now = 0;
-    func_002EBC48(&now);
+    NetGetLocalTime(&now);
     if (D_005842C8) {
         D_00585E80 = (now - D_005842CC) / 1000;
     }
@@ -58,17 +58,17 @@ int func_004446E0(int update)
         String_Copy(msg.name, D_00584220);
         msg.ver = D_004976D8;
         memcpy(msg.data, D_00585E90, sizeof(msg.data));
-        func_0046A998(&msg);
+        MediusSendPlayerReport(&msg);
     }
     if (!D_00584231) {
         return -6;
     }
     if (D_00584240 && now >= D_005842D0 + 15000) {
         D_005842D0 = now;
-        if (func_002EBEC8(&status, D_00584520) == 0 && status >= 0) {
+        if (NetGetValidClientCount(&status, D_00584520) == 0 && status >= 0) {
             D_00584390 = status;
             D_0058438E = 1;
-            func_002EBCE0(&tmp);
+            NetGetTime(&tmp);
             ret = Medius_SendServerReport(D_00584378);
             if (ret) {
                 return ret;
@@ -80,7 +80,7 @@ int func_004446E0(int update)
         if (*dirty || now >= D_005842D8 + 15000) {
             D_005842D8 = now;
             *dirty = 0;
-            if (func_002EBEC8(&status, D_00584520)) {
+            if (NetGetValidClientCount(&status, D_00584520)) {
                 status = 1;
             }
             D_005843B0 = status;
@@ -89,7 +89,7 @@ int func_004446E0(int update)
             D_00584514 = func_003A6BC0() ? 1 : 3;
             D_00584508 = *(volatile int*)&D_00584514;
             memcpy(D_005843F4, D_00585E70, 0x18);
-            func_0046AA18(D_00584398);
+            MediusSendWorldReport(D_00584398);
         }
     }
     ret = MGCLUpdate();

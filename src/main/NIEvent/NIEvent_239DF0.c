@@ -40,7 +40,7 @@ static inline Key_239DF0* Zero_239DF0(void* d0, int n0) { void* dst = d0; int n 
     }
     return r;
 }
-extern "C" void func_00240150(Vec_239DF0* v, unsigned int n, const Key_239DF0* value);
+extern "C" void std_vector_imp_FloatKey_resize(Vec_239DF0* v, unsigned int n, const Key_239DF0* value);
 extern "C" void NiEvent_ReadKeyedTrack4(Track_239DF0* self, Reader_239DF0* r)
 {
     Key_239DF0 k1;
@@ -52,8 +52,8 @@ extern "C" void NiEvent_ReadKeyedTrack4(Track_239DF0* self, Reader_239DF0* r)
     {
         Key_239DF0* p1 = Zero_239DF0(&k1, 16);
         Key_239DF0* p0 = Zero_239DF0(&k0, 16);
-        func_00240150(&self->keys, 0, p0);
-        func_00240150(&self->keys, n, p1);
+        std_vector_imp_FloatKey_resize(&self->keys, 0, p0);
+        std_vector_imp_FloatKey_resize(&self->keys, n, p1);
     }
     i = 0;
     if (0 < n) do {

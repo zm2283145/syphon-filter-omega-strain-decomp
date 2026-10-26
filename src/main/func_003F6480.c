@@ -15,9 +15,9 @@ typedef struct Strm6480 {
     int pos;
 } Strm6480;
 
-extern int func_003A6C10(void);
+extern int snd_GetTransStatus(void);
 extern void func_003F6940(int* p1, int* n1, int* p2, int* n2, Strm6480* t, int x);
-extern int func_003F6630(Strm6480* s, int p1, int n1, int p2, int n2, int at, int room, int start, int rest);
+extern int sendToIOP2area(Strm6480* s, int p1, int n1, int p2, int n2, int at, int room, int start, int rest);
 
 void func_003F6480(Strm6480* s)
 {
@@ -34,7 +34,7 @@ void func_003F6480(Strm6480* s)
         n2 = 0;
         break;
     case 2:
-        func_003F6940(&p1, &n1, &p2, &n2, s, (func_003A6C10() & 0xFFFFFF) - s->base);
+        func_003F6940(&p1, &n1, &p2, &n2, s, (snd_GetTransStatus() & 0xFFFFFF) - s->base);
         break;
     case 3:
         return;
@@ -49,7 +49,7 @@ void func_003F6480(Strm6480* s)
         room = room < blocks ? room : blocks;
         rest = blocks - room;
         if (n1 + n2 >= 0x400 && room + rest >= 0x400)
-            got = func_003F6630(s, p1, n1, p2, n2, at, room, s->start, rest);
+            got = sendToIOP2area(s, p1, n1, p2, n2, at, room, s->start, rest);
     }
     s->avail -= got;
     s->off += got;

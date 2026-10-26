@@ -11,7 +11,7 @@
 #include "buf_holder_dtor.h"
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR(func_003E2A40)
+DEFINE_BUF_HOLDER_DTOR(std_vector_cGroupPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003E2A40 */
 
@@ -20,7 +20,7 @@ DEFINE_BUF_HOLDER_DTOR(func_003E2A40)
 #pragma cplusplus on
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR(func_003E2B30)
+DEFINE_BUF_HOLDER_DTOR(std_vector_StringPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003E2B30 */
 
@@ -41,7 +41,7 @@ DEFINE_OBJ_LIST_DTOR(ReceiverList_Dtor_3E2C20)
 typedef struct { int m0; int m4; int m8; } T2CA0;
 extern void ObjectList_EraseRange_3E3320(int* out, T2CA0* self, int* first, int* last);
 extern void operator_delete(void* p);
-T2CA0* func_003E2CA0(T2CA0* self, short del)
+T2CA0* std_list_PopVar_dtor(T2CA0* self, short del)
 {
     if (self) {
         if (self) {
@@ -76,22 +76,22 @@ extern char D_004938D0;
 extern char D_00559F18;
 extern int PtrVec_Reserve(int, int);
 
-int func_003E2D20(int a0, int a1) {
+int std_vector_cGroupPtr_reserve(int a0, int a1) {
     return PtrVec_Reserve(a0, a1);
 }
 
-Rel* func_003E2D30(Rel* r) {
+Rel* std_vector_cGroupPtr_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
     return r;
 }
 
-int func_003E2D50(int a0, int a1) {
+int std_vector_StringPtr_reserve(int a0, int a1) {
     return PtrVec_Reserve(a0, a1);
 }
 
-Rel* func_003E2D60(Rel* r) {
+Rel* std_vector_StringPtr_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
@@ -99,7 +99,7 @@ Rel* func_003E2D60(Rel* r) {
 }
 
 /* Byte flag setters. */
-void func_003E2D80(int value) {
+void cScriptInterpreter_SetGenerateSyms(int value) {
     D_00559F18 = value;
 }
 
@@ -114,7 +114,7 @@ void ScriptFilter_SetGate(int value) {
 #include "int_map_subscript.h"
 /* map<int, int>::operator[] */
 typedef struct { int key; int a; } P2DA0;
-DEFINE_INT_MAP_SUBSCRIPT(func_003E2DA0, P2DA0, func_003E3C80, v.a = 0)
+DEFINE_INT_MAP_SUBSCRIPT(func_003E2DA0, P2DA0, std_tree_pair_int_value_compare_cAllocator_pair_insert_node_at_nodeP_bool_bool_pairR_2, v.a = 0)
 #pragma pop /* merge_units */
 /* merge_units: end func_003E2DA0 */
 
@@ -124,7 +124,7 @@ DEFINE_INT_MAP_SUBSCRIPT(func_003E2DA0, P2DA0, func_003E3C80, v.a = 0)
 #include "int_tree_find.h"
 
 /* Find an int key in a tree; end() when absent. */
-DEFINE_INT_TREE_FIND(func_003E2E60)
+DEFINE_INT_TREE_FIND(std_tree_pair_int_value_compare_cAllocator_pair_find_intR)
 #pragma pop /* merge_units */
 /* merge_units: end func_003E2E60 */
 
@@ -133,7 +133,7 @@ DEFINE_INT_TREE_FIND(func_003E2E60)
 #pragma cplusplus on
 
 /* Find an int key in a tree; end() when absent. */
-DEFINE_INT_TREE_FIND(func_003E2EE0)
+DEFINE_INT_TREE_FIND(std_tree_pair_int_value_compare_find_intR_2)
 #pragma pop /* merge_units */
 /* merge_units: end func_003E2EE0 */
 
@@ -143,7 +143,7 @@ DEFINE_INT_TREE_FIND(func_003E2EE0)
 #include "vector_resize.h"
 DEFINE_RESIZE_ELEMENT(Elem12_2F60, 12)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_003E2F60, Elem12_2F60, func_003E3660, func_003E3480)
+DEFINE_VECTOR_RESIZE(std_vector_imp_EnumField_resize, Elem12_2F60, std_vector_imp_EnumField_insert, std_vector_imp_EnumField_erase)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_003E2F60 */
@@ -153,7 +153,7 @@ DEFINE_VECTOR_RESIZE(func_003E2F60, Elem12_2F60, func_003E3660, func_003E3480)
 #pragma cplusplus on
 DEFINE_RESIZE_ELEMENT(Elem4_2FF0, 4)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_003E2FF0, Elem4_2FF0, KeyVector_PushBack, PtrVector_Erase_3E3B60)
+DEFINE_VECTOR_RESIZE(std_vector_imp_cObjectId_resize, Elem4_2FF0, KeyVector_PushBack, PtrVector_Erase_3E3B60)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_003E2FF0 */
@@ -163,13 +163,13 @@ DEFINE_VECTOR_RESIZE(func_003E2FF0, Elem4_2FF0, KeyVector_PushBack, PtrVector_Er
 #pragma cplusplus on
 #include "tree_node_free.h"
 extern "C" { char D_004BDC08[] = "allocator.hh"; }
-DEFINE_TREE_NODE_FREE(func_003E3060, D_004BDC08)
+DEFINE_TREE_NODE_FREE(std_tree_pair_int_value_compare_cAllocator_pair_destroy_nodeP_2, D_004BDC08)
 #pragma pop /* merge_units */
 /* merge_units: end func_003E3060 */
 
 /* merge_units: begin func_003E3140 */
 #pragma push /* merge_units */
-Map* func_003E3140(Map* m, unsigned char* cmp) {
+Map* std_tree_pair_int_value_compare_cAllocator_pair_ctor_valuecompareR_cAllocatorR_2(Map* m, unsigned char* cmp) {
     m->count = 0;
     m->head = 0;
     m->cmp = *cmp;

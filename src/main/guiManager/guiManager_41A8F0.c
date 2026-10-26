@@ -46,13 +46,13 @@ typedef struct SsoString {
     char* longData;
 } SsoString;
 typedef struct { char pad[0x48]; SsoString text; char pad2[0x24]; void* view; char pad3[4]; unsigned char active; char pad4[0xB]; int mode; } TextBox;
-extern void func_0041BE50(TextBox* t);
+extern void GuiTextWidget_UpdateText(TextBox* t);
 extern void GuiTextEditWidget_MaskText(void* view, int len);
 extern void GuiTextEditWidget_ClampCursor(TextBox* t, int mode);
 /* Refreshes the text box, updating the view with the text length when active. */
-void func_0041AA10(TextBox* t)
+void GuiTextEditWidget_UpdateText(TextBox* t)
 {
-    func_0041BE50(t);
+    GuiTextWidget_UpdateText(t);
     if (t->active) {
         int len;
         if (!(t->text.h.flags & 1))

@@ -1,9 +1,9 @@
 #include "types.h"
-extern void func_0020C110(void* self);
+extern void std_vector_imp_cSkaTransBLEND_ctor_vectorimpR(void* self);
 #pragma optimization_level 1
-void* func_0020C0D0(void* self)
+void* std_vector_cSkaTransBLEND_ctor_vectorR(void* self)
 {
-    func_0020C110(self);
+    std_vector_imp_cSkaTransBLEND_ctor_vectorimpR(self);
     return self;
 }
 #pragma optimization_level reset

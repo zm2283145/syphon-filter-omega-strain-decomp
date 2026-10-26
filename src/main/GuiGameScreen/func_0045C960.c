@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_0045C960(Iter* a, Iter* b) {
+int cArray_int_Iterator_opNe(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 
@@ -24,7 +24,7 @@ int func_0045C9B0(char* self) {
     return *(int*)(self + 0);
 }
 
-void func_0045C9C0(Iter* out, PtrVec* v) {
+void cArray_int_End(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
 
@@ -37,6 +37,6 @@ Word* func_0045C9F0(Word* dst, Word* src) {
     return dst;
 }
 
-void func_0045CA00(Iter* out, PtrVec* v) {
+void std_vector_int_end_void_2(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }

@@ -13,13 +13,13 @@
 
 /* merge_units: begin func_003B8140 */
 #pragma push /* merge_units */
-extern void func_003B6F70(void* p, void* q);
-extern void func_003B6DC0(void* p, void* q);
-void func_003B8140(char* p, int n, char* x)
+extern void cString4_opAssign(void* p, void* q);
+extern void cSkaAnimAnchor_opAssign(void* p, void* q);
+void std_fill_n_cSkaAnimAnchorListEntry_int_fill_n(char* p, int n, char* x)
 {
     for (; n != 0; n--) {
-        func_003B6F70(p, x);
-        func_003B6DC0(p + 0x10, x + 0x10);
+        cString4_opAssign(p, x);
+        cSkaAnimAnchor_opAssign(p + 0x10, x + 0x10);
         p += 0x180;
     }
 }
@@ -37,29 +37,29 @@ struct Elem_3B81B0 { unsigned char head[0x10]; unsigned char body[0x170]; };
 
 extern "C" {
 #if 0 /* merge_units */
-void func_003B6F70(Elem_3B81B0* dst, const Elem_3B81B0* src);
+void cString4_opAssign(Elem_3B81B0* dst, const Elem_3B81B0* src);
 #endif /* merge_units */
-#define func_003B6F70(a0, a1) (func_003B6F70((void *)(a0), (void *)(a1))) /* merge_units */
+#define cString4_opAssign(a0, a1) (cString4_opAssign((void *)(a0), (void *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_003B6DC0(void* dst, const void* src);
+void cSkaAnimAnchor_opAssign(void* dst, const void* src);
 #endif /* merge_units */
-#define func_003B6DC0(a0, a1) (func_003B6DC0((a0), (void *)(a1))) /* merge_units */
+#define cSkaAnimAnchor_opAssign(a0, a1) (cSkaAnimAnchor_opAssign((a0), (void *)(a1))) /* merge_units */
 
 }
 
-extern "C" Elem_3B81B0* func_003B81B0(Elem_3B81B0* first, Elem_3B81B0* last, Elem_3B81B0* dest)
+extern "C" Elem_3B81B0* std_copy_backward_cSkaAnimAnchorListEntry_copy_backward(Elem_3B81B0* first, Elem_3B81B0* last, Elem_3B81B0* dest)
 {
     while (first < last) {
         --last;
         --dest;
-        func_003B6F70(dest, last);
-        func_003B6DC0(dest->body, last->body);
+        cString4_opAssign(dest, last);
+        cSkaAnimAnchor_opAssign(dest->body, last->body);
     }
     return dest;
 }
-#undef func_003B6F70 /* merge_units */
-#undef func_003B6DC0 /* merge_units */
+#undef cString4_opAssign /* merge_units */
+#undef cSkaAnimAnchor_opAssign /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003B81B0(void) {}
 #pragma pop /* merge_units */
@@ -75,11 +75,11 @@ extern "C" {
 extern char D_004BCE80[];
 extern char D_004BCFB8[];
 void* Mem_PlacementNew(unsigned int size, void* p);
-void func_003B6B20(void* dst, const E003B8230* src);
-void func_003B8100(V003B8230* a, V003B8230* b);
-void func_003961E0(V003B8230* a, int f);
+void cSkaAnimAnchorListEntry_ctor(void* dst, const E003B8230* src);
+void std_swap_vectordeleterR_vectordeleterR_41(V003B8230* a, V003B8230* b);
+void std_vector_deleter_cSkaAnimAnchorListEntry_dtor(V003B8230* a, int f);
 }
-extern "C" void func_003B8230(V003B8230* v, unsigned int n)
+extern "C" void std_vector_imp_cSkaAnimAnchorListEntry_reserve(V003B8230* v, unsigned int n)
 {
     if (v->cap < n) {
         if (n > 0x40000) {
@@ -97,11 +97,11 @@ extern "C" void func_003B8230(V003B8230* v, unsigned int n)
         E003B8230* e = s + v->count;
         for (; s < e; s++, d++) {
             void* o = Mem_PlacementNew(sizeof(E003B8230), d);
-            if (o) func_003B6B20(o, s);
+            if (o) cSkaAnimAnchorListEntry_ctor(o, s);
             tmp.count++;
         }
-        func_003B8100(&tmp, v);
-        func_003961E0(&tmp, -1);
+        std_swap_vectordeleterR_vectordeleterR_41(&tmp, v);
+        std_vector_deleter_cSkaAnimAnchorListEntry_dtor(&tmp, -1);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -117,7 +117,7 @@ typedef struct { int pad; Node_3B83D0* root; } Tree_3B83D0;
 typedef struct { Node_3B83D0* node; bool inserted; } Res_3B83D0;
 extern "C" {
 int Name_Compare48(const char* a, const char* b, int n);
-Node_3B83D0* func_003B9840(Tree_3B83D0* t, Node_3B83D0* y, bool comp, bool leftmost, const char* key);
+Node_3B83D0* std_tree_pair_cString16N_value_compare_cAllocator_pair_insert_node_at_nodeP_bool_bool_pairR(Tree_3B83D0* t, Node_3B83D0* y, bool comp, bool leftmost, const char* key);
 static bool D_00493518 = true;
 extern const bool D_00493520;
 }
@@ -125,7 +125,7 @@ static inline bool Less_3B83D0(const char* a, const char* b)
 {
     return !(a[0] == 0 && b[0] == 0) && Name_Compare48(a, b, 0x30) < 0;
 }
-extern "C" void func_003B83D0(Res_3B83D0* out, Tree_3B83D0* t, const char* key)
+extern "C" void std_tree_pair_cString16N_value_compare_cAllocator_pair_insert_one_pairR(Res_3B83D0* out, Tree_3B83D0* t, const char* key)
 {
     Node_3B83D0* lb = 0;
     Node_3B83D0* y = (Node_3B83D0*)&t->root;
@@ -146,7 +146,7 @@ extern "C" void func_003B83D0(Res_3B83D0* out, Tree_3B83D0* t, const char* key)
         }
     }
     if (lb == 0 || Less_3B83D0(lb->name, key)) {
-        out->node = func_003B9840(t, y, comp, leftmost, key);
+        out->node = std_tree_pair_cString16N_value_compare_cAllocator_pair_insert_node_at_nodeP_bool_bool_pairR(t, y, comp, leftmost, key);
         out->inserted = D_00493518;
     } else {
         out->node = lb;

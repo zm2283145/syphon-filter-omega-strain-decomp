@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_0030EBC8(int a0) {
+int rt_upnp_disable_natservice_heartbeat(int a0) {
     int v0, v1;
     int cond;
 

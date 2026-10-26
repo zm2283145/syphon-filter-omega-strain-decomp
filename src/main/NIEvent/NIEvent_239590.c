@@ -16,7 +16,7 @@
  */
 
 
-int* func_00239590(PtrVec* v, int i) {
+int* std_vector_cFXKeyPtr_opIndex(PtrVec* v, int i) {
     return v->data + i;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -44,7 +44,7 @@ extern void FileMan_Release(SubObj* s, int flags);
 extern void cMessage_dtor(Event* e, int flags);
 
 /* Builds a temporary event from self+0x10 and arg, dispatches it as g_Game, then destroys it. */
-void func_002395A0(char* self, void* arg)
+void cStopSndFXKey_Execute(char* self, void* arg)
 {
     Event e;
     SoundStopMsg_Ctor(&e, self + 0x10, arg);

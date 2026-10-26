@@ -26,7 +26,7 @@ void* Script_ObjectToId(void*);
 int String_CompareNoCase(char*,char*);
 Event* ScriptEvent_Construct(Event*,int,Desc*,void**,int,int);
 void EventQueue_Admit(Event*);
-void func_003E3250(void*,void*,Pair*);
+void std_tree_pair_int_value_compare_insert_one_pairR(void*,void*,Pair*);
 }
 static inline void* Alloc(int size,int line) { AllocGuard g;return Mem_Alloc(0,size,D_004BD4C0,line); }
 extern "C" int ScriptSched_PrepareCall(Self* self0,Desc* desc0,void** args,int count,float delay) {
@@ -57,7 +57,7 @@ extern "C" int ScriptSched_PrepareCall(Self* self0,Desc* desc0,void** args,int c
  if(ev) ev=ScriptEvent_Construct(ev,(int)(1000.0f*delay),desc,args,count,self->owner);
  EventQueue_Admit(ev);
  pair.key=D_0055A100;pair.value=ev;
- func_003E3250(ret,D_0055A0F0,&pair);
+ std_tree_pair_int_value_compare_insert_one_pairR(ret,D_0055A0F0,&pair);
  ev->id=D_0055A100;
  return D_0055A100++;
 }

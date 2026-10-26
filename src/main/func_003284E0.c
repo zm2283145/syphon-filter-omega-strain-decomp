@@ -7,11 +7,11 @@
 #include "types.h"
 #include "loose02_types.h"
 
-extern Rel* func_003285D0(Rel* r);
+extern Rel* std_vector_imp_Slide_ctor(Rel* r);
 
 /* Owning vector constructor. */
-OwnedRel* func_003284E0(OwnedRel* self) {
-    func_003285D0(&self->vec);
+OwnedRel* cArray_Slide_ctor(OwnedRel* self) {
+    std_vector_imp_Slide_ctor(&self->vec);
     self->owned = 1;
     return self;
 }

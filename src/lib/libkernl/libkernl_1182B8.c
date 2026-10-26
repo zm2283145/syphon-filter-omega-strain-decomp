@@ -8,7 +8,7 @@ extern unsigned int D_0048786C;
 extern Entry D_004E9AC8[];
 
 /* Clears an entry of one of two tables (negative index selects the fixed 32-entry table); -0x69 if out of range. */
-int func_001182B8(int index)
+int sceSifRemoveRebootNotifyHandler(int index)
 {
     Entry* table;
     unsigned int count;

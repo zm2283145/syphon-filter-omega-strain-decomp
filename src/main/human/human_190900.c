@@ -16,7 +16,7 @@
  */
 
 
-void* func_00190900(char* self) {
+void* cSkaAnimDataSample_DeltaRotation(char* self) {
     return self + 64;
 }
 
@@ -36,7 +36,7 @@ typedef struct FlagObj {
 } FlagObj;
 
 /* Returns whether bit `bit` is set in the object's flag word. */
-int func_00190920(FlagObj* obj, int bit) {
+int cSkaAnimData_BoneHasRotation(FlagObj* obj, int bit) {
     return (obj->flags & (1 << bit)) != 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -46,7 +46,7 @@ static inline void merge_flush_func_00190920(void) {}
 
 /* merge_units: begin func_00190940 */
 #pragma push /* merge_units */
-void* func_00190940(char* self) {
+void* cSkaAnimDataSample_Translation(char* self) {
     return self + 16;
 }
 /* merge_units: generate this block's code under its own pragmas */

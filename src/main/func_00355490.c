@@ -20,7 +20,7 @@ extern void cMessage_dtor(void* msg, int flags);
 extern void SoundAction_CtorVoice(void* action, int kind, char* voice, int a, int b);
 extern void SoundMsg_WrapAction(SoundMsg_355490* msg, void* action);
 extern void GuiBitmapWidget_SetImage(Widget_355490* w, char* s, int v);
-extern void func_0043C810(Widget_355490* w);
+extern void GuiBitmapWidget_ClearBitmap(Widget_355490* w);
 extern int sprintf(char* buf, const char* fmt, ...);
 
 static inline void StopVoice_355490(Self_355490* self)
@@ -68,7 +68,7 @@ void GuiPersonnelMenu_ToggleDetail(Self_355490* self, int on)
         if (self->wA0) self->wA0->flags &= ~2;
         if (self->w9C) self->w9C->flags |= 2;
         if (self->w98) {
-            func_0043C810(self->w98);
+            GuiBitmapWidget_ClearBitmap(self->w98);
             self->w98->flags &= ~2;
         }
         StopVoice_355490(self);

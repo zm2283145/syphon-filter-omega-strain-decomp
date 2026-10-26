@@ -1,10 +1,10 @@
 #include "types.h"
 extern char D_004DAD90[];
 extern char D_004DA330[];
-extern void func_001810D0(void* p, int f);
+extern void std_vector_deleter_cVector_dtor(void* p, int f);
 extern void operator_delete(void* p);
 typedef struct { void* vt; } V_EF30;
-V_EF30* func_0017EF30(V_EF30* self, short flag)
+V_EF30* cGameCameraCollisionRoutine_dtor(V_EF30* self, short flag)
 {
     if (self) {
         void* m;
@@ -13,7 +13,7 @@ V_EF30* func_0017EF30(V_EF30* self, short flag)
         if (m) {
             if (m) {
                 if (m)
-                    func_001810D0(m, 0);
+                    std_vector_deleter_cVector_dtor(m, 0);
             }
         }
         if (self)

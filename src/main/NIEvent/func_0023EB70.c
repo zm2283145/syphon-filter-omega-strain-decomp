@@ -23,45 +23,45 @@ public:
     Vec kids;
 };
 extern "C" {
-int func_0023DA80(Vec*);
-int func_0023DA90(Vec*);
-Node** func_0023DAA0(Vec*, int);
-Node** func_0023DAB0(Vec*, int);
-Node* func_0023EEA0(Node*);
-Node* func_0023EB70(Node*);
+int std_vector_cNIEventBasePtr_size(Vec*);
+int cArray_cNIEventBasePtr_Size(Vec*);
+Node** cArray_cNIEventBasePtr_opIndex(Vec*, int);
+Node** std_vector_imp_cNIEventBasePtr_1_opIndex(Vec*, int);
+Node* cNIEventBase_GetFirstVUM(Node*);
+Node* cNIEventBase_GetVUMInTree(Node*);
 }
 static inline Node* G(Node* x)
 {
     if (x->Find()) return x->Find();
-    for (int k = 0; k < func_0023DA90(&x->kids); k++) {
-        if (!!func_0023EEA0(*func_0023DAA0(&x->kids, k)))
-            return func_0023EEA0(*func_0023DAA0(&x->kids, k));
+    for (int k = 0; k < cArray_cNIEventBasePtr_Size(&x->kids); k++) {
+        if (!!cNIEventBase_GetFirstVUM(*cArray_cNIEventBasePtr_opIndex(&x->kids, k)))
+            return cNIEventBase_GetFirstVUM(*cArray_cNIEventBasePtr_opIndex(&x->kids, k));
     }
     return 0;
 }
 static inline Node* L1(Node* pp)
 {
-    if (pp->parent) return func_0023EB70(pp->parent);
-    return func_0023EEA0(pp);
+    if (pp->parent) return cNIEventBase_GetVUMInTree(pp->parent);
+    return cNIEventBase_GetFirstVUM(pp);
 }
 static inline Node* L2(Node* p)
 {
     if (p->parent) return L1(p->parent);
     if (p->Find()) return p->Find();
-    for (int k = 0; k < func_0023DA90(&p->kids); k++) {
-        if (!!func_0023EEA0(*func_0023DAA0(&p->kids, k)))
-            return func_0023EEA0(*func_0023DAA0(&p->kids, k));
+    for (int k = 0; k < cArray_cNIEventBasePtr_Size(&p->kids); k++) {
+        if (!!cNIEventBase_GetFirstVUM(*cArray_cNIEventBasePtr_opIndex(&p->kids, k)))
+            return cNIEventBase_GetFirstVUM(*cArray_cNIEventBasePtr_opIndex(&p->kids, k));
     }
     return 0;
 }
-extern "C" Node* func_0023EB70(Node* o)
+extern "C" Node* cNIEventBase_GetVUMInTree(Node* o)
 {
     Node* p = o->parent;
     if (p) return L2(p);
     if (o->Find()) return o->Find();
-    for (int j = 0; j < func_0023DA80(&o->kids); j++) {
-        if (G(*func_0023DAB0(&o->kids, j)))
-            return G(*func_0023DAB0(&o->kids, j));
+    for (int j = 0; j < std_vector_cNIEventBasePtr_size(&o->kids); j++) {
+        if (G(*std_vector_imp_cNIEventBasePtr_1_opIndex(&o->kids, j)))
+            return G(*std_vector_imp_cNIEventBasePtr_1_opIndex(&o->kids, j));
     }
     return 0;
 }

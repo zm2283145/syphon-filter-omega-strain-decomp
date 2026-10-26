@@ -16,7 +16,7 @@ typedef struct { void* vtable; char pad[0x2C]; } Msg;
 extern "C" {
 unsigned long long Time_GetMilliseconds(void);
 float SoftFloat_U64ToFloat(unsigned long long);
-void func_0040E320(void* p);
+void cMemCard_NextFrame(void* p);
 Mgr* Gui_GetScreenStack(void);
 int Gui_GetScreenList(void);
 void GuiCanvas_NestedUpdate(Mgr* m, float dt);
@@ -57,7 +57,7 @@ extern "C" void FrontEnd_UpdateGui(ObjCBB30* o)
             o->last = now - 100;
         dt = SoftFloat_U64ToFloat(now - o->last) / 1000.0f;
         if (o->b2A && o->b28)
-            func_0040E320(g_MemCard);
+            cMemCard_NextFrame(g_MemCard);
         if (g_DebugTriangle) {
             GuiCanvas_NestedUpdate(Gui_GetScreenStack(), dt);
         } else {

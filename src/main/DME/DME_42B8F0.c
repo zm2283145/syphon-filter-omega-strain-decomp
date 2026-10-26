@@ -11,7 +11,7 @@
 #include "buf_holder_dtor.h"
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_0042B8F0)
+DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_tServerPtr_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0042B8F0 */
 
@@ -25,7 +25,7 @@ DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_0042B8F0)
 
 #include "types.h"
 
-Rel* func_0042B9E0(Rel* r) {
+Rel* std_vector_tServerPtr_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

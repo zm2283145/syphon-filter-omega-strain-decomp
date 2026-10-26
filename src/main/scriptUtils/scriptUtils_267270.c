@@ -10,7 +10,7 @@
 #include "guarded_buffer_dtor.h"
 
 extern "C" char D_004A8250[];
-extern "C" GuardedBuffer* func_00267270(GuardedBuffer* self, short deleteFlag)
+extern "C" GuardedBuffer* std_vector_deleter_TaserPoint_dtor(GuardedBuffer* self, short deleteFlag)
 {
     if (self) {
         self->count = 0;
@@ -28,6 +28,6 @@ extern "C" GuardedBuffer* func_00267270(GuardedBuffer* self, short deleteFlag)
 #pragma cplusplus on
 #include "base_dtor_chain.h"
 
-DEFINE_BASE_DTOR_CHAIN(func_00267360, func_002673C0)
+DEFINE_BASE_DTOR_CHAIN(cArray_cAirTaserPtr_dtor, std_vector_imp_cAirTaserPtr_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00267360 */

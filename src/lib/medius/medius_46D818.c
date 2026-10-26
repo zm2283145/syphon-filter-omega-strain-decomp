@@ -9,7 +9,7 @@
 extern char D_00497DA0[];
 extern char D_00497DA4[];
 
-int func_0046D818(void) {
+int MediusUniqueCallbackGetWorldSecurityLevelResponseHandler(void) {
     int v0;
     int cond;
 
@@ -24,11 +24,11 @@ ret:
     return v0;
 }
 
-int func_0046D848(void) {
+int MediusUniqueCallbackBanPlayerRequestHandler(void) {
     return 56;
 }
 
-int func_0046D850(void) {
+int MediusUniqueCallbackBanPlayerResponseHandler(void) {
     int v0;
     int cond;
 

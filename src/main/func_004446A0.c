@@ -4,7 +4,7 @@ extern int D_0058423C;
 unsigned int D_004976D8[2] = { 0xFFFFFFFF, 0x0 };
 
 /* Publish the callback's value on success, or mark the operation as failed. */
-void func_004446A0(int unused0, int unused1, int unused2, LobbyStatusResult* result)
+void Callback_MGCLCreateGameOnMeRequest(int unused0, int unused1, int unused2, LobbyStatusResult* result)
 {
     if (!result->status) {
         (*(int*)D_004976D8) = result->value;

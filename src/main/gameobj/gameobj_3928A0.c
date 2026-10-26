@@ -17,7 +17,7 @@
 
 
 extern int Model_HardMeshAttachPoints(int* p);
-extern void func_003A9F00(int* ctx);
+extern void cSkeleton_Deactivate(int* ctx);
 extern int SkelNodes_ConstructActive(int* ctx);
 extern void Object_Deactivate(cVUM_GOBJ* self);
 extern void cNode_v07(cVUM_GOBJ* self);
@@ -25,12 +25,12 @@ extern void cNode_v06(cVUM_GOBJ* self);
 
 void Actor_v07(cVUM_GOBJ* self) {
     cNode_v07(self);
-    func_003A9F00(&self->modelCtx);
+    cSkeleton_Deactivate(&self->modelCtx);
 }
 
 void Actor_Deactivate(cVUM_GOBJ* self) {
     Object_Deactivate(self);
-    func_003A9F00(&self->modelCtx);
+    cSkeleton_Deactivate(&self->modelCtx);
 }
 
 void Actor_v06(cVUM_GOBJ* self) {

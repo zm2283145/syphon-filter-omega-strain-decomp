@@ -23,10 +23,10 @@ struct Obj_B2D20 {
 extern "C" {
 NetRec_B2D20* NetMap_Lookup(int id);
 void WeaponInv_EquipItem(Inv_B2D20* inv, int id);
-void func_001B2D20(Obj_B2D20* o);
+void cHuman_CheckForChangedWeapons(Obj_B2D20* o);
 }
 static inline Item_B2D20* AsItem(Ent_B2D20* e) { return e; }
-void func_001B2D20(Obj_B2D20* o)
+void cHuman_CheckForChangedWeapons(Obj_B2D20* o)
 {
     if (!o->remote) {
         if (!o->ent) {

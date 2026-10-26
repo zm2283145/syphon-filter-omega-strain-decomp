@@ -3,7 +3,7 @@
 extern "C" char D_004D92A0[];
 extern "C" char D_004D92C0[];
 extern "C" char D_004DFD80[];
-MSG_CLONE_BEGIN(func_00147BA0, 0x34, "ai.hh", 0x15B)
+MSG_CLONE_BEGIN(cAISoundSystemGOBJMessage_Clone, 0x34, "ai.hh", 0x15B)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);

@@ -16,10 +16,10 @@
  */
 
 
-extern Rel* func_00398410(Rel* r);
+extern Rel* std_vector_imp_intPtr_1_ctor(Rel* r);
 
-ParticleRelFlag* func_003983E0(ParticleRelFlag* self) {
-    func_00398410(&self->rel);
+ParticleRelFlag* cArray_intPtr_ctor(ParticleRelFlag* self) {
+    std_vector_imp_intPtr_1_ctor(&self->rel);
     self->flag = 1;
     return self;
 }
@@ -39,7 +39,7 @@ static inline void merge_flush_func_003983E0(void) {}
 extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
 
 /* Zeroes the three words. */
-Rel* func_00398410(Rel* r) {
+Rel* std_vector_imp_intPtr_1_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
@@ -47,12 +47,12 @@ Rel* func_00398410(Rel* r) {
 }
 
 /* push_back on a pointer vector. */
-int func_00398430(PtrVec* v, int value) {
+int std_vector_intPtr_push_back(PtrVec* v, int value) {
     return PtrVec_Insert(v, v->data + v->count, 1, value);
 }
 
 /* Zeroes the three words. */
-Rel* func_00398450(Rel* r) {
+Rel* std_vector_cEffectRequestPtr_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

@@ -15,13 +15,13 @@
 #include "types.h"
 
 /* Iterator copy-assignment. */
-Word* func_0042D770(Word* dst, Word* src) {
+Word* cAssocArray_int_cMessagePtr_Iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
 /* end(): iterator at the tree header. */
-void func_0042D780(Iter* out, Tree* t) {
+void std_map_int_cMessagePtr_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 #pragma pop /* merge_units */
@@ -41,15 +41,15 @@ extern char D_004BFB00[];
 extern char D_004D9300[];
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 void Mem_Free(int pool, void* allocation, char* file, int line);
-void func_0042F650(TransferReferenceInsertResult* result, RbTree* tree,
+void std_tree_pair_int_value_compare_insert_one_pairR_3(TransferReferenceInsertResult* result, RbTree* tree,
                    const TransferReferenceValue* value);
 void Event_Construct(TransferNotice* event, const void* descriptor);
 void Event_Send(TransferNotice* event, cGOBJ* object, int flags);
 void cMessage_dtor(TransferNotice* event, int flags);
 void ObjMap_Find_42EEF0(TransferReferenceIterator* result, RbTree* tree, const GobjId* id);
-TransferReferenceIterator func_0042DA20(RbTree* tree);
-void func_0042DA10(TransferReferenceIterator* result, const TransferReferenceIterator& source);
-void func_0042F510(RbTree* tree, TransferReferenceIterator* position);
+TransferReferenceIterator std_map_int_tNetActivateTerrainObjectPtr_end(RbTree* tree);
+void cAssocArray_int_tNetActivateTerrainObjectPtr_Iterator_ctor(TransferReferenceIterator* result, const TransferReferenceIterator& source);
+void std_tree_pair_int_value_compare_erase_tree_4(RbTree* tree, TransferReferenceIterator* position);
 }
 
 static inline const GobjId& reference_id(cGOBJ* object, GobjId& invalid)
@@ -61,7 +61,7 @@ static inline const GobjId& reference_id(cGOBJ* object, GobjId& invalid)
 }
 
 /* Register an object reference and send its notice unless the controller handles it. */
-extern "C" void func_0042D790(cGOBJ* object)
+extern "C" void cNetObjectMgr_TerrainActivation(cGOBJ* object)
 {
     TransferReferenceInsertResult result;
     TransferReferenceValue value;
@@ -80,7 +80,7 @@ extern "C" void func_0042D790(cGOBJ* object)
         }
         value.id.word = ((GobjEntry*)object)->id.word;
         value.reference = reference;
-        func_0042F650(&result, &D_00582700, &value);
+        std_tree_pair_int_value_compare_insert_one_pairR_3(&result, &D_00582700, &value);
         bool handled = false;
         if (object->attached && ((TransferController*)object->attached)->manages_transfer())
             handled = true;
@@ -105,7 +105,7 @@ extern "C" void NetObjectMgr_Remove(cGOBJ* object)
     key.word = ((GobjEntry*)object)->id.word;
     ObjMap_Find_42EEF0(&found, &D_00582700, &key);
     TransferReferenceNode* node = found.node;
-    func_0042DA10(&end, func_0042DA20(&D_00582700));
+    cAssocArray_int_tNetActivateTerrainObjectPtr_Iterator_ctor(&end, std_map_int_tNetActivateTerrainObjectPtr_end(&D_00582700));
     if ((node == end.node) ^ 1) {
         TransferReference* reference = node->reference;
         {
@@ -114,7 +114,7 @@ extern "C" void NetObjectMgr_Remove(cGOBJ* object)
         }
         TransferReferenceIterator position;
         position.node = node;
-        func_0042F510(&D_00582700, &position);
+        std_tree_pair_int_value_compare_erase_tree_4(&D_00582700, &position);
     }
 }
 #pragma pop /* merge_units */

@@ -8,10 +8,10 @@
 
 extern char D_00559FA0[];
 
-void* func_003E1520(void* self) {
+void* cScriptInterpreter_SOBJ_convert(void* self) {
     return self;
 }
 
-int func_003E1530(void) {
+int cScriptInterpreter_SOBJ_getClassId(void) {
     return (int)D_00559FA0;
 }

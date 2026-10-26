@@ -3,4 +3,4 @@
 #include "trivial_dtor.h"
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_00182150)
+DEFINE_TRIVIAL_DTOR(cCollisionModel_TreeLink_dtor)

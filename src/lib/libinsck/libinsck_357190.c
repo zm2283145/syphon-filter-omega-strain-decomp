@@ -1,4 +1,4 @@
-unsigned int func_00357190(const char *nptr, char **endptr, int base, int *err)
+unsigned int strtoui_internal(const char *nptr, char **endptr, int base, int *err)
 {
     const char *s = nptr;
     unsigned int acc;

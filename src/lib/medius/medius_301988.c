@@ -1,6 +1,6 @@
 #include "types.h"
 /* Stores a 16-bit value little-endian into two bytes; returns 2 when p is NULL. */
-int func_00301988(unsigned char* p, unsigned short v)
+int rt_msg_set_u2byte(unsigned char* p, unsigned short v)
 {
     int ret = 2;
     unsigned char hi = v >> 8;

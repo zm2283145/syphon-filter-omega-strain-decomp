@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046D8F0(void) {
+int MediusUniqueCallbackGetLocationsRequestHandler(void) {
     return 38;
 }

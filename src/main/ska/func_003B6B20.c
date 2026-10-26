@@ -20,23 +20,23 @@ typedef struct Obj178 {
     Body body;
 } Obj178;
 
-extern void func_003B6C20(void*, void*);
-extern void func_00132800(void*, void*);
+extern void cSkaAnimAnchor_TreeNode_ctor_cSkaAnimAnchorTreeNodeR(void*, void*);
+extern void cQuaternion_ctor_cQuaternionR(void*, void*);
 extern void Vec4_Assign(void*, void*);
-extern void func_003B6BC0(void*, void*);
+extern void cArray_FixedSize_cVector_4_ctor_cArrayFixedSizeR(void*, void*);
 
 /* Assignment operator: copies each member. */
-Obj178* func_003B6B20(Obj178* self, Obj178* other) {
+Obj178* cSkaAnimAnchorListEntry_ctor(Obj178* self, Obj178* other) {
     Body* d;
     self->id = other->id;
     d = &self->body;
-    func_003B6C20(d->part0, other->body.part0);
+    cSkaAnimAnchor_TreeNode_ctor_cSkaAnimAnchorTreeNodeR(d->part0, other->body.part0);
     d->fD0 = other->body.fD0;
-    func_00132800(d->partE0, other->body.partE0);
+    cQuaternion_ctor_cQuaternionR(d->partE0, other->body.partE0);
     Vec4_Assign(d->partF0, other->body.partF0);
     d->f100 = other->body.f100;
-    func_003B6BC0(d->part110, other->body.part110);
-    func_00132800(d->part150, other->body.part150);
+    cArray_FixedSize_cVector_4_ctor_cArrayFixedSizeR(d->part110, other->body.part110);
+    cQuaternion_ctor_cQuaternionR(d->part150, other->body.part150);
     d->i160 = other->body.i160;
     d->i164 = other->body.i164;
     return self;

@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_002E6098(int a0) {
+int NetIsValidConnectionIndex(int a0) {
     return ((unsigned int)(a0) < (unsigned int)(4));
 }

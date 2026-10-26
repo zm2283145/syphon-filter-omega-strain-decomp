@@ -8,7 +8,7 @@ extern signed char D_00584235;
 extern signed char D_00584236;
 extern char D_00584378;
 
-void func_00445260(int d0, int d1, int d2, char * arg3) {
+void Callback_MGCLServerSessionBegin(int d0, int d1, int d2, char * arg3) {
     D_00584235 = 1;
     if (F_(arg3, 0x15, signed char) == 0) {
         String_Copy(&D_00584220, arg3 + 0x90);

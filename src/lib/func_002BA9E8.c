@@ -2,7 +2,7 @@
 
 extern char D_005141C0[];
 
-int func_002BA9E8(void) {
+int _sceMcpInit(void) {
     int a0, v0, v1;
     int cond;
 

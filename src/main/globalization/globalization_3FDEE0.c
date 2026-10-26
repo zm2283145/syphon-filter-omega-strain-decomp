@@ -12,12 +12,12 @@ int sprintf(void *, const void *, ...);
 
 /* merge_units: begin func_003FDEE0 */
 #pragma push /* merge_units */
-extern void func_003FEEE0(void* self, short del);
+extern void std_vector_deleter_1_dtor(void* self, short del);
 extern void operator_delete(void* p);
-void* func_003FDEE0(void* self, short del)
+void* std_vector_imp_1_dtor(void* self, short del)
 {
     if (self) {
-        func_003FEEE0(self, 0);
+        std_vector_deleter_1_dtor(self, 0);
         if (del > 0)
             operator_delete(self);
     }

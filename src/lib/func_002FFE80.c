@@ -2,11 +2,11 @@
 typedef struct { char b[16]; } K16;
 typedef struct { char b[64]; } K64;
 extern void *memcpy(void *, const void *, unsigned int);
-extern int func_002FE720(void);
-extern int func_003019B0(unsigned char *, unsigned short *);
-extern int func_002F84D0(int, int, char *);
-extern int func_002FE7C0(int);
-int func_002FFE80(void *s, int kind, unsigned char *buf, unsigned int len)
+extern int rt_msg_client_is_valid_connection(void);
+extern int rt_msg_get_u2byte(unsigned char *, unsigned short *);
+extern int KM_SetPublicKey(int, int, char *);
+extern int rt_msg_client_is_valid_connection_id(int);
+int rt_msg_client_process_client_connect_notify(void *s, int kind, unsigned char *buf, unsigned int len)
 {
     K16 k;
     K64 k2;
@@ -17,7 +17,7 @@ int func_002FFE80(void *s, int kind, unsigned char *buf, unsigned int len)
     void (*cb)(int, int, char *, int);
     int id;
     p = buf;
-    if (func_002FE720() != 1) return 2;
+    if (rt_msg_client_is_valid_connection() != 1) return 2;
     if (p == 0) return 2;
     if (kind == 8)
         big = 1;
@@ -25,7 +25,7 @@ int func_002FFE80(void *s, int kind, unsigned char *buf, unsigned int len)
         return 2;
     r = 1; /* the state value checked above; comparing through a variable keeps retail's li/sltu */
     if (r >= len) return r;
-    if (func_003019B0(buf, &port) != 0) return 7;
+    if (rt_msg_get_u2byte(buf, &port) != 0) return 7;
     p = buf + 2;
     if (big) {
         if ((int)(len - 2) != 80) return 1; /* cast keeps fold() from merging the -2 into the constant */
@@ -36,13 +36,13 @@ int func_002FFE80(void *s, int kind, unsigned char *buf, unsigned int len)
     p += 16;
     if (big) {
         memcpy(&k2, p, 64);
-        func_002F84D0(F(s, unsigned short, 0), port, k2.b);
+        KM_SetPublicKey(F(s, unsigned short, 0), port, k2.b);
     }
     cb = F(s, void *, 0x8C);
     if (cb != 0) {
         id = F(s, unsigned short, 0);
         cb(id, port, k.b, big);
-        if (func_002FE7C0(id) == 0) return 0xB;
+        if (rt_msg_client_is_valid_connection_id(id) == 0) return 0xB;
     }
     return 0;
 }

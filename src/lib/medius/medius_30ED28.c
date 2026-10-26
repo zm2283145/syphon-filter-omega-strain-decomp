@@ -18,7 +18,7 @@ extern int D_00491354;
 extern int D_00491358;
 extern int D_0049135C;
 
-extern void func_002F5DB0(int h);
+extern void rt_comm_destroy(int h);
 extern int func_0030BE60(UpnpED28 *u, char *done);
 extern int func_0030C418(UpnpED28 *u);
 extern int func_0030C5E8(UpnpED28 *u);
@@ -28,8 +28,8 @@ extern int func_0030CD00(UpnpED28 *u);
 extern int func_0030D1E8(UpnpED28 *u);
 extern int func_0030D2B8(UpnpED28 *u);
 extern int func_0030D520(UpnpED28 *u);
-extern int func_0030D610(UpnpED28 *u);
-extern int func_0030D830(UpnpED28 *u);
+extern int process_nat_resolution_timeslice(UpnpED28 *u);
+extern int process_heartbeat_timeslice(UpnpED28 *u);
 /* weak discarded stub: the retail TU defined func_0030D8B0 before this function (gives the non-likely branch) */
 int __attribute__((weak, section(".dtors_drop"))) func_0030D8B0(UpnpED28 *u) { return 0; }
 
@@ -41,7 +41,7 @@ int func_0030ED28(UpnpED28 *u)
     if (u == 0) return 2;
     switch (u->state) {
     case 0:
-        r = func_0030D830(u);
+        r = process_heartbeat_timeslice(u);
         break;
     case 1:
         if (D_0049134C == 0) {
@@ -50,7 +50,7 @@ int func_0030ED28(UpnpED28 *u)
             if (r != 0 || done != 0) {
                 D_00491350 = r;
                 D_0049134C = 1;
-                func_002F5DB0(u->ctx->f0);
+                rt_comm_destroy(u->ctx->f0);
                 u->ctx->f0 = 0;
                 u->ctx->cb2044(u, r, u->ctx->flags);
                 u->ctx->cb2044 = 0;
@@ -106,7 +106,7 @@ int func_0030ED28(UpnpED28 *u)
         r = func_0030D520(u);
         break;
     case 10:
-        r = func_0030D610(u);
+        r = process_nat_resolution_timeslice(u);
         break;
     }
     if (r == 0 && u->ctx != 0)

@@ -10,11 +10,11 @@ extern V4* Quat_Assign(V4* d, V4* s);
 extern V4* Vec4_Copy(V4* d, V4* s);
 extern void* Placement_GetQuat(F8Plc* p);
 extern void* Placement_GetPosition(F8Plc* p);
-extern void func_00132530(F8RootW* w, void* q);
-extern void func_00132510(F8RootW* w, void* pos);
-extern V4* func_00132840(V4* self);
+extern void cQuatVec_Rotate(F8RootW* w, void* q);
+extern void cQuatVec_Translate(F8RootW* w, void* pos);
+extern V4* cQuaternion_ctor_void(V4* self);
 extern void Quat_Multiply(V4* a, V4* b, V4* c);
-extern V4* func_00132800(V4* d, V4* s);
+extern V4* cQuaternion_ctor_cQuaternionR(V4* d, V4* s);
 void Root_RefreshWorldCache(F8Root* r);
 static inline void F8PlcCopy(F8Plc* d, F8Plc* s)
 {
@@ -38,8 +38,8 @@ static inline F8Plc* RootWorld_(F8Root* r)
             F8RootW* w;
             F8PlcCopy(&Root_Identity(r)->world, &Root_Identity(r)->local);
             w = Root_Identity(r);
-            func_00132530(w, Placement_GetQuat(pp));
-            func_00132510(w, Placement_GetPosition(pp));
+            cQuatVec_Rotate(w, Placement_GetQuat(pp));
+            cQuatVec_Translate(w, Placement_GetPosition(pp));
             r->dirty = 0;
         }
         return (F8Plc*)r;
@@ -62,9 +62,9 @@ void Root_RefreshWorldCache(F8Root* r)
         V4* pq;
         V4* pv;
         { V4* s = &r->local.q; Q6(&r->world.q,s); Q6(&r->world.pos,s+1); }
-        func_00132840(&t);
+        cQuaternion_ctor_void(&t);
         Quat_Multiply(&t, &pp->q, &r->world.q);
-        func_00132800(&u, &t);
+        cQuaternion_ctor_cQuaternionR(&u, &t);
         r->world.q = u;
         { void* xx = &u; } /* dead: retail's duplicate addiu v1,sp,0x70 */
         vp = &r->world.pos;

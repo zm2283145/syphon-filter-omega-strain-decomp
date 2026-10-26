@@ -4,7 +4,7 @@ typedef struct Enum3E0 { char pad00[0x8]; int count; EnumMember3E0* members; } E
 typedef struct Vec3E0 { int pad0; int count; Enum3E0** data; } Vec3E0;
 extern Vec3E0* D_00554F30;
 #pragma opt_strength_reduction off
-char* func_003E0040(void* script, int id, int value)
+char* cScriptInterpreter_getEnumValString(void* script, int id, int value)
 {
     Enum3E0* e;
     int i;

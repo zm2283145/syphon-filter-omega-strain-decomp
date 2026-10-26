@@ -14,12 +14,12 @@
 
 #include "types.h"
 
-Vec4* func_00139BA0(Vec4* d, Vec4* s) {
+Vec4* cCollisionModel_FaceLocator_opAssign(Vec4* d, Vec4* s) {
     *d = *s;
     return d;
 }
 
-Vec4* func_00139BB0(Vec4* d, Vec4* s) {
+Vec4* cCollisionModel_FaceProperties_opAssign(Vec4* d, Vec4* s) {
     *d = *s;
     return d;
 }
@@ -44,9 +44,9 @@ void* Mem_PlacementNew(unsigned int size, void* p);
 #endif /* merge_units */
 #define Mem_PlacementNew(a0, a1) ((void *)Mem_PlacementNew((int)(a0), (int)(a1))) /* merge_units */
 
-void func_00139D30(void* dst, const E139BD0* src);
+void cLosRequest_cCollisionModelList_Game_ctor(void* dst, const E139BD0* src);
 }
-extern "C" void func_00139BD0(V139BD0* v, unsigned int n, const E139BD0* val)
+extern "C" void std_vector_imp_cLosRequest_cCollisionModelList_Game_init(V139BD0* v, unsigned int n, const E139BD0* val)
 {
     if (n) {
         if (n > 0x6DB6D) {
@@ -60,7 +60,7 @@ extern "C" void func_00139BD0(V139BD0* v, unsigned int n, const E139BD0* val)
         E139BD0* end = p + n;
         for (; p < end; p++) {
             void* o = Mem_PlacementNew(sizeof(E139BD0), p);
-            if (o) func_00139D30(o, val);
+            if (o) cLosRequest_cCollisionModelList_Game_ctor(o, val);
             v->count++;
         }
     }

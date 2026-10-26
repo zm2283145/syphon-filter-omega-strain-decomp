@@ -8,17 +8,17 @@ extern "C" {
 void Mem_Free(int, void*, char*, int);
 void List_Erase(int*, char*, int*);
 Raw_2B10 List_Begin(void*);
-Raw_2B10 func_00432730(void*);
-void func_00432740(char**, const Raw_2B10&);
-void func_00432720(char**, const Raw_2B10&);
-void func_0015AF40(int*, char**);
-int func_004361C0(int*, int);
+Raw_2B10 std_list_tNPCInfoPtr_end(void*);
+void std_list_tNPCInfoPtr_generic_iterator_ctor(char**, const Raw_2B10&);
+void cLListIterator_tNPCInfoPtr_ctor(char**, const Raw_2B10&);
+void std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(int*, char**);
+int cNPCInfoObject_Find(int*, int);
 extern char D_004BFCA0;
 extern char D_00582AF0;
 }
-#define Begin_2B10(o) func_00432740(o, List_Begin(&D_00582AF0))
-#define End_2B10(o) func_00432720(o, func_00432730(&D_00582AF0))
-extern "C" void func_00432B10(int d0, Ent_2B10* tbl) {
+#define Begin_2B10(o) std_list_tNPCInfoPtr_generic_iterator_ctor(o, List_Begin(&D_00582AF0))
+#define End_2B10(o) cLListIterator_tNPCInfoPtr_ctor(o, std_list_tNPCInfoPtr_end(&D_00582AF0))
+extern "C" void cNPCInfoObject_DoPendingAdds(int d0, Ent_2B10* tbl) {
     int k[1];
     char* end;
     {
@@ -33,7 +33,7 @@ extern "C" void func_00432B10(int d0, Ent_2B10* tbl) {
             cur = n;
             n = F_(n, 0x4, char*);
             k[0] = e->key;
-            if (!func_004361C0(k, 0)) {
+            if (!cNPCInfoObject_Find(k, 0)) {
                 int i;
                 for (i = 0; i < 29; i++) if (tbl[i].key == -1) break;
                 if (i < 29) {
@@ -54,7 +54,7 @@ extern "C" void func_00432B10(int d0, Ent_2B10* tbl) {
                         int res;
                         int pos;
                         c = cur;
-                        func_0015AF40(&pos, &c);
+                        std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&pos, &c);
                         List_Erase(&res, &D_00582AF0, &pos);
                     }
                 }

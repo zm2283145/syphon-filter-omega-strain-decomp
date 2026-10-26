@@ -11,7 +11,7 @@
 typedef struct { char pad[0x98]; void* w98; char pad9C[4]; void* wA0; char padA4[9]; char flagAD; } SelfDE0;
 extern "C" char* Loc_LookupText(const char*);
 extern "C" void GuiTextWidget_SetText(void*, char*, int);
-extern "C" void func_00288DE0(SelfDE0* self, char flag)
+extern "C" void GuiAccountLogin_SetMode(SelfDE0* self, char flag)
 {
     if (self->wA0)
         GuiTextWidget_SetText(self->wA0, Loc_LookupText((unsigned char)flag == 0 ? "LoginAccount" : "CreateAccount"), 0);
@@ -43,7 +43,7 @@ unsigned char SFOLobby_FormatError(void* g, int a);
 int func_004459D0(void* g, char* a, char* b);
 void FrontEnd_ClosePopup(void* ui, int id);
 }
-extern "C" void func_00288E90(S_00288E90* self)
+extern "C" void GuiAccountLogin_RegisterAccount(S_00288E90* self)
 {
     void* g = DME_GetLobby();
     char* pw;

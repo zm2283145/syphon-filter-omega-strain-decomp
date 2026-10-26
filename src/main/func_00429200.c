@@ -10,7 +10,7 @@ extern char D_00582550[];         /* 32-byte decoded key buffer */
 extern int Transport_Send(int, int, int, int);
 
 /* Sends a2 through the transport with the first two arguments swapped and -1 as the third. */
-int func_00429200(int a0, int a1, int a2) {
+int cDeactivateMsg_SendDeactivated(int a0, int a1, int a2) {
     return Transport_Send(a1, a0, -1, a2);
 }
 

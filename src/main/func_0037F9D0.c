@@ -9,12 +9,12 @@
 /* Runtime array constructor: (array, ctor, dtor, element size, count). */
 extern int __construct_array(void* array, void* ctor, void* dtor, int size, int count);
 extern int CameraRecord_Construct(void*);
-extern List* func_0037FE80(List*);
-extern int func_003BB2F0(int, int);
-extern int func_003BB340(int);
+extern List* std_list_deleter_tDataDelRec_ctor(List*);
+extern int cUserFrameEnv_dtor(int, int);
+extern int cUserFrameEnv_ctor(int);
 
 /* Constructor: 8 sub-objects, two counters, six Slot20 entries. */
-Manager37F9D0* func_0037F9D0(Manager37F9D0* self) {
+Manager37F9D0* XLib_ctor(Manager37F9D0* self) {
     char* item;
 
     self->unk00 = -1;
@@ -25,7 +25,7 @@ Manager37F9D0* func_0037F9D0(Manager37F9D0* self) {
     } while (item != self->items[8]);
     self->unk1058 = 0;
     self->unk105C = 0;
-    __construct_array(self->slots, func_003BB340, func_003BB2F0, 20, 6);
-    func_0037FE80(&self->unk1108);
+    __construct_array(self->slots, cUserFrameEnv_ctor, cUserFrameEnv_dtor, 20, 6);
+    std_list_deleter_tDataDelRec_ctor(&self->unk1108);
     return self;
 }

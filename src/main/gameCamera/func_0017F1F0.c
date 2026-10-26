@@ -1,4 +1,4 @@
-/* func_0017F1F0: Pair[2] init from (a, b*f) + f40=f, f44=1/f. Empty do/while stands in for the Pair array ctor loop; named scale temp V s fixes stack order; 'i <= 1' gives slti $at. */
+/* cHermiteSplineWithScaledDuration_cVector_ctor_cVectorR_cVectorR_float: Pair[2] init from (a, b*f) + f40=f, f44=1/f. Empty do/while stands in for the Pair array ctor loop; named scale temp V s fixes stack order; 'i <= 1' gives slti $at. */
 #pragma cplusplus on
 #pragma exceptions off
 #pragma always_inline on
@@ -31,7 +31,7 @@ struct T {
     float f40;
     float f44;
 };
-extern "C" T* func_0017F1F0(T* p, const V* a, const V* b, float f)
+extern "C" T* cHermiteSplineWithScaledDuration_cVector_ctor_cVectorR_cVectorR_float(T* p, const V* a, const V* b, float f)
 {
     int i;
     V s = *b * f; Pair pl(*a, s);

@@ -16,9 +16,9 @@ int Mem_Free();
 
 /* merge_units: begin func_00410C10 */
 #pragma push /* merge_units */
-extern void func_003CBF70(int a, int b, int c);
-void func_00410C10(int a, int b) {
-    func_003CBF70(a, b, 0);
+extern void std_basic_string_char_char_traits_char_find_basicstringR_uint(int a, int b, int c);
+void cString_Find(int a, int b) {
+    std_basic_string_char_char_traits_char_find_basicstringR_uint(a, b, 0);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00410C10(void) {}
@@ -43,9 +43,9 @@ extern char D_004BEE90[];
 int FileMan_FindMember(void* file);
 int FileMan_GetSize(void* file);
 void FileMan_LoadMemberSync(void* file, char** out, int z);
-void func_0036DEC0(void* file);
+void cFileMan_Close(void* file);
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
-void func_0040FBC0(Subs410C20* self, const char* s, const char* end);
+void cSubtitleFeed_ParseINI(Subs410C20* self, const char* s, const char* end);
 }
 
 static inline void MemClear_410C20(void* d0, int n0) { int n = n0; void* dst = d0;
@@ -106,7 +106,7 @@ extern "C" void MovieSubtitles_ParseFeed(Subs410C20* self, void* file, int lang)
     buf = Alloc_410C20(size);
     MemClear_410C20(buf, size);
     FileMan_LoadMemberSync(file, (char**)&buf, 0);
-    func_0036DEC0(file);
+    cFileMan_Close(file);
     {
     unsigned char* u = (unsigned char*)buf;
     if (u == 0) return;
@@ -118,7 +118,7 @@ extern "C" void MovieSubtitles_ParseFeed(Subs410C20* self, void* file, int lang)
         e = s + size;
     }
     }
-    func_0040FBC0(self, s, e);
+    cSubtitleFeed_ParseINI(self, s, e);
     Free_410C20(buf);
     self->f68 = 0;
 }

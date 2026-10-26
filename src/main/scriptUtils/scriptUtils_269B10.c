@@ -85,7 +85,7 @@ List* func_0026A0F0(List* l) {
 #include "obj_list_dtor.h"
 
 /* Destroy an object list: erase all nodes, optionally delete. */
-DEFINE_OBJ_LIST_DTOR(func_0026A110)
+DEFINE_OBJ_LIST_DTOR(std_list_ArrayPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0026A110 */
 
@@ -94,7 +94,7 @@ DEFINE_OBJ_LIST_DTOR(func_0026A110)
 #pragma cplusplus on
 
 /* Destroy an object list: erase all nodes, optionally delete. */
-DEFINE_OBJ_LIST_DTOR(func_0026A190)
+DEFINE_OBJ_LIST_DTOR(std_list_cNodeListPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0026A190 */
 

@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046E400(void) {
+int MediusUniqueCallbackFileGetMetaDataRequestHandler(void) {
     return 508;
 }

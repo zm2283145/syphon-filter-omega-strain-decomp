@@ -29,7 +29,7 @@ static inline char* Alloc6190(int n) {
     return (char*)Mem_Alloc(0, n, D_004BD3B0, 0x130);
 }
 static inline int Round6190(int n) { return (n + 31) / 32 * 32; }
-extern "C" S6190* func_003D6190(S6190* s, const char* name, int a, int b, unsigned char f)
+extern "C" S6190* VarDef_ctor(S6190* s, const char* name, int a, int b, unsigned char f)
 {
     char* p = 0;
     if (name) {
@@ -58,25 +58,25 @@ typedef struct { void* key; } KeyRef;
 typedef struct { char* name; KeyRef* ref; } NamedRef;
 extern int strlen(const char* s); /* strlen */
 extern char* String_Copy(char* dst, const char* src);
-extern void func_003D6580(Writer* w, int size);
-extern int func_003D6570(Writer* w, int size);
-extern void func_003D63C0(Writer* w, int words);
-extern char* func_003D7510(void* key);
+extern void ScriptFileBuff_put(Writer* w, int size);
+extern int ScriptFileBuff_charsToInts(Writer* w, int size);
+extern void ScriptFileBuff_expand(Writer* w, int words);
+extern char* cScriptBase_getClassName(void* key);
 static inline void Writer_PutString(Writer* w, char* s)
 {
     int size = strlen(s) + 1;
     int words;
-    func_003D6580(w, size);
-    words = func_003D6570(w, size);
-    func_003D63C0(w, words);
+    ScriptFileBuff_put(w, size);
+    words = ScriptFileBuff_charsToInts(w, size);
+    ScriptFileBuff_expand(w, words);
     String_Copy((char*)w->cursor, s);
     w->cursor += words;
 }
 /* Serialises the name and the key's name as padded strings. */
-void func_003D62D0(NamedRef* r, Writer* w)
+void VarDef_exportData(NamedRef* r, Writer* w)
 {
     Writer_PutString(w, r->name);
-    Writer_PutString(w, func_003D7510(r->ref->key));
+    Writer_PutString(w, cScriptBase_getClassName(r->ref->key));
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003D62D0 */

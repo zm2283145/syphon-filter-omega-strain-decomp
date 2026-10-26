@@ -7,7 +7,7 @@ extern volatile int D_004878A0;
 extern volatile int D_004878B4;
 
 static inline SemaParam8718 *publish(SemaParam8718 *p,int *where,int value){/* Prepare next semaphore argument before publishing its predecessor. */ __asm__ volatile("" : "+r"(p));*where=value;return p;}
-void func_00118718(void)
+void cmd_sem_init(void)
 {
     SemaParam8718 p; int value;
     if (D_004878A8 == -1 || D_004878AC == -1 || D_004878B0 == -1) {

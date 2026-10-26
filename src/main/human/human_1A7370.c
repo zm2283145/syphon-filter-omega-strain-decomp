@@ -49,7 +49,7 @@ extern void Root_RefreshWorldCache(void* r);
 extern char* Root_Identity(void* r);
 #pragma push
 #pragma opt_propagation off
-V4_73C0* func_001A73C0(Obj_73C0* o, V4_73C0* out)
+V4_73C0* cSkaAnimAnchor_TreeNode_GetParentInverseRotation(Obj_73C0* o, V4_73C0* out)
 {
     void* r = o->root;
     V4_73C0* v;

@@ -6,18 +6,18 @@
 
 #include "types.h"
 
-void func_0033BB40(char* self) {
+void std_vector_deleter_tParTimes_clear(char* self) {
     *(int*)(self + 4) = 0;
 }
 
-void func_0033BB50(char* self) {
+void std_vector_deleter_RatingRecord_clear(char* self) {
     *(int*)(self + 4) = 0;
 }
 
-void func_0033BB60(char* self) {
+void std_vector_deleter_tRankInfo_clear(char* self) {
     *(int*)(self + 4) = 0;
 }
 
-void func_0033BB70(char* self) {
+void std_vector_deleter_PartData_clear(char* self) {
     *(int*)(self + 4) = 0;
 }

@@ -11,7 +11,7 @@ extern int D_00598748;
 unsigned int D_00497DA8[1] = { 0x0 };
 extern int Medius_TerminateString(char *, int);
 extern int Net_SendLocked(int, int, int, int, int, int, void *);
-int func_0046B1E0(char *a, int b)
+int MediusGetLocations(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -25,7 +25,7 @@ int func_0046B1E0(char *a, int b)
 /* merge_units: begin func_0046B280 */
 extern int D_00598750;
 int D_00497DAC = 0;
-int func_0046B280(char *a, int b)
+int MediusPickLocation(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);

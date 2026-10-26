@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_002D8AE8(int a0) {
+void ResetVideoSequence(int a0) {
     *(int*)((char*)a0 + 8) = 0;
 }

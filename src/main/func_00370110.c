@@ -6,5 +6,5 @@
 
 #include "types.h"
 
-void func_00370110(void) {
+void cDmaMan_RegisterModel(void) {
 }

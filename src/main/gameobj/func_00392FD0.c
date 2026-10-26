@@ -4,16 +4,16 @@
 
 #include "gobj_types.h"
 
-Word* func_00392FD0(Word* dst, Word* src) {
+Word* cLListIterator_cSkaTransPlaybackPtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_00392FE0(Iter* out, Tree* t) {
+void std_list_cSkaTransPlaybackPtr_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-Word* func_00392FF0(Word* dst, Word* src) {
+Word* std_list_cSkaTransPlaybackPtr_generic_iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }

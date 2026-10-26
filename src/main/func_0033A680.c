@@ -1,6 +1,6 @@
 typedef struct { int cap; unsigned int size; char* buf; } V3A680;
 extern void* memcpy(void* d, const void* s, unsigned int n);
-char* func_0033A680(V3A680* v, char* first, char* last)
+char* std_vector_pod_eRequirementState_erase(V3A680* v, char* first, char* last)
 {
     unsigned int n;
     if (first == last)

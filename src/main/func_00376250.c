@@ -66,10 +66,10 @@ extern int D_004932E0[];
 extern u64_t D_004BC1B0;
 extern u64_t D_005392D8;
 extern int D_00554EFC;
-extern void func_00382910(TexMgr6250*);
-extern void func_00375A30(void*, int, int, int);
+extern void cTexMan_EndBatch(TexMgr6250*);
+extern void cDmaMan_InsertChain(void*, int, int, int);
 extern unsigned int Renderer_SetDrawState(void*, Mtx6250*, unsigned int, unsigned int);
-extern Q6250* func_00375B40(void*, int, int);
+extern Q6250* cDmaMan_BeginChain_eDmaChannel_int(void*, int, int);
 extern void DmaPacket_Close(void*, int, Q6250*);
 extern void Shadow_RenderBatch(void*);
 extern void Shadow_NextReceiverBatch(void*);
@@ -124,7 +124,7 @@ static inline void SetTexEnv(void)
 {
     int e = D_005380F8;
     if (e != D_00538170) {
-        func_00375A30(D_00537F80, 1, D_004932C0[e], D_004932E0[e]);
+        cDmaMan_InsertChain(D_00537F80, 1, D_004932C0[e], D_004932E0[e]);
         D_00538170 = e;
     }
 }
@@ -161,7 +161,7 @@ void Model_Draw(Model6250* m, unsigned int flags, Mtx6250* xf)
             }
         }
     }
-    func_00382910(tm);
+    cTexMan_EndBatch(tm);
     spr = 0x70000000;
     {
         MReg6250* r = m->regs;
@@ -197,7 +197,7 @@ void Model_Draw(Model6250* m, unsigned int flags, Mtx6250* xf)
         }
     }
     {
-        Q6250* p = func_00375B40(D_00537F80, 1, m->qwc);
+        Q6250* p = cDmaMan_BeginChain_eDmaChannel_int(D_00537F80, 1, m->qwc);
         if (m->qwc <= 0x300) {
             Dma_StartFromSpr(spr, (unsigned int)p & 0x0FFFFFFF, m->qwc);
         } else {
@@ -212,7 +212,7 @@ void Model_Draw(Model6250* m, unsigned int flags, Mtx6250* xf)
         SetTexEnv();
         D_005381C4++;
         Renderer_SetDrawState(g_Video, xf, flags, m->extra);
-        p = func_00375B40(D_00537F80, 1, m->qwc);
+        p = cDmaMan_BeginChain_eDmaChannel_int(D_00537F80, 1, m->qwc);
         QCopy6250(m->data->packet, m->qwc, p);
         DmaPacket_Close(D_00537F80, 1, p + m->qwc);
         Shadow_NextReceiverBatch(D_00543790);

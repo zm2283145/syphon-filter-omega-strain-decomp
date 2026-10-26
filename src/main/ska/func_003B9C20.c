@@ -6,7 +6,7 @@ struct DqBuf { unsigned int cap; unsigned int size; unsigned int start; int* dat
 extern "C" {
 extern char D_0049AF00[];
 extern char D_0049AE50[];
-unsigned int func_003BA0C0(DqBuf* self, unsigned int n);
+unsigned int _cdeque_deleter_common_int_suggest_new_cap(DqBuf* self, unsigned int n);
 }
 static inline void Dealloc(int* p)
 {
@@ -31,7 +31,7 @@ static inline int* CopyQ(DqBuf* q, int* o)
     }
     return d;
 }
-extern "C" void func_003B9C20(DqBuf* self, const int* v)
+extern "C" void _cdeque_deleter_int_1_push_back(DqBuf* self, const int* v)
 {
     unsigned int c0 = self->cap == 0 ? 0 : self->cap - 1;
     unsigned int size = self->size;
@@ -39,7 +39,7 @@ extern "C" void func_003B9C20(DqBuf* self, const int* v)
         self->size = size + 1;
         self->data[(self->start + size) % self->cap] = *v;
     } else {
-        unsigned int c = func_003BA0C0(self, size + 1);
+        unsigned int c = _cdeque_deleter_common_int_suggest_new_cap(self, size + 1);
         int* nd = (int*)TStr_Alloc((c + 1) * 4, D_0049AE50, 0x5C);
         int* d = CopyQ(self, nd);
         *d = *v;

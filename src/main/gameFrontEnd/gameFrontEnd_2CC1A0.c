@@ -15,22 +15,22 @@ char *strncpy(void *, const void *, int);
 #include "direct_base_dtor.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_DIRECT_BASE_DTOR(func_002CC1A0, func_00299360)
+DEFINE_DIRECT_BASE_DTOR(std_vector_imp_tAchievementInfo_dtor_void_2, func_00299360)
 #pragma pop /* merge_units */
 /* merge_units: end func_002CC1A0 */
 
 /* merge_units: begin func_002CC200 */
 #pragma push /* merge_units */
 extern void* D_004FFC04;
-extern void func_002CBD40(void* p);
-void func_002CC200(int mode)
+extern void cGameFrontEnd_LobbySetAgentStats(void* p);
+void cGameFrontEnd_LobbyStatsCallback(int mode)
 {
     switch (mode) {
     case 0:
     case 1:
     case 2:
     case 3:
-        func_002CBD40(D_004FFC04);
+        cGameFrontEnd_LobbySetAgentStats(D_004FFC04);
         break;
     }
 }

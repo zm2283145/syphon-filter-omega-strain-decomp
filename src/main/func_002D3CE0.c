@@ -10,6 +10,6 @@
 /* Sends message (id, 8, arg) to the owner. */
 extern int NetEvent_Send(ControllerOwner* owner, int id, int kind, int arg, int a4, int a5, int a6);
 
-int func_002D3CE0(Controller2D* self) {
+int cNetNPC_SendNewAwarenessOfPlayers(Controller2D* self) {
     return NetEvent_Send(self->owner, 54, 8, 0, 0, 0, 0);
 }

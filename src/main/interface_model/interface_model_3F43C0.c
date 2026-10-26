@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-void func_003F43C0(void) {
+void cAnimator_Update(void) {
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003F43C0 */

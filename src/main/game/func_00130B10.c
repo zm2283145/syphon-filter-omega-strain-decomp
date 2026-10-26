@@ -11,7 +11,7 @@ struct S_00130B10 { char pad[0x2C]; char m2C[4]; int n; E_00130B10** arr; };
 static inline void Free_00130B10(void* p, int line) { AllocGuard g; Mem_Free(0, p, D_0049A890, line); }
 static inline void Del_00130B10(void* p, int line) { if (p) { AllocGuard g; Mem_Free(0, p, D_0049A890, line); } }
 #pragma opt_strength_reduction off
-extern "C" void func_00130B10(S_00130B10* self)
+extern "C" void cGameSystem_RemoveVUMGOBJNames(S_00130B10* self)
 {
     int i;
     for (i = 0; i < self->n; i++) {

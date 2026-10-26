@@ -4,4 +4,4 @@
 #include "guarded_release.h"
 
 /* Free an allocation under the allocator guard. */
-DEFINE_GUARDED_RELEASE(func_00393900)
+DEFINE_GUARDED_RELEASE(opDelete_cSkaTransPlaybackP_int_bool_charP_etc)

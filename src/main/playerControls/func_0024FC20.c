@@ -6,6 +6,6 @@
 #include "types.h"
 #include "playerControls_types.h"
 
-void func_0024FC20(PlayerCamera* self, float value) {
+void cGameCamera_SetDesiredFOV(PlayerCamera* self, float value) {
     self->fovTarget = value;
 }

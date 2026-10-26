@@ -2,9 +2,9 @@
 
 extern char D_00491308[];
 extern char D_00529830[];
-extern int func_00306BF0(void);
+extern int rt_time_platform_timer_getcount(void);
 
-int func_00306C00(void) {
+int rt_time_platform_init(void) {
     int s0, s1, v0, v1;
     int cond;
 
@@ -16,7 +16,7 @@ int func_00306C00(void) {
     *(int*)(char*)s0 = 0;
     *(int*)((char*)s0 + 4) = 0;
     *(int*)((char*)s0 + 8) = 0;
-    v0 = func_00306BF0();
+    v0 = rt_time_platform_timer_getcount();
     v1 = 0 + 1;
     *(int*)((char*)s0 + 12) = v0;
     *(char*)(char*)s1 = v1;

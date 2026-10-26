@@ -17,9 +17,9 @@ int strcmp(const void *, const void *);
 struct E308E0 { int id; int val; int pad[4]; };
 extern "C" {
 extern char g_UnlockRows[];
-int func_0032E3F0(void* t);
-int func_0032E3C0(void* t);
-void func_0032E3E0(E308E0** out, void* t, int* raw);
+int std_vector_imp_Record_begin(void* t);
+int std_vector_imp_Record_end(void* t);
+void std_vector_Record_pointer2iterator(E308E0** out, void* t, int* raw);
 int Loc_FindKeyThunk(__int128* key);
 }
 static inline bool Neq308E0(E308E0* a, E308E0* b) { return !(a == b); }
@@ -33,11 +33,11 @@ extern "C" int UnlockTable_FindBitByName(__int128 key)
     E308E0* last;
     int k;
     int r;
-    t1 = func_0032E3F0(g_UnlockRows);
-    func_0032E3E0(&b, g_UnlockRows, &t1);
+    t1 = std_vector_imp_Record_begin(g_UnlockRows);
+    std_vector_Record_pointer2iterator(&b, g_UnlockRows, &t1);
     first = b;
-    t2 = func_0032E3C0(g_UnlockRows);
-    func_0032E3E0(&e, g_UnlockRows, &t2);
+    t2 = std_vector_imp_Record_end(g_UnlockRows);
+    std_vector_Record_pointer2iterator(&e, g_UnlockRows, &t2);
     last = e;
     k = Loc_FindKeyThunk(&key);
     for (; Neq308E0(first, last); first++) {
@@ -64,9 +64,9 @@ struct E309C0 { int id; int val; int pad[4]; };
 extern "C" {
 extern char D_00532AF0[];
 #if 0 /* merge_units */
-void func_0032E3E0(E309C0** out, void* t, int* raw);
+void std_vector_Record_pointer2iterator(E309C0** out, void* t, int* raw);
 #endif /* merge_units */
-#define func_0032E3E0(a0, a1, a2) (func_0032E3E0((E308E0 * *)(a0), (a1), (a2))) /* merge_units */
+#define std_vector_Record_pointer2iterator(a0, a1, a2) (std_vector_Record_pointer2iterator((E308E0 * *)(a0), (a1), (a2))) /* merge_units */
 
 }
 static inline bool Neq309C0(E309C0* a, E309C0* b) { return !(a == b); }
@@ -80,11 +80,11 @@ extern "C" int Awards_FindLevelRow(__int128 key)
     E309C0* last;
     int k;
     int r;
-    t1 = func_0032E3F0(D_00532AF0);
-    func_0032E3E0(&b, D_00532AF0, &t1);
+    t1 = std_vector_imp_Record_begin(D_00532AF0);
+    std_vector_Record_pointer2iterator(&b, D_00532AF0, &t1);
     first = b;
-    t2 = func_0032E3C0(D_00532AF0);
-    func_0032E3E0(&e, D_00532AF0, &t2);
+    t2 = std_vector_imp_Record_end(D_00532AF0);
+    std_vector_Record_pointer2iterator(&e, D_00532AF0, &t2);
     last = e;
     k = Loc_FindKeyThunk(&key);
     for (; Neq309C0(first, last); first++) {
@@ -99,7 +99,7 @@ found:
         r = 0;
     return r;
 }
-#undef func_0032E3E0 /* merge_units */
+#undef std_vector_Record_pointer2iterator /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003309C0(void) {}
 #pragma pop /* merge_units */
@@ -111,19 +111,19 @@ typedef struct { int key; int value; char pad8[0x10]; } Row330;
 typedef struct { Row330* p; } It330;
 extern char D_005329F0[];
 #if 0 /* merge_units */
-extern Row330* func_0032E3F0(void* v);
+extern Row330* std_vector_imp_Record_begin(void* v);
 #endif /* merge_units */
-#define func_0032E3F0(a0) ((Row330 *)func_0032E3F0((a0))) /* merge_units */
+#define std_vector_imp_Record_begin(a0) ((Row330 *)std_vector_imp_Record_begin((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern Row330* func_0032E3C0(void* v);
+extern Row330* std_vector_imp_Record_end(void* v);
 #endif /* merge_units */
-#define func_0032E3C0(a0) ((Row330 *)func_0032E3C0((a0))) /* merge_units */
+#define std_vector_imp_Record_end(a0) ((Row330 *)std_vector_imp_Record_end((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_0032E3E0(It330* out, void* self, It330* src);
+extern void std_vector_Record_pointer2iterator(It330* out, void* self, It330* src);
 #endif /* merge_units */
-#define func_0032E3E0(a0, a1, a2) (func_0032E3E0((void *)(a0), (a1), (void *)(a2))) /* merge_units */
+#define std_vector_Record_pointer2iterator(a0, a1, a2) (std_vector_Record_pointer2iterator((void *)(a0), (a1), (void *)(a2))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int Loc_FindKeyThunk(__int128* name);
@@ -141,11 +141,11 @@ static inline int Find330(__int128* name)
     Row330* p;
     Row330* end;
     int key;
-    b.p = func_0032E3F0(D_005329F0);
-    func_0032E3E0(&itB, D_005329F0, &b);
+    b.p = std_vector_imp_Record_begin(D_005329F0);
+    std_vector_Record_pointer2iterator(&itB, D_005329F0, &b);
     p = itB.p;
-    e.p = func_0032E3C0(D_005329F0);
-    func_0032E3E0(&itE, D_005329F0, &e);
+    e.p = std_vector_imp_Record_end(D_005329F0);
+    std_vector_Record_pointer2iterator(&itE, D_005329F0, &e);
     end = itE.p;
     key = Loc_FindKeyThunk(name);
     for (; Ne330(p, end); p++) {
@@ -159,9 +159,9 @@ int Objective_Find(__int128 name)
     if (r < 0) r = 0;
     return r;
 }
-#undef func_0032E3F0 /* merge_units */
-#undef func_0032E3C0 /* merge_units */
-#undef func_0032E3E0 /* merge_units */
+#undef std_vector_imp_Record_begin /* merge_units */
+#undef std_vector_imp_Record_end /* merge_units */
+#undef std_vector_Record_pointer2iterator /* merge_units */
 #undef Loc_FindKeyThunk /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00330AA0(void) {}
@@ -276,7 +276,7 @@ extern int Loc_FindKeyThunk(const char* key);
 #endif /* merge_units */
 #define Loc_FindKeyThunk(a0) (Loc_FindKeyThunk((void *)(a0))) /* merge_units */
 
-extern int func_00338B60(DosEntryVec* v, DosEntry* pos, int count, DosEntry* value);
+extern int std_vector_imp_tRankInfo_insert(DosEntryVec* v, DosEntry* pos, int count, DosEntry* value);
 
 static inline DosDef* At(DosDefVec* v, int i) { return &v->data[i]; }
 void Global_cAgentData__RegisterDossier(int agent, const char* name)
@@ -298,7 +298,7 @@ void Global_cAgentData__RegisterDossier(int agent, const char* name)
     e.flag = 0;
     sprintf(buf, D_004B99A8, e.num + 1);
     e.key = Loc_FindKeyThunk(buf);
-    func_00338B60(&D_00532B70, &D_00532B70.data[D_00532B70.count], 1, &e);
+    std_vector_imp_tRankInfo_insert(&D_00532B70, &D_00532B70.data[D_00532B70.count], 1, &e);
 }
 #undef Loc_FindKeyThunk /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -312,7 +312,7 @@ extern unsigned char* D_005061D0;
 static inline short R16_330E40(void) { unsigned char lo = *D_005061D0++; unsigned char hi = *D_005061D0++; return lo + (hi << 8); }
 static inline int R32_330E40(void) { unsigned short lo = R16_330E40(); return lo + ((unsigned short)R16_330E40() << 16); }
 typedef struct { char p0[8]; int f[31]; char p84[0xB70 - 0x84]; unsigned char done; } T330E40;
-void func_00330E40(T330E40* t) {
+void cAgentData_NetUnpackStats(T330E40* t) {
     int i;
     i = 14; do { t->f[i] = R32_330E40(); i++; } while (i < 31);
     t->done = 1;
@@ -327,7 +327,7 @@ static inline void merge_flush_func_00330E40(void) {}
 static inline void W16_00330F00(int v) { short s = v; *D_005061D0++ = s; *D_005061D0++ = s >> 8; }
 static inline void W32_00330F00(int v) { W16_00330F00((unsigned short)v); W16_00330F00(v >> 16); }
 typedef struct { char pad[8]; int v[31]; } S_00330F00;
-void func_00330F00(S_00330F00* p) {
+void cAgentData_NetPackStats(S_00330F00* p) {
     int i;
     for (i = 14; i < 31; i++) {
         W32_00330F00(p->v[i]);
@@ -341,8 +341,8 @@ static inline void merge_flush_func_00330F00(void) {}
 /* merge_units: begin func_003314F0 */
 #pragma push /* merge_units */
 extern void AgentData_Reset(void);
-extern int func_00334780(void);
-extern void func_00281E90(char* s, int n);
+extern int cBitArray_224_NumChunks(void);
+extern void cNetMsg_GetString(char* s, int n);
 extern void awards_SetAwardsAndBonuses(void* p, int a, int b);
 extern void AgentData_StartLevel(void* p, int a);
 static inline short R16_003314F0(void) { unsigned char lo = *D_005061D0++; unsigned char hi = *D_005061D0++; return lo + (hi << 8); }
@@ -357,17 +357,17 @@ typedef struct {
 #pragma push
 #pragma opt_unroll_loops off
 #pragma opt_strength_reduction off
-void func_003314F0(S_003314F0* p, int awards) {
+void cAgentData_NetUnpack(S_003314F0* p, int awards) {
     int i; int j; int k; int n; S_003314F0* q; S_003314F0* r;
     AgentData_Reset();
     p->s0[0] = 0;
     p->s1[0] = 0;
     p->s2[0] = 0;
-    n = func_00334780();
+    n = cBitArray_224_NumChunks();
     i = 0; if (i < n) { q = p; do { q->w[0] = R32_003314F0(); q = (S_003314F0*)((int*)q + 1); } while (++i < n); }
     for (j = 0, r = p; j < 31; j++) { r->v[0] = R32_003314F0(); r = (S_003314F0*)((int*)r + 1); }
     for (k = 0; k < p->count; k++) { E_003314F0* e = &p->e[k]; e->v = R32_003314F0(); }
-    func_00281E90(p->s0, 0x10);
+    cNetMsg_GetString(p->s0, 0x10);
     p->f = RF_003314F0();
     {
         char c = *D_005061D0++;

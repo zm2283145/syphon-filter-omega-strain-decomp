@@ -11,9 +11,9 @@ void* Mem_Alloc(int heap, int size, char* file, int line);
 void Mem_Free(int heap, void* p, char* file, int line);
 void FileHal_Dtor(void* p, int flag);
 int* FileHal_Ctor(void* p, char* name, int mode);
-void func_0036DEC0(void* h);
+void cFileMan_Close(void* h);
 int FileMan_FindMember(void* h);
-void func_0036E140(void* h, char* name, int* f, int a);
+void cFileMan_EncodeFilename_charP_cFileIOP_bool(void* h, char* name, int* f, int a);
 void Hog_Register(void* h, char* name, int size, int a);
 char* strrchr(const char* s, int c);
 }
@@ -31,7 +31,7 @@ extern "C" void FileMan_Open(S_003DC080* s, char* name, int mode)
     s->b4 = 0;
     s->b0 = 0;
     if (s->file) {
-        func_0036DEC0(s->hog);
+        cFileMan_Close(s->hog);
         if (s->file) {
             DelG_003DC080(s->file, D_004BDC28, 0x45);
             s->file = 0;
@@ -49,7 +49,7 @@ extern "C" void FileMan_Open(S_003DC080* s, char* name, int mode)
             if (f) f = FileHal_Ctor(f, name, 1);
             s->file = f;
             if (*s->file >= 0) {
-                func_0036E140(s->hog, name, s->file, 0);
+                cFileMan_EncodeFilename_charP_cFileIOP_bool(s->hog, name, s->file, 0);
             } else {
                 DelG_003DC080(s->file, D_004BDC48, 0x74);
                 s->file = 0;

@@ -1,13 +1,13 @@
 #define F(p, o, T) (*(T *)((char *)(p) + (o)))
 #define REG(a) (*(volatile unsigned int *)(a))
 typedef struct { int type; int pad; long a; long b; } CbData;
-extern void func_00107748(void *);
-extern int func_0010B488(void *, CbData *);
+extern void _waitIpuIdle(void *);
+extern int _dispatchMpegCallback(void *, CbData *);
 extern int DIntr(void);
 extern void EIntr(void);
 extern void func_0010BD90(void *, const char *);
 
-int func_001064A0(void *m)
+int _waitBdecOut(void *m)
 {
     CbData cb;
     CbData cb2;
@@ -17,11 +17,11 @@ int func_001064A0(void *m)
     int oldintr;
     int n;
 
-    func_00107748(m);
+    _waitIpuIdle(m);
     while (REG(0x1000B020) && !(REG(0x10002010) & 0x4000)) {
         if (REG(0x1000B420) == 0 && !(REG(0x1000B400) & 0x100)) {
             cb.type = 1;
-            func_0010B488(F(m, 0x870, void *), &cb);
+            _dispatchMpegCallback(F(m, 0x870, void *), &cb);
         }
         if (F(m, 0x10A0, int)) {
             oldintr = DIntr();
@@ -52,10 +52,10 @@ int func_001064A0(void *m)
     if (REG(0x10002010) & 0x4000) {
         func_0010BD90(m, "Error code detected(BDEC)");
         cb2.type = 2;
-        func_0010B488(F(m, 0x870, void *), &cb2);
+        _dispatchMpegCallback(F(m, 0x870, void *), &cb2);
         *(unsigned int *)0x10002010 = 0x40000000;
         cb2.type = 3;
-        func_0010B488(F(m, 0x870, void *), &cb2);
+        _dispatchMpegCallback(F(m, 0x870, void *), &cb2);
         oldintr = DIntr();
         REG(0x1000F590) = REG(0x1000F520) | 0x10000;
         REG(0x1000B000) = 0;

@@ -17,18 +17,18 @@
 
 
 /* Construct from a single word. */
-XlibWord* func_0037B2C0(XlibWord* self, int value) {
+XlibWord* std_list_deleter_tDataDelRec_generic_iterator_ctor(XlibWord* self, int value) {
     self->value = value;
     return self;
 }
 
 /* Address of the payload following the header word. */
-void* func_0037B2D0(XlibWord* self) {
+void* std_list_deleter_tDataDelRec_tail(XlibWord* self) {
     return self->data;
 }
 
 /* Identity accessor. */
-void* func_0037B2E0(void* self) {
+void* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_9(void* self) {
     return self;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -39,10 +39,10 @@ static inline void merge_flush_func_0037B2C0(void) {}
 /* merge_units: begin func_0037B2F0 */
 #pragma push /* merge_units */
 typedef struct { int a; int b; int kind; } Request3;
-extern void func_0037FCA0(int* out, void* list, void** slot, Request3* req);
+extern void std_list_deleter_tDataDelRec_insert(int* out, void* list, void** slot, Request3* req);
 
 /* Builds a kind-2 request (a, b) and submits it to the list at +0x1108 with slot +0x110C. */
-void func_0037B2F0(char* self, int a, int b)
+void XLib_RequestDeleteDmaData(char* self, int a, int b)
 {
     void* slot;
     int result;
@@ -51,7 +51,7 @@ void func_0037B2F0(char* self, int a, int b)
     req.b = b;
     req.kind = 2;
     slot = self + 0x110C;
-    func_0037FCA0(&result, self + 0x1108, &slot, &req);
+    std_list_deleter_tDataDelRec_insert(&result, self + 0x1108, &slot, &req);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0037B2F0(void) {}

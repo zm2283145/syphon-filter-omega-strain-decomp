@@ -11,7 +11,7 @@
 #include "tree_insert_v8.h"
 
 extern "C" { char D_004BDBC8[] = "allocator.hh"; }
-DEFINE_TREE_INSERT_V8(func_003E3DF0, TIValueII, D_004BDA80, D_004BDBC8, 0x5C, func_0013CD40)
+DEFINE_TREE_INSERT_V8(std_tree_pair_int_value_compare_insert_node_at_nodeP_bool_bool_pairR_2, TIValueII, D_004BDA80, D_004BDBC8, 0x5C, std_red_black_tree_1_balance_insert)
 #pragma pop /* merge_units */
 /* merge_units: end func_003E3DF0 */
 
@@ -24,7 +24,7 @@ DEFINE_TREE_INSERT_V8(func_003E3DF0, TIValueII, D_004BDA80, D_004BDBC8, 0x5C, fu
  */
 
 
-Map* func_003E3F60(Map* m, unsigned char* cmp) {
+Map* std_tree_pair_int_value_compare_ctor_valuecompareR_cAllocatorR(Map* m, unsigned char* cmp) {
     m->count = 0;
     m->head = 0;
     m->cmp = *cmp;
@@ -37,15 +37,15 @@ Map* func_003E3F60(Map* m, unsigned char* cmp) {
 /* merge_units: begin func_003E3F80 */
 #pragma push /* merge_units */
 typedef struct { int m0; void* m4; } T3F80;
-extern void func_003E4090(T3F80* t, void* n);
+extern void std_tree_pair_int_value_compare_destroy_nodeP(T3F80* t, void* n);
 extern void operator_delete(void* p);
-T3F80* func_003E3F80(T3F80* t, short del)
+T3F80* cAssocArray_int_SchedCallbackPtr_dtor(T3F80* t, short del)
 {
     if (t) {
         if (t) {
             if (t) {
                 if (t->m4)
-                    func_003E4090(t, t->m4);
+                    std_tree_pair_int_value_compare_destroy_nodeP(t, t->m4);
             }
         }
         if (del > 0)
@@ -58,10 +58,10 @@ T3F80* func_003E3F80(T3F80* t, short del)
 
 /* merge_units: begin func_003E3FF0 */
 #pragma push /* merge_units */
-extern void func_003E2A40(void* self, short del);
-extern void func_003E2B30(void* self, short del);
+extern void std_vector_cGroupPtr_dtor(void* self, short del);
+extern void std_vector_StringPtr_dtor(void* self, short del);
 extern void ReceiverList_Dtor_3E2C20(void* self, short del);
-extern void func_003E2CA0(void* self, short del);
+extern void std_list_PopVar_dtor(void* self, short del);
 void* ScriptInterpreter_dtor(void* self, short del)
 {
     if (self) {
@@ -69,15 +69,15 @@ void* ScriptInterpreter_dtor(void* self, short del)
         void* b;
         void* c;
         if (a)
-            func_003E2A40(a, -1);
+            std_vector_cGroupPtr_dtor(a, -1);
         b = (char*)self + 0x18;
         if (b)
-            func_003E2B30(b, -1);
+            std_vector_StringPtr_dtor(b, -1);
         c = (char*)self + 0xC;
         if (c)
             ReceiverList_Dtor_3E2C20(c, 0);
         if (self)
-            func_003E2CA0(self, 0);
+            std_list_PopVar_dtor(self, 0);
         if (del > 0)
             operator_delete(self);
     }

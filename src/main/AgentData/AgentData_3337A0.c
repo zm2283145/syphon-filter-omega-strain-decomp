@@ -17,14 +17,14 @@ struct E337A0 { int id; int pad[4]; int val; };
 extern "C" {
 extern char g_UnlockRows[];
 extern int D_00532B14;
-E337A0** func_003305C0(void* v);
+E337A0** std_vector_deleter_Record_data(void* v);
 }
 static inline bool Neq337A0(E337A0* a, E337A0* b) { return !(a == b); }
 extern "C" int Awards_ResolveUnlock(int id)
 {
     if (id > -1) {
-        E337A0* first = *func_003305C0(g_UnlockRows);
-        E337A0* last = *func_003305C0(g_UnlockRows) + D_00532B14;
+        E337A0* first = *std_vector_deleter_Record_data(g_UnlockRows);
+        E337A0* last = *std_vector_deleter_Record_data(g_UnlockRows) + D_00532B14;
         for (; Neq337A0(first, last); first++) {
             if (id == first->id)
                 return first->val;
@@ -91,9 +91,9 @@ extern "C" {
 extern char D_005329F0[];
 extern int D_005329F4;
 #if 0 /* merge_units */
-E3339E0** func_003305C0(void* v);
+E3339E0** std_vector_deleter_Record_data(void* v);
 #endif /* merge_units */
-#define func_003305C0(a0) ((E3339E0 * *)func_003305C0((a0))) /* merge_units */
+#define std_vector_deleter_Record_data(a0) ((E3339E0 * *)std_vector_deleter_Record_data((a0))) /* merge_units */
 
 const char* Loc_GetStoredKey(int name);
 #if 0 /* merge_units */
@@ -112,8 +112,8 @@ static inline bool Done3339E0(A3339E0* self, int idx)
 }
 extern "C" int cAgentData_AreObjectivesComplete(A3339E0* self, const char* pattern)
 {
-    E3339E0* first = *func_003305C0(D_005329F0);
-    E3339E0* last = *func_003305C0(D_005329F0) + D_005329F4;
+    E3339E0* first = *std_vector_deleter_Record_data(D_005329F0);
+    E3339E0* last = *std_vector_deleter_Record_data(D_005329F0) + D_005329F4;
     for (; Neq3339E0(first, last); first++) {
         if (Awards_MatchKeyPattern(self, pattern, Loc_GetStoredKey(first->name), '*')) {
             if (!Done3339E0(self, first->idx)) return 0;
@@ -121,7 +121,7 @@ extern "C" int cAgentData_AreObjectivesComplete(A3339E0* self, const char* patte
     }
     return 1;
 }
-#undef func_003305C0 /* merge_units */
+#undef std_vector_deleter_Record_data /* merge_units */
 #undef Awards_MatchKeyPattern /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003339E0(void) {}
@@ -160,8 +160,8 @@ extern void cNetAddObjectiveMsg_dtor();
 extern void cNetAddObjectiveMsg_v01();
 extern void cNetAddObjectiveMsg_v04();
 extern void cNetAddObjectiveMsg_v05();
-extern void func_002823E0();
-void * const D_004DE810[8] = { (void*)0x0, (void*)0x0, (void*)cNetAddObjectiveMsg_dtor, (void*)cNetAddObjectiveMsg_v01, (void*)func_002823E0, (void*)Message_GetScriptTypeKey, (void*)cNetAddObjectiveMsg_v04, (void*)cNetAddObjectiveMsg_v05 };
+extern void cNetMsg_Pack();
+void * const D_004DE810[8] = { (void*)0x0, (void*)0x0, (void*)cNetAddObjectiveMsg_dtor, (void*)cNetAddObjectiveMsg_v01, (void*)cNetMsg_Pack, (void*)Message_GetScriptTypeKey, (void*)cNetAddObjectiveMsg_v04, (void*)cNetAddObjectiveMsg_v05 };
 extern char D_004DCF10[];
 #if 0 /* merge_units */
 extern __int128 StringPool_MakeKey(char*);

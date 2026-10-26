@@ -14,22 +14,22 @@
 /* merge_units: begin func_002CC480 */
 #pragma push /* merge_units */
 typedef struct { int size; char hdr[4]; void* first; } ListC520;
-ListC520* func_002CC520(ListC520* self, short deleteFlag); /* gsynth: defined below */
+ListC520* std_list_MessageBoxEntry_dtor(ListC520* self, short deleteFlag); /* gsynth: defined below */
 #pragma cplusplus on
 extern "C" {
 extern "C" void Event_PackHeader();
 extern "C" void Message_GetScriptTypeKey();
 extern "C" void GObj_GetID();
-extern "C" void func_0012ECF0();
-extern "C" void func_0012ED00();
-extern "C" void func_0012ED10();
-extern "C" void func_0012ED20();
-extern "C" void func_0012ED30();
-extern "C" void func_0012ED40();
-extern "C" void func_0012ED50();
-extern "C" void func_00133900();
-extern "C" void func_001383D0();
-extern "C" void func_001385B0();
+extern "C" void cSystem_ScriptGetRealObj();
+extern "C" void cSystem_SendCreated();
+extern "C" void cSystem_NetActivate();
+extern "C" void cSystem_NetDeactivate();
+extern "C" void cSystem_NetEnable();
+extern "C" void cSystem_NetDisable();
+extern "C" void cSystem_IsDeliverable();
+extern "C" void cNextFrameMsg_dtor();
+extern "C" void cSystem_IsNetworked();
+extern "C" void cNextFrameMsg_Clone();
 extern "C" void SoundPauseMsg_dtor();
 extern "C" void SoundPauseMsg_Clone();
 extern "C" void FrontEnd_v01();
@@ -38,9 +38,9 @@ extern "C" void Receiver_ScriptDispatch();
 extern void * const D_004DE180[];
 void FrontEnd_TeardownGui(void* self);
 #if 0 /* merge_units */
-void func_002CC520(void* m, int flags);
+void std_list_MessageBoxEntry_dtor(void* m, int flags);
 #endif /* merge_units */
-#define func_002CC520(a0, a1) ((void)func_002CC520((ListC520 *)(a0), (short)(a1))) /* merge_units */
+#define std_list_MessageBoxEntry_dtor(a0, a1) ((void)std_list_MessageBoxEntry_dtor((ListC520 *)(a0), (short)(a1))) /* merge_units */
 
 void Receiver_Destruct(void* self, int flags);
 #if 0 /* merge_units */
@@ -59,15 +59,15 @@ extern "C" ObjC480* FrontEnd_dtor(ObjC480* self, short deleteFlag)
             FrontEnd_TeardownGui(self);
         m = self->member;
         if (m)
-            func_002CC520(m, 0);
+            std_list_MessageBoxEntry_dtor(m, 0);
         Receiver_Destruct(self, 0);
         if (deleteFlag > 0)
             operator_delete(self);
     }
     return self;
 }
-void * const D_004DE180[32] = { (void*)0x0, (void*)0x0, (void*)FrontEnd_dtor, (void*)FrontEnd_v01, (void*)GObj_GetID, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)Receiver_GetScriptTypeKey, (void*)Receiver_ScriptDispatch, (void*)0x0, (void*)0x0, (void*)0x0, (void*)func_00133900, (void*)func_001385B0, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)SoundPauseMsg_dtor, (void*)SoundPauseMsg_Clone, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
-#undef func_002CC520 /* merge_units */
+void * const D_004DE180[32] = { (void*)0x0, (void*)0x0, (void*)FrontEnd_dtor, (void*)FrontEnd_v01, (void*)GObj_GetID, (void*)cSystem_ScriptGetRealObj, (void*)cSystem_IsNetworked, (void*)cSystem_SendCreated, (void*)cSystem_NetActivate, (void*)cSystem_NetDeactivate, (void*)cSystem_NetEnable, (void*)cSystem_NetDisable, (void*)cSystem_IsDeliverable, (void*)Receiver_GetScriptTypeKey, (void*)Receiver_ScriptDispatch, (void*)0x0, (void*)0x0, (void*)0x0, (void*)cNextFrameMsg_dtor, (void*)cNextFrameMsg_Clone, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)SoundPauseMsg_dtor, (void*)SoundPauseMsg_Clone, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
+#undef std_list_MessageBoxEntry_dtor /* merge_units */
 #undef operator_delete /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002CC480(void) {}
@@ -76,13 +76,13 @@ static inline void merge_flush_func_002CC480(void) {}
 
 /* merge_units: begin func_002CC520 */
 #pragma push /* merge_units */
-extern void func_002CDEF0(void** res, ListC520* l, void** first, void** last);
+extern void std_list_deleter_MessageBoxEntry_erase_listdeleter_listdeleter(void** res, ListC520* l, void** first, void** last);
 #if 0 /* merge_units */
 extern void operator_delete(void* p);
 #endif /* merge_units */
 #define operator_delete(a0) ((void)operator_delete((a0))) /* merge_units */
 
-ListC520* func_002CC520(ListC520* self, short deleteFlag)
+ListC520* std_list_MessageBoxEntry_dtor(ListC520* self, short deleteFlag)
 {
     if (self) {
         if (self) {
@@ -92,7 +92,7 @@ ListC520* func_002CC520(ListC520* self, short deleteFlag)
                 void* last;
                 last = self->hdr;
                 first = self->first;
-                func_002CDEF0(&res, self, &first, &last);
+                std_list_deleter_MessageBoxEntry_erase_listdeleter_listdeleter(&res, self, &first, &last);
             }
         }
         if (deleteFlag > 0)
@@ -150,7 +150,7 @@ extern char D_004DE180[];
 #define D_004DE180 ((char*)&D_004DE180) /* merge_units */
 
 extern void Receiver_Construct(void* self, void* id);
-extern void func_002CE4F0(void* list);
+extern void std_list_deleter_MessageBoxEntry_ctor(void* list);
 extern void DME_CreateLobby(void);
 extern void DME_SetLobbyActive(int a);
 ObjC5A0* FrontEnd_ctor(ObjC5A0* o)
@@ -166,7 +166,7 @@ ObjC5A0* FrontEnd_ctor(ObjC5A0* o)
     o->i248 = -1;
     o->i24C = -1;
     o->b250 = 0;
-    func_002CE4F0(o->list2FC);
+    std_list_deleter_MessageBoxEntry_ctor(o->list2FC);
     o->t20 = 0;
     o->b28 = 0;
     o->b29 = 0;
@@ -223,6 +223,6 @@ static inline void merge_flush_func_002CC5A0(void) {}
 #pragma cplusplus on
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_002CC6D0, func_002CC730)
+DEFINE_BASE_DTOR_CHAIN(cLList_MessageBoxEntry_dtor, std_list_imp_MessageBoxEntry_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_002CC6D0 */

@@ -5,7 +5,7 @@ typedef struct { char pad[0x10]; V_5840 a; V_5840 b; } S_5840;
 #pragma peephole off
 
 #pragma opt_common_subs off
-V_5840 func_001E5840(S_5840* s)
+V_5840 cPointMass_GetDisplacement(S_5840* s)
 {
     V_5840 r;
     V_5840* pr = &r;

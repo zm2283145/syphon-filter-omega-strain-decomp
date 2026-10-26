@@ -7,10 +7,10 @@ struct NmV4 { float x, y, z, w; } __attribute__((aligned(16)));
 struct NmMtx { NmV4 r[4]; };
 struct NmNode { char pad[0x80]; float tx, ty, tz, angle; };
 extern "C" {
-float func_0015C280(NmV4* v);
-float func_0015C290(NmV4* v);
-float func_0015C2A0(NmV4* v);
-float func_0015C2B0(NmV4* v);
+float cAxisAngle_Angle(NmV4* v);
+float cAxisAngle_Z(NmV4* v);
+float cAxisAngle_Y(NmV4* v);
+float cAxisAngle_X(NmV4* v);
 NmMtx* Mtx_MakeAxisRotation(NmMtx* out, float x, float y, float z, float angle);
 }
 static inline void SetAA(NmV4* aa, NmV4* axis) {
@@ -32,10 +32,10 @@ extern "C" void ActorObj_BuildNodeMatrix(NmMtx* out, NmNode* n)
     axis.x = 0.0f; axis.y = 0.0f; axis.z = 1.0f; axis.w = 0.0f;
     SetAA(&aa, &axis);
     {
-        float x = func_0015C2B0(&aa);
-        float y = func_0015C2A0(&aa);
-        float z = func_0015C290(&aa);
-        float w = func_0015C280(&aa);
+        float x = cAxisAngle_X(&aa);
+        float y = cAxisAngle_Y(&aa);
+        float z = cAxisAngle_Z(&aa);
+        float w = cAxisAngle_Angle(&aa);
         Mtx_MakeAxisRotation(&m, x, y, z, w);
     }
     GetT(&pos, n);

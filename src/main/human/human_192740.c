@@ -27,7 +27,7 @@ static inline float fmax_2750(float a, float b) { float r; asm { max.s r, a, b }
 static inline float fmin_2750(float a, float b) { float r; asm { min.s r, a, b } return r; }
 static inline float Clamp_2750(float x, float lo, float hi) { float r; asm { max.s r, x, lo; min.s r, r, hi } return r; }
 /* set a [lo,hi] range and clamp it into [0,1] (flag: clamp both independently) */
-R_2750* func_00192750(R_2750* r, float lo, float hi, unsigned char flag)
+R_2750* cSkaTimeSpan_Normalized_ctor_float_float_bool(R_2750* r, float lo, float hi, unsigned char flag)
 {
     r->lo = lo;
     r->hi = hi;

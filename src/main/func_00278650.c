@@ -53,8 +53,8 @@ extern int D_00538C64;
 extern char D_00538C68;
 extern long long D_004BC1B0[];
 void Renderer_BindTexture(void* m, int idx);
-void func_0025CD10(void* s);
-void func_0025CA40(void* s);
+void XLib_NewStrip(void* s);
+void XLib_NextBatchVert(void* s);
 void Renderer_FlushBatch(void* s);
 void Vec4_Copy(V* d, const V* s);
 void GuiBatch_AddVertexColor(V* d, const V* s);
@@ -95,7 +95,7 @@ static inline void Begin(void)
     e->c2C += D_00539224;
     e->c30 += D_00539224;
     e->c34 += D_00539224;
-    func_0025CD10(g_Video);
+    XLib_NewStrip(g_Video);
     D_00539224 = 0;
 }
 static inline void Emit(const V& pos, const V& col, const V& uv)
@@ -103,7 +103,7 @@ static inline void Emit(const V& pos, const V& col, const V& uv)
     V tmp;
     Ent* e;
     float u;
-    func_0025CA40(g_Video);
+    XLib_NextBatchVert(g_Video);
     e = &RS->ents[D_00539210.f10];
     Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
     GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], &col);

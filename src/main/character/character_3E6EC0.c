@@ -3,7 +3,7 @@
 extern "C" char D_004DFD80[];
 extern "C" char D_004E0160[];
 extern "C" char D_004E0840[];
-MSG_CLONE_BEGIN(func_003E6EC0, 0x3C, "character.hh", 0x2D8)
+MSG_CLONE_BEGIN(cCharActionMsg_ObjectId_Int_Scalar_Bool_Clone, 0x3C, "character.hh", 0x2D8)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);

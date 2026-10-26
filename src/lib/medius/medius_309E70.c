@@ -26,13 +26,13 @@ typedef struct {
     int rest[1];
 } Hdr9e70;
 
-extern int func_002FABD0(int *list, void **node);
-extern int func_00308F58(void *pkt, Hdr9e70 *out);
-extern int func_00308FB8(void *pkt, Hdr9e70 *in);
-extern int func_0030AB20(Mgr9e70 *m, Ent9e70 *e);
+extern int rt_list_buf_get_head(int *list, void **node);
+extern int rt_udp_get_packet_header(void *pkt, Hdr9e70 *out);
+extern int rt_udp_set_packet_header(void *pkt, Hdr9e70 *in);
+extern int rt_udp_send_reset(Mgr9e70 *m, Ent9e70 *e);
 extern int RtUdp_QueueAck(Mgr9e70 *m, Ent9e70 *e, Pkt9e70 *p);
 
-int func_00309E70(Mgr9e70 *m, Pkt9e70 *p, int idx)
+int rt_udp_process_connect(Mgr9e70 *m, Pkt9e70 *p, int idx)
 {
     Hdr9e70 hd;
     void *node = 0;
@@ -46,15 +46,15 @@ int func_00309E70(Mgr9e70 *m, Pkt9e70 *p, int idx)
         e->seq = p->seq;
         node = 0;
         e->ack = p->ack;
-        func_002FABD0(&e->list, &node);
+        rt_list_buf_get_head(&e->list, &node);
         if (node == 0) {
             e->state = 6;
-            func_0030AB20(m, e);
+            rt_udp_send_reset(m, e);
             return 7;
         }
-        func_00308F58(node, &hd);
+        rt_udp_get_packet_header(node, &hd);
         hd.seq = e->seq;
-        func_00308FB8(node, &hd);
+        rt_udp_set_packet_header(node, &hd);
     }
     if (e->state == 7) return 0;
     switch (e->state) {
@@ -67,7 +67,7 @@ int func_00309E70(Mgr9e70 *m, Pkt9e70 *p, int idx)
         break;
     default:
         e->state = 1;
-        func_0030AB20(m, e);
+        rt_udp_send_reset(m, e);
         break;
     }
     return ret;

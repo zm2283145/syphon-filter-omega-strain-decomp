@@ -5,15 +5,15 @@
 
 #include "types.h"
 
-extern int func_003FECD0(int a0, int a1);
+extern int std_vector_imp_1_reserve(int a0, int a1);
 
-/* Thunk to func_003FECD0. */
-int func_003FDEB0(int a0, int a1) {
-    return func_003FECD0(a0, a1);
+/* Thunk to std_vector_imp_1_reserve. */
+int std_vector_1_reserve(int a0, int a1) {
+    return std_vector_imp_1_reserve(a0, a1);
 }
 
 /* Zero-initialise a three-word record. */
-Rel* func_003FDEC0(Rel* r) {
+Rel* std_vector_1_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

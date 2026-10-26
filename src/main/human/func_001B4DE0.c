@@ -1,15 +1,15 @@
 #pragma cplusplus on
 #include "types.h"
-extern "C" { void operator_delete(void* p); void __destroy_array(void* p, void* dtor, int size, int n); void func_001B4EF0(void);
+extern "C" { void operator_delete(void* p); void __destroy_array(void* p, void* dtor, int size, int n); void cHumanCollisionRoutine_cFinalLedgeSearchInfo_dtor(void);
 extern char D_004DAD00[];
 extern "C" void Physical_RejectMotionAxis();
 extern "C" void Physical_RetainMotionAxis();
-extern "C" void func_001B8C80();
-extern "C" void func_001B8CE0();
-extern "C" void func_001B8D90();
-void * const D_004DA800[4] = { (void*)0x0, (void*)0x0, (void*)func_001B8C80, (void*)Physical_RejectMotionAxis };
-void * const D_004DA810[4] = { (void*)0x0, (void*)0x0, (void*)func_001B8CE0, (void*)0x0 };
-void * const D_004DA820[4] = { (void*)0x0, (void*)0x0, (void*)func_001B8D90, (void*)Physical_RetainMotionAxis };
+extern "C" void cHumanCollision_DeltaPosModificationFunction_Floor_dtor();
+extern "C" void cSkaAnimAnchor_cDeltaPosModificationFunction_dtor();
+extern "C" void cHumanCollision_DeltaPosModificationFunction_Ledge_dtor();
+void * const D_004DA800[4] = { (void*)0x0, (void*)0x0, (void*)cHumanCollision_DeltaPosModificationFunction_Floor_dtor, (void*)Physical_RejectMotionAxis };
+void * const D_004DA810[4] = { (void*)0x0, (void*)0x0, (void*)cSkaAnimAnchor_cDeltaPosModificationFunction_dtor, (void*)0x0 };
+void * const D_004DA820[4] = { (void*)0x0, (void*)0x0, (void*)cHumanCollision_DeltaPosModificationFunction_Ledge_dtor, (void*)Physical_RetainMotionAxis };
 extern char D_004DA3E0[];
 extern char D_004DA380[];
 extern char D_004DA330[];
@@ -24,7 +24,7 @@ extern "C" void* ActorPhys_Dtor(O_1B4DE0* self, short deleteFlag)
     if (self) {
         self->vt.vt = D_004DAD00;
         InnerDtor_1B4DE0(&self->inner);
-        if (self->arr) __destroy_array(self->arr, (void*)func_001B4EF0, 0xA0, 9);
+        if (self->arr) __destroy_array(self->arr, (void*)cHumanCollisionRoutine_cFinalLedgeSearchInfo_dtor, 0xA0, 9);
         Vt2_1B4DE0(&self->mA0, D_004DA3E0, D_004DA380);
         if (self) self->vt.vt = D_004DA330;
         if (deleteFlag > 0) operator_delete(self);

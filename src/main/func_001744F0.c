@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int* func_001744F0(PtrVec* v, int i) {
+int* std_vector_int_opIndex_uint_2(PtrVec* v, int i) {
     return v->data + i;
 }

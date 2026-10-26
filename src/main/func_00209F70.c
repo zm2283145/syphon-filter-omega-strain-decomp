@@ -1,14 +1,14 @@
 #include "types.h"
 #pragma optimization_level 1
 
-extern void func_00136DA0(int*);
+extern void cTimerDisable_ctor(int*);
 extern void Mem_Free(int, int, int, int);
-extern void func_0012F530(int*, int);
+extern void cTimerDisable_dtor(int*, int);
 
 /* Runs Mem_Free(b, a, d, e) inside a scoped guard object. */
-void func_00209F70(int a, int b, int c, int d, int e) {
+void opDelete_charP_int_bool_charP_etc(int a, int b, int c, int d, int e) {
     int guard;
-    func_00136DA0(&guard);
+    cTimerDisable_ctor(&guard);
     Mem_Free(b, a, d, e);
-    func_0012F530(&guard, -1);
+    cTimerDisable_dtor(&guard, -1);
 }

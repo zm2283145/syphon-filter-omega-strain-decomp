@@ -5,7 +5,7 @@
 typedef struct { int pad0; int count; int* data; } PtrVec_393600;
 extern void PtrVector_Resize(PtrVec_393600* v, int n, int* fill);
 
-void func_00393600(PtrVec_393600* v, int* value)
+void cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Remove_OrderNotPreserved(PtrVec_393600* v, int* value)
 {
     int i;
     int last = v->count - 1;

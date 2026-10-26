@@ -7,11 +7,11 @@
 #include "types.h"
 #include "hudTargets_types.h"
 
-void func_00273EE0(int* dst, int* src) {
+void std_list_cHudTargetInfoPtr_generic_iterator_opCast(int* dst, int* src) {
     *dst = *src;
 }
 
-Word* func_00273EF0(Word* dst, Word* src) {
+Word* std_list_cHudTargetInfoPtr_generic_iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }

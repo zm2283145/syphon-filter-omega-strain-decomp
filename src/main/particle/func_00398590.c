@@ -30,13 +30,13 @@ extern unsigned char D_0053B540;
 extern unsigned int* D_005381C8;
 unsigned int* DmaPacket_Open(void* q, int a, int b, int c, int d);
 void DmaPacket_Close(void* q, int a, void* end);
-int func_003797D0(void* r);
-void* func_00398B00(int reg, int tex);
+int XLib_GetTexMan(void* r);
+void* cTexMan_GetHalTexture(int reg, int tex);
 u64_t* Gs_MakeTex1(void* t);
-u64_t* func_00379700(void* t);
-void func_001AE170(void* d, void* s, int n);
+u64_t* cTexture_GetTEX0_1(void* t);
+void MEMCPY16(void* d, void* s, int n);
 Q_0050* ParticleRandom_QwordAt(void* tbl, int i);
-unsigned int func_003700D0(void* q, int n);
+unsigned int cVU1Man_GetMSCAL(void* q, int n);
 float Math_Powf(float x, float y);
 }
 
@@ -169,8 +169,8 @@ extern "C" void PhysEmitter_Draw(char* e, float t, float a, float b, float c)
         u -= v;
         z += F_(s3, 0x44, float);
         w += F_(s3, 0x48, float);
-        F_(s3, 0xB0, u64_t) = *Gs_MakeTex1(func_00398B00(func_003797D0(g_Video), F_(s3, 0x74, int)));
-        F_(s3, 0xC0, u64_t) = *func_00379700(func_00398B00(func_003797D0(g_Video), F_(s3, 0x74, int)));
+        F_(s3, 0xB0, u64_t) = *Gs_MakeTex1(cTexMan_GetHalTexture(XLib_GetTexMan(g_Video), F_(s3, 0x74, int)));
+        F_(s3, 0xC0, u64_t) = *cTexture_GetTEX0_1(cTexMan_GetHalTexture(XLib_GetTexMan(g_Video), F_(s3, 0x74, int)));
         lim = 0x21;
         if (F_(s3, 0x64, unsigned char)) {
             F_(s3, 0xB8, u64_t) = 0x15;
@@ -189,11 +189,11 @@ extern "C" void PhysEmitter_Draw(char* e, float t, float a, float b, float c)
             p++;
             *p = (u64_t)0x6C0D8000 << 32;
             p++;
-            func_001AE170(p, s3 + 0x80, 0xC);
+            MEMCPY16(p, s3 + 0x80, 0xC);
             p += 0x18;
             *(Q_0050*)p = *ParticleRandom_QwordAt(D_0053B6A0, (int)(s7 + left));
             p += 2;
-            *p = func_003700D0(D_00538080, 0x16);
+            *p = cVU1Man_GetMSCAL(D_00538080, 0x16);
             p++;
             *p = 0;
             p++;

@@ -47,7 +47,7 @@ void String_Dtor(void* s, int f);
 void Mtx_SetBasis(void* m, V4_416F70* a, V4_416F70* b, V4_416F70* c);
 void Mtx_SetTranslation(void* m, V4_416F70* t);
 void String_CtorEmpty(E_416F70* e);
-void func_00417C60(void* v, E_416F70* pos, int n, E_416F70* e);
+void std_vector_imp_GuiAnimationTrack_insert(void* v, E_416F70* pos, int n, E_416F70* e);
 
 static inline float RdF_416F70(char** c) { float* p = (float*)*c; *c = (char*)(p + 1); return *p; }
 static inline unsigned short Rd16_416F70(char** c) { unsigned short* p = (unsigned short*)*c; unsigned short v = *p; *c = (char*)(p + 1); return v; }
@@ -105,7 +105,7 @@ int GuiInterfaceDecorator_Load(O_416F70* o, char** cur)
         e.b = Rd16_416F70(cur);
         e.c = Rd16_416F70(cur);
         e.d = Rd16_416F70(cur);
-        func_00417C60(o->v70, o->v78 + o->n74, 1, &e);
+        std_vector_imp_GuiAnimationTrack_insert(o->v70, o->v78 + o->n74, 1, &e);
         String_Dtor(&e, 0);
     }
     return 1;

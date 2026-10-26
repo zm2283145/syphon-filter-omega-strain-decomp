@@ -84,7 +84,7 @@ void* Mem_Alloc(int pool, int size, char* file, int line);
 void EventQueue_Admit(Q_76660* q);
 void ActorFader_Start(float, void*, int);
 int ObjHandle_Set(void*, int);
-void func_00176EB0(void*);
+void cLList_cSafePtr_cGOBJ_Clear(void*);
 void PlayerInput_ClearPendingBit11(void*);
 }
 static inline void Init_76660(Q_76660* q, void* obj)
@@ -140,7 +140,7 @@ extern "C" int PlayerComp_HandleMessage(PC_76660* self, Msg_76660* msg)
             Init_76660(q, self);
         EventQueue_Admit(q);
         ObjHandle_Set(self->h110, ObjHandle_Set(self->h118, 0));
-        func_00176EB0(self->f13C);
+        cLList_cSafePtr_cGOBJ_Clear(self->f13C);
         break;
     }
     case 17:
@@ -160,7 +160,7 @@ static inline void merge_flush_func_00176660(void) {}
 #pragma push /* merge_units */
 typedef struct { int a; int b; void* vt; } S_6E60;
 extern void operator_delete(void* p);
-S_6E60* func_00176E60(S_6E60* self, short flag)
+S_6E60* cCBData_dtor(S_6E60* self, short flag)
 {
     if (self) {
         self->vt = D_004D9DE0;

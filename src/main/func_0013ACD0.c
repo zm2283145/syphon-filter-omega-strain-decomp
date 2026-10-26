@@ -12,12 +12,12 @@ typedef struct {
     AcNode* x44;
 } AcOwner;
 extern void List_Begin(AcIter*, void*);
-extern void func_0013B170(AcIter*, AcIter*);
-extern void func_0013B160(AcIter*, void*);
+extern void std_list_cLosRequest_cCollisionModelList_GamePtr_generic_iterator_ctor(AcIter*, AcIter*);
+extern void std_list_deleter_voidPtr_end_void(AcIter*, void*);
 extern void LosMgr_ExecuteEntry(void*);
-extern void func_0013AE00(AcOwner*, void*);
+extern void cLosManager_cCollisionModelList_Game_DeleteRequest(AcOwner*, void*);
 extern void ObjectList_EraseRange(AcIter*, void*, AcIter*, AcIter*);
-extern AcNode* func_0013ADF0(void*);
+extern AcNode* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void(void*);
 extern void List_Erase(AcIter*, void*, AcIter*);
 int LosMgr_Update(AcOwner* o)
 {
@@ -34,23 +34,23 @@ int LosMgr_Update(AcOwner* o)
     AcNode* n;
     AcNode* e;
     List_Begin(&t1, o->list);
-    func_0013B170(&it, &t1);
+    std_list_cLosRequest_cCollisionModelList_GamePtr_generic_iterator_ctor(&it, &t1);
     n = it.n;
-    func_0013B160(&t2, o->list);
-    func_0013B170(&end, &t2);
+    std_list_deleter_voidPtr_end_void(&t2, o->list);
+    std_list_cLosRequest_cCollisionModelList_GamePtr_generic_iterator_ctor(&end, &t2);
     e = end.n;
     for (; n != e; n = n->next) {
         obj = n->obj;
         LosMgr_ExecuteEntry(obj);
-        func_0013AE00(o, obj);
+        cLosManager_cCollisionModelList_Game_DeleteRequest(o, obj);
     }
     last.n = (AcNode*)o->x34;
     first.n = o->x38;
     ObjectList_EraseRange(&r1, o->list, &first, &last);
     if (*(int*)o->x3c) {
-        obj = func_0013ADF0(o->x40)->next->obj;
+        obj = details_compressed_pair_imp_cAllocator_node_node_base_1_second_void(o->x40)->next->obj;
         LosMgr_ExecuteEntry(obj);
-        func_0013AE00(o, obj);
+        cLosManager_cCollisionModelList_Game_DeleteRequest(o, obj);
         pos.n = o->x44;
         List_Erase(&r2, o->x3c, &pos);
     }

@@ -134,26 +134,26 @@ extern char D_0049B6D0[];
 extern char D_0049B730[];
 extern char D_0049B780[];
 
-void func_00436C00(Lock_A440*);
-void func_00436BA0(Lock_A440*, int);
-int func_004340C0(Lock_A440*, int*);
-int func_00434440(Lock_A440*, int*);
-int func_00434380(Lock_A440*, int*);
-int func_00434190(Lock_A440*, int*, int);
-int func_00433EC0(Lock_A440*, int*, int);
-void func_00435D80(Lock_A440*, int*, int);
+void cNPCInfoObject_ctor(Lock_A440*);
+void cNPCInfoObject_dtor(Lock_A440*, int);
+int cNPCInfoObject_IsActiveOnRemote(Lock_A440*, int*);
+int cNPCInfoObject_GetOwner_cObjectIdR(Lock_A440*, int*);
+int cNPCInfoObject_GetPrevOwner(Lock_A440*, int*);
+int cNPCInfoObject_IsActive(Lock_A440*, int*, int);
+int cNPCInfoObject_IsInActiveTerrain(Lock_A440*, int*, int);
+void cNPCInfoObject_DisconnectOwner(Lock_A440*, int*, int);
 NpcObj_A440* Object_ClosestPlayerDistSq(NpcObj_A440*, float*);
 void List_Begin(Raw_A440*, void*);
 void func_0015AD60(Node_A440**, Raw_A440*);
 void func_0015AD50(Raw_A440*, void*);
 void func_0015AD40(Node_A440**, Raw_A440*);
-void func_0015AD10(void*);
-void func_0015ACD0(void*);
-void func_0015ACC0(void*);
-void func_0015ACB0(void*);
-void func_0015ACA0(void*);
-void func_0015AC90(void*, int);
-void func_0015AC70(void*);
+void cNpcTransfer_ctor(void*);
+void cAiTransfer_ctor(void*);
+void cAiTargetTransfer_ctor(void*);
+void cPathNavigatorTransfer_ctor(void*);
+void cPathTransfer_ctor(void*);
+void cObjectId_ctor_uint(void*, int);
+void cTargetAwareness_ctor(void*);
 void func_00148B50(void*, Npc_A440*);
 void func_00148CD0(Npc_A440*, void*);
 void Event_Construct(Msg_A440*, void*);
@@ -162,8 +162,8 @@ void cMessage_dtor(Msg_A440*, int);
 void printf(char*, ...);
 int PlayerSlots_Get(int);
 int Net_GetClock(int);
-void func_0042D310(int*, int);
-void func_0042DA30(NpcObj_A440*, int, int);
+void cNetObjectMgr_AddCopyMsg(int*, int);
+void cNetObjectMgr_AddDeactivate(NpcObj_A440*, int, int);
 void NetGame_InitLocalSlot(int*, int);
 
 }
@@ -221,10 +221,10 @@ extern "C" void cNPC_CriticalNextFrame(Npc_A440* self, float dt)
         Lock_A440 lk;
         bool busy;
         NpcObj_A440* o;
-        func_00436C00(&lk);
+        cNPCInfoObject_ctor(&lk);
         o = self->obj;
         busy = o->b2D && o->b2C && !o->b2E;
-        if (!busy && !func_004340C0(&lk, &id)) {
+        if (!busy && !cNPCInfoObject_IsActiveOnRemote(&lk, &id)) {
             if (!self->b1D5) {
                 float d;
                 NpcObj_A440* pl = Object_ClosestPlayerDistSq(self->obj, &d);
@@ -256,15 +256,15 @@ extern "C" void cNPC_CriticalNextFrame(Npc_A440* self, float dt)
             }
             self->b1D5 = 0;
         }
-        func_00436BA0(&lk, -1);
+        cNPCInfoObject_dtor(&lk, -1);
     }
     if (g_IsMultiplayer && self->obj->V7C() == 0) {
         Lock_A440 lk2;
         int slot;
         int alt;
-        func_00436C00(&lk2);
-        slot = func_00434440(&lk2, &id);
-        alt = func_00434380(&lk2, &id);
+        cNPCInfoObject_ctor(&lk2);
+        slot = cNPCInfoObject_GetOwner_cObjectIdR(&lk2, &id);
+        alt = cNPCInfoObject_GetPrevOwner(&lk2, &id);
         if (slot >= 0) {
             Rec_A440* rec = 0;
             Node_A440* it;
@@ -285,15 +285,15 @@ extern "C" void cNPC_CriticalNextFrame(Npc_A440* self, float dt)
                             Npc_A440* n;
                             char* q = (char*)&big;
                             char* p;
-                            func_0015AD10(q);
-                            func_0015ACD0(big.b);
-                            func_0015ACC0(q + 0x110);
-                            func_0015ACB0(q + 0x140);
-                            func_0015ACA0(q + 0x1B0);
-                            func_0015AC90(q + 0x1D0, -1);
+                            cNpcTransfer_ctor(q);
+                            cAiTransfer_ctor(big.b);
+                            cAiTargetTransfer_ctor(q + 0x110);
+                            cPathNavigatorTransfer_ctor(q + 0x140);
+                            cPathTransfer_ctor(q + 0x1B0);
+                            cObjectId_ctor_uint(q + 0x1D0, -1);
                             p = q + 0x1E0;
                             do {
-                                func_0015AC70(p);
+                                cTargetAwareness_ctor(p);
                                 p += 0x40;
                             } while (p != q + 0x2E0);
                             func_00148B50(&big, self);
@@ -315,7 +315,7 @@ extern "C" void cNPC_CriticalNextFrame(Npc_A440* self, float dt)
                             for (i = 0; i < 4; i++) {
                                 if (PlayerSlots_Get(i) && (rec->mask & (1 << i))) {
                                     who = i;
-                                    if (func_00434190(&lk2, &self->obj->id, i) && func_00433EC0(&lk2, &self->obj->id, i))
+                                    if (cNPCInfoObject_IsActive(&lk2, &self->obj->id, i) && cNPCInfoObject_IsInActiveTerrain(&lk2, &self->obj->id, i))
                                         break;
                                 }
                             }
@@ -324,8 +324,8 @@ extern "C" void cNPC_CriticalNextFrame(Npc_A440* self, float dt)
                                 rec->t = 0.0f;
                                 if (who > 0) {
                                     int* pid = &self->obj->id;
-                                    func_0042D310(pid, self->V90());
-                                    func_0042DA30(self->obj, 0, who);
+                                    cNetObjectMgr_AddCopyMsg(pid, self->V90());
+                                    cNetObjectMgr_AddDeactivate(self->obj, 0, who);
                                     printf(D_0049B730);
                                     D_004EA380 = Net_GetClock(1) + 0xFA;
                                 }
@@ -334,11 +334,11 @@ extern "C" void cNPC_CriticalNextFrame(Npc_A440* self, float dt)
                     }
                 } else if (!PlayerSlots_Get(slot) || (slot == -1 && !PlayerSlots_Get(alt))) {
                     printf(D_0049B780, slot, id);
-                    func_00435D80(&lk2, &id, 0);
+                    cNPCInfoObject_DisconnectOwner(&lk2, &id, 0);
                     self->b169 = 1;
                     rec->mask &= ~(1 << slot);
                 } else {
-                    if (func_00434190(&lk2, &id, slot) && !func_00433EC0(&lk2, &id, slot))
+                    if (cNPCInfoObject_IsActive(&lk2, &id, slot) && !cNPCInfoObject_IsInActiveTerrain(&lk2, &id, slot))
                         rec->t += dt;
                     else
                         rec->t = 0.0f;
@@ -349,7 +349,7 @@ extern "C" void cNPC_CriticalNextFrame(Npc_A440* self, float dt)
                         rec->t = 0.0f;
                         to = -1;
                         for (j = 0; j < 4; j++) {
-                            if (j != slot && PlayerSlots_Get(j) && func_00434190(&lk2, &self->obj->id, j) && func_00433EC0(&lk2, &self->obj->id, j)) {
+                            if (j != slot && PlayerSlots_Get(j) && cNPCInfoObject_IsActive(&lk2, &self->obj->id, j) && cNPCInfoObject_IsInActiveTerrain(&lk2, &self->obj->id, j)) {
                                 to = j;
                                 if (rec->mask & (1 << j))
                                     break;
@@ -359,15 +359,15 @@ extern "C" void cNPC_CriticalNextFrame(Npc_A440* self, float dt)
                             me = LocalSlot(D_005721A8);
                             if (slot == me) {
                                 int* pid = &self->obj->id;
-                                func_0042D310(pid, self->V90());
+                                cNetObjectMgr_AddCopyMsg(pid, self->V90());
                             }
-                            func_0042DA30(self->obj, slot, to);
+                            cNetObjectMgr_AddDeactivate(self->obj, slot, to);
                         }
                     }
                 }
             }
         }
-        func_00436BA0(&lk2, -1);
+        cNPCInfoObject_dtor(&lk2, -1);
     }
     if (act >= 0)
         self->VC8(act);

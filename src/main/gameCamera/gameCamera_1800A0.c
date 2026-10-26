@@ -10,7 +10,7 @@
 /* merge_units: begin func_001800A0 */
 #pragma push /* merge_units */
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
-V4 func_001800A0(void) {
+V4 cSplinedMotion_Vector_InitPos(void) {
     V4 l0;
     V4* q1 = &l0;
     asm {

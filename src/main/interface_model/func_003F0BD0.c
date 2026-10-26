@@ -37,23 +37,23 @@ extern char D_004939D0[];
 extern char D_004939D8[];
 extern char D_004939E0[];
 extern void* Mem_Alloc(int pool, int size, char* file, int line);
-extern void* func_0013D5C0(int size, int pool, char* file, int line);
+extern void* opNew_uint_int_charP_int(int size, int pool, char* file, int line);
 extern int strcmp(const char* a, const char* b);
-extern void func_003F1C40(void* v, char* value);
-extern void* func_003F1C10(void* self);
-extern void func_003F1AD0(Vec_0BD0* v);
-extern void func_003F1AB0(char** cursor, int* out);
-extern void func_003F1AA0(Vec_0BD0* v, int n);
-extern void* func_003F1980(void* self, Ent_0BD0* e, char** cursor);
-extern void func_003F1960(Vec_0BD0* v, void** p);
-extern void func_003F1910(Vec_0BD0* v);
-extern void func_003F1900(Vec_0BD0* v, int n);
+extern void std_vector_AnimType_push_back(void* v, char* value);
+extern void* cAnimator_ctor(void* self);
+extern void cArray_cAnimatorPtr_ctor(Vec_0BD0* v);
+extern void cStreamingBuffer_opShr(char** cursor, int* out);
+extern void cArray_cAnimatorPtr_ReserveActual(Vec_0BD0* v, int n);
+extern void* cKeyframeAnimation_cXyz_ctor(void* self, Ent_0BD0* e, char** cursor);
+extern void cArray_cAnimatorPtr_PushBackActual(Vec_0BD0* v, void** p);
+extern void cArray_cKeyframe_tRGB_ctor(Vec_0BD0* v);
+extern void cArray_cKeyframe_tRGB_ReserveActual(Vec_0BD0* v, int n);
 extern V4_0BD0* func_003F3E30(V4_0BD0* out, char** cursor);
-extern void func_003F18E0(Vec_0BD0* v, V4_0BD0* p);
-extern void func_003F1890(Vec_0BD0* v);
-extern void func_003F1880(Vec_0BD0* v, int n);
-extern V2_0BD0* func_003F1FF0(V2_0BD0* out, char** cursor);
-extern void func_003F1860(Vec_0BD0* v, V2_0BD0* p);
+extern void cArray_cKeyframe_tRGB_PushBackActual(Vec_0BD0* v, V4_0BD0* p);
+extern void cArray_cKeyframe_float_ctor(Vec_0BD0* v);
+extern void cArray_cKeyframe_float_ReserveActual(Vec_0BD0* v, int n);
+extern V2_0BD0* cKeyframe_float_ctor(V2_0BD0* out, char** cursor);
+extern void cArray_cKeyframe_float_PushBackActual(Vec_0BD0* v, V2_0BD0* p);
 }
 
 static inline void Copy(PStr_0BD0* buf, char* t, const char* s)
@@ -79,16 +79,16 @@ static inline ObjA_0BD0* ObjA_Ctor(ObjA_0BD0* o, Ent_0BD0* e, char** cursor)
 {
     int n;
     int i;
-    func_003F1C10(o);
+    cAnimator_ctor(o);
     o->vtable = D_004E0820;
-    func_003F1AD0(&o->vec);
-    func_003F1AB0(cursor, &n);
-    func_003F1AA0(&o->vec, n);
+    cArray_cAnimatorPtr_ctor(&o->vec);
+    cStreamingBuffer_opShr(cursor, &n);
+    cArray_cAnimatorPtr_ReserveActual(&o->vec, n);
     for (i = 0; i < n; i++) {
         void* c;
-        void* m = func_0013D5C0(0x30, 0, D_004BE1A0, 0x90);
-        c = m ? func_003F1980(m, e++, cursor) : m;
-        func_003F1960(&o->vec, &c);
+        void* m = opNew_uint_int_charP_int(0x30, 0, D_004BE1A0, 0x90);
+        c = m ? cKeyframeAnimation_cXyz_ctor(m, e++, cursor) : m;
+        cArray_cAnimatorPtr_PushBackActual(&o->vec, &c);
     }
     return o;
 }
@@ -97,16 +97,16 @@ static inline ObjB_0BD0* ObjB_Ctor(ObjB_0BD0* o, void* a, char** cursor)
 {
     int n;
     int i;
-    func_003F1C10(o);
+    cAnimator_ctor(o);
     o->vtable = D_004E07E0;
     o->f18 = 0;
     o->f1C = a;
-    func_003F1910(&o->vec);
-    func_003F1AB0(cursor, &n);
-    func_003F1900(&o->vec, n);
+    cArray_cKeyframe_tRGB_ctor(&o->vec);
+    cStreamingBuffer_opShr(cursor, &n);
+    cArray_cKeyframe_tRGB_ReserveActual(&o->vec, n);
     for (i = 0; i < n; i++) {
         V4_0BD0 t;
-        func_003F18E0(&o->vec, func_003F3E30(&t, cursor));
+        cArray_cKeyframe_tRGB_PushBackActual(&o->vec, func_003F3E30(&t, cursor));
     }
     return o;
 }
@@ -115,16 +115,16 @@ static inline ObjB_0BD0* ObjC_Ctor(ObjB_0BD0* o, void* a, char** cursor)
 {
     int n;
     int i;
-    func_003F1C10(o);
+    cAnimator_ctor(o);
     o->vtable = D_004E07C0;
     o->f18 = 0;
     o->f1C = a;
-    func_003F1890(&o->vec);
-    func_003F1AB0(cursor, &n);
-    func_003F1880(&o->vec, n);
+    cArray_cKeyframe_float_ctor(&o->vec);
+    cStreamingBuffer_opShr(cursor, &n);
+    cArray_cKeyframe_float_ReserveActual(&o->vec, n);
     for (i = 0; i < n; i++) {
         V2_0BD0 t;
-        func_003F1860(&o->vec, func_003F1FF0(&t, cursor));
+        cArray_cKeyframe_float_PushBackActual(&o->vec, cKeyframe_float_ctor(&t, cursor));
     }
     return o;
 }
@@ -132,13 +132,13 @@ static inline ObjB_0BD0* ObjC_Ctor(ObjB_0BD0* o, void* a, char** cursor)
 #define CASEC(str, code, line, off) \
     if (strcmp(s.text, str) == 0) { \
         ObjB_0BD0* o; \
-        func_003F1C40(names, code); \
+        std_vector_AnimType_push_back(names, code); \
         { AllocGuard g; o = (ObjB_0BD0*)Mem_Alloc(0, 0x30, D_004BE030, line); } \
         if (o) o = ObjC_Ctor(o, (char*)self + off, cursor); \
         return o; \
     }
 
-extern "C" void* func_003F0BD0(Self_0BD0* self, char** cursor, void* names)
+extern "C" void* CreateAnimation(Self_0BD0* self, char** cursor, void* names)
 {
     PStr_0BD0 s;
     char* start = *cursor;
@@ -147,14 +147,14 @@ extern "C" void* func_003F0BD0(Self_0BD0* self, char** cursor, void* names)
     *cursor = (char*)(((int)*cursor + 3) & ~3);
     if (strcmp(s.text, D_004BE060) == 0) {
         ObjA_0BD0* o;
-        func_003F1C40(names, D_00493998);
+        std_vector_AnimType_push_back(names, D_00493998);
         { AllocGuard g; o = (ObjA_0BD0*)Mem_Alloc(0, 0x28, D_004BE030, 0x84); }
         if (o) o = ObjA_Ctor(o, self->p70, cursor);
         return o;
     }
     if (strcmp(s.text, D_004BE068) == 0) {
         ObjB_0BD0* o;
-        func_003F1C40(names, D_004939A0);
+        std_vector_AnimType_push_back(names, D_004939A0);
         { AllocGuard g; o = (ObjB_0BD0*)Mem_Alloc(0, 0x30, D_004BE030, 0x89); }
         if (o) o = ObjB_Ctor(o, (char*)self + 0xA0, cursor);
         return o;

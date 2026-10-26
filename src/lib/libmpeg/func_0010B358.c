@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-void func_0010B358(int a0, int a1, int a2, int a3) {
+void sceMpegGetDecodeMode(int a0, int a1, int a2, int a3) {
     int tmp0;
     int tmp1;
     int tmp2;
@@ -21,7 +21,7 @@ void func_0010B358(int a0, int a1, int a2, int a3) {
     *(int*)((char*)a3) = tmp3;
 }
 
-int func_0010B378(int a0) {
+int sceMpegIsEnd(int a0) {
     int tmp0;
     int tmp1;
 
@@ -30,7 +30,7 @@ int func_0010B378(int a0) {
     return tmp1;
 }
 
-int func_0010B388(int a0) {
+int sceMpegIsRefBuffEmpty(int a0) {
     int tmp0;
     int tmp1;
 

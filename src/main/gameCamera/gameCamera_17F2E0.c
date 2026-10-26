@@ -22,7 +22,7 @@ extern char D_004DA3E0[]; /* vtable */
 extern int PhysicalBase_Construct(char* self, char*, char*);
 
 /* Constructor: base construct, set vtable, clear words +0x38 and +0x3C. */
-char* func_0017F2E0(char* self) {
+char* cCameraShake_cPulsedShakeMagnitude_ctor(char* self) {
     PhysicalBase_Construct(self, D_0048A158, D_0048A160);
     *(char**)self = D_004DA3E0;
     *(int*)(self + 0x38) = 0;
@@ -63,7 +63,7 @@ extern void Curve_InitConstant(Curve* c, float* lo, float* hi, float value);
 extern void Curve_Bind(CurveBinding* b, Curve* c);
 
 /* Constructor: default range values, a constant curve and its binding. */
-Obj17F* func_0017F330(Obj17F* self)
+Obj17F* cSplinedMotion_Scalar_ctor(Obj17F* self)
 {
     self->vtable = D_004DA380;
     self->min = D_0048A158;

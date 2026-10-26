@@ -44,9 +44,9 @@ typedef union String {
     } s;
 } String;
 
-extern void func_0013D710(String*, int, int, int);
+extern void std_basic_string_char_char_traits_char_replace_uint_uint_basicstringR(String*, int, int, int);
 
-/* Calls func_0013D710(str, size(str), 0, arg). */
+/* Calls std_basic_string_char_char_traits_char_replace_uint_uint_basicstringR(str, size(str), 0, arg). */
 void func_0029F5B0(String* str, int arg) {
     int size;
     if (str->l.cap & 1) {
@@ -54,7 +54,7 @@ void func_0029F5B0(String* str, int arg) {
     } else {
         size = (unsigned char)str->s.size;
     }
-    func_0013D710(str, size, 0, arg);
+    std_basic_string_char_char_traits_char_replace_uint_uint_basicstringR(str, size, 0, arg);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0029F5B0 */

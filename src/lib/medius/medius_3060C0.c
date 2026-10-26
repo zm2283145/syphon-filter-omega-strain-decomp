@@ -1,5 +1,5 @@
-extern int func_003060D8(void *tv);
-int func_003060C0(void *tv)
+extern int rt_time_get_time_stamp(void *tv);
+int rt_time_start(void *tv)
 {
-    return func_003060D8(tv);
+    return rt_time_get_time_stamp(tv);
 }

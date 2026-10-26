@@ -11,17 +11,17 @@ typedef struct {
     int total;
 } DmaState;
 
-extern int func_001098B0(int, DmaState *);
+extern int _ch3dmaCSC(int, DmaState *);
 extern int AddDmacHandler2(int, int (*)(int, DmaState *), int, DmaState *);
 extern int RemoveDmacHandler(int, int);
 extern int EnableDmac(int);
 extern int DisableDmac(int);
 extern int DIntr(void);
 extern void EIntr(void);
-extern void func_0010B488(void*, int *);
+extern void _dispatchMpegCallback(void*, int *);
 extern void func_0010BD90(void *, const char *);
 
-void func_001099F8(void *m, unsigned int addr, int n)
+void _doCSC2(void *m, unsigned int addr, int n)
 {
     int buf[8];
     DmaState s;
@@ -36,7 +36,7 @@ void func_001099F8(void *m, unsigned int addr, int n)
     s.cnt = 0;
     while (REGI(0x10002010) < 0)
         ;
-    id = AddDmacHandler2(3, func_001098B0, 0, &s);
+    id = AddDmacHandler2(3, _ch3dmaCSC, 0, &s);
     REG(0x1000E010) = 8;
     EnableDmac(3);
     old = DIntr();
@@ -47,7 +47,7 @@ void func_001099F8(void *m, unsigned int addr, int n)
         EIntr();
     REG(0x10002000) = 0x700003FF;
     buf[0] = 4;
-    func_0010B488(F(m, 0x870, void*), buf);
+    _dispatchMpegCallback(F(m, 0x870, void*), buf);
     while (s.cnt < s.total)
         ;
     if (s.done)

@@ -37,10 +37,10 @@ int GuiOnlineConnect_IsType(void* self, const char* name)
 
 /* merge_units: begin func_0029CB90 */
 #pragma push /* merge_units */
-void func_0029CB90(void) {
+void GuiLobbyScreen_StartLobbyScreen(void) {
 }
 
-void func_0029CBA0(void) {
+void GuiLobbyScreen_ExitLobbyScreen(void) {
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0029CB90 */

@@ -7,8 +7,8 @@ extern int func_00452A60(L442*);
 extern int LobbyArray_At(char*, int);
 extern int sprintf(char*, const char*, ...);
 extern int func_004526D0(L442*, char*);
-extern int func_00452B40(L442*, char*);
-extern void func_0044E1A0(L442*, int);
+extern int SFOLobby_JoinMissionChannel(L442*, char*);
+extern void SFOLobby_FilterGameListByMyMission(L442*, int);
 extern void SFOLobby_SetError(L442*, int, char*, int);
 int SFOLobby_CheckMissionLobby(L442* l, int idx) {
     char buf[0x100];
@@ -21,9 +21,9 @@ int SFOLobby_CheckMissionLobby(L442* l, int idx) {
             if (!func_004526D0(l, buf)) return 0;
         } else {
             sprintf(buf, D_004C05A0, LobbyArray_At(l->f54, idx), l->f1f38);
-            if (!func_00452B40(l, buf)) return 0;
+            if (!SFOLobby_JoinMissionChannel(l, buf)) return 0;
         }
-        func_0044E1A0(l, idx);
+        SFOLobby_FilterGameListByMyMission(l, idx);
         D_004976D0 = l->f1f38;
         l->f26a8 = 2;
     }

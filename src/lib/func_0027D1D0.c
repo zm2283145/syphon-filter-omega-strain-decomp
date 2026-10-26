@@ -2,15 +2,15 @@ typedef struct { int status; void* func; void* stack; int stack_size; void* gp_r
 typedef struct { unsigned char b[16]; } B27D1D0;
 extern char D_004E9B70[];
 extern B27D1D0 D_00506140;
-extern void func_0027D160(void* p);
+extern void sce_callback_function(void* p);
 extern int CreateThread(TP27D1D0* p);
 extern int StartThread(int th, void* arg);
 extern int DeleteThread(int th);
-int func_0027D1D0(B27D1D0* arg, void* stack, int size, int prio)
+int sce_create_callback_thread(B27D1D0* arg, void* stack, int size, int prio)
 {
     TP27D1D0 tp;
     int th;
-    tp.func = func_0027D160;
+    tp.func = sce_callback_function;
     tp.stack = stack;
     tp.stack_size = size;
     tp.initial_priority = prio;

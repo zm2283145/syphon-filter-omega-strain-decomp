@@ -7,13 +7,13 @@
 #include "types.h"
 #include "loose01_types.h"
 
-FloatPair* func_00209EB0(FloatPair* dst, FloatPair* src) {
+FloatPair* cSkaBlendSequenceExtents_opAssign(FloatPair* dst, FloatPair* src) {
     dst->a = src->a;
     dst->b = src->b;
     return dst;
 }
 
-Word* func_00209ED0(Word* dst, Word* src) {
+Word* cPointer_cSkaNode_opAssign(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }

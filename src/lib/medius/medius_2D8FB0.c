@@ -3,10 +3,10 @@ typedef struct { char pad0[0x8C]; int sock; char pad90[0xBC - 0x90]; int state; 
 extern int strlen(const char *);
 extern char *strncpy(char *, const char *, int);
 extern void *memset(void *, int, int);
-extern int func_00307328(int, Addr *);
-extern void func_002F5270(int);
-extern int func_002D92B0(Conn *);
-int func_002D8FB0(Conn *o, char *name, int port, int mode)
+extern int rt_udp_resolve_address(int, Addr *);
+extern void WaitTimeMs(int);
+extern int UpdateAudio(Conn *);
+int ResolveAddress(Conn *o, char *name, int port, int mode)
 {
     Addr a;
     if (o == 0) goto fail;
@@ -20,13 +20,13 @@ int func_002D8FB0(Conn *o, char *name, int port, int mode)
     memset(&a, 0, sizeof(a));
     strncpy(a.name, name, 16);
     a.port = port;
-    if (func_00307328(o->sock, &a) != 0) {
+    if (rt_udp_resolve_address(o->sock, &a) != 0) {
 fail:
         return -1;
     }
     while (o->state == 1 && o->mode == 0) {
-        func_002F5270(20);
-        func_002D92B0(o);
+        WaitTimeMs(20);
+        UpdateAudio(o);
     }
     return 0;
 }

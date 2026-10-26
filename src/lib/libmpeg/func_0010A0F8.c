@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_0010A0F8(int a0, int a1) {
+int _sysbitPtr(int a0, int a1) {
     int v0, v1;
     int cond;
 

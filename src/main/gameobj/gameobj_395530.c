@@ -34,7 +34,7 @@ extern "C" {
 extern char D_004BC430[];
 extern char D_004BC530[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
-void* func_00377C30(void* p);
+void* cVU1Model_ctor(void* p);
 void* Resource_Construct(void* p);
 }
 inline void* operator new(unsigned int, void* p) { return p; }
@@ -72,7 +72,7 @@ static inline void* NewA_395530(int line)
     if (p) p = Resource_Construct(p);
     return p;
 }
-extern "C" void func_00395530(S_395530* self_, S_395530* other_)
+extern "C" void cVUM_GOBJ_CreateModelData(S_395530* self_, S_395530* other_)
 {
     S_395530* self = self_;
     S_395530* other = other_;
@@ -83,7 +83,7 @@ extern "C" void func_00395530(S_395530* self_, S_395530* other_)
         AllocGuard g;
         p = Mem_Alloc(0, 0x30, D_004BC430, 0x99);
     }
-    if (p) p = func_00377C30(p);
+    if (p) p = cVU1Model_ctor(p);
     self->p68 = p;
     if (self->p70 == 0) {
         {
@@ -161,7 +161,7 @@ struct S00395910 {
     unsigned char f1F3;
 };
 extern "C" char g_IdentityMatrix[];
-extern "C" int func_00395910(S00395910* p) {
+extern "C" int cVUM_GOBJ_Init(S00395910* p) {
     p->f68 = 0;
     p->f70 = 0;
     p->f1E0 = 0;
@@ -183,14 +183,14 @@ static inline void merge_flush_func_00395910(void) {}
 extern "C" {
 extern char D_004DF970[];
 void cGOBJ_dtor(void* self, int flag);
-void func_0036D5D0(void* p, int flag);
+void cHogFile_dtor(void* p, int flag);
 void FileMan_Release(void* p, int flag);
-void func_00377BD0(void* p, int flag);
-void func_003C1790(void* p);
+void cVU1Model_dtor(void* p, int flag);
+void cCollisionModelMaster_UnLoad(void* p);
 void operator_delete(void* p);
 }
 static inline void DelA_00395950(void* p, int line) { AllocGuard g; FileMan_Release(p, -1); Mem_Free(0, p, D_004BC430, line); }
-static inline void DelB_00395950(void* p, int line) { AllocGuard g; func_00377BD0(p, -1); Mem_Free(0, p, D_004BC430, line); }
+static inline void DelB_00395950(void* p, int line) { AllocGuard g; cVU1Model_dtor(p, -1); Mem_Free(0, p, D_004BC430, line); }
 struct S_00395950 {
     void* vt; char pad4[0x5C]; int i60; int i64; void* p68; char pad6c[4]; void* p70; char m74[0x1E0 - 0x74];
     void* p1E0; void* p1E4; void* p1E8; void* p1EC; char pad1f0[2]; unsigned char b1F2;
@@ -207,7 +207,7 @@ extern "C" S_00395950* cVUM_GOBJ_dtor(S_00395950* self, short flag)
         }
         if (self->i60 == 0) {
             DelB_00395950(self->p68, 0x44);
-            { void* q = self->p70; if (q) { { AllocGuard g; if (q) func_003C1790(q); Mem_Free(0, q, "collision.hh", 0x506); } self->p70 = 0; } }
+            { void* q = self->p70; if (q) { { AllocGuard g; if (q) cCollisionModelMaster_UnLoad(q); Mem_Free(0, q, "collision.hh", 0x506); } self->p70 = 0; } }
             if (self->p1E0) DelA_00395950(self->p1E0, 0x49);
             DelA_00395950(self->p1E8, 0x4B);
             DelA_00395950(self->p1E4, 0x4C);
@@ -218,10 +218,10 @@ extern "C" S_00395950* cVUM_GOBJ_dtor(S_00395950* self, short flag)
         self->p1E8 = 0;
         self->p1E4 = 0;
         self->p1EC = 0;
-        func_0036D5D0(self->m74, -1);
+        cHogFile_dtor(self->m74, -1);
         {
             void** h = (void**)((char*)self + 0x6C);
-            if (h) { if (self->p70) func_003C1790(self->p70); }
+            if (h) { if (self->p70) cCollisionModelMaster_UnLoad(self->p70); }
         }
         cGOBJ_dtor(self, 0);
         if (flag > 0)

@@ -20,9 +20,9 @@ int strlen(const char *);
 /* merge_units: begin func_003FE110 */
 #pragma push /* merge_units */
 extern unsigned char D_0055D470;
-extern int func_00326130(int);
+extern int sceScfGetLanguage(int);
 void Language_FromSystem(int arg) {
-    int r = func_00326130(arg);
+    int r = sceScfGetLanguage(arg);
     if (r >= 0 && r < 7) {
         switch (r) {
         case 1:
@@ -58,16 +58,16 @@ extern char* D_0055D460;
 extern char D_0055CA70[];
 void* Mem_Alloc(int, int, char*, int);
 void FileHal_Dtor(void*,int);
-void func_0036DEC0(void*);
+void cFileMan_Close(void*);
 void FileMan_Release(void*,int);
 void Resource_Construct(void*);
 void FileMan_Open(void*,char*,int);
 void* FileMan_ReadData(void*);
 int FileMan_GetSize(void*);
-void func_003FEED0(void*);
+void std_vector_deleter_1_clear(void*);
 #define strlen(a0) ((unsigned int)strlen((a0))) /* merge_units */
 char String_ToLower(char);
-void func_003FE800(void*, void*, int, char*);
+void insert__Q23std33__vector_impTFP1UiRC1(void*, void*, int, char*);
 void func_003FE640(void*);
 void PtrVec_PushBack_330280(void*, char**);
 }
@@ -75,7 +75,7 @@ struct Stream {
  void* file; int size; char hog[0x9C]; void* owned; char* a8; char* ac; int b0; int b4; unsigned char ready; char pad[3];
  Stream() { Resource_Construct(hog); file=0;size=0; }
  __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~Stream() {
-  func_0036DEC0(hog);
+  cFileMan_Close(hog);
   { void* p=file; if(p) { { AllocGuard g; FileHal_Dtor(p,-1); Mem_Free(0,p,D_004BDC28,0x45); } file=0; } }
   size=0;
   { void* p=owned; if(p) { AllocGuard g; Mem_Free(0,p,D_004BDC18,0x4B); } }
@@ -98,7 +98,7 @@ extern "C" bool Loc_ReadPoolFile(Loc* self, char* name) {
   s.owned = 0;
   int* pc = (int*)s.a8; s.a8 += 4;
   int count = *pc;
-  func_003FEED0(self);
+  std_vector_deleter_1_clear(self);
   for (int i = 0; i < count; i++) {
    memcpy(key, s.a8, 0x10);
    s.a8 += 0x10;
@@ -125,7 +125,7 @@ extern "C" bool Loc_ReadPoolFile(Loc* self, char* name) {
     AllocGuard g;
     Mem_Free(0, tmp, D_004BE440, 0x83);
    }
-   func_003FE800(self, &self->entries[self->count], 1, key);
+   insert__Q23std33__vector_impTFP1UiRC1(self, &self->entries[self->count], 1, key);
    func_003FE640(D_0055CA70);
    PtrVec_PushBack_330280(D_0055CA70, &str);
   }

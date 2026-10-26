@@ -7,21 +7,21 @@
 /* merge_units: begin func_0010EA70 */
 static unsigned int dat_004861A0[1] = { 0x0 };
 extern char D_004E2C00[];
-extern void func_0010E4C0(char *);
-void func_0010EA70(int c)
+extern void kputs(char *);
+void deci2Putchar(int c)
 {
     int n;
     if ((*(int*)dat_004861A0) >= 0x7E) {
         (*(int*)dat_004861A0) = 0;
         D_004E2C00[0x7F] = 0;
-        func_0010E4C0(D_004E2C00);
+        kputs(D_004E2C00);
     }
     if (c == '\n') {
         n = (*(int*)dat_004861A0);
         (*(int*)dat_004861A0) = 0;
         D_004E2C00[n] = c;
         D_004E2C00[n + 1] = 0;
-        func_0010E4C0(D_004E2C00);
+        kputs(D_004E2C00);
     } else {
         D_004E2C00[(*(int*)dat_004861A0)++] = c;
     }
@@ -34,20 +34,20 @@ void func_0010EA70(int c)
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
-int func_0010EA30();                                 
+int kputchar();                                 
 
-void func_0010EB20(int arg0) {
+void serialPutchar(int arg0) {
     if (arg0 == 0xA) {
-        func_0010EA30(0xD);
-        func_0010EA30(0xA);
+        kputchar(0xD);
+        kputchar(0xA);
         return;
     }
-    func_0010EA30();
+    kputchar();
 }
 /* merge_units: end func_0010EB20 */
 
 /* merge_units: begin func_0010EB58 */
-int func_0010EB58(unsigned long x)
+int ftoi(unsigned long x)
 {
     long e = (x << 1) >> 53;
     e -= 0x433;

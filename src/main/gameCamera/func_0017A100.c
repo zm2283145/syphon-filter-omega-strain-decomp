@@ -13,7 +13,7 @@ extern char g_Game[]; /* world object */
 extern char D_00555070[];
 extern int ScriptFilter_Dispatch(char*, int, int);
 extern int World_PushObjectFromAction(char* world, int camera); /* push camera */
-extern void func_00282020(int);
+extern void cNetMsg_PutGOBJ(int);
 
 /* Script binding: removes camera args[0] from the world camera stack. */
 int Script_cGameCamera_RemoveCamera(int* args) {
@@ -37,14 +37,14 @@ void ScriptType_cGameCamera_Init(void) {
 }
 
 /* Returns the value of global D_004EE908. */
-int func_0017A1A0(void) {
+int cGameCamera_getSOBJClassId(void) {
     return D_004EE908;
 }
 
-int func_0017A1B0(int a0, int a1) {
+int cGameCamera_ScriptHandleMessage(int a0, int a1) {
     return ScriptFilter_Dispatch(D_00555070, a0, a1);
 }
 
 void cHumanSeenMsg_v04(char* msg) {
-    func_00282020(*(int*)(msg + 0x24));
+    cNetMsg_PutGOBJ(*(int*)(msg + 0x24));
 }

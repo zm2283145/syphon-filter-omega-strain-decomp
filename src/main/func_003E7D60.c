@@ -23,10 +23,10 @@ extern void String_Dtor_138350(void*);
 extern void String_Reserve(Str_E7D60* s, int n);
 extern void String_CtorCStr_13B480(Str_E7D60* s, char* c);
 extern void String_AssignString(Str_E7D60* d, Str_E7D60* s);
-extern void func_00209620(Str_E7D60* d, Str_E7D60* s);
+extern void std_basic_string_char_char_traits_char_append_basicstringR(Str_E7D60* d, Str_E7D60* s);
 extern void String_Dtor(Str_E7D60* s, int f);
 
-Con_E7D60* func_003E7D60(Con_E7D60* self, char* name, int x)
+Con_E7D60* cConsole_ctor(Con_E7D60* self, char* name, int x)
 {
     int i;
     int off;
@@ -49,7 +49,7 @@ Con_E7D60* func_003E7D60(Con_E7D60* self, char* name, int x)
     {
         Str_E7D60 t;
         String_CtorCStr_13B480(&t, name);
-        func_00209620(&self->lines[0], &t);
+        std_basic_string_char_char_traits_char_append_basicstringR(&self->lines[0], &t);
         String_Dtor(&t, 0);
     }
     {

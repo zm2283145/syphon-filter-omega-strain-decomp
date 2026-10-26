@@ -17,13 +17,13 @@ extern int WeaponInv_EquipItem(void* inventory, int a1);
 extern int* func_001450C0(void);
 extern void* NpcScript_GetReceiver(int handle);
 extern void Actor_SetInvulnerable(PlayerActor* actor, int invulnerable);
-extern int* func_0022DE00(void);
+extern int* cNotifyCheckpointMsg_SOBJ_getClassId(void);
 extern int* func_0022F170(void);
 extern int* func_0022F1F0(void);
-extern void func_002493C0(PlayerInputState* input, PlayerActor* actor);
+extern void cPlayerControls_NetSelectNextWeapon(PlayerInputState* input, PlayerActor* actor);
 extern int ScriptType_AddAccepted(int type, int messageType);
 extern void ScriptType_SetParent(int type, int parentType);
-extern int* func_004080E0(void);
+extern int* cDamageMsg_SOBJ_getClassId(void);
 
 int Script_cPlayer_RestoreBody(void) {
     return 0;
@@ -51,11 +51,11 @@ int ScriptType_cPlayer_Init(void) {
 
     type = func_0022F170();
     ScriptType_SetParent(D_004EE790, *type);
-    type = func_0022DE00();
+    type = cNotifyCheckpointMsg_SOBJ_getClassId();
     ScriptType_AddAccepted(D_004EE790, *type);
     type = func_0022F1F0();
     ScriptType_AddAccepted(D_004EE790, *type);
-    type = func_004080E0();
+    type = cDamageMsg_SOBJ_getClassId();
     ScriptType_AddAccepted(D_004EE790, *type);
     type = func_001450C0();
     return ScriptType_AddAccepted(D_004EE790, *type);
@@ -67,11 +67,11 @@ int cHotboxMsg_WhoPlayer(int obj) {
     return tmp;
 }
 
-void* func_00175FA0(void* self) {
+void* cPlayer_SOBJ_convert(void* self) {
     return self;
 }
 
-int* func_00175FB0(void) {
+int* cPlayer_SOBJ_getClassId(void) {
     return &D_004EE788;
 }
 
@@ -85,7 +85,7 @@ int cPlayer_v0C(int a0, int a1) {
 
 /*
  * For an NPC-class actor: calls WeaponInv_EquipItem on its inventory (a1 is passed
- * through) and, when the g_IsMultiplayer flag is set, func_002493C0 on the input state.
+ * through) and, when the g_IsMultiplayer flag is set, cPlayerControls_NetSelectNextWeapon on the input state.
  */
 void Player_EquipItem(PlayerComponent* self, int a1) {
     PlayerActor* actor = self->actor;
@@ -93,7 +93,7 @@ void Player_EquipItem(PlayerComponent* self, int a1) {
     if (actor != 0 && actor->classToken == g_HumanActorClassKey) {
         WeaponInv_EquipItem(actor->inventory, a1);
         if (g_IsMultiplayer != 0) {
-            func_002493C0(&self->input, actor);
+            cPlayerControls_NetSelectNextWeapon(&self->input, actor);
         }
     }
 }

@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-void func_00409DF0(PtrVec* a, PtrVec* b) {
+void std_swap_vectordeleterR_vectordeleterR_47(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;
         int* p;
@@ -36,21 +36,21 @@ void func_00409DF0(PtrVec* a, PtrVec* b) {
 #pragma push /* merge_units */
 typedef struct { char d[0x38]; } E124;
 typedef struct { char base[0xC]; E124 e[5]; } T124;
-extern void func_00329930(T124* d, const T124* s);
-extern void func_00409EC0(E124* d, const E124* s);
+extern void cString_opAssign(T124* d, const T124* s);
+extern void cMaterialProperties_MatPropInfo_opAssign(E124* d, const E124* s);
 static inline void t124_assign(T124* d, const T124* s) {
     E124* a;
     const E124* b;
-    func_00329930(d, s);
+    cString_opAssign(d, s);
     a = d->e;
     b = s->e;
     do {
-        func_00409EC0(a, b);
+        cMaterialProperties_MatPropInfo_opAssign(a, b);
         a++;
         b++;
     } while (a != d->e + 5);
 }/* Fills n records with a copy of v. */
-void func_00409E30(T124* d, unsigned int n, const T124* v) {
+void std_fill_n_cMaterialProperties_int_fill_n(T124* d, unsigned int n, const T124* v) {
     for (; n != 0; n--, d++)
         t124_assign(d, v);
 }

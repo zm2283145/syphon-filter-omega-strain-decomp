@@ -14,7 +14,7 @@
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-VEC4_WITH_COMP_FUNC(func_0028D530, 0x120, y)
+VEC4_WITH_COMP_FUNC(cBone_SetScaleY, 0x120, y)
 #pragma pop
 #pragma pop /* merge_units */
 /* merge_units: end func_0028D530 */
@@ -25,7 +25,7 @@ VEC4_WITH_COMP_FUNC(func_0028D530, 0x120, y)
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-VEC4_WITH_COMP_FUNC(func_0028D580, 0x110, x)
+VEC4_WITH_COMP_FUNC(cBone_SetScaleX, 0x110, x)
 #pragma pop
 #pragma pop /* merge_units */
 /* merge_units: end func_0028D580 */

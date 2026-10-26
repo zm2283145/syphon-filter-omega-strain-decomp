@@ -5,6 +5,6 @@
 
 #include "types.h"
 
-int func_00154650(void) {
+int cGobjController_GetVelocity(void) {
     return 0;
 }

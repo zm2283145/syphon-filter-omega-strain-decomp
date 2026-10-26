@@ -13,11 +13,11 @@ typedef struct { char pad[0x14]; unsigned short flags; char pad16[0x32]; int h48
 extern void String_CtorCStr_13B480(Str_43C890* s, char* c);
 extern void String_AssignString(Str_43C890* d, Str_43C890* s);
 extern void String_Dtor(Str_43C890* s, int f);
-extern void func_001BFF20(It_43C890* out, Str_43C890* s);
-extern void func_001BFEE0(It_43C890* out, Str_43C890* s);
-extern int func_001BFE90(It_43C890* a, It_43C890* b);
-extern char* func_001BFED0(It_43C890* a);
-extern void func_001BFEB0(It_43C890* a);
+extern void std_basic_string_char_char_traits_char_begin(It_43C890* out, Str_43C890* s);
+extern void std_basic_string_char_char_traits_char_end(It_43C890* out, Str_43C890* s);
+extern int std_opNe_wrapiteratorR_wrapiteratorR(It_43C890* a, It_43C890* b);
+extern char* std_wrap_iterator_basic_string_char_charPtr_opMul(It_43C890* a);
+extern void std_wrap_iterator_basic_string_char_charPtr_opInc(It_43C890* a);
 extern void Tex_Release(int a, int b, int c);
 extern int GuiBitmapWidget_Load(O_43C890* o);
 extern int g_TextureMgr;
@@ -45,11 +45,11 @@ int GuiBitmapWidget_SetImage(O_43C890* o, char* name, int arg)
         String_CtorCStr_13B480(&t2, name);
         String_AssignString(&o->name, &t2);
         String_Dtor(&t2, 0);
-        func_001BFF20(&it, &o->name);
-        func_001BFEE0(&end, &o->name);
-        while (func_001BFE90(&it, &end)) {
-            if (*func_001BFED0(&it) >= 'a' && *func_001BFED0(&it) <= 'z') *func_001BFED0(&it) -= 0x20;
-            func_001BFEB0(&it);
+        std_basic_string_char_char_traits_char_begin(&it, &o->name);
+        std_basic_string_char_char_traits_char_end(&end, &o->name);
+        while (std_opNe_wrapiteratorR_wrapiteratorR(&it, &end)) {
+            if (*std_wrap_iterator_basic_string_char_charPtr_opMul(&it) >= 'a' && *std_wrap_iterator_basic_string_char_charPtr_opMul(&it) <= 'z') *std_wrap_iterator_basic_string_char_charPtr_opMul(&it) -= 0x20;
+            std_wrap_iterator_basic_string_char_charPtr_opInc(&it);
         }
     }
     if (o->flags & 8) return GuiBitmapWidget_Load(o);

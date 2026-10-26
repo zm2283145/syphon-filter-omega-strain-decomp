@@ -8,7 +8,7 @@ int AgentData_Construct(...);
 int Mem_Alloc(...);
 int ScriptMgr_CallFunction(...);
 int WeaponDb_Load(...);
-int func_0040E4C0(...);
+int cMemCard_Init(...);
 extern char D_0049A890;
 extern unsigned char D_004E9FF0;
 extern char D_00555070;
@@ -24,7 +24,7 @@ extern "C" void Awards_Init(char * arg0) {
     if (D_004E9FF0 == 0) {
         D_004E9FF0 = 1;
         WeaponDb_Load(F_(arg0, 0x1E0, int));
-        func_0040E4C0(&g_MemCard);
+        cMemCard_Init(&g_MemCard);
         ScriptMgr_CallFunction(&D_00555070, "awards::init", 0);
         var_s1 = 0;
         var_s0 = arg0;

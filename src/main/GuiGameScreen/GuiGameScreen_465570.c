@@ -62,7 +62,7 @@ extern char D_00587170[];
 char* Loc_LookupText(int key);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, void* d, int e);
 int GuiWidget_BroadcastEvent(void* self, int message, int first, int second);
-int func_00465A50(void* self, void* sender, int message, int first, int second);
+int GuiCommonCanvas_onMessage(void* self, void* sender, int message, int first, int second);
 int GuiSound_Stop(void* sender, char* tbl, int message);
 int GuiSound_Play(void* sender, char* tbl, int message);
 }
@@ -101,7 +101,7 @@ extern "C" int GuiFrontendCanvas_OnEvent(void* self, void* sender, int message, 
                 return GuiSound_Stop(sender, tbl, message);
         }
     }
-    return func_00465A50(self, sender, message, first, second);
+    return GuiCommonCanvas_onMessage(self, sender, message, first, second);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00465610 */
@@ -111,7 +111,7 @@ extern "C" int GuiFrontendCanvas_OnEvent(void* self, void* sender, int message, 
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int func_003A6650(int);                                 
+int SFOLibInit_RequestCancel(int);                                 
 int func_00465A40();                                  
 extern unsigned char g_DebugTriangle;
 
@@ -128,7 +128,7 @@ void GuiCanvas_HandlePad(int d0, char * arg1) {
             var_v1 = F_(arg1, 0x6, unsigned short) == 0;
         }
         if (var_v1 != 0) {
-            func_003A6650(1);
+            SFOLibInit_RequestCancel(1);
         }
         return;
     }

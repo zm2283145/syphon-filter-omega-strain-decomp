@@ -34,14 +34,14 @@ struct TVis {
 extern "C" {
 int TargetVis_GetSlotIndex(TVis* s, Tgt* t);
 void TargetVis_LeaveRecent(RList* l, Pred p);
-PIt* func_0022CAE0(PIt* it, PNode* n);
-PNode* func_0022CAF0(PList* l);
-PNode* func_0022CB00(void* n);
-void func_0022D650(PList* l, NPred p);
+PIt* std_list_deleter_LosReqElem_generic_iterator_ctor(PIt* it, PNode* n);
+PNode* std_list_deleter_LosReqElem_tail(PList* l);
+PNode* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_5(void* n);
+void std_list_imp_LosReqElem_remove_if(PList* l, NPred p);
 }
 
-static inline PNode* PBegin(PList* l) { return func_0022CB00(&l->sprev)->next; }
-static inline PNode* PEnd(PList* l) { PIt t; func_0022CAE0(&t, func_0022CAF0(l)); return t.n; }
+static inline PNode* PBegin(PList* l) { return details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_5(&l->sprev)->next; }
+static inline PNode* PEnd(PList* l) { PIt t; std_list_deleter_LosReqElem_generic_iterator_ctor(&t, std_list_deleter_LosReqElem_tail(l)); return t.n; }
 
 extern "C" int TargetVis_Unregister(TVis* self, Tgt* t)
 {
@@ -57,7 +57,7 @@ extern "C" int TargetVis_Unregister(TVis* self, Tgt* t)
     { Eq eq; HndT h(t); TargetVis_LeaveRecent(&self->recent, Pred(eq, h)); }
     for (PNode* it = PBegin(&self->pairs); it != PEnd(&self->pairs); it = it->next) {
         if (slot == it->v.a || slot == it->v.b) {
-            { NEq eq; func_0022D650(&self->pairs, NPred(eq, it->v)); }
+            { NEq eq; std_list_imp_LosReqElem_remove_if(&self->pairs, NPred(eq, it->v)); }
             break;
         }
     }

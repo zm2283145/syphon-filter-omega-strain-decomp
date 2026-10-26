@@ -97,9 +97,9 @@ extern char D_00538C68;
 void GuiWidget_Draw(Self* self);
 int Font_GetLineHeight(Font* f);
 LineIter List_Begin(LineList*);
-LineIter func_0043DB60(LineList*);
-void func_0043DB70(LineIter*, const LineIter&);
-void func_0043DB50(LineIter*, const LineIter&);
+LineIter std_list_charPtr_end(LineList*);
+void std_list_charPtr_generic_iterator_ctor(LineIter*, const LineIter&);
+void cLListIterator_charPtr_ctor(LineIter*, const LineIter&);
 void TextObj_SetText(Box* b, char* text);
 void TextObj_Draw(Box* b);
 }
@@ -135,8 +135,8 @@ extern "C" void GuiMultiLineText_Draw(Self* self)
             saved.w = f->a;
         }
         self->font->SetColor(self->color);
-        func_0043DB70(&it, List_Begin(&self->lines));
-        for (n = it; func_0043DB50(&end, func_0043DB60(&self->lines)), n.node != end.node; n.node = n.node->next) {
+        std_list_charPtr_generic_iterator_ctor(&it, List_Begin(&self->lines));
+        for (n = it; cLListIterator_charPtr_ctor(&end, std_list_charPtr_end(&self->lines)), n.node != end.node; n.node = n.node->next) {
             if (i++ < self->scrollPos) continue;
             self->textBox->SetPos((int)self->x, y);
             TextObj_SetText(self->textBox, n.node->text);

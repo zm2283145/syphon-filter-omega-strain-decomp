@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int* func_003D6C80(PtrVec* v, int i) {
+int* std_vector_FieldDefPtr_opIndex_uint(PtrVec* v, int i) {
     return v->data + i;
 }

@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_001741A0(char* self) {
+void* std_vector_deleter_cObjectId_data_void(char* self) {
     return self + 8;
 }

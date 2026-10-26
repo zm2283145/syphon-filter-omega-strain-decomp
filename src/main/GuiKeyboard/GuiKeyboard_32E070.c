@@ -24,7 +24,7 @@ DEFINE_GUARDED_NEW_CTOR(GuiKeyboard_Create, 0xEC, D_004B8D60, GuiKeyboard_ctor)
 
 #include "types.h"
 
-int func_0032E120(void) {
+int gsmCreate(void) {
     return 0;
 }
 #pragma pop /* merge_units */

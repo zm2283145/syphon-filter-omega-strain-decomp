@@ -16,7 +16,7 @@
 #pragma cplusplus on
 
 /* Deleting destructor: restore the vtable chain, optionally delete. */
-DEFINE_VTABLE_CHAIN_DTOR2(func_003A6120, D_004DFB70, D_004DFAA0)
+DEFINE_VTABLE_CHAIN_DTOR2(cSplineDefinition_dtor, D_004DFB70, D_004DFAA0)
 #pragma pop /* merge_units */
 /* merge_units: end func_003A6120 */
 
@@ -25,6 +25,6 @@ DEFINE_VTABLE_CHAIN_DTOR2(func_003A6120, D_004DFB70, D_004DFAA0)
 #pragma cplusplus on
 
 /* Deleting destructor: restore the vtable chain, optionally delete. */
-DEFINE_VTABLE_CHAIN_DTOR2(func_003A6180, D_004DFB90, D_004DFAA0)
+DEFINE_VTABLE_CHAIN_DTOR2(cSprayDefinition_dtor, D_004DFB90, D_004DFAA0)
 #pragma pop /* merge_units */
 /* merge_units: end func_003A6180 */

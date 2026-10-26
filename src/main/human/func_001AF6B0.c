@@ -6,26 +6,26 @@
 
 #include "types.h"
 
-void* func_001AF6B0(char* self) {
+void* cSkeletonBBoxContribution_ContributionPointOffset(char* self) {
     return self + 16;
 }
 
-float func_001AF6C0(char* self) {
+float cSkeletonBBoxContribution_ContributionPointRadius(char* self) {
     return *(float*)(self + 8);
 }
 
-int func_001AF6D0(char* self) {
+int cSkeletonBBoxContribution_BoneIndex(char* self) {
     return *(int*)(self + 0);
 }
 
-int func_001AF6E0(char* self) {
+int cArray_cSkeletonBBoxContributionPtr_ConstIterator_opMul(char* self) {
     return *(int*)(self + 0);
 }
 
-void func_001AF6F0(Iter* out, PtrVec* v) {
+void cArray_cSkeletonBBoxContributionPtr_End(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
 
-void func_001AF710(Iter* out, PtrVec* v) {
+void cArray_cSkeletonBBoxContributionPtr_Begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }

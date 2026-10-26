@@ -8,7 +8,7 @@
 extern Iter* List_InsertBefore(Iter* out, Tree* t, Iter* hint, int value);
 
 /* map insert(value): inserts with an end() hint, result iterator in out[1]. */
-Iter* func_0015B1F0(Tree* t, int value) {
+Iter* std_list_cEnabledListItemPtr_push_back(Tree* t, int value) {
     Iter it[2];
 
     it[0].p = &t->header;

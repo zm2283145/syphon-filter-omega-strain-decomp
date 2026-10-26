@@ -8,7 +8,7 @@ extern char g_dataRoot[];
 extern char FrontEndScene_skelHogFmt[];
 extern char g_skelManager[];
 extern int sprintf(char* buf, const char* fmt, ...);
-extern int func_003F96B0(void* archives, char* path, int b);
+extern int cHogList_OpenProtected(void* archives, char* path, int b);
 extern int Skel_Load(int* out, void* skelManager, char* name, int hog);
 
 /* Opens COMMON\SKEL.HOG into `archives` and loads the female and male skeletons
@@ -20,7 +20,7 @@ void FrontEndScene_LoadSkeletons(FrontEndScene* self, void* archives) {
     int hog;
     char** name;
     sprintf(path, FrontEndScene_skelHogFmt, g_dataRoot);
-    hog = func_003F96B0(archives, path, 0);
+    hog = cHogList_OpenProtected(archives, path, 0);
     for (name = names; **name != 0; name++) {
         Skel_Load(&skel, g_skelManager, *name, hog);
     }

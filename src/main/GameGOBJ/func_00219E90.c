@@ -4,5 +4,5 @@
 
 #include "gobj_types.h"
 
-void func_00219E90(void) {
+void cFacingGOBJ_CriticalNextFrame(void) {
 }

@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-int* func_003D7370(PtrVec* v, int i) {
+int* std_vector_FieldDefPtr_opIndex_uint_2(PtrVec* v, int i) {
     return v->data + i;
 }
 #pragma pop /* merge_units */
@@ -30,14 +30,14 @@ void PtrVector_Resize(void* v, int n, int* val);
 typedef struct { int pad0; int count; int* data; unsigned char owns; } V7380;
 typedef struct { int x0; int x4; V7380 vec; int x18; } O7380;
 extern "C" {
-void func_003D6010(V7380* v);
+void std_vector_intPtr_ctor(V7380* v);
 }
 static inline int* At(V7380* v, unsigned int i) { return &v->data[i]; }
-extern "C" O7380* func_003D7380(O7380* o, int x0, int x4, int x18, int n, int* src)
+extern "C" O7380* MemberFunc_ctor(O7380* o, int x0, int x4, int x18, int n, int* src)
 {
     V7380* v; int i; int zero;
     v = &o->vec;
-    func_003D6010(v);
+    std_vector_intPtr_ctor(v);
     v->owns = 1;
     o->x0 = x0;
     o->x4 = x4;
@@ -66,7 +66,7 @@ extern char D_004BD3A0[];
 extern char D_004BD3A8[];
 static void * const dat_004938B0[8] = { (void*)0x0, (void*)D_004BD378, (void*)D_004BD380, (void*)D_004BD388, (void*)D_004BD390, (void*)D_004BD398, (void*)D_004BD3A0, (void*)D_004BD3A8 };
 
-int func_003D7510(int arg0) {
+int cScriptBase_getClassName(int arg0) {
     int var_a0;
 
     var_a0 = arg0;

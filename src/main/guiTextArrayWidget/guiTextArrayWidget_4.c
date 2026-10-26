@@ -22,7 +22,7 @@ DEFINE_PTRVEC_INSERT(Vector_Insert_427B30, 0x1800000, 0xC00000, D_004BF830, D_00
 
 DEFINE_RESIZE_ELEMENT(Elem48_00428000, 48)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_00428000, Elem48_00428000, func_00428450, func_004282A0)
+DEFINE_VECTOR_RESIZE(std_vector_imp_tTextElement_resize, Elem48_00428000, std_vector_imp_tTextElement_insert, std_vector_imp_tTextElement_erase)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_00428000 */

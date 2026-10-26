@@ -49,14 +49,14 @@ static inline void merge_flush_func_0018D0F0(void) {}
  */
 
 
-extern void func_001CAE10(void*);
+extern void cHumanIkRoutine_StopUpperBodyAnimation(void*);
 
 /* Release the secondary component if flagged (bit 8 of flags324C), then clear the flag. */
 void Actor_ReleaseSecondary(Actor* actor) {
     void* secondary = actor->secondary;
 
     if (secondary != 0 && ((actor->flags324C >> 8) & 1) != 0) {
-        func_001CAE10(secondary);
+        cHumanIkRoutine_StopUpperBodyAnimation(secondary);
         actor->flags324C &= ~0x100;
     }
 }

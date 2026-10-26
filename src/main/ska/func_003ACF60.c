@@ -7,7 +7,7 @@ extern void Event_Construct(Msg* m, void* type);
 extern void Event_Send(Msg* m, void* target, int immediate);
 extern void cMessage_dtor(Msg* m, int flags);
 /* Sends an immediate message carrying s->value to s->target. */
-void func_003ACF60(S* s)
+void cSkaAnimEvent_Trigger(S* s)
 {
     Msg msg;
     int value = s->value;

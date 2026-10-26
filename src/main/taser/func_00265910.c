@@ -1,5 +1,5 @@
 #pragma cplusplus on
-/* func_00265910: LOS ray from just behind the first trail segment to the last one; returns the hit flag */
+/* cAirTaser_LosBlocked: LOS ray from just behind the first trail segment to the last one; returns the hit flag */
 #include "types.h"
 #include "vslot_pad.h"
 #pragma inline_depth(8)
@@ -62,7 +62,7 @@ extern char g_LosCheckService[];
 void Event_Construct(void*, void*);
 void cMessage_dtor(void*, int);
 Svc* Service_Lookup(void* a, void* b);
-int func_00265910(HeldItem* h);
+int cAirTaser_LosBlocked(HeldItem* h);
 }
 
 #pragma define_section MSG_DTOR ".dtors_drop" far_absolute RX
@@ -100,7 +100,7 @@ struct LosMsg : MsgB {
     __declspec(weak) __declspec(MSG_DTOR) ~LosMsg() { vtable = D_004D9180; }
 };
 
-int func_00265910(HeldItem* h)
+int cAirTaser_LosBlocked(HeldItem* h)
 {
     int hit = 0;
     if (h->idx > 1) {

@@ -66,7 +66,7 @@ void GuiMissionStatistics_Init(S34FBA0* o)
 #include "loose03_types.h"
 
 extern char D_004DEE70[];       /* GuiMissionStatistics vtable */
-extern int func_0034FE40(Member34FE40*);
+extern int std_vector_MissionStats_ctor(Member34FE40*);
 extern int GuiPersonnelScreen_ctor(GuiMissionStatistics*);
 
 /* GuiMissionStatistics constructor. */
@@ -76,7 +76,7 @@ GuiMissionStatistics* GuiMissionStatistics_ctor(GuiMissionStatistics* self) {
     GuiPersonnelScreen_ctor(self);
     member = &self->unk70;
     self->base.base.vtable = D_004DEE70;
-    func_0034FE40(member);
+    std_vector_MissionStats_ctor(member);
     member->unk0C = 1;
     self->unk6C = 0;
     return self;
@@ -89,7 +89,7 @@ GuiMissionStatistics* GuiMissionStatistics_ctor(GuiMissionStatistics* self) {
 #pragma cplusplus on
 #include "member_dtor_chain.h"
 
-DEFINE_MEMBER_DTOR_CHAIN(func_0034FD10, func_003513B0)
+DEFINE_MEMBER_DTOR_CHAIN(cArray_MissionStats_dtor, std_vector_deleter_MissionStats_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0034FD10 */
 
@@ -98,7 +98,7 @@ DEFINE_MEMBER_DTOR_CHAIN(func_0034FD10, func_003513B0)
 #pragma cplusplus on
 #include "base_dtor_chain.h"
 
-DEFINE_BASE_DTOR_CHAIN(func_0034FD80, func_003513B0)
+DEFINE_BASE_DTOR_CHAIN(std_vector_MissionStats_dtor, std_vector_deleter_MissionStats_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0034FD80 */
 

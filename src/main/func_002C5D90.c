@@ -11,7 +11,7 @@ typedef struct {
     unsigned char b38, b39, b3A, b3B, b3C;
 } S2C5D90;
 /* Member-wise copy (assignment operator). */
-S2C5D90* func_002C5D90(S2C5D90* d, S2C5D90* s)
+S2C5D90* cTargetAwareness_opAssign(S2C5D90* d, S2C5D90* s)
 {
     { float x = s->a.x; float y = s->a.y; d->a.x = x; d->a.y = y; d->a.z = s->a.z; }
     VCopyF(&d->q, &s->q);

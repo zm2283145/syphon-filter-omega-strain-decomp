@@ -14,7 +14,7 @@ static __inline__ void SetGP_B488(void *gp)
     /* $gp restore: register move only expressible in asm */
     __asm__ volatile("move $gp, %0" : : "r"(gp) : "memory");
 }
-int func_0010B488(ObjB488 *o, int *id)
+int _dispatchMpegCallback(ObjB488 *o, int *id)
 {
     int r = 0;
     if (o != 0) {

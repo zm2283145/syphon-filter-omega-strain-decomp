@@ -4,6 +4,6 @@
 
 #include "gobj_types.h"
 
-void func_00396590(PtrVec* v) {
+void cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Clear(PtrVec* v) {
     v->count = 0;
 }

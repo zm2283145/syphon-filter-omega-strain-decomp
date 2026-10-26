@@ -32,9 +32,9 @@ typedef struct ContactList {
     ContactRec recs[9];      /* 0x10 */
 } ContactList;
 
-extern void func_001EAF30(void* dst, void* src);
-extern void func_001EAEC0(void* dst, void* src);
-extern void func_001EAEB0(void* dst, void* src);
+extern void cHumanCollisionRoutine_cIntermediateLedgeSearchInfo_cMasks_opAssign(void* dst, void* src);
+extern void cCollisionEdge_opAssign(void* dst, void* src);
+extern void cBitArray_19_opAssign(void* dst, void* src);
 extern void Vec4_Copy(Q* dst, Q* src);
 
 /* Appends a copy of src to the contact list (max 9 entries). */
@@ -42,14 +42,14 @@ void ContactList_Add(ContactList* list, ContactRec* src) {
     if ((unsigned int)list->count < 9) {
         ContactRec* rec = &list->recs[list->count];
         rec->kind = src->kind;
-        func_001EAF30(rec->part04, src->part04);
+        cHumanCollisionRoutine_cIntermediateLedgeSearchInfo_cMasks_opAssign(rec->part04, src->part04);
         rec->a = src->a;
         rec->b = src->b;
         rec->f30 = src->f30;
         rec->f31 = src->f31;
         rec->f32 = src->f32;
-        func_001EAEC0(rec->part40, src->part40);
-        func_001EAEB0(rec->partA0, src->partA0);
+        cCollisionEdge_opAssign(rec->part40, src->part40);
+        cBitArray_19_opAssign(rec->partA0, src->partA0);
         Vec4_Copy(&rec->q[0], &src->q[0]);
         Vec4_Copy(&rec->q[1], &src->q[1]);
         Vec4_Copy(&rec->q[2], &src->q[2]);

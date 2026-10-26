@@ -28,12 +28,12 @@ extern float D_0049F720;
 void Quat_SetIdentity(V* q);
 void Vec4_SetOrigin(V* v);
 void Placement_GetIdentity(Plc* p, V* q, V* v);
-void func_001DE2D0(MIter* out, void* t, const Key* k);
-void func_001CEE10(MIter* out, void* t);
-MIter* func_001CEE00(MIter* d, MIter* s);
-void* func_001CAB40(void* base, int index);
+void std_tree_pair_cWeaponSlotPair_value_compare_find(MIter* out, void* t, const Key* k);
+void std_map_cWeaponSlotPair_cIkTarget_LeftRight_end(MIter* out, void* t);
+MIter* cAssocArray_cWeaponSlotPair_cIkTarget_LeftRight_Iterator_ctor(MIter* d, MIter* s);
+void* cArray_FixedSize_cIkTargetWithSplinedTransition_2_opIndex(void* base, int index);
 void SecondaryAim_SetLayerSource(void* self, float w, Src* src);
-void func_001CEA90(Self* s, void* aim);
+void cDrawAndHolsterWeapon_ActionManager_StartTransitionIfNecessary(Self* s, void* aim);
 }
 static inline void MkKey(Key* k, int a, int b)
 {
@@ -55,7 +55,7 @@ static inline Plc Ident()
     }
     return D_00497F00;
 }
-void func_001CEA90(Self* s, void* aim)
+void cDrawAndHolsterWeapon_ActionManager_StartTransitionIfNecessary(Self* s, void* aim)
 {
     if (s->active) {
         Src* src = 0;
@@ -70,10 +70,10 @@ void func_001CEA90(Self* s, void* aim)
             MIter f;
             MIter t;
             MkKey(&k, s->b2, s->b3);
-            func_001DE2D0(&f, D_004F2D88, &k);
+            std_tree_pair_cWeaponSlotPair_value_compare_find(&f, D_004F2D88, &k);
             it = f;
-            func_001CEE10(&t, D_004F2D88);
-            func_001CEE00(&e, &t);
+            std_map_cWeaponSlotPair_cIkTarget_LeftRight_end(&t, D_004F2D88);
+            cAssocArray_cWeaponSlotPair_cIkTarget_LeftRight_Iterator_ctor(&e, &t);
             if (Ne(it, e)) {
                 mode = s->b5;
                 src = Deref(it)->v;
@@ -91,25 +91,25 @@ void func_001CEA90(Self* s, void* aim)
         }
         if (src) {
             if (mode == 0 || mode == 2) {
-                SecondaryAim_SetLayerSource(func_001CAB40(aim, 0), D_0049F720, src);
+                SecondaryAim_SetLayerSource(cArray_FixedSize_cIkTargetWithSplinedTransition_2_opIndex(aim, 0), D_0049F720, src);
             } else {
                 Src t;
                 Plc p = Ident();
                 t.a = p.rot;
                 t.b = p.pos;
                 t.c = 0x13;
-                SecondaryAim_SetLayerSource(func_001CAB40(aim, 0), D_0049F720, &t);
+                SecondaryAim_SetLayerSource(cArray_FixedSize_cIkTargetWithSplinedTransition_2_opIndex(aim, 0), D_0049F720, &t);
             }
             if (mode == 1 || mode == 2) {
                 Src* s1p = src + 1;
-                SecondaryAim_SetLayerSource(func_001CAB40(aim, 1), D_0049F720, s1p);
+                SecondaryAim_SetLayerSource(cArray_FixedSize_cIkTargetWithSplinedTransition_2_opIndex(aim, 1), D_0049F720, s1p);
             } else {
                 Src t;
                 Plc p = Ident();
                 t.a = p.rot;
                 t.b = p.pos;
                 t.c = 0x14;
-                SecondaryAim_SetLayerSource(func_001CAB40(aim, 1), D_0049F720, &t);
+                SecondaryAim_SetLayerSource(cArray_FixedSize_cIkTargetWithSplinedTransition_2_opIndex(aim, 1), D_0049F720, &t);
             }
         }
         s->active = 0;

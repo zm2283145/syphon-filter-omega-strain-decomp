@@ -6,19 +6,19 @@ typedef struct { char pad[0x1C]; char ref[8]; int owner; unsigned char b28; unsi
 typedef struct { char pad[4]; int owner; char pad2[0x14]; Sess1F00* sess; } Hdl1F00;
 extern unsigned char D_005723C8;
 extern Obj1F00* Object_LookupById(int* id);
-extern void func_002C4EA0(void* ref, Obj1F00* o);
-extern void func_00316980(Sess1F00* s, Obj1F00* o);
+extern void cAimWeapon_Creation(void* ref, Obj1F00* o);
+extern void cTargetInfo_Creation(Sess1F00* s, Obj1F00* o);
 extern Ent1F00* NetMap_Lookup(int);
 extern Ent1F00* NetMap_BindReceiver(int, void*, int);
 #pragma push
 #pragma opt_common_subs off
 #pragma opt_propagation off
-void func_002D1F00(void* recv, int id)
+void cNetHuman_NetHumanCreationCallback(void* recv, int id)
 {
     struct { int pad; int oid; Hdl1F00* h; } sl;
     if (!D_005723C8)
         D_005723C8 = 1;
-    if (func_002EB650((NetOwnerHdl**)&sl.h, id) == 0) {
+    if (NetGetObject((NetOwnerHdl**)&sl.h, id) == 0) {
         Obj1F00* r;
         Sess1F00* s = sl.h->sess;
         s->b29 = 0;
@@ -28,8 +28,8 @@ void func_002D1F00(void* recv, int id)
         r = Object_LookupById(&sl.oid);
         if (r) {
             Obj1F00* o = r;
-            func_002C4EA0(s->ref, o);
-            func_00316980(s, o);
+            cAimWeapon_Creation(s->ref, o);
+            cTargetInfo_Creation(s, o);
             o->link = s;
         } else {
             Ent1F00* e = NetMap_Lookup(s->netId);

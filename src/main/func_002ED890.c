@@ -7,6 +7,6 @@
 #include "types.h"
 #include "loose02_types.h"
 
-int func_002ED890(WordFields* self) {
+int GridGetPrev(WordFields* self) {
     return self->unk00;
 }

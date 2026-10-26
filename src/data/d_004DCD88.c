@@ -6,11 +6,11 @@ extern void cNetGrenadeMsg_dtor();
 extern void cNetGrenadeMsg_v01();
 extern void cNetGrenadeMsg_v04();
 extern void cNetGrenadeMsg_v05();
+extern void cNetMsg_Pack();
 extern void cNetTaserMsg_dtor();
 extern void cNetTaserMsg_v01();
 extern void cNetTaserMsg_v04();
 extern void cNetTaserMsg_v05();
-extern void func_002823E0();
 
 void *D_004DCD88[6] __attribute__((aligned(8))) = {
     0, 0, &Bullet_OnWaterCrossing, 0,
@@ -19,10 +19,10 @@ void *D_004DCD88[6] __attribute__((aligned(8))) = {
 
 void *D_004DCDA0[8] = {
     0, 0, &cNetTaserMsg_dtor, &cNetTaserMsg_v01,
-    &func_002823E0, &Message_GetScriptTypeKey, &cNetTaserMsg_v04, &cNetTaserMsg_v05,
+    &cNetMsg_Pack, &Message_GetScriptTypeKey, &cNetTaserMsg_v04, &cNetTaserMsg_v05,
 };
 
 void *D_004DCDC0[8] = {
     0, 0, &cNetGrenadeMsg_dtor, &cNetGrenadeMsg_v01,
-    &func_002823E0, &Message_GetScriptTypeKey, &cNetGrenadeMsg_v04, &cNetGrenadeMsg_v05,
+    &cNetMsg_Pack, &Message_GetScriptTypeKey, &cNetGrenadeMsg_v04, &cNetGrenadeMsg_v05,
 };

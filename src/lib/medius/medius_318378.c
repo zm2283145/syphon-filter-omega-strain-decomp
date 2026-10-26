@@ -6,7 +6,7 @@ typedef struct { char pad[0x2C]; short flag; char pad2E[0x38 - 0x2E]; float valu
 typedef struct { char pad[0x48]; Inner* inner; } Outer;
 
 /* Sets inner->value and marks it dirty. */
-void func_00318378(Outer* o, float value)
+void NellySetWhisperFactorSase3200(Outer* o, float value)
 {
     Inner* in = o->inner;
     in->flag = 1;

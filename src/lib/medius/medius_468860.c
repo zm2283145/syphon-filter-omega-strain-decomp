@@ -4,7 +4,7 @@ extern int D_00598668;
 unsigned int D_00497D98[1] = { 0x0 };
 extern int Medius_TerminateString(char *, int);
 extern int Net_SendLocked(int, int, int, int, int, int, void *);
-int func_00468860(char *a, int b)
+int MediusVersionServer(char *a, int b)
 {
 
     if (D_00497CC0 != 1) return -0xF;

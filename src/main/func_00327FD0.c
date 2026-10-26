@@ -18,7 +18,7 @@ extern char D_004B88F0[];
 extern char D_004A7520[];
 void GuiWidget_Init(S327FD0* self);
 W327FD0* GuiWidget_FindChildByName(S327FD0* a, char* b);
-void func_0041C0F0(W327FD0* w, int a);
+void GuiTextWidget_SetDisableWrap(W327FD0* w, int a);
 }
 extern "C" void GuiSlideShow_Init(S327FD0* self)
 {
@@ -31,7 +31,7 @@ extern "C" void GuiSlideShow_Init(S327FD0* self)
     p = GuiWidget_FindChildByName(self, D_00491540);
     self->w60 = (p && p->IsA(D_004A7520)) ? p : 0;
     if (self->w60)
-        func_0041C0F0(self->w60, 1);
+        GuiTextWidget_SetDisableWrap(self->w60, 1);
     p = GuiWidget_FindChildByName(self, D_00491550);
     self->w64 = (p && p->IsA(D_004A7520)) ? p : 0;
     p = GuiWidget_FindChildByName(self, D_00491558);

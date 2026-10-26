@@ -7,8 +7,8 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern char* func_002071B0(void*);
+extern char* details_compressed_pair_imp_rep_s_2_first_void(void*);
 
-char* func_00207260(void* self) {
-    return func_002071B0(self) + 4;
+char* std_basic_string_char_char_traits_char_long_size(void* self) {
+    return details_compressed_pair_imp_rep_s_2_first_void(self) + 4;
 }

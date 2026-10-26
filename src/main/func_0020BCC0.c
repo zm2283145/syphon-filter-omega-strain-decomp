@@ -5,12 +5,12 @@ typedef struct Rec14 {
     char b[0x14];
 } Rec14;
 
-extern void func_0020BD30(Rec14*, void*);
+extern void cSkaSwitchItem_opAssign(Rec14*, void*);
 
 /* Constructs count records from value. */
-void func_0020BCC0(Rec14* p, int count, void* value) {
+void std_fill_n_cSkaSwitchItem_int_fill_n(Rec14* p, int count, void* value) {
     while (count != 0) {
-        func_0020BD30(p, value);
+        cSkaSwitchItem_opAssign(p, value);
         p++;
         count--;
     }

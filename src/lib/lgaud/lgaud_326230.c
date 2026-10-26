@@ -6,13 +6,13 @@
 
 /* merge_units: begin func_00326230 */
 extern void GetOsdConfigParam(void *);
-extern int func_003260F0(void);
+extern int IsT10K(void);
 extern short D_004914A0;
-int func_00326230(void)
+int sceScfGetTimeZone(void)
 {
     int c;
     int r;
-    if (func_003260F0()) {
+    if (IsT10K()) {
         r = D_004914A0;
     } else {
         GetOsdConfigParam(&c);
@@ -26,11 +26,11 @@ int func_00326230(void)
 extern int GetOsdConfigParam2(void *, int, int);
 typedef struct { unsigned char lo:4; unsigned char b4:1; unsigned char b5:1; unsigned char top:2; } Cfg6280;
 extern unsigned char D_004914A3;
-int func_00326280(void)
+int sceScfGetDateNotation(void)
 {
     struct { unsigned int c; unsigned char b[4]; } s;
     int r;
-    if (func_003260F0()) {
+    if (IsT10K()) {
         r = D_004914A3;
     } else {
         GetOsdConfigParam(&s.c);
@@ -46,11 +46,11 @@ int func_00326280(void)
 
 /* merge_units: begin func_003262E8 */
 extern unsigned char D_004914A6;
-int func_003262E8(void)
+int sceScfGetSummerTime(void)
 {
     struct { unsigned int c; unsigned char b[4]; } s;
     int r;
-    if (func_003260F0()) {
+    if (IsT10K()) {
         r = D_004914A6;
     } else {
         GetOsdConfigParam(&s.c);
@@ -66,11 +66,11 @@ int func_003262E8(void)
 
 /* merge_units: begin func_00326350 */
 extern unsigned char D_004914A7;
-int func_00326350(void)
+int sceScfGetTimeNotation(void)
 {
     struct { unsigned int c; unsigned char b[4]; } s;
     int r;
-    if (func_003260F0()) {
+    if (IsT10K()) {
         r = D_004914A7;
     } else {
         GetOsdConfigParam(&s.c);

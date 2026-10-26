@@ -6,14 +6,14 @@
 
 #include "types.h"
 
-void func_002F3228(int a0, int a1) {
+void SetPlayerStatus(int a0, int a1) {
     int tmp0;
 
     tmp0 = *(int*)((char*)a0 + 2128);
     *(int*)((char*)a0 + 2128) = (tmp0 | a1);
 }
 
-void func_002F3238(int a0, int a1) {
+void ResetPlayerStatus(int a0, int a1) {
     int tmp0;
 
     tmp0 = *(int*)((char*)a0 + 2128);

@@ -20,16 +20,16 @@ int sprintf(void *, const void *, ...);
 
 
 /* Iterator inequality. */
-int func_00380C90(TexListIter* a, TexListIter* b) {
+int opNe_cLListIteratorR_cLListIteratorR_7(TexListIter* a, TexListIter* b) {
     return a->node != b->node;
 }
 
-void func_00380CB0(Iter* out, Tree* t) {
+void cLList_int_End(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
 /* Post-increment: returns the current node and advances it. */
-void func_00380CC0(TexListIter* out, TexListIter* it) {
+void cLListIterator_int_opInc(TexListIter* out, TexListIter* it) {
     TexListNode* node = it->node;
 
     it->node = node->next;
@@ -45,7 +45,7 @@ static inline void merge_flush_func_00380C90(void) {}
 extern void List_Erase_383560(int* out, void* a, int* b);
 
 /* Calls List_Erase_383560 with a copy of *b and stores the produced word in *out. */
-void func_00380CE0(int* out, void* a, int* b) {
+void cLList_int_Erase(int* out, void* a, int* b) {
     int value;
     int result;
     value = *b;
@@ -80,14 +80,14 @@ static inline void merge_flush_func_00380D20(void) {}
 
 /* merge_units: begin func_00380D40 */
 #pragma push /* merge_units */
-extern void func_0036DFB0(void* obj, char* name, void* obj2);
+extern void cFileMan_EncodeFilename_charP_cFileManR(void* obj, char* name, void* obj2);
 extern void TexMan_LoadNewTexture(void* self, void* obj, __int128* name);
 /* Formats a 16-byte name into a buffer, applies it to obj, then forwards to TexMan_LoadNewTexture. */
 void Tex_FindByName(void* self, __int128 name, void* obj)
 {
     char buf[80];
     sprintf(buf, "%s.TDX", &name);
-    func_0036DFB0(obj, buf, obj);
+    cFileMan_EncodeFilename_charP_cFileManR(obj, buf, obj);
     TexMan_LoadNewTexture(self, obj, &name);
 }
 /* merge_units: generate this block's code under its own pragmas */

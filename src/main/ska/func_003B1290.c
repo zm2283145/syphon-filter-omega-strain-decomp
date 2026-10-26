@@ -1,6 +1,6 @@
 #pragma cplusplus on
 #include "types.h"
-/* func_003B1290: add a clip's contribution to a channel, merging it into an existing entry for the same clip */
+/* cSkaPlaybackGroup_Add: add a clip's contribution to a channel, merging it into an existing entry for the same clip */
 struct V4 { float x, y, z, w; V4() {} } __attribute__((aligned(16)));
 typedef struct { char pad[0x45]; unsigned char b45; } Obj;
 typedef struct { Obj* id; float weight; unsigned char active; char pad[7]; V4 v; } Ent;
@@ -20,30 +20,30 @@ typedef struct Contrib {
     unsigned char f32;
 } Contrib;
 extern "C" {
-Ent** func_003B14D0(EVec* v);
-Ent* func_003B14A0(Ent* d, Ent* s);
-V4 func_003B1450(Ent* e);
+Ent** std_vector_deleter_cSkaPlaybackItem_data(EVec* v);
+Ent* cSkaPlaybackItem_opAssign(Ent* d, Ent* s);
+V4 cSkaPlaybackItem_GetSummedOffsetRootRotation(Ent* e);
 V4 Vec4_Add_3B1420(V4* a, V4* b);
 V4* Quat_Assign(V4* d, V4* s);
-int func_003B7470(EVec* v, Ent* pos, int n, Ent* value);
-void func_003B1290(Contrib* c, Ent* e, float k);
+int std_vector_imp_cSkaPlaybackItem_insert(EVec* v, Ent* pos, int n, Ent* value);
+void cSkaPlaybackGroup_Add(Contrib* c, Ent* e, float k);
 }
 static inline bool Ne(Ent* a, Ent* b) { return !(a == b); }
-void func_003B1290(Contrib* c, Ent* e, float k)
+void cSkaPlaybackGroup_Add(Contrib* c, Ent* e, float k)
 {
     bool found = 0;
     float w = e->weight;
     c->active = 1;
     c->sum += w;
     c->wsum += k * w;
-    Ent* it = *func_003B14D0(&c->vec);
-    Ent* end = *func_003B14D0(&c->vec) + c->vec.count;
+    Ent* it = *std_vector_deleter_cSkaPlaybackItem_data(&c->vec);
+    Ent* end = *std_vector_deleter_cSkaPlaybackItem_data(&c->vec) + c->vec.count;
     while (Ne(it, end)) {
         if (it->id == e->id) {
             if (it->weight == 0.0f) {
-                func_003B14A0(it, e);
+                cSkaPlaybackItem_opAssign(it, e);
             } else {
-                Quat_Assign(&it->v, &Vec4_Add_3B1420(&func_003B1450(it), &func_003B1450(e)));
+                Quat_Assign(&it->v, &Vec4_Add_3B1420(&cSkaPlaybackItem_GetSummedOffsetRootRotation(it), &cSkaPlaybackItem_GetSummedOffsetRootRotation(e)));
                 it->weight += e->weight;
                 it->active = 0;
             }
@@ -53,7 +53,7 @@ void func_003B1290(Contrib* c, Ent* e, float k)
         it++;
     }
     if (!found) {
-        func_003B7470(&c->vec, c->vec.data + c->vec.count, 1, e);
+        std_vector_imp_cSkaPlaybackItem_insert(&c->vec, c->vec.data + c->vec.count, 1, e);
         c->f32 = c->f32 && e->id->b45;
     }
 }

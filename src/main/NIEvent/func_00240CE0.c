@@ -20,7 +20,7 @@ struct E_00240CE0 {
     }
 };
 struct V_00240CE0 { unsigned int cap; unsigned int count; E_00240CE0* data; };
-extern "C" E_00240CE0* func_00240CE0(V_00240CE0* self, E_00240CE0* first, E_00240CE0* last)
+extern "C" E_00240CE0* std_vector_imp_VectorKey_erase(V_00240CE0* self, E_00240CE0* first, E_00240CE0* last)
 {
     if (first == last)
         return first;

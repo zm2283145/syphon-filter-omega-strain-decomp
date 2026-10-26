@@ -6,13 +6,13 @@
 
 /* merge_units: begin func_002F5270 */
 extern int GetThreadId(void);
-extern void func_0010CEE0(unsigned short, void *, int);
+extern void SetAlarm(unsigned short, void *, int);
 extern void SleepThread(void);
-extern void func_002F5258(void);
-void func_002F5270(int a)
+extern void delay_wakeup(void);
+void WaitTimeMs(int a)
 {
     int s = GetThreadId();
-    func_0010CEE0(a, func_002F5258, s);
+    SetAlarm(a, delay_wakeup, s);
     SleepThread();
 }
 /* merge_units: end func_002F5270 */
@@ -20,7 +20,7 @@ void func_002F5270(int a)
 /* merge_units: begin func_002F52A8 */
 extern void *memset(void *, int, unsigned int);
 extern int Net_AllocZeroed(int *, unsigned long);
-int func_002F52A8(int *s, unsigned int n, int x)
+int rt_circ_buf_create(int *s, unsigned int n, int x)
 {
     int r;
     if (s == 0) return 2;
@@ -39,11 +39,11 @@ int func_002F52A8(int *s, unsigned int n, int x)
 /* merge_units: end func_002F52A8 */
 
 /* merge_units: begin func_002F5348 */
-extern int func_002FB3C0(int *);
-int func_002F5348(int *p)
+extern int rt_memory_free(int *);
+int rt_circ_buf_destroy(int *p)
 {
     if (p == 0) return 2;
-    if (p[4]) func_002FB3C0(p + 4);
+    if (p[4]) rt_memory_free(p + 4);
     p[0] = 0;
     p[1] = 0;
     p[2] = 0;

@@ -8,16 +8,16 @@ extern "C" {
 void Mem_Free(int, void*, char*, int);
 void List_Erase(int*, char*, int*);
 Raw_2750 List_Begin(void*);
-Raw_2750 func_00432730(void*);
-void func_00432740(char**, const Raw_2750&);
-void func_00432720(char**, const Raw_2750&);
-void func_0015AF40(int*, char**);
+Raw_2750 std_list_tNPCInfoPtr_end(void*);
+void std_list_tNPCInfoPtr_generic_iterator_ctor(char**, const Raw_2750&);
+void cLListIterator_tNPCInfoPtr_ctor(char**, const Raw_2750&);
+void std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(int*, char**);
 extern char D_004BFCA0;
 extern char D_00582B10;
 }
-#define Begin_2750(o) func_00432740(o, List_Begin(&D_00582B10))
-#define End_2750(o) func_00432720(o, func_00432730(&D_00582B10))
-extern "C" void func_00432750(int d0, Ent_2750* tbl, int key) {
+#define Begin_2750(o) std_list_tNPCInfoPtr_generic_iterator_ctor(o, List_Begin(&D_00582B10))
+#define End_2750(o) cLListIterator_tNPCInfoPtr_ctor(o, std_list_tNPCInfoPtr_end(&D_00582B10))
+extern "C" void cNPCInfoObject_DoPendingOwnership(int d0, Ent_2750* tbl, int key) {
     char* end;
     {
         char* e;
@@ -47,7 +47,7 @@ extern "C" void func_00432750(int d0, Ent_2750* tbl, int key) {
                     int res;
                     int pos;
                     c = cur;
-                    func_0015AF40(&pos, &c);
+                    std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&pos, &c);
                     List_Erase(&res, &D_00582B10, &pos);
                 }
             }

@@ -24,9 +24,9 @@ extern char D_004C1C60[];
 extern char D_004C1C70[];
 char* Loc_LookupText(char*);
 void List_Begin(void*, void*);
-void func_0028C090(void*, void*);
-void func_0028C0A0(void*, void*);
-void func_0028C0B0(void*, void*);
+void cLListIterator_GuiWidgetPtr_ctor_listR(void*, void*);
+void std_list_GuiWidgetPtr_end(void*, void*);
+void std_list_GuiWidgetPtr_generic_iterator_ctor(void*, void*);
 void GuiObjectives_Init(void*);
 void GuiTextWidget_SetText(void*, char*, int);
 int sprintf(char*, const char*, ...);
@@ -47,9 +47,9 @@ void GuiStartMenu_Init(O456* o)
         int i = 0;
         LNode* n;
         List_Begin(&a, o->acc + 0x28);
-        func_0028C0B0(&it, &a);
+        std_list_GuiWidgetPtr_generic_iterator_ctor(&it, &a);
         n = it;
-        while ((func_0028C0A0(&t, o->acc + 0x28), func_0028C090(&end, &t), n != end) && i < 7) {
+        while ((std_list_GuiWidgetPtr_end(&t, o->acc + 0x28), cLListIterator_GuiWidgetPtr_ctor_listR(&end, &t), n != end) && i < 7) {
             n->obj[4] = i;
             o->arr[i] = n->obj;
             i++;

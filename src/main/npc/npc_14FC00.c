@@ -15,11 +15,11 @@
  */
 
 
-int func_0014FC00(void) {
+int cGobjController_DetermineDeathType_int(void) {
     return 0;
 }
 
-void func_0014FC10(Iter* out, PtrVec* v) {
+void std_list_cActiveListItemPtr_begin_void(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 /* merge_units: generate this block's code under its own pragmas */

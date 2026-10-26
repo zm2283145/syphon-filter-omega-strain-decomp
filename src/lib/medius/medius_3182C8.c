@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-float func_003182C8(int a0, int a1) {
+float VoiceFontSquash(int a0, int a1) {
     float tmp0;
     float tmp1;
     float tmp2;

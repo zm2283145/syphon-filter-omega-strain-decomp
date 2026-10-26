@@ -2,7 +2,7 @@ extern int D_004878A4;
 extern void (*D_004E9D08)(void *);
 extern int D_004E9D0C;
 extern void *D_004E9D10;
-void func_001188F0(void)
+void _sceCd_Poff_Intr(void)
 {
     void (*fn)(void *) = D_004E9D08;
     if (fn && D_004878A4 == 0) {

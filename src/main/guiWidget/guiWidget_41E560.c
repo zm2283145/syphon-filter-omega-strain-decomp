@@ -40,11 +40,11 @@ extern int D_00539228;
 extern int D_00539238;
 extern int D_0053923C;
 extern int g_DrawMode;
-void func_0025CD10(char* r);
-void func_0025CA40(char* r);
+void XLib_NewStrip(char* r);
+void XLib_NextBatchVert(char* r);
 void Vec4_Copy(void* d, V4* s);
 int* GuiBatch_AddVertexColor(void* out, V4* in);
-void func_003701B0(char* r);
+void XLib_DrawLines(char* r);
 }
 
 #define SlotAt(i) ((Slot*)(g_Video + 0x1F0 + (i) * 0x110))
@@ -57,7 +57,7 @@ static inline V4 Pt(float x, float y) { return V4(x, y, 1.0f, 0.0f); }
 
 static inline void Vertex(V4* p, V4* c) {
     Ent* e;
-    func_0025CA40(g_Video);
+    XLib_NextBatchVert(g_Video);
     e = EntAt(D_00539210);
     Vec4_Copy(e->pos + (D_00539224 - 1) * 16, p);
     GuiBatch_AddVertexColor(e->c30 + (D_00539224 - 1) * 16, c);
@@ -105,7 +105,7 @@ extern "C" void GuiWidget_DrawFocusHighlight(Widget* self, V4* colorp)
             e->c2C += D_00539224 * 16;
             e->c30 += D_00539224 * 16;
             e->c34 += D_00539224 * 16;
-            func_0025CD10(g_Video);
+            XLib_NewStrip(g_Video);
             D_00539224 = 0;
         }
         Vertex(&p[0], &color);
@@ -113,7 +113,7 @@ extern "C" void GuiWidget_DrawFocusHighlight(Widget* self, V4* colorp)
         Vertex(&p[2], &color);
         Vertex(&p[3], &color);
         Vertex(&p[0], &color);
-        func_003701B0(g_Video);
+        XLib_DrawLines(g_Video);
     }
     g_DrawMode = save;
     D_00538C68 = 1;
@@ -165,9 +165,9 @@ extern "C" void GuiWidget_SetPos(W41EBA0* w, float x, float y)
 
 extern "C" {
 void List_Begin(ChildIterator* result, ChildList* list);
-void func_0028C0B0(ChildIterator* result, const ChildIterator* source);
-void func_0028C0A0(ChildIterator* result, ChildList* list);
-void func_0028C090(ChildIterator* result, const ChildIterator* source);
+void std_list_GuiWidgetPtr_generic_iterator_ctor(ChildIterator* result, const ChildIterator* source);
+void std_list_GuiWidgetPtr_end(ChildIterator* result, ChildList* list);
+void cLListIterator_GuiWidgetPtr_ctor_listR(ChildIterator* result, const ChildIterator* source);
 void GuiWidget_CheckSleep(TraversalWidget* self);
 }
 
@@ -194,15 +194,15 @@ extern "C" void GuiWidget_BaseSleep(TraversalWidget* self)
         else
             self->flags &= ~8;
         List_Begin(&rawBegin, &self->children);
-        func_0028C0B0(&begin, &rawBegin);
+        std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
         ChildNode* node = begin.node;
-        func_0028C0A0(&rawEnd, &self->children);
-        func_0028C090(&end, &rawEnd);
+        std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+        cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
         while (node != end.node) {
             node->widget->handler->propagate_state();
             node = node->next;
-            func_0028C0A0(&rawEnd, &self->children);
-            func_0028C090(&end, &rawEnd);
+            std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+            cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
         }
         GuiWidget_CheckSleep(self);
     }
@@ -228,16 +228,16 @@ extern "C" void GuiWidget_CheckSleep(TraversalWidget* self)
     ChildIterator rawEnd;
     if ((self->flags & 0x10) && !(self->flags & 8)) {
         List_Begin(&rawBegin, &self->children);
-        func_0028C0B0(&begin, &rawBegin);
+        std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
         ChildNode* node = begin.node;
-        func_0028C0A0(&rawEnd, &self->children);
-        func_0028C090(&end, &rawEnd);
+        std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+        cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
         ChildNode* e = end.node;
         if (node != e) do {
             if (!notify(node->widget, self, 15)) return;
             node = node->next;
-            func_0028C0A0(&rawEnd, &self->children);
-            func_0028C090(&end, &rawEnd);
+            std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+            cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
             e = end.node;
         } while (node != e);
         self->flags &= ~0x10;
@@ -266,15 +266,15 @@ extern "C" void GuiWidget_ClearAwake(TraversalWidget* self)
     self->flags &= ~0x10;
     self->flags &= ~8;
     List_Begin(&rawBegin, &self->children);
-    func_0028C0B0(&begin, &rawBegin);
+    std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
     ChildNode* node = begin.node;
-    func_0028C0A0(&rawEnd, &self->children);
-    func_0028C090(&end, &rawEnd);
+    std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+    cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     while (node != end.node) {
         GuiWidget_ClearAwake(node->widget);
         node = node->next;
-        func_0028C0A0(&rawEnd, &self->children);
-        func_0028C090(&end, &rawEnd);
+        std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+        cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     }
 }
 
@@ -305,15 +305,15 @@ extern "C" void GuiWidget_BaseWake(TraversalWidget* self)
     if (!(self->flags & 8)) {
         self->flags |= 8;
         List_Begin(&rawBegin, &self->children);
-        func_0028C0B0(&begin, &rawBegin);
+        std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
         ChildNode* node = begin.node;
-        func_0028C0A0(&rawEnd, &self->children);
-        func_0028C090(&end, &rawEnd);
+        std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+        cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
         while (node != end.node) {
             node->widget->handler->request_state();
             node = node->next;
-            func_0028C0A0(&rawEnd, &self->children);
-            func_0028C090(&end, &rawEnd);
+            std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+            cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
         }
     }
 }
@@ -358,15 +358,15 @@ extern "C" void GuiWidget_Deinit(TraversalWidget* self)
     ChildIterator rawEnd;
     self->flags &= ~1;
     List_Begin(&rawBegin, &self->children);
-    func_0028C0B0(&begin, &rawBegin);
+    std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
     ChildNode* node = begin.node;
-    func_0028C0A0(&rawEnd, &self->children);
-    func_0028C090(&end, &rawEnd);
+    std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+    cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     while (node != end.node) {
         node->widget->handler->on_unregistered();
         node = node->next;
-        func_0028C0A0(&rawEnd, &self->children);
-        func_0028C090(&end, &rawEnd);
+        std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+        cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     }
 }
 #pragma pop /* merge_units */

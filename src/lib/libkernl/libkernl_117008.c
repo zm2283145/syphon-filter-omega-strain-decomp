@@ -8,7 +8,7 @@
 
 static unsigned int dat_00487860[2] = { 0x0, 0xFFFFFFFF };
 
-int func_00117008(int a0) {
+int UnlinkAlarm(int a0) {
     int v0, v1;
     int cond;
 

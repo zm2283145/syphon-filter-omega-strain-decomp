@@ -15,7 +15,7 @@
  */
 
 
-int* func_002151B0(PtrVec* v, int i) {
+int* std_vector_charPtr_opIndex_uint(PtrVec* v, int i) {
     return v->data + i;
 }
 /* merge_units: generate this block's code under its own pragmas */

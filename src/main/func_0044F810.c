@@ -4,7 +4,7 @@ int SFOLobby_Free(int);
 extern int D_00585E58;
 
 #pragma opt_common_subs off
-void func_0044F810(int arg0) {
+void SFOLobbyList_FreeList(int arg0) {
     int temp_a0;
 
     temp_a0 = F_(arg0, 0x14, int);

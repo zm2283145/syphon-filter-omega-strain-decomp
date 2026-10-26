@@ -9,11 +9,11 @@ extern char D_004FFB00[];
 extern int scePrintf(const char *, ...);
 extern int WaitSema(int);
 extern void DeleteSema(int);
-extern E18A0 *func_002713C0(void *);
+extern E18A0 *_sceRpcGetPacket_void_2(void *);
 extern int CreateSema(SemaParam18A0 *);
-extern void func_00271468(E18A0 *);
-extern int func_0010F948(unsigned int, void *, int, int, int, int);
-extern void func_0010FB10(int, int);
+extern void _sceRpcFreePacket_void_2(E18A0 *);
+extern int sceSifSendCmd(unsigned int, void *, int, int, int, int);
+extern void sceSifWriteBackDCache(int, int);
 int sceSifMCallRpc(C18A0 *cd, int rpc_number, int mode, int send, int ssize, int receive, int rsize, int end_function, int end_param)
 {
     SemaParam18A0 sp;
@@ -33,7 +33,7 @@ int sceSifMCallRpc(C18A0 *cd, int rpc_number, int mode, int send, int ssize, int
         scePrintf(D_004A8D60, D_004A8D50, receive);
         return -1;
     }
-    e = func_002713C0(D_004FFB00);
+    e = _sceRpcGetPacket_void_2(D_004FFB00);
     if (e == 0) return -1;
     cd->x20 = end_param;
     cd->x4 = e->x18;
@@ -49,17 +49,17 @@ int sceSifMCallRpc(C18A0 *cd, int rpc_number, int mode, int send, int ssize, int
     e->x1C = (int)cd;
     e->x34 = cd->x24;
     if (send == receive) {
-        func_0010FB10(send, ssize < rsize ? rsize : ssize);
+        sceSifWriteBackDCache(send, ssize < rsize ? rsize : ssize);
     } else {
-        if (ssize > 0) func_0010FB10(send, ssize);
-        if (rsize > 0) func_0010FB10(receive, rsize);
+        if (ssize > 0) sceSifWriteBackDCache(send, ssize);
+        if (rsize > 0) sceSifWriteBackDCache(receive, rsize);
     }
     if (mode & 1) {
         if (end_function == 0) e->x30 = 0;
         else e->x30 = 1;
         cd->x8 = -1;
-        if (func_0010F948(0x8000001A, e, 0x40, send, cd->x14, ssize) == 0) {
-            func_00271468(e);
+        if (sceSifSendCmd(0x8000001A, e, 0x40, send, cd->x14, ssize) == 0) {
+            _sceRpcFreePacket_void_2(e);
             return -2;
         }
         return 0;
@@ -70,12 +70,12 @@ int sceSifMCallRpc(C18A0 *cd, int rpc_number, int mode, int send, int ssize, int
     s = CreateSema(&sp);
     cd->x8 = s;
     if (s < 0) {
-        func_00271468(e);
+        _sceRpcFreePacket_void_2(e);
         return -3;
     }
     e->x30 = 1;
-    if (func_0010F948(0x8000001A, e, 0x40, send, cd->x14, ssize) == 0) {
-        func_00271468(e);
+    if (sceSifSendCmd(0x8000001A, e, 0x40, send, cd->x14, ssize) == 0) {
+        _sceRpcFreePacket_void_2(e);
         DeleteSema(s);
         return -2;
     }

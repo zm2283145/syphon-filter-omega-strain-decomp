@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int* func_003E0D80(PtrVec* v, int i) {
+int* std_vector_EnumDefPtr_opIndex(PtrVec* v, int i) {
     return v->data + i;
 }

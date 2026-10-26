@@ -3,7 +3,7 @@ extern unsigned int strlen(const char *);
 extern char *strstr(char *, const char *);
 extern int atoi(const char *);
 extern char D_004ADB50[];
-int func_002DD380(unsigned char *out, const char *s)
+int NetIIpStringToBinary(unsigned char *out, const char *s)
 {
     char buf[16];
     char *p;

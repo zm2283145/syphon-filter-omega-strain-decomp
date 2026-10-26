@@ -6,13 +6,13 @@
 
 #include "types.h"
 
-extern int func_002DEA68(int value);
+extern int NetFreeRemoteObject(int value);
 
-int func_002E74C0(int a0, int a1, int a2, unsigned short* a3) {
+int DeleteNetObjectPacketHandler(int a0, int a1, int a2, unsigned short* a3) {
     int result = -1;
 
     if (a3 != 0) {
-        func_002DEA68(*a3);
+        NetFreeRemoteObject(*a3);
         result = 2;
     }
     return result;

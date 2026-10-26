@@ -1,7 +1,7 @@
 extern float D_004B3968[];
 extern float D_004E1C54;
-extern void func_0031BB28(float* a, int n, int* outIdx, float* outVal);
-void func_0031CDC0(float *x, int *pos, int *cnt, int *flag)
+extern void FindMaxValueFlt(float* a, int n, int* outIdx, float* outVal);
+void EliminateSmallP0(float *x, int *pos, int *cnt, int *flag)
 {
     int n = *cnt;
     int k = pos[n - 1];
@@ -28,7 +28,7 @@ void func_0031CDC0(float *x, int *pos, int *cnt, int *flag)
             hit = 1;
         if (hit == 1) {
             if (n == 1) {
-                func_0031BB28(x + k, 74 - k, &idx, &val);
+                FindMaxValueFlt(x + k, 74 - k, &idx, &val);
                 *pos = idx + k;
             } else {
                 n--;

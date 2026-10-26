@@ -33,9 +33,9 @@ typedef struct Widget {
     Child* child;           /* +0x44 */
 } Widget;
 extern "C" void List_Begin(ListIter* out, NodeList* list);  /* list.begin() */
-extern "C" void func_0028C0B0(ListIter* out, ListIter* in);    /* iterator -> const_iterator */
-extern "C" void func_0028C0A0(ListIter* out, NodeList* list);  /* list.end() */
-extern "C" void func_0028C090(ListIter* out, ListIter* in);    /* iterator -> const_iterator */
+extern "C" void std_list_GuiWidgetPtr_generic_iterator_ctor(ListIter* out, ListIter* in);    /* iterator -> const_iterator */
+extern "C" void std_list_GuiWidgetPtr_end(ListIter* out, NodeList* list);  /* list.end() */
+extern "C" void cLListIterator_GuiWidgetPtr_ctor_listR(ListIter* out, ListIter* in);    /* iterator -> const_iterator */
 
 /* For every other widget in the +0x28 list: clears flag 0x2 and notifies its child (+0x44, virtual +0x20). */
 extern "C" void GuiAgentCreate_SleepChildren(Widget* self)
@@ -48,11 +48,11 @@ extern "C" void GuiAgentCreate_SleepChildren(Widget* self)
     NodeList* list;
     if (self) {
     List_Begin(&beginIt, &self->children);
-    func_0028C0B0(&it, &beginIt);
+    std_list_GuiWidgetPtr_generic_iterator_ctor(&it, &beginIt);
     node = it.node;
     list = &self->children;
-    func_0028C0A0(&endIt, list);
-    func_0028C090(&last, &endIt);
+    std_list_GuiWidgetPtr_end(&endIt, list);
+    cLListIterator_GuiWidgetPtr_ctor_listR(&last, &endIt);
     if (node != last.node) {
     do {
     Widget* w = node->data;
@@ -61,8 +61,8 @@ extern "C" void GuiAgentCreate_SleepChildren(Widget* self)
     node->data->child->Method20();
     }
     node = node->next;
-    func_0028C0A0(&endIt, list);
-    func_0028C090(&last, &endIt);
+    std_list_GuiWidgetPtr_end(&endIt, list);
+    cLListIterator_GuiWidgetPtr_ctor_listR(&last, &endIt);
     } while (node != last.node);
     }
     }
@@ -102,19 +102,19 @@ extern "C" void List_Begin(ListIter_0028C2A0* out, NodeList* list);  /* list.beg
 #define List_Begin(a0, a1) (List_Begin((ListIter *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern "C" void func_0028C0B0(ListIter_0028C2A0* out, ListIter_0028C2A0* in);    /* iterator -> const_iterator */
+extern "C" void std_list_GuiWidgetPtr_generic_iterator_ctor(ListIter_0028C2A0* out, ListIter_0028C2A0* in);    /* iterator -> const_iterator */
 #endif /* merge_units */
-#define func_0028C0B0(a0, a1) (func_0028C0B0((ListIter *)(a0), (ListIter *)(a1))) /* merge_units */
+#define std_list_GuiWidgetPtr_generic_iterator_ctor(a0, a1) (std_list_GuiWidgetPtr_generic_iterator_ctor((ListIter *)(a0), (ListIter *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern "C" void func_0028C0A0(ListIter_0028C2A0* out, NodeList* list);  /* list.end() */
+extern "C" void std_list_GuiWidgetPtr_end(ListIter_0028C2A0* out, NodeList* list);  /* list.end() */
 #endif /* merge_units */
-#define func_0028C0A0(a0, a1) (func_0028C0A0((ListIter *)(a0), (a1))) /* merge_units */
+#define std_list_GuiWidgetPtr_end(a0, a1) (std_list_GuiWidgetPtr_end((ListIter *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern "C" void func_0028C090(ListIter_0028C2A0* out, ListIter_0028C2A0* in);    /* iterator -> const_iterator */
+extern "C" void cLListIterator_GuiWidgetPtr_ctor_listR(ListIter_0028C2A0* out, ListIter_0028C2A0* in);    /* iterator -> const_iterator */
 #endif /* merge_units */
-#define func_0028C090(a0, a1) (func_0028C090((ListIter *)(a0), (ListIter *)(a1))) /* merge_units */
+#define cLListIterator_GuiWidgetPtr_ctor_listR(a0, a1) (cLListIterator_GuiWidgetPtr_ctor_listR((ListIter *)(a0), (ListIter *)(a1))) /* merge_units */
 
 
 /* For every other widget in the +0x28 list: sets flag 0x2, notifies its child (+0x44, virtual +0x1C), sets 0x4 and clears 0x80. */
@@ -128,11 +128,11 @@ extern "C" void GuiAgentCreate_WakeChildren(Widget_0028C2A0* self)
     NodeList* list;
     if (self) {
     List_Begin(&beginIt, &self->children);
-    func_0028C0B0(&it, &beginIt);
+    std_list_GuiWidgetPtr_generic_iterator_ctor(&it, &beginIt);
     node = it.node;
     list = &self->children;
-    func_0028C0A0(&endIt, list);
-    func_0028C090(&last, &endIt);
+    std_list_GuiWidgetPtr_end(&endIt, list);
+    cLListIterator_GuiWidgetPtr_ctor_listR(&last, &endIt);
     if (node != last.node) {
     do {
     Widget_0028C2A0* w = node->data;
@@ -143,16 +143,16 @@ extern "C" void GuiAgentCreate_WakeChildren(Widget_0028C2A0* self)
     node->data->flags &= ~0x80;
     }
     node = node->next;
-    func_0028C0A0(&endIt, list);
-    func_0028C090(&last, &endIt);
+    std_list_GuiWidgetPtr_end(&endIt, list);
+    cLListIterator_GuiWidgetPtr_ctor_listR(&last, &endIt);
     } while (node != last.node);
     }
     }
 }
 #undef List_Begin /* merge_units */
-#undef func_0028C0B0 /* merge_units */
-#undef func_0028C0A0 /* merge_units */
-#undef func_0028C090 /* merge_units */
+#undef std_list_GuiWidgetPtr_generic_iterator_ctor /* merge_units */
+#undef std_list_GuiWidgetPtr_end /* merge_units */
+#undef cLListIterator_GuiWidgetPtr_ctor_listR /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0028C2A0(void) {}
 #pragma pop /* merge_units */

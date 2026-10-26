@@ -23,7 +23,7 @@ struct Arc413900 { char pad[0x14C]; unsigned char ready; };
 struct Self413900 { char pad[0x1E0]; int h1E0; int p1E4; Arc413900* arc; };
 
 extern "C" {
-int func_004134B0(Self413900* self, Str413900* out, int name, int flags);
+int cInterfaceManager_FindHogFile(Self413900* self, Str413900* out, int name, int flags);
 char* String_CStr(Str413900* s);
 Arc413900* Archive_Open(int h, char* name, int a, int b);
 void String_Dtor(Str413900* s, int flags);
@@ -31,14 +31,14 @@ void String_Dtor(Str413900* s, int flags);
 
 #pragma push
 #pragma opt_propagation off
-extern "C" void func_00413900(Self413900* self, int name)
+extern "C" void cInterfaceManager_OpenHogOfHog(Self413900* self, int name)
 {
     bool ok = false;
     if (self->p1E4 && self->h1E0) {
         Str413900 s;
         Str413900* ps = &s;
         ps->a = 0; ps->b = 0; ps->c = 0;
-        if (func_004134B0(self, ps, name, 0)) {
+        if (cInterfaceManager_FindHogFile(self, ps, name, 0)) {
             self->arc = Archive_Open(self->h1E0, String_CStr(&s), 1, 0);
             if (self->arc->ready) ok = true;
         }
@@ -72,14 +72,14 @@ int String_CStr(Item_4139C0* it);
 
 void Interface_Dtor(void* p, int f);
 void ArchiveList_CloseNamed(int a, int b);
-void func_004145A0(void* p, int f);
+void std_vector_deleter_cString_dtor(void* p, int f);
 }
-static inline void D3_4139C0(void* p) { if (p) func_004145A0(p, 0); }
+static inline void D3_4139C0(void* p) { if (p) std_vector_deleter_cString_dtor(p, 0); }
 static inline void D2_4139C0(void* p) { if (p) D3_4139C0(p); }
 static inline void D1_4139C0(void* p) { if (p) D2_4139C0(p); }
 
 #pragma opt_strength_reduction off
-extern "C" void func_004139C0(Self_4139C0* self)
+extern "C" void cInterfaceManager_Reset(Self_4139C0* self)
 {
     int i;
     Ent_4139C0* e = self->ents;
@@ -142,7 +142,7 @@ static inline Rec413C70* New413C70(int line)
     return p;
 }
 
-extern "C" void func_00413C70(Self413C70* self)
+extern "C" void cInterfaceManager_Init(Self413C70* self)
 {
     int i;
     self->h1E0 = 0;

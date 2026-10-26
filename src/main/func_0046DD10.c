@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046DD10(void) {
+int MediusUniqueCallbackGetLobbyPlayerNames_ExtraInfoRequestHandler(void) {
     return 28;
 }

@@ -5,7 +5,7 @@
  */
 
 /* merge_units: begin func_002FB580 */
-int func_002FB580(unsigned int *out, unsigned int v, unsigned short align)
+int rt_memory_get_aligned_address(unsigned int *out, unsigned int v, unsigned short align)
 {
     if (out == 0 || v == 0) return 1;
     *out = v;
@@ -19,11 +19,11 @@ int func_002FB580(unsigned int *out, unsigned int v, unsigned short align)
 
 /* merge_units: begin func_002FB5C8 */
 static const unsigned int dat_00490908[2] = { 0x0, 0x0 };
-extern int func_002F8908(int, int);
-int func_002FB5C8(void)
+extern int KM_GetLocalPublicKey(int, int);
+int rt_msg_client_get_client_security_mode(void)
 {
     if ((*(int*)dat_00490908) == 0) {
-        if (func_002F8908(0, 0) == 0) (*(int*)dat_00490908) = 1;
+        if (KM_GetLocalPublicKey(0, 0) == 0) (*(int*)dat_00490908) = 1;
         else (*(int*)dat_00490908) = 2;
     }
     return (*(int*)dat_00490908);

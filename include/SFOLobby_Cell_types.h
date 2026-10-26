@@ -1,7 +1,7 @@
 #ifndef SFOLOBBY_CELL_TYPES_H
 #define SFOLOBBY_CELL_TYPES_H
 
-/* Lobby cell object (partial). Cached data is refreshed by func_00449A00 once
+/* Lobby cell object (partial). Cached data is refreshed by SFOLobby_CellGetInfo once
  * the refresh interval D_00497800 has elapsed since lastUpdate. */
 typedef struct LobbyCell {
     char pad0000[0xE8C];

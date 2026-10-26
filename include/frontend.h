@@ -15,9 +15,9 @@
 typedef struct FrontEndScene {
     /* 0x00 */ void* vtable;        /* FrontEndScene_vtable (D_004DB810) */
     /* 0x04 */ char unk_04[0x28];   /* base object (ListReceiver_Ctor ctor, ListReceiver_Dtor dtor) */
-    /* 0x2C */ char archives[0xC];  /* archive list (func_001391E0 ctor, func_00137670 dtor) */
-    /* 0x38 */ void* characters;    /* front-end character set: 0x18 bytes, built by func_0022A040,
-                                       torn down by func_00229EB0 (frontCharacter.cc) */
+    /* 0x2C */ char archives[0xC];  /* archive list (std_list_deleter_cHogFile_ctor ctor, cLList_cHogFile_dtor dtor) */
+    /* 0x38 */ void* characters;    /* front-end character set: 0x18 bytes, built by CCI_Screen_ScreenInit,
+                                       torn down by CCI_Screen_ScreenCleanup (frontCharacter.cc) */
 } FrontEndScene; /* 0x3C */
 
 #define FrontEndScene_vtable D_004DB810

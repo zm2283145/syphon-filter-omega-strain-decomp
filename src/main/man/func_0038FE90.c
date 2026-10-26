@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_0038FE90(char* self) {
+void* cBone_GetScaleMatrix(char* self) {
     return self + 272;
 }

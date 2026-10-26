@@ -8,10 +8,10 @@
 #include "types.h"
 
 extern int RSA_GenerateKeyPair(int, int);
-extern int func_002F7F60(void);
+extern int InitializePRNG(void);
 
-int func_002F96B8(int a0, int a1) {
-    func_002F7F60();
+int KM_GenerateRSAKeyPair(int a0, int a1) {
+    InitializePRNG();
     return RSA_GenerateKeyPair(a0, a1);
 }
 /* merge_units: end func_002F96B8 */
@@ -19,8 +19,8 @@ int func_002F96B8(int a0, int a1) {
 /* merge_units: begin func_002F96F0 */
 extern int RSA_GenerateKeyPair2(int, int);
 
-int func_002F96F0(int a0, int a1) {
-    func_002F7F60();
+int KM_GenerateRSAKeyPairEZ(int a0, int a1) {
+    InitializePRNG();
     return RSA_GenerateKeyPair2(a0, a1);
 }
 /* merge_units: end func_002F96F0 */

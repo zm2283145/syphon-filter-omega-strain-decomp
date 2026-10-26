@@ -8,6 +8,6 @@
 #include "loose00_types.h"
 
 /* Reset the timer from the definition's +0x40 value. */
-void func_001CF520(TimedRef* self) {
+void cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_cQuaternion_cQuaternion_Restart(TimedRef* self) {
     self->timer = self->def->unk40;
 }

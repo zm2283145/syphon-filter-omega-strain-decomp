@@ -31,7 +31,7 @@ char *strncpy(void *, const void *, int);
 #pragma cplusplus on
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_001B5E20)
+DEFINE_TRIVIAL_DTOR(cStatesWithHistory_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_001B5E20 */
 
@@ -42,13 +42,13 @@ DEFINE_TRIVIAL_DTOR(func_001B5E20)
 /* Deleting destructor: restore the vtable chain, optionally delete. */
 extern "C" void AngleCurve_PreUpdate();
 extern "C" void AngleCurve_UpdateRate();
-extern "C" void func_001B87E0();
-extern "C" void func_001B88A0();
-extern "C" void func_001B88B0();
-extern "C" void func_001B8AC0();
+extern "C" void cSplinedMotion_Angle_TeleportByDelta();
+extern "C" void cSplinedMotion_Angle_InitPos();
+extern "C" void cSplinedMotion_Angle_ZeroVel();
+extern "C" void cSplinedMotion_Angle_FixUpResultOfSplineEvaluation();
 extern void * const D_004DA7D0[];
 extern "C" char D_004DA380[];
-extern "C" VtableChainObject* func_001B5E70(VtableChainObject* self,
+extern "C" VtableChainObject* cSplinedMotion_Angle_dtor(VtableChainObject* self,
                                    short deleteFlag)
 {
     if (self) {
@@ -60,7 +60,7 @@ extern "C" VtableChainObject* func_001B5E70(VtableChainObject* self,
     }
     return self;
 }
-void * const D_004DA7D0[12] = { (void*)0x0, (void*)0x0, (void*)func_001B5E70, (void*)func_001B87E0, (void*)func_001B88A0, (void*)func_001B88B0, (void*)AngleCurve_PreUpdate, (void*)func_001B8AC0, (void*)AngleCurve_UpdateRate, (void*)0x0, (void*)0x0, (void*)0x0 };
+void * const D_004DA7D0[12] = { (void*)0x0, (void*)0x0, (void*)cSplinedMotion_Angle_dtor, (void*)cSplinedMotion_Angle_TeleportByDelta, (void*)cSplinedMotion_Angle_InitPos, (void*)cSplinedMotion_Angle_ZeroVel, (void*)AngleCurve_PreUpdate, (void*)cSplinedMotion_Angle_FixUpResultOfSplineEvaluation, (void*)AngleCurve_UpdateRate, (void*)0x0, (void*)0x0, (void*)0x0 };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001B5E70(void) {}
 #pragma pop /* merge_units */
@@ -80,7 +80,7 @@ void func_001BE690(void* p, int f);
 static inline void D3_1B5ED0(void* p) { if (p) func_001BE690(p, 0); }
 static inline void D2_1B5ED0(void* p) { if (p) D3_1B5ED0(p); }
 static inline void D1_1B5ED0(void* p) { if (p) D2_1B5ED0(p); }
-extern "C" void* func_001B5ED0(void* self, short deleteFlag)
+extern "C" void* cHumanMotionParams_cTargetZRotationStack_dtor(void* self, short deleteFlag)
 {
     if (self) {
         D1_1B5ED0(self);
@@ -99,7 +99,7 @@ static inline void merge_flush_func_001B5ED0(void) {}
 #pragma cplusplus on
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_001B5F40)
+DEFINE_TRIVIAL_DTOR(cArray_FixedSize_bool_10_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_001B5F40 */
 
@@ -108,7 +108,7 @@ DEFINE_TRIVIAL_DTOR(func_001B5F40)
 #pragma cplusplus on
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_001B5F90)
+DEFINE_TRIVIAL_DTOR(cAimComponentList_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_001B5F90 */
 
@@ -254,10 +254,10 @@ void Skeleton_BuildInFrame(Skl*, Hog*, int);
 void WeaponInv_Add(void*, int, int, int, int, int);
 void WeaponInv_EquipFirst(void*);
 void Actor_InitComponents(Act*, unsigned char, int, void*);
-void func_00436C00(int*);
-void func_00435F30(int*, int*, int);
-void func_00434600(int*, int*, int);
-void func_00436BA0(int*, int);
+void cNPCInfoObject_ctor(int*);
+void cNPCInfoObject_Add(int*, int*, int);
+void cNPCInfoObject_SetOwner_cObjectIdR_int(int*, int*, int);
+void cNPCInfoObject_dtor(int*, int);
 int Agent_GetSelected(char*, int);
 int AgentData_HasUnlock(int, int);
 }
@@ -432,10 +432,10 @@ extern "C" bool Npc_Initialize(Act* a, Mtx* mtx, char* name, int health, int max
         if (type != 4) Actor_InitComponents(a, type, s2, 0);
         if (type != 4 && type != 3 && !s2) {
             int loc;
-            func_00436C00(&loc);
-            { int* w = &a->wC; func_00435F30(&loc, w, LocalId()); }
-            if (type == 1) { int* w = &a->wC; func_00434600(&loc, w, LocalId()); }
-            func_00436BA0(&loc, -1);
+            cNPCInfoObject_ctor(&loc);
+            { int* w = &a->wC; cNPCInfoObject_Add(&loc, w, LocalId()); }
+            if (type == 1) { int* w = &a->wC; cNPCInfoObject_SetOwner_cObjectIdR_int(&loc, w, LocalId()); }
+            cNPCInfoObject_dtor(&loc, -1);
         }
     }
     if (On(a)) {

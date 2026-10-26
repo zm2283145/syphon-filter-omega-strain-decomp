@@ -14,43 +14,43 @@ struct M_418E00 {
 };
 struct NI_418 { void* n; };
 extern "C" {
-int func_002A8890(void* a, void* b);
-void func_002A88B0(void* out, void* list);
-void func_002CCDE0(void* dst, void* src);
-void func_002CCDF0(void* it);
-int* func_002CCE10(void* it);
-void func_002CCE20(void* dst, void* src);
-void func_002CCE30(void* out, void* list);
-void func_002CCE40(void* it);
-void func_002CCE50(void* list, W_418E00** v);
-NI_418 func_0028C0A0(void* list);
-void func_0028C090(void* dst, const NI_418& src);
+int opNe_cLListIteratorR_cLListIteratorR_6(void* a, void* b);
+void cLList_GuiWidgetPtr_End(void* out, void* list);
+void cLListIterator_GuiWidgetPtr_ctor_cLListIteratorR(void* dst, void* src);
+void cLListIterator_GuiWidgetPtr_opInc(void* it);
+int* cLListIterator_GuiWidgetPtr_opMul(void* it);
+void cLListIterator_GuiWidgetPtr_opAssign(void* dst, void* src);
+void cLList_GuiWidgetPtr_Begin(void* out, void* list);
+void cLListIterator_GuiWidgetPtr_ctor_void(void* it);
+void std_list_GuiWidgetPtr_push_back_GuiWidgetPR(void* list, W_418E00** v);
+NI_418 std_list_GuiWidgetPtr_end(void* list);
+void cLListIterator_GuiWidgetPtr_ctor_listR(void* dst, const NI_418& src);
 void GuiManager_RemoveWidget(M_418E00* m, W_418E00* w);
 void Mem_Free(int pool, void* p, char* file, int line);
 extern char D_004BF138[];
 }
 
 /* list.end() converted to the const iterator (by-value temporary). */
-static inline void End_418(char** out, M_418E00* m) { func_0028C090(out, func_0028C0A0(m->list)); }
+static inline void End_418(char** out, M_418E00* m) { cLListIterator_GuiWidgetPtr_ctor_listR(out, std_list_GuiWidgetPtr_end(m->list)); }
 /* Linear search for w; locals live at inline depth (stack slot order). */
 static inline void Find_418(char** out, M_418E00* m, W_418E00*& w)
 {
     int it;
     int b;
     int e;
-    func_002CCE40(&it);
-    func_002CCE30(&b, m->list);
-    func_002CCE20(&it, &b);
-    func_002A88B0(&e, m->list);
-    if (func_002A8890(&it, &e) != 0) {
+    cLListIterator_GuiWidgetPtr_ctor_void(&it);
+    cLList_GuiWidgetPtr_Begin(&b, m->list);
+    cLListIterator_GuiWidgetPtr_opAssign(&it, &b);
+    cLList_GuiWidgetPtr_End(&e, m->list);
+    if (opNe_cLListIteratorR_cLListIteratorR_6(&it, &e) != 0) {
 loopf:
-        if ((W_418E00*)*func_002CCE10(&it) != w) {
-            func_002CCDF0(&it);
-            func_002A88B0(&e, m->list);
-            if (func_002A8890(&it, &e) != 0) goto loopf;
+        if ((W_418E00*)*cLListIterator_GuiWidgetPtr_opMul(&it) != w) {
+            cLListIterator_GuiWidgetPtr_opInc(&it);
+            cLList_GuiWidgetPtr_End(&e, m->list);
+            if (opNe_cLListIteratorR_cLListIteratorR_6(&it, &e) != 0) goto loopf;
         }
     }
-    func_002CCDE0(out, &it);
+    cLListIterator_GuiWidgetPtr_ctor_cLListIteratorR(out, &it);
 }
 
 extern "C" void GuiManager_UnloadRoot(M_418E00* m, W_418E00* w, int del)
@@ -72,7 +72,7 @@ extern "C" void GuiManager_UnloadRoot(M_418E00* m, W_418E00* w, int del)
                     Mem_Free(0, p, D_004BF138, 0xDB);
                 }
             } else {
-                func_002CCE50(m->pending, &w);
+                std_list_GuiWidgetPtr_push_back_GuiWidgetPR(m->pending, &w);
             }
         }
     }

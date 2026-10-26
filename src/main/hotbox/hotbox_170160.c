@@ -89,7 +89,7 @@ typedef struct { char pad[0xC]; int idC; int id10; char pad14[0x7C]; int f90; } 
 int NetMap_BindReceiver(int, int, Obj_0360*);
 Obj_0360* Hotbox_CreateRuntime(int, int, int, int);
 int NetGame_InitLocalSlot(int*, int);
-int func_002EBBA0(int, int*);
+int NetGetPeerToPeerHostClientIndex(int, int*);
 extern int D_00494178;
 extern int g_HotboxTracker;
 extern int D_005721A8;
@@ -112,12 +112,12 @@ static inline int NetId_0360(void)
         id = LocalId_0360();
     } else {
         int tmp[1];
-        func_002EBBA0(D_005721A8, tmp);
+        NetGetPeerToPeerHostClientIndex(D_005721A8, tmp);
         id = tmp[0];
     }
     return id;
 }
-void func_00170360(int arg0, int* arg1)
+void MakeNPCNetInteractable(int arg0, int* arg1)
 {
     Obj_0360* o = Hotbox_CreateRuntime(g_HotboxTracker, arg0, 1, 0);
     o->idC = *arg1;

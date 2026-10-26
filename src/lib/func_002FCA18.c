@@ -20,16 +20,16 @@ extern void *memset(void *, int, unsigned int);
 extern void *memcpy(void *, const void *, unsigned int);
 extern char *strncpy(char *, const char *, unsigned int);
 extern int NetConn_Allocate(unsigned short *, int, int, int);
-extern void func_002F94D0(unsigned short);
-extern void func_002F8368(unsigned short, int, int);
-extern int func_002FE810(unsigned short, NsConn **);
-extern int func_00301038(NsConn *, int);
+extern void KM_Destroy(unsigned short);
+extern void KM_Create(unsigned short, int, int);
+extern int rt_msg_client_get_connection(unsigned short, NsConn **);
+extern int rt_msg_client_change_state(NsConn *, int);
 extern int Net_AllocZeroed(void *, unsigned long);
-extern int func_003060C0(void *);
-extern int func_002F5398(void *);
-extern int func_002F5C98(void *, char *, unsigned short, NsAddr *);
-extern int func_003010C8(int);
-extern int func_002FDC60(NsConn *);
+extern int rt_time_start(void *);
+extern int rt_circ_buf_clear(void *);
+extern int rt_comm_create(void *, char *, unsigned short, NsAddr *);
+extern int rt_msg_client_map_comm_error(int);
+extern int rt_msg_client_update_comm_wait(NsConn *);
 
 int NetSession_CreateSockets(unsigned short *out, NsCfg *cfg)
 {
@@ -50,12 +50,12 @@ int NetSession_CreateSockets(unsigned short *out, NsCfg *cfg)
     *out = D_004908F0 + 1;
     if ((r = NetConn_Allocate(&id, cfg->mode, cfg->x28, cfg->x2C)) != 0) return r;
     *out = id;
-    func_002F94D0(id);
-    func_002F8368(id, 0, cfg->x1C);
-    if ((r = func_002FE810(id, &conn)) != 0) return r;
+    KM_Destroy(id);
+    KM_Create(id, 0, cfg->x1C);
+    if ((r = rt_msg_client_get_connection(id, &conn)) != 0) return r;
     if (!conn) return 9;
     if (conn->x8 != st) return 23;
-    if ((r = func_00301038(conn, 0)) != 0) return r;
+    if ((r = rt_msg_client_change_state(conn, 0)) != 0) return r;
     memcpy(&conn->cfg, cfg, sizeof(*cfg));
     if (cfg->data && cfg->len) {
         if (Net_AllocZeroed(&conn->cfg.data, cfg->len)) return 8;
@@ -76,25 +76,25 @@ int NetSession_CreateSockets(unsigned short *out, NsCfg *cfg)
         if (s) {
             s->x86 = 0;
             s->x88 = 0;
-            if (func_003060C0(s->t20)) return 24;
-            if (func_003060C0(s->t28)) return 24;
+            if (rt_time_start(s->t20)) return 24;
+            if (rt_time_start(s->t28)) return 24;
             s->x3C = 0;
             s->x30 = cfg->x20;
-            if (func_003060C0(s->t34)) return 24;
+            if (rt_time_start(s->t34)) return 24;
             s->x40 = cfg->x24;
             s->b44 = 0;
-            if (func_002F5398(s->q50)) return 21;
-            if (func_002F5398(s->q68)) return 21;
+            if (rt_circ_buf_clear(s->q50)) return 21;
+            if (rt_circ_buf_clear(s->q68)) return 21;
         }
     }
-    if ((r = func_00301038(conn, 2)) != 0) return r;
+    if ((r = rt_msg_client_change_state(conn, 2)) != 0) return r;
     if (conn->x4 == 1) {
         s = conn->sock[1];
         if (!s) return 9;
         memset(&loc, 0, sizeof(loc));
         loc.x0 = 1;
         loc.x4 = 584;
-        if ((r = func_003010C8(func_002F5C98(s->x1C, 0, cfg->port2, &loc))) != 0) return r;
+        if ((r = rt_msg_client_map_comm_error(rt_comm_create(s->x1C, 0, cfg->port2, &loc))) != 0) return r;
         s->b5 = 0;
     }
     if (conn->x4 < 2) {
@@ -106,11 +106,11 @@ int NetSession_CreateSockets(unsigned short *out, NsCfg *cfg)
         memset(&loc, 0, sizeof(loc));
         loc.x0 = 0;
         loc.b8 = 1;
-        if ((r = func_003010C8(func_002F5C98(s->x1C, cfg->name, cfg->port, &loc))) != 0) return r;
+        if ((r = rt_msg_client_map_comm_error(rt_comm_create(s->x1C, cfg->name, cfg->port, &loc))) != 0) return r;
         s->b5 = 1;
         conn->active = s;
     }
     if (!conn->active) return 9;
     if (conn->id != conn->active->x6) return 1;
-    return func_002FDC60(conn);
+    return rt_msg_client_update_comm_wait(conn);
 }

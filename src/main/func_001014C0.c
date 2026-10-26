@@ -70,7 +70,7 @@ typedef struct ex_specification {
 
 extern char *func_00100BC0(char *p, unsigned int *pnum); /* __DecodeUnsignedNumber */
 extern char *func_00100C70(char *p, int *pnum);          /* __DecodeSignedNumber */
-extern void func_00100AB0(void);                         /* terminate */
+extern void std_terminate(void);                         /* terminate */
 extern int func_00100800(char *throwtype, char *catchtype, long *offset_result); /* __throw_catch_compare */
 extern void func_00101640(ThrowContext *context, ExceptionInfo *info, char *catcher); /* UnwindStack */
 extern exaction_type func_00101E90(ActionIterator *iter); /* NextAction */
@@ -190,7 +190,7 @@ CatchInfo *func_001014C0(ThrowContext *context, ExceptionInfo *info)
 
         case 14:
         default:
-            func_00100AB0();
+            std_terminate();
         }
         break;
     }

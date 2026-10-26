@@ -44,7 +44,7 @@ extern CellRow* D_004EE620;
 
 
 /* Marks cell (row, col) in the D_004EE620 grid. */
-void func_002A55A0(int row, int col) {
+void TeamSetEnemy_int_int(int row, int col) {
     D_004EE620[row].cells[col].set = 1;
 }
 #undef D_004EE620 /* merge_units */

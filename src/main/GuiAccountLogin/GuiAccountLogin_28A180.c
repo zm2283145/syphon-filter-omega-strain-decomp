@@ -20,7 +20,7 @@ char* String_CStr(Str_0028A180* s);
 char* GuiScreen_GetLobbyString(S_0028A180* self, int a, int b, int c, int d, int e);
 void GuiKeyboard_Open(void* kb, char* title, char* text, S_0028A180* self, int a, int b, int c);
 }
-extern "C" void func_0028A180(S_0028A180* self)
+extern "C" void GuiAccountLogin_EditPassword(S_0028A180* self)
 {
     void* kb = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A9798, D_004A97A8);
     if (kb) {
@@ -58,7 +58,7 @@ void String_CtorCStr_13B480(Str_0028A230* s, const char* c);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, S_0028A230* d, int e);
 void String_Dtor(Str_0028A230* s, int flags);
 }
-extern "C" void func_0028A230(S_0028A230* self)
+extern "C" void GuiAccountLogin_EditUserName(S_0028A230* self)
 {
     if (self->bA4) {
         void* kb = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A9798, D_004A97A8);
@@ -87,7 +87,7 @@ extern "C" void func_0028A230(S_0028A230* self)
 
 /* merge_units: begin func_0028A380 */
 #pragma push /* merge_units */
-void func_0028A380(int a0, int a1) {
+void GuiAccountLogin_ActivateButtons(int a0, int a1) {
     int a2, v1;
     int cond;
 

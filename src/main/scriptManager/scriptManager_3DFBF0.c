@@ -16,7 +16,7 @@
  */
 
 
-void func_003DFBF0(Iter* out, Tree* t) {
+void std_tree_pair_int_value_compare_begin_void(Iter* out, Tree* t) {
     out->p = t->leftmost;
 }
 /* merge_units: generate this block's code under its own pragmas */

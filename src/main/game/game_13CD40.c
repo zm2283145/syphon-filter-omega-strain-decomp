@@ -11,10 +11,10 @@ struct N {
     void set_black() { parent_ = (N*)((unsigned int)parent_ & ~1); }
 };
 
-extern "C" void func_0013CF60(N* x, N** root);
-extern "C" void func_0013CFF0(N* x, N** root);
+extern "C" void std_red_black_tree_1_rotate_left(N* x, N** root);
+extern "C" void std_red_black_tree_1_rotate_right(N* x, N** root);
 
-extern "C" void func_0013CD40(N* x, N* root)
+extern "C" void std_red_black_tree_1_balance_insert(N* x, N* root)
 {
     x->set_red();
     while (x != root && x->parent()->is_red()) {
@@ -29,11 +29,11 @@ extern "C" void func_0013CD40(N* x, N* root)
             } else {
                 if (x == x->parent()->right_) {
                     x = x->parent();
-                    func_0013CF60(x, &root);
+                    std_red_black_tree_1_rotate_left(x, &root);
                 }
                 x->parent()->set_black();
                 x->parent()->parent()->set_red();
-                func_0013CFF0(x->parent()->parent(), &root);
+                std_red_black_tree_1_rotate_right(x->parent()->parent(), &root);
             }
         } else {
             N* y = xpp->left_;
@@ -45,11 +45,11 @@ extern "C" void func_0013CD40(N* x, N* root)
             } else {
                 if (x == x->parent()->left_) {
                     x = x->parent();
-                    func_0013CFF0(x, &root);
+                    std_red_black_tree_1_rotate_right(x, &root);
                 }
                 x->parent()->set_black();
                 x->parent()->parent()->set_red();
-                func_0013CF60(x->parent()->parent(), &root);
+                std_red_black_tree_1_rotate_left(x->parent()->parent(), &root);
             }
         }
     }

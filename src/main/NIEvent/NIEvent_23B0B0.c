@@ -33,20 +33,20 @@ public:
 };
 extern "C" {
 extern int D_004F7C60;
-int* func_0023A550(PtrVec* v, int i);
-void func_0023B120(Node_23B120* self);
+int* std_vector_cNIEventBasePtr_opIndex(PtrVec* v, int i);
+void cNIEventOBJ_UpdateChildren(Node_23B120* self);
 }
 /* Calls virtual slot 70, then recurses into every child whose kind (+0x4C) is NIEventOBJ (D_004F7C60). */
 #pragma push
 #pragma opt_strength_reduction off
-extern "C" void func_0023B120(Node_23B120* self)
+extern "C" void cNIEventOBJ_UpdateChildren(Node_23B120* self)
 {
     int i;
     self->slot70();
     for (i = 0; i < self->children.count; i++) {
-        Child_23B120* c = (Child_23B120*)*func_0023A550(&self->children, i);
+        Child_23B120* c = (Child_23B120*)*std_vector_cNIEventBasePtr_opIndex(&self->children, i);
         if (c->kind == D_004F7C60)
-            func_0023B120((Node_23B120*)self->children.data[i]);
+            cNIEventOBJ_UpdateChildren((Node_23B120*)self->children.data[i]);
     }
 }
 #pragma pop

@@ -4,7 +4,7 @@ extern long g_TickCounter64;
 extern int g_TimerAccum;
 
 /* Resets timer state and the EE timer 0 counter register. */
-int func_00165E40(void)
+int cMachine_InitTimers(void)
 {
     g_TickCounter64 = 0;
     g_TimerAccum = 0;

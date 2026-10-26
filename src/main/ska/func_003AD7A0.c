@@ -32,11 +32,11 @@ struct AnimCtx;
 extern "C" void AnimGroup_Update(AnimGroup* g, AnimCtx* ctx);
 struct AnimCtl { char pad0[4]; unsigned char busy; char pad5[0x13]; BlockArray arr; };
 extern "C" {
-void func_00397840(DqIt* out, BlockArray* a, int n);
-void func_003AE150(void* g);
-void func_003AE050(SkaWords6* self, BlockArray* a);
-SkaWords6* func_003AE0B0(SkaWords6* dst, SkaWords6* src);
-void func_003AE0F0(SkaWords6* self, BlockArray* a);
+void std_deque_deleter_common_cSkaSystem_Request_make_iterator(DqIt* out, BlockArray* a, int n);
+void cSkaPlaybackList_StartOfFrameUpdate(void* g);
+void std_deque_cSkaSystem_Request_rend(SkaWords6* self, BlockArray* a);
+SkaWords6* cDequeue_cSkaSystem_Request_ReverseIterator_ctor(SkaWords6* dst, SkaWords6* src);
+void std_deque_cSkaSystem_Request_rbegin(SkaWords6* self, BlockArray* a);
 void AnimCtl_Evaluate(void* a0, void* a1, SkaWords6* q, SkaWords6* req, unsigned char flag, float w, float t);
 void AnimCtl_UpdateTransitions(AnimCtl* c, float t);
 void AnimCtl_Update(AnimCtl* c, void* m, float dt);
@@ -55,25 +55,25 @@ extern "C" void AnimCtl_Update(AnimCtl* c, void* m, float dt)
     SkaWords6 t1;
     SkaWords6 t2;
     char* e;
-    func_00397840(&b, &c->arr, 0);
+    std_deque_deleter_common_cSkaSystem_Request_make_iterator(&b, &c->arr, 0);
     it = b;
-    func_00397840(&r, &c->arr, c->arr.count);
+    std_deque_deleter_common_cSkaSystem_Request_make_iterator(&r, &c->arr, c->arr.count);
     e = r.elem;
     while (it.Ne(e)) {
-        func_003AE150(it.elem + 0xE8);
+        cSkaPlaybackList_StartOfFrameUpdate(it.elem + 0xE8);
         ++it;
     }
     c->busy = 1;
-    func_003AE0F0(&t1, &c->arr);
-    func_003AE0B0(&fin, &t1);
-    func_003AE050(&t2, &c->arr);
-    func_003AE0B0(&beg, &t2);
+    std_deque_cSkaSystem_Request_rbegin(&t1, &c->arr);
+    cDequeue_cSkaSystem_Request_ReverseIterator_ctor(&fin, &t1);
+    std_deque_cSkaSystem_Request_rend(&t2, &c->arr);
+    cDequeue_cSkaSystem_Request_ReverseIterator_ctor(&beg, &t2);
     AnimCtl_Evaluate(c, m, &fin, &beg, 0, 1.0f, dt);
     AnimCtl_UpdateTransitions(c, dt);
     c->busy = 0;
-    func_00397840(&b2, &c->arr, 0);
+    std_deque_deleter_common_cSkaSystem_Request_make_iterator(&b2, &c->arr, 0);
     it2 = b2;
-    func_00397840(&r2, &c->arr, c->arr.count);
+    std_deque_deleter_common_cSkaSystem_Request_make_iterator(&r2, &c->arr, c->arr.count);
     e = r2.elem;
     while (it2.Ne(e)) {
         AnimGroup_Update((AnimGroup*)(it2.elem + 0xE8), (AnimCtx*)m);
@@ -114,17 +114,17 @@ struct V {
 } __attribute__((aligned(16)));
 extern "C" {
 Raw List_Begin(AnimGroup* g);
-void func_00396B10(LIt* out, const Raw& r);
-Raw func_00396B00(AnimGroup* g);
-void func_00396AF0(LIt* out, const Raw& r);
-float func_003ADEB0(int c);
-void func_003ADEF0(VIt* out, IntVec* v);
-void func_003ADED0(VIt* out, IntVec* v);
-int func_003ADDA0(VIt* a, VIt* b);
-int func_003ADEC0(VIt* a);
-void func_003ADDC0(VIt* a);
-int func_00198B20(int c);
-V func_003ADDE0(int o);
+void std_list_cSkaPlaybackGroupPtr_generic_iterator_ctor(LIt* out, const Raw& r);
+Raw std_list_cSkaPlaybackGroupPtr_end(AnimGroup* g);
+void cLListIterator_cSkaPlaybackGroupPtr_ctor(LIt* out, const Raw& r);
+float cSkaPlaybackItem_GetSummedWeight(int c);
+void cArray_cSkaPlaybackItem_Begin(VIt* out, IntVec* v);
+void cArray_cSkaPlaybackItem_End(VIt* out, IntVec* v);
+int cArray_cSkaPlaybackItem_Iterator_opNe(VIt* a, VIt* b);
+int cArray_cSkaPlaybackItem_Iterator_opArrow(VIt* a);
+void cArray_cSkaPlaybackItem_Iterator_opInc(VIt* a);
+int cSkaPlaybackItem_GetAnimation(int c);
+V cSkaPlaybackItem_GetSummedAndNormalizedOffsetRootRotation(int o);
 void AnimContext_PushTime(AnimCtx* s, float t);
 void AnimGroup_ResetInactive(Contrib* c);
 float AnimPhase_GetCurrent(int* p);
@@ -136,8 +136,8 @@ void SkaClip_SampleFrames(int clip, Contrib* c, float w, const V& q, AnimCtx* ct
 void AnimGroup_Update(AnimGroup* g, AnimCtx* ctx);
 }
 
-static inline void LBegin(LIt* o, AnimGroup* g) { func_00396B10(o, List_Begin(g)); }
-static inline void LEnd0(LIt* o, AnimGroup* g) { func_00396AF0(o, func_00396B00(g)); }
+static inline void LBegin(LIt* o, AnimGroup* g) { std_list_cSkaPlaybackGroupPtr_generic_iterator_ctor(o, List_Begin(g)); }
+static inline void LEnd0(LIt* o, AnimGroup* g) { cLListIterator_cSkaPlaybackGroupPtr_ctor(o, std_list_cSkaPlaybackGroupPtr_end(g)); }
 static inline void LEnd(LIt* o, AnimGroup* g) { LEnd0(o, g); }
 /* FloatStack_Top; the volatile read keeps this count load separate from Push's (retail loads
  * the count twice: once for the top value, once for the push test and index). */
@@ -155,13 +155,13 @@ static inline void SampleClips(Contrib* c, AnimCtx* ctx)
 {
     VIt vi;
     VIt ve;
-    func_003ADEF0(&vi, &c->vec);
-    func_003ADED0(&ve, &c->vec);
-    while (func_003ADDA0(&vi, &ve)) {
-        int clip = func_00198B20(func_003ADEC0(&vi));
-        float w = func_003ADEB0(func_003ADEC0(&vi));
-        SkaClip_SampleFrames(clip, c, w, func_003ADDE0(func_003ADEC0(&vi)), ctx);
-        func_003ADDC0(&vi);
+    cArray_cSkaPlaybackItem_Begin(&vi, &c->vec);
+    cArray_cSkaPlaybackItem_End(&ve, &c->vec);
+    while (cArray_cSkaPlaybackItem_Iterator_opNe(&vi, &ve)) {
+        int clip = cSkaPlaybackItem_GetAnimation(cArray_cSkaPlaybackItem_Iterator_opArrow(&vi));
+        float w = cSkaPlaybackItem_GetSummedWeight(cArray_cSkaPlaybackItem_Iterator_opArrow(&vi));
+        SkaClip_SampleFrames(clip, c, w, cSkaPlaybackItem_GetSummedAndNormalizedOffsetRootRotation(cArray_cSkaPlaybackItem_Iterator_opArrow(&vi)), ctx);
+        cArray_cSkaPlaybackItem_Iterator_opInc(&vi);
     }
 }
 

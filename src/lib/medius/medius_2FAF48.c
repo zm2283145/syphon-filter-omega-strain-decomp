@@ -6,7 +6,7 @@
 
 /* merge_units: begin func_002FAF48 */
 typedef struct { int x0; int x4; int x8; int xC; char *x10; int *x14; } SAF48;
-int func_002FAF48(SAF48 *s)
+int rt_list_buf_place_list_head(SAF48 *s)
 {
     int *p = (int *)(s->x10 + s->x4);
     int a, c;
@@ -23,7 +23,7 @@ int func_002FAF48(SAF48 *s)
 /* merge_units: end func_002FAF48 */
 
 /* merge_units: begin func_002FAF80 */
-int func_002FAF80(int *o, int *out)
+int rt_list_buf_calc_free_space(int *o, int *out)
 {
     int d;
     if (out == 0) return 2;
@@ -35,7 +35,7 @@ int func_002FAF80(int *o, int *out)
 /* merge_units: end func_002FAF80 */
 
 /* merge_units: begin func_002FAFB0 */
-int func_002FAFB0(unsigned int *o, unsigned int *out)
+int rt_list_buf_calc_free_contiguous_space(unsigned int *o, unsigned int *out)
 {
     if (out == 0) return 2;
     if (o[0] < o[1]) *out = o[2] - o[1];
@@ -46,7 +46,7 @@ int func_002FAFB0(unsigned int *o, unsigned int *out)
 /* merge_units: end func_002FAFB0 */
 
 /* merge_units: begin func_002FB000 */
-int func_002FB000(unsigned int *o, unsigned int *out)
+int rt_list_buf_calc_free_non_contiguous_space(unsigned int *o, unsigned int *out)
 {
     if (out == 0) return 2;
     if (o[0] < o[1]) *out = o[2] - o[1] + o[0];

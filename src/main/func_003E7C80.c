@@ -28,7 +28,7 @@ void Global_SetCursorChar(char* str) {
     *(*(char**)dat_00493970) = c;
 }
 
-void func_003E7CD0(Unk3E7CD0* self) {
+void cConsole_Deactivate(Unk3E7CD0* self) {
     self->unk01 = 0;
     self->unk02 = 1;
     self->unk04 = -7;

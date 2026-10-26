@@ -6,12 +6,12 @@
 
 #include "types.h"
 
-void* func_00138580(char* self) {
+void* cCollisionModelList_GetList(char* self) {
     return self + 4;
 }
 
-void func_00138590(void) {
+void cCollisionModelList_SetCenterOfActivation(void) {
 }
 
-void func_001385A0(void) {
+void cCollisionModelList_Prepare(void) {
 }

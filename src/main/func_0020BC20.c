@@ -7,16 +7,16 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern Word* func_0020BC50(Word*, int, int);
-extern Word* func_0020BC90(Word*);
+extern Word* details_compressed_pair_imp_cAllocator_cSkaSwitchItem_int_1_ctor_cAllocatorR_uint(Word*, int, int);
+extern Word* cAllocator_cSkaSwitchItem_ctor_cAllocatorR(Word*);
 
-Word* func_0020BC20(Word* self, int unused, int value) {
-    func_0020BC50(self, unused, value);
+Word* compressed_pair_cAllocator_cSkaSwitchItem_int_ctor_cAllocatorR_uint(Word* self, int unused, int value) {
+    details_compressed_pair_imp_cAllocator_cSkaSwitchItem_int_1_ctor_cAllocatorR_uint(self, unused, value);
     return self;
 }
 
-Word* func_0020BC50(Word* self, int unused, int value) {
-    func_0020BC90(self);
+Word* details_compressed_pair_imp_cAllocator_cSkaSwitchItem_int_1_ctor_cAllocatorR_uint(Word* self, int unused, int value) {
+    cAllocator_cSkaSwitchItem_ctor_cAllocatorR(self);
     self->value = value;
     return self;
 }

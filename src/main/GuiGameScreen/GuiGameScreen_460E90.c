@@ -16,7 +16,7 @@
 extern Rel* func_00460F20(Rel* r);
 
 /* Constructor: clears the triple and sets the enabled flag. */
-FlaggedRel* func_00460E90(FlaggedRel* self) {
+FlaggedRel* cArray_tQuip_ctor(FlaggedRel* self) {
     func_00460F20(&self->rel);
     self->enabled = 1;
     return self;

@@ -21,7 +21,7 @@
 
 DEFINE_RESIZE_ELEMENT(Elem16, 16)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_0021BF30, Elem16, Vector_Insert_21C330, func_0021C260)
+DEFINE_VECTOR_RESIZE(std_vector_imp_cQuaternion_resize, Elem16, Vector_Insert_21C330, std_vector_imp_cQuaternion_erase)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_0021BF30 */
@@ -33,7 +33,7 @@ DEFINE_VECTOR_RESIZE(func_0021BF30, Elem16, Vector_Insert_21C330, func_0021C260)
 extern "C" {
 char D_004A4A08[] = "allocator.hh";
 }
-DEFINE_VECTOR_DESTROY_DTOR_FILE(func_0021BFA0, func_0021C180, D_004A4A08)
+DEFINE_VECTOR_DESTROY_DTOR_FILE(std_vector_deleter_cSafePtr_cGOBJ_dtor, func_0021C180, D_004A4A08)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0021BFA0(void) {}
 #pragma pop /* merge_units */

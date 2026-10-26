@@ -10,10 +10,10 @@ extern unsigned short D_004E1D4C;
 extern void *(*D_004E1D34)(int n, int size);
 extern int func_00322E60(int);
 extern int func_00323248(void);
-extern int func_0031F7C8(void *p);
-extern int func_003214C0(H321 **pp);
+extern int NellyInitDecodeSase3200(void *p);
+extern int nciFreeDecodeSase3200(H321 **pp);
 extern int printf(const char *fmt, ...);
-int func_00321398(H321 **pp)
+int nciInitDecodeSase3200(H321 **pp)
 {
     H321 *h;
     int r;
@@ -37,9 +37,9 @@ int func_00321398(H321 **pp)
         h->buf34 = D_004E1D34(0x1000, 1);
         if (h->buf34 == 0) return 0x1770;
     }
-    r = func_0031F7C8(h->inner);
+    r = NellyInitDecodeSase3200(h->inner);
     if (r) {
-        func_003214C0(pp);
+        nciFreeDecodeSase3200(pp);
         return 0x1770;
     }
     D_004E1D4C++;
@@ -49,8 +49,8 @@ int func_00321398(H321 **pp)
 
 /* merge_units: begin func_003214C0 */
 extern void (*D_004E1D38)(void *p);
-extern void func_0031F938(void *p);
-int func_003214C0(H321 **pp)
+extern void NellyFreeDecodeSase3200(void *p);
+int nciFreeDecodeSase3200(H321 **pp)
 {
     H321 *h;
     if (pp == 0) return 0x181A;
@@ -59,7 +59,7 @@ int func_003214C0(H321 **pp)
     D_004E1D4C--;
     h = *pp;
     h->magic = 0;
-    func_0031F938(h->inner);
+    NellyFreeDecodeSase3200(h->inner);
     if (h->buf30) { D_004E1D38(h->buf30); h->buf30 = 0; }
     if (h->buf34) { D_004E1D38(h->buf34); h->buf34 = 0; }
     D_004E1D38(h);

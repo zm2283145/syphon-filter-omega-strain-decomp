@@ -110,6 +110,6 @@ m.f2C = 0;
 #include "tank_reset.h"
 
 /* cTank: reset controller and aim. */
-extern "C" void func_00285690(TankResetTank* self) { TankReset_Do(self); }
+extern "C" void cTank_Reset(TankResetTank* self) { TankReset_Do(self); }
 #pragma pop /* merge_units */
 /* merge_units: end func_00285690 */

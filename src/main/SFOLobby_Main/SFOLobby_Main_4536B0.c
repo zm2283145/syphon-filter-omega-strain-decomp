@@ -10,14 +10,14 @@
 typedef struct { char pad[0x255C]; int mode; } S4536B0;
 extern unsigned char D_00585FB8;
 extern int SFOLobby_Poll(S4536B0*, int, int, int);
-extern void func_0044C420(S4536B0*);
-extern void func_00442F30(S4536B0*);
-extern void func_00445E60(S4536B0*);
-extern void func_004516E0(S4536B0*);
+extern void SFOLobby_ConfigScreenIntel(S4536B0*);
+extern void SFOLobby_ServerScreenIntel(S4536B0*);
+extern void SFOLobby_AccountScreenIntel(S4536B0*);
+extern void SFOLobby_LobbyScreenIntel(S4536B0*);
 extern void SFOLobby_UpdateContacts(S4536B0*);
-extern void func_0044B180(S4536B0*);
-extern void func_00442700(S4536B0*);
-extern void func_0044E330(S4536B0*);
+extern void SFOLobby_CellScreenIntel(S4536B0*);
+extern void SFOLobby_MissionScreenIntel(S4536B0*);
+extern void SFOLobby_GameIntel(S4536B0*);
 void SFOLobby_Update(S4536B0* s) {
     if (D_00585FB8) return;
     D_00585FB8 = 1;
@@ -28,14 +28,14 @@ void SFOLobby_Update(S4536B0* s) {
         }
     }
     switch (s->mode) {
-    case 1: func_0044C420(s); break;
-    case 2: func_00442F30(s); break;
-    case 3: func_00445E60(s); break;
-    case 5: func_004516E0(s); break;
+    case 1: SFOLobby_ConfigScreenIntel(s); break;
+    case 2: SFOLobby_ServerScreenIntel(s); break;
+    case 3: SFOLobby_AccountScreenIntel(s); break;
+    case 5: SFOLobby_LobbyScreenIntel(s); break;
     case 6: SFOLobby_UpdateContacts(s); break;
-    case 7: func_0044B180(s); break;
-    case 4: func_00442700(s); break;
-    case 10: func_0044E330(s); break;
+    case 7: SFOLobby_CellScreenIntel(s); break;
+    case 4: SFOLobby_MissionScreenIntel(s); break;
+    case 10: SFOLobby_GameIntel(s); break;
     }
     D_00585FB8 = 0;
 }
@@ -55,7 +55,7 @@ void SFOLobby_Update(S4536B0* s) {
 extern int memset(void* dst, int value, int size); /* memset */
 
 /* Resets the lobby object: clears the session block and the handles. */
-int func_004537D0(SFOLobby* self) {
+int SFOLobby_ResetConnectionFlags(SFOLobby* self) {
     int ret;
 
     ret = memset(self->sessionBlock, 0, 0x950);
@@ -117,26 +117,26 @@ int func_004537D0(SFOLobby* self) {
 #pragma push /* merge_units */
 typedef struct { char p0[0x23D8]; int h[11]; } S4538D0;
 extern void LobbyArray_Free(int h);
-extern void func_0044F810(void* p);
+extern void SFOLobbyList_FreeList(void* p);
 static inline void Release4538D0(int* h) { int t = *h; if (t != 0) LobbyArray_Free(t); *h = 0; }
 #pragma push
 #pragma opt_common_subs off
-void func_004538D0(S4538D0* s)
+void SFOLobby_FreeLists(S4538D0* s)
 {
     char* b = (char*)s;
     Release4538D0(&s->h[0]); Release4538D0(&s->h[1]); Release4538D0(&s->h[2]); Release4538D0(&s->h[3]);
     Release4538D0(&s->h[4]); Release4538D0(&s->h[5]); Release4538D0(&s->h[6]); Release4538D0(&s->h[7]);
     Release4538D0(&s->h[8]); Release4538D0(&s->h[9]); Release4538D0(&s->h[10]);
-    func_0044F810(b + 0x70);
-    func_0044F810(b + 0xFC);
-    func_0044F810(b + 0x118);
-    func_0044F810(b + 0x8C);
-    func_0044F810(b + 0xA8);
-    func_0044F810(b + 0xC4);
-    func_0044F810(b + 0xE0);
-    func_0044F810(b + 0x134);
-    func_0044F810(b + 0x150);
-    func_0044F810(b);
+    SFOLobbyList_FreeList(b + 0x70);
+    SFOLobbyList_FreeList(b + 0xFC);
+    SFOLobbyList_FreeList(b + 0x118);
+    SFOLobbyList_FreeList(b + 0x8C);
+    SFOLobbyList_FreeList(b + 0xA8);
+    SFOLobbyList_FreeList(b + 0xC4);
+    SFOLobbyList_FreeList(b + 0xE0);
+    SFOLobbyList_FreeList(b + 0x134);
+    SFOLobbyList_FreeList(b + 0x150);
+    SFOLobbyList_FreeList(b);
 }
 #pragma pop
 #pragma pop /* merge_units */
@@ -153,7 +153,7 @@ void func_004538D0(S4538D0* s)
 extern int LobbyArray_Init(LobbyRecord1C* pool, int count, int grow, int elemSize);
 
 /* Sets up the lobby's record pools (count, growth, element size). */
-int func_00453A50(SFOLobby* self) {
+int SFOLobby_InitLists(SFOLobby* self) {
     LobbyArray_Init(&self->pool70, 32, 32, 276);
     LobbyArray_Init(&self->accountCache, 512, 0, 320);
     LobbyArray_Init(&self->pool118, 1024, 512, 44);
@@ -177,11 +177,11 @@ typedef struct {
     char p2560[4];
     unsigned char err;
 } S453B00;
-extern void func_00444070(int);
+extern void SFOMGCL_Shutdown(int);
 extern void SFOLobby_DisconnectAuthServer(S453B00*);
-extern void func_004689B0(void);
-extern void func_002E9648(void);
-extern void func_00444E70(void);
+extern void MediusCloseBare(void);
+extern void NetClose(void);
+extern void SFOMGCL_Close_API(void);
 #if 0 /* merge_units */
 extern void LobbyArray_Free(void*);
 #endif /* merge_units */
@@ -190,27 +190,27 @@ extern void LobbyArray_Free(void*);
 extern void SFOLobby_NetDown(S453B00*);
 extern void Iop_LoadEzNetModules(int);
 #if 0 /* merge_units */
-extern void func_004538D0(S453B00*);
+extern void SFOLobby_FreeLists(S453B00*);
 #endif /* merge_units */
-#define func_004538D0(a0) (func_004538D0((S4538D0 *)(a0))) /* merge_units */
+#define SFOLobby_FreeLists(a0) (SFOLobby_FreeLists((S4538D0 *)(a0))) /* merge_units */
 
 extern void LobbyArray_Clear(void*);
 
-void func_00453B00(S453B00* s, int full)
+void SFOLobby_Reset(S453B00* s, int full)
 {
     if (s->f1EA8 > 0) {
-        func_00444070(0);
+        SFOMGCL_Shutdown(0);
         if (s->f180 > 0)
             SFOLobby_DisconnectAuthServer(s);
         if (s->f180 > 0)
             SFOLobby_DisconnectAuthServer(s);
         if (full) {
-            func_004689B0();
-            func_002E9648();
+            MediusCloseBare();
+            NetClose();
         }
         s->f1EA8 = 0;
         if (full)
-            func_00444E70();
+            SFOMGCL_Close_API();
         if (s->f2404)
             LobbyArray_Free(s->f2404);
         s->f2404 = 0;
@@ -222,9 +222,9 @@ void func_00453B00(S453B00* s, int full)
     if (full) {
         if (s->f1EA8) {
             if (s->f1EA8 == -1) {
-                func_004689B0();
-                func_00444E70();
-                func_002E9648();
+                MediusCloseBare();
+                SFOMGCL_Close_API();
+                NetClose();
             }
             SFOLobby_NetDown(s);
             s->f1EA8 = 0;
@@ -232,7 +232,7 @@ void func_00453B00(S453B00* s, int full)
         Iop_LoadEzNetModules(0);
     }
     s->f180 = -1;
-    func_004538D0(s);
+    SFOLobby_FreeLists(s);
     if (full) {
         LobbyArray_Clear(s->f1C);
         LobbyArray_Clear(s->f38);
@@ -242,6 +242,6 @@ void func_00453B00(S453B00* s, int full)
     s->err = 0;
 }
 #undef LobbyArray_Free /* merge_units */
-#undef func_004538D0 /* merge_units */
+#undef SFOLobby_FreeLists /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00453B00 */

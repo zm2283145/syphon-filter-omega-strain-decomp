@@ -6,13 +6,13 @@
 
 #include "types.h"
 
-void* func_001DF620(char* self) {
+void* std_tree_pair_cWeaponSlotPair_value_compare_node_alloc(char* self) {
     return self + 4;
 }
 
-void func_001DF630(void) {
+void cAllocator_pair_cWeaponSlotPair_destroy(void) {
 }
 
-void* func_001DF640(void* self) {
+void* std_tree_pair_cWeaponSlotPair_value_compare_alloc(void* self) {
     return self;
 }

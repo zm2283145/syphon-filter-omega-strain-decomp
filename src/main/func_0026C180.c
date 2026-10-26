@@ -8,10 +8,10 @@ typedef struct Obj { char pad[0x24]; LList list; } Obj;
 extern int HudMarkers_GetHighlight(Obj* o);
 extern void HudMarkers_SetHighlight(Obj* o, int v);
 extern void List_Begin_16E880(LIt* out, LList* l);
-extern LIt* func_0026C390(LIt* out, LNode* n);
-extern void func_0026C320(LIt* out, LList* l);
-extern LIt* func_0026C350(LIt* dst, LIt* src);
-extern void func_0026C360(LIt* out, LList* l);
+extern LIt* std_list_cHudTargetInfoPtr_generic_iterator_1_ctor(LIt* out, LNode* n);
+extern void std_list_cHudTargetInfoPtr_end_void(LIt* out, LList* l);
+extern LIt* cConstLListIterator_cHudTargetInfoPtr_ctor(LIt* dst, LIt* src);
+extern void std_list_cHudTargetInfoPtr_begin_void(LIt* out, LList* l);
 extern void HudMap_Commit(Obj** self);
 
 int HudMap_PrevMarker(Obj** self) {
@@ -33,12 +33,12 @@ int HudMap_PrevMarker(Obj** self) {
     } else {
         if (l->count > 1) {
         List_Begin_16E880(&t, l);
-        func_0026C390(&r, t.node);
+        std_list_cHudTargetInfoPtr_generic_iterator_1_ctor(&r, t.node);
         n = r.node;
-        while (func_0026C320(&es, l), func_0026C350(&ec, &es), n != ec.node) {
+        while (std_list_cHudTargetInfoPtr_end_void(&es, l), cConstLListIterator_cHudTargetInfoPtr_ctor(&ec, &es), n != ec.node) {
             if (n->data == HudMarkers_GetHighlight(*self)) {
-                func_0026C360(&bs, l);
-                func_0026C350(&bc, &bs);
+                std_list_cHudTargetInfoPtr_begin_void(&bs, l);
+                cConstLListIterator_cHudTargetInfoPtr_ctor(&bc, &bs);
                 if (n == bc.node) {
                     HudMarkers_SetHighlight(*self, l->last->data);
                 } else {

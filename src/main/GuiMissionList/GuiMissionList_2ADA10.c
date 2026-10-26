@@ -13,7 +13,7 @@ extern int GuiScreen_GetLobbyString(Obj2AD* o, int type, int a, int b, int c, in
 extern void FrontEnd_OpenPopup(void* mgr, int a, const char* text, int b, Obj2AD* o, int c);
 
 /* Sets the id and name from rec, then registers the object (event 0x35) with the manager. */
-void func_002ADA10(Obj2AD* o, NameRec* rec)
+void GuiNetContacts_SelectAgentRemove(Obj2AD* o, NameRec* rec)
 {
     void* mgr;
     String tmp;

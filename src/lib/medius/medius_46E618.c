@@ -9,7 +9,7 @@
 int D_00497E38 = 0;
 int D_00497E3C = 0;
 
-int func_0046E618(void) {
+int MediusUtilGetServerVersionResponseHandler(void) {
     int v0;
     int cond;
 
@@ -24,11 +24,11 @@ ret:
     return v0;
 }
 
-int func_0046E648(void) {
+int MediusUtilAddLobbyWorldRequestHandler(void) {
     return 136;
 }
 
-int func_0046E650(void) {
+int MediusUtilAddLobbyWorldResponseHandler(void) {
     int v0;
     int cond;
 

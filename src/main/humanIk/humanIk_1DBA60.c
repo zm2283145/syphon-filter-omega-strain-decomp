@@ -23,7 +23,7 @@ struct S {
     V v50;
     signed char c60;
 };
-extern "C" S* func_001DBA60(S* d, const S* s)
+extern "C" S* std_pair_cWeaponSlotPair_cIkTarget_LeftRight_ctor_pairR(S* d, const S* s)
 {
     *d = *s; return d;
 }
@@ -40,7 +40,7 @@ typedef struct Seg { V4 p; V4 q; signed char f; } Seg;
 typedef struct SegPair { Seg a; Seg b; } SegPair;
 #pragma peephole off
 #pragma opt_propagation off
-SegPair* func_001DBAD0(SegPair* d, const Seg* a, const Seg* b)
+SegPair* cDrawAndHolsterWeapon_ActionManager_cIkTarget_LeftRight_ctor_cIkTargetR_cIkTargetR(SegPair* d, const Seg* a, const Seg* b)
 {
     const V4* sbq;
     V4* daq;

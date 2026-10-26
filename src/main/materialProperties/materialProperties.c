@@ -8,15 +8,15 @@
 #pragma push /* merge_units */
 #include "types.h"
 typedef struct { int m0; void* m4; } T8D80;
-extern void func_0040A9C0(T8D80* t, void* n);
+extern void std_tree_pair_cString_value_compare_destroy_nodeP_4(T8D80* t, void* n);
 extern void operator_delete(void* p);
 /* Deleting destructor of a tree owner: erase the root, then delete. */
-T8D80* func_00408D80(T8D80* t, short del)
+T8D80* std_map_cString_int_dtor(T8D80* t, short del)
 {
     if (t) {
         if (t) {
             if (t->m4)
-                func_0040A9C0(t, t->m4);
+                std_tree_pair_cString_value_compare_destroy_nodeP_4(t, t->m4);
         }
         if (del > 0)
             operator_delete(t);
@@ -38,32 +38,32 @@ T8D80* func_00408D80(T8D80* t, short del)
 
 extern int String_CopyCtor(L4Elem124Vec*, int);
 
-void func_00408DF0(Iter* out, void* self, Iter* src) {
+void std_vector_cMaterialProperties_pointer2iterator(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }
 
 /* end() of the element vector. */
-L4Elem124* func_00408E00(L4Elem124Vec* v) {
+L4Elem124* std_vector_imp_cMaterialProperties_end(L4Elem124Vec* v) {
     return v->data + v->count;
 }
 
-int func_00408E30(L4Elem124Vec* v, int a1, int value) {
+int std_make_pair_cString_int(L4Elem124Vec* v, int a1, int value) {
     int ret = String_CopyCtor(v, a1);
 
     v->unk0C = value;
     return ret;
 }
 
-Word* func_00408E70(Word* dst, Word* src) {
+Word* cAssocArray_cString_int_Iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_00408E80(Iter* out, Tree* t) {
+void std_map_cString_int_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-void* func_00408E90(char* self) {
+void* std_vector_deleter_cMaterialProperties_data(char* self) {
     return self + 8;
 }
 #pragma pop /* merge_units */
@@ -72,36 +72,36 @@ void* func_00408E90(char* self) {
 /* merge_units: begin func_00408EA0 */
 #pragma push /* merge_units */
 typedef struct { int m0; void* m4; } T8FB0;
-T8FB0* func_00408FB0(T8FB0* t, short del); /* gsynth: defined below */
+T8FB0* cAssocArray_cString_char_dtor(T8FB0* t, short del); /* gsynth: defined below */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
 int Alloc_Lock(int);                                    
 int Alloc_Unlock(int);                                  
-int func_0012F530(char *, int);                            
-int func_00136DA0(char *);                               
+int cTimerDisable_dtor(char *, int);                            
+int cTimerDisable_ctor(char *);                               
 #if 0 /* merge_units */
-int func_00408FB0(int, int);
+int cAssocArray_cString_char_dtor(int, int);
 #endif /* merge_units */
-#define func_00408FB0(a0, a1) ((int)func_00408FB0((T8FB0 *)(a0), (short)(a1))) /* merge_units */
+#define cAssocArray_cString_char_dtor(a0, a1) ((int)cAssocArray_cString_char_dtor((T8FB0 *)(a0), (short)(a1))) /* merge_units */
 
                             
-int func_0040A210(int, int);                            
+int std_vector_deleter_cMaterialProperties_dtor(int, int);                            
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
 
 typedef struct { int f0; int f4; unsigned char f8; } PS0_00408EA0;
-void func_00408EA0(PS0_00408EA0 *arg0) {
+void cMaterialPropertiesTable_Reset(PS0_00408EA0 *arg0) {
     int sp38[2];
     int temp_s1;
     int temp_s1_2;
 
     if (arg0->f8 != 0) {
         temp_s1 = arg0->f0;
-        func_00136DA0(sp38);
-        func_00408FB0(temp_s1, -1);
+        cTimerDisable_ctor(sp38);
+        cAssocArray_cString_char_dtor(temp_s1, -1);
         Mem_Free(0, temp_s1, "materialProperties.cc", 0x75);
-        func_0012F530(sp38, -1);
+        cTimerDisable_dtor(sp38, -1);
         arg0->f0 = 0;
         temp_s1_2 = arg0->f4;
         if (g_ProfileLockEnabled != 0) {
@@ -109,7 +109,7 @@ void func_00408EA0(PS0_00408EA0 *arg0) {
         }
         g_ProfileLockDepth += 1;
         if ((temp_s1_2 != 0) && (temp_s1_2 != 0) && (temp_s1_2 != 0)) {
-            func_0040A210(temp_s1_2, 0);
+            std_vector_deleter_cMaterialProperties_dtor(temp_s1_2, 0);
         }
         Mem_Free(0, temp_s1_2, "materialProperties.cc", 0x78);
         if (g_ProfileLockEnabled != 0) {
@@ -122,21 +122,21 @@ void func_00408EA0(PS0_00408EA0 *arg0) {
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00408EA0(void) {}
-#undef func_00408FB0 /* merge_units */
+#undef cAssocArray_cString_char_dtor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00408EA0 */
 
 /* merge_units: begin func_00408FB0 */
 #pragma push /* merge_units */
-extern void func_0040A380(T8FB0* t, void* n);
+extern void std_tree_pair_cString_value_compare_destroy_nodeP_3(T8FB0* t, void* n);
 /* Deleting destructor of a nested tree owner: erase the root, then delete. */
-T8FB0* func_00408FB0(T8FB0* t, short del)
+T8FB0* cAssocArray_cString_char_dtor(T8FB0* t, short del)
 {
     if (t) {
         if (t) {
             if (t) {
                 if (t->m4)
-                    func_0040A380(t, t->m4);
+                    std_tree_pair_cString_value_compare_destroy_nodeP_3(t, t->m4);
             }
         }
         if (del > 0)

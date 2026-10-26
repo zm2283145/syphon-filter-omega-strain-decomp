@@ -8,7 +8,7 @@
 #include "loose02_types.h"
 
 /* Sets parameter unk1C and marks it dirty. */
-ParamBlock* func_00318300(ParamOwner* self, float value) {
+ParamBlock* NellySetPitchOffsetSase3200(ParamOwner* self, float value) {
     ParamBlock* params = self->params;
 
     params->unk1C = value;

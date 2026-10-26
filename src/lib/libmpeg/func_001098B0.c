@@ -9,7 +9,7 @@ typedef struct {
     int total;
 } DmaState;
 
-int func_001098B0(int ch, DmaState *s)
+int _ch3dmaCSC(int ch, DmaState *s)
 {
     int last;
 

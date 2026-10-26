@@ -9,7 +9,7 @@
 extern char D_004AF148[];
 static void * const dat_00490898[1] = { (void*)D_004AF148 };
 
-int func_002F5A48(void) {
+int rt_comm_get_version_string_ptr(void) {
     int tmp0;
 
     tmp0 = *(int*)((char*)dat_00490898);

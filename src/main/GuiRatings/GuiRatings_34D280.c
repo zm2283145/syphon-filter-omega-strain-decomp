@@ -31,10 +31,10 @@ static inline void merge_flush_func_0034D280(void) {}
  */
 
 
-void func_0034D2B0(void) {
+void GuiPersonnelScreen_PopulateList(void) {
 }
 
-void func_0034D2C0(void) {
+void GuiPersonnelScreen_ItemAction(void) {
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0034D2B0(void) {}

@@ -1,6 +1,6 @@
 #include "types.h"
 
-int func_001B78F0(int a0, int a1) {
+int cBitArray_8_ctor(int a0, int a1) {
     int v0, v1;
     int cond;
 

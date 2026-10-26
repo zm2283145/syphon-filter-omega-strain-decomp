@@ -4,7 +4,7 @@ typedef struct { char p0[0x80]; char io[0xC8]; B36CAC0* p148; unsigned char stat
 extern void FileHal_Reopen(void* io, S36CAC0* s, int mode);
 extern void FileHal_Read(void* io, void* dst, int size, int pos);
 /* Starts reading entry idx of the archive into dst (4 when the archive is not open). */
-int func_0036CAC0(S36CAC0* s, int idx, void* dst, int big)
+int cHogFile_Stream_int_voidP_bool(S36CAC0* s, int idx, void* dst, int big)
 {
     int size; int start; int* t;
     if (s->state != 2) return 4;

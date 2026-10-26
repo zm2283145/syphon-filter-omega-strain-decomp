@@ -6,7 +6,7 @@
 
 /* merge_units: begin func_002D8AF0 */
 typedef struct { int f0; int n; } X8AF0;
-int func_002D8AF0(X8AF0* p)
+int GetAudioSequence(X8AF0* p)
 {
     return p->n++;
 }
@@ -14,14 +14,14 @@ int func_002D8AF0(X8AF0* p)
 
 /* merge_units: begin func_002D8B08 */
 typedef struct { int f0; int f4; int n; } X8B08;
-int func_002D8B08(X8B08* p)
+int GetVideoSequence(X8B08* p)
 {
     return p->n++;
 }
 /* merge_units: end func_002D8B08 */
 
 /* merge_units: begin func_002D8B20 */
-int func_002D8B20(int* p)
+int GetPackSequence(int* p)
 {
     return (*p)++;
 }

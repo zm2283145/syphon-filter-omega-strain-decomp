@@ -26,10 +26,10 @@ void Alloc_Lock(int id);
 void Alloc_Unlock(int id);
 void* Mem_Alloc(int heap, int size, const char* file, int line);
 int String_AssignCStr_1C43A0(Str* s, const char* t);
-int func_004134B0(Self* self, Str* path, const char* name, unsigned char* flag);
+int cInterfaceManager_FindHogFile(Self* self, Str* path, const char* name, unsigned char* flag);
 void String_Dtor(Str* s, int f);
 char* String_CStr(Str* s);
-void* func_003F9850(void* files, char* path, int mode);
+void* cHogList_OpenFromHog(void* files, char* path, int mode);
 void* Archive_Open(void* files, char* path, int a, int b);
 int sprintf(char* buf, const char* fmt, ...);
 void Resource_Construct(Hog* h);
@@ -123,12 +123,12 @@ extern "C" int GuiManager_FindInterface(Self* self, const char* name)
     if (i != -1 && self->files) {
         Str* ps = &path;
         ps->a = 0; ps->b = 0; ps->c = 0;
-        if (!func_004134B0(self, ps, name, &flag)) {
+        if (!cInterfaceManager_FindHogFile(self, ps, name, &flag)) {
             String_Dtor(&path, 0);
             return -1;
         }
         if (flag) {
-            arc = func_003F9850(self->files, String_CStr(&path), self->mode);
+            arc = cHogList_OpenFromHog(self->files, String_CStr(&path), self->mode);
         } else {
             arc = Archive_Open(self->files, String_CStr(&path), 0, 0);
             asm { .set reorder } /* barrier: keeps the then-arm's own move (retail does not merge the tails) */

@@ -9,9 +9,9 @@ typedef struct { unsigned char flag; char pad[3]; int x4; int x8; } S2FD288;
 extern unsigned char D_004908EC;
 extern S2FD288 D_005297E0;
 extern unsigned int strlen(const char *);
-extern int func_002F5FE8(int, unsigned char *, char *, unsigned short);
-extern int func_003010C8(int);
-int func_002FD288(unsigned char *out, char *name, unsigned short x)
+extern int rt_comm_send_echo(int, unsigned char *, char *, unsigned short);
+extern int rt_msg_client_map_comm_error(int);
+int rt_msg_client_isend_echo(unsigned char *out, char *name, unsigned short x)
 {
     int r;
     if (out == 0) return 2;
@@ -20,7 +20,7 @@ int func_002FD288(unsigned char *out, char *name, unsigned short x)
     if (D_005297E0.flag != 1) return 5;
     if (name == 0) return 2;
     if (strlen(name) >= 0x10) return 2;
-    r = func_003010C8(func_002F5FE8(D_005297E0.x4, out, name, x));
+    r = rt_msg_client_map_comm_error(rt_comm_send_echo(D_005297E0.x4, out, name, x));
     __asm__ __volatile__("");
     return r;
 }
@@ -29,9 +29,9 @@ int func_002FD288(unsigned char *out, char *name, unsigned short x)
 /* merge_units: begin func_002FD338 */
 typedef struct { char pad[0x48]; unsigned int f48; unsigned int f4C; char q50[0x18]; char q68[4]; } S;
 typedef struct { char pad[0x78]; S *sub[2]; } O;
-extern int func_002FE860(unsigned short, O **);
-extern int func_002F5818(void *, unsigned int *);
-int func_002FD338(unsigned short id, unsigned int *a, unsigned int *b, unsigned int *pa, unsigned int *pb)
+extern int rt_msg_client_get_valid_connection(unsigned short, O **);
+extern int rt_circ_buf_get_used(void *, unsigned int *);
+int rt_msg_client_iget_buffer_status(unsigned short id, unsigned int *a, unsigned int *b, unsigned int *pa, unsigned int *pb)
 {
     unsigned int x = 0; unsigned int y = 0;
     O *o = 0;
@@ -43,15 +43,15 @@ int func_002FD338(unsigned short id, unsigned int *a, unsigned int *b, unsigned 
     int r;
     S *s;
     if (D_004908EC != 1) return 5;
-    r = func_002FE860(id, &o);
+    r = rt_msg_client_get_valid_connection(id, &o);
     if (r) return r;
     for (i = 0; i < 2; i++) {
         s = o->sub[i];
         if (s) {
-            if (func_002F5818(s->q68, &x)) return 0x15;
+            if (rt_circ_buf_get_used(s->q68, &x)) return 0x15;
             sx += x;
             s48 += s->f48;
-            if (func_002F5818(s->q50, &y)) return 0x15;
+            if (rt_circ_buf_get_used(s->q50, &y)) return 0x15;
             s4c += s->f4C;
             sy += y;
         }
@@ -74,40 +74,40 @@ int func_002FD338(unsigned short id, unsigned int *a, unsigned int *b, unsigned 
 /* merge_units: end func_002FD338 */
 
 /* merge_units: begin func_002FD518 */
-extern int func_002F63E8(void *p);
-int func_002FD518(void *p)
+extern int rt_comm_get_local_ip(void *p);
+int rt_msg_client_iget_local_ip(void *p)
 {
     int r;
     if (D_004908EC != 1) return 5;
     if (p == 0) return 2;
-    r = func_003010C8(func_002F63E8(p));
+    r = rt_msg_client_map_comm_error(rt_comm_get_local_ip(p));
     __asm__ __volatile__(""); /* barrier: retail keeps jal + return, no sibling call */
     return r;
 }
 /* merge_units: end func_002FD518 */
 
 /* merge_units: begin func_002FD560 */
-extern int func_002F6400(void *p);
-int func_002FD560(void *p)
+extern int rt_comm_get_broadcast_ip(void *p);
+int rt_msg_client_iget_broadcast_ip(void *p)
 {
     int r;
     if (D_004908EC != 1) return 5;
     if (p == 0) return 2;
-    r = func_003010C8(func_002F6400(p));
+    r = rt_msg_client_map_comm_error(rt_comm_get_broadcast_ip(p));
     __asm__ __volatile__(""); /* barrier: retail keeps jal + return, no sibling call */
     return r;
 }
 /* merge_units: end func_002FD560 */
 
 /* merge_units: begin func_002FD5A8 */
-extern int func_002F6418(int, int);
-int func_002FD5A8(int a, int b)
+extern int rt_comm_get_host_by_name(int, int);
+int rt_msg_client_iget_host_by_name(int a, int b)
 {
     if (D_004908EC != 1) return 5;
     if (a == 0) return 2;
     if (b == 0) return 2;
     {
-        int r = func_003010C8(func_002F6418(a, b));
+        int r = rt_msg_client_map_comm_error(rt_comm_get_host_by_name(a, b));
         __asm__ __volatile__("");
         return r;
     }
@@ -116,44 +116,44 @@ int func_002FD5A8(int a, int b)
 
 /* merge_units: begin func_002FD5F8 */
 #if 0 /* merge_units */
-extern int func_002FE860(unsigned short, char **);
+extern int rt_msg_client_get_valid_connection(unsigned short, char **);
 #endif /* merge_units */
-#define func_002FE860(a0, a1) (func_002FE860((a0), (O * *)(a1))) /* merge_units */
+#define rt_msg_client_get_valid_connection(a0, a1) (rt_msg_client_get_valid_connection((a0), (O * *)(a1))) /* merge_units */
 
 extern void String_Copy(char *, char *);
-int func_002FD5F8(unsigned short id, char *dst)
+int rt_msg_client_iget_connection_ip(unsigned short id, char *dst)
 {
     char *p = 0;
     int r;
     if (D_004908EC != 1) return 5;
     if (dst == 0) return 2;
-    r = func_002FE860(id, &p);
+    r = rt_msg_client_get_valid_connection(id, &p);
     if (r) return r;
     if (*(int *)(p + 8) != 8) return 0x17;
     String_Copy(dst, p + 0x5C);
     return 0;
 }
-#undef func_002FE860 /* merge_units */
+#undef rt_msg_client_get_valid_connection /* merge_units */
 /* merge_units: end func_002FD5F8 */
 
 /* merge_units: begin func_002FD670 */
 #if 0 /* merge_units */
-extern int func_002FE860(unsigned short, char **);
+extern int rt_msg_client_get_valid_connection(unsigned short, char **);
 #endif /* merge_units */
-#define func_002FE860(a0, a1) (func_002FE860((a0), (O * *)(a1))) /* merge_units */
+#define rt_msg_client_get_valid_connection(a0, a1) (rt_msg_client_get_valid_connection((a0), (O * *)(a1))) /* merge_units */
 
-extern int func_003018E0(char *, int);
+extern int rt_msg_set_ubyte(char *, int);
 extern int NetConn_BufferMessage(int, int, int, char *, int, int);
-int func_002FD670(unsigned short id, unsigned char f)
+int rt_msg_client_ireceive_broadcasts(unsigned short id, unsigned char f)
 {
     char buf[16];
     char *p = 0;
     int r;
     if (D_004908EC != 1) return 5;
-    r = func_002FE860(id, &p);
+    r = rt_msg_client_get_valid_connection(id, &p);
     if (r) return r;
-    if (func_003018E0(buf, 2) || func_003018E0(buf + 1, f == 1)) return 7;
+    if (rt_msg_set_ubyte(buf, 2) || rt_msg_set_ubyte(buf + 1, f == 1)) return 7;
     return NetConn_BufferMessage(*(int *)(p + 0x80), 0xD, 0xFFFF, buf, 2, 0);
 }
-#undef func_002FE860 /* merge_units */
+#undef rt_msg_client_get_valid_connection /* merge_units */
 /* merge_units: end func_002FD670 */

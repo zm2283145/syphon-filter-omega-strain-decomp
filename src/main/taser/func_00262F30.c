@@ -16,7 +16,7 @@ extern float D_0048B160[];
 float Math_Sin(float);
 }
 
-extern "C" void func_00262F30(Rope* r, float dt)
+extern "C" void cAirTaser_AddWhipAction(Rope* r, float dt)
 {
     float step = 3.14f / r->len;
     int n = r->n;

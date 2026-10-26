@@ -2,7 +2,7 @@
 #pragma always_inline on
 #pragma inline_depth(8)
 #include "types.h"
-/* func_003C4120: Los_TraceWaterSurfaces' twin that flips back faces only for double-sided
+/* cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_2: Los_TraceWaterSurfaces' twin that flips back faces only for double-sided
  * candidates (otherwise a back face is rejected): intersects the trace segment (origin q->org,
  * direction q->dir) with candidate triangle c, the plane hit point must lie inside the segment,
  * and the barycentric test is done in the plane of the two smallest normal components; hits are
@@ -62,7 +62,7 @@ float Vec4_GetZ(V* v);
 float Math_Fabs(float f);
 V* Array16_At(Cand* c, int i);
 V Sphere_FromCenter(const V* a, const V* b);
-int func_003C4120(LosQ* q, Cand* c);
+int cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_2(LosQ* q, Cand* c);
 }
 
 /* the barycentric test is returned as a materialised bool */
@@ -115,7 +115,7 @@ static inline void Inside(LosQ* q, Cand* c, const V& hit)
         q->sink->Hit((V*)&hit, c);
 }
 
-extern "C" int func_003C4120(LosQ* q, Cand* c)
+extern "C" int cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_2(LosQ* q, Cand* c)
 {
     V t;
     const V* n = &c->n;

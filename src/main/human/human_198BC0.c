@@ -65,27 +65,27 @@ static inline void merge_flush_func_00198BC0(void) {}
 
 /* merge_units: begin func_00198CA0 */
 #pragma push /* merge_units */
-float func_00198CF0(char* self); /* gsynth: defined below */
+float cSkaPlaybackGroup_Weight(char* self); /* gsynth: defined below */
 typedef struct { char pad[0xE8]; char map[1]; } Table198;
 typedef struct { char pad[0x3C]; char ref[1]; } Obj198;
 
 extern Table198* Deque_Back(void* ref);
-extern void* func_00198D00(void* map, int key);
+extern void* cSkaPlaybackList_FindPlaybackGroup(void* map, int key);
 #if 0 /* merge_units */
-extern float func_00198CF0(void* entry);
+extern float cSkaPlaybackGroup_Weight(void* entry);
 #endif /* merge_units */
-#define func_00198CF0(a0) (func_00198CF0((void *)(a0))) /* merge_units */
+#define cSkaPlaybackGroup_Weight(a0) (cSkaPlaybackGroup_Weight((void *)(a0))) /* merge_units */
 
 
 /* Looks up key in the object's table and returns the entry's value, or 0. */
 float Actor_GetGaitPhase(Obj198* self, int key)
 {
-    void* entry = func_00198D00(Deque_Back(self->ref)->map, key);
+    void* entry = cSkaPlaybackList_FindPlaybackGroup(Deque_Back(self->ref)->map, key);
     if (entry)
-        return func_00198CF0(entry);
+        return cSkaPlaybackGroup_Weight(entry);
     return 0.0f;
 }
-#undef func_00198CF0 /* merge_units */
+#undef cSkaPlaybackGroup_Weight /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00198CA0(void) {}
 #pragma pop /* merge_units */
@@ -93,7 +93,7 @@ static inline void merge_flush_func_00198CA0(void) {}
 
 /* merge_units: begin func_00198CF0 */
 #pragma push /* merge_units */
-float func_00198CF0(char* self) {
+float cSkaPlaybackGroup_Weight(char* self) {
     return *(float*)(self + 36);
 }
 /* merge_units: generate this block's code under its own pragmas */

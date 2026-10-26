@@ -6,19 +6,19 @@
 
 /* merge_units: begin func_002F5C10 */
 extern int D_0049089C;
-extern int func_002F7B60(void);
-int func_002F5C10(void)
+extern int rt_comm_platform_shutdown(void);
+int rt_comm_shutdown(void)
 {
     int r;
     if (D_0049089C <= 0) return 4;
-    if (--D_0049089C == 0 && (r = func_002F7B60()) != 0) return r;
+    if (--D_0049089C == 0 && (r = rt_comm_platform_shutdown()) != 0) return r;
     return 0;
 }
 /* merge_units: end func_002F5C10 */
 
 /* merge_units: begin func_002F5C58 */
 extern void *memset(void *, int, unsigned int);
-int func_002F5C58(int *p)
+int rt_comm_set_default_options(int *p)
 {
     if (p == 0) return 2;
     memset(p, 0, 0xC);
@@ -30,37 +30,37 @@ int func_002F5C58(int *p)
 /* merge_units: begin func_002F5C98 */
 typedef struct { int a; int b; int c; } Opts;
 typedef struct { unsigned char f0; unsigned char used; char pad2[2]; int f4; Opts opts; unsigned short port; char name[1]; } Ent;
-extern int func_002F66B8(int *);
-extern int func_002F6758(int, Ent **);
+extern int rt_comm_get_new_channel_id(int *);
+extern int rt_comm_get_channel(int, Ent **);
 #if 0 /* merge_units */
-extern int func_002F5C58(Opts *);
+extern int rt_comm_set_default_options(Opts *);
 #endif /* merge_units */
-#define func_002F5C58(a0) (func_002F5C58((int *)(a0))) /* merge_units */
+#define rt_comm_set_default_options(a0) (rt_comm_set_default_options((int *)(a0))) /* merge_units */
 
-extern int func_002F7B78(int *, char *, unsigned short *, Opts *, char *);
-extern int func_002F6728(int);
-int func_002F5C98(int *out, char *name, unsigned short port, Opts *opts)
+extern int rt_comm_platform_create(int *, char *, unsigned short *, Opts *, char *);
+extern int rt_comm_release_channel_id(int);
+int rt_comm_create(int *out, char *name, unsigned short port, Opts *opts)
 {
     int id;
     Ent *e = 0;
     int r;
     if (out == 0) return 2;
     *out = 0;
-    r = func_002F66B8(&id);
+    r = rt_comm_get_new_channel_id(&id);
     if (r) return r;
-    r = func_002F6758(id, &e);
+    r = rt_comm_get_channel(id, &e);
     if (r) return r;
     if (e == 0) return 0xA;
     if (opts) {
         e->opts = *opts;
     } else {
-        r = func_002F5C58(&e->opts);
+        r = rt_comm_set_default_options(&e->opts);
         if (r) goto err;
     }
-    r = func_002F7B78(&e->f4, name, &port, &e->opts, e->name);
+    r = rt_comm_platform_create(&e->f4, name, &port, &e->opts, e->name);
     if (r) {
 err:
-        func_002F6728(id);
+        rt_comm_release_channel_id(id);
         return r;
     }
     e->port = port;
@@ -68,29 +68,29 @@ err:
     *out = id;
     return 0;
 }
-#undef func_002F5C58 /* merge_units */
+#undef rt_comm_set_default_options /* merge_units */
 /* merge_units: end func_002F5C98 */
 
 /* merge_units: begin func_002F5DB0 */
-extern int func_002F6770(int, char **);
-extern void func_002F7B90(int);
-int func_002F5DB0(int a)
+extern int rt_comm_get_valid_channel(int, char **);
+extern void rt_comm_platform_destroy(int);
+int rt_comm_destroy(int a)
 {
     char *p = 0;
-    int r = func_002F6770(a, &p);
+    int r = rt_comm_get_valid_channel(a, &p);
     if (r) return r;
     if (p == 0) return 0xA;
-    func_002F7B90(*(int *)(p + 4));
+    rt_comm_platform_destroy(*(int *)(p + 4));
     p[1] = 0;
     p[0] = 0;
-    return func_002F6728(a);
+    return rt_comm_release_channel_id(a);
 }
 /* merge_units: end func_002F5DB0 */
 
 /* merge_units: begin func_002F5E10 */
-extern int func_002F6628(int, unsigned char *);
-extern int func_002F7BA8(int, int, unsigned short, unsigned short *);
-extern int func_002F6878(unsigned short, int, int);
+extern int rt_comm_is_connected(int, unsigned char *);
+extern int rt_comm_platform_send(int, int, unsigned short, unsigned short *);
+extern int rt_comm_metric_add_data(unsigned short, int, int);
 int Socket_WriteConnected(int a, int b, unsigned short c, unsigned short *out)
 {
     unsigned char ok;
@@ -99,14 +99,14 @@ int Socket_WriteConnected(int a, int b, unsigned short c, unsigned short *out)
     if (out == 0) return 2;
     *out = 0;
     if (b == 0) return 2;
-    r = func_002F6770(a, &p);
+    r = rt_comm_get_valid_channel(a, &p);
     if (r) return r;
     if (p == 0) return 0xA;
     t = *(int *)(p + 8);
     if (t != 0 && t != 2) return 0xC;
     if (((unsigned char *)p)[0x16] == 0 && *(int *)(p + 8) == 0) {
         ok = 0;
-        r = func_002F6628(a, &ok);
+        r = rt_comm_is_connected(a, &ok);
         if (r) return r;
         if (ok == 0) {
             *out = 0;
@@ -114,14 +114,14 @@ int Socket_WriteConnected(int a, int b, unsigned short c, unsigned short *out)
         }
         p[0x16] = 1;
     }
-    r = func_002F7BA8(*(int *)(p + 4), b, c, out);
+    r = rt_comm_platform_send(*(int *)(p + 4), b, c, out);
     if (r) return r;
-    return func_002F6878(*out, 0, 0x28);
+    return rt_comm_metric_add_data(*out, 0, 0x28);
 }
 /* merge_units: end func_002F5E10 */
 
 /* merge_units: begin func_002F5F20 */
-extern int func_002F7BC0(int, int, unsigned short, int, unsigned short, unsigned short *);
+extern int rt_comm_platform_send_to(int, int, unsigned short, int, unsigned short, unsigned short *);
 int Socket_WriteAddressed(int a, int b, unsigned short c, int d, unsigned short e, unsigned short *out)
 {
     char *p = 0;
@@ -130,49 +130,49 @@ int Socket_WriteAddressed(int a, int b, unsigned short c, int d, unsigned short 
     if (out == 0) return 2;
     *out = 0;
     if (d == 0) return 2;
-    r = func_002F6770(a, &p);
+    r = rt_comm_get_valid_channel(a, &p);
     if (r) return r;
     if (p == 0) return 0xA;
     if (*(int *)(p + 8) != 1) return 0xC;
-    r = func_002F7BC0(*(int *)(p + 4), b, c, d, e, out);
+    r = rt_comm_platform_send_to(*(int *)(p + 4), b, c, d, e, out);
     if (r) return r;
-    return func_002F6878(*out, 0, 0x1C);
+    return rt_comm_metric_add_data(*out, 0, 0x1C);
 }
 /* merge_units: end func_002F5F20 */
 
 /* merge_units: begin func_002F5FE8 */
-extern int func_002F7BE0(int, char *, int, unsigned short);
+extern int rt_comm_platform_send_echo(int, char *, int, unsigned short);
 #if 0 /* merge_units */
-extern int func_002F6878(int, int, int);
+extern int rt_comm_metric_add_data(int, int, int);
 #endif /* merge_units */
-#define func_002F6878(a0, a1, a2) (func_002F6878((unsigned short)(a0), (a1), (a2))) /* merge_units */
+#define rt_comm_metric_add_data(a0, a1, a2) (rt_comm_metric_add_data((unsigned short)(a0), (a1), (a2))) /* merge_units */
 
-int func_002F5FE8(int a, char *b, int c, unsigned short d)
+int rt_comm_send_echo(int a, char *b, int c, unsigned short d)
 {
     char *p = 0;
     int r;
     if (b == 0) return 2;
     *b = 0;
     if (c == 0) return 2;
-    r = func_002F6770(a, &p);
+    r = rt_comm_get_valid_channel(a, &p);
     if (r) return r;
     if (p == 0) return 0xA;
     if (*(int *)(p + 8) != 3) return 0xC;
-    r = func_002F7BE0(*(int *)(p + 4), b, c, d);
+    r = rt_comm_platform_send_echo(*(int *)(p + 4), b, c, d);
     if (r) return r;
-    return func_002F6878(0x1C, 0, 0);
+    return rt_comm_metric_add_data(0x1C, 0, 0);
 }
-#undef func_002F6878 /* merge_units */
+#undef rt_comm_metric_add_data /* merge_units */
 /* merge_units: end func_002F5FE8 */
 
 /* merge_units: begin func_002F6090 */
-extern int func_002F7BF8(int, int, unsigned short, unsigned short *);
+extern int rt_comm_platform_receive(int, int, unsigned short, unsigned short *);
 #if 0 /* merge_units */
-extern int func_002F6878(int, unsigned short, int);
+extern int rt_comm_metric_add_data(int, unsigned short, int);
 #endif /* merge_units */
-#define func_002F6878(a0, a1, a2) (func_002F6878((unsigned short)(a0), (int)(a1), (a2))) /* merge_units */
+#define rt_comm_metric_add_data(a0, a1, a2) (rt_comm_metric_add_data((unsigned short)(a0), (int)(a1), (a2))) /* merge_units */
 
-int func_002F6090(int a, int b, unsigned short c, unsigned short *out)
+int rt_comm_receive(int a, int b, unsigned short c, unsigned short *out)
 {
     unsigned char ok;
     char *p = 0;
@@ -180,14 +180,14 @@ int func_002F6090(int a, int b, unsigned short c, unsigned short *out)
     if (out == 0) return 2;
     *out = 0;
     if (b == 0) return 2;
-    r = func_002F6770(a, &p);
+    r = rt_comm_get_valid_channel(a, &p);
     if (r) return r;
     if (p == 0) return 0xA;
     t = *(int *)(p + 8);
     if (t != 0 && t != 2) return 0xC;
     if (((unsigned char *)p)[0x16] == 0 && *(int *)(p + 8) == 0) {
         ok = 0;
-        r = func_002F6628(a, &ok);
+        r = rt_comm_is_connected(a, &ok);
         if (r) return r;
         if (ok == 0) {
             *out = 0;
@@ -195,21 +195,21 @@ int func_002F6090(int a, int b, unsigned short c, unsigned short *out)
         }
         p[0x16] = 1;
     }
-    r = func_002F7BF8(*(int *)(p + 4), b, c, out);
+    r = rt_comm_platform_receive(*(int *)(p + 4), b, c, out);
     if (r) return r;
-    return func_002F6878(0, *out, 0x28);
+    return rt_comm_metric_add_data(0, *out, 0x28);
 }
-#undef func_002F6878 /* merge_units */
+#undef rt_comm_metric_add_data /* merge_units */
 /* merge_units: end func_002F6090 */
 
 /* merge_units: begin func_002F61A0 */
-extern int func_002F7C10(int, int, int, int, unsigned short, unsigned short *);
+extern int rt_comm_platform_receive_from(int, int, int, int, unsigned short, unsigned short *);
 #if 0 /* merge_units */
-extern int func_002F6878(int, unsigned short, int);
+extern int rt_comm_metric_add_data(int, unsigned short, int);
 #endif /* merge_units */
-#define func_002F6878(a0, a1, a2) (func_002F6878((unsigned short)(a0), (int)(a1), (a2))) /* merge_units */
+#define rt_comm_metric_add_data(a0, a1, a2) (rt_comm_metric_add_data((unsigned short)(a0), (int)(a1), (a2))) /* merge_units */
 
-int func_002F61A0(int a, int b, int c, int d, unsigned short e, unsigned short *out)
+int rt_comm_receive_from(int a, int b, int c, int d, unsigned short e, unsigned short *out)
 {
     char *p = 0;
     int r;
@@ -217,25 +217,25 @@ int func_002F61A0(int a, int b, int c, int d, unsigned short e, unsigned short *
     if (out == 0) return 2;
     *out = 0;
     if (d == 0) return 2;
-    r = func_002F6770(a, &p);
+    r = rt_comm_get_valid_channel(a, &p);
     if (r) return r;
     if (p == 0) return 0xA;
     if (*(int *)(p + 8) != 1) return 0xC;
-    r = func_002F7C10(*(int *)(p + 4), b, c, d, e, out);
+    r = rt_comm_platform_receive_from(*(int *)(p + 4), b, c, d, e, out);
     if (r) return r;
-    return func_002F6878(0, *out, 0x1C);
+    return rt_comm_metric_add_data(0, *out, 0x1C);
 }
-#undef func_002F6878 /* merge_units */
+#undef rt_comm_metric_add_data /* merge_units */
 /* merge_units: end func_002F61A0 */
 
 /* merge_units: begin func_002F6268 */
-extern int func_002F7C28(int, unsigned char *, int, int);
+extern int rt_comm_platform_receive_echo(int, unsigned char *, int, int);
 #if 0 /* merge_units */
-extern int func_002F6878(int, int, int);
+extern int rt_comm_metric_add_data(int, int, int);
 #endif /* merge_units */
-#define func_002F6878(a0, a1, a2) (func_002F6878((unsigned short)(a0), (a1), (a2))) /* merge_units */
+#define rt_comm_metric_add_data(a0, a1, a2) (rt_comm_metric_add_data((unsigned short)(a0), (a1), (a2))) /* merge_units */
 
-int func_002F6268(int a, unsigned char *out, int c, int d)
+int rt_comm_receive_echo(int a, unsigned char *out, int c, int d)
 {
     char *p = 0;
     int r;
@@ -243,36 +243,36 @@ int func_002F6268(int a, unsigned char *out, int c, int d)
     *out = 0;
     if (c == 0) return 2;
     if (d == 0) return 2;
-    r = func_002F6770(a, &p);
+    r = rt_comm_get_valid_channel(a, &p);
     if (r) return r;
     if (p == 0) return 0xA;
     if (*(int *)(p + 8) != 3) return 0xC;
-    r = func_002F7C28(*(int *)(p + 4), out, c, d);
+    r = rt_comm_platform_receive_echo(*(int *)(p + 4), out, c, d);
     if (r) return r;
     if (*out == 1) {
-        r = func_002F6878(0, 0x1C, 0);
+        r = rt_comm_metric_add_data(0, 0x1C, 0);
         if (r) return r;
     }
     return 0;
 }
-#undef func_002F6878 /* merge_units */
+#undef rt_comm_metric_add_data /* merge_units */
 /* merge_units: end func_002F6268 */
 
 /* merge_units: begin func_002F6330 */
-extern int func_002F7C40(int, unsigned short *);
-int func_002F6330(int a, unsigned short *out)
+extern int rt_comm_platform_get_avail_bytes_to_read(int, unsigned short *);
+int rt_comm_get_avail_bytes_to_read(int a, unsigned short *out)
 {
     unsigned char ok;
     char *p = 0;
     int r;
     if (out == 0) return 2;
     *out = 0;
-    r = func_002F6770(a, &p);
+    r = rt_comm_get_valid_channel(a, &p);
     if (r) return r;
     if (p == 0) return 0xA;
     if (((unsigned char *)p)[0x16] == 0 && *(int *)(p + 8) == 0) {
         ok = 0;
-        r = func_002F6628(a, &ok);
+        r = rt_comm_is_connected(a, &ok);
         if (r) return r;
         if (ok == 0) {
             *out = 0;
@@ -280,6 +280,6 @@ int func_002F6330(int a, unsigned short *out)
         }
         p[0x16] = 1;
     }
-    return func_002F7C40(*(int *)(p + 4), out);
+    return rt_comm_platform_get_avail_bytes_to_read(*(int *)(p + 4), out);
 }
 /* merge_units: end func_002F6330 */

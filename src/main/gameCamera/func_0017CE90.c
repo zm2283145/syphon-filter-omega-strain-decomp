@@ -6,5 +6,5 @@
 
 #include "types.h"
 
-void func_0017CE90(void) {
+void cSplinedMotion_cVector_FixUpResultOfSplineEvaluation(void) {
 }

@@ -3,7 +3,7 @@ typedef struct { int sock; char pad4[0x20]; char *buf; char pad28[0x10]; unsigne
 extern void *memset(void *, int, unsigned int);
 extern void *memcpy(void *, const void *, unsigned int);
 extern int Socket_WriteAddressed(int sock, int addr, unsigned int port, char *buf, unsigned int len, unsigned short *written);
-int func_00307CB0(S307CB0 *s, int addr, unsigned short port, void *data, unsigned int len)
+int rt_udp_send_unconnected(S307CB0 *s, int addr, unsigned short port, void *data, unsigned int len)
 {
     H307CB0 h;
     unsigned short written = 0;

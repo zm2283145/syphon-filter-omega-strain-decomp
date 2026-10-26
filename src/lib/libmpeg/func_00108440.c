@@ -12,41 +12,41 @@ typedef struct {
     int progressive_frame;
 } MpegCtx;
 
-extern int func_00107ED8(void *, int);
+extern int _nextBit(void *, int);
 
 #define IPU_CTRL ((volatile unsigned int *)0x10002010)
 
-void func_00108440(MpegCtx *m)
+void _pictureCodingExtension(MpegCtx *m)
 {
     int x;
 
-    m->f_code[0][0] = func_00107ED8(m, 4);
-    m->f_code[0][1] = func_00107ED8(m, 4);
-    m->f_code[1][0] = func_00107ED8(m, 4);
-    m->f_code[1][1] = func_00107ED8(m, 4);
-    x = func_00107ED8(m, 2);
+    m->f_code[0][0] = _nextBit(m, 4);
+    m->f_code[0][1] = _nextBit(m, 4);
+    m->f_code[1][0] = _nextBit(m, 4);
+    m->f_code[1][1] = _nextBit(m, 4);
+    x = _nextBit(m, 2);
     *IPU_CTRL = (*IPU_CTRL & 0xFFFCFFFF) | (x << 16);
-    m->picture_structure = func_00107ED8(m, 2);
+    m->picture_structure = _nextBit(m, 2);
     if (m->picStructure == 0) {
         m->picStructure = m->picture_structure;
     }
-    m->top_field_first = func_00107ED8(m, 1);
-    m->frame_pred_frame_dct = func_00107ED8(m, 1);
-    m->concealment_motion_vectors = func_00107ED8(m, 1);
-    x = func_00107ED8(m, 1);
+    m->top_field_first = _nextBit(m, 1);
+    m->frame_pred_frame_dct = _nextBit(m, 1);
+    m->concealment_motion_vectors = _nextBit(m, 1);
+    x = _nextBit(m, 1);
     *IPU_CTRL = (*IPU_CTRL & 0xFFBFFFFF) | (x << 22);
-    x = func_00107ED8(m, 1);
+    x = _nextBit(m, 1);
     *IPU_CTRL = (*IPU_CTRL & 0xFFDFFFFF) | (x << 21);
-    x = func_00107ED8(m, 1);
+    x = _nextBit(m, 1);
     *IPU_CTRL = (*IPU_CTRL & 0xFFEFFFFF) | (x << 20);
-    m->repeat_first_field = func_00107ED8(m, 1);
-    func_00107ED8(m, 1);
-    m->progressive_frame = func_00107ED8(m, 1);
-    if (func_00107ED8(m, 1) != 0) {
-        func_00107ED8(m, 1);
-        func_00107ED8(m, 3);
-        func_00107ED8(m, 1);
-        func_00107ED8(m, 7);
-        func_00107ED8(m, 8);
+    m->repeat_first_field = _nextBit(m, 1);
+    _nextBit(m, 1);
+    m->progressive_frame = _nextBit(m, 1);
+    if (_nextBit(m, 1) != 0) {
+        _nextBit(m, 1);
+        _nextBit(m, 3);
+        _nextBit(m, 1);
+        _nextBit(m, 7);
+        _nextBit(m, 8);
     }
 }

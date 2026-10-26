@@ -16,8 +16,8 @@ extern "C" void GuiWidget_Deinit();
 extern "C" void GuiWidget_Load();
 extern "C" void GuiArrayWidget_SendEvent21();
 extern "C" void GuiArrayWidget_SendEvent20();
-extern "C" void func_00423610();
-extern "C" void func_00423660();
+extern "C" void GuiArrayWidget_onRowRender();
+extern "C" void GuiArrayWidget_onColumnRender();
 extern "C" void GuiArrayWidget_Draw();
 extern "C" void GuiArrayWidget_OnLoseFocus();
 extern "C" void GuiArrayWidget_OnGainFocus();
@@ -41,4 +41,4 @@ extern "C" VtableObject* GuiWeaponStats_dtor(VtableObject* self, short deleteFla
     }
     return self;
 }
-void * const D_004E1350[32] = { (void*)0x0, (void*)0x0, (void*)GuiWeaponStats_dtor, (void*)GuiWeaponStats_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiTextArrayWidget_Wake, (void*)GuiTextArrayWidget_Sleep, (void*)GuiArrayWidget_OnGainFocus, (void*)GuiArrayWidget_OnLoseFocus, (void*)GuiWeaponStats_HandleInput, (void*)GuiArrayWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiWeaponStats_GetClassName, (void*)GuiWeaponStats_IsType, (void*)GuiTextArrayWidget_SetDims, (void*)func_00423660, (void*)func_00423610, (void*)GuiWeaponStats_CellColour, (void*)GuiArrayWidget_SendEvent20, (void*)GuiArrayWidget_SendEvent21, (void*)0x0, (void*)0x0, (void*)0x0 };
+void * const D_004E1350[32] = { (void*)0x0, (void*)0x0, (void*)GuiWeaponStats_dtor, (void*)GuiWeaponStats_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiTextArrayWidget_Wake, (void*)GuiTextArrayWidget_Sleep, (void*)GuiArrayWidget_OnGainFocus, (void*)GuiArrayWidget_OnLoseFocus, (void*)GuiWeaponStats_HandleInput, (void*)GuiArrayWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiWeaponStats_GetClassName, (void*)GuiWeaponStats_IsType, (void*)GuiTextArrayWidget_SetDims, (void*)GuiArrayWidget_onColumnRender, (void*)GuiArrayWidget_onRowRender, (void*)GuiWeaponStats_CellColour, (void*)GuiArrayWidget_SendEvent20, (void*)GuiArrayWidget_SendEvent21, (void*)0x0, (void*)0x0, (void*)0x0 };

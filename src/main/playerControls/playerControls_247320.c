@@ -52,7 +52,7 @@ static inline void merge_flush_func_002473E0(void) {}
 #pragma cplusplus on
 struct E247720 { unsigned char used; char p1[3]; int v; };
 struct V247720 { int pad; int count; E247720* data; };
-extern "C" void func_00247720(V247720* v, int idx); /* gsynth: defined below */
+extern "C" void cHumanMotionParams_cTargetZRotationStack_Remove_ByIndex_And_CleanUp(V247720* v, int idx); /* gsynth: defined below */
 #pragma pop
 #pragma cplusplus on
 struct St_247410 {
@@ -65,14 +65,14 @@ struct St_247410 {
 typedef struct { float a; float b; } HEnt_247410;
 typedef struct { int x; int y; } Tmp_247410;
 extern "C" {
-void* func_002477E0(Tmp_247410* t, float f);
-void func_002477C0(char* h, void* e);
+void* cHumanMotionParams_cTargetZRotationStackSlot_ctor(Tmp_247410* t, float f);
+void cArray_cTargetZRotationStackSlot_PushBackActual(char* h, void* e);
 void ActorHeading_RetargetLast(char* h, float f);
-int func_002477B0(char* h);
+int cHumanMotionParams_GetTargetZRotation_TopOfStackId(char* h);
 #if 0 /* merge_units */
-void func_00247720(char* h, int id);
+void cHumanMotionParams_cTargetZRotationStack_Remove_ByIndex_And_CleanUp(char* h, int id);
 #endif /* merge_units */
-#define func_00247720(a0, a1) (func_00247720((V247720 *)(a0), (a1))) /* merge_units */
+#define cHumanMotionParams_cTargetZRotationStack_Remove_ByIndex_And_CleanUp(a0, a1) (cHumanMotionParams_cTargetZRotationStack_Remove_ByIndex_And_CleanUp((V247720 *)(a0), (a1))) /* merge_units */
 
 HEnt_247410* History_At(char* h, int id);
 }
@@ -86,13 +86,13 @@ extern "C" void PlayerInput_UpdateAimHeading(St_247410* s, char* a, int on, floa
                 spd = 0.33f;
             else if (s->cur == 5)
                 spd = 1.0f;
-            func_002477C0(a + 0x3088, func_002477E0(&t, f));
+            cArray_cTargetZRotationStackSlot_PushBackActual(a + 0x3088, cHumanMotionParams_cTargetZRotationStackSlot_ctor(&t, f));
             ActorHeading_RetargetLast(a + 0x3030, spd);
-            s->id = func_002477B0(a + 0x3030);
+            s->id = cHumanMotionParams_GetTargetZRotation_TopOfStackId(a + 0x3030);
         }
     } else if ((s->Left(5) && s->cur != 8) || (s->Left(8) && s->cur != 5) || (s->Left(5) && s->Left(8))) {
         if (s->id != -1) {
-            func_00247720(a + 0x3088, s->id);
+            cHumanMotionParams_cTargetZRotationStack_Remove_ByIndex_And_CleanUp(a + 0x3088, s->id);
             ActorHeading_RetargetLast(a + 0x3030, -1.0f);
             s->id = -1;
         }
@@ -101,7 +101,7 @@ extern "C" void PlayerInput_UpdateAimHeading(St_247410* s, char* a, int on, floa
         ActorHeading_RetargetLast(a + 0x3030, -1.0f);
     }
 }
-#undef func_00247720 /* merge_units */
+#undef cHumanMotionParams_cTargetZRotationStack_Remove_ByIndex_And_CleanUp /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00247410(void) {}
 #pragma pop /* merge_units */
@@ -112,12 +112,12 @@ static inline void merge_flush_func_00247410(void) {}
 #pragma cplusplus on
 
 
-extern "C" void func_00250E70(V247720* v, int n, E247720* fill);
+extern "C" void std_vector_imp_cTargetZRotationStackSlot_resize(V247720* v, int n, E247720* fill);
 static inline int Used247720(E247720* e) { return e->used != 0; }
 #pragma push
 #pragma bool off
 #pragma opt_strength_reduction off
-extern "C" void func_00247720(V247720* v, int idx)
+extern "C" void cHumanMotionParams_cTargetZRotationStack_Remove_ByIndex_And_CleanUp(V247720* v, int idx)
 {
     int n;
     int i;
@@ -127,7 +127,7 @@ extern "C" void func_00247720(V247720* v, int idx)
     for (i = v->count - 1; i >= 0; i--) { if (Used247720(&v->data[i]) ^ 1) continue; n = i + 1; break; }
     f.used = 1;
     f.v = 0;
-    func_00250E70(v, n, &f);
+    std_vector_imp_cTargetZRotationStackSlot_resize(v, n, &f);
 }
 #pragma pop
 /* merge_units: generate this block's code under its own pragmas */

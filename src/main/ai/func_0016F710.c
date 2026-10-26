@@ -5,7 +5,7 @@ extern "C" {
 extern char D_004D9850[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void cMessage_ctor2(void* self, void* other);
-void func_0016F7E0(void* dst, void* src);
+void cObjectId_ctor_cObjectIdR(void* dst, void* src);
 void Vec4_Assign(void* dst, void* src);
 }
 struct Msg_0016F710 {
@@ -14,7 +14,7 @@ struct Msg_0016F710 {
     char a[0xC];
     char v[0x10];
 };
-extern "C" Msg_0016F710* func_0016F710(Msg_0016F710* self)
+extern "C" Msg_0016F710* cAISoundSystemGOBJPositionMessage_Clone(Msg_0016F710* self)
 {
     Msg_0016F710* p;
     {
@@ -24,7 +24,7 @@ extern "C" Msg_0016F710* func_0016F710(Msg_0016F710* self)
     if (p) {
         cMessage_ctor2(p, self);
         p->vtable = D_004D9850;
-        func_0016F7E0(p->a, self->a);
+        cObjectId_ctor_cObjectIdR(p->a, self->a);
         Vec4_Assign(p->v, self->v);
     }
     return p;

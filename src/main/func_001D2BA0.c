@@ -1,7 +1,7 @@
 #include "types.h"
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
 /* VU0 hand-scheduled block (MAC-flag test with branch-likely), emitted as written */
-void func_001D2BA0(V4* a, V4* b) {
+void nIk_NegateIfDotProductNegative(V4* a, V4* b) {
     int t;
     asm {
         .set noreorder

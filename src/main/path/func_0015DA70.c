@@ -41,15 +41,15 @@ extern int D_004FFBE4;
 extern RegionVec* D_004FFBE8;
 extern char D_0049C1B8[];
 void* Mem_Alloc(int, int, char*, int);
-void func_0015DD90(BoxVec* v);
-void func_001647E0(BoxVec* v, int n, Box* fill);
-int* func_0015DD80(Region* r, int i);
+void std_vector_cBox_ctor(BoxVec* v);
+void std_vector_imp_cBox_resize(BoxVec* v, int n, Box* fill);
+int* std_vector_int_opIndex_uint(Region* r, int i);
 void* NpcPath_GetNode(int id);
 void Node_GetTranslation(V4* out, void* node);
 void NpcRoute_BuildRegionBoxes(void);
 }
 
-inline void BoxVec::Resize(int n, Box* f) { func_001647E0(this, n, f); }
+inline void BoxVec::Resize(int n, Box* f) { std_vector_imp_cBox_resize(this, n, f); }
 static inline void Grow(Box* b, float d)
 {
     V4 v(d, d, d, 0.0f);
@@ -63,7 +63,7 @@ void NpcRoute_BuildRegionBoxes(void)
         BoxVec* v;
         { AllocGuard g; v = (BoxVec*)Mem_Alloc(0, 0x10, D_0049C1B8, 0xB1A); }
         if (v) {
-            func_0015DD90(v);
+            std_vector_cBox_ctor(v);
             v->owned = 1;
         }
         D_004EE118 = v;
@@ -76,7 +76,7 @@ void NpcRoute_BuildRegionBoxes(void)
             D_004EE118->data[i].Reset();
             for (int j = 0; j < r->n; j++) {
                 V4 p;
-                Node_GetTranslation(&p, NpcPath_GetNode(*func_0015DD80(r, j)));
+                Node_GetTranslation(&p, NpcPath_GetNode(*std_vector_int_opIndex_uint(r, j)));
                 D_004EE118->At(i).Extend(&p);
             }
             Grow(&D_004EE118->At(i), 2.0f);

@@ -3,11 +3,11 @@
 /* Built at a lower optimization level (unscheduled call sequence). */
 #pragma optimization_level 1
 
-extern void func_001F39C0(void* self);
+extern void std_list_imp_voidPtr_ctor(void* self);
 
-/* Runs func_001F39C0 on self and returns self. */
-void* func_001F3A70(void* self)
+/* Runs std_list_imp_voidPtr_ctor on self and returns self. */
+void* std_list_cSkaSwitchItemPtr_ctor(void* self)
 {
-    func_001F39C0(self);
+    std_list_imp_voidPtr_ctor(self);
     return self;
 }

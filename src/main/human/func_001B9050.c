@@ -31,7 +31,7 @@ extern void AnimChannel_RebuildSegment(void*, float*, float*, float*, float*);
 extern void AnimChannel_UpdateEndpoint(void*, int, float*, float*);
 extern void func_0017CA90(void*, int);
 extern void* Mem_PlacementNew(int, void*);
-extern void func_0017CA00(void*, float*, float*, float*, void*, float);
+extern void cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_floatR_floatR_etc(void*, float*, float*, float*, void*, float);
 }
 static inline bool Eq(float a, float b) { return a == b; }
 static inline void Set2(float* q, float a, float b) { q[0] = a; q[1] = b; }
@@ -68,7 +68,7 @@ extern "C" void AnimChannel_PreUpdate(Ch* c)
             c->f10 = c->f8 + Wrap(c, c->f10 - c->f8);
             func_0017CA90(c->a18, -1);
             v = Mem_PlacementNew(0x18, c->a18);
-            if (v) func_0017CA00(v, &c->f8, &c->fC, &c->f10, &D_0048A180, c->f28);
+            if (v) cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_floatR_floatR_etc(v, &c->f8, &c->fC, &c->f10, &D_0048A180, c->f28);
         } else {
             bool ne = !Eq(0.0f, c->f34);
             if (ne) {

@@ -8,7 +8,7 @@
 typedef struct { int a; int b; int c; char pad[0x38-0xC]; } E002232C0;
 typedef struct { int count; E002232C0* tbl; } T002232C0;
 extern T002232C0 D_004F5780;
-int func_002232C0(int i, unsigned int v)
+int sceUsbKbSetCodeType(int i, unsigned int v)
 {
     if (i >= D_004F5780.count) return -11;
     if (v < 2) {
@@ -28,7 +28,7 @@ extern T00223310 D_004F5780;
 #endif /* merge_units */
 #define D_004F5780 (*(T00223310*)&D_004F5780) /* merge_units */
 
-int func_00223310(int i, unsigned int v)
+int sceUsbKbSetArrangement(int i, unsigned int v)
 {
     if (i >= D_004F5780.count) return -11;
     if (v < 3) {

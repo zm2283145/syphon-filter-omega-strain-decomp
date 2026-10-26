@@ -15,7 +15,7 @@
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
 int NiRotationTrack_Update(float, char * );                       
-int func_0023E5D0(char * );                            
+int cNIEventBase_SetEndState(char * );                            
 
 void cNIEventLight_v48(char * arg0) {
     F_(arg0, 0x18C, signed char) = 1;
@@ -26,7 +26,7 @@ void cNIEventLight_v48(char * arg0) {
     if (F_(arg0, 0x1A4, int) == -1) {
         NiRotationTrack_Update(*(float *)((char *)F_(arg0, 0x19C, int) + ((F_(arg0, 0x198, int) - 1) * 0x10)) - F_(arg0, 0x1A8, float), arg0 + 0x190);
     }
-    func_0023E5D0(arg0);
+    cNIEventBase_SetEndState(arg0);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00237A20(void) {}

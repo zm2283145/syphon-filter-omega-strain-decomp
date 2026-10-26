@@ -5,12 +5,12 @@
 extern "C" {
 extern TraversalWidget* D_00572138;
 extern TraversalWidget* D_00572140;
-void func_0013B160(ChildIterator* result, ChildList* list);
+void std_list_deleter_voidPtr_end_void(ChildIterator* result, ChildList* list);
 void List_Begin(ChildIterator* result, ChildList* list);
-void func_002A89A0(ChildIterator* result, ChildList* list);
-void func_0028C0A0(ChildIterator* result, ChildList* list);
-void func_0028C0B0(ChildIterator* result, const ChildIterator* source);
-void func_0028C090(ChildIterator* result, const ChildIterator* source);
+void std_list_GuiWidgetPtr_begin(ChildIterator* result, ChildList* list);
+void std_list_GuiWidgetPtr_end(ChildIterator* result, ChildList* list);
+void std_list_GuiWidgetPtr_generic_iterator_ctor(ChildIterator* result, const ChildIterator* source);
+void cLListIterator_GuiWidgetPtr_ctor_listR(ChildIterator* result, const ChildIterator* source);
 }
 
 static inline unsigned char focusable(TraversalWidget* widget)
@@ -42,11 +42,11 @@ extern "C" TraversalWidget* GuiWidget_FocusPrev(TraversalWidget* self, Traversal
     if (boundary == self)
         D_00572140 = self;
     TraversalWidget* found = 0;
-    func_0013B160(&rawBegin, &self->children);
-    func_0028C0B0(&begin, &rawBegin);
+    std_list_deleter_voidPtr_end_void(&rawBegin, &self->children);
+    std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
     ChildNode* node = begin.node;
-    func_002A89A0(&rawEnd, &self->children);
-    func_0028C090(&end, &rawEnd);
+    std_list_GuiWidgetPtr_begin(&rawEnd, &self->children);
+    cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     while (node != end.node) {
         node = node->previous;
         TraversalWidget* child = node->widget;
@@ -55,8 +55,8 @@ extern "C" TraversalWidget* GuiWidget_FocusPrev(TraversalWidget* self, Traversal
             if (found)
                 break;
         }
-        func_002A89A0(&rawEnd, &self->children);
-        func_0028C090(&end, &rawEnd);
+        std_list_GuiWidgetPtr_begin(&rawEnd, &self->children);
+        cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     }
     self->selected = found;
     if (restart && !self->selected)
@@ -79,10 +79,10 @@ extern "C" TraversalWidget* GuiWidget_FocusNext(TraversalWidget* self, Traversal
         D_00572138 = self;
     TraversalWidget* found = 0;
     List_Begin(&rawBegin, &self->children);
-    func_0028C0B0(&begin, &rawBegin);
+    std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
     ChildNode* node = begin.node;
-    func_0028C0A0(&rawEnd, &self->children);
-    func_0028C090(&end, &rawEnd);
+    std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+    cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     while (node != end.node) {
         TraversalWidget* child = node->widget;
         if ((child->flags & 4) && (child->flags & 2)) {
@@ -91,8 +91,8 @@ extern "C" TraversalWidget* GuiWidget_FocusNext(TraversalWidget* self, Traversal
                 break;
         }
         node = node->next;
-        func_0028C0A0(&rawEnd, &self->children);
-        func_0028C090(&end, &rawEnd);
+        std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+        cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     }
     self->selected = found;
     if (restart && !self->selected)
@@ -107,11 +107,11 @@ extern "C" TraversalWidget* GuiWidget_FocusLast(TraversalWidget* self)
     ChildIterator begin;
     ChildIterator rawBegin;
     ChildIterator rawEnd;
-    func_0013B160(&rawBegin, &self->children);
-    func_0028C0B0(&begin, &rawBegin);
+    std_list_deleter_voidPtr_end_void(&rawBegin, &self->children);
+    std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
     ChildNode* node = begin.node;
-    func_002A89A0(&rawEnd, &self->children);
-    func_0028C090(&end, &rawEnd);
+    std_list_GuiWidgetPtr_begin(&rawEnd, &self->children);
+    cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     while (node != end.node) {
         node = node->previous;
         TraversalWidget* child = node->widget;
@@ -122,8 +122,8 @@ extern "C" TraversalWidget* GuiWidget_FocusLast(TraversalWidget* self)
                 return found;
             }
         }
-        func_002A89A0(&rawEnd, &self->children);
-        func_0028C090(&end, &rawEnd);
+        std_list_GuiWidgetPtr_begin(&rawEnd, &self->children);
+        cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     }
     return selectable(self) ? self : 0;
 }
@@ -136,10 +136,10 @@ extern "C" TraversalWidget* GuiWidget_FocusFirst(TraversalWidget* self)
     ChildIterator rawBegin;
     ChildIterator rawEnd;
     List_Begin(&rawBegin, &self->children);
-    func_0028C0B0(&begin, &rawBegin);
+    std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
     ChildNode* node = begin.node;
-    func_0028C0A0(&rawEnd, &self->children);
-    func_0028C090(&end, &rawEnd);
+    std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+    cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     while (node != end.node) {
         TraversalWidget* child = node->widget;
         if ((child->flags & 4) && (child->flags & 2)) {
@@ -150,8 +150,8 @@ extern "C" TraversalWidget* GuiWidget_FocusFirst(TraversalWidget* self)
             }
         }
         node = node->next;
-        func_0028C0A0(&rawEnd, &self->children);
-        func_0028C090(&end, &rawEnd);
+        std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
+        cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     }
     return selectable(self) ? self : 0;
 }

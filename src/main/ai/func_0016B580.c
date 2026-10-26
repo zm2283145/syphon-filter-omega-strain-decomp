@@ -15,9 +15,9 @@ void NpcPerception_SetTarget(SfAiPerception*,Actor*,int);
 void NpcPerception_UpdateRecords(SfAiPerception*,float);
 void NpcPerception_VisibilityTest(SfAiPerception*,Actor*);
 void __register_global_object(void*,void*,void*);
-void func_0016BB80(void*,void*);
-void func_0016BB90(void*,void*);
-void func_0016BBA0(void*,void*);
+void std_list_cTargetAwarenessPtr_end_void(void*,void*);
+void cLListIterator_cTargetAwarenessPtr_ctor(void*,void*);
+void std_list_cTargetAwarenessPtr_begin(void*,void*);
 void StaticInit_FloorContactVecs(void*,int);
 extern signed char D_004EE590;
 extern char D_004EE598[],D_004EE5B0[];
@@ -109,11 +109,11 @@ block_14:
     NpcPerception_UpdateRecords(arg0,dt);
     var_f21 = 0.0f;
     var_s4 = 0;
-    func_0016BBA0(&spA4, &arg0->records);
-    func_0016BB90(&spB4, &spA4);
+    std_list_cTargetAwarenessPtr_begin(&spA4, &arg0->records);
+    cLListIterator_cTargetAwarenessPtr_ctor(&spB4, &spA4);
     spBC = spB4;
-    func_0016BB80(&spA0, &arg0->records);
-    func_0016BB90(&spB0, &spA0);
+    std_list_cTargetAwarenessPtr_end_void(&spA0, &arg0->records);
+    cLListIterator_cTargetAwarenessPtr_ctor(&spB0, &spA0);
     if (spBC.p != spB0.p) {
         do {
             temp_s3 = (SfAwarenessRecord*)spBC.p->value;
@@ -169,8 +169,8 @@ block_14:
                 }
             }
             spBC.p = spBC.p->next;
-            func_0016BB80(&spA0, &arg0->records);
-            func_0016BB90(&spB0, &spA0);
+            std_list_cTargetAwarenessPtr_end_void(&spA0, &arg0->records);
+            cLListIterator_cTargetAwarenessPtr_ctor(&spB0, &spA0);
         } while (spBC.p != spB0.p);
     }
     if (!(var_f21 <= 0.0f)) {
@@ -185,8 +185,8 @@ block_14:
         var_v1_3 = var_a3 ? var_a2 : 0;
         if (var_v1_3 != 0) {
             NpcPerception_FindRecord(&spB8, &arg0->records, (temp_a1_2 || var_a2->id == arg0->target.id) ? var_a2 : 0);
-            func_0016BB80(&sp9C, &arg0->records);
-            func_0016BB90(&spAC, &sp9C);
+            std_list_cTargetAwarenessPtr_end_void(&sp9C, &arg0->records);
+            cLListIterator_cTargetAwarenessPtr_ctor(&spAC, &sp9C);
             if (spB8.p == spAC.p) {
                 NpcPerception_SetTarget(arg0, 0, 0x14);
             }

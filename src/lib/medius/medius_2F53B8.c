@@ -14,11 +14,11 @@ typedef struct {
     int flag;
 } Ring2F53B8;
 
-extern int func_002F5818(Ring2F53B8 *r, unsigned int *avail);
-extern int func_002F56F8(Ring2F53B8 *r, unsigned char flag);
+extern int rt_circ_buf_get_used(Ring2F53B8 *r, unsigned int *avail);
+extern int rt_circ_buf_normalize(Ring2F53B8 *r, unsigned char flag);
 
 /* Consumes n bytes from a ring buffer (advances the read index with wrap). */
-int func_002F53B8(Ring2F53B8 *r, unsigned int n)
+int rt_circ_buf_free(Ring2F53B8 *r, unsigned int n)
 {
     int ret = 2;
     unsigned int avail = 0;
@@ -26,7 +26,7 @@ int func_002F53B8(Ring2F53B8 *r, unsigned int n)
 
     if (r != 0) {
         if (n != 0) {
-            ret = func_002F5818(r, &avail);
+            ret = rt_circ_buf_get_used(r, &avail);
             if (ret != 0) return ret;
             if (avail >= n) {
                 do {
@@ -35,7 +35,7 @@ int func_002F53B8(Ring2F53B8 *r, unsigned int n)
                     else r->rd = n - rem;
                     r->count -= n;
                 } while (0);
-                ret = func_002F56F8(r, 0);
+                ret = rt_circ_buf_normalize(r, 0);
                 if (ret != 0) return ret;
             } else return 1;
         }
@@ -55,11 +55,11 @@ typedef struct {
     int flag;
 } Ring2F5460;
 
-extern int func_002F5898(Ring2F5460 *r, unsigned int *avail);
+extern int rt_circ_buf_get_avail(Ring2F5460 *r, unsigned int *avail);
 #if 0 /* merge_units */
-extern int func_002F56F8(Ring2F5460 *r, unsigned char flag);
+extern int rt_circ_buf_normalize(Ring2F5460 *r, unsigned char flag);
 #endif /* merge_units */
-#define func_002F56F8(a0, a1) (func_002F56F8((Ring2F53B8 *)(a0), (a1))) /* merge_units */
+#define rt_circ_buf_normalize(a0, a1) (rt_circ_buf_normalize((Ring2F53B8 *)(a0), (a1))) /* merge_units */
 
 
 /* Commits n written bytes to a ring buffer (advances the write index with wrap). */
@@ -71,7 +71,7 @@ int NetRing_Commit(Ring2F5460 *r, unsigned int n)
 
     if (r != 0) {
         if (n != 0) {
-            ret = func_002F5898(r, &avail);
+            ret = rt_circ_buf_get_avail(r, &avail);
             if (ret != 0) return ret;
             if (avail >= n) {
                 do {
@@ -80,7 +80,7 @@ int NetRing_Commit(Ring2F5460 *r, unsigned int n)
                     else r->wr = n - rem;
                     r->count += n;
                 } while (0);
-                ret = func_002F56F8(r, 0);
+                ret = rt_circ_buf_normalize(r, 0);
                 if (ret != 0) return ret;
             } else return 1;
         }
@@ -88,18 +88,18 @@ int NetRing_Commit(Ring2F5460 *r, unsigned int n)
     }
     return ret;
 }
-#undef func_002F56F8 /* merge_units */
+#undef rt_circ_buf_normalize /* merge_units */
 /* merge_units: end func_002F5460 */
 
 /* merge_units: begin func_002F5508 */
 typedef struct { unsigned int rd; unsigned int wr; unsigned int size; unsigned int count; char *buf; } Ring;
 #if 0 /* merge_units */
-extern int func_002F5898(Ring *, unsigned int *);
+extern int rt_circ_buf_get_avail(Ring *, unsigned int *);
 #endif /* merge_units */
-#define func_002F5898(a0, a1) (func_002F5898((Ring2F5460 *)(a0), (a1))) /* merge_units */
+#define rt_circ_buf_get_avail(a0, a1) (rt_circ_buf_get_avail((Ring2F5460 *)(a0), (a1))) /* merge_units */
 
 extern void *memcpy(void *, const void *, unsigned int);
-int func_002F5508(Ring *r, char *src, unsigned int n)
+int rt_circ_buf_store(Ring *r, char *src, unsigned int n)
 {
     int ret = 2;
     unsigned int space = 0;
@@ -107,7 +107,7 @@ int func_002F5508(Ring *r, char *src, unsigned int n)
     if (r == 0) return ret;
     if (src == 0) return ret;
     if (n == 0) return ret;
-    ret = func_002F5898(r, &space);
+    ret = rt_circ_buf_get_avail(r, &space);
     if (ret != 0) return ret;
     if (space >= n) {
         tail = r->size - r->wr;
@@ -128,5 +128,5 @@ int func_002F5508(Ring *r, char *src, unsigned int n)
     }
     return 1;
 }
-#undef func_002F5898 /* merge_units */
+#undef rt_circ_buf_get_avail /* merge_units */
 /* merge_units: end func_002F5508 */

@@ -12,7 +12,7 @@
 #include "base_dtor_chain.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_00296DF0, func_00299270)
+DEFINE_BASE_DTOR_CHAIN(func_00296DF0, std_vector_deleter_tRequirementInfo_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00296DF0 */
 
@@ -22,7 +22,7 @@ DEFINE_BASE_DTOR_CHAIN(func_00296DF0, func_00299270)
 #include "member_dtor_chain.h"
 
 /* Deleting destructor that runs the member destructor. */
-DEFINE_MEMBER_DTOR_CHAIN(func_00296E50, func_00299360)
+DEFINE_MEMBER_DTOR_CHAIN(cArray_tAchievementInfo_dtor_void, func_00299360)
 #pragma pop /* merge_units */
 /* merge_units: end func_00296E50 */
 
@@ -31,7 +31,7 @@ DEFINE_MEMBER_DTOR_CHAIN(func_00296E50, func_00299360)
 #pragma cplusplus on
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_00296EC0, func_00299360)
+DEFINE_BASE_DTOR_CHAIN(std_vector_tAchievementInfo_dtor_void, func_00299360)
 #pragma pop /* merge_units */
 /* merge_units: end func_00296EC0 */
 
@@ -59,7 +59,7 @@ Rel* func_00296F20(Rel* r) {
 #include "direct_base_dtor.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_DIRECT_BASE_DTOR(func_00296F40, func_00299270)
+DEFINE_DIRECT_BASE_DTOR(std_vector_imp_tRequirementInfo_dtor, std_vector_deleter_tRequirementInfo_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00296F40 */
 

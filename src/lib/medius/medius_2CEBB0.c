@@ -16,14 +16,14 @@
 int D_0048C40C = 0xFFFFFF;
 extern char D_0048C41C[];
 
-int func_002CEBB0(void) {
+int MGCLGetClientConnectCallback(void) {
     int tmp0;
 
     tmp0 = *(int*)D_0048C41C;
     return tmp0;
 }
 
-int func_002CEBC0(void) {
+int MGCLGetServerType(void) {
     int tmp0;
 
     tmp0 = *(int*)((char*)&D_0048C40C);
@@ -37,7 +37,7 @@ int func_002CEBC0(void) {
 extern int D_0048C40C;
 
 /* Stores a value into a global setting. */
-void func_002CEBD0(int value)
+void MGCLSetServerType(int value)
 {
     D_0048C40C = value;
 }

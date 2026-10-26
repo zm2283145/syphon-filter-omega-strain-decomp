@@ -49,15 +49,15 @@ void Appearance_RemoveBlankPairs(App391020* app);
 int Appearance_GetPairCount(App391020* app);
 void Appearance_RequestHardMesh(App391020* app, int hard, char* out);
 void TexCache_LoadPartTexture(char* cache, __int128 name, char* tex, short* a, short* b);
-int func_004027E0(char* cache, __int128 name);
-void func_00403940(char* cache, int slot);
+int FindTex__7MonsterF1(char* cache, __int128 name);
+void Monster_FreeTexture(char* cache, int slot);
 int MeshCache_FindSlot(char* cache, __int128 name);
-void func_00404D90(char* cache, int slot);
+void Monster_FreePart(char* cache, int slot);
 void Appearance_ReorderParts(Self391020* self);
 void ActorModel_Setup(Self391020* self, int flag);
 }
 
-extern "C" void func_00391020(Self391020* self)
+extern "C" void cMan_AddDisguise(Self391020* self)
 {
     int i;
     int j;
@@ -73,15 +73,15 @@ extern "C" void func_00391020(Self391020* self)
     self->x22C0[i] = 0;
     n = Appearance_GetPairCount(self->x2C14);
     for (j = 0; j <= n; j++) {
-        int s = func_004027E0(g_AgentPartCache, self->x2C14->pairs[j].b);
+        int s = FindTex__7MonsterF1(g_AgentPartCache, self->x2C14->pairs[j].b);
         if (s != -1) {
-            func_00403940(g_AgentPartCache, s);
+            Monster_FreeTexture(g_AgentPartCache, s);
         }
     }
     for (i = 0; i < n; i++) {
         int s = MeshCache_FindSlot(g_AgentPartCache, self->x2C14->pairs[i].a);
         if (s != -1) {
-            func_00404D90(g_AgentPartCache, s);
+            Monster_FreePart(g_AgentPartCache, s);
         }
     }
     {
@@ -114,7 +114,7 @@ struct Self391210 {
 };
 
 extern "C" {
-void func_0038E030(Self391210* self);
+void cMan_GetTextureIDs(Self391210* self);
 #if 0 /* merge_units */
 void ActorModel_Setup(Self391210* self, int flag);
 #endif /* merge_units */
@@ -149,7 +149,7 @@ extern "C" void ActorModel_RestoreBodyPacking(Self391210* self)
             Mem_Free(0, p, D_004BC310, 0x2A8);
         }
         self->x2C14 = 0;
-        func_0038E030(self);
+        cMan_GetTextureIDs(self);
         ActorModel_Setup(self, 1);
     }
 }
@@ -198,11 +198,11 @@ typedef struct { char pad0[4]; char bones[0x10]; unsigned char hasMorph; char pa
 typedef struct { char pad0[0x40]; char name[0x2BC4]; Pt2_Skl* skel; char pad2C08[8]; unsigned char preset; } Pt2_App;
 extern Pt2_PresetTbl D_00571300;
 extern Pt2_Sc* D_00571484[];
-extern float* func_0028D5F0(void*, int);
+extern float* cArray_cBoneScale_opIndex(void*, int);
 extern void* SkelNodes_GetAt(void*, int);
-extern void func_0028D580(void*, float);
-extern void func_0028D530(void*, float);
-extern void func_0028D4E0(void*, float);
+extern void cBone_SetScaleX(void*, float);
+extern void cBone_SetScaleY(void*, float);
+extern void cBone_SetScaleZ(void*, float);
 
 int Skel_ApplyScalePreset(Pt2_App* a, int preset) {
     Pt2_Sc* s;
@@ -223,14 +223,14 @@ int Skel_ApplyScalePreset(Pt2_App* a, int preset) {
         Pt2_Skl* k;
         float v;
         k = a->skel; v = s->x;
-        func_0028D5F0(k->bones, i)[0] = v;
-        if (k->hasMorph) func_0028D580(SkelNodes_GetAt(k->morph, i), v);
+        cArray_cBoneScale_opIndex(k->bones, i)[0] = v;
+        if (k->hasMorph) cBone_SetScaleX(SkelNodes_GetAt(k->morph, i), v);
         k = a->skel; v = s->y;
-        func_0028D5F0(k->bones, i)[1] = v;
-        if (k->hasMorph) func_0028D530(SkelNodes_GetAt(k->morph, i), v);
+        cArray_cBoneScale_opIndex(k->bones, i)[1] = v;
+        if (k->hasMorph) cBone_SetScaleY(SkelNodes_GetAt(k->morph, i), v);
         k = a->skel; v = s->z;
-        func_0028D5F0(k->bones, i)[2] = v;
-        if (k->hasMorph) func_0028D4E0(SkelNodes_GetAt(k->morph, i), v);
+        cArray_cBoneScale_opIndex(k->bones, i)[2] = v;
+        if (k->hasMorph) cBone_SetScaleZ(SkelNodes_GetAt(k->morph, i), v);
     }
     a->preset = preset;
     return preset;

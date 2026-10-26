@@ -7,9 +7,9 @@
 /* merge_units: begin func_003B5300 */
 #pragma push /* merge_units */
 #include "types.h"
-extern void func_003B71A0(int a, int b, int c, int d, int e);
-void func_003B5300(int a, int b, int c, int d) {
-    func_003B71A0(a, b, c, d, b);
+extern void std_basic_string_char_char_traits_char_ctor_basicstringR_uint_uint_cAllocatorR(int a, int b, int c, int d, int e);
+void std_basic_string_char_char_traits_char_substr(int a, int b, int c, int d) {
+    std_basic_string_char_char_traits_char_ctor_basicstringR_uint_uint_cAllocatorR(a, b, c, d, b);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003B5300(void) {}
@@ -29,7 +29,7 @@ extern "C" {
 int FileMan_FindMember(File_5310* f);
 int FileMan_GetSize(File_5310* f);
 int FileMan_LoadMemberSync(File_5310* f, char** buf, int size);
-void func_0036DEC0(File_5310* f);
+void cFileMan_Close(File_5310* f);
 void* Mem_Alloc(int a, int size, char* file, int line);
 void String_CtorCStr_13B480(Str_5310* s, char* c);
 void String_Dtor(Str_5310* s, int f);
@@ -38,7 +38,7 @@ void Skas_AppendAnimation(Self_5310* self, Str_5310* s, char* buf);
 #endif /* merge_units */
 #define Skas_AppendAnimation(a0, a1, a2) (Skas_AppendAnimation((int)(a0), (void *)(a1), (unsigned int *)(a2))) /* merge_units */
 
-void func_00146000(void* list, struct Buf_5310* buf);
+void std_vector_charPtr_push_back_charPR(void* list, struct Buf_5310* buf);
 extern char D_004BCD70;
 }
 static inline void MemCopy_5310(void* dst, void* src, int n0)
@@ -77,7 +77,7 @@ static inline void MemCopy_5310(void* dst, void* src, int n0)
         .set reorder
     }
 }
-extern "C" void func_003B5310(Self_5310* self, File_5310* f)
+extern "C" void cSkaAnimationSet_AddAnimation_cFileManR(Self_5310* self, File_5310* f)
 {
     Buf_5310 buf;
     Buf_5310 tmp;
@@ -89,7 +89,7 @@ extern "C" void func_003B5310(Self_5310* self, File_5310* f)
     if (!buf.p) return;
     tmp = buf;
     r = FileMan_LoadMemberSync(f, &tmp.p, size);
-    func_0036DEC0(f);
+    cFileMan_Close(f);
     if (r & 0xFF) return;
     { char* dst; char* src = tmp.p; dst = buf.p; if (src != dst) MemCopy_5310(dst, src, size); }
     {
@@ -98,7 +98,7 @@ extern "C" void func_003B5310(Self_5310* self, File_5310* f)
         Skas_AppendAnimation(self, &s, buf.p);
         String_Dtor(&s, 0);
     }
-    func_00146000(self->list, &buf);
+    std_vector_charPtr_push_back_charPR(self->list, &buf);
 }
 #undef Skas_AppendAnimation /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -137,7 +137,7 @@ static inline void merge_flush_func_003B54C0(void) {}
 typedef struct { unsigned int word; unsigned int length; char* data; } Str_6150;
 typedef struct { char* data; unsigned int len; } Src_6150;
 typedef struct { Src_6150* s; unsigned int pos; unsigned char empty; } Tok_6150;
-Tok_6150* func_003B6150(Tok_6150* self, Str_6150* out); /* gsynth: defined below */
+Tok_6150* cSkaAnimationSet_cMyIStream_opShr(Tok_6150* self, Str_6150* out); /* gsynth: defined below */
 #pragma cplusplus on
 #pragma inline_depth(8)
 extern "C" {struct StrP_5580 { unsigned int word; unsigned int length; char* data; };
@@ -162,9 +162,9 @@ extern int String_AssignCStr_1C43A0(StrP_5580* s, char* c);
 extern void String_CtorEmpty(Str2_5580* s);
 extern void String_Dtor_138350(Str2_5580* s, int f);
 #if 0 /* merge_units */
-extern Tok_5580* func_003B6150(Tok_5580* self, Str2_5580* out);
+extern Tok_5580* cSkaAnimationSet_cMyIStream_opShr(Tok_5580* self, Str2_5580* out);
 #endif /* merge_units */
-#define func_003B6150(a0, a1) ((Tok_5580 *)func_003B6150((Tok_6150 *)(a0), (Str_6150 *)(a1))) /* merge_units */
+#define cSkaAnimationSet_cMyIStream_opShr(a0, a1) ((Tok_5580 *)cSkaAnimationSet_cMyIStream_opShr((Tok_6150 *)(a0), (Str_6150 *)(a1))) /* merge_units */
 
 extern char* String_CStr_189540(Str2_5580* s);
 extern int atoi(char* s);
@@ -181,9 +181,9 @@ extern char* String_CStr_Thunk(StrP_5580* s);
 #define String_CStr_Thunk(a0) (String_CStr_Thunk((void *)(a0))) /* merge_units */
 
 extern int Vector_Insert_22A360(Vec_5580* v, int* pos, int n, char* value);
-extern void func_001C00D0(StrP_5580* out, StrP_5580* a, char* b);
+extern void opAdd_cStringR_charP(StrP_5580* out, StrP_5580* a, char* b);
 extern char* String_CStr(StrP_5580* s);
-extern unsigned int* func_0036D3C0(void* o, char* name, int n);
+extern unsigned int* cHogFile_GetBlock_charP_bool(void* o, char* name, int n);
 #if 0 /* merge_units */
 extern void Skas_RegisterClip(int* out, void* self, char* name, unsigned int* clip);
 #endif /* merge_units */
@@ -234,7 +234,7 @@ static inline int ReadInt0(Tok_5580* tok)
     int r;
     Str2_5580 t;
     String_CtorEmpty(&t);
-    func_003B6150(tok, &t);
+    cSkaAnimationSet_cMyIStream_opShr(tok, &t);
     r = atoi(String_CStr_189540(&t));
     String_Dtor_138350(&t, -1);
     return r;
@@ -244,7 +244,7 @@ static inline void ReadFloat0(Tok_5580* tok, float* out)
 {
     Str2_5580 t;
     String_CtorEmpty(&t);
-    func_003B6150(tok, &t);
+    cSkaAnimationSet_cMyIStream_opShr(tok, &t);
     *out = SoftFloat_DoubleToFloat(atof(String_CStr_189540(&t)));
     String_Dtor_138350(&t, -1);
 }
@@ -337,10 +337,10 @@ extern "C" void Skas_Load(Skas_5580* self, Tok_5580* tok, void* list)
                                     String_AssignString(&c, &a);
                                     ReadToken(tok, &a);
                                 }
-                                func_001C00D0(&tmp, &a, D_004BCD78);
+                                opAdd_cStringR_charP(&tmp, &a, D_004BCD78);
                                 String_AssignString(&b, &tmp);
                                 String_Dtor(&tmp, 0);
-                                clip = func_0036D3C0(list, String_CStr(&b), 0);
+                                clip = cHogFile_GetBlock_charP_bool(list, String_CStr(&b), 0);
                                 if (!clip) RET;
                                 if (*clip > 3) RET;
                                 if (count > 0) {
@@ -372,7 +372,7 @@ extern "C" void Skas_Load(Skas_5580* self, Tok_5580* tok, void* list)
 }
 #undef String_CtorCStr_13B480 /* merge_units */
 #undef String_Dtor /* merge_units */
-#undef func_003B6150 /* merge_units */
+#undef cSkaAnimationSet_cMyIStream_opShr /* merge_units */
 #undef String_Length /* merge_units */
 #undef String_CStr_Thunk /* merge_units */
 #undef Skas_RegisterClip /* merge_units */
@@ -403,7 +403,7 @@ extern void String_PushBack(Str_6150* s, char c);
 #endif /* merge_units */
 #define String_PushBack(a0, a1) (String_PushBack((void *)(a0), (a1))) /* merge_units */
 
-Tok_6150* func_003B6150(Tok_6150* self, Str_6150* out)
+Tok_6150* cSkaAnimationSet_cMyIStream_opShr(Tok_6150* self, Str_6150* out)
 {
     int started;
     {
@@ -450,10 +450,10 @@ void Skas_Load(void* self, Desc_3B6270* d, void* arg);
 #endif /* merge_units */
 #define Skas_Load(a0, a1, a2) (Skas_Load((Skas_5580 *)(a0), (Tok_5580 *)(a1), (a2))) /* merge_units */
 
-void func_003B50A0(void* self, void* arg);
+void cSkaAnimationSet_AddAllAnimationsFromSkaHog(void* self, void* arg);
 }
 
-extern "C" void func_003B6270(void* self, int a, int b, void* arg)
+extern "C" void cSkaAnimationSet_InitWithSkasFile_And_AddAllAnimationsFromSkaHog(void* self, int a, int b, void* arg)
 {
     Key_3B6270 key;
     Desc_3B6270 d;
@@ -464,7 +464,7 @@ extern "C" void func_003B6270(void* self, int a, int b, void* arg)
     d.n = 0;
     d.flag = 0;
     Skas_Load(self, &d, arg);
-    func_003B50A0(self, arg);
+    cSkaAnimationSet_AddAllAnimationsFromSkaHog(self, arg);
 }
 #undef Skas_Load /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */

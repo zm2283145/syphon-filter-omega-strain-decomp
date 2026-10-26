@@ -15,7 +15,7 @@
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" {
-extern "C" void func_00177E20();
+extern "C" void cCBData_IsReferencing();
 extern "C" void SoundPauseEvent_Fire();
 extern void * const D_004DAC30[];
 extern char D_004D9DE0[];
@@ -31,7 +31,7 @@ extern "C" Vt8Object* func_001C61A0(Vt8Object* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DAC30[8] = { (void*)0x0, (void*)0x0, (void*)func_001C61A0, (void*)func_00177E20, (void*)SoundPauseEvent_Fire, (void*)0x0, (void*)0x0, (void*)0x0 };
+void * const D_004DAC30[8] = { (void*)0x0, (void*)0x0, (void*)func_001C61A0, (void*)cCBData_IsReferencing, (void*)SoundPauseEvent_Fire, (void*)0x0, (void*)0x0, (void*)0x0 };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C61A0(void) {}
 #pragma pop /* merge_units */

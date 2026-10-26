@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046DE40(void) {
+int MediusUniqueCallbackUpdateLadderStatsWideRequestHandler(void) {
     return 428;
 }

@@ -8,137 +8,137 @@
 
 extern int func_00357150(int);
 extern int func_00357178(int);
-extern int func_00357340(void);
-extern int func_00357370(int, int);
-extern int func_00357578(void);
-extern int func_003575C8(int, int);
-extern int func_00357640(void);
-extern int func_00357680(int);
-extern int func_00357840(int);
-extern int func_00358C30(int);
+extern int sceInsockInetAddr(void);
+extern int sceInsockInetAton(int, int);
+extern int sceInsockInetLnaof(void);
+extern int sceInsockInetMakeaddr(int, int);
+extern int sceInsockInetNetof(void);
+extern int sceInsockInetNetwork(int);
+extern int sceInsockInetNtoa(int);
+extern int sceInsockTerminate(int);
 extern int Insck_Bind(int, int, int);
 extern int Insck_Connect(int, int, int);
 extern int Insck_Accept(int, int, int);
-extern int func_0035AA60(int);
-extern int func_0035ABE0(int, int, int);
+extern int sceInsockGethostbyname(int);
+extern int sceInsockGethostbyaddr(int, int, int);
 
-int func_0045A998(void) {
+int sceNetGlueThreadInit(void) {
     return 0;
 }
 
-int func_0045A9A0(int a0) {
+int sceNetGlueThreadTerminate(int a0) {
     int tmp0;
 
-    tmp0 = func_00358C30(a0);
+    tmp0 = sceInsockTerminate(a0);
     return tmp0;
 }
 
-int func_0045A9C0(int a0, int a1, int a2) {
+int sceNetGlueGethostbyaddr(int a0, int a1, int a2) {
     int tmp0;
 
-    tmp0 = func_0035ABE0(a0, a1, a2);
+    tmp0 = sceInsockGethostbyaddr(a0, a1, a2);
     return tmp0;
 }
 
-int func_0045A9E0(int a0) {
+int sceNetGlueGethostbyname(int a0) {
     int tmp0;
 
-    tmp0 = func_0035AA60(a0);
+    tmp0 = sceInsockGethostbyname(a0);
     return tmp0;
 }
 
-int func_0045AA00(void) {
+int sceNetGlueInetAddr(void) {
     int tmp0;
 
-    tmp0 = func_00357340();
+    tmp0 = sceInsockInetAddr();
     return tmp0;
 }
 
-int func_0045AA20(int a0, int a1) {
+int sceNetGlueInetAton(int a0, int a1) {
     int tmp0;
 
-    tmp0 = func_00357370(a0, a1);
+    tmp0 = sceInsockInetAton(a0, a1);
     return tmp0;
 }
 
-int func_0045AA40(void) {
+int sceNetGlueInetLnaof(void) {
     int tmp0;
 
-    tmp0 = func_00357578();
+    tmp0 = sceInsockInetLnaof();
     return tmp0;
 }
 
-int func_0045AA60(int a0, int a1) {
+int sceNetGlueInetMakeaddr(int a0, int a1) {
     int tmp0;
 
-    tmp0 = func_003575C8(a0, a1);
+    tmp0 = sceInsockInetMakeaddr(a0, a1);
     return tmp0;
 }
 
-int func_0045AA80(void) {
+int sceNetGlueInetNetof(void) {
     int tmp0;
 
-    tmp0 = func_00357640();
+    tmp0 = sceInsockInetNetof();
     return tmp0;
 }
 
-int func_0045AAA0(int a0) {
+int sceNetGlueInetNetwork(int a0) {
     int tmp0;
 
-    tmp0 = func_00357680(a0);
+    tmp0 = sceInsockInetNetwork(a0);
     return tmp0;
 }
 
-int func_0045AAC0(int a0) {
+int sceNetGlueInetNtoa(int a0) {
     int tmp0;
 
-    tmp0 = func_00357840(a0);
+    tmp0 = sceInsockInetNtoa(a0);
     return tmp0;
 }
 
-int func_0045AAE0(int a0) {
-    int tmp0;
-
-    tmp0 = func_00357150(a0);
-    return tmp0;
-}
-
-int func_0045AB00(int a0) {
-    int tmp0;
-
-    tmp0 = func_00357178((a0 & 65535));
-    return tmp0;
-}
-
-int func_0045AB20(int a0) {
+int sceNetGlueHtonl(int a0) {
     int tmp0;
 
     tmp0 = func_00357150(a0);
     return tmp0;
 }
 
-int func_0045AB40(int a0) {
+int sceNetGlueHtons(int a0) {
     int tmp0;
 
     tmp0 = func_00357178((a0 & 65535));
     return tmp0;
 }
 
-int func_0045AB60(int a0, int a1, int a2) {
+int sceNetGlueNtohl(int a0) {
+    int tmp0;
+
+    tmp0 = func_00357150(a0);
+    return tmp0;
+}
+
+int sceNetGlueNtohs(int a0) {
+    int tmp0;
+
+    tmp0 = func_00357178((a0 & 65535));
+    return tmp0;
+}
+
+int sceNetGlueAccept(int a0, int a1, int a2) {
     int tmp0;
 
     tmp0 = Insck_Accept(a0, a1, a2);
     return tmp0;
 }
 
-int func_0045AB80(int a0, int a1, int a2) {
+int sceNetGlueBind(int a0, int a1, int a2) {
     int tmp0;
 
     tmp0 = Insck_Bind(a0, a1, a2);
     return tmp0;
 }
 
-int func_0045ABA0(int a0, int a1, int a2) {
+int sceNetGlueConnect(int a0, int a1, int a2) {
     int tmp0;
 
     tmp0 = Insck_Connect(a0, a1, a2);

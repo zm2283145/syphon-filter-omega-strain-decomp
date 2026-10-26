@@ -15,7 +15,7 @@
 #pragma cplusplus on
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR(func_003D7190)
+DEFINE_BUF_HOLDER_DTOR(std_vector_FieldDefPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003D7190 */
 
@@ -24,6 +24,6 @@ DEFINE_BUF_HOLDER_DTOR(func_003D7190)
 #pragma cplusplus on
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR(func_003D7280)
+DEFINE_BUF_HOLDER_DTOR(std_vector_MemberFuncPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003D7280 */

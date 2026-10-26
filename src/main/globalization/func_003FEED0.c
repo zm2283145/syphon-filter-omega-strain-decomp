@@ -7,6 +7,6 @@
 #include "globalization_types.h"
 
 /* Clear unk04. */
-void func_003FEED0(LocTable* self) {
+void std_vector_deleter_1_clear(LocTable* self) {
     self->unk04 = 0;
 }

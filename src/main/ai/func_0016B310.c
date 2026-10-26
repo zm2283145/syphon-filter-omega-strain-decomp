@@ -2,4 +2,4 @@
 #include "iter_return_copy.h"
 
 /* Return the begin iterator. */
-DEFINE_ITER_BEGIN(func_0016B310)
+DEFINE_ITER_BEGIN(std_list_cActiveListItemPtr_begin_void_2)

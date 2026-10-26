@@ -25,18 +25,18 @@ typedef struct {
 } NetHumanD1940;
 typedef struct { int max; int ver; int flags; unsigned char mode; } PrmD1940;
 extern "C" {
-extern int func_002E9B60(void);
-extern int func_002E9BE8(int* db, int offset, int size, int count, int type, PrmD1940* prm);
-extern int func_002E9CD0(int* h, char* name, int n);
-extern int func_002E9D88(int h, void* a, void* b, void* c);
-extern unsigned char func_002D23D0(void* self, NetHumanD1940* r, PrmD1940* prm);
-extern unsigned char func_002D22E0(void* self, NetHumanD1940* r, PrmD1940* prm);
-extern void func_00316A00(NetHumanD1940*);
-extern void func_00316A30(NetHumanD1940*, int);
-void func_002D1F00(void);
-void func_002D1DC0(void);
-void func_002D1D50(void);
-extern char D_004AD588[]; /* "cNetHuman", shared with func_002D1FF0 */
+extern int NetRegisterObjectStart(void);
+extern int NetObjectField(int* db, int offset, int size, int count, int type, PrmD1940* prm);
+extern int NetRegisterStructure(int* h, char* name, int n);
+extern int NetRegisterRemoteObjectCallback(int h, void* a, void* b, void* c);
+extern unsigned char cTargetInfo_InitNet(void* self, NetHumanD1940* r, PrmD1940* prm);
+extern unsigned char cAimWeapon_InitNet(void* self, NetHumanD1940* r, PrmD1940* prm);
+extern void cTargetInfo_Init(NetHumanD1940*);
+extern void cTargetInfo_dtor(NetHumanD1940*, int);
+void cNetHuman_NetHumanCreationCallback(void);
+void cNetHuman_NetHumanUpdateCallback(void);
+void cNetHuman_NetHumanDeleteCallback(void);
+extern char D_004AD588[]; /* "cNetHuman", shared with cNetHuman_CreateNetHuman */
 extern int D_0051F078;
 unsigned char cNetHuman_NetRegister(void);
 }
@@ -72,37 +72,37 @@ extern "C" unsigned char cNetHuman_NetRegister(void)
     o.f1C = 0;
     o.f20 = 0;
     ok = 0;
-    func_00316A00(&o);
+    cTargetInfo_Init(&o);
     prm.max = 100;
     prm.ver = 1;
     pm = &prm.mode;
     *pm = 0;
     prm.flags = 0;
-    if (func_002E9B60() == 0 &&
-        func_002D23D0(&o, &o, &prm) &&
-        func_002D22E0(&o.f1C, &o, &prm) &&
+    if (NetRegisterObjectStart() == 0 &&
+        cTargetInfo_InitNet(&o, &o, &prm) &&
+        cAimWeapon_InitNet(&o.f1C, &o, &prm) &&
         (base = (char*)&o, 1) && /* the offset base is set up here, after the sub-record calls */
-        func_002E9BE8(&db, OFS(f2C), 4, 5, 1, &prm) == 0 &&
-        (*pm = 0x40, func_002E9BE8(&db, OFS(f30), 2, 2, 1, &prm) == 0) &&
-        (prm.max = 1000, r = func_002E9BE8(&db, OFS(f50), 1, 1, 1, &prm), *pm = 0, r == 0) && /* mode reset either way */
-        func_002E9BE8(&db, OFS(f3C), 4, 6, 1, &prm) == 0 &&
-        func_002E9BE8(&db, OFS(f40), 4, 6, 1, &prm) == 0 &&
-        func_002E9BE8(&db, OFS(f44), 4, 6, 1, &prm) == 0 &&
-        func_002E9BE8(&db, OFS(f48), 4, 6, 1, &prm) == 0 &&
-        func_002E9BE8(&db, OFS(f4C), 4, 6, 1, &prm) == 0 &&
-        (*pm = 0x40, func_002E9BE8(&db, OFS(f38), 4, 6, 1, &prm) == 0) &&
-        (prm.max = 100, func_002E9BE8(&db, OFS(f32), 1, 1, 1, &prm) == 0) &&
-        func_002E9BE8(&db, OFS(f52), 1, 1, 1, &prm) == 0 &&
-        func_002E9BE8(&db, OFS(f33), 1, 1, 1, &prm) == 0 &&
-        func_002E9BE8(&db, OFS(f34), 1, 1, 1, &prm) == 0 &&
-        func_002E9BE8(&db, OFS(f35), 1, 1, 1, &prm) == 0 &&
-        (*pm = 0, prm.max = 1000, func_002E9BE8(&db, OFS(f54), 4, 5, 1, &prm) == 0) &&
-        func_002E9BE8(&db, OFS(f51), 1, 1, 1, &prm) == 0 &&
-        (*pm = 0, func_002E9CD0(&h, D_004AD588, 0x58) == 0) &&
-        func_002E9D88(h, func_002D1F00, func_002D1DC0, func_002D1D50) == 0) {
+        NetObjectField(&db, OFS(f2C), 4, 5, 1, &prm) == 0 &&
+        (*pm = 0x40, NetObjectField(&db, OFS(f30), 2, 2, 1, &prm) == 0) &&
+        (prm.max = 1000, r = NetObjectField(&db, OFS(f50), 1, 1, 1, &prm), *pm = 0, r == 0) && /* mode reset either way */
+        NetObjectField(&db, OFS(f3C), 4, 6, 1, &prm) == 0 &&
+        NetObjectField(&db, OFS(f40), 4, 6, 1, &prm) == 0 &&
+        NetObjectField(&db, OFS(f44), 4, 6, 1, &prm) == 0 &&
+        NetObjectField(&db, OFS(f48), 4, 6, 1, &prm) == 0 &&
+        NetObjectField(&db, OFS(f4C), 4, 6, 1, &prm) == 0 &&
+        (*pm = 0x40, NetObjectField(&db, OFS(f38), 4, 6, 1, &prm) == 0) &&
+        (prm.max = 100, NetObjectField(&db, OFS(f32), 1, 1, 1, &prm) == 0) &&
+        NetObjectField(&db, OFS(f52), 1, 1, 1, &prm) == 0 &&
+        NetObjectField(&db, OFS(f33), 1, 1, 1, &prm) == 0 &&
+        NetObjectField(&db, OFS(f34), 1, 1, 1, &prm) == 0 &&
+        NetObjectField(&db, OFS(f35), 1, 1, 1, &prm) == 0 &&
+        (*pm = 0, prm.max = 1000, NetObjectField(&db, OFS(f54), 4, 5, 1, &prm) == 0) &&
+        NetObjectField(&db, OFS(f51), 1, 1, 1, &prm) == 0 &&
+        (*pm = 0, NetRegisterStructure(&h, D_004AD588, 0x58) == 0) &&
+        NetRegisterRemoteObjectCallback(h, cNetHuman_NetHumanCreationCallback, cNetHuman_NetHumanUpdateCallback, cNetHuman_NetHumanDeleteCallback) == 0) {
         D_0051F078 = h;
         ok = 1;
     }
-    func_00316A30(&o, 0);
+    cTargetInfo_dtor(&o, 0);
     return ok;
 }

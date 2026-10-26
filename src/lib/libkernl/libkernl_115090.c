@@ -4,15 +4,15 @@ typedef struct { int ret; int size; char name[0xFC]; char data[0xFC]; } RpcBuf;
 extern RpcCd D_004E63C0;
 extern RpcBuf D_004E61C0;
 extern int sceSifCallRpc(void *cd, int fno, int mode, void *send, int ssize, void *recv, int rsize, void *endf, void *endp);
-extern int func_001148B8(void);
-extern int func_001149B8(void);
+extern int _lf_bind(void);
+extern int _lf_version(void);
 extern void *memcpy(void *, const void *, unsigned int);
 extern char *strncpy(char *, const char *, unsigned int);
 
-int func_00115090(const char *name, int size, void *data, int *out, int fno)
+int _sceSifLoadModule(const char *name, int size, void *data, int *out, int fno)
 {
-    if (func_001148B8() < 0) return -0x10000;
-    if (func_001149B8() != 0) return -0x10004;
+    if (_lf_bind() < 0) return -0x10000;
+    if (_lf_version() != 0) return -0x10004;
     strncpy(D_004E61C0.name, name, 0xFC);
     D_004E61C0.name[0xFB] = 0;
     if (data != 0) {

@@ -11,7 +11,7 @@ extern void cNPC_v46(Obj2D35* self, int kind, int arg);
 extern void NetEvent_Send(void* owner, int msg, int len, int a, int b, int c, int d);
 
 /* Forwards to cNPC_v46 when enabled, then sends message 0xC to the owner. */
-void func_002D3510(Obj2D35* self, int kind, int arg) {
+void cNetNPC_SetFireMode(Obj2D35* self, int kind, int arg) {
     int enabled;
     if (g_IsMultiplayer) {
         enabled = D_005721C0;

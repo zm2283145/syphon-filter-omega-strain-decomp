@@ -1,5 +1,5 @@
 typedef struct N7ED8 { int a; struct N7ED8 *next; unsigned int key; } N7ED8;
-N7ED8 *func_002F7ED8(N7ED8 *l, unsigned int key)
+N7ED8 *GetKeyChain(N7ED8 *l, unsigned int key)
 {
     N7ED8 *n = 0;
     key &= 0x1FFFFFFF;

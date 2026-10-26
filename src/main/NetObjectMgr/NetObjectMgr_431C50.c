@@ -44,7 +44,7 @@ typedef struct { int kind; int id; short f8; short fA; } Pk431D60;
 extern "C" {
 extern unsigned char D_005721D0;
 void* Object_LookupById(int*);
-void func_0042D790(void*);
+void cNetObjectMgr_TerrainActivation(void*);
 void NetObjectMgr_Remove(void*);
 }
 #pragma push
@@ -56,7 +56,7 @@ extern "C" int cNetTerrainActivationMsg_NetReceive(int a0, int a1, int a2, Pk431
         int id = p->id;
         void* o = Object_LookupById(&id);
         if (o) {
-            if (p->fA == 0) func_0042D790(o);
+            if (p->fA == 0) cNetObjectMgr_TerrainActivation(o);
             else NetObjectMgr_Remove(o);
         }
     }

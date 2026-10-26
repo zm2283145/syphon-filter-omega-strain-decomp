@@ -1,6 +1,6 @@
 #include "types.h"
-extern void func_001F38E0(void);
-/* Wrapper around func_001F38E0. */
+extern void std_list_cSkaTransBLENDPtr_push_back(void);
+/* Wrapper around std_list_cSkaTransBLENDPtr_push_back. */
 #pragma optimization_level 1
-void func_001F38C0(void) { func_001F38E0(); }
+void cLList_cSkaTransBLENDPtr_PushBackActual(void) { std_list_cSkaTransBLENDPtr_push_back(); }
 #pragma optimization_level reset

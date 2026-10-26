@@ -7,12 +7,12 @@
 #include "types.h"
 #include "NetObjectMgr_types.h"
 
-extern void func_0042FC50(RbTree* tree, void* node);
+extern void std_tree_pair_int_value_compare_destroy_nodeP_3(RbTree* tree, void* node);
 
 /* Clears the tree: erases all nodes from the root down, then resets the header. */
 void func_0042F4D0(RbTree* tree) {
     if (tree->root != 0) {
-        func_0042FC50(tree, tree->root);
+        std_tree_pair_int_value_compare_destroy_nodeP_3(tree, tree->root);
         tree->count = 0;
         tree->root = 0;
         tree->leftmost = &tree->root;

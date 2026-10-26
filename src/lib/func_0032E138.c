@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0032E138(void) {
+int gsmEncode(void) {
     return -1;
 }

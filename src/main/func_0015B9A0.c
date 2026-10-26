@@ -37,7 +37,7 @@ struct ListI8_0015B9A0Flag {
 };
 
 struct ListI8_0015B9A0Holder;
-extern "C" void func_0015BB80(ListI8_0015B9A0Holder* holder);
+extern "C" void details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_2(ListI8_0015B9A0Holder* holder);
 
 struct ListI8_0015B9A0Holder {
     int* alloc;
@@ -45,7 +45,7 @@ struct ListI8_0015B9A0Holder {
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~ListI8_0015B9A0Holder()
     {
         if (node) {
-            func_0015BB80(this);
+            details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_2(this);
             ListI8_0015B9A0Node* p = node;
             if (p) {
                 AllocGuard guard;
@@ -86,4 +86,4 @@ struct ListI8_0015B9A0Holder {
     }
 
 #endif /* LIB_0015B9A0 */
-DEFINE_LIST_INSERT_BEFORE8(func_0015B9A0)
+DEFINE_LIST_INSERT_BEFORE8(std_list_deleter_cLookAtListItem_insert)

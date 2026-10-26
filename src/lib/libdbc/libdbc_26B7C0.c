@@ -2,7 +2,7 @@ typedef struct { unsigned char b0, b1, b2, b3; int f4; char pad[0x14]; unsigned 
 typedef struct { char pad[0x10]; R26B7C0* recs; char pad2[0x334 - 0x14]; } E26B7C0;
 extern E26B7C0 D_004FBB88[];
 extern void* memset(void* d, int c, unsigned int n);
-void func_0026B7C0(int i)
+void scePad2InitDmaDBuff(int i)
 {
     R26B7C0* r = D_004FBB88[i].recs;
     int n;

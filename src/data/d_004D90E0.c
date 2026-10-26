@@ -6,26 +6,26 @@ extern void LosReceiver_HandleEvent();
 extern void Message_GetScriptTypeKey();
 extern void Receiver_GetScriptTypeKey();
 extern void Receiver_ScriptDispatch();
-extern void func_0012ECF0();
-extern void func_0012ED00();
-extern void func_0012ED10();
-extern void func_0012ED20();
-extern void func_0012ED30();
-extern void func_0012ED40();
-extern void func_0012ED50();
-extern void func_00135970();
-extern void func_001383D0();
+extern void cSystem_IsDeliverable();
+extern void cSystem_IsNetworked();
+extern void cSystem_NetActivate();
+extern void cSystem_NetDeactivate();
+extern void cSystem_NetDisable();
+extern void cSystem_NetEnable();
+extern void cSystem_ScriptGetRealObj();
+extern void cSystem_SendCreated();
 extern void func_001383E0();
 extern void func_001384E0();
+extern void std_list_deleter_voidPtr_dtor();
 
 void *D_004D90E0[8] = {
-    0, 0, &func_00135970, &func_001383E0,
+    0, 0, &std_list_deleter_voidPtr_dtor, &func_001383E0,
     &Event_PackHeader, &Message_GetScriptTypeKey, 0, 0,
 };
 
 void *D_004D9100[16] = {
     0, 0, &func_001384E0, &LosReceiver_HandleEvent,
-    &GObj_GetID, &func_0012ECF0, &func_001383D0, &func_0012ED00,
-    &func_0012ED10, &func_0012ED20, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &Receiver_GetScriptTypeKey, &Receiver_ScriptDispatch, 0,
+    &GObj_GetID, &cSystem_ScriptGetRealObj, &cSystem_IsNetworked, &cSystem_SendCreated,
+    &cSystem_NetActivate, &cSystem_NetDeactivate, &cSystem_NetEnable, &cSystem_NetDisable,
+    &cSystem_IsDeliverable, &Receiver_GetScriptTypeKey, &Receiver_ScriptDispatch, 0,
 };

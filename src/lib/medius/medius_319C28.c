@@ -1,4 +1,4 @@
-int func_00319C28(float *t, int n, float x)
+int ScalarQuant(float *t, int n, float x)
 {
     int best = 0;
     int i;

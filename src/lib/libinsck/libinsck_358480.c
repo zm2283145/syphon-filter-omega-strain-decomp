@@ -23,7 +23,7 @@ N8480 *Insck_FindSocket(int id)
 int func_00357150(int);                             
 int memset(int, int, int);                                     
 
-void func_003584B8(int arg0, int *arg1) {
+void conv_addr_to_inet(int arg0, int *arg1) {
     memset(arg0, 0, 0x10);
     F_(arg0, 0x4, int) = func_00357150(*arg1);
 }
@@ -32,7 +32,7 @@ void func_003584B8(int arg0, int *arg1) {
 /* merge_units: begin func_00358500 */
                              
 
-void func_00358500(int *arg0, int arg1) {
+void conv_addr_from_inet(int *arg0, int arg1) {
     *arg0 = func_00357150(F_(arg1, 0x4, int));
 }
 /* merge_units: end func_00358500 */

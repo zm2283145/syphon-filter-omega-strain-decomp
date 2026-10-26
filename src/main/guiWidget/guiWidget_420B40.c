@@ -2,7 +2,7 @@
 #include "vtable_base_dtor.h"
 
 extern "C" {
-extern "C" void func_0041BE50();
+extern "C" void GuiTextWidget_UpdateText();
 extern "C" void GuiTextWidget_Draw();
 extern "C" void GuiTextWidget_OnSleep();
 extern "C" void GuiTextWidget_Load();
@@ -36,4 +36,4 @@ extern "C" VtableObject* GuiButtonWidget_dtor(VtableObject* self, short deleteFl
     }
     return self;
 }
-void * const D_004E0C00[24] = { (void*)0x0, (void*)0x0, (void*)GuiButtonWidget_dtor, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiButtonWidget_OnWake, (void*)GuiTextWidget_OnSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiButtonWidget_OnInput, (void*)GuiTextWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiButtonWidget_OnEvent, (void*)GuiTextWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiButtonWidget_GetClassName, (void*)GuiButtonWidget_IsType, (void*)func_0041BE50 };
+void * const D_004E0C00[24] = { (void*)0x0, (void*)0x0, (void*)GuiButtonWidget_dtor, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiButtonWidget_OnWake, (void*)GuiTextWidget_OnSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiButtonWidget_OnInput, (void*)GuiTextWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiButtonWidget_OnEvent, (void*)GuiTextWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiButtonWidget_GetClassName, (void*)GuiButtonWidget_IsType, (void*)GuiTextWidget_UpdateText };

@@ -7,18 +7,18 @@
 #include "types.h"
 
 extern char D_0048C438[];
-extern int func_002F5160(void);
+extern int GetCurrentTimeMs(void);
 
-int func_002D86A0(void) {
+int MeasureTime(void) {
     int tmp0;
     int tmp2;
 
-    tmp0 = func_002F5160();
+    tmp0 = GetCurrentTimeMs();
     tmp2 = *(int*)D_0048C438;
     return (tmp0 - tmp2);
 }
 
-void func_002D86C8(int a0, int a1, int a2) {
+void UpdateAudioEncodePerformance(int a0, int a1, int a2) {
     int tmp0;
     int tmp1;
 
@@ -28,7 +28,7 @@ void func_002D86C8(int a0, int a1, int a2) {
     *(int*)((char*)a0 + 40) = (tmp1 + a1);
 }
 
-void func_002D86E8(int a0, int a1, int a2) {
+void UpdateAudioDecodePerformance(int a0, int a1, int a2) {
     int tmp0;
     int tmp1;
 

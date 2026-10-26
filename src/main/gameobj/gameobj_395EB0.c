@@ -27,7 +27,7 @@ extern char D_004BC510[];
 void SkelNode_Assign(SkelNode395EB0* d, const SkelNode395EB0* s);
 }
 
-extern "C" void func_00395EB0(V395EB0* v, unsigned int n, const SkelNode395EB0* val)
+extern "C" void std_vector_imp_cBone_init(V395EB0* v, unsigned int n, const SkelNode395EB0* val)
 {
     if (n) {
         if (n > 0x34F72) {
@@ -58,7 +58,7 @@ static inline void merge_flush_func_00395EB0(void) {}
 extern "C" {
 char D_004BC500[] = "allocator.hh";
 }
-DEFINE_VECTOR_DESTROY_DTOR_FILE(func_00396000, func_00396B70, D_004BC500)
+DEFINE_VECTOR_DESTROY_DTOR_FILE(std_vector_deleter_cBone_dtor, std_vector_deleter_cBoneScale_clear, D_004BC500)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00396000(void) {}
 #pragma pop /* merge_units */

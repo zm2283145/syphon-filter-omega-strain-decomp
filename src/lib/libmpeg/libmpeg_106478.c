@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-void func_00106478(int a0) {
+void _ipuSetMPEG1(int a0) {
     int tmp0;
 
     tmp0 = *(int*)(char*)268443664;

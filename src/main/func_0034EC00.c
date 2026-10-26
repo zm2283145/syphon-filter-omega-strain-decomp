@@ -11,7 +11,7 @@ typedef struct { char pad[8]; unsigned char kind; char pad9[3]; int a; int b; in
 struct AwardVec_4EC00;
 extern "C" {
 extern void func_00296F20(AwardVec_4EC00*);
-extern void func_00299270(AwardVec_4EC00*, int);
+extern void std_vector_deleter_tRequirementInfo_dtor(AwardVec_4EC00*, int);
 extern void AgentData_GetAwardItems(A4EC00*, int, int, AwardVec_4EC00*);
 extern char D_004BA9B8[];
 extern char D_004BA9C8[];
@@ -29,7 +29,7 @@ extern void GuiSlideShow_Clear(void*);
 extern int GuiTextListWidget_GetItemText(void*, int);
 extern int GuiSlideShow_AddCategory(void*, int);
 extern int sprintf(char*, const char*, ...);
-extern T4EC00* func_0034E760(void);
+extern T4EC00* cAgentData_GetRanks(void);
 extern G4EC00* D_004FFC04;
 extern void GuiSlideShow_AddSlide(void*, int, char*, int, char*);
 extern void GuiStack_SwapScreens(int, O4EC00*, void*);
@@ -39,7 +39,7 @@ struct AwardVec_4EC00 {
     int x0; int count; Item_4EC00* data; unsigned char owns;
     AwardVec_4EC00() { func_00296F20(this); owns = 1; }
     /* out-of-line copy is weak and dropped at link (as include/alloc_guard.h) */
-    __declspec(weak) __declspec(DROPDTOR) ~AwardVec_4EC00() { func_00299270(this, 0); }
+    __declspec(weak) __declspec(DROPDTOR) ~AwardVec_4EC00() { std_vector_deleter_tRequirementInfo_dtor(this, 0); }
 };
 extern "C" void GuiOmegaStrain_Select(O4EC00* o, int idx) {
     AwardVec_4EC00 v;

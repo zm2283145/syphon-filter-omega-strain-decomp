@@ -4,47 +4,47 @@ extern void IeDiffuseTrack_Construct();
 extern void IeScalarTrack_Construct();
 extern void IeTrack_EvaluateGroup();
 extern void Message_GetScriptTypeKey();
+extern void cAnimator_Update();
+extern void cAnimator_dtor();
+extern void cCharActionMsg_Pack();
 extern void cCharActionMsg_dtor();
 extern void cCharActionMsg_v01();
-extern void func_003E9390();
-extern void func_003F1E40();
-extern void func_003F1ED0();
-extern void func_003F1F60();
-extern void func_003F3FC0();
-extern void func_003F3FF0();
-extern void func_003F4190();
-extern void func_003F4360();
-extern void func_003F43C0();
-extern void func_003FCFB0();
-extern void func_003FD0F0();
-extern void func_003FF330();
+extern void cKeyframeAnimation_cXyz_NumFrames();
+extern void cKeyframeAnimation_cXyz_Update();
+extern void cKeyframeAnimation_cXyz_dtor();
+extern void cKeyframeAnimation_float_NumFrames();
+extern void cKeyframeAnimation_float_dtor();
+extern void cKeyframeAnimation_tRGB_NumFrames();
+extern void cKeyframeAnimation_tRGB_dtor();
+extern void cKfAnimationContainer_NumFrames();
+extern void cKfAnimationContainer_dtor();
 
 void *D_004E07A0[8] = {
-    0, 0, &func_003F1E40, &func_003F4190,
-    &func_003F3FF0, 0, 0, 0,
+    0, 0, &cKeyframeAnimation_cXyz_dtor, &cKeyframeAnimation_cXyz_NumFrames,
+    &cKeyframeAnimation_cXyz_Update, 0, 0, 0,
 };
 
 void *D_004E07C0[8] = {
-    0, 0, &func_003F1ED0, &func_003F3FC0,
+    0, 0, &cKeyframeAnimation_float_dtor, &cKeyframeAnimation_float_NumFrames,
     &IeScalarTrack_Construct, 0, 0, 0,
 };
 
 void *D_004E07E0[8] = {
-    0, 0, &func_003F1F60, &func_003F4360,
+    0, 0, &cKeyframeAnimation_tRGB_dtor, &cKeyframeAnimation_tRGB_NumFrames,
     &IeDiffuseTrack_Construct, 0, 0, 0,
 };
 
 void *D_004E0800[8] = {
-    0, 0, &func_003E9390, 0,
-    &func_003F43C0, 0, 0, 0,
+    0, 0, &cAnimator_dtor, 0,
+    &cAnimator_Update, 0, 0, 0,
 };
 
 void *D_004E0820[8] = {
-    0, 0, &func_003FD0F0, &func_003FCFB0,
+    0, 0, &cKfAnimationContainer_dtor, &cKfAnimationContainer_NumFrames,
     &IeTrack_EvaluateGroup, 0, 0, 0,
 };
 
 void *D_004E0840[8] = {
     0, 0, &cCharActionMsg_dtor, &cCharActionMsg_v01,
-    &func_003FF330, &Message_GetScriptTypeKey, 0, 0,
+    &cCharActionMsg_Pack, &Message_GetScriptTypeKey, 0, 0,
 };

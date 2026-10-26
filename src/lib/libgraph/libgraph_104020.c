@@ -7,7 +7,7 @@
 /* merge_units: begin func_00104020 */
 typedef struct { int w[5]; } S4020;
 extern S4020 D_004E1DB8;
-S4020* func_00104020(S4020* d)
+S4020* sceDmaGetEnv(S4020* d)
 {
     *d = D_004E1DB8;
     return d;
@@ -23,7 +23,7 @@ S4020* func_00104020(S4020* d)
 
 #include "types.h"
 
-int func_00104058(int a0) {
+int sceDmaPutStallAddr(int a0) {
     int tmp0;
 
     tmp0 = *(int*)(char*)268492896;

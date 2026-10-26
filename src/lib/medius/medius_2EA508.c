@@ -9,56 +9,56 @@ extern unsigned char D_0048C4D7, D_0048C4DC;
 extern char D_005253F0[];
 extern int RecursiveLock_Acquire(void *, int);
 extern int RecursiveLock_Release(void *, int);
-extern int func_002DF680(void *, void *);
-int func_002EA508(void *a, void *b)
+extern int NetIAssignLocalServer(void *, void *);
+int NetAssignLocalServer(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DF680(a, b);
+    r = NetIAssignLocalServer(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EA508 */
 
 /* merge_units: begin func_002EA5B0 */
-extern int func_002E0098(void *);
-int func_002EA5B0(void *a)
+extern int NetISetDefaultConnectParams(void *);
+int NetSetDefaultConnectParams(void *a)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E0098(a);
+    r = NetISetDefaultConnectParams(a);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EA5B0 */
 
 /* merge_units: begin func_002EA648 */
-extern int func_002E0118(void *, void *);
-int func_002EA648(void *a, void *b)
+extern int NetIConnect(void *, void *);
+int NetConnect(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E0118(a, b);
+    r = NetIConnect(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EA648 */
 
 /* merge_units: begin func_002EA6F0 */
-extern int func_002E0BE0(void *);
-int func_002EA6F0(void *a)
+extern int NetISetDefaultHostPeerToPeerParams(void *);
+int NetSetDefaultHostPeerToPeerParams(void *a)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E0BE0(a);
+    r = NetISetDefaultHostPeerToPeerParams(a);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
@@ -79,266 +79,266 @@ int NetGame_Create(void *a, void *b)
 /* merge_units: end func_002EA788 */
 
 /* merge_units: begin func_002EA830 */
-extern int func_002E0F00(void *);
-int func_002EA830(void *a)
+extern int NetISetNATServiceAddr(void *);
+int NetSetNATServiceAddr(void *a)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E0F00(a);
+    r = NetISetNATServiceAddr(a);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EA830 */
 
 /* merge_units: begin func_002EA8C8 */
-extern int func_002E0F50(void *);
-int func_002EA8C8(void *a)
+extern int NetISetDefaultResolveAddrParams(void *);
+int NetSetDefaultResolveAddrParams(void *a)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E0F50(a);
+    r = NetISetDefaultResolveAddrParams(a);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EA8C8 */
 
 /* merge_units: begin func_002EA960 */
-extern int func_002E0F90(void *, void *);
-int func_002EA960(void *a, void *b)
+extern int NetIResolveAddr(void *, void *);
+int NetResolveAddr(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E0F90(a, b);
+    r = NetIResolveAddr(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EA960 */
 
 /* merge_units: begin func_002EAA08 */
-extern int func_002E1118(void *);
-int func_002EAA08(void *a)
+extern int NetISetDefaultIncomingClientParams(void *);
+int NetSetDefaultIncomingClientParams(void *a)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E1118(a);
+    r = NetISetDefaultIncomingClientParams(a);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EAA08 */
 
 /* merge_units: begin func_002EAAA0 */
-extern int func_002E1158(void *, void *);
-int func_002EAAA0(void *a, void *b)
+extern int NetIIncomingClient(void *, void *);
+int NetIncomingClient(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E1158(a, b);
+    r = NetIIncomingClient(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EAAA0 */
 
 /* merge_units: begin func_002EAB48 */
-extern int func_002E1470(void *, void *);
-int func_002EAB48(void *a, void *b)
+extern int NetISetMyClientReceiveBroadcast(void *, void *);
+int NetSetMyClientReceiveBroadcast(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E1470(a, b);
+    r = NetISetMyClientReceiveBroadcast(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EAB48 */
 
 /* merge_units: begin func_002EABF0 */
-extern int func_002E1500(void *);
-int func_002EABF0(void *a)
+extern int NetISetDefaultJoinParams(void *);
+int NetSetDefaultJoinParams(void *a)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E1500(a);
+    r = NetISetDefaultJoinParams(a);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EABF0 */
 
 /* merge_units: begin func_002EAC88 */
-extern int func_002E1578(void *, void *);
-int func_002EAC88(void *a, void *b)
+extern int NetIJoin(void *, void *);
+int NetJoin(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E1578(a, b);
+    r = NetIJoin(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EAC88 */
 
 /* merge_units: begin func_002EAD30 */
-extern int func_002DF828(void *);
-int func_002EAD30(void *a)
+extern int NetIRequestServersOnSubnet(void *);
+int NetRequestServersOnSubnet(void *a)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DF828(a);
+    r = NetIRequestServersOnSubnet(a);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EAD30 */
 
 /* merge_units: begin func_002EADC8 */
-extern int func_002E1EA8(void *, void *, void *);
-int func_002EADC8(void *a, void *b, void *c)
+extern int NetIPing(void *, void *, void *);
+int NetPing(void *a, void *b, void *c)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E1EA8(a, b, c);
+    r = NetIPing(a, b, c);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EADC8 */
 
 /* merge_units: begin func_002EAE80 */
-extern int func_002E2090(void *, void *);
-int func_002EAE80(void *a, void *b)
+extern int NetIPingIP(void *, void *);
+int NetPingIP(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E2090(a, b);
+    r = NetIPingIP(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EAE80 */
 
 /* merge_units: begin func_002EAF28 */
-extern int func_002E2480(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
-int func_002EAF28(void *a, void *b, void *c, void *d, void *e, void *f, void *g, void *h, void *i, void *j)
+extern int NetICreateObject(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
+int NetCreateObject(void *a, void *b, void *c, void *d, void *e, void *f, void *g, void *h, void *i, void *j)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E2480(a, b, c, d, e, f, g, h, i, j);
+    r = NetICreateObject(a, b, c, d, e, f, g, h, i, j);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EAF28 */
 
 /* merge_units: begin func_002EB038 */
-extern int func_002E2250(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
-int func_002EB038(void *a, void *b, void *c, void *d, void *e, void *f, void *g, void *h, void *i, void *j, void *k)
+extern int NetIRequestCreateRemoteNamedObject(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
+int NetRequestCreateRemoteNamedObject(void *a, void *b, void *c, void *d, void *e, void *f, void *g, void *h, void *i, void *j, void *k)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E2250(a, b, c, d, e, f, g, h, i, j, k);
+    r = NetIRequestCreateRemoteNamedObject(a, b, c, d, e, f, g, h, i, j, k);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EB038 */
 
 /* merge_units: begin func_002EB150 */
-extern int func_002E2878(void *, void *, void *, void *, void *, void *, void *, unsigned short, unsigned short);
-int func_002EB150(void *a, void *b, void *c, void *d, void *e, void *f, void *g, unsigned short h, unsigned short i)
+extern int NetIOpenDataStream(void *, void *, void *, void *, void *, void *, void *, unsigned short, unsigned short);
+int NetOpenDataStream(void *a, void *b, void *c, void *d, void *e, void *f, void *g, unsigned short h, unsigned short i)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E2878(a, b, c, d, e, f, g, h, i);
+    r = NetIOpenDataStream(a, b, c, d, e, f, g, h, i);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EB150 */
 
 /* merge_units: begin func_002EB260 */
-extern int func_002E3718(void *, void *, void *);
-int func_002EB260(void *a, void *b, void *c)
+extern int NetIAddToDataStream(void *, void *, void *);
+int NetAddToDataStream(void *a, void *b, void *c)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E3718(a, b, c);
+    r = NetIAddToDataStream(a, b, c);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EB260 */
 
 /* merge_units: begin func_002EB318 */
-extern int func_002E2B18(void *);
-int func_002EB318(void *a)
+extern int NetIEndDataStream(void *);
+int NetEndDataStream(void *a)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E2B18(a);
+    r = NetIEndDataStream(a);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EB318 */
 
 /* merge_units: begin func_002EB3B0 */
-extern int func_002E3340(void *, void *);
-int func_002EB3B0(void *a, void *b)
+extern int NetISendObjectFullUpdate(void *, void *);
+int NetSendObjectFullUpdate(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E3340(a, b);
+    r = NetISendObjectFullUpdate(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EB3B0 */
 
 /* merge_units: begin func_002EB458 */
-extern int func_002DB550(void *, void *);
-int func_002EB458(void *a, void *b)
+extern int NetISendMyClientUpdate(void *, void *);
+int NetSendMyClientUpdate(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DB550(a, b);
+    r = NetISendMyClientUpdate(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EB458 */
 
 /* merge_units: begin func_002EB500 */
-extern int func_002DD380(void *, void *);
-int func_002EB500(void *a, void *b)
+extern int NetIIpStringToBinary(void *, void *);
+int NetIpStringToBinary(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DD380(a, b);
+    r = NetIIpStringToBinary(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
@@ -346,7 +346,7 @@ int func_002EB500(void *a, void *b)
 
 /* merge_units: begin func_002EB5A8 */
 extern int Net_IpToString(void *, void *);
-int func_002EB5A8(void *a, void *b)
+int NetIpBinaryToString(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
@@ -359,476 +359,476 @@ int func_002EB5A8(void *a, void *b)
 /* merge_units: end func_002EB5A8 */
 
 /* merge_units: begin func_002EB650 */
-extern int func_002DD968(void *, void *);
-int func_002EB650(void *a, void *b)
+extern int NetIGetObject(void *, void *);
+int NetGetObject(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DD968(a, b);
+    r = NetIGetObject(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EB650 */
 
 /* merge_units: begin func_002EB6F8 */
-extern int func_002DD9B0(void *, void *);
-int func_002EB6F8(void *a, void *b)
+extern int NetIGetDataStream(void *, void *);
+int NetGetDataStream(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DD9B0(a, b);
+    r = NetIGetDataStream(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EB6F8 */
 
 /* merge_units: begin func_002EB7A0 */
-extern int func_002DB1F0(void *, void *, void *);
-int func_002EB7A0(void *a, void *b, void *c)
+extern int NetIGetClientStatus(void *, void *, void *);
+int NetGetClientStatus(void *a, void *b, void *c)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DB1F0(a, b, c);
+    r = NetIGetClientStatus(a, b, c);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EB7A0 */
 
 /* merge_units: begin func_002EB858 */
-extern int func_002DB188(void *, void *, void *);
-int func_002EB858(void *a, void *b, void *c)
+extern int NetIGetClient(void *, void *, void *);
+int NetGetClient(void *a, void *b, void *c)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DB188(a, b, c);
+    r = NetIGetClient(a, b, c);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EB858 */
 
 /* merge_units: begin func_002EB910 */
-extern int func_002DD488(void *);
-int func_002EB910(void *a)
+extern int NetIGetMyIpAddress(void *);
+int NetGetMyIpAddress(void *a)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DD488(a);
+    r = NetIGetMyIpAddress(a);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EB910 */
 
 /* merge_units: begin func_002EB9A8 */
-extern int func_002DD4E8(void *, void *, void *);
-int func_002EB9A8(void *a, void *b, void *c)
+extern int NetIGetClientIpAddress(void *, void *, void *);
+int NetGetClientIpAddress(void *a, void *b, void *c)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DD4E8(a, b, c);
+    r = NetIGetClientIpAddress(a, b, c);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EB9A8 */
 
 /* merge_units: begin func_002EBA60 */
-extern int func_002DD938(void *);
-int func_002EBA60(void *a)
+extern int NetIGetCurrentUDPSourceBinaryIP(void *);
+int NetGetCurrentUDPSourceBinaryIP(void *a)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DD938(a);
+    r = NetIGetCurrentUDPSourceBinaryIP(a);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EBA60 */
 
 /* merge_units: begin func_002EBAF8 */
-extern int func_002DD178(void *, void *);
+extern int NetIGetMyClientIndex(void *, void *);
 int NetGame_InitLocalSlot(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DD178(a, b);
+    r = NetIGetMyClientIndex(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EBAF8 */
 
 /* merge_units: begin func_002EBBA0 */
-extern int func_002DD1F8(void *, void *);
-int func_002EBBA0(void *a, void *b)
+extern int NetIGetPeerToPeerHostClientIndex(void *, void *);
+int NetGetPeerToPeerHostClientIndex(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DD1F8(a, b);
+    r = NetIGetPeerToPeerHostClientIndex(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EBBA0 */
 
 /* merge_units: begin func_002EBC48 */
-extern int func_002DDAC8(void *);
-int func_002EBC48(void *a)
+extern int NetIGetLocalTime(void *);
+int NetGetLocalTime(void *a)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DDAC8(a);
+    r = NetIGetLocalTime(a);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EBC48 */
 
 /* merge_units: begin func_002EBCE0 */
-extern int func_002DDB08(void *);
-int func_002EBCE0(void *a)
+extern int NetIGetTime(void *);
+int NetGetTime(void *a)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DDB08(a);
+    r = NetIGetTime(a);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EBCE0 */
 
 /* merge_units: begin func_002EBD78 */
-extern int func_002DDB30(void *, void *);
-int func_002EBD78(void *a, void *b)
+extern int NetIGetSessionMasterClientIndex(void *, void *);
+int NetGetSessionMasterClientIndex(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DDB30(a, b);
+    r = NetIGetSessionMasterClientIndex(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EBD78 */
 
 /* merge_units: begin func_002EBE20 */
-extern int func_002DDB98(void *, void *);
-int func_002EBE20(void *a, void *b)
+extern int NetIGetConnectStatus(void *, void *);
+int NetGetConnectStatus(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DDB98(a, b);
+    r = NetIGetConnectStatus(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EBE20 */
 
 /* merge_units: begin func_002EBEC8 */
-extern int func_002DDC00(void *, void *);
-int func_002EBEC8(void *a, void *b)
+extern int NetIGetValidClientCount(void *, void *);
+int NetGetValidClientCount(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DDC00(a, b);
+    r = NetIGetValidClientCount(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EBEC8 */
 
 /* merge_units: begin func_002EBF70 */
-extern int func_002DDCA0(void *, void *);
-int func_002EBF70(void *a, void *b)
+extern int NetIGetConnectionStatus(void *, void *);
+int NetGetConnectionStatus(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DDCA0(a, b);
+    r = NetIGetConnectionStatus(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EBF70 */
 
 /* merge_units: begin func_002EC018 */
-extern int func_002E4190(void *, void *);
-int func_002EC018(void *a, void *b)
+extern int NetIDataStreamBytesFree(void *, void *);
+int NetDataStreamBytesFree(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E4190(a, b);
+    r = NetIDataStreamBytesFree(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EC018 */
 
 /* merge_units: begin func_002EC0C0 */
-extern int func_002DDD50(void *, void *);
-int func_002EC0C0(void *a, void *b)
+extern int NetIGetServerVersion(void *, void *);
+int NetGetServerVersion(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DDD50(a, b);
+    r = NetIGetServerVersion(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EC0C0 */
 
 /* merge_units: begin func_002EC168 */
-extern int func_002DCD30(void *, void *);
-int func_002EC168(void *a, void *b)
+extern int NetISetBufferSize(void *, void *);
+int NetSetBufferSize(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DCD30(a, b);
+    r = NetISetBufferSize(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EC168 */
 
 /* merge_units: begin func_002EC210 */
-extern int func_002DB820(void *);
-int func_002EC210(void *a)
+extern int NetISetMyClientObject(void *);
+int NetSetMyClientObject(void *a)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DB820(a);
+    r = NetISetMyClientObject(a);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EC210 */
 
 /* merge_units: begin func_002EC2A8 */
-extern int func_002DEC60(void *);
-int func_002EC2A8(void *a)
+extern int NetIFreeObject(void *);
+int NetFreeObject(void *a)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DEC60(a);
+    r = NetIFreeObject(a);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EC2A8 */
 
 /* merge_units: begin func_002EC340 */
-extern int func_002DF8E8(void);
-int func_002EC340(void)
+extern int NetIFreeAllObjects(void);
+int NetFreeAllObjects(void)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DF8E8();
+    r = NetIFreeAllObjects();
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EC340 */
 
 /* merge_units: begin func_002EC3C8 */
-extern int func_002E2BB8(void *);
-int func_002EC3C8(void *a)
+extern int NetIRequestObjectPrivateOwnership(void *);
+int NetRequestObjectPrivateOwnership(void *a)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E2BB8(a);
+    r = NetIRequestObjectPrivateOwnership(a);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EC3C8 */
 
 /* merge_units: begin func_002EC460 */
-extern int func_002E2CE0(void *);
-int func_002EC460(void *a)
+extern int NetIReleaseObjectPrivateOwnership(void *);
+int NetReleaseObjectPrivateOwnership(void *a)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E2CE0(a);
+    r = NetIReleaseObjectPrivateOwnership(a);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EC460 */
 
 /* merge_units: begin func_002EC4F8 */
-extern int func_002E4A30(void);
-int func_002EC4F8(void)
+extern int NetIUpdate(void);
+int NetUpdate(void)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E4A30();
+    r = NetIUpdate();
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EC4F8 */
 
 /* merge_units: begin func_002EC580 */
-extern int func_002E4C48(void *);
-int func_002EC580(void *a)
+extern int NetIGetNetUpdateErrors(void *);
+int NetGetNetUpdateErrors(void *a)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E4C48(a);
+    r = NetIGetNetUpdateErrors(a);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EC580 */
 
 /* merge_units: begin func_002EC618 */
-extern int func_002E4A00(void);
-int func_002EC618(void)
+extern int NetITick(void);
+int NetTick(void)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E4A00();
+    r = NetITick();
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EC618 */
 
 /* merge_units: begin func_002EC6A0 */
-extern int func_002E1A20(void *);
-int func_002EC6A0(void *a)
+extern int NetILeave(void *);
+int NetLeave(void *a)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E1A20(a);
+    r = NetILeave(a);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EC6A0 */
 
 /* merge_units: begin func_002EC738 */
-extern int func_002E4CA8(void *);
-int func_002EC738(void *a)
+extern int NetIDisconnect(void *);
+int NetDisconnect(void *a)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E4CA8(a);
+    r = NetIDisconnect(a);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EC738 */
 
 /* merge_units: begin func_002EC7D0 */
-extern int func_00313DB8(void *, void *);
-int func_002EC7D0(void *a, void *b)
+extern int NetIStreamMediaJoinChannel(void *, void *);
+int NetStreamMediaJoinChannel(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_00313DB8(a, b);
+    r = NetIStreamMediaJoinChannel(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EC7D0 */
 
 /* merge_units: begin func_002EC878 */
-extern int func_00313E70(void *, void *);
-int func_002EC878(void *a, void *b)
+extern int NetIStreamMediaQuitChannel(void *, void *);
+int NetStreamMediaQuitChannel(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_00313E70(a, b);
+    r = NetIStreamMediaQuitChannel(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EC878 */
 
 /* merge_units: begin func_002EC920 */
-extern int func_00313F18(void *, void *, void *);
-int func_002EC920(void *a, void *b, void *c)
+extern int NetIStreamMediaGetChannelInfo(void *, void *, void *);
+int NetStreamMediaGetChannelInfo(void *a, void *b, void *c)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_00313F18(a, b, c);
+    r = NetIStreamMediaGetChannelInfo(a, b, c);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EC920 */
 
 /* merge_units: begin func_002EC9D8 */
-extern int func_00314028(void *, void *, void *);
-int func_002EC9D8(void *a, void *b, void *c)
+extern int NetIStreamMediaGetClientInfo(void *, void *, void *);
+int NetStreamMediaGetClientInfo(void *a, void *b, void *c)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_00314028(a, b, c);
+    r = NetIStreamMediaGetClientInfo(a, b, c);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002EC9D8 */
 
 /* merge_units: begin func_002ECA90 */
-extern int func_00314180(void *, void *);
-int func_002ECA90(void *a, void *b)
+extern int NetIStreamMediaEndRecording(void *, void *);
+int NetStreamMediaEndRecording(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_00314180(a, b);
+    r = NetIStreamMediaEndRecording(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002ECA90 */
 
 /* merge_units: begin func_002ECB38 */
-extern int func_00314208(void *, void *);
-int func_002ECB38(void *a, void *b)
+extern int NetIStreamMediaGetCurrentChannelState(void *, void *);
+int NetStreamMediaGetCurrentChannelState(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_00314208(a, b);
+    r = NetIStreamMediaGetCurrentChannelState(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
@@ -836,7 +836,7 @@ int func_002ECB38(void *a, void *b)
 
 /* merge_units: begin func_002ECBE0 */
 extern void *memset(void *, int, unsigned int);
-int func_002ECBE0(int *p)
+int NetStreamMediaSetDefaultIgnoreParams(int *p)
 {
     int r;
     unsigned char v;
@@ -854,70 +854,70 @@ int func_002ECBE0(int *p)
 /* merge_units: end func_002ECBE0 */
 
 /* merge_units: begin func_002ECC98 */
-extern int func_003142A0(void *);
-int func_002ECC98(void *a)
+extern int NetIStreamMediaSetIgnoreState(void *);
+int NetStreamMediaSetIgnoreState(void *a)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_003142A0(a);
+    r = NetIStreamMediaSetIgnoreState(a);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002ECC98 */
 
 /* merge_units: begin func_002ECD30 */
-extern int func_002E66F0(void *);
+extern int NetISetDefaultStreamMediaParams(void *);
 int func_002ECD30(void *a)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E66F0(a);
+    r = NetISetDefaultStreamMediaParams(a);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002ECD30 */
 
 /* merge_units: begin func_002ECDC8 */
-extern int func_002E6708(void *, void *);
-int func_002ECDC8(void *a, void *b)
+extern int NetISetFieldChanged(void *, void *);
+int NetSetFieldChanged(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E6708(a, b);
+    r = NetISetFieldChanged(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002ECDC8 */
 
 /* merge_units: begin func_002ECE70 */
-extern int func_002E67E8(void *);
+extern int NetISendFieldUpdates(void *);
 int func_002ECE70(void *a)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E67E8(a);
+    r = NetISendFieldUpdates(a);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }
 /* merge_units: end func_002ECE70 */
 
 /* merge_units: begin func_002ECF08 */
-extern int func_002E6808(void *, void *, void *, void *, void *, void *);
-int func_002ECF08(void *a, void *b, void *c, void *d, void *e, void *f)
+extern int NetIGetClientBufferStatus(void *, void *, void *, void *, void *, void *);
+int NetGetClientBufferStatus(void *a, void *b, void *c, void *d, void *e, void *f)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002E6808(a, b, c, d, e, f);
+    r = NetIGetClientBufferStatus(a, b, c, d, e, f);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }

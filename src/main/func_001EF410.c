@@ -7,11 +7,11 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern ObjVec* func_001EF450(ObjVec*, ObjVec*);
+extern ObjVec* std_vector_imp_cCollisionEdgePtr_1_opAssign(ObjVec*, ObjVec*);
 
 /* Array copy constructor: copy contents, then the owns-storage flag. */
-ObjVec* func_001EF410(ObjVec* dst, ObjVec* src) {
-    func_001EF450(dst, src);
+ObjVec* cArray_cCollisionEdgePtr_opAssign(ObjVec* dst, ObjVec* src) {
+    std_vector_imp_cCollisionEdgePtr_1_opAssign(dst, src);
     dst->owned = src->owned;
     return dst;
 }

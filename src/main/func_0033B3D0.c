@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-void func_0033B3D0(PtrVec* a, PtrVec* b) {
+void std_swap_vectordeleterR_vectordeleterR_36(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;
         int* p;
@@ -22,6 +22,6 @@ void func_0033B3D0(PtrVec* a, PtrVec* b) {
     }
 }
 
-void func_0033B410(char* self) {
+void std_vector_deleter_tMissionStats_clear(char* self) {
     *(int*)(self + 4) = 0;
 }

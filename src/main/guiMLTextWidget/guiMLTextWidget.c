@@ -19,9 +19,9 @@ extern "C" {
 void Mem_Free(int, void*, char*, int);
 void ObjectList_EraseRange(int*, MLTextLineList*, MLTextLine**, MLTextLine**);
 LineIter List_Begin(MLTextLineList*);                 /* begin() */
-LineIter func_0043DB60(MLTextLineList*);                 /* end() */
-void func_0043DB70(MLTextLine**, const LineIter&);       /* iterator copy */
-void func_0043DB50(MLTextLine**, const LineIter&);       /* iterator copy */
+LineIter std_list_charPtr_end(MLTextLineList*);                 /* end() */
+void std_list_charPtr_generic_iterator_ctor(MLTextLine**, const LineIter&);       /* iterator copy */
+void cLListIterator_charPtr_ctor(MLTextLine**, const LineIter&);       /* iterator copy */
 void GuiScrollBarWidget_SetRange(void*, int, int, int, int);           /* scroll bar: set position/range */
 }
 /* Free every line's text, erase all nodes, scroll to the top. */
@@ -31,9 +31,9 @@ extern "C" void MLTextWidget_Clear(MLTextWidget* self) {
         {
             MLTextLine* n;
             MLTextLine* it;
-            func_0043DB70(&it, List_Begin(&self->lines));
+            std_list_charPtr_generic_iterator_ctor(&it, List_Begin(&self->lines));
             n = it;
-            while ((func_0043DB50(&end, func_0043DB60(&self->lines)), n != end)) {
+            while ((cLListIterator_charPtr_ctor(&end, std_list_charPtr_end(&self->lines)), n != end)) {
                 void* text = n->text;
                 {
                     AllocGuard g;

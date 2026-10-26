@@ -1,5 +1,5 @@
 #include "types.h"
-extern void func_001F43D0(void* s);
+extern void std_list_cSkaBlendSequenceItemPtr_push_back(void* s);
 #pragma optimization_level 1
-void func_001F43B0(void* s) { func_001F43D0(s); }
+void cLList_cSkaBlendSequenceItemPtr_PushBackActual(void* s) { std_list_cSkaBlendSequenceItemPtr_push_back(s); }
 #pragma optimization_level reset

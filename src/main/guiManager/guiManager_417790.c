@@ -69,16 +69,16 @@ typedef struct GuiWidget {
 
 extern char D_00571DC0[];
 extern "C" void IeElement_Release(void* p);
-extern "C" void func_00412CF0(void* mgr, int handle);
+extern "C" void cInterfaceManager_RemoveInterface(void* mgr, int handle);
 
-/* Notifies the child (virtual +0x10); if a handle (+0x20) is held, releases it (IeElement_Release on +0x24, func_00412CF0) and resets it to -1. */
-extern "C" void func_00417870(GuiWidget* self)
+/* Notifies the child (virtual +0x10); if a handle (+0x20) is held, releases it (IeElement_Release on +0x24, cInterfaceManager_RemoveInterface) and resets it to -1. */
+extern "C" void GuiInterfaceDecorator_onRemove(GuiWidget* self)
 {
     self->child->Method10();
     if (self->handle != -1) {
     if (self->unk24)
     IeElement_Release(self->unk24);
-    func_00412CF0(D_00571DC0, self->handle);
+    cInterfaceManager_RemoveInterface(D_00571DC0, self->handle);
     self->handle = -1;
     }
 }

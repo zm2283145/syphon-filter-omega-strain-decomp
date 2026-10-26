@@ -43,12 +43,12 @@ struct Ctx { int region; int mode; float cost; };
 extern "C" {
 extern NodeTab* D_004FFBE0;
 extern RegionVec* D_004FFBE8;
-void func_0014F1F0(It4* out, Region* c);
-void func_0014F1C0(It4* out, Region* c);
-void func_0014F1E0(It4* out, It4* raw);
-int* func_0015D3E0(void* c);
-int* func_0015D3B0(void* c);
-void func_0015D3D0(It8* out, void* c, int** raw);
+void std_vector_int_begin(It4* out, Region* c);
+void std_vector_int_end_void(It4* out, Region* c);
+void cArray_int_ConstIterator_ctor(It4* out, It4* raw);
+int* std_vector_imp_tNodeLink_begin_void_2(void* c);
+int* std_vector_imp_tNodeLink_end_void_2(void* c);
+void std_vector_tNodeLink_pointer2iterator_tNodeLinkPR_2(It8* out, void* c, int** raw);
 V4 Node_GetTranslation(PNode* n);
 void NpcRoute_AddLinkedRegions(Route* self, Ctx* ctx);
 }
@@ -71,17 +71,17 @@ void NpcRoute_AddLinkedRegions(Route* self, Ctx* ctx)
     It4 raw110;
     NodeTab* tab = D_004FFBE0;
     Region* rg = &D_004FFBE8->data[ctx->region];
-    func_0014F1F0(&raw11C, rg);
-    func_0014F1E0(&t134, &raw11C);
+    std_vector_int_begin(&raw11C, rg);
+    cArray_int_ConstIterator_ctor(&t134, &raw11C);
     it1 = t134;
-    while ((func_0014F1C0(&raw110, rg), func_0014F1E0(&end1, &raw110), !Eq4(end1, it1))) {
+    while ((std_vector_int_end_void(&raw110, rg), cArray_int_ConstIterator_ctor(&end1, &raw110), !Eq4(end1, it1))) {
         PNode* n = tab->data[*it1.p];
         if (n->flags & 0x80) {
             void* c = n->links;
-            func_0015D3D0(&t124, c, (raw118 = func_0015D3E0(c), &raw118));
+            std_vector_tNodeLink_pointer2iterator_tNodeLinkPR_2(&t124, c, (raw118 = std_vector_imp_tNodeLink_begin_void_2(c), &raw118));
             t130.p = t124.p;
             it2 = t130;
-            while ((func_0015D3D0(&t120, c, (raw114 = func_0015D3B0(c), &raw114)), (end2.p = t120.p, !Eq8(it2, end2)))) {
+            while ((std_vector_tNodeLink_pointer2iterator_tNodeLinkPR_2(&t120, c, (raw114 = std_vector_imp_tNodeLink_end_void_2(c), &raw114)), (end2.p = t120.p, !Eq8(it2, end2)))) {
                 Link* l = (Link*)it2.p;
                 if (l->type == 10) {
                     PNode* m = tab->data[l->id];

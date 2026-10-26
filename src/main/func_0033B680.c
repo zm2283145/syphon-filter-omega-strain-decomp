@@ -2,4 +2,4 @@
 #include "guarded_buffer_dtor.h"
 
 extern "C" { char D_004B9878[] = "allocator.hh"; }
-DEFINE_GUARDED_BUFFER_CALL_DTOR(func_0033B680, func_0033BB60, D_004B9878)
+DEFINE_GUARDED_BUFFER_CALL_DTOR(std_vector_deleter_tRankInfo_dtor, std_vector_deleter_tRankInfo_clear, D_004B9878)

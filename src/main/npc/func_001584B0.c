@@ -2,7 +2,7 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 int NpcAi_RequestMode(int , int, int);
 
-int func_001584B0(int arg0) {
+int cNetworkTransferNpc_ctor_void(int arg0) {
     int var_a0;
     int var_a1;
     int var_v1;

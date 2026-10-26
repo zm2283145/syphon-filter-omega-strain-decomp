@@ -4,7 +4,7 @@
 extern "C" {
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void cMessage_ctor(void* self, void* src);
-void func_0020E730(void* dst, void* src);
+void cSndFx_ctor_cSndFxR(void* dst, void* src);
 extern char D_004DADF0[];
 }
 struct Msg0E660 { void* vtable; char pad[0x2C]; char payload[0x190]; unsigned char b1C0; };
@@ -18,7 +18,7 @@ extern "C" Msg0E660* func_0020E660(Msg0E660* src)
     if (p) {
         cMessage_ctor(p, src);
         p->vtable = D_004DADF0;
-        func_0020E730(p->payload, src->payload);
+        cSndFx_ctor_cSndFxR(p->payload, src->payload);
         p->b1C0 = src->b1C0;
     }
     return p;

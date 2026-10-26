@@ -16,7 +16,7 @@
  */
 
 
-void* func_00190990(char* self) {
+void* cSkaAnimDataSample_DeltaTranslation(char* self) {
     return self + 32;
 }
 
@@ -33,7 +33,7 @@ static inline void merge_flush_func_00190990(void) {}
 typedef struct { char pad[0x1C]; unsigned int mask; } BitObj;
 
 /* Returns 1 if bit n of the mask at +0x1C is set. */
-int func_001909B0(BitObj* self, int n)
+int cSkaAnimData_BoneHasTranslation(BitObj* self, int n)
 {
     return (self->mask & (1 << n)) != 0;
 }
@@ -45,15 +45,15 @@ static inline void merge_flush_func_001909B0(void) {}
 /* merge_units: begin func_001909D0 */
 #pragma push /* merge_units */
 /* Address of field +0x10 in 32-byte element i. */
-char* func_001909D0(char* base, int i) {
+char* cSkeletonData_GetBoneData(char* base, int i) {
     return base + (i << 5) + 16;
 }
 
-int func_001909E0(char* self) {
+int cSkeletonData_GetBoneCount(char* self) {
     return *(int*)(self + 0);
 }
 
-void* func_001909F0(void* self) {
+void* cSkaAnimDataSample_IsEndOfData(void* self) {
     return self;
 }
 /* merge_units: generate this block's code under its own pragmas */

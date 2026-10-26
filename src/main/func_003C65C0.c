@@ -4,7 +4,7 @@ static inline void Q65C0(void* d, const void* s) { __int128 t; __asm__ volatile(
 struct V { float x, y, z, w; } __attribute__((aligned(16)));
 struct Box { V min; V max; };
 struct Sphere { float r; int pad[3]; V c; };
-extern "C" void func_003C65C0(Sphere* out, const Box* b)
+extern "C" void cLineSegment_BoundingSphere(Sphere* out, const Box* b)
 {
     V Lv; V c; V v; V sub; V sum; V t;
     float r;

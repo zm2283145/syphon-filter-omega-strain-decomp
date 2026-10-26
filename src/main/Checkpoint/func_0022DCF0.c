@@ -18,9 +18,9 @@ extern int D_004F79D0; /* cCheckpoint key */
 extern int D_004F79D8; /* cCheckpoint type id */
 extern int Global_SetPlayersCheckpoint(int player, int checkpoint);
 extern int* Checkpoint_GetScriptTypeKeyPtr(void);
-extern int* func_0022DDA0(void);
-extern int* func_0022DE00(void);
-extern int* func_0022DE60(void);
+extern int* cRespawnMsg_SOBJ_getClassId(void);
+extern int* cNotifyCheckpointMsg_SOBJ_getClassId(void);
+extern int* cAddCheckpointMsg_SOBJ_getClassId(void);
 
 /* cCheckpoint derives from cGObj. */
 void ScriptType_cCheckpoint_Init(void) {
@@ -46,12 +46,12 @@ void ScriptType_cRespawnMsg_Init(void) {
     ScriptType_SetParent(D_004F79C8, *parent);
 }
 
-int* func_0022DDA0(void) {
+int* cRespawnMsg_SOBJ_getClassId(void) {
     return &D_004F79C0;
 }
 
 int cRespawnMsg_v03(void) {
-    return *func_0022DDA0();
+    return *cRespawnMsg_SOBJ_getClassId();
 }
 
 void ScriptType_cNotifyCheckpointMsg_Init(void) {
@@ -59,12 +59,12 @@ void ScriptType_cNotifyCheckpointMsg_Init(void) {
     ScriptType_SetParent(D_004F79B8, *parent);
 }
 
-int* func_0022DE00(void) {
+int* cNotifyCheckpointMsg_SOBJ_getClassId(void) {
     return &D_004F79B0;
 }
 
 int cNotifyCheckpointMsg_v03(void) {
-    return *func_0022DE00();
+    return *cNotifyCheckpointMsg_SOBJ_getClassId();
 }
 
 void ScriptType_cAddCheckpointMsg_Init(void) {
@@ -72,12 +72,12 @@ void ScriptType_cAddCheckpointMsg_Init(void) {
     ScriptType_SetParent(D_004F79A8, *parent);
 }
 
-int* func_0022DE60(void) {
+int* cAddCheckpointMsg_SOBJ_getClassId(void) {
     return &D_004F79A0;
 }
 
 int cAddCheckpointMsg_v03(void) {
-    return *func_0022DE60();
+    return *cAddCheckpointMsg_SOBJ_getClassId();
 }
 
 /* SetPlayersCheckpoint(player, checkpoint) */

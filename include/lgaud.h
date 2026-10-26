@@ -52,7 +52,7 @@ enum {
 
 /*
  * Stream format for one direction. Field meanings follow the values the game
- * passes (func_004384C0: 1/16/8000/200 and 2/16/8000/400).
+ * passes (cHeadSet_DetectAndSetupUSB: 1/16/8000/200 and 2/16/8000/400).
  */
 typedef struct lgAudFormat {
     unsigned char channels;       /* +0x00 (1, 2) */

@@ -1,6 +1,6 @@
 #pragma cplusplus on
 
-#define ObjectList_EraseRange func_0022D890
+#define ObjectList_EraseRange std_list_deleter_LosReqElem_erase
 #include "obj_list_dtor.h"
 
-DEFINE_OBJ_LIST_DTOR(func_0022A840)
+DEFINE_OBJ_LIST_DTOR(std_list_LosReqElem_dtor)

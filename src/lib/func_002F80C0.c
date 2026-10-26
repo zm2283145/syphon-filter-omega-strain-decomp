@@ -4,7 +4,7 @@ extern char D_005296C0[];
 extern void *memcpy(void *, const void *, unsigned int);
 extern void *memset(void *, int, unsigned int);
 
-void func_002F80C0(int id, void *p)
+void KM_Initialize(int id, void *p)
 {
     if (id == -1) {
         if (p)

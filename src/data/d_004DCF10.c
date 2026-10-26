@@ -6,15 +6,15 @@ extern void cBeamMsg_v01();
 extern void cBeamMsg_v03();
 extern void cBeamMsg_v04();
 extern void cBeamMsg_v05();
-extern void func_0012F070();
-extern void func_002823E0();
+extern void cNetMsg_Pack();
+extern void cNetMsg_dtor();
 
 void *D_004DCF10[8] = {
-    0, 0, &func_0012F070, 0,
-    &func_002823E0, &Message_GetScriptTypeKey, 0, 0,
+    0, 0, &cNetMsg_dtor, 0,
+    &cNetMsg_Pack, &Message_GetScriptTypeKey, 0, 0,
 };
 
 void *D_004DCF30[8] = {
     0, 0, &cBeamMsg_dtor, &cBeamMsg_v01,
-    &func_002823E0, &cBeamMsg_v03, &cBeamMsg_v04, &cBeamMsg_v05,
+    &cNetMsg_Pack, &cBeamMsg_v03, &cBeamMsg_v04, &cBeamMsg_v05,
 };

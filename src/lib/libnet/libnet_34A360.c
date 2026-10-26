@@ -12,9 +12,9 @@ typedef struct S {
     char pad20[0x3C - 0x20];
     int x3C;
 } S;
-extern int func_0034A6E8(S *p, S **q, unsigned char *c);
+extern int libnetb_get_valid_data_header_ptr(S *p, S **q, unsigned char *c);
 
-int func_0034A360(S *p, unsigned char a, unsigned char b, unsigned char *out)
+int libnetb_is_data_waiting(S *p, unsigned char a, unsigned char b, unsigned char *out)
 {
     S *q;
     unsigned char c;
@@ -29,7 +29,7 @@ int func_0034A360(S *p, unsigned char a, unsigned char b, unsigned char *out)
         q = 0;
         if (b == 0) {
             c = 0;
-            r = func_0034A6E8(p, &q, &c);
+            r = libnetb_get_valid_data_header_ptr(p, &q, &c);
             if (r)
                 return r;
             *out = c;
@@ -54,7 +54,7 @@ int func_0034A360(S *p, unsigned char a, unsigned char b, unsigned char *out)
 typedef struct { volatile int f0; volatile int f4; volatile int f8; volatile int fC; char p[0x2C]; volatile int f3C; } H34A418;
 
 /* Header init: returns 2 for a null pointer or a size below 0x80, else stores size-0x40 and zeroes the rest. */
-int func_0034A418(H34A418 *p, unsigned int n) {
+int libnetb_block_init_buffer(H34A418 *p, unsigned int n) {
     H34A418 *h;
     if (p == 0) return 2;
     if (n < 0x80) return 2;
@@ -72,7 +72,7 @@ int func_0034A418(H34A418 *p, unsigned int n) {
 
 /* merge_units: begin func_0034A458 */
 typedef struct { int next; int used; int size; int avail; int pad[11]; int busy; } NetBlk_458;
-int func_0034A458(NetBlk_458 *p, unsigned int size, int *out)
+int libnetb_block_calc_avail(NetBlk_458 *p, unsigned int size, int *out)
 {
     int total = 0;
     int n;

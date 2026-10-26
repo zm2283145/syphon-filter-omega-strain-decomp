@@ -5,39 +5,39 @@
 
 #include "types.h"
 
-int* func_003B6690(PtrVec* v) {
+int* std_vector_imp_charPtr_1_end(PtrVec* v) {
     return v->data + v->count;
 }
 
-void func_003B66B0(Iter* out, void* self, Iter* src) {
+void std_vector_charPtr_pointer2iterator(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }
 
-int func_003B66C0(char* self) {
+int std_vector_imp_charPtr_1_begin(char* self) {
     return *(int*)(self + 8);
 }
 
-void func_003B66D0(Iter* out, Tree* t) {
+void std_tree_pair_cString16N_value_compare_cAllocator_pair_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-void func_003B66E0(Iter* out, Tree* t) {
+void std_tree_pair_cString16N_value_compare_cAllocator_pair_begin(Iter* out, Tree* t) {
     out->p = t->leftmost;
 }
 
-Word* func_003B66F0(Word* dst, Word* src) {
+Word* cArray_cSkaNodePtr_Iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_003B6700(Iter* out, PtrVec* v) {
+void std_vector_cSkaNodePtr_end(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
 
-void func_003B6720(Iter* out, void* self, Iter* src) {
+void std_vector_cSkaNodePtr_pointer2iterator(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }
 
-int func_003B6730(char* self) {
+int std_vector_imp_cSkaNodePtr_1_begin(char* self) {
     return *(int*)(self + 8);
 }

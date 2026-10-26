@@ -31,12 +31,12 @@ DEFINE_VTABLE_BASE_DTOR(cCharActionMsg_dtor, D_004E0840, cMessage_dtor)
 extern "C" {
 extern "C" void Event_PackHeader();
 extern "C" void Message_GetScriptTypeKey();
-extern "C" void func_00147BA0();
+extern "C" void cAISoundSystemGOBJMessage_Clone();
 extern void * const D_004D92C0[];
 extern char D_004D92A0[];
 void* cMessage_dtor(void* self, short deleteFlag);
 }
-extern "C" Vtable2Object* func_00140DA0(Vtable2Object* self, short deleteFlag)
+extern "C" Vtable2Object* cAISoundSystemGOBJMessage_dtor(Vtable2Object* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004D92C0);
@@ -49,7 +49,7 @@ extern "C" Vtable2Object* func_00140DA0(Vtable2Object* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004D92C0[8] = { (void*)0x0, (void*)0x0, (void*)func_00140DA0, (void*)func_00147BA0, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
+void * const D_004D92C0[8] = { (void*)0x0, (void*)0x0, (void*)cAISoundSystemGOBJMessage_dtor, (void*)cAISoundSystemGOBJMessage_Clone, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00140DA0(void) {}
 #pragma pop /* merge_units */

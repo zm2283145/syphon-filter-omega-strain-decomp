@@ -5,7 +5,7 @@ struct E_00136BD0 { int f0; int f4; int f8; int fC; };
 struct L_00136BD0 { int f0; int n; E_00136BD0* arr; };
 struct O_00136BD0 { char pad[0x98]; L_00136BD0* l; };
 extern "C" { extern char D_0049A890[]; void func_00139EE0(void* p, short f); void Mem_Free(int pool, void* p, const char* file, int line); }
-extern "C" void func_00136BD0(O_00136BD0* o)
+extern "C" void cGameSystem_ClearNodeGroups(O_00136BD0* o)
 {
     if (o->l) {
         int i;

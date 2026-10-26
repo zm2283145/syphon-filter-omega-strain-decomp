@@ -8,7 +8,7 @@
 
 extern char D_00497E20[];
 
-int func_00467DE0(void) {
+int MediusGetProcessingState(void) {
     int tmp0;
 
     tmp0 = *(int*)D_00497E20;

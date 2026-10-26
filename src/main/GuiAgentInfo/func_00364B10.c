@@ -22,7 +22,7 @@ typedef struct {
 extern float Math_FMod(float, float);
 extern void func_0017CA90(float* p, int a);
 extern void* Mem_PlacementNew(int type, float* p);
-extern void func_0017CA00(void* r, float* a, float* b, float* c, void* d, float e);
+extern void cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_floatR_floatR_etc(void* r, float* a, float* b, float* c, void* d, float e);
 extern char D_00492EE0[];
 
 static inline float clamp01(float x, float lo, float hi) { float r; asm { max.s r, x, lo; min.s r, r, hi } return r; }
@@ -72,7 +72,7 @@ void func_00364B10(A364B10* p, float* dt)
     func_0017CA90(&p->f18, -1);
     {
         void* r = Mem_PlacementNew(0x18, &p->f18);
-        if (r) func_0017CA00(r, &p->f8, &p->fC, &p->f10, D_00492EE0, p->f28);
+        if (r) cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_floatR_floatR_etc(r, &p->f8, &p->fC, &p->f10, D_00492EE0, p->f28);
     }
 }
 

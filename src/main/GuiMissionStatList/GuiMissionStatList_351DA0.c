@@ -7,12 +7,12 @@
 /* merge_units: begin func_00351DA0 */
 #pragma push /* merge_units */
 #include "types.h"
-int func_00329930(void *, void *);
-int func_003517B0(void *, void *);
+int cString_opAssign(void *, void *);
+int cArray_StatsRequirement_opAssign(void *, void *);
 typedef struct { int w[15]; } W15;
 typedef struct { char p0[0xC]; unsigned char fC; char pD[3]; W15 f10; char f4C[0x10]; } E351;
-static inline void asg351(E351 *d, E351 *s) { func_00329930(d, s); d->fC = s->fC; d->f10 = s->f10; func_003517B0(d->f4C, s->f4C); }
-E351 *func_00351DA0(E351 *first, E351 *last, E351 *dest) {
+static inline void asg351(E351 *d, E351 *s) { cString_opAssign(d, s); d->fC = s->fC; d->f10 = s->f10; cArray_StatsRequirement_opAssign(d->f4C, s->f4C); }
+E351 *std_copy_backward_MissionStats_copy_backward(E351 *first, E351 *last, E351 *dest) {
     while (first < last) {
         --last; --dest;
         asg351(dest, last);
@@ -28,9 +28,9 @@ E351 *func_00351DA0(E351 *first, E351 *last, E351 *dest) {
 #define NULL 0
 #pragma mpwc_relax on
 int String_CopyCtor();                                  
-int func_00351EE0(char * , char * );                    
+int std_vector_StatsRequirement_ctor(char * , char * );                    
 
-char * func_00351E50(char * arg0, char * arg1) {
+char * MissionStats_ctor(char * arg0, char * arg1) {
     char * var_a0;
     char * var_v1;
     char * temp_s2;
@@ -47,7 +47,7 @@ char * func_00351E50(char * arg0, char * arg1) {
         var_v1 += 0xC;
     } while (var_a0 != arg0 + 0x4C);
     temp_s2 = arg0 + 0x4C;
-    func_00351EE0(temp_s2, arg1 + 0x4C);
+    std_vector_StatsRequirement_ctor(temp_s2, arg1 + 0x4C);
     F_(temp_s2, 0xC, unsigned char) = F_(arg1, 0x58, unsigned char);
     return arg0;
 }

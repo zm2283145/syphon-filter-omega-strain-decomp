@@ -18,11 +18,11 @@ extern int sceSifSetReg(unsigned int, unsigned int);
 extern unsigned int sceSifGetReg(unsigned int);
 extern int AddDmacHandler(int, void *, int);
 extern int EnableDmac(int);
-extern int func_0010F948(unsigned int, void *, int, void *, void *, int);
-extern void func_0010F408(void *, void *);
-extern void func_0010F3E8(void *, void *);
-extern int func_0010F9C8(int);
-void func_0010F460(void)
+extern int sceSifSendCmd(unsigned int, void *, int, void *, void *, int);
+extern void _change_addr(void *, void *);
+extern void _set_sreg(void *, void *);
+extern int _sceSifCmdIntrHdlr(int);
+void sceSifInitCmd(void)
 {
     int i;
     unsigned int v;
@@ -46,9 +46,9 @@ void func_0010F460(void)
     }
     for (i = 0; i < 32; i++)
         D_004E2F00[i] = 0;
-    D_004E2D80[0].func = func_0010F408;
+    D_004E2D80[0].func = _change_addr;
     D_004E2D80[0].data = &D_004E2D58;
-    D_004E2D80[1].func = func_0010F3E8;
+    D_004E2D80[1].func = _set_sreg;
     D_004E2D80[1].data = &D_004E2D58;
     EIntr();
     FlushCache(0);
@@ -56,13 +56,13 @@ void func_0010F460(void)
         R(0x1000E010) = 0x20;
     if (!(R(0x1000C000) & 0x100))
         sceSifSetDChain();
-    D_004E2D54 = AddDmacHandler(5, func_0010F9C8, 0);
+    D_004E2D54 = AddDmacHandler(5, _sceSifCmdIntrHdlr, 0);
     EnableDmac(5);
     v = sceSifGetReg(0x80000000);
     D_004E2D58.iop = v;
     if (v) {
         D_004E2D40.x10 = D_004E2C80;
-        func_0010F948(0x80000000, &D_004E2D40, 0x14, 0, 0, 0);
+        sceSifSendCmd(0x80000000, &D_004E2D40, 0x14, 0, 0, 0);
         return;
     }
     while (!(sceSifGetReg(4) & 0x20000))
@@ -73,6 +73,6 @@ void func_0010F460(void)
     sceSifSetReg(0x80000001, (unsigned int)&D_004E2D58);
     D_004E2D40.x10 = D_004E2C80;
     D_004E2D40.xC = 0;
-    func_0010F948(0x80000002, &D_004E2D40, 0x14, 0, 0, 0);
+    sceSifSendCmd(0x80000002, &D_004E2D40, 0x14, 0, 0, 0);
 }
 

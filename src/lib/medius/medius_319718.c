@@ -25,14 +25,14 @@ static inline float Dist2_319718(Cx319718* a, Cx319718* b)
     return r;
 }
 
-extern void func_003199F8(Cx319718* pos, Cx319718* tab, int n, int* out, int k);
-extern float func_00319D08(int idx, Cx319718* tab, int n, Cx319718* out);
-extern void func_00319B18(Cx319718* a, Cx319718* tab, int idx, Cx319718* out);
-extern void func_00319B68(Cx319718* a, Cx319718* tab, int idx, Cx319718* out);
-extern int func_00319BE0(int* a, int n, int v);
-extern int func_00319CA0(Cx319718* p, Cx319718* pts, int n);
+extern void VQ2mbest(Cx319718* pos, Cx319718* tab, int n, int* out, int k);
+extern float Dim2VectorLUT(int idx, Cx319718* tab, int n, Cx319718* out);
+extern void RotScaleVQ2(Cx319718* a, Cx319718* tab, int idx, Cx319718* out);
+extern void DeRotScaleVQ2(Cx319718* a, Cx319718* tab, int idx, Cx319718* out);
+extern int SelectOutCellCB(int* a, int n, int v);
+extern int Dim2VectorQuantize(Cx319718* p, Cx319718* pts, int n);
 
-void func_00319718(int* out, Cx319718* pos, int n, int nA, Cx319718* tabA, Cx319718* tabB,
+void RS2StageVQ2Enc(int* out, Cx319718* pos, int n, int nA, Cx319718* tabA, Cx319718* tabB,
                    int nC, Cx319718* ptsA, Cx319718* ptsB, int nList, int* list)
 {
     int cand[4];
@@ -43,21 +43,21 @@ void func_00319718(int* out, Cx319718* pos, int n, int nA, Cx319718* tabA, Cx319
     float bestD = 3.40281981555156e+38f;
     int i;
 
-    func_003199F8(pos, tabA, nA, cand, n);
+    VQ2mbest(pos, tabA, nA, cand, n);
     for (i = 0; i < n; i++) {
         int c = cand[i];
         Cx319718* pts;
         int j;
         float dx, dy, d;
 
-        func_00319D08(c, tabA, nA, &cur);
+        Dim2VectorLUT(c, tabA, nA, &cur);
         diff.re = pos->re - cur.re;
         diff.im = pos->im - cur.im;
-        func_00319B18(&diff, tabB, c, &rot);
-        pts = func_00319BE0(list, nList, c) == 1 ? ptsB : ptsA;
-        j = func_00319CA0(&rot, pts, nC);
-        func_00319D08(j, pts, nC, &rot);
-        func_00319B68(&rot, tabB, c, &diff);
+        RotScaleVQ2(&diff, tabB, c, &rot);
+        pts = SelectOutCellCB(list, nList, c) == 1 ? ptsB : ptsA;
+        j = Dim2VectorQuantize(&rot, pts, nC);
+        Dim2VectorLUT(j, pts, nC, &rot);
+        DeRotScaleVQ2(&rot, tabB, c, &diff);
         cur.re += diff.re;
         cur.im += diff.im;
         d = Dist2_319718(pos, &cur);
@@ -78,30 +78,30 @@ void func_00319718(int* out, Cx319718* pos, int n, int nA, Cx319718* tabA, Cx319
 typedef struct { float re; float im; } Cx319910;
 
 #if 0 /* merge_units */
-extern float func_00319D08(int idx, Cx319910* tab, int n, Cx319910* out);
+extern float Dim2VectorLUT(int idx, Cx319910* tab, int n, Cx319910* out);
 #endif /* merge_units */
-#define func_00319D08(a0, a1, a2, a3) (func_00319D08((a0), (Cx319718 *)(a1), (a2), (Cx319718 *)(a3))) /* merge_units */
+#define Dim2VectorLUT(a0, a1, a2, a3) (Dim2VectorLUT((a0), (Cx319718 *)(a1), (a2), (Cx319718 *)(a3))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_00319B68(Cx319910* a, Cx319910* tab, int idx, Cx319910* out);
+extern void DeRotScaleVQ2(Cx319910* a, Cx319910* tab, int idx, Cx319910* out);
 #endif /* merge_units */
-#define func_00319B68(a0, a1, a2, a3) (func_00319B68((Cx319718 *)(a0), (Cx319718 *)(a1), (a2), (Cx319718 *)(a3))) /* merge_units */
+#define DeRotScaleVQ2(a0, a1, a2, a3) (DeRotScaleVQ2((Cx319718 *)(a0), (Cx319718 *)(a1), (a2), (Cx319718 *)(a3))) /* merge_units */
 
 
-void func_00319910(int* in, Cx319910* pos, int nA, Cx319910* tabA, Cx319910* tabB,
+void RS2StageVQ2Dec(int* in, Cx319910* pos, int nA, Cx319910* tabA, Cx319910* tabB,
                    int nC, Cx319910* ptsA, Cx319910* ptsB, int nList, int* list)
 {
     Cx319910 rot;
     Cx319910 diff;
     Cx319910* pts;
 
-    func_00319D08(in[0], tabA, nA, pos);
-    pts = func_00319BE0(list, nList, in[0]) == 1 ? ptsB : ptsA;
-    func_00319D08(in[1], pts, nC, &rot);
-    func_00319B68(&rot, tabB, in[0], &diff);
+    Dim2VectorLUT(in[0], tabA, nA, pos);
+    pts = SelectOutCellCB(list, nList, in[0]) == 1 ? ptsB : ptsA;
+    Dim2VectorLUT(in[1], pts, nC, &rot);
+    DeRotScaleVQ2(&rot, tabB, in[0], &diff);
     pos->re += diff.re;
     pos->im += diff.im;
 }
-#undef func_00319D08 /* merge_units */
-#undef func_00319B68 /* merge_units */
+#undef Dim2VectorLUT /* merge_units */
+#undef DeRotScaleVQ2 /* merge_units */
 /* merge_units: end func_00319910 */

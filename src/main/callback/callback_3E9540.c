@@ -9,6 +9,6 @@
 
 unsigned int D_00493980[2] = { 0x3F800000, 0x0 };
 
-void func_003E9540(float value) {
+void cMAP_GOBJ_SetScale(float value) {
     (*(float*)D_00493980) = value;
 }

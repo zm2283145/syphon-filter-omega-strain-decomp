@@ -1586,13 +1586,13 @@ struct cNPC_00149540 {
     virtual void CheckHotbox(void* hotbox); /* +0x178 */
 };
 
-extern "C" void* func_0016FE30(void* object);
+extern "C" void* cHotbox_SOBJ_convert(void* object);
 
 /* Script native: cNPC::CheckHotbox(hotbox of args[1]); returns 0. */
 extern "C" int Script_cNPC_CheckHotbox(ScriptArg_00149540* args)
 {
     cNPC_00149540* npc = (cNPC_00149540*)args[0].p;
-    npc->CheckHotbox(func_0016FE30(args[1].p));
+    npc->CheckHotbox(cHotbox_SOBJ_convert(args[1].p));
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */

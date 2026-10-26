@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_003EA420(void) {
+int cGobjController_Enemy_cGOBJP(void) {
     return 0;
 }

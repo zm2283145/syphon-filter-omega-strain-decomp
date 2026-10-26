@@ -1,4 +1,4 @@
-/* func_001DB8C0 (humanIk, mw38): IkPose ctor - byte pair + SegPair copy.
+/* std_make_pair_cWeaponSlotPair_cIkTargetLeftRight (humanIk, mw38): IkPose ctor - byte pair + SegPair copy.
    Volatile lq/sq asm copies + dead address locals reproduce retail's duplicate addius. */
 typedef struct { __int128 a; __int128 b; signed char f; } Seg;
 typedef struct { Seg s0; Seg s1; } SegPair;
@@ -8,7 +8,7 @@ static inline void GQ(void* d, const void* s) { __int128 q; __asm__ volatile("lq
 static inline __int128 GL(const void* s) { __int128 q; __asm__ volatile("lq %0, 0(%1)" : "=r"(q) : "r"(s) : "memory"); return q; }
 static inline void GS(void* d, __int128 q) { __asm__ volatile("sq %0, 0(%1)" : : "r"(q), "r"(d) : "memory"); }
 #pragma peephole off
-void func_001DB8C0(IkPose* d, IkBytePair bp, SegPair* s)
+void std_make_pair_cWeaponSlotPair_cIkTargetLeftRight(IkPose* d, IkBytePair bp, SegPair* s)
 {
     void* d0;
     __int128 q0;

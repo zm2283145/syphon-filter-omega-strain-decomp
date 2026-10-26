@@ -34,8 +34,8 @@ struct V {
         return r;
     }
 } __attribute__((aligned(16)));
-extern "C" float func_003C13C0(const V* a, const V* b, const V* dir);
-float func_003C13C0(const V* a, const V* b, const V* dir)
+extern "C" float GetDistanceSquaredPointToLine(const V* a, const V* b, const V* dir);
+float GetDistanceSquaredPointToLine(const V* a, const V* b, const V* dir)
 {
     V d1 = *a - *b;
     void* x1 = &d1;

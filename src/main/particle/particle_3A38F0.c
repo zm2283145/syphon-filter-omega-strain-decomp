@@ -15,12 +15,12 @@
  */
 
 
-Word* func_003A38F0(Word* dst, Word* src) {
+Word* cLListIterator_cParticleDefinitionPtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_003A3900(Iter* out, PtrVec* v) {
+void std_list_cParticleDefinitionPtr_begin_void_2(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 /* merge_units: generate this block's code under its own pragmas */

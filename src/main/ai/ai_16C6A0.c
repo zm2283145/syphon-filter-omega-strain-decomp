@@ -13,8 +13,8 @@ typedef struct { char pad[0x24]; float f24; } B7_6A0Val;
 typedef struct { char pad[8]; B7_6A0Val* val; } B7_6A0Node;
 typedef struct { char pad[0x30]; char map[1]; } B7_6A0Owner;
 extern void NpcPerception_FindRecord(B7_6A0Node** out, void* map, int key);
-extern void func_0016BB80(B7_6A0Node** out, void* map);
-extern void func_0016BB90(B7_6A0Node** out, B7_6A0Node** in);
+extern void std_list_cTargetAwarenessPtr_end_void(B7_6A0Node** out, void* map);
+extern void cLListIterator_cTargetAwarenessPtr_ctor(B7_6A0Node** out, B7_6A0Node** in);
 B7_6A0Val* NpcPerception_SensedRecord(B7_6A0Owner* p, int key)
 {
     B7_6A0Val* r = 0;
@@ -24,8 +24,8 @@ B7_6A0Val* NpcPerception_SensedRecord(B7_6A0Owner* p, int key)
     B7_6A0Node* n;
     NpcPerception_FindRecord(&it, p->map, key);
     n = it;
-    func_0016BB80(&tmp, p->map);
-    func_0016BB90(&end, &tmp);
+    std_list_cTargetAwarenessPtr_end_void(&tmp, p->map);
+    cLListIterator_cTargetAwarenessPtr_ctor(&end, &tmp);
     if (n != end) {
         B7_6A0Val* v = n->val;
         if (!(v->f24 < 0.0f)) {
@@ -80,14 +80,14 @@ extern void NpcPerception_FindRecord(Node_770** out, void* map, int key);
 #define NpcPerception_FindRecord(a0, a1, a2) (NpcPerception_FindRecord((void *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_0016BB80(Node_770** out, void* map);
+extern void std_list_cTargetAwarenessPtr_end_void(Node_770** out, void* map);
 #endif /* merge_units */
-#define func_0016BB80(a0, a1) (func_0016BB80((void *)(a0), (a1))) /* merge_units */
+#define std_list_cTargetAwarenessPtr_end_void(a0, a1) (std_list_cTargetAwarenessPtr_end_void((void *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_0016BB90(Node_770** out, Node_770** in);
+extern void cLListIterator_cTargetAwarenessPtr_ctor(Node_770** out, Node_770** in);
 #endif /* merge_units */
-#define func_0016BB90(a0, a1) (func_0016BB90((void *)(a0), (void *)(a1))) /* merge_units */
+#define cLListIterator_cTargetAwarenessPtr_ctor(a0, a1) (cLListIterator_cTargetAwarenessPtr_ctor((void *)(a0), (void *)(a1))) /* merge_units */
 
 extern void NpcPerception_AddAwareness(Owner_770* p, int key, int kind, float amt);
 void NpcPerception_RegisterSighting(Owner_770* p, int key, unsigned char a, unsigned char b)
@@ -97,8 +97,8 @@ void NpcPerception_RegisterSighting(Owner_770* p, int key, unsigned char a, unsi
     Node_770* end;
     Node_770* tmp;
     NpcPerception_FindRecord(&it, p->map, key);
-    func_0016BB80(&tmp, p->map);
-    func_0016BB90(&end, &tmp);
+    std_list_cTargetAwarenessPtr_end_void(&tmp, p->map);
+    cLListIterator_cTargetAwarenessPtr_ctor(&end, &tmp);
     if (it != end) {
         if (both && !it->val->f3C) {
             NpcPerception_AddAwareness(p, key, 6, 0.0f);
@@ -120,8 +120,8 @@ void NpcPerception_RegisterSighting(Owner_770* p, int key, unsigned char a, unsi
     }
 }
 #undef NpcPerception_FindRecord /* merge_units */
-#undef func_0016BB80 /* merge_units */
-#undef func_0016BB90 /* merge_units */
+#undef std_list_cTargetAwarenessPtr_end_void /* merge_units */
+#undef cLListIterator_cTargetAwarenessPtr_ctor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0016C770(void) {}
 #pragma pop /* merge_units */

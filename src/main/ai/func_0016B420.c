@@ -20,9 +20,9 @@ extern char D_004D92A0[];
 extern char D_004D92C0[];
 extern void Event_PackHeader();
 extern void Message_GetScriptTypeKey();
-extern void func_0016F690();
-extern void func_0016F710();
-void * const D_004D9850[8] = { (void*)0x0, (void*)0x0, (void*)func_0016F690, (void*)func_0016F710, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
+extern void cAISoundSystemGOBJPositionMessage_dtor();
+extern void cAISoundSystemGOBJPositionMessage_Clone();
+void * const D_004D9850[8] = { (void*)0x0, (void*)0x0, (void*)cAISoundSystemGOBJPositionMessage_dtor, (void*)cAISoundSystemGOBJPositionMessage_Clone, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 void Event_Construct(M_B420* m, void* type);
 static inline void C1_B420(M_B420* m, float a, float b, signed char k)
 {

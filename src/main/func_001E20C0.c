@@ -15,7 +15,7 @@ struct FxNode {
 };
 
 /* Calls the virtual at vtable+0x58 when the flag at +0x50 is set; returns the sub-object at +0x40. */
-extern "C" void* func_001E20C0(FxNode* self)
+extern "C" void* cXform_GetTranslation(FxNode* self)
 {
     if (self->flag50)
         self->Method58();

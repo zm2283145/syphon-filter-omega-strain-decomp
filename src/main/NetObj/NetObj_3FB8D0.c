@@ -28,10 +28,10 @@ struct PsNode { char pad[0x10]; PsRef ref; };
 struct PsIt { PsNode* p; };
 extern "C" {
 extern char D_0055C770[];
-void func_003FC000(PsIt*, void*, int*);
-void func_003FB8C0(PsIt*, void*);
-PsIt* func_003FB8B0(PsIt*, PsIt*);
-void func_003FB750(int);
+void std_tree_pair_int_value_compare_cAllocator_pair_find_intR_2(PsIt*, void*, int*);
+void std_map_int_cSafePtr_cGOBJ_cAllocator_pair_end(PsIt*, void*);
+PsIt* cAssocArray_int_cSafePtr_cGOBJ_Iterator_ctor(PsIt*, PsIt*);
+void cNetObj_RemovePlayer_int(int);
 }
 extern "C" PsObj* PlayerSlots_Get(int key)
 {
@@ -44,10 +44,10 @@ extern "C" PsObj* PlayerSlots_Get(int key)
     unsigned char valid;
     PsRef* r;
     PsObj* got;
-    func_003FC000(&it, D_0055C770, &key);
+    std_tree_pair_int_value_compare_cAllocator_pair_find_intR_2(&it, D_0055C770, &key);
     n = it.p;
-    func_003FB8C0(&e, D_0055C770);
-    func_003FB8B0(&e2, &e);
+    std_map_int_cSafePtr_cGOBJ_cAllocator_pair_end(&e, D_0055C770);
+    cAssocArray_int_cSafePtr_cGOBJ_Iterator_ctor(&e2, &e);
     if ((n == e2.p) ^ 1) {
         r = &n->ref;
         valid = 1;
@@ -56,7 +56,7 @@ extern "C" PsObj* PlayerSlots_Get(int key)
         if (!isnull && o->serial != r->serial) valid = 0;
         got = valid ? o : 0;
         if (got) return r->Get();
-        func_003FB750(key);
+        cNetObj_RemovePlayer_int(key);
     }
     return 0;
 }
@@ -71,11 +71,11 @@ typedef struct { char pad[0xC]; unsigned int h; } Obj_B9C0;
 typedef struct { Obj_B9C0* o; int id; } Pair_B9C0;
 typedef struct { int k; Pair_B9C0 p; } Ent_B9C0;
 extern unsigned char D_005724B0;
-Ent_B9C0* func_003FBF40(void* map, int* key);
-int func_00436C00(void* ctx);
-int func_00436BA0(void* ctx, int n);
-void func_00435F30(void* ctx, unsigned int* h, int owner);
-void func_003FB9C0(Obj_B9C0* o)
+Ent_B9C0* std_tree_pair_int_value_compare_cAllocator_pair_find_or_insert_intR_2(void* map, int* key);
+int cNPCInfoObject_ctor(void* ctx);
+int cNPCInfoObject_dtor(void* ctx, int n);
+void cNPCInfoObject_Add(void* ctx, unsigned int* h, int owner);
+void cNetObj_AddPlayer(Obj_B9C0* o)
 {
     int k[1];
     char ctx[4];
@@ -83,7 +83,7 @@ void func_003FB9C0(Obj_B9C0* o)
     Ent_B9C0* r;
     k[0] = ((o->h & 0x7F000000) >> 24) - 1;
     if (k[0] < 0) k[0] = 0;
-    r = func_003FBF40(D_0055C770, k);
+    r = std_tree_pair_int_value_compare_cAllocator_pair_find_or_insert_intR_2(D_0055C770, k);
     r->p.o = o;
     {
         Pair_B9C0* pr = &r->p;
@@ -93,11 +93,11 @@ void func_003FB9C0(Obj_B9C0* o)
     }
     if (g_IsMultiplayer && D_005724B0 != 7) {
         unsigned int own;
-        func_00436C00(ctx);
+        cNPCInfoObject_ctor(ctx);
         own = (o->h & 0x7F000000) >> 24;
         if (own - 1 == NetLocalId())
-            func_00435F30(ctx, &o->h, ((o->h & 0x7F000000) >> 24) - 1);
-        func_00436BA0(ctx, -1);
+            cNPCInfoObject_Add(ctx, &o->h, ((o->h & 0x7F000000) >> 24) - 1);
+        cNPCInfoObject_dtor(ctx, -1);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -109,9 +109,9 @@ static inline void merge_flush_func_003FB9C0(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0x10]; int val; } E4Node;
 extern char D_0055C7A0[];
-extern void func_001BB080(E4Node** out, void* map, int* key);
-extern void func_0021D360(void* out, void* map);
-extern void func_0021D350(E4Node** out, void* in);
+extern void std_tree_pair_int_value_compare_find_intR(E4Node** out, void* map, int* key);
+extern void std_map_int_netSystemField_end(void* out, void* map);
+extern void cAssocArray_int_netSystemField_Iterator_ctor(E4Node** out, void* in);
 static inline int E4Eq(E4Node* a, E4Node* b) { return a == b; }
 #pragma bool off
 int* NetMap_Lookup(int key)
@@ -119,10 +119,10 @@ int* NetMap_Lookup(int key)
     E4Node* end[1]; E4Node* it[1]; int tmp[1]; int k[1];
     E4Node* n;
     k[0] = key;
-    func_001BB080(it, D_0055C7A0, k);
+    std_tree_pair_int_value_compare_find_intR(it, D_0055C7A0, k);
     n = it[0];
-    func_0021D360(tmp, D_0055C7A0);
-    func_0021D350(end, tmp);
+    std_map_int_netSystemField_end(tmp, D_0055C7A0);
+    cAssocArray_int_netSystemField_Iterator_ctor(end, tmp);
     if (E4Eq(n, end[0]) ^ 1) { int* p = &n->val; if (*p) return p; } return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -142,7 +142,7 @@ extern int D_0055C7B0;
 extern int D_005721A8;
 extern unsigned char g_IsMultiplayer;
 
-int func_003FBBA0(void) {
+int cNetObj_GetNetID(void) {
     int var_a0;
 
     D_0055C7B0 += 1;
@@ -158,14 +158,14 @@ static inline void merge_flush_func_003FBBA0(void) {}
 #pragma push /* merge_units */
 #pragma mpwc_relax on
                         
-int func_004343E0(int, int);
+int cNPCInfoObject_GetOwner_uint(int, int);
 extern int D_0055C988;
 
-int func_003FBC40(int arg0) {
+int cNetObj_IsOwner(int arg0) {
     int var_s0;
 
     LOCALID_(var_s0)
-    return var_s0 == func_004343E0(D_0055C988, arg0);
+    return var_s0 == cNPCInfoObject_GetOwner_uint(D_0055C988, arg0);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003FBC40(void) {}
@@ -178,20 +178,20 @@ static inline void merge_flush_func_003FBC40(void) {}
 int Alloc_Lock(int, int, int);                          
 int Alloc_Unlock(int);                                  
 int NetMap_Clear(int *);                              
-int func_003FC080(char *);                               
-int func_00436380(char *);                               
+int std_tree_pair_int_value_compare_cAllocator_pair_clear_void(char *);                               
+int cNPCInfoObject_Clear(char *);                               
 #if 0 /* merge_units */
-int func_00436BA0(char *, int);
+int cNPCInfoObject_dtor(char *, int);
 #endif /* merge_units */
-#define func_00436BA0(a0, a1) (func_00436BA0((void *)(a0), (a1))) /* merge_units */
+#define cNPCInfoObject_dtor(a0, a1) (cNPCInfoObject_dtor((void *)(a0), (a1))) /* merge_units */
                             
 #if 0 /* merge_units */
-int func_00436C00(char *);
+int cNPCInfoObject_ctor(char *);
 #endif /* merge_units */
-#define func_00436C00(a0) (func_00436C00((void *)(a0))) /* merge_units */
+#define cNPCInfoObject_ctor(a0) (cNPCInfoObject_ctor((void *)(a0))) /* merge_units */
                                
-int func_0043ACE0(char *);                               
-int func_0043B190(char *);                               
+int cGenInfoObject_Clear(char *);                               
+int cGenInfoObject_ctor(char *);                               
 extern signed char D_00493A10;
 extern signed char D_00493A11;
 extern signed char D_00493A12;
@@ -239,11 +239,11 @@ void NetSession_Cleanup(void) {
     if (D_0055C7A0 > 0) {
         NetMap_Clear(&D_0055C7A0);
     }
-    func_003FC080(&D_0055C770);
-    func_00436C00(&sp2C);
-    func_00436380(&sp2C);
-    func_0043B190(&sp28);
-    func_0043ACE0(&sp28);
+    std_tree_pair_int_value_compare_cAllocator_pair_clear_void(&D_0055C770);
+    cNPCInfoObject_ctor(&sp2C);
+    cNPCInfoObject_Clear(&sp2C);
+    cGenInfoObject_ctor(&sp28);
+    cGenInfoObject_Clear(&sp28);
     var_a2 = 0;
     var_a0 = &D_0055C7C0;
     do {
@@ -273,7 +273,7 @@ loop_4:
             Alloc_Lock(9, var_a1, var_a2);
         }
         g_ProfileLockDepth += 1;
-        func_00436BA0(temp_s0, -1);
+        cNPCInfoObject_dtor(temp_s0, -1);
         Mem_Free(0, temp_s0, &D_004BE228, 0x12E);
         if (g_ProfileLockEnabled != 0) {
             Alloc_Unlock(9);
@@ -294,10 +294,10 @@ loop_4:
     D_0055C9A8 = 0;
     D_0055C9AC = 0;
     D_0055C9B0 = 0;
-    func_00436BA0(&sp2C, -1);
+    cNPCInfoObject_dtor(&sp2C, -1);
 }
-#undef func_00436BA0 /* merge_units */
-#undef func_00436C00 /* merge_units */
+#undef cNPCInfoObject_dtor /* merge_units */
+#undef cNPCInfoObject_ctor /* merge_units */
 #undef D_0055C770 /* merge_units */
 #undef D_0055C7A0 /* merge_units */
 #undef D_0055C988 /* merge_units */

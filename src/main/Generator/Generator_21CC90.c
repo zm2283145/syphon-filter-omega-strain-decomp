@@ -23,9 +23,9 @@ typedef struct { F7Sub_21C* target; int arg; } F7Ctx_21C;
 extern "C" {
 extern unsigned char g_IsMultiplayer;
 F7Gen_21C* GObj_IdentityB(int h);
-void func_00436C00(int* t);
-int func_00434440(int* t, unsigned int* id);
-void func_00436BA0(int* t, int f);
+void cNPCInfoObject_ctor(int* t);
+int cNPCInfoObject_GetOwner_cObjectIdR(int* t, unsigned int* id);
+void cNPCInfoObject_dtor(int* t, int f);
 }
 static inline unsigned char F7IsA(F7Gen_21C* g) { unsigned char r = 0; if (g->sub && g->sub->IsA()) r = 1; return r; }
 static inline unsigned char F7IsB(F7Gen_21C* g) { unsigned char r = 0; if (g->sub && g->sub->IsB()) r = 1; return r; }
@@ -38,9 +38,9 @@ extern "C" int Script_cGenerator_DisableBy(F7Ctx_21C* c)
         if (g) {
             if (F7IsA(g) || F7IsB(g)) {
                 int tmp[1];
-                func_00436C00(tmp);
-                v = func_00434440(tmp, &g->id);
-                func_00436BA0(tmp, -1);
+                cNPCInfoObject_ctor(tmp);
+                v = cNPCInfoObject_GetOwner_cObjectIdR(tmp, &g->id);
+                cNPCInfoObject_dtor(tmp, -1);
             } else {
                 v = ((g->id & 0x7F000000) >> 24) - 1;
             }
@@ -87,9 +87,9 @@ extern "C" int Script_cGenerator_EnableBy(F8Ctx_21C* c)
         if (g) {
             if (F8IsA(g) || F8IsB(g)) {
                 int tmp[1];
-                func_00436C00(tmp);
-                v = func_00434440(tmp, &g->id);
-                func_00436BA0(tmp, -1);
+                cNPCInfoObject_ctor(tmp);
+                v = cNPCInfoObject_GetOwner_cObjectIdR(tmp, &g->id);
+                cNPCInfoObject_dtor(tmp, -1);
             } else {
                 v = ((g->id & 0x7F000000) >> 24) - 1;
             }

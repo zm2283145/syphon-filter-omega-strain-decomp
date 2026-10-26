@@ -32,7 +32,7 @@ typedef union ScriptArg { int i; float f; void* p; } ScriptArg;
 typedef struct { char data[0x1C]; } OmegaReq;
 extern char D_00532BB0[];
 extern void* OmegaReqRow_Construct(OmegaReq* r, int a, int zero, int e, int b, int c, int d);
-extern void func_0032E230(void* registry, void* item);
+extern void cArray_tRequirementInfo_PushBackActual(void* registry, void* item);
 
 /* Script native: builds an Omega requirement from args[0..4] and registers it; returns 0. */
 int Script_cAgentData__RegisterOmegaReq_2(ScriptArg* args)
@@ -48,7 +48,7 @@ int Script_cAgentData__RegisterOmegaReq_2(ScriptArg* args)
     p2[0] = args[2].i;
     p1[0] = args[1].i;
     p0[0] = args[0].i;
-    func_0032E230(D_00532BB0, OmegaReqRow_Construct(&r, *(int*)p0, 0, *(int*)p4, *(int*)p1, *(int*)p2, *(int*)p3));
+    cArray_tRequirementInfo_PushBackActual(D_00532BB0, OmegaReqRow_Construct(&r, *(int*)p0, 0, *(int*)p4, *(int*)p1, *(int*)p2, *(int*)p3));
     return 0;
 }
 #pragma pop /* merge_units */

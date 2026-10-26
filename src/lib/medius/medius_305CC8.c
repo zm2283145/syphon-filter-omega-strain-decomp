@@ -12,7 +12,7 @@ extern unsigned int D_0052980C;
 extern unsigned int D_00529808;
 /* memset declared with an int destination: the address is formed as integer base + offset like retail */
 extern void *memset(int d, int c, unsigned int n);
-int func_00305CC8(unsigned int idx)
+int rt_parse_zero_execution_counts(unsigned int idx)
 {
     int ret = 3;
     int *p;
@@ -30,7 +30,7 @@ int func_00305CC8(unsigned int idx)
 /* merge_units: begin func_00305D58 */
 extern int D_004912F0;
 extern int D_004912F4;
-int func_00305D58(unsigned int idx, int *out, unsigned int n)
+int rt_parse_get_execution_counts(unsigned int idx, int *out, unsigned int n)
 {
     unsigned int i;
     if (D_004912E8 != 1) return 3;

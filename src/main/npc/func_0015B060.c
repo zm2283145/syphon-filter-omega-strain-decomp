@@ -12,14 +12,14 @@ void List_Begin(N_B060** out, void* list);
 void func_0015AD60(N_B060** out, N_B060** in);
 void func_0015AD50(N_B060** out, void* list);
 void func_0015AD40(N_B060** out, N_B060** in);
-void func_0015B1F0(void* list, Ent_B060** e);
+void std_list_cEnabledListItemPtr_push_back(void* list, Ent_B060** e);
 }
 typedef struct { char pad[0xC]; int id; } Ctl_B060;
 typedef struct { char pad[0x30]; Ctl_B060* ctl; } NPC_B060;
 static inline void Begin(N_B060** out) { N_B060* t; List_Begin(&t, D_004EA1B0); func_0015AD60(out, &t); }
 static inline N_B060* End(N_B060** out) { N_B060* t; func_0015AD50(&t, D_004EA1B0); func_0015AD40(out, &t); return *out; }
 static inline void Ent_Init(Ent_B060* p, Ctl_B060* c) { p->key = -1; p->key = c->id; p->val = 0; p->x8 = 0; }
-extern "C" int func_0015B060(NPC_B060* self)
+extern "C" int cNPC_GetEnabled(NPC_B060* self)
 {
     Ent_B060* found = 0;
     N_B060* end;
@@ -42,7 +42,7 @@ extern "C" int func_0015B060(NPC_B060* self)
         if (p)
             Ent_Init(p, self->ctl);
         found = p;
-        func_0015B1F0(D_004EA1B0, &found);
+        std_list_cEnabledListItemPtr_push_back(D_004EA1B0, &found);
     }
     return found->val;
 }

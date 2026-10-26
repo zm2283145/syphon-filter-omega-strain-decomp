@@ -6,7 +6,7 @@ extern char D_00543670[];
 extern char D_00543690[];
 extern char String_Dtor_138350[];
 extern void __register_global_object(void* obj, void* dtor, void* link);
-void func_004D59F0(void)
+void StaticInit_SFOini(void)
 {
     V3_4D59F0* p;
     p = (V3_4D59F0*)D_00543680; p->a = 0; p->b = 0; p->c = 0;

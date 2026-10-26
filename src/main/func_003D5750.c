@@ -4,7 +4,7 @@ typedef struct { int head; int value; } ListHead;
 extern void ObjectList_EraseRange_383420(int* out, void* list, int* value, ListHead** head);
 
 /* Calls ObjectList_EraseRange_383420 on the list at +0x1175C with the head at +0x11760 and its value. */
-void func_003D5750(char* self)
+void cShadowMan_Purge(char* self)
 {
     ListHead* headp;
     int value;

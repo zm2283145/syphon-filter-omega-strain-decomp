@@ -4,7 +4,7 @@ extern unsigned int strlen(const char*);
 extern int sprintf(char*, const char*, ...);
 extern void MLTextWidget_AddText(O2AE*, char*);
 extern void MLTextWidget_UpdateScrollBar(O2AE*);
-void func_002AEC90(O2AE* o, char* name, char* msg, int team) {
+void GuiChatWindow_AddChatLine(O2AE* o, char* name, char* msg, int team) {
     char buf[0x80];
     unsigned char atEnd;
     if (!name || !*name || !msg || !*msg) return;

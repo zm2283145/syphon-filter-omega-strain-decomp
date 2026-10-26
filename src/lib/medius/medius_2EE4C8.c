@@ -43,19 +43,19 @@ typedef struct {
     void* buf;
 } Conn_2EE4C8;
 
-extern int func_002F5160(void);
-extern Conn_2EE4C8* func_002D9E88(int handle, unsigned short id);
-extern void func_002F33D8(void* groups);
-extern Group_2EE4C8* func_002F3388(void* groups, unsigned short id);
-extern void func_002D9C10(int handle, char* data, int len, int addr);
-extern int func_00315E38(int seq);
-extern void func_00315ED8(int stream, int seq, char* data, int len);
-extern int func_00315FC8(int stream);
-extern int func_002F3228(Conn_2EE4C8* c, int flags);
+extern int GetCurrentTimeMs(void);
+extern Conn_2EE4C8* GetPlayerByID(int handle, unsigned short id);
+extern void GetPlayerCountInSet(void* groups);
+extern Group_2EE4C8* GetRefFromSet(void* groups, unsigned short id);
+extern void AudioSendToPlayer(int handle, char* data, int len, int addr);
+extern int CreateVSequence(int seq);
+extern void AddVSequence(int stream, int seq, char* data, int len);
+extern int GetVDataBytes(int stream);
+extern int SetPlayerStatus(Conn_2EE4C8* c, int flags);
 extern void func_002FB2D8(void** buf, int size);
 extern void* memcpy(void* d, const void* s, unsigned int n);
 
-int func_002EE4C8(Net_2EE4C8* net, Pkt_2EE4C8* pkt, Self_2EE4C8* self, char* data, int len)
+int GridProcessVideoPack(Net_2EE4C8* net, Pkt_2EE4C8* pkt, Self_2EE4C8* self, char* data, int len)
 {
     Group_2EE4C8* grp;
     Conn_2EE4C8* conn;
@@ -68,8 +68,8 @@ int func_002EE4C8(Net_2EE4C8* net, Pkt_2EE4C8* pkt, Self_2EE4C8* self, char* dat
     int s;
     int d;
 
-    now = func_002F5160();
-    conn = func_002D9E88(net->handle, pkt->id);
+    now = GetCurrentTimeMs();
+    conn = GetPlayerByID(net->handle, pkt->id);
     if (conn == 0) {
         return -1;
     }
@@ -80,10 +80,10 @@ int func_002EE4C8(Net_2EE4C8* net, Pkt_2EE4C8* pkt, Self_2EE4C8* self, char* dat
         useGroups = 0;
         if (net->groupsOn) {
             useGroups = 1;
-            func_002F33D8(net->groups);
+            GetPlayerCountInSet(net->groups);
         }
         if (useGroups) {
-            grp = func_002F3388(net->groups, pkt->id);
+            grp = GetRefFromSet(net->groups, pkt->id);
         } else {
             grp = 0;
         }
@@ -106,7 +106,7 @@ int func_002EE4C8(Net_2EE4C8* net, Pkt_2EE4C8* pkt, Self_2EE4C8* self, char* dat
                         continue;
                     }
                 }
-                func_002D9C10(net->handle, data, len, p->addr);
+                AudioSendToPlayer(net->handle, data, len, p->addr);
             }
         }
         if (conn->flags & 1) {
@@ -120,7 +120,7 @@ int func_002EE4C8(Net_2EE4C8* net, Pkt_2EE4C8* pkt, Self_2EE4C8* self, char* dat
             if ((seq & 0x60000000) != 0x60000000) {
                 s = conn->stream;
                 if (s == 0) {
-                    s = func_00315E38(seq);
+                    s = CreateVSequence(seq);
                     conn->stream = s;
                     if (s == 0) {
                         return -1;
@@ -130,9 +130,9 @@ int func_002EE4C8(Net_2EE4C8* net, Pkt_2EE4C8* pkt, Self_2EE4C8* self, char* dat
                 s = conn->stream;
             }
             if (s != 0) {
-                func_00315ED8(s, seq, data, len);
-                if (func_00315FC8(conn->stream)) {
-                    func_002F3228(conn, 0x40000000);
+                AddVSequence(s, seq, data, len);
+                if (GetVDataBytes(conn->stream)) {
+                    SetPlayerStatus(conn, 0x40000000);
                 }
             } else {
                 d = seq - conn->nextSeq;
@@ -152,7 +152,7 @@ int func_002EE4C8(Net_2EE4C8* net, Pkt_2EE4C8* pkt, Self_2EE4C8* self, char* dat
                 }
                 memcpy(conn->buf, data, len);
                 conn->bufLen = len;
-                func_002F3228(conn, 0x40000000);
+                SetPlayerStatus(conn, 0x40000000);
                 conn->nextSeq = seq + 1;
             }
         done:

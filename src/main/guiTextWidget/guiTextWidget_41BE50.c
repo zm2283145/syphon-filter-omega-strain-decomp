@@ -16,7 +16,7 @@ typedef struct { char p[0x48]; char m48[0x30]; void* f78; } W41BE50;
 extern void* String_CStr(void* s);
 extern void TextObj_SetText(void* o, void* s);
 extern void GuiWidget_SendEventUp(W41BE50* w, int kind, void* s, int z);
-void func_0041BE50(W41BE50* w)
+void GuiTextWidget_UpdateText(W41BE50* w)
 {
     if (w->f78) TextObj_SetText(w->f78, String_CStr(w->m48));
     GuiWidget_SendEventUp(w, 0x1C, String_CStr(w->m48), 0);

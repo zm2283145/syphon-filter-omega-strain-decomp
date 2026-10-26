@@ -63,7 +63,7 @@ typedef struct {
     long x848;
 } MpegCtx;
 
-int func_00108B40(MpegCtx *m, int second)
+int _updateRefImage(MpegCtx *m, int second)
 {
     MpegPic *tmp;
     register MpegPic *pic asm("$8");

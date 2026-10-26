@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-Word* func_0013D940(Word* dst, Word* src) {
+Word* std_list_cScenePtr_generic_iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
@@ -28,18 +28,18 @@ typedef struct Nd_D950 { struct Nd_D950* prev; struct Nd_D950* next; int obj; } 
 struct It_D950 { Nd_D950* n; It_D950() {} void operator=(const It_D950& o) { const float* s = (const float*)&o; float* d = (float*)this; *d = *s; } };
 extern "C" {
 void List_Begin(It_D950*, int);
-void func_0013B160(It_D950*, int);
+void std_list_deleter_voidPtr_end_void(It_D950*, int);
 #if 0 /* merge_units */
-void func_0013D940(It_D950*, It_D950*);
+void std_list_cScenePtr_generic_iterator_ctor(It_D950*, It_D950*);
 #endif /* merge_units */
-#define func_0013D940(a0, a1) ((void)func_0013D940((Word *)(a0), (Word *)(a1))) /* merge_units */
+#define std_list_cScenePtr_generic_iterator_ctor(a0, a1) ((void)std_list_cScenePtr_generic_iterator_ctor((Word *)(a0), (Word *)(a1))) /* merge_units */
 
 int World_DrawPass(int);
 }
 /* run World_DrawPass over every entry of the list (begin/end iterators) */
 #pragma push
 #pragma opt_propagation off
-extern "C" void func_0013D950(int l)
+extern "C" void cSceneManager_Render(int l)
 {
     It_D950 it;
     It_D950 tmp;
@@ -49,10 +49,10 @@ extern "C" void func_0013D950(int l)
     It_D950 t2;
     Nd_D950* n;
     List_Begin(&t1, l);
-    func_0013D940(&b, &t1);
+    std_list_cScenePtr_generic_iterator_ctor(&b, &t1);
     n = b.n;
-    func_0013B160(&t2, l);
-    func_0013D940(&e, &t2);
+    std_list_deleter_voidPtr_end_void(&t2, l);
+    std_list_cScenePtr_generic_iterator_ctor(&e, &t2);
     tmp.n = n;
     n = e.n;
     it = tmp;
@@ -65,7 +65,7 @@ extern "C" void func_0013D950(int l)
 #undef IT
 }
 #pragma pop
-#undef func_0013D940 /* merge_units */
+#undef std_list_cScenePtr_generic_iterator_ctor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0013D950 */
 
@@ -80,7 +80,7 @@ extern void ScalarCollection_Dtor_13DAD0(void);
 extern void __register_global_object(void* obj, void* dtor, void* link);
 
 /* Returns the lazily constructed static collection at D_004EA118. */
-ScalarCollection* func_0013D9F0(void)
+ScalarCollection* GetSceneManager(void)
 {
     if (D_004EA100 == 0) {
         ScalarCollection_Init(&D_004EA118);
@@ -99,6 +99,6 @@ ScalarCollection* func_0013D9F0(void)
 #include "obj_list_dtor.h"
 
 /* Destroy an object list: erase all nodes, optionally delete. */
-DEFINE_OBJ_LIST_DTOR(func_0013DA50)
+DEFINE_OBJ_LIST_DTOR(std_list_cScenePtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0013DA50 */

@@ -7,7 +7,7 @@ extern char D_004DE2A0[];
 void cNPC_dtor(Npc2D5FA0* p, int f);
 void operator_delete(void* p);
 }
-extern "C" Npc2D5FA0* func_002D5FA0(Npc2D5FA0* self, short del)
+extern "C" Npc2D5FA0* cNetNPC_dtor(Npc2D5FA0* self, short del)
 {
     if (self) {
         *(void**)self = D_004DE2A0;

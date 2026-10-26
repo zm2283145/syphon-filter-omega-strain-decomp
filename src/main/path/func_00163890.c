@@ -14,7 +14,7 @@ typedef struct PathPolyObj {
     void* vtable;
 } PathPolyObj;
 
-PathPolyObj* func_00163890(PathPolyObj* self) {
+PathPolyObj* cNodeIndex_ctor(PathPolyObj* self) {
     self->vtable = D_004D9720;
     self->vtable = D_004D9700;
     self->vtable = D_004D9710;

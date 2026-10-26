@@ -82,12 +82,40 @@ extern void QuatCurve_ComputeRate();
 extern void QuatCurve_Normalize4();
 extern void QuatCurve_PreUpdate();
 extern void VecCurve_ZeroDerivative();
+extern void cCAMERA_GOBJ_Init();
+extern void cCAMERA_GOBJ_Load();
+extern void cCAMERA_GOBJ_NextFrame();
+extern void cCAMERA_GOBJ_dtor();
+extern void cGOBJ_CheckBullet();
+extern void cGOBJ_GetBBox();
+extern void cGOBJ_GetChildList_void();
+extern void cGOBJ_GetChildList_void_2();
+extern void cGOBJ_GetFloorPlane();
+extern void cGOBJ_GetLosPosition();
+extern void cGOBJ_GetMovementState();
+extern void cGOBJ_GetNumSubTargets();
+extern void cGOBJ_GetStatus();
+extern void cGOBJ_GetSubTargetAimAdjust();
+extern void cGOBJ_GetTargetPriority();
+extern void cGOBJ_HasHeadset();
+extern void cGOBJ_InitNetwork();
+extern void cGOBJ_IsAimed();
+extern void cGOBJ_IsGeneratorCreated();
+extern void cGOBJ_IsNetworked();
+extern void cGOBJ_ScaleBBox();
+extern void cGOBJ_SetStatus();
 extern void cGOBJ_v0B();
 extern void cGOBJ_v0C();
 extern void cGOBJ_v35();
 extern void cGOBJ_v39();
+extern void cGameCamera_ScriptHandleMessage();
+extern void cGameCamera_SetRotation();
 extern void cGameCamera_dtor();
+extern void cGameCamera_getSOBJClassId();
 extern void cGameCamera_v10();
+extern void cHuman_GetTransform_ForCameraTracking();
+extern void cHuman_InitNetwork();
+extern void cHuman_cDrawAndHolsterWeaponCallback_Trigger();
 extern void cNode_v06();
 extern void cNode_v07();
 extern void cNode_v0D();
@@ -101,129 +129,101 @@ extern void cNode_v29();
 extern void cNode_v2A();
 extern void cNode_v2B();
 extern void cNode_v3A();
-extern void func_0012ED00();
-extern void func_0012ED30();
-extern void func_0012ED40();
-extern void func_0012ED50();
-extern void func_0013E060();
-extern void func_0013EE60();
+extern void cSplinedMotion_QuaternionLERP_1_InitPos();
+extern void cSplinedMotion_QuaternionLERP_1_TeleportByDelta();
+extern void cSplinedMotion_QuaternionLERP_1_ZeroVel();
+extern void cSplinedMotion_Scalar_InitPos();
+extern void cSplinedMotion_Scalar_dtor_void();
+extern void cSplinedMotion_Vector_InitPos();
+extern void cSplinedMotion_Vector_dtor();
+extern void cSplinedMotion_float_TeleportByDelta();
+extern void cSystem_IsDeliverable();
+extern void cSystem_NetDisable();
+extern void cSystem_NetEnable();
+extern void cSystem_SendCreated();
 extern void func_00140E90();
-extern void func_00148870();
-extern void func_00153860();
-extern void func_0015BFB0();
-extern void func_0015BFC0();
-extern void func_0015BFD0();
-extern void func_0015BFE0();
-extern void func_0015BFF0();
-extern void func_0015C000();
-extern void func_0015C010();
-extern void func_0015C020();
-extern void func_0015C030();
-extern void func_0015C040();
-extern void func_0015C050();
-extern void func_0015C080();
-extern void func_0015C090();
-extern void func_0015C0A0();
-extern void func_0017A1A0();
-extern void func_0017A1B0();
-extern void func_0017EC70();
 extern void func_0017ED20();
-extern void func_0017EDD0();
-extern void func_0017F080();
-extern void func_00180020();
-extern void func_00180080();
-extern void func_001800A0();
-extern void func_00180120();
-extern void func_001802D0();
-extern void func_001802F0();
-extern void func_00180780();
-extern void func_00180790();
-extern void func_001807A0();
-extern void func_00180B50();
-extern void func_001856D0();
-extern void func_001B0F20();
-extern void func_001B8790();
 
 void *D_004DA3E0[12] = {
-    0, 0, &func_0017EC70, &func_00180020,
-    &func_00180080, &Curve_ReturnZero, &Curve_Retarget, &Curve_VirtualNop,
+    0, 0, &cSplinedMotion_Scalar_dtor_void, &cSplinedMotion_float_TeleportByDelta,
+    &cSplinedMotion_Scalar_InitPos, &Curve_ReturnZero, &Curve_Retarget, &Curve_VirtualNop,
     &Curve_SetVelocity, 0, 0, 0,
 };
 
 void *D_004DA410[12] = {
     0, 0, &func_0017ED20, &CameraRig_TranslateFollowCurves,
-    &func_001800A0, &VecCurve_ZeroDerivative, &Curve_PreUpdate, &Curve_ForceWOne,
+    &cSplinedMotion_Vector_InitPos, &VecCurve_ZeroDerivative, &Curve_PreUpdate, &Curve_ForceWOne,
     &Curve_ComputeRates, 0, 0, 0,
 };
 
 void *D_004DA440[12] = {
-    0, 0, &func_0017EDD0, &func_00180120,
-    &func_001802D0, &func_001802F0, &QuatCurve_PreUpdate, &QuatCurve_Normalize4,
+    0, 0, &cSplinedMotion_Vector_dtor, &cSplinedMotion_QuaternionLERP_1_TeleportByDelta,
+    &cSplinedMotion_QuaternionLERP_1_InitPos, &cSplinedMotion_QuaternionLERP_1_ZeroVel, &QuatCurve_PreUpdate, &QuatCurve_Normalize4,
     &QuatCurve_ComputeRate, 0, 0, 0,
 };
 
 void *D_004DA470[68] = {
-    0, 0, &func_0017F080, &Object_HandleMessage,
-    &GObj_GetID, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
-    &cNode_v06, &cNode_v07, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &cGOBJ_v0B, &cGOBJ_v0C, &cNode_v0D,
-    &func_00180780, &func_00180790, &func_001807A0, &Actor_BasePreLogic,
+    0, 0, &cCAMERA_GOBJ_dtor, &Object_HandleMessage,
+    &GObj_GetID, &Object_GetAttachedOrSelf, &cGOBJ_IsNetworked, &cSystem_SendCreated,
+    &cNode_v06, &cNode_v07, &cSystem_NetEnable, &cSystem_NetDisable,
+    &cSystem_IsDeliverable, &cGOBJ_v0B, &cGOBJ_v0C, &cNode_v0D,
+    &cCAMERA_GOBJ_Init, &cCAMERA_GOBJ_Load, &cCAMERA_GOBJ_NextFrame, &Actor_BasePreLogic,
     &Actor_BaseWorldUpdate, &Actor_VirtualNop, &cNode_v14, &Object_Activate,
     &Object_Deactivate, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
-    &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
-    &func_0015BFF0, &func_0015BFE0, &func_0013EE60, &func_0015C000,
+    &cGOBJ_HasHeadset, &cGOBJ_SetStatus, &cGOBJ_GetStatus, &cGOBJ_IsGeneratorCreated,
+    &cGOBJ_GetChildList_void_2, &cGOBJ_GetChildList_void, &cGOBJ_GetBBox, &cGOBJ_ScaleBBox,
     &Object_AttachTransform, &Player_GetActiveWeapon, &cNode_v24, &cNode_v25,
     &cNode_v26, &cNode_v27, &cNode_v28, &cNode_v29,
-    &cNode_v2A, &cNode_v2B, &func_0015C010, &func_00153860,
-    &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &cGOBJ_v35,
+    &cNode_v2A, &cNode_v2B, &cGOBJ_GetTargetPriority, &cGOBJ_GetLosPosition,
+    &Object_GetEye, &cGOBJ_GetMovementState, &func_00140E90, &cGOBJ_GetSubTargetAimAdjust,
+    &cGOBJ_GetNumSubTargets, &cGOBJ_IsAimed, &Node_GetWorldMatrix, &cGOBJ_v35,
     &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &cGOBJ_v39,
-    &cNode_v3A, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
-    &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
+    &cNode_v3A, &GObj_GetWorldMatrix, &cGOBJ_GetFloorPlane, &cGOBJ_InitNetwork,
+    &Actor_ApplyContactDamage, &cGOBJ_CheckBullet, &GObj_GetLifeState, &Controller_DeathNotice,
 };
 
 void *D_004DA580[68] = {
     0, 0, &cGameCamera_dtor, &Object_HandleMessage,
-    &GObj_GetID, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
-    &cNode_v06, &cNode_v07, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &func_0017A1A0, &func_0017A1B0, &cNode_v0D,
-    &func_00180780, &func_00180790, &cGameCamera_v10, &Actor_BasePreLogic,
+    &GObj_GetID, &Object_GetAttachedOrSelf, &cGOBJ_IsNetworked, &cSystem_SendCreated,
+    &cNode_v06, &cNode_v07, &cSystem_NetEnable, &cSystem_NetDisable,
+    &cSystem_IsDeliverable, &cGameCamera_getSOBJClassId, &cGameCamera_ScriptHandleMessage, &cNode_v0D,
+    &cCAMERA_GOBJ_Init, &cCAMERA_GOBJ_Load, &cGameCamera_v10, &Actor_BasePreLogic,
     &CameraRig_BaseUpdate, &Actor_VirtualNop, &cNode_v14, &Object_Activate,
     &Object_Deactivate, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
-    &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
-    &func_0015BFF0, &func_0015BFE0, &func_0013EE60, &func_0015C000,
-    &Object_AttachTransform, &Player_GetActiveWeapon, &func_00180B50, &cNode_v25,
+    &cGOBJ_HasHeadset, &cGOBJ_SetStatus, &cGOBJ_GetStatus, &cGOBJ_IsGeneratorCreated,
+    &cGOBJ_GetChildList_void_2, &cGOBJ_GetChildList_void, &cGOBJ_GetBBox, &cGOBJ_ScaleBBox,
+    &Object_AttachTransform, &Player_GetActiveWeapon, &cGameCamera_SetRotation, &cNode_v25,
     &cNode_v26, &cNode_v27, &cNode_v28, &cNode_v29,
-    &cNode_v2A, &cNode_v2B, &func_0015C010, &func_00153860,
-    &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &cGOBJ_v35,
+    &cNode_v2A, &cNode_v2B, &cGOBJ_GetTargetPriority, &cGOBJ_GetLosPosition,
+    &Object_GetEye, &cGOBJ_GetMovementState, &func_00140E90, &cGOBJ_GetSubTargetAimAdjust,
+    &cGOBJ_GetNumSubTargets, &cGOBJ_IsAimed, &Node_GetWorldMatrix, &cGOBJ_v35,
     &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &cGOBJ_v39,
-    &cNode_v3A, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
-    &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
+    &cNode_v3A, &GObj_GetWorldMatrix, &cGOBJ_GetFloorPlane, &cGOBJ_InitNetwork,
+    &Actor_ApplyContactDamage, &cGOBJ_CheckBullet, &GObj_GetLifeState, &Controller_DeathNotice,
 };
 
 void *D_004DA690[70] = {
     0, 0, &Npc_Dtor, &Npc_HandleMessage,
     &GObj_GetID, &Object_GetAttachedOrSelf, &Npc_v04, &Npc_v05,
     &Npc_Enable, &Npc_v07, &Npc_v08, &Npc_v09,
-    &func_0012ED50, &cGOBJ_v0B, &cGOBJ_v0C, &cNode_v0D,
+    &cSystem_IsDeliverable, &cGOBJ_v0B, &cGOBJ_v0C, &cNode_v0D,
     &Npc_ResetTime, &Npc_InitModel, &Npc_Update, &Npc_PreUpdate,
     &Actor_WorldUpdate, &Actor_VirtualNop, &Actor_Draw, &Npc_Activate,
     &Npc_Deactivate, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
     &Npc_v1A, &Npc_v1B, &Npc_v1C, &Actor_IsReplica,
-    &func_0015BFF0, &func_0015BFE0, &Actor_GetBounds, &func_0015C000,
+    &cGOBJ_GetChildList_void_2, &cGOBJ_GetChildList_void, &Actor_GetBounds, &cGOBJ_ScaleBBox,
     &Object_AttachTransform, &Npc_GetActiveWeapon, &Npc_v24, &Npc_v25,
     &Npc_v26, &Npc_v27, &Npc_v28, &Npc_v29,
-    &Npc_v2A, &Npc_v2B, &func_0015C010, &Npc_v2D,
+    &Npc_v2A, &Npc_v2B, &cGOBJ_GetTargetPriority, &Npc_v2D,
     &Actor_GetEyeNode, &Actor_GetTargetCategory, &Actor_GetStance, &Actor_GetTargetSizeFactor,
     &Actor_GetSubtargetCount, &Npc_v33, &Node_GetWorldMatrix, &cGOBJ_v35,
     &Actor_GetBodyCenter, &Actor_GetPosition, &Actor_GetRootPosition, (void *)0x1b0f30,
-    &func_001B0F20, &Actor_GetRootWorldMatrix, &Actor_GetFloorContactPos, &func_001856D0,
+    &cHuman_GetTransform_ForCameraTracking, &Actor_GetRootWorldMatrix, &Actor_GetFloorContactPos, &cHuman_InitNetwork,
     &Actor_HandleCombatEvent, &Bullet_ApplyHit, &Actor_GetLifeState, &Actor_Kill,
     &Actor_GetFloorContactRecord, 0,
 };
 
-void *D_004DA7A8[4] __attribute__((aligned(8))) = { 0, 0, &func_001B8790, 0 };
+void *D_004DA7A8[4] __attribute__((aligned(8))) = { 0, 0, &cHuman_cDrawAndHolsterWeaponCallback_Trigger, 0 };
 
 int D_004DA7B8[6] __attribute__((aligned(8))) = {
     0, 0, 0, 0,

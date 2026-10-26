@@ -38,10 +38,10 @@ typedef struct PendingEvent {
 } PendingEvent;
 
 extern char D_0055A0F0[];
-extern void func_003E2EE0(PendingEvent** outIt, void* map, int* key);
-extern void func_003DFAF0(int* outEnd, void* map);
-extern void func_003DFAE0(PendingEvent** out, int* end);
-extern void func_003E3160(void* map, PendingEvent** it);
+extern void std_tree_pair_int_value_compare_find_intR_2(PendingEvent** outIt, void* map, int* key);
+extern void std_map_int_SchedCallbackPtr_end(int* outEnd, void* map);
+extern void cAssocArray_int_SchedCallbackPtr_Iterator_ctor(PendingEvent** out, int* end);
+extern void std_tree_pair_int_value_compare_erase_tree_2(void* map, PendingEvent** it);
 extern void EventQueue_Remove(void* queued);
 
 /* Unschedule(id): removes a pending scheduled event. */
@@ -53,14 +53,14 @@ void Script_Unschedule(int id) {
     PendingEvent* end;
     PendingEvent* it;
     key = id;
-    func_003E2EE0(&found, D_0055A0F0, &key);
+    std_tree_pair_int_value_compare_find_intR_2(&found, D_0055A0F0, &key);
     it = found;
-    func_003DFAF0(&endRaw, D_0055A0F0);
-    func_003DFAE0(&end, &endRaw);
+    std_map_int_SchedCallbackPtr_end(&endRaw, D_0055A0F0);
+    cAssocArray_int_SchedCallbackPtr_Iterator_ctor(&end, &endRaw);
     if ((it == end) ^ 1) {
         EventQueue_Remove(it->queued);
         eraseIt = it;
-        func_003E3160(D_0055A0F0, &eraseIt);
+        std_tree_pair_int_value_compare_erase_tree_2(D_0055A0F0, &eraseIt);
     }
 
 }

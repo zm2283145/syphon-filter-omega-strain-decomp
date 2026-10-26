@@ -12,25 +12,25 @@ extern void cObjective_v04();
 extern void cObjective_v06();
 extern void cObjective_v07();
 extern void cObjective_v0B();
-extern void func_0012ECF0();
-extern void func_0012ED00();
-extern void func_0012ED10();
-extern void func_0012ED20();
-extern void func_0012ED30();
-extern void func_0012ED40();
-extern void func_0012ED50();
-extern void func_001383D0();
+extern void cSystem_IsDeliverable();
+extern void cSystem_IsNetworked();
+extern void cSystem_NetActivate();
+extern void cSystem_NetDeactivate();
+extern void cSystem_NetDisable();
+extern void cSystem_NetEnable();
+extern void cSystem_ScriptGetRealObj();
+extern void cSystem_SendCreated();
 
 void *D_004DB790[16] = {
     0, 0, &cObjectiveMan_dtor, &cObjectiveMan_v01,
-    &GObj_GetID, &func_0012ECF0, &func_001383D0, &func_0012ED00,
-    &func_0012ED10, &func_0012ED20, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &cObjectiveMan_v0B, &cObjectiveMan_v0C, 0,
+    &GObj_GetID, &cSystem_ScriptGetRealObj, &cSystem_IsNetworked, &cSystem_SendCreated,
+    &cSystem_NetActivate, &cSystem_NetDeactivate, &cSystem_NetEnable, &cSystem_NetDisable,
+    &cSystem_IsDeliverable, &cObjectiveMan_v0B, &cObjectiveMan_v0C, 0,
 };
 
 void *D_004DB7D0[16] = {
     0, 0, &cObjective_dtor, &Objective_ConsumeEvent,
-    &GObj_GetID, &func_0012ECF0, &cObjective_v04, &func_0012ED00,
-    &cObjective_v06, &cObjective_v07, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &cObjective_v0B, &Objective_ScriptFilter, 0,
+    &GObj_GetID, &cSystem_ScriptGetRealObj, &cObjective_v04, &cSystem_SendCreated,
+    &cObjective_v06, &cObjective_v07, &cSystem_NetEnable, &cSystem_NetDisable,
+    &cSystem_IsDeliverable, &cObjective_v0B, &Objective_ScriptFilter, 0,
 };

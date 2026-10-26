@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_002ECFF8(void) {
+int NetIMessageField(void) {
     return 0;
 }

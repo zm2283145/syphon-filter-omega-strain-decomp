@@ -10,7 +10,7 @@
 
 /* merge_units: begin func_003DC470 */
 #pragma push /* merge_units */
-int* func_003DC4C0(PtrVec* v, int i); /* gsynth: defined below */
+int* cArray_EnumDefPtr_opIndex(PtrVec* v, int i); /* gsynth: defined below */
 /*
  * Matched functions (byte-identical with the retail executable).
  * Original translation unit not identified yet; functions are named by address
@@ -20,19 +20,19 @@ int* func_003DC4C0(PtrVec* v, int i); /* gsynth: defined below */
 
 extern PtrVec* D_00554F30;  /* global enum table (ScriptEnum* entries, ids start at 10) */
 #if 0 /* merge_units */
-extern ScriptEnum** func_003DC4C0(PtrVec* v, int i);
+extern ScriptEnum** cArray_EnumDefPtr_opIndex(PtrVec* v, int i);
 #endif /* merge_units */
-#define func_003DC4C0(a0, a1) ((ScriptEnum * *)func_003DC4C0((a0), (a1))) /* merge_units */
+#define cArray_EnumDefPtr_opIndex(a0, a1) ((ScriptEnum * *)cArray_EnumDefPtr_opIndex((a0), (a1))) /* merge_units */
 
 extern int Script_RemapEnumId(Script* script, int localId);
 
 /* First word of member 'index' of the script-local enum 'localId'. */
-int func_003DC470(Script* script, int localId, int index) {
+int cScriptInterpreter_SymbolTable_remapEnumVal(Script* script, int localId, int index) {
     int id = Script_RemapEnumId(script, localId);
-    ScriptEnum* e = *func_003DC4C0(D_00554F30, id - 10);
+    ScriptEnum* e = *cArray_EnumDefPtr_opIndex(D_00554F30, id - 10);
     return e->members[index].unk0;
 }
-#undef func_003DC4C0 /* merge_units */
+#undef cArray_EnumDefPtr_opIndex /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003DC470(void) {}
 #pragma pop /* merge_units */
@@ -40,7 +40,7 @@ static inline void merge_flush_func_003DC470(void) {}
 
 /* merge_units: begin func_003DC4C0 */
 #pragma push /* merge_units */
-int* func_003DC4C0(PtrVec* v, int i) {
+int* cArray_EnumDefPtr_opIndex(PtrVec* v, int i) {
     return v->data + i;
 }
 

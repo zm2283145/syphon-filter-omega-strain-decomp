@@ -9,19 +9,19 @@
 
 extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
 
-int* func_003DC030(PtrVec* v, int i) {
+int* cArray_VarDefPtr_opIndex(PtrVec* v, int i) {
     return v->data + i;
 }
 
 /* push_back: inserts one value at the end. */
-int func_003DC040(PtrVec* v, int value) {
+int std_vector_SubScriptPtr_push_back(PtrVec* v, int value) {
     return PtrVec_Insert(v, v->data + v->count, 1, value);
 }
 
-int* func_003DC060(PtrVec* v, int i) {
+int* std_vector_SubScriptPtr_opIndex(PtrVec* v, int i) {
     return v->data + i;
 }
 
-int* func_003DC070(PtrVec* v, int i) {
+int* std_vector_intPtr_opIndex(PtrVec* v, int i) {
     return v->data + i;
 }

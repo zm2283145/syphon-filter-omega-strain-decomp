@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_00262F20(void* self) {
+void* details_compressed_pair_imp_cAllocator_TaserPoint_int_1_first(void* self) {
     return self;
 }

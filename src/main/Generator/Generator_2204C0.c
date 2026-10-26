@@ -71,9 +71,9 @@ extern char g_Game[];
 extern char g_LosCheckService[];
 extern char g_LosRequestMsgClass[];
 extern char D_004D9180[];
-LNode* func_0021E000(void* l);
-LNode** func_0021DFE0(It* it, LNode* n);
-LNode** func_0021DFF0(It* it, LNode* n);
+LNode* std_list_deleter_cSafePtr_cGOBJ_tail(void* l);
+LNode** std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(It* it, LNode* n);
+LNode** std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodeP(It* it, LNode* n);
 void Node_GetTranslation(V* out, void* node);
 Obj* PlayerSlots_Get(int i);
 Obj** List_Front(void* v);
@@ -88,8 +88,8 @@ static inline Tgt* HGet(Hnd* h) {
     bool ok = !h->p || IdEq(h->p, h);
     return ok ? h->p : 0;
 }
-static inline void Begin(It* o, Gen* g) { It t; func_0021DFF0(&t, func_0021E000(&g->list90)->next); *o = t; }
-static inline void End(It* o, Gen* g) { It t; func_0021DFE0(&t, func_0021E000(&g->list90)); *o = t; }
+static inline void Begin(It* o, Gen* g) { It t; std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodeP(&t, std_list_deleter_cSafePtr_cGOBJ_tail(&g->list90)->next); *o = t; }
+static inline void End(It* o, Gen* g) { It t; std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(&t, std_list_deleter_cSafePtr_cGOBJ_tail(&g->list90)); *o = t; }
 static inline void DoRay(Svc* svc, HitRes* res, const V& start, const V& end, Obj* pl, Obj* cl) {
     RayMsg msg;
     RayMsg* m = &msg;
@@ -207,19 +207,19 @@ struct Ev {
 };
 extern "C" {
 #if 0 /* merge_units */
-LNode_00220BB0* func_0021E000(void* l);
+LNode_00220BB0* std_list_deleter_cSafePtr_cGOBJ_tail(void* l);
 #endif /* merge_units */
-#define func_0021E000(a0) ((LNode_00220BB0 *)func_0021E000((a0))) /* merge_units */
+#define std_list_deleter_cSafePtr_cGOBJ_tail(a0) ((LNode_00220BB0 *)std_list_deleter_cSafePtr_cGOBJ_tail((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-LNode_00220BB0** func_0021DFE0(LNode_00220BB0** it, LNode_00220BB0* n);
+LNode_00220BB0** std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(LNode_00220BB0** it, LNode_00220BB0* n);
 #endif /* merge_units */
-#define func_0021DFE0(a0, a1) ((LNode_00220BB0 * *)func_0021DFE0((It *)(a0), (LNode *)(a1))) /* merge_units */
+#define std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(a0, a1) ((LNode_00220BB0 * *)std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP((It *)(a0), (LNode *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-LNode_00220BB0** func_0021DFF0(LNode_00220BB0** it, LNode_00220BB0* n);
+LNode_00220BB0** std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodeP(LNode_00220BB0** it, LNode_00220BB0* n);
 #endif /* merge_units */
-#define func_0021DFF0(a0, a1) ((LNode_00220BB0 * *)func_0021DFF0((It *)(a0), (LNode *)(a1))) /* merge_units */
+#define std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodeP(a0, a1) ((LNode_00220BB0 * *)std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodeP((It *)(a0), (LNode *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
 int Event_Construct(void*, char*);
@@ -254,8 +254,8 @@ extern "C" void Generator_DeactivateSpawned(Gen_00220BB0* self)
     LNode_00220BB0* it;
     LNode_00220BB0* end;
     LNode_00220BB0* n;
-    func_0021DFF0(&it, func_0021E000(&self->list90)->next);
-    for (n = it; func_0021DFE0(&end, func_0021E000(&self->list90)), n != end; n = n->next) {
+    std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodeP(&it, std_list_deleter_cSafePtr_cGOBJ_tail(&self->list90)->next);
+    for (n = it; std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(&end, std_list_deleter_cSafePtr_cGOBJ_tail(&self->list90)), n != end; n = n->next) {
         Hnd_00220BB0* h = &n->h;
         t = HGet_00220BB0(h);
         t->Deactivate(1);
@@ -270,9 +270,9 @@ extern "C" void Generator_DeactivateSpawned(Gen_00220BB0* self)
     }
     Object_Deactivate(self, 1);
 }
-#undef func_0021E000 /* merge_units */
-#undef func_0021DFE0 /* merge_units */
-#undef func_0021DFF0 /* merge_units */
+#undef std_list_deleter_cSafePtr_cGOBJ_tail /* merge_units */
+#undef std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP /* merge_units */
+#undef std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodeP /* merge_units */
 #undef Event_Construct /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -289,8 +289,8 @@ typedef struct cGen00220D00 {
     char pad2D[0xCC - 0x2D];
     unsigned int mask;
 } cGen00220D00;
-extern void func_0043B190(void* msg);
-extern void func_0043A030(void* msg, void* target);
+extern void cGenInfoObject_ctor(void* msg);
+extern void cGenInfoObject_Deactivate(void* msg, void* target);
 void cGenerator_v09(cGen00220D00* self, int bit)
 {
     if (bit >= 0)
@@ -300,8 +300,8 @@ void cGenerator_v09(cGen00220D00* self, int bit)
     if (self->mask == 0) {
         int msg[1];
         self->b2C = 0;
-        func_0043B190(msg);
-        func_0043A030(msg, self->f0C);
+        cGenInfoObject_ctor(msg);
+        cGenInfoObject_Deactivate(msg, self->f0C);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -327,14 +327,14 @@ extern char g_cDisableMsgClass[];
 extern char D_004E0860[];
 void NetMsg_Send(Msg_220D70* msg, int id, int x);
 #if 0 /* merge_units */
-void func_0043B190(void* t);
+void cGenInfoObject_ctor(void* t);
 #endif /* merge_units */
-#define func_0043B190(a0) (func_0043B190((a0))) /* merge_units */
+#define cGenInfoObject_ctor(a0) (cGenInfoObject_ctor((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_0043A030(void* t, void* p);
+void cGenInfoObject_Deactivate(void* t, void* p);
 #endif /* merge_units */
-#define func_0043A030(a0, a1) (func_0043A030((a0), (a1))) /* merge_units */
+#define cGenInfoObject_Deactivate(a0, a1) (cGenInfoObject_Deactivate((a0), (a1))) /* merge_units */
 
 void cGenerator_v18(G_220D70* g, int bit)
 {
@@ -344,8 +344,8 @@ void cGenerator_v18(G_220D70* g, int bit)
         if (bit >= 0)
             g->mask &= ~(1 << bit);
         if (g->mask == 0) {
-            func_0043B190(t);
-            func_0043A030(t, g->sub);
+            cGenInfoObject_ctor(t);
+            cGenInfoObject_Deactivate(t, g->sub);
             g->state = 0;
         }
         Event_Construct(&msg, g_cDisableMsgClass);
@@ -362,8 +362,8 @@ void cGenerator_v18(G_220D70* g, int bit)
 }
 #undef Event_Construct /* merge_units */
 #undef cMessage_dtor /* merge_units */
-#undef func_0043B190 /* merge_units */
-#undef func_0043A030 /* merge_units */
+#undef cGenInfoObject_ctor /* merge_units */
+#undef cGenInfoObject_Deactivate /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00220D70(void) {}
 #pragma pop /* merge_units */
@@ -377,13 +377,13 @@ typedef struct { char pad[0xC]; char key[0x20]; unsigned char b2C; unsigned char
 extern "C" {
 void cNode_v06(void);
 #if 0 /* merge_units */
-void func_0043B190(void* ctx);
+void cGenInfoObject_ctor(void* ctx);
 #endif /* merge_units */
-#define func_0043B190(a0) (func_0043B190((a0))) /* merge_units */
+#define cGenInfoObject_ctor(a0) (cGenInfoObject_ctor((a0))) /* merge_units */
 
-int func_0043AB20(void* ctx, void* key);
-void func_00439D00(void* ctx, void* key, int id);
-void func_0043A420(void* ctx, void* key);
+int cGenInfoObject_HasOwner(void* ctx, void* key);
+void cGenInfoObject_SetOwner(void* ctx, void* key, int id);
+void cGenInfoObject_Activate(void* ctx, void* key);
 }
 extern "C" void cGenerator_v08(Gen_12D0* g, int who)
 {
@@ -393,16 +393,16 @@ extern "C" void cGenerator_v08(Gen_12D0* g, int who)
     ok = ok ? g->b2C != 0 : ok;
     ok = ok ? (g->b2E != 0) ^ 1 : ok;
     if (ok) {
-        func_0043B190(ctx);
+        cGenInfoObject_ctor(ctx);
         if (who == NetLocalId() && g->maskCC == 0) {
             void* key = g->key;
-            func_00439D00(ctx, key, NetLocalId());
+            cGenInfoObject_SetOwner(ctx, key, NetLocalId());
         }
-        func_0043A420(ctx, g->key);
+        cGenInfoObject_Activate(ctx, g->key);
     }
     if (who >= 0) g->maskCC |= 1 << who; else g->maskCC = 0xFF;
 }
-#undef func_0043B190 /* merge_units */
+#undef cGenInfoObject_ctor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00220E60(void) {}
 #pragma pop /* merge_units */
@@ -419,9 +419,9 @@ extern "C" {
 extern char D_004E0880[];
 extern char g_cEnableMsgClass[];
 #if 0 /* merge_units */
-void func_0043B190(void* ctx);
+void cGenInfoObject_ctor(void* ctx);
 #endif /* merge_units */
-#define func_0043B190(a0) (func_0043B190((a0))) /* merge_units */
+#define cGenInfoObject_ctor(a0) (cGenInfoObject_ctor((a0))) /* merge_units */
 
 #if 0 /* merge_units */
 Own_0FD0* Object_ClosestPlayerDistSq(Gen_0FD0* g, int i);
@@ -433,7 +433,7 @@ int Event_Construct(Msg_0FD0* m, void* type);
 #endif /* merge_units */
 #define Event_Construct(a0, a1) (Event_Construct((void *)(a0), (a1))) /* merge_units */
 
-void func_003FF930(Msg_0FD0* m, int id);
+void cEnableMsg_SendEnabled(Msg_0FD0* m, int id);
 #if 0 /* merge_units */
 int cMessage_dtor(Msg_0FD0* m, int flags);
 #endif /* merge_units */
@@ -452,24 +452,24 @@ extern "C" void cGenerator_v17(Gen_0FD0* g, int who)
         ok = ok ? g->b2C != 0 : ok;
         ok = ok ? (g->b2E != 0) ^ 1 : ok;
         if (ok) {
-            func_0043B190(ctx);
+            cGenInfoObject_ctor(ctx);
             if (who < 0) {
                 Own_0FD0* o = Object_ClosestPlayerDistSq(g, 0);
-                func_00439D00(ctx, g->key, o ? Owner_0FD0(o) : NetLocalId());
+                cGenInfoObject_SetOwner(ctx, g->key, o ? Owner_0FD0(o) : NetLocalId());
             } else {
                 if (who == NetLocalId() && g->maskCC == 0) {
                     void* key = g->key;
-                    func_00439D00(ctx, key, NetLocalId());
+                    cGenInfoObject_SetOwner(ctx, key, NetLocalId());
                 }
             }
-            func_0043A420(ctx, g->key);
+            cGenInfoObject_Activate(ctx, g->key);
         } else if (who < 0) {
             int own = -1;
             Own_0FD0* o = Object_ClosestPlayerDistSq(g, 0);
             if (o) own = Owner_0FD0(o);
             if (own != NetLocalId()) {
-                func_0043B190(ctx2);
-                func_00439D00(ctx2, g->key, own);
+                cGenInfoObject_ctor(ctx2);
+                cGenInfoObject_SetOwner(ctx2, g->key, own);
             }
         }
         if (who >= 0) g->maskCC |= 1 << who; else g->maskCC = 0xFF;
@@ -478,12 +478,12 @@ extern "C" void cGenerator_v17(Gen_0FD0* g, int who)
         msg.vt = D_004E0880;
         msg.f1C = 0x40;
         msg.f20 = 4;
-        func_003FF930(&msg, g->id10);
+        cEnableMsg_SendEnabled(&msg, g->id10);
         msg.vt = D_004E0880;
         cMessage_dtor(&msg, 0);
     }
 }
-#undef func_0043B190 /* merge_units */
+#undef cGenInfoObject_ctor /* merge_units */
 #undef Object_ClosestPlayerDistSq /* merge_units */
 #undef Event_Construct /* merge_units */
 #undef cMessage_dtor /* merge_units */
@@ -498,9 +498,9 @@ static inline void merge_flush_func_00220FD0(void) {}
 extern "C" {}
 extern "C" {
 #if 0 /* merge_units */
-void func_0043B190(void* ctx);
+void cGenInfoObject_ctor(void* ctx);
 #endif /* merge_units */
-#define func_0043B190(a0) (func_0043B190((a0))) /* merge_units */
+#define cGenInfoObject_ctor(a0) (cGenInfoObject_ctor((a0))) /* merge_units */
 
 }
 extern "C" void cGenerator_v06(Gen_12D0* g)
@@ -511,15 +511,15 @@ extern "C" void cGenerator_v06(Gen_12D0* g)
     ok = ok ? g->b2C != 0 : ok;
     ok = ok ? (g->b2E != 0) ^ 1 : ok;
     if (ok) {
-        func_0043B190(ctx);
-        if ((g->maskCC & (1 << NetLocalId())) && func_0043AB20(ctx, g->key) == 0) {
+        cGenInfoObject_ctor(ctx);
+        if ((g->maskCC & (1 << NetLocalId())) && cGenInfoObject_HasOwner(ctx, g->key) == 0) {
             void* key = g->key;
-            func_00439D00(ctx, key, NetLocalId());
+            cGenInfoObject_SetOwner(ctx, key, NetLocalId());
         }
-        func_0043A420(ctx, g->key);
+        cGenInfoObject_Activate(ctx, g->key);
     }
 }
-#undef func_0043B190 /* merge_units */
+#undef cGenInfoObject_ctor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002212D0(void) {}
 #pragma pop /* merge_units */

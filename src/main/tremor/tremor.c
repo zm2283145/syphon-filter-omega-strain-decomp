@@ -37,20 +37,20 @@ void CameraShake_Apply(Ch_D640* c, float x, float d) {
  */
 
 
-Word* func_00272770(Word* dst, Word* src) {
+Word* cLListIterator_cTremorObjPtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_00272780(Iter* out, Tree* t) {
+void std_list_cTremorObjPtr_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-void func_00272790(int a0, int a1) {
+void std_list_cTremorObjPtr_generic_iterator_opCast(int a0, int a1) {
     *(int*)((char*)a0) = *(int*)(char*)a1;
 }
 
-Word* func_002727A0(Word* dst, Word* src) {
+Word* std_list_cTremorObjPtr_generic_iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }

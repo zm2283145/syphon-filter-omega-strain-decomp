@@ -7,8 +7,8 @@
 #include "types.h"
 #include "loose00_types.h"
 
-extern int func_001D8730(void);
-extern int func_001D8900(void);
+extern int cDrawAndHolsterWeapon_ActionManager_UnInitStatics(void);
+extern int cDrawAndHolsterWeapon_ActionManager_InitStatics(void);
 
 /* Rec24 constructor (+0x08 is left untouched). */
 Rec24* Secondary_MotionRecordCtor(Rec24* r) {
@@ -29,10 +29,10 @@ IntPair* func_001D8700(IntPair* p) {
     return p;
 }
 
-int func_001D8710(void) {
-    return func_001D8730();
+int cHumanIkRoutine_UnInitStatics(void) {
+    return cDrawAndHolsterWeapon_ActionManager_UnInitStatics();
 }
 
-int func_001D8720(void) {
-    return func_001D8900();
+int cHumanIkRoutine_InitStatics(void) {
+    return cDrawAndHolsterWeapon_ActionManager_InitStatics();
 }

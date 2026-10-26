@@ -1,6 +1,6 @@
 #include "types.h"
 extern char D_004F80F0[];
-extern char func_00261080[];
+extern char LockSetting_ctor[];
 extern char D_004F8190[];
 extern char D_0048B0A0[];
 extern char D_00493890[];
@@ -18,8 +18,8 @@ extern int Script_RegisterVariable();
 extern int Script_RegisterNative_2();
 void StaticInit_RegisterLockColours(void)
 {
-    __construct_array(D_004F80F0, func_00261080, 0, 0x10, 0xa);
-    __construct_array(D_004F8190, func_00261080, 0, 0x10, 0xa);
+    __construct_array(D_004F80F0, LockSetting_ctor, 0, 0x10, 0xa);
+    __construct_array(D_004F8190, LockSetting_ctor, 0, 0x10, 0xa);
     D_004F8238 = Script_RegisterVariable("lockAlpha", (int)D_0048B0A0, D_00493890);
     D_004F8240 = Script_RegisterVariable("NVlockAlpha", (int)D_0048B0A8, D_00493890);
     D_004F8248 = Script_RegisterNative_2(Script_SetLockColor, D_00493880, "SetLockColor", 5, D_00493888, D_00493890, D_00493888, D_00493888, D_00493888);

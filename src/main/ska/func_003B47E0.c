@@ -5,11 +5,11 @@
 
 #include "types.h"
 
-Word* func_003B47E0(Word* dst, Word* src) {
+Word* cAssocArray_cString16N_2_cSkaAnimationBlendPtr_Iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_003B47F0(Iter* out, Tree* t) {
+void std_map_cString16N_2_cSkaAnimationBlendPtr_cAllocator_pair_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }

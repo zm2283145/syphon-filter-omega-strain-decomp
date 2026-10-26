@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046DCA0(void) {
+int MediusUniqueCallbackGetBuddyList_ExtraInfoRequestHandler(void) {
     return 21;
 }

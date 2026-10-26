@@ -6,7 +6,7 @@ typedef struct { unsigned int base; unsigned int size; unsigned int cur; } Arena
 extern void func_0010BD90(void* ctx, const char* msg);
 
 /* Allocates size bytes aligned to align from the arena; reports an error and returns 0 when full. */
-unsigned int func_0010B608(void* ctx, Arena* arena, unsigned int size, unsigned int align)
+unsigned int _alalcAlloc(void* ctx, Arena* arena, unsigned int size, unsigned int align)
 {
     unsigned int start = (arena->cur + align - 1) / align * align;
     unsigned int end = start + size;

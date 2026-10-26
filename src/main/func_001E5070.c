@@ -2,7 +2,7 @@
 typedef struct { char pad[0x10]; Q a; Q b; Q c; } S1E5070;
 #pragma peephole off
 #pragma opt_propagation off
-void func_001E5070(S1E5070* s)
+void cPointMass_ClearVelocity(S1E5070* s)
 {
     __int128* zp;
     s->b = s->a;

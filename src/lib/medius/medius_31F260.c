@@ -6,7 +6,7 @@
 
 /* merge_units: begin func_0031F260 */
 #include "types.h"
-void func_0031F260(float* buf, float* tmp, float ratio)
+void spectralWarp(float* buf, float* tmp, float ratio)
 {
     int i, j;
     if (ratio == 1.0f) return;
@@ -27,7 +27,7 @@ typedef struct {
     unsigned short *pos;
     unsigned char *bit;
 } BitRd_0031F300;
-void func_0031F300(BitRd_0031F300 *r, unsigned char *out, int n)
+void BitUnpackCBuffer(BitRd_0031F300 *r, unsigned char *out, int n)
 {
     unsigned char *bitp = r->bit;
     unsigned short *pos = r->pos;

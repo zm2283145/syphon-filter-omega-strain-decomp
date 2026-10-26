@@ -2,22 +2,22 @@
 #include "types.h"
 #include "GobjMan_types.h"
 #pragma bool off
-/* func_0040B510: drop every object whose id is queued in the scope's id list (and unmap it in a root scope), then clear the list */
+/* cBaseObjList_Purge: drop every object whose id is queued in the scope's id list (and unmap it in a root scope), then clear the list */
 /* id-list cursor; a union so the whole-cursor copy is a block move like retail's */
 union ItU_40B510 { int* p; };
 struct It_40B510 { int* p; It_40B510() {} };
 extern "C" {
 extern GobjMap D_00571C10;
 extern GobjMapNode D_00571C14;
-int* func_0040B6C0(GobjVec* v);
-int* func_00174010(GobjVec* v);
+int* std_vector_imp_cObjectId_begin(GobjVec* v);
+int* std_vector_imp_cObjectId_end(GobjVec* v);
 struct It_40B510;
-void func_00174000(It_40B510* out, GobjVec* v, int* const& p);
+void std_vector_cObjectId_pointer2iterator(It_40B510* out, GobjVec* v, int* const& p);
 void ObjMap_Find(GobjMapNode** result, GobjMap* map, const GobjId* id);
 void PtrVector_Resize(GobjVec* v, int n, int* fill);
-void func_0040CB00(GobjMap* map, GobjMapNode** node);
+void std_tree_pair_cObjectId_value_compare_erase(GobjMap* map, GobjMapNode** node);
 void Actor_VirtualLeaf175230(GobjVec* v);
-void func_0040B510(GobjScope* self);
+void cBaseObjList_Purge(GobjScope* self);
 }
 static inline int Ne_40B510(int* a, int* b) { return !(a == b); }
 static inline void Remove_40B510(GobjVec* v, int value, int* fill)
@@ -36,7 +36,7 @@ static inline void Remove_40B510(GobjVec* v, int value, int* fill)
 }
 #pragma push
 #pragma opt_strength_reduction off
-void func_0040B510(GobjScope* self)
+void cBaseObjList_Purge(GobjScope* self)
 {
     ItU_40B510 it;
     GobjId id;
@@ -46,10 +46,10 @@ void func_0040B510(GobjScope* self)
     It_40B510 b;
     GobjMapNode* n;
     It_40B510 e;
-    func_00174000(&b, &self->ids, func_0040B6C0(&self->ids));
+    std_vector_cObjectId_pointer2iterator(&b, &self->ids, std_vector_imp_cObjectId_begin(&self->ids));
     cur.p = b.p;
     it = cur;
-    while ((func_00174000(&e, &self->ids, func_00174010(&self->ids)), Ne_40B510(it.p, e.p))) {
+    while ((std_vector_cObjectId_pointer2iterator(&e, &self->ids, std_vector_imp_cObjectId_end(&self->ids)), Ne_40B510(it.p, e.p))) {
         GobjMapNode* nd;
         id.word = *it.p;
         ObjMap_Find(&node, &D_00571C10, &id);
@@ -58,7 +58,7 @@ void func_0040B510(GobjScope* self)
             Remove_40B510(&self->objects, (int)nd->object, &fill);
             if (!self->parent) {
                 n = nd;
-                func_0040CB00(&D_00571C10, &n);
+                std_tree_pair_cObjectId_value_compare_erase(&D_00571C10, &n);
             }
         }
         it.p++;

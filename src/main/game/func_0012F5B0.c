@@ -9,7 +9,7 @@
 
 extern int strncpy(char* dst, const char* src, int n); /* bounded string copy */
 
-int func_0012F5B0(NameSlotTable* t, int i) {
+int cGameSystem_GetClientPlayerLocation(NameSlotTable* t, int i) {
     return t->values[i];
 }
 

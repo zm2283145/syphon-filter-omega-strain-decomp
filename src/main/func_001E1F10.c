@@ -82,14 +82,14 @@ void* Root_GetParent(Nd* n);
 Plc* Root_GetWorldPlacement(void* r);
 void Transform_SetOrientation(Plc* d, Plc* s);
 void Placement_Invert(Plc* p);
-int func_001913E0(Nd* n);
-void* func_001913D0(Nd* n);
-void func_001913C0(It* out, void* vec);
-void func_001913A0(It* out, void* vec);
-bool func_001912A0(It* a, It* b);
-Nd** func_00191390(It* it);
-void func_001912E0(Nd* n);
-void func_001912C0(It* it);
+int cTreeNode_cSkaAnimAnchor_TreeNodeData_HasChildren(Nd* n);
+void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(Nd* n);
+void cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Begin(It* out, void* vec);
+void cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_End(It* out, void* vec);
+bool cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opNe(It* a, It* b);
+Nd** cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opMul(It* it);
+void cSkaAnimAnchor_TreeNode_TellNeedToUpdate(Nd* n);
+void cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opInc(It* it);
 }
 #pragma opt_propagation off
 extern "C" void Root_SetBasePosition(Nd* self, V4* pos)
@@ -115,11 +115,11 @@ extern "C" void Root_SetBasePosition(Nd* self, V4* pos)
         }
     }
     self->dirty = 1;
-    if (func_001913E0(self)) {
+    if (cTreeNode_cSkaAnimAnchor_TreeNodeData_HasChildren(self)) {
         It it, end;
-        func_001913C0(&it, func_001913D0(self));
-        func_001913A0(&end, func_001913D0(self));
-        for (; func_001912A0(&it, &end); func_001912C0(&it))
-            func_001912E0(*func_00191390(&it));
+        cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Begin(&it, cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(self));
+        cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_End(&end, cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(self));
+        for (; cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opNe(&it, &end); cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opInc(&it))
+            cSkaAnimAnchor_TreeNode_TellNeedToUpdate(*cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opMul(&it));
     }
 }

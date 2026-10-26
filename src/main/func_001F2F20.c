@@ -7,12 +7,12 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern Word* func_001F2ED0(Word*, Word*);
+extern Word* std_list_deleter_voidPtr_generic_iterator_1_ctor(Word*, Word*);
 
-Word* func_001F2F20(Word* dst, int value) {
+Word* std_list_cSkaSwitchItemPtr_generic_iterator_1_ctor_listdeleter(Word* dst, int value) {
     Word tmp;
 
     tmp.value = value;
-    func_001F2ED0(dst, &tmp);
+    std_list_deleter_voidPtr_generic_iterator_1_ctor(dst, &tmp);
     return dst;
 }

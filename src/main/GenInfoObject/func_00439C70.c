@@ -1,7 +1,7 @@
 #include "types.h"
 typedef struct { int id; unsigned char flags; char pad[3]; } E43AB20;
 extern E43AB20 *D_00583888;
-int func_00439C70(int d0, int *arg1) {
+int cGenInfoObject_GetOwner(int d0, int *arg1) {
     E43AB20 *e;
     E43AB20 *t = D_00583888;
     int key = *arg1;

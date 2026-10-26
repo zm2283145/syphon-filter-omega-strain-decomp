@@ -3,4 +3,4 @@
 #include "trivial_dtor.h"
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_0017CC60)
+DEFINE_TRIVIAL_DTOR(cHermiteSplineWithScaledDuration_cVector_dtor)

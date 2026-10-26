@@ -1,12 +1,12 @@
 #pragma cplusplus on
 #include "types.h"
 #include "tstr_types.h"
-/* func_00338B60: vector<DosEntry>::insert(pos, n, value) for the 36-byte dossier entries
+/* std_vector_imp_tRankInfo_insert: vector<DosEntry>::insert(pos, n, value) for the 36-byte dossier entries
  * (Global_cAgentData__RegisterDossier pushes through it); vector_insert_fill_t.h body with the end/after
  * declarations split (declaring after first gives retail's register order). */
 struct E_00338B60 { int m0; int m1; int m2; int m3; char s[16]; int key; };
-struct func_00338B60_V { unsigned int cap; unsigned int count; E_00338B60* data; };
-static inline void func_00338B60_Construct(E_00338B60* p, const E_00338B60* src)
+struct std_vector_imp_tRankInfo_insert_V { unsigned int cap; unsigned int count; E_00338B60* data; };
+static inline void std_vector_imp_tRankInfo_insert_Construct(E_00338B60* p, const E_00338B60* src)
 {
     if (p)
         *p = *src;
@@ -14,10 +14,10 @@ static inline void func_00338B60_Construct(E_00338B60* p, const E_00338B60* src)
 extern "C" {
 extern char D_004B9320[];
 extern char D_004B9928[];
-void func_00339230(func_00338B60_V* a, func_00338B60_V* b);
-void func_0033B680(func_00338B60_V* v, int flags);
+void std_swap_vectordeleterR_vectordeleterR_32(std_vector_imp_tRankInfo_insert_V* a, std_vector_imp_tRankInfo_insert_V* b);
+void std_vector_deleter_tRankInfo_dtor(std_vector_imp_tRankInfo_insert_V* v, int flags);
 }
-extern "C" void func_00338B60(func_00338B60_V* v, E_00338B60* pos, unsigned int n, const E_00338B60* value)
+extern "C" void std_vector_imp_tRankInfo_insert(std_vector_imp_tRankInfo_insert_V* v, E_00338B60* pos, unsigned int n, const E_00338B60* value)
 {
     if (n == 0)
         return;
@@ -32,19 +32,19 @@ extern "C" void func_00338B60(func_00338B60_V* v, E_00338B60* pos, unsigned int 
         if (after < n) {
             E_00338B60* p = end;
             for (; after < n; n--) {
-                func_00338B60_Construct(p, value);
+                std_vector_imp_tRankInfo_insert_Construct(p, value);
                 p++;
                 v->count++;
             }
             for (E_00338B60* q = pos; q < end; q++, p++) {
-                func_00338B60_Construct(p, q);
+                std_vector_imp_tRankInfo_insert_Construct(p, q);
                 v->count++;
             }
         } else {
             E_00338B60* src = end - n;
             E_00338B60* dst = end;
             for (; src < end; src++, dst++) {
-                func_00338B60_Construct(dst, src);
+                std_vector_imp_tRankInfo_insert_Construct(dst, src);
                 v->count++;
             }
             if (end - (after - n) <= value && value < end)
@@ -63,7 +63,7 @@ extern "C" void func_00338B60(func_00338B60_V* v, E_00338B60* pos, unsigned int 
             ++pos;
         } while (n);
     } else {
-        func_00338B60_V tmp;
+        std_vector_imp_tRankInfo_insert_V tmp;
         E_00338B60* dst;
         unsigned int newCap;
         E_00338B60** tdata;
@@ -90,18 +90,18 @@ extern "C" void func_00338B60(func_00338B60_V* v, E_00338B60* pos, unsigned int 
         srcEnd = src + v->count;
         dst = *tdata;
         for (; src < pos; src++, dst++) {
-            func_00338B60_Construct(dst, src);
+            std_vector_imp_tRankInfo_insert_Construct(dst, src);
             (*tcount)++;
         }
         for (; n; n--, dst++) {
-            func_00338B60_Construct(dst, value);
+            std_vector_imp_tRankInfo_insert_Construct(dst, value);
             (*tcount)++;
         }
         for (; src < srcEnd; src++, dst++) {
-            func_00338B60_Construct(dst, src);
+            std_vector_imp_tRankInfo_insert_Construct(dst, src);
             (*tcount)++;
         }
-        func_00339230(&tmp, v);
-        func_0033B680(&tmp, -1);
+        std_swap_vectordeleterR_vectordeleterR_32(&tmp, v);
+        std_vector_deleter_tRankInfo_dtor(&tmp, -1);
     }
 }

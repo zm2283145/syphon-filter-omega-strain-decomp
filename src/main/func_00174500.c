@@ -28,8 +28,8 @@ extern char D_004EE780[];
 extern char D_004D9BE0[];
 extern char D_0049CA58[];
 void cVUM_GOBJ_ctor(Terrain_74500* o, int* desc, char* info);
-void func_001747B0(Vec_74500* v, int a, int* b);
-void func_00174770(Vec_74500* v, int a, int* b);
+void std_vector_cGOBJPtr_ctor_uint_cGOBJPR(Vec_74500* v, int a, int* b);
+void std_vector_cObjectId_ctor_uint_cObjectIdR(Vec_74500* v, int a, int* b);
 void PtrVec_InitEmpty(Vec_74500* v);
 char* strchr(const char* s, int c);
 void String_Copy(char* d, const char* s);
@@ -60,13 +60,13 @@ Terrain_74500* Terrain_Construct(Terrain_74500* self, Reader_74500* r, int a, in
     {
         Vec_74500* v = &self->v1F4;
         int z = 0;
-        func_001747B0(v, 0, &z);
+        std_vector_cGOBJPtr_ctor_uint_cGOBJPR(v, 0, &z);
         v->flag = 1;
     }
     {
         int m = -1;
         Vec_74500* v = &self->v204;
-        func_00174770(v, 0, &m);
+        std_vector_cObjectId_ctor_uint_cObjectIdR(v, 0, &m);
         v->flag = 1;
     }
     {

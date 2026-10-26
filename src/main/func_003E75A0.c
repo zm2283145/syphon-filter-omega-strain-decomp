@@ -13,7 +13,7 @@ extern char D_004BDEB0;
 
 #pragma push
 #pragma opt_propagation off
-int func_003E75A0(int arg0, int *arg1, int arg2) {
+int confunc_INTERFACE(int arg0, int *arg1, int arg2) {
     if (arg0 == 1) {
         if (String_CompareNoCase(&D_004BDE78, *arg1) == 0) {
             (*(signed char*)D_00493948) = 1;

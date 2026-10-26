@@ -32,8 +32,8 @@ void GuiKeyboard_Open(void* pg, char* title, char* text, Self_0028B3C0* self, in
 void* Gui_GetScreenStack(void);
 void GuiStack_SwapScreens(void* a, void* b, void* c);
 void GuiWidget_SendEvent(void* a, void* b, int kind, int v, int f);
-void func_0028C0C0(void* p);
-void func_0028BF90(void* p);
+void RecurseChildrenFocusable(void* p);
+void RecurseChildrenNotFocusable(void* p);
 void GuiScreen_SetFocus(void* ui, void* w);
 void GuiAgentCreate_StepOption(Self_0028B3C0* self, int a, int b);
 int GuiAgentCreate_HandleInput(Self_0028B3C0* self, Ev_0028B3C0* ev);
@@ -91,12 +91,12 @@ extern "C" int GuiAgentCreate_HandleInput(Self_0028B3C0* self, Ev_0028B3C0* ev)
         if (self->fCC != 0 && self->fCC != 1)
             GuiWidget_SendEvent(self, Gui_GetScreenStack(), 0x10, 0, 0);
         if (self->fCC == 2) {
-            func_0028C0C0(self->f4C);
-            func_0028BF90(self->f48);
+            RecurseChildrenFocusable(self->f4C);
+            RecurseChildrenNotFocusable(self->f48);
             GuiScreen_SetFocus(Gui_GetScreenStack(), self->GetFocus());
         } else if (self->fCC == 3) {
-            func_0028C0C0(self->f50);
-            func_0028BF90(self->f48);
+            RecurseChildrenFocusable(self->f50);
+            RecurseChildrenNotFocusable(self->f48);
             if (!self->fD8 && self->f54)
                 self->f54->flags &= ~2;
             GuiScreen_SetFocus(Gui_GetScreenStack(), self->GetFocus());
@@ -111,12 +111,12 @@ extern "C" int GuiAgentCreate_HandleInput(Self_0028B3C0* self, Ev_0028B3C0* ev)
     }
     if (Plain_0028B3C0(ev, 0x8000) && !self->fD0) {
         GuiWidget_SendEvent(self, Gui_GetScreenStack(), 0x10, 0, 0);
-        func_0028C0C0(self->f48);
+        RecurseChildrenFocusable(self->f48);
         if (self->fCC == 2) {
-            func_0028BF90(self->f4C);
+            RecurseChildrenNotFocusable(self->f4C);
             GuiScreen_SetFocus(Gui_GetScreenStack(), self->f4C);
         } else {
-            func_0028BF90(self->f50);
+            RecurseChildrenNotFocusable(self->f50);
             GuiScreen_SetFocus(Gui_GetScreenStack(), self->f50);
         }
     }

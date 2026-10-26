@@ -45,12 +45,12 @@ struct RouteX {
 extern "C" {
 extern NodeTab* D_004FFBE0;
 extern RegionVec* D_004FFBE8;
-void func_0014F1F0(It4* out, Region* c);
-void func_0014F1C0(It4* out, Region* c);
-void func_0014F1E0(It4* out, It4* raw);
-int* func_0015D3E0(void* c);
-int* func_0015D3B0(void* c);
-void func_0015D3D0(It8* out, void* c, int** raw);
+void std_vector_int_begin(It4* out, Region* c);
+void std_vector_int_end_void(It4* out, Region* c);
+void cArray_int_ConstIterator_ctor(It4* out, It4* raw);
+int* std_vector_imp_tNodeLink_begin_void_2(void* c);
+int* std_vector_imp_tNodeLink_end_void_2(void* c);
+void std_vector_tNodeLink_pointer2iterator_tNodeLinkPR_2(It8* out, void* c, int** raw);
 V4 Node_GetTranslation(PNode* n);
 PNode* NpcPath_GetNode(int id);
 Obj* NpcAi_NodeReservedBy(int node);
@@ -140,10 +140,10 @@ void NpcRoute_CollectCandidates(Route* self, int depth)
         if (x->e[k].id >= 0) {
             Region* rg = &D_004FFBE8->data[x->e[k].id];
             if (x->e[k].cost < x->maxDist) {
-                func_0014F1F0(&raw104, rg);
-                func_0014F1E0(&t124, &raw104);
+                std_vector_int_begin(&raw104, rg);
+                cArray_int_ConstIterator_ctor(&t124, &raw104);
                 it1 = t124;
-                while ((func_0014F1C0(&rawF4, rg), func_0014F1E0(&end1, &rawF4), !Eq4(end1, it1))) {
+                while ((std_vector_int_end_void(&rawF4, rg), cArray_int_ConstIterator_ctor(&end1, &rawF4), !Eq4(end1, it1))) {
                     int id = *it1.p;
                     PNode* n = tab->data[id];
                     if (id != x->skipNode && Masked(x, n)) {
@@ -167,11 +167,11 @@ void NpcRoute_CollectCandidates(Route* self, int depth)
                                         mask = (x->nodeMask & 0x40) ? 6 : 0x40;
                                         if (mask & n->flags)
                                             link = id;
-                                        func_0015D3D0(&t110, lk, (raw100 = func_0015D3E0(lk), &raw100));
+                                        std_vector_tNodeLink_pointer2iterator_tNodeLinkPR_2(&t110, lk, (raw100 = std_vector_imp_tNodeLink_begin_void_2(lk), &raw100));
                                         t120.p = t110.p;
                                         it2 = t120;
                                     } else {
-                                        func_0015D3D0(&t10C, lk, (rawFC = func_0015D3B0(lk), &rawFC));
+                                        std_vector_tNodeLink_pointer2iterator_tNodeLinkPR_2(&t10C, lk, (rawFC = std_vector_imp_tNodeLink_end_void_2(lk), &rawFC));
                                         t11C.p = t10C.p;
                                         it2 = t11C;
                                     }
@@ -204,7 +204,7 @@ void NpcRoute_CollectCandidates(Route* self, int depth)
                                             }
                                         }
                                         link = -1;
-                                        while ((func_0015D3D0(&t108, lk, (rawF8 = func_0015D3B0(lk), &rawF8)), end2.p = t108.p, !Eq8(it2, end2))) {
+                                        while ((std_vector_tNodeLink_pointer2iterator_tNodeLinkPR_2(&t108, lk, (rawF8 = std_vector_imp_tNodeLink_end_void_2(lk), &rawF8)), end2.p = t108.p, !Eq8(it2, end2))) {
                                             int type;
                                             Link* l = (Link*)it2.p;
                                             type = l->type;

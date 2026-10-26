@@ -12,20 +12,20 @@ typedef struct { S92Str key; unsigned char val; } S92Pair;
 typedef struct { void* it; unsigned char ok; } S92Res;
 extern void String_CopyCtor(S92Str* dst, const S92Str* src);
 extern void String_Dtor(S92Str* s, int del);
-extern void func_004089B0(S92Pair* out, S92Str* key, unsigned char val);
-extern void func_0040A880(S92Res* out, void* map, S92Pair* p);
+extern void std_make_pair_cString_uchar(S92Pair* out, S92Str* key, unsigned char val);
+extern void std_tree_pair_cString_value_compare_insert_one_pairR_3(S92Res* out, void* map, S92Pair* p);
 /* Inserts (name, value) into the map; returns whether it was inserted. */
-unsigned char func_004092D0(void* map, const S92Str* name, unsigned char* val) {
+unsigned char cAssocArray_cString_char_Add(void* map, const S92Str* name, unsigned char* val) {
     S92Res r;
     S92Str k;
     S92Pair p1;
     S92Pair p2;
     unsigned char ok;
     String_CopyCtor(&k, name);
-    func_004089B0(&p1, &k, *val);
+    std_make_pair_cString_uchar(&p1, &k, *val);
     String_CopyCtor(&p2.key, &p1.key);
     p2.val = p1.val;
-    func_0040A880(&r, map, &p2);
+    std_tree_pair_cString_value_compare_insert_one_pairR_3(&r, map, &p2);
     ok = r.ok;
     String_Dtor(&p2.key, 0);
     String_Dtor(&p1.key, 0);
@@ -45,7 +45,7 @@ unsigned char func_004092D0(void* map, const S92Str* name, unsigned char* val) {
 
 #include "materialProperties_types.h"
 
-extern int func_00409940(MaterialVec* v, MaterialProps* pos, int n, int value);   /* insert */
+extern int std_vector_imp_cMaterialProperties_insert(MaterialVec* v, MaterialProps* pos, int n, int value);   /* insert */
 
 /* back() */
 MaterialProps* MaterialVec_Back(MaterialVec* v) {
@@ -54,11 +54,11 @@ MaterialProps* MaterialVec_Back(MaterialVec* v) {
 
 /* push_back(v, value) */
 int MaterialVec_PushBack(MaterialVec* v, int value) {
-    return func_00409940(v, v->data + v->count, 1, value);
+    return std_vector_imp_cMaterialProperties_insert(v, v->data + v->count, 1, value);
 }
 
 /* size() */
-int func_004093D0(MaterialVec* v) {
+int cArray_cMaterialProperties_Size(MaterialVec* v) {
     return v->count;
 }
 #pragma pop /* merge_units */
@@ -98,35 +98,35 @@ int func_004093E0(int arg0, int arg1) {
 
 /* merge_units: begin func_00409480 */
 #pragma push /* merge_units */
-extern void func_004097A0(MatIter* out, int a1, int a2);
+extern void std_tree_pair_cString_value_compare_find_cStringR_3(MatIter* out, int a1, int a2);
 
 /* &v->data[i] */
-MaterialProps* func_00409480(MaterialVec* v, int i) {
+MaterialProps* cArray_cMaterialProperties_opIndex(MaterialVec* v, int i) {
     return &v->data[i];
 }
 
 /* Iterator dereference. */
-int* func_004094A0(MatIter* it) {
+int* cAssocArray_cString_char_Iterator_opMul(MatIter* it) {
     return &it->node->value;
 }
 
-int func_004094B0(Iter* a, Iter* b) {
+int cAssocArray_cString_char_Iterator_opNe(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 
-void func_004094D0(Iter* out, Tree* t) {
+void cAssocArray_cString_char_End(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-/* Forwards to func_004097A0 through a temporary iterator. */
-void func_004094E0(MatIter* out, int a1, int a2) {
+/* Forwards to std_tree_pair_cString_value_compare_find_cStringR_3 through a temporary iterator. */
+void cAssocArray_cString_char_Find(MatIter* out, int a1, int a2) {
     MatIter tmp;
 
-    func_004097A0(&tmp, a1, a2);
+    std_tree_pair_cString_value_compare_find_cStringR_3(&tmp, a1, a2);
     out->node = tmp.node;
 }
 
-int* func_00409510(int* self, int value) {
+int* details_compressed_pair_imp_cAllocator_cMaterialProperties_int_1_ctor(int* self, int value) {
     *self = value;
     return self;
 }

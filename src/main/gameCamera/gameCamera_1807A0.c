@@ -20,7 +20,7 @@ extern "C" {
 float Math_Atan2f(float y, float x);
 void Actor_BaseLogicUpdate(A1807A0* a, float dt);
 }
-extern "C" void func_001807A0(A1807A0* a, float dt)
+extern "C" void cCAMERA_GOBJ_NextFrame(A1807A0* a, float dt)
 {
     T1807A0* t = a->t;
     Q1807A0 p;
@@ -43,18 +43,18 @@ static inline void merge_flush_func_001807A0(void) {}
 typedef struct { void* vt; } VO;
 extern char D_004DA580[], D_004DA2F0[], D_004DA3E0[], D_004DA380[], D_004DA410[], D_004DA3B0[];
 extern char D_004DA440[], D_004DA350[], D_004DAD70[], D_004DA330[], D_004DAD90[], D_004DA470[];
-void func_00136300(void*, int);
-void func_00136350(void*, int);
+void cActivationTracker_dtor(void*, int);
+void cCollisionModelList_dtor(void*, int);
 void func_0017ED20(void*, int);
-void func_0017EC00(void*, int);
-void func_0017EC70(void*, int);
-void func_001810D0(void*, int);
+void cCameraShake_cPulsedShakeMagnitude_dtor(void*, int);
+void cSplinedMotion_Scalar_dtor_void(void*, int);
+void std_vector_deleter_cVector_dtor(void*, int);
 void cGOBJ_dtor(void*, int);
 void operator_delete(void*);
 
 static inline void BaseD(VO* o, void* vt) { if (o) o->vt = vt; }
 static inline void CrvD(VO* o, void* vt, void* bvt) { if (o) { o->vt = vt; BaseD(o, bvt); } }
-static inline void S1D(void* o) { if (o) func_001810D0(o, 0); }
+static inline void S1D(void* o) { if (o) std_vector_deleter_cVector_dtor(o, 0); }
 static inline void S2D(void* o) { if (o) S1D(o); }
 static inline void S3D(void* o) { if (o) S2D(o); }
 
@@ -64,13 +64,13 @@ void* cGameCamera_dtor(char* self, short flag)
         ((VO*)self)->vt = D_004DA580;
         if ((VO*)(self + 0xC70)) {
             ((VO*)(self + 0xC70))->vt = D_004DA2F0;
-            func_00136300(self + 0xCB0, -1);
-            func_00136350(self + 0xC70, 0);
+            cActivationTracker_dtor(self + 0xCB0, -1);
+            cCollisionModelList_dtor(self + 0xC70, 0);
         }
         if ((VO*)(self + 0xB20)) {
             func_0017ED20(self + 0xBA0, -1);
-            func_0017EC00(self + 0xB58, -1);
-            func_0017EC70(self + 0xB20, -1);
+            cCameraShake_cPulsedShakeMagnitude_dtor(self + 0xB58, -1);
+            cSplinedMotion_Scalar_dtor_void(self + 0xB20, -1);
         }
         CrvD((VO*)(self + 0xA90), D_004DA3E0, D_004DA380);
         CrvD((VO*)(self + 0x9D0), D_004DA410, D_004DA3B0);

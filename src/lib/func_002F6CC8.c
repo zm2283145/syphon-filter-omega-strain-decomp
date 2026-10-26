@@ -5,11 +5,11 @@ extern unsigned char D_004908A0[];
 extern char D_00525600[];
 extern char D_00525640[];
 extern void *memset(void *, int, unsigned int);
-extern int func_0034AA50(char *, char *, int, int *, char *, int, int);
-extern int func_0034BE80(char *, char *, int *, SockDesc *);
-extern int func_0034BFA8(char *, char *, int, int);
-extern int func_0034C168(char *, char *, int, int);
-extern int func_0034C690(char *, char *, int, int, void *, int);
+extern int sceInetName2Address(char *, char *, int, int *, char *, int, int);
+extern int sceBInetCreate(char *, char *, int *, SockDesc *);
+extern int sceBInetOpen(char *, char *, int, int);
+extern int sceBInetClose(char *, char *, int, int);
+extern int sceBInetControl(char *, char *, int, int, void *, int);
 
 int Socket_Construct(int *out, char *host, unsigned short *port, SockCfg *cfg, unsigned char *flag)
 {
@@ -36,7 +36,7 @@ int Socket_Construct(int *out, char *host, unsigned short *port, SockCfg *cfg, u
         p.xC = -1;
         p.x20 = *port;
         p.x8 = 1;
-        if (func_0034AA50(D_00525600, D_00525640, 0, p.x10, host, 0, 0) < 0) return 1;
+        if (sceInetName2Address(D_00525600, D_00525640, 0, p.x10, host, 0, 0) < 0) return 1;
         timeout = cfg->b8 != 1 ? 10000 : 0;
     } else if (t == 1) {
         if (host) return 2;
@@ -55,31 +55,31 @@ int Socket_Construct(int *out, char *host, unsigned short *port, SockCfg *cfg, u
         p.x8 = t;
         timeout = 10000;
         p.x20 = 0;
-        if (func_0034AA50(D_00525600, D_00525640, 0, p.x10, 0, 0, 0) < 0) return 1;
+        if (sceInetName2Address(D_00525600, D_00525640, 0, p.x10, 0, 0, 0) < 0) return 1;
     } else if (t == 2) {
         if (host) return 2;
         p.xC = *port;
         timeout = 0;
         p.x8 = t;
         p.x20 = 0;
-        if (func_0034AA50(D_00525600, D_00525640, 0, p.x10, 0, 0, 0) < 0) return 1;
+        if (sceInetName2Address(D_00525600, D_00525640, 0, p.x10, 0, 0, 0) < 0) return 1;
     } else
         return 3;
-    if (func_0034BE80(D_00525600, D_00525640, &sock, &p) != 0) return 1;
-    r = func_0034BFA8(D_00525600, D_00525640, sock, timeout);
+    if (sceBInetCreate(D_00525600, D_00525640, &sock, &p) != 0) return 1;
+    r = sceBInetOpen(D_00525600, D_00525640, sock, timeout);
     if (r != 0) {
         if (r != -500 || cfg->type != 2) {
-            func_0034C168(D_00525600, D_00525640, sock, 500);
+            sceBInetClose(D_00525600, D_00525640, sock, 500);
             return 1;
         }
     }
     if (cfg->type == 0 || cfg->type == 2) {
         one = 1;
-        if (func_0034C690(D_00525600, D_00525640, sock, 3, &one, 4) != 0) return 1;
+        if (sceBInetControl(D_00525600, D_00525640, sock, 3, &one, 4) != 0) return 1;
     }
     if (cfg->type == 1 && *port == 0) {
         memset(&info, 0, sizeof(info));
-        if (func_0034C690(D_00525600, D_00525640, sock, 1, &info, sizeof(info)) != 0) return 1;
+        if (sceBInetControl(D_00525600, D_00525640, sock, 1, &info, sizeof(info)) != 0) return 1;
         *port = info.port;
     }
     if (cfg->type == 0 && cfg->b8 == 1)

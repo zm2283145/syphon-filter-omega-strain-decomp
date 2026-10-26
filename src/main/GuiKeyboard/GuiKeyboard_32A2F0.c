@@ -10,7 +10,7 @@
 #include "release_buffer_call_dtor.h"
 
 extern "C" { char D_004B8890[] = "allocator.hh"; }
-DEFINE_RELEASE_BUFFER_CALL_DTOR(func_0032A2F0, func_0032A280,func_0032A370,D_004B8890)
+DEFINE_RELEASE_BUFFER_CALL_DTOR(std_vector_deleter_Section_dtor, std_vector_deleter_Section_clear,opDelete_SectionP_int_bool_charP_etc,D_004B8890)
 #pragma pop /* merge_units */
 /* merge_units: end func_0032A2F0 */
 
@@ -24,17 +24,17 @@ DEFINE_RELEASE_BUFFER_CALL_DTOR(func_0032A2F0, func_0032A280,func_0032A370,D_004
 /* Allocator release(ptr, pool, destroy, file, line): destroy the element (member at +0x4C, then base), then Mem_Free under the guard. */
 extern "C" {
 void Mem_Free(int pool, void* allocation, char* file, int line);
-void* func_0034F7A0(void* self, short flags);
+void* cArray_StatsRequirement_dtor(void* self, short flags);
 void* String_Dtor_138350(void* self, short flags);
-void* func_00328470(void* self, short flags);
-void func_0032A370(void* allocation, int pool, int destroy, char* file, int line);
+void* cArray_Slide_dtor(void* self, short flags);
+void opDelete_SectionP_int_bool_charP_etc(void* allocation, int pool, int destroy, char* file, int line);
 }
-void func_0032A370(void* allocation, int pool, int destroy, char* file, int line)
+void opDelete_SectionP_int_bool_charP_etc(void* allocation, int pool, int destroy, char* file, int line)
 {
     AllocGuard guard;
     if (destroy) {
         if (allocation) {
-            func_00328470((char*)allocation + 0xC, -1);
+            cArray_Slide_dtor((char*)allocation + 0xC, -1);
             String_Dtor_138350(allocation, -1);
         }
     }

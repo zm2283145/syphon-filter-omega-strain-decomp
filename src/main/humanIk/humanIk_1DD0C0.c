@@ -13,7 +13,7 @@ typedef struct SegPair { Seg a; Seg b; } SegPair;
 typedef struct SegList { unsigned int n; SegPair e[6]; } SegList;
 #pragma peephole off
 #pragma opt_propagation off
-void func_001DD0C0(SegList* l, const SegPair* s)
+void cArray_FixedCapacity_cIkTarget_LeftRight_6_PushBackActual(SegList* l, const SegPair* s)
 {
     if (l->n < 6) {
         SegPair* e;
@@ -49,7 +49,7 @@ static inline void merge_flush_func_001DD0C0(void) {}
 #pragma push /* merge_units */
 #pragma peephole off
 #pragma opt_propagation off
-SegList* func_001DD140(SegList* l, int unused, const SegPair* s)
+SegList* cDrawAndHolsterWeapon_ActionManager_cWeaponSlotIkTargetTable_PushBack_WithIndexCheck(SegList* l, int unused, const SegPair* s)
 {
     if (l->n < 6) {
         SegPair* e;

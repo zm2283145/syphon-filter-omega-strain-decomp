@@ -1,5 +1,5 @@
 #include "types.h"
-int func_0010CA10(int mode)
+int sceIpuSync(int mode)
 {
     int r = 0;
     switch (mode) {

@@ -1,6 +1,6 @@
 typedef struct G4Node { int a; struct G4Node* next; int b, c; int id; } G4Node;
 typedef struct { G4Node* head; int x, y; } G4List;
-extern G4List D_004908D8;G4Node* func_002F7D68(int id)
+extern G4List D_004908D8;G4Node* GetKeyMaster(int id)
 {
     G4Node* p = D_004908D8.head;
     if (p != 0 && p->id != id) {

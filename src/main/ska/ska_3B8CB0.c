@@ -16,15 +16,15 @@
  */
 
 
-int func_003B8CB0(char* self) {
+int alloc_ptr_cSkaSystem_Request_int_capacity(char* self) {
     return *(int*)(self + 4);
 }
 
-int func_003B8CC0(char* self) {
+int alloc_ptr_cSkaSystem_Request_int_allocator(char* self) {
     return *(int*)(self + 0);
 }
 
-int func_003B8CD0(char* self) {
+int alloc_ptr_cSkaSystem_Request_int_get(char* self) {
     return *(int*)(self + 8);
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -235,11 +235,11 @@ static inline void merge_flush_func_003B8F50(void) {}
 #pragma push /* merge_units */
 extern void __construct_array(void* array, void* ctor, void* dtor, int elemSize, int count);
 extern int func_0018A210(int, int);
-extern int func_0018A870(int);
+extern int cSkaAnimEvent_ctor_void(int);
 
 /* Copy-construct the notification table: construct seven 8-byte entries, then copy all fourteen words. */
 SkaNotifyTable* NotifyTable_CopyConstruct(SkaNotifyTable* dst, SkaNotifyTable* src) {
-    __construct_array(dst, (void*)func_0018A870, (void*)func_0018A210, 8, 7);
+    __construct_array(dst, (void*)cSkaAnimEvent_ctor_void, (void*)func_0018A210, 8, 7);
     dst->words[0] = src->words[0];
     dst->words[1] = src->words[1];
     dst->words[2] = src->words[2];

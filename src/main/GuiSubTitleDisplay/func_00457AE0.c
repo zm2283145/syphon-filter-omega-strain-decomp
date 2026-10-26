@@ -58,9 +58,9 @@ extern "C" {
 extern char g_Video[];
 extern int D_00538C64;
 extern char D_00538C68;
-SIt* func_00457FB0(SIt* self, SNode* n);
-SNode* func_00457FC0(SList* l);
-SNode* func_00457FD0(SNode* h);
+SIt* std_list_deleter_TextAtom_generic_iterator_ctor(SIt* self, SNode* n);
+SNode* std_list_deleter_TextAtom_tail(SList* l);
+SNode* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_12(SNode* h);
 char* strncpy(char* d, const char* s, int n);
 int Font_GetLineHeight(int font);
 void TextObj_Draw(TextPos* o);
@@ -73,8 +73,8 @@ void GuiSubTitleDisplay_Draw(SubW* self);
 static inline SMtx* MtxAt(int i) { return &((SRender*)g_Video)->mtx[i]; }
 static inline void GQR(void* d, void* s) { __int128 qa, qb; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(s) : "memory"); }
 static inline void UM(void* p) { int t; __asm__ volatile("sqc2 $vf0, 0x30(%1); qmfc2.ni %0, $vf0; pcpyud %0, %0, $zero; sq %0, 0x10(%1); pexcw %0, %0; sq %0, 0x20(%1); pcpyud %0, %0, $zero; sq %0, 0x0(%1)" : "=&r"(t) : "r"(p) : "memory"); }
-static inline SIt Begin(SList* l) { SIt t(func_00457FD0(&l->head)->next); return t; }
-static inline SIt End(SList* l) { SIt t; func_00457FB0(&t, func_00457FC0(l)); return t; }
+static inline SIt Begin(SList* l) { SIt t(details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_12(&l->head)->next); return t; }
+static inline SIt End(SList* l) { SIt t; std_list_deleter_TextAtom_generic_iterator_ctor(&t, std_list_deleter_TextAtom_tail(l)); return t; }
 static inline const int& Min(const int& a, const int& b) { return a < b ? a : b; }
 static inline void SetPos(TextPos* o, int x, int y) { o->x = x; o->y = y; }
 static inline const int& Max(const int& a, const int& b) { return a < b ? b : a; }

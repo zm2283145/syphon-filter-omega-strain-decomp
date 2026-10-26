@@ -7,71 +7,71 @@
 /* merge_units: begin func_002F4FF0 */
 #include "types.h"
 
-extern int func_002DABD8(int);
+extern int RemovePlayer(int);
 
-int func_002F4FF0(int a0) {
-    return func_002DABD8(a0);
+int rt_audio_remove_player(int a0) {
+    return RemovePlayer(a0);
 }
 /* merge_units: end func_002F4FF0 */
 
 /* merge_units: begin func_002F5008 */
-extern int func_002DA9A8(int, int, int);
+extern int SetIgnoreFlag(int, int, int);
 
-int func_002F5008(int a0, int a1, int a2) {
-    return func_002DA9A8(a0, a1, a2);
+int rt_audio_set_ignore(int a0, int a1, int a2) {
+    return SetIgnoreFlag(a0, a1, a2);
 }
 /* merge_units: end func_002F5008 */
 
 /* merge_units: begin func_002F5020 */
-extern int func_002DA3D8(int, int);
+extern int JoinChannel(int, int);
 
-int func_002F5020(int a0, int a1) {
-    return func_002DA3D8(a0, a1);
+int rt_audio_join_channel(int a0, int a1) {
+    return JoinChannel(a0, a1);
 }
 /* merge_units: end func_002F5020 */
 
 /* merge_units: begin func_002F5038 */
-extern int func_002DA4E0(int, int);
+extern int QuitChannel(int, int);
 
-int func_002F5038(int a0, int a1) {
-    return func_002DA4E0(a0, a1);
+int rt_audio_quit_channel(int a0, int a1) {
+    return QuitChannel(a0, a1);
 }
 /* merge_units: end func_002F5038 */
 
 /* merge_units: begin func_002F5050 */
 extern int func_002DACB0(int);
 
-int func_002F5050(int a0) {
+int rt_audio_get_state(int a0) {
     return func_002DACB0(a0);
 }
 /* merge_units: end func_002F5050 */
 
 /* merge_units: begin func_002F5068 */
-extern int func_002D92B0(int);
+extern int UpdateAudio(int);
 
-int func_002F5068(int a0) {
-    return func_002D92B0(a0);
+int rt_audio_update(int a0) {
+    return UpdateAudio(a0);
 }
 /* merge_units: end func_002F5068 */
 
 /* merge_units: begin func_002F5080 */
-extern int func_002DA050(int, int, int, int);
+extern int StreamInput(int, int, int, int);
 
-int func_002F5080(int a0, int a1, int a2, int a3) {
-    return func_002DA050(a0, a1, a2, a3);
+int rt_audio_write(int a0, int a1, int a2, int a3) {
+    return StreamInput(a0, a1, a2, a3);
 }
 /* merge_units: end func_002F5080 */
 
 /* merge_units: begin func_002F5098 */
-extern int func_002D8A98(int);
+extern int DestroyAudio(int);
 
-void func_002F5098(int a0) {
+void rt_audio_destroy(int a0) {
     int v0;
     int cond;
 
     cond = a0 == 0;
     if (cond) goto L002F50B0;
-    v0 = func_002D8A98(a0);
+    v0 = DestroyAudio(a0);
     goto ret;
 L002F50B0:;
     goto ret;
@@ -80,49 +80,49 @@ ret:;
 /* merge_units: end func_002F5098 */
 
 /* merge_units: begin func_002F50C0 */
-extern int func_002DA5A8(int, int, int);
+extern int EnumChannel(int, int, int);
 
-int func_002F50C0(int a0, int a1, int a2) {
-    return func_002DA5A8(a0, a1, a2);
+int rt_audio_enum_channel(int a0, int a1, int a2) {
+    return EnumChannel(a0, a1, a2);
 }
 /* merge_units: end func_002F50C0 */
 
 /* merge_units: begin func_002F50D8 */
-extern int func_002DA640(int, int, int);
+extern int EnumPlayer(int, int, int);
 
-int func_002F50D8(int a0, int a1, int a2) {
-    return func_002DA640(a0, a1, a2);
+int rt_audio_enum_players(int a0, int a1, int a2) {
+    return EnumPlayer(a0, a1, a2);
 }
 /* merge_units: end func_002F50D8 */
 
 /* merge_units: begin func_002F50F0 */
-extern int func_002DA750(int, int, int, int);
+extern int EnumChannelPlayer(int, int, int, int);
 
-int func_002F50F0(int a0, int a1, int a2, int a3) {
-    return func_002DA750(a0, a1, a2, a3);
+int rt_audio_enum_channel_players(int a0, int a1, int a2, int a3) {
+    return EnumChannelPlayer(a0, a1, a2, a3);
 }
 /* merge_units: end func_002F50F0 */
 
 /* merge_units: begin func_002F5108 */
-extern int func_002DA880(int, int, int, int);
+extern int EnumConnectedPlayer(int, int, int, int);
 
-int func_002F5108(int a0, int a1, int a2, int a3) {
-    return func_002DA880(a0, a1, a2, a3);
+int rt_audio_enum_connected_players(int a0, int a1, int a2, int a3) {
+    return EnumConnectedPlayer(a0, a1, a2, a3);
 }
 /* merge_units: end func_002F5108 */
 
 /* merge_units: begin func_002F5120 */
-extern int func_002DAA50(int, int);
+extern int SetRedundancyOff(int, int);
 
-int func_002F5120(int a0, int a1) {
-    return func_002DAA50(a0, a1);
+int rt_audio_set_redundancy_off(int a0, int a1) {
+    return SetRedundancyOff(a0, a1);
 }
 /* merge_units: end func_002F5120 */
 
 /* merge_units: begin func_002F5138 */
-extern int func_002DAD10(int, int, int, int, int);
+extern int GetCPULoad(int, int, int, int, int);
 
-int func_002F5138(int a0, int a1, int a2, int a3, int t0) {
-    return func_002DAD10(a0, a1, a2, a3, t0);
+int rt_audio_get_cpu_load(int a0, int a1, int a2, int a3, int t0) {
+    return GetCPULoad(a0, a1, a2, a3, t0);
 }
 /* merge_units: end func_002F5138 */

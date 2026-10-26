@@ -9,7 +9,7 @@ int WaitSema(int);
 typedef struct { int f0; char p4[4]; int f8; int fC; int f10; int f14; int f18; char p1C[36]; int f40; } PS0_003F53B0;
 #pragma push
 
-void func_003F53B0(PS0_003F53B0 *arg0, int *arg1, int *arg2, int *arg3, char * arg4) {
+void viBufBeginPut(PS0_003F53B0 *arg0, int *arg1, int *arg2, int *arg3, char * arg4) {
     int *temp_s0;
 int temp_a1;
 int temp_a0;

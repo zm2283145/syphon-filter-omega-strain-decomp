@@ -16,11 +16,11 @@ struct C5Trace { unsigned char hit; char pad[0x5F]; unsigned char want; unsigned
 struct C5TriIt { C5Tri* p; C5TriIt() {} C5TriIt(C5Tri* q) : p(q) {} };
 inline bool operator==(const C5TriIt& a, const C5TriIt& b) { return a.p == b.p; }
 inline bool operator!=(const C5TriIt& a, const C5TriIt& b) { return !(a == b); }
-extern "C" C5Tri** func_001EEBA0(C5TriVec* v);
+extern "C" C5Tri** std_vector_deleter_cCollisionFace_data_void(C5TriVec* v);
 extern "C" void Col_SegmentVsTriangle(C5Trace* t, C5Tri* tri);
 extern "C" bool Col_TraceFloorTriangles(C5Trace* t, C5TriVec* v) {
-    C5TriIt it(*func_001EEBA0(v));
-    const C5TriIt& end = C5TriIt(*func_001EEBA0(v) + v->count);
+    C5TriIt it(*std_vector_deleter_cCollisionFace_data_void(v));
+    const C5TriIt& end = C5TriIt(*std_vector_deleter_cCollisionFace_data_void(v) + v->count);
     for (; it != end; it.p++) {
         if ((unsigned char)(it.p->flags & t->reject) == 0 && t->want == (unsigned char)(it.p->flags & t->want))
             Col_SegmentVsTriangle(t, it.p);
@@ -40,9 +40,9 @@ struct C6Rec_3C37A0 { char pad[0x40]; unsigned char flags; char pad41[0x2F]; };
 struct C6Coll_3C37A0 { int pad0; int count; };
 struct C6Query_3C37A0 { unsigned char hit; char pad[0x5F]; unsigned char require; unsigned char reject; };
 #if 0 /* merge_units */
-extern "C" C6Rec_3C37A0** func_001EEBA0(C6Coll_3C37A0*);
+extern "C" C6Rec_3C37A0** std_vector_deleter_cCollisionFace_data_void(C6Coll_3C37A0*);
 #endif /* merge_units */
-#define func_001EEBA0(a0) ((C6Rec_3C37A0 * *)func_001EEBA0((C5TriVec *)(a0))) /* merge_units */
+#define std_vector_deleter_cCollisionFace_data_void(a0) ((C6Rec_3C37A0 * *)std_vector_deleter_cCollisionFace_data_void((C5TriVec *)(a0))) /* merge_units */
 
 extern "C" void Los_IntersectRecord(C6Query_3C37A0*, C6Rec_3C37A0*);
 static inline int C6Eq(C6Rec_3C37A0* a, C6Rec_3C37A0* b) { return a == b; }
@@ -50,8 +50,8 @@ extern "C" int Los_TraceTriangles(C6Query_3C37A0* q, C6Coll_3C37A0* coll) {
     C6Rec_3C37A0** pend;
     C6Rec_3C37A0* end;
     C6Rec_3C37A0* it;
-    it = *func_001EEBA0(coll);
-    end = *func_001EEBA0(coll) + coll->count;
+    it = *std_vector_deleter_cCollisionFace_data_void(coll);
+    end = *std_vector_deleter_cCollisionFace_data_void(coll) + coll->count;
     pend = &end;
     for (; C6Eq(it, *pend) ^ 1; it++) {
         unsigned char f = it->flags;
@@ -60,7 +60,7 @@ extern "C" int Los_TraceTriangles(C6Query_3C37A0* q, C6Coll_3C37A0* coll) {
     }
     return q->hit != 0;
 }
-#undef func_001EEBA0 /* merge_units */
+#undef std_vector_deleter_cCollisionFace_data_void /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003C37A0(void) {}
 #pragma pop /* merge_units */
@@ -72,25 +72,25 @@ typedef struct { char pad0[0x40]; unsigned char mask; char pad41[0x2F]; } Pt2_LR
 typedef struct { int pad0; int count; } Pt2_LVec;
 typedef struct { unsigned char hit; char pad1[0x5F]; unsigned char want; unsigned char excl; unsigned char alt; } Pt2_LQ;
 #if 0 /* merge_units */
-extern Pt2_LRec** func_001EEBA0(Pt2_LVec*);
+extern Pt2_LRec** std_vector_deleter_cCollisionFace_data_void(Pt2_LVec*);
 #endif /* merge_units */
-#define func_001EEBA0(a0) ((Pt2_LRec * *)func_001EEBA0((void *)(a0))) /* merge_units */
+#define std_vector_deleter_cCollisionFace_data_void(a0) ((Pt2_LRec * *)std_vector_deleter_cCollisionFace_data_void((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void Col_SegmentVsTriangle(Pt2_LQ*, Pt2_LRec*);
 #endif /* merge_units */
 #define Col_SegmentVsTriangle(a0, a1) (Col_SegmentVsTriangle((void *)(a0), (void *)(a1))) /* merge_units */
 
-extern void func_003C4120(Pt2_LQ*, Pt2_LRec*);
+extern void cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_2(Pt2_LQ*, Pt2_LRec*);
 static inline int Pt2_Ne(Pt2_LRec* a, Pt2_LRec** b) { return !(a == *b); }
 
-int func_003C3880(Pt2_LQ* q, Pt2_LVec* v) {
+int cCollisionProbe_Ray_DetectForCollision_cArrayR_3(Pt2_LQ* q, Pt2_LVec* v) {
     unsigned char deferred = 0;
     {
         Pt2_LRec* end[1];
         Pt2_LRec** ep;
-        Pt2_LRec* it = *func_001EEBA0(v);
-        end[0] = *func_001EEBA0(v) + v->count;
+        Pt2_LRec* it = *std_vector_deleter_cCollisionFace_data_void(v);
+        end[0] = *std_vector_deleter_cCollisionFace_data_void(v) + v->count;
         ep = end;
         for (; Pt2_Ne(it, ep); it++) {
             unsigned char m = it->mask;
@@ -105,21 +105,21 @@ int func_003C3880(Pt2_LQ* q, Pt2_LVec* v) {
     if (deferred) {
         Pt2_LRec* end[1];
         Pt2_LRec** ep;
-        Pt2_LRec* it = *func_001EEBA0(v);
-        end[0] = *func_001EEBA0(v) + v->count;
+        Pt2_LRec* it = *std_vector_deleter_cCollisionFace_data_void(v);
+        end[0] = *std_vector_deleter_cCollisionFace_data_void(v) + v->count;
         ep = end;
         for (; Pt2_Ne(it, ep); it++) {
             unsigned char m = it->mask;
             if ((unsigned char)(m & q->alt)) {
                 if (!(unsigned char)(m & q->excl)) {
-                    if (q->want == (unsigned char)(m & q->want)) func_003C4120(q, it);
+                    if (q->want == (unsigned char)(m & q->want)) cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_2(q, it);
                 }
             }
         }
     }
     return q->hit != 0;
 }
-#undef func_001EEBA0 /* merge_units */
+#undef std_vector_deleter_cCollisionFace_data_void /* merge_units */
 #undef Col_SegmentVsTriangle /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003C3880(void) {}
@@ -129,9 +129,9 @@ static inline void merge_flush_func_003C3880(void) {}
 /* merge_units: begin func_003C3A60 */
 #pragma push /* merge_units */
 #if 0 /* merge_units */
-extern Pt2_LRec** func_001EEBA0(Pt2_LVec*);
+extern Pt2_LRec** std_vector_deleter_cCollisionFace_data_void(Pt2_LVec*);
 #endif /* merge_units */
-#define func_001EEBA0(a0) ((Pt2_LRec * *)func_001EEBA0((void *)(a0))) /* merge_units */
+#define std_vector_deleter_cCollisionFace_data_void(a0) ((Pt2_LRec * *)std_vector_deleter_cCollisionFace_data_void((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void Los_IntersectRecord(Pt2_LQ*, Pt2_LRec*);
@@ -145,8 +145,8 @@ int Los_TraceWithWater(Pt2_LQ* q, Pt2_LVec* v) {
     {
         Pt2_LRec* end[1];
         Pt2_LRec** ep;
-        Pt2_LRec* it = *func_001EEBA0(v);
-        end[0] = *func_001EEBA0(v) + v->count;
+        Pt2_LRec* it = *std_vector_deleter_cCollisionFace_data_void(v);
+        end[0] = *std_vector_deleter_cCollisionFace_data_void(v) + v->count;
         ep = end;
         for (; Pt2_Ne(it, ep); it++) {
             unsigned char m = it->mask;
@@ -161,8 +161,8 @@ int Los_TraceWithWater(Pt2_LQ* q, Pt2_LVec* v) {
     if (deferred) {
         Pt2_LRec* end[1];
         Pt2_LRec** ep;
-        Pt2_LRec* it = *func_001EEBA0(v);
-        end[0] = *func_001EEBA0(v) + v->count;
+        Pt2_LRec* it = *std_vector_deleter_cCollisionFace_data_void(v);
+        end[0] = *std_vector_deleter_cCollisionFace_data_void(v) + v->count;
         ep = end;
         for (; Pt2_Ne(it, ep); it++) {
             unsigned char m = it->mask;
@@ -175,7 +175,7 @@ int Los_TraceWithWater(Pt2_LQ* q, Pt2_LVec* v) {
     }
     return q->hit != 0;
 }
-#undef func_001EEBA0 /* merge_units */
+#undef std_vector_deleter_cCollisionFace_data_void /* merge_units */
 #undef Los_IntersectRecord /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003C3A60(void) {}

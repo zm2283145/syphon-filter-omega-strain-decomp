@@ -32,7 +32,7 @@ extern void* func_00198F20(void*);
 
 
 /* Construct an iterator holding value (goes through a stack temporary). */
-int func_00198E70(int a0, int a1) {
+int std_list_cSkaPlaybackGroupPtr_generic_iterator_1_ctor(int a0, int a1) {
     int loc[1];
     int v0, v1;
 
@@ -75,13 +75,13 @@ static inline void merge_flush_func_00198EF0(void) {}
 
 /* merge_units: begin func_00198F20 */
 #pragma push /* merge_units */
-extern int func_00198D00(char*, int);
+extern int cSkaPlaybackList_FindPlaybackGroup(char*, int);
 #if 0 /* merge_units */
 extern char* Deque_Back(char*);
 #endif /* merge_units */
 #define Deque_Back(a0) (Deque_Back((a0))) /* merge_units */
 
-extern char* func_00198F70(char*);
+extern char* cSkaParams_IsPlaybackActive(char*);
 
 void* func_00198F20(void* self) {
     return self;
@@ -91,13 +91,13 @@ int MotionCtrl_IsSelectorPlaying(char* self, int key) {
     char* last;
     int found;
 
-    last = func_00198F70(self);
-    found = func_00198D00(last, key);
+    last = cSkaParams_IsPlaybackActive(self);
+    found = cSkaPlaybackList_FindPlaybackGroup(last, key);
     return found != 0;
 }
 
 /* Last element of the deque at +0x3C, offset +0xE8 into it. */
-char* func_00198F70(char* self) {
+char* cSkaParams_IsPlaybackActive(char* self) {
     char* last;
 
     last = Deque_Back(self + 60);

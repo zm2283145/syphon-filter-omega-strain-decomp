@@ -3,7 +3,7 @@ typedef struct { void *pkt_addr; int rpc_id; int sema_id; unsigned int mode; } R
 typedef struct { RpcHdr1488 hdr; unsigned int command; void *buff; void *gp; void (*end_function)(void *); void *end_param; void *server; int sema; int x2C; } RpcClient1488;
 typedef struct { char pad[0x1C]; RpcClient1488 *client; unsigned int cid; void *server; void *buff; } RpcRend1488;
 extern int iSignalSema(int);
-extern void func_00271468(void *);
+extern void _sceRpcFreePacket_void_2(void *);
 static __inline__ void *ChangeGP_1488(void *gp)
 {
     void *old;
@@ -11,7 +11,7 @@ static __inline__ void *ChangeGP_1488(void *gp)
     __asm__ volatile("move %0, $gp\n\tmove $gp, %1" : "=&r"(old) : "r"(gp) : "memory");
     return old;
 }
-void func_00271488(RpcRend1488 *req)
+void _request_end_void_2(RpcRend1488 *req)
 {
     RpcClient1488 *client;
     switch (req->cid) {
@@ -41,7 +41,7 @@ void func_00271488(RpcRend1488 *req)
     {
         RpcClient1488 *c = req->client;
         if (c->hdr.sema_id >= 0) iSignalSema(c->hdr.sema_id);
-        func_00271468(c->hdr.pkt_addr);
+        _sceRpcFreePacket_void_2(c->hdr.pkt_addr);
         c->hdr.pkt_addr = 0;
     }
 }

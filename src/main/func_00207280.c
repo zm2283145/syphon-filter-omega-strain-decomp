@@ -5,10 +5,10 @@ typedef union SsoHeader {
     struct { unsigned char isLong : 1; unsigned char len : 7; } bits;
 } SsoHeader;
 
-extern SsoHeader* func_002071B0(void* self);
+extern SsoHeader* details_compressed_pair_imp_rep_s_2_first_void(void* self);
 
 /* Returns the short-string length stored in the SSO header byte. */
-unsigned char func_00207280(void* self)
+unsigned char std_basic_string_char_char_traits_char_short_size(void* self)
 {
-    return func_002071B0(self)->bits.len;
+    return details_compressed_pair_imp_rep_s_2_first_void(self)->bits.len;
 }

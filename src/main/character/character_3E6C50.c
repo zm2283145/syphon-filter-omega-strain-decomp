@@ -5,7 +5,7 @@ static inline void CpSD(const void* s, void* d) { VCopyF(d, s); }
 extern "C" char D_004DFD80[];
 extern "C" char D_004E0840[];
 extern "C" char D_004E0120[];
-MSG_CLONE_BEGIN(func_003E6C50, 0x50, "character.hh", 0x3C8)
+MSG_CLONE_BEGIN(cCharActionMsg_MotionParams_Clone, 0x50, "character.hh", 0x3C8)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);

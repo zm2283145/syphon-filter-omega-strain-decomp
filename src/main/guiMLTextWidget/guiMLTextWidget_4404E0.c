@@ -2,7 +2,7 @@
 #include "vtable_base_dtor.h"
 
 extern "C" {
-extern "C" void func_00293950();
+extern "C" void GuiWidget_onInput();
 extern "C" void GuiWidget_FocusPrev();
 extern "C" void GuiWidget_FocusNext();
 extern "C" void GuiWidget_FocusLast();
@@ -35,4 +35,4 @@ extern "C" VtableObject* GuiWeaponDisplay_dtor(VtableObject* self, short deleteF
     }
     return self;
 }
-void * const D_004E11A0[24] = { (void*)0x0, (void*)0x0, (void*)GuiWeaponDisplay_dtor, (void*)GuiWeaponDisplay_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiWidget_BaseWake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_00293950, (void*)GuiWeaponDisplay_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWeaponDisplay_Update, (void*)GuiWidget_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiWeaponDisplay_GetClassName, (void*)GuiWeaponDisplay_IsType, (void*)0x0 };
+void * const D_004E11A0[24] = { (void*)0x0, (void*)0x0, (void*)GuiWeaponDisplay_dtor, (void*)GuiWeaponDisplay_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiWidget_BaseWake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiWidget_onInput, (void*)GuiWeaponDisplay_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWeaponDisplay_Update, (void*)GuiWidget_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiWeaponDisplay_GetClassName, (void*)GuiWeaponDisplay_IsType, (void*)0x0 };

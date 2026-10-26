@@ -1,6 +1,6 @@
 #include "types.h"
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
-void func_0036FF40(V4* a, V4* b) {
+void cXform_Rotate_cMatrixR(V4* a, V4* b) {
     char* pv1 = (char*)a + 0x10;
     asm {
         lqc2 vf4, 0x0(b)

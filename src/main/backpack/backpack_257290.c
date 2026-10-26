@@ -16,7 +16,7 @@
 #pragma cplusplus on
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_00257290)
+DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_cBackpackPtr_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00257290 */
 
@@ -35,15 +35,15 @@ int Alloc_Unlock(int);
 #define Alloc_Unlock(a0) (Alloc_Unlock((a0))) /* merge_units */
                                   
 int Mem_Alloc(int, int, int *, int);                      
-int func_001361D0(int *);                           
+int cArrayCapacity_Int(int *);                           
 int PtrVec_Reserve_Thunk_257450(int , int);                       
-int func_00257460(int );                            
+int std_vector_cBackpackPtr_ctor(int );                            
 extern int D_004A7B50;
 extern int g_BackpackList;
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
 
-void func_00257380(void) {
+void cBackpack_InitLevel(void) {
     int sp2C;
     int temp_s0;
 
@@ -58,8 +58,8 @@ void func_00257380(void) {
     g_ProfileLockDepth -= 1;
     if (temp_s0 != NULL) {
         sp2C = 0x14;
-        func_00257460(temp_s0);
-        PtrVec_Reserve_Thunk_257450(temp_s0, func_001361D0(&sp2C));
+        std_vector_cBackpackPtr_ctor(temp_s0);
+        PtrVec_Reserve_Thunk_257450(temp_s0, cArrayCapacity_Int(&sp2C));
         F_(temp_s0, 0xC, signed char) = 1;
     }
     g_BackpackList = temp_s0;

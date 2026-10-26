@@ -1,7 +1,7 @@
 #pragma cplusplus on
 #include "types.h"
 #include "alloc_guard.h"
-/* func_003AE150: drop the motion-group contributions that received no weight this frame, reset the rest */
+/* cSkaPlaybackList_StartOfFrameUpdate: drop the motion-group contributions that received no weight this frame, reset the rest */
 typedef struct { char unused; } Alloc;
 struct TaggedInt { Alloc alloc; int value; TaggedInt(const Alloc& a, int v) : alloc(a), value(v) {} };
 typedef struct { int cap; int count; int* data; } IntVec;
@@ -28,16 +28,16 @@ typedef struct { int w; } Raw;
 typedef struct { int pad[3]; float unkC; } AnimGroup;
 extern "C" {
 Raw List_Begin(AnimGroup* g);
-void func_00396B10(LIt* out, const Raw& r);
-Raw func_00396B00(AnimGroup* g);
-void func_00396AF0(LIt* out, const Raw& r);
-Elem* func_003AE340(IntVec* v, int i);
+void std_list_cSkaPlaybackGroupPtr_generic_iterator_ctor(LIt* out, const Raw& r);
+Raw std_list_cSkaPlaybackGroupPtr_end(AnimGroup* g);
+void cLListIterator_cSkaPlaybackGroupPtr_ctor(LIt* out, const Raw& r);
+Elem* std_vector_cSkaPlaybackItem_opIndex(IntVec* v, int i);
 void MotionGroup_ClearContributions(IntVec* v);
 void func_00396C10(IntVec* v, int f);
 void Mem_Free(int pool, void* p, char* file, int line);
 void ActiveList_EraseMatching(void* self, TaggedInt arg);
 extern char D_004BCFF8[];
-void func_003AE150(AnimGroup* g);
+void cSkaPlaybackList_StartOfFrameUpdate(AnimGroup* g);
 }
 static inline void EraseValue(void* self, int value)
 {
@@ -46,10 +46,10 @@ static inline void EraseValue(void* self, int value)
     /* the int round trip keeps the argument's address in a register: retail passes it with ldl/ldr */
     ActiveList_EraseMatching(self, *(TaggedInt*)(int)&t);
 }
-static inline void LBegin0(LIt* o, AnimGroup* g) { func_00396B10(o, List_Begin(g)); }
+static inline void LBegin0(LIt* o, AnimGroup* g) { std_list_cSkaPlaybackGroupPtr_generic_iterator_ctor(o, List_Begin(g)); }
 /* the extra inline level orders the begin/end Raw temporaries below the erase tag like retail */
 static inline void LBegin(LIt* o, AnimGroup* g) { LBegin0(o, g); }
-static inline void LEnd0(LIt* o, AnimGroup* g) { func_00396AF0(o, func_00396B00(g)); }
+static inline void LEnd0(LIt* o, AnimGroup* g) { cLListIterator_cSkaPlaybackGroupPtr_ctor(o, std_list_cSkaPlaybackGroupPtr_end(g)); }
 static inline void LEnd(LIt* o, AnimGroup* g) { LEnd0(o, g); }
 static inline void VZero(void* d) { asm { .set reorder; sq zero, 0(d) } }
 static inline unsigned char Expire(Contrib* c)
@@ -57,7 +57,7 @@ static inline unsigned char Expire(Contrib* c)
     if (c->id == -1) {
         Elem* e;
         if (!c->active) return true;
-        e = func_003AE340(&c->vec, 0);
+        e = std_vector_cSkaPlaybackItem_opIndex(&c->vec, 0);
         e->f4 = 0;
         e->b8 = 0;
         VZero(&e->v10);
@@ -73,7 +73,7 @@ static inline unsigned char Expire(Contrib* c)
 #pragma opt_rotateloops off
 #pragma opt_propagation off
 #pragma opt_loop_invariants off
-void func_003AE150(AnimGroup* g)
+void cSkaPlaybackList_StartOfFrameUpdate(AnimGroup* g)
 {
     LIt it;
     LIt cur;

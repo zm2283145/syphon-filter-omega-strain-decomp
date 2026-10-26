@@ -13,16 +13,16 @@
 
 #include "types.h"
 
-Word* func_00432F20(Word* dst, Word* src) {
+Word* cAssocArray_tNPCInfoPtr_bool_Iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_00432F30(Iter* out, Tree* t) {
+void std_map_tNPCInfoPtr_bool_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-void func_00432F40(Iter* out, Tree* t) {
+void std_tree_pair_tNPCInfoPtr_value_compare_begin(Iter* out, Tree* t) {
     out->p = t->leftmost;
 }
 #pragma pop /* merge_units */
@@ -37,6 +37,6 @@ extern "C" {
 #include "npc_info_rec.h"
 }
 #include "npc_info_purge.h"
-DEFINE_NPC_INFO_PURGE(func_00432F50, D_00582AB0, 1, 0x683)
+DEFINE_NPC_INFO_PURGE(cNPCInfoObject_DoPendingActivates, D_00582AB0, 1, 0x683)
 #pragma pop /* merge_units */
 /* merge_units: end func_00432F50 */

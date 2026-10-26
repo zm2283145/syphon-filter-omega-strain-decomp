@@ -9,7 +9,7 @@
 extern char D_00598494[];
 extern char D_00598498[];
 
-int func_0046DC38(void) {
+int MediusUniqueCallbackClanLadderListResponseHandler(void) {
     int v0;
     int cond;
 
@@ -24,11 +24,11 @@ ret:
     return v0;
 }
 
-int func_0046DC68(void) {
+int MediusUniqueCallbackClanLadderPositionRequestHandler(void) {
     return 36;
 }
 
-int func_0046DC70(void) {
+int MediusUniqueCallbackClanLadderPositionResponseHandler(void) {
     int v0;
     int cond;
 

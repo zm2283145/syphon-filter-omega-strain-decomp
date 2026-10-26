@@ -28,7 +28,7 @@ int cNIEventOBJ_ActivateCamera(int camera) {
     return World_PushObjectFromAction(g_Game, camera);
 }
 
-void* func_0017A5F0(char* self) {
+void* cGameCamera_GetGlobalOffset(char* self) {
     return self + 0xB10;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -41,7 +41,7 @@ static inline void merge_flush_func_0017A5D0(void) {}
 typedef struct { char pad[0xB10]; Vec4 v; } ObjB10;
 /* Copies a vector into the object's field at +0xB10. */
 #pragma peephole off
-void func_0017A600(ObjB10* obj, Vec4* v) { obj->v = *v; }
+void cGameCamera_SetGlobalOffset(ObjB10* obj, Vec4* v) { obj->v = *v; }
 #pragma peephole reset
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0017A600(void) {}

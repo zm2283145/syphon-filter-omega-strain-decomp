@@ -7,25 +7,25 @@
 #include "types.h"
 #include "loose00_types.h"
 
-FlagElem16* func_001E1580(FlagElem16Iter* it) {
+FlagElem16* cArray_cCollisionEdge_ConstIterator_opMul(FlagElem16Iter* it) {
     return it->p;
 }
 
-Elem60* func_001E1590(Elem60Iter* it) {
+Elem60* cArray_cEdgeGroup_Iterator_opMul(Elem60Iter* it) {
     return it->p;
 }
 
 /* End iterator of an array of 16-byte elements. */
-void func_001E15A0(FlagElem16Iter* out, Vec16Array* v) {
+void cArray_cEdgeGroup_End_void(FlagElem16Iter* out, Vec16Array* v) {
     out->p = v->data + v->count;
 }
 
-void func_001E15C0(Iter* out, PtrVec* v) {
+void cArray_cEdgeGroup_Begin_void(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 
 /* End iterator of an array of 0x60-byte records. */
-void func_001E15D0(Elem60Iter* out, Vec60Array* v) {
+void cArray_cCollisionEdge_End(Elem60Iter* out, Vec60Array* v) {
     int count;
     Elem60* data;
 
@@ -34,6 +34,6 @@ void func_001E15D0(Elem60Iter* out, Vec60Array* v) {
     out->p = data + count;
 }
 
-void func_001E15F0(Iter* out, PtrVec* v) {
+void cArray_cCollisionEdge_Begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }

@@ -9,7 +9,7 @@ extern char D_004B98B8[];
 }
 static inline void Cp33B980(char* d, const char* f, const char* l) { memcpy(d, f, l - f); }
 /* Byte vector assign(first, last): grows the buffer when needed, then copies. */
-extern "C" void func_0033B980(V33B980* v, char* first, char* last)
+extern "C" void std_vector_pod_eRequirementState_do_assign(V33B980* v, char* first, char* last)
 {
     unsigned int n = last - first;
     if (v->cap < n) {

@@ -8,7 +8,7 @@ struct Pt1FlIt {
 };
 extern "C" {
 extern void* D_004FFD48;
-void* func_00224AB0(void* list);
+void* cObjList_cTerrainPtr_GetList(void* list);
 void LosRegionArray_Begin(Pt1FlIt* it, void* node);
 void LosRegionArray_End(Pt1FlIt* it, void* node);
 }
@@ -18,9 +18,9 @@ extern "C" int TerrainList_GetFirst(void)
     Pt1FlIt b;
     Pt1FlIt e;
     int r;
-    LosRegionArray_Begin(&b, func_00224AB0(list));
+    LosRegionArray_Begin(&b, cObjList_cTerrainPtr_GetList(list));
     r = 0;
-    LosRegionArray_End(&e, func_00224AB0(list));
+    LosRegionArray_End(&e, cObjList_cTerrainPtr_GetList(list));
     if (b != e)
         r = *b.p;
     return r;

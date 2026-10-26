@@ -31,7 +31,7 @@ extern int D_004FF0D4;
 extern int D_004FF0D8;
 extern int D_004FF0DC;
 
-void func_004D16B0(void) {
+void StaticInit_map(void) {
     D_004FF074 = 0;
     D_004FF078 = 0;
     D_004FF07C = 0;

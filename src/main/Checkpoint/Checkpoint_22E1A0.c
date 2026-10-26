@@ -26,7 +26,7 @@ extern int Global_ReSpawn(int checkpoint);
 
 /* ReSpawn(checkpoint) */
 int Script_ReSpawn(CheckpointScriptArg* args) {
-    Global_ReSpawn(func_00175FA0(args[0].i));
+    Global_ReSpawn(cPlayer_SOBJ_convert(args[0].i));
     return 0;
 }
 #undef Global_ReSpawn /* merge_units */

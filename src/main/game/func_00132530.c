@@ -6,7 +6,7 @@ typedef struct { V4 rot; V4 pos; } P_2530;
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-P_2530* func_00132530(P_2530* p, V4* q) {
+P_2530* cQuatVec_Rotate(P_2530* p, V4* q) {
     V4 u; V4 t;
     V4* vp;
     V4* s2;

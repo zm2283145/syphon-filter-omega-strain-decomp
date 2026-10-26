@@ -57,6 +57,6 @@ int GuiSound_Play(char* self, void* a, void* b)
 #pragma cplusplus on
 
 /* Message destructor: payload members, then cMessage base. */
-DEFINE_MESSAGE_TWO_MEMBER_DTOR(func_00465CC0, D_004DAE30)
+DEFINE_MESSAGE_TWO_MEMBER_DTOR(cPlaySoundMsg_dtor_void_2, D_004DAE30)
 #pragma pop /* merge_units */
 /* merge_units: end func_00465CC0 */

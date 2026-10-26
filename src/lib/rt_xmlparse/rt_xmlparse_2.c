@@ -41,7 +41,7 @@ int RtXml_Alloc(Ctx3111E0 *c, void **pp, unsigned int size)
 /* merge_units: end func_003111E0 */
 
 /* merge_units: begin func_00311320 */
-extern int func_002FB3C0(void *p);
+extern int rt_memory_free(void *p);
 typedef struct { void *ptr; int size; } Slot311320;
 typedef struct { Slot311320 slot[0x1000]; int count; int used; } Ctx311320;
 int RtXml_Free(Ctx311320 *c, void **pp)
@@ -49,7 +49,7 @@ int RtXml_Free(Ctx311320 *c, void **pp)
     unsigned int i;
     for (i = 0; i < 0x1000; i++) {
         if (*pp == c->slot[i].ptr) {
-            func_002FB3C0(pp);
+            rt_memory_free(pp);
             c->used -= c->slot[i].size;
             *pp = 0;
             c->slot[i].ptr = 0;
@@ -60,7 +60,7 @@ int RtXml_Free(Ctx311320 *c, void **pp)
     if (*pp) {
         if ("Freeing a pointer that wasn't alloc'd by me!")
             printf(D_004B0DE0, D_004B0E18, 0x1BB, "!\"Freeing a pointer that wasn't alloc'd by me!\"");
-        func_002FB3C0(pp);
+        rt_memory_free(pp);
     }
     return 0;
 }

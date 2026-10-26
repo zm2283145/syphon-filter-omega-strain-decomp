@@ -11,7 +11,7 @@ extern void NpcThinkList_RemoveActor(D2D5EE0* d);
 extern char* Object_LookupById(unsigned short* id);
 extern void Actor_InitComponents(A2D5EE0* a, int n, B2D5EE0* b, int c);
 extern void func_00148CD0(M2D5EE0* m, void* p);
-void func_002D5EE0(S2D5EE0* s, X2D5EE0* x)
+void cNetNPC_ConvertToNpc(S2D5EE0* s, X2D5EE0* x)
 {
     A2D5EE0* a = AiController_GetActor(s, x);
     NpcThinkList_RemoveActor(s->x30);

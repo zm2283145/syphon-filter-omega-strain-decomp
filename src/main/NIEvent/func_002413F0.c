@@ -7,7 +7,7 @@
 #include "types.h"
 
 /* Swaps the contents of two vectors. */
-void func_002413F0(PtrVec* a, PtrVec* b) {
+void std_swap_vectordeleterR_vectordeleterR_20(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;
         int* p;

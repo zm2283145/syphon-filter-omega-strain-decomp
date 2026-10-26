@@ -32,7 +32,7 @@ void Fstream_PurgeRequests(Loader_EAE60* l, int a);
 Req_EAE60* Fstream_FindRequest(Loader_EAE60* l, char* name, int kind);
 void List_PushBack_3EB310(Loader_EAE60* l, Req_EAE60** r);
 char* Resource_Construct(void* p);
-void func_0036DFB0(char* f, char* a, char* b);
+void cFileMan_EncodeFilename_charP_cFileManR(char* f, char* a, char* b);
 void FileMan_FindMember(char* f);
 int FileMan_GetSize(char* f);
 int FStream_AllocBlock(Sub_EAE60* s, int size);
@@ -130,7 +130,7 @@ extern "C" int AsyncLoader_QueueLoad(Loader_EAE60* ldr, char* name, void (*cb)(S
             { AllocGuard g; f = (char*)Mem_Alloc(0, 0x9C, &D_004BE010, 0x89); }
             if (f) f = Resource_Construct(f);
             r->file = f;
-            func_0036DFB0(r->file, name + 4, name);
+            cFileMan_EncodeFilename_charP_cFileManR(r->file, name + 4, name);
             r->owned = 1;
         } else {
             r->file = name;

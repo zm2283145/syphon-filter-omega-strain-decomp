@@ -1,8 +1,8 @@
 #pragma cplusplus on
 #include "types.h"
 
-/* func_003C55C0: collision-tree box query root - upload the query box to VU0, then walk the root
- * node's children (func_003C5EA0 / func_003C5BD0) or test the single leaf's triangles. */
+/* cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cRayMatrixR: collision-tree box query root - upload the query box to VU0, then walk the root
+ * node's children (cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cCollisionModelTreeNodeR_cRayMatrixR / cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cCollisionModelTreeLeafR_cRayMatrixR) or test the single leaf's triangles. */
 
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
 struct H { int v; H(int x) { v = x; } };
@@ -18,25 +18,25 @@ struct CtOut;
 extern "C" {
 extern int D_00542D10;
 int ColTree_IsLeaf(CtMesh* m, const H& h);
-CtNode* func_00182120(CtMesh* m, const H& h);
-unsigned char func_003C61A0(CtMesh* m, void* box);
-int func_001821D0(int* p, int z);
-void func_001821C0(HO* d, int* s);
-void func_00182150(HO* h, int f);
-CtLeaf* func_00181E90(CtMesh* m, const H& h);
-void func_003C5BD0(CtMesh* m, CtOut* out, CtLeaf* l, CtBox* box);
-int func_003C5BC0(int* d, int n);
-void func_003C5BB0(HO* d, int* s);
-int* func_00183B30(CtMesh* m, HO* h);
-void func_00183730(HO* h, int f);
-CtTri* func_003C0CF0(CtMesh* m, int t);
-V4* func_00231EC0(CtMesh* m, unsigned short v);
-unsigned char func_003C5B80(CtMesh* m, V4* a, V4* b, V4* c);
-void func_003C58A0(CtOut* out, CtMesh* m, CtTri* t, int i);
-void func_003C5EA0(CtMesh* m, CtOut* out, CtNode* node, CtBox* box);
-CtNode* func_00182260(CtMesh* m, H* h);
-CtLeaf* func_00181E80(CtMesh* m, H* h);
-void func_003C55C0(CtMesh* m, CtOut* out, CtBox* box);
+CtNode* cCollisionModel_Data_GetTreeNode(CtMesh* m, const H& h);
+unsigned char cCollisionModel_Data_TestBox(CtMesh* m, void* box);
+int cCollisionModel_TreeLink_opNe(int* p, int z);
+void cCollisionModel_TreeLink_ctor(HO* d, int* s);
+void cCollisionModel_TreeLink_dtor(HO* h, int f);
+CtLeaf* cCollisionModel_Data_GetTreeLeaf(CtMesh* m, const H& h);
+void cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cCollisionModelTreeLeafR_cRayMatrixR(CtMesh* m, CtOut* out, CtLeaf* l, CtBox* box);
+int cVU0Man_GetProgAddr(int* d, int n);
+void cCollisionModel_Address_int_ctor(HO* d, int* s);
+int* cCollisionModel_Data_GetFaceIndices(CtMesh* m, HO* h);
+void cCollisionModel_Address_int_dtor(HO* h, int f);
+CtTri* cCollisionModel_Data_GetFace(CtMesh* m, int t);
+V4* cCollisionModel_Data_GetVertex(CtMesh* m, unsigned short v);
+unsigned char cCollisionModel_Data_TestFace(CtMesh* m, V4* a, V4* b, V4* c);
+void cCollisionFaceCollector_AddFace(CtOut* out, CtMesh* m, CtTri* t, int i);
+void cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cCollisionModelTreeNodeR_cRayMatrixR(CtMesh* m, CtOut* out, CtNode* node, CtBox* box);
+CtNode* cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_2(CtMesh* m, H* h);
+CtLeaf* cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress(CtMesh* m, H* h);
+void cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cRayMatrixR(CtMesh* m, CtOut* out, CtBox* box);
 }
 
 static inline void SetMpg(int a) {
@@ -50,7 +50,7 @@ static inline void SetMpg(int a) {
 }
 
 
-extern "C" void func_003C55C0(CtMesh* m, CtOut* out, CtBox* box)
+extern "C" void cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cRayMatrixR(CtMesh* m, CtOut* out, CtBox* box)
 {
     HO hr;
     HO hl;
@@ -80,30 +80,30 @@ extern "C" void func_003C55C0(CtMesh* m, CtOut* out, CtBox* box)
     if (m->nNodes > 0) {
         CtNode* node;
         hr.v = m->root;
-        node = func_00182260(m, (H*)&hr);
-        if ((unsigned char)func_003C61A0(m, node)) {
+        node = cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_2(m, (H*)&hr);
+        if ((unsigned char)cCollisionModel_Data_TestBox(m, node)) {
             int* c;
             unsigned int j;
             c = node->child;
             for (j = 0; j < 8; j++, c++) {
-                if (func_001821D0(c, 0)) {
+                if (cCollisionModel_TreeLink_opNe(c, 0)) {
                     unsigned char leaf;
                     {
                         HO h;
-                        func_001821C0(&h, c);
+                        cCollisionModel_TreeLink_ctor(&h, c);
                         leaf = ColTree_IsLeaf(m, *(H*)&h);
-                        func_00182150(&h, -1);
+                        cCollisionModel_TreeLink_dtor(&h, -1);
                     }
                     if (!leaf) {
                         HO h;
-                        func_001821C0(&h, c);
-                        func_003C5EA0(m, out, func_00182120(m, *(H*)&h), box);
-                        func_00182150(&h, -1);
+                        cCollisionModel_TreeLink_ctor(&h, c);
+                        cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cCollisionModelTreeNodeR_cRayMatrixR(m, out, cCollisionModel_Data_GetTreeNode(m, *(H*)&h), box);
+                        cCollisionModel_TreeLink_dtor(&h, -1);
                     } else {
                         HO h;
-                        func_001821C0(&h, c);
-                        func_003C5BD0(m, out, func_00181E90(m, *(H*)&h), box);
-                        func_00182150(&h, -1);
+                        cCollisionModel_TreeLink_ctor(&h, c);
+                        cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cCollisionModelTreeLeafR_cRayMatrixR(m, out, cCollisionModel_Data_GetTreeLeaf(m, *(H*)&h), box);
+                        cCollisionModel_TreeLink_dtor(&h, -1);
                     }
                 }
             }
@@ -111,28 +111,28 @@ extern "C" void func_003C55C0(CtMesh* m, CtOut* out, CtBox* box)
     } else {
         CtLeaf* l;
         hl.v = m->leaf;
-        l = func_00181E80(m, (H*)&hl);
-        if (func_003C61A0(m, l)) {
+        l = cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress(m, (H*)&hl);
+        if (cCollisionModel_Data_TestBox(m, l)) {
             unsigned int n;
             int* ip;
             unsigned int k;
-            SetMpg(func_003C5BC0(&D_00542D10, 4));
+            SetMpg(cVU0Man_GetProgAddr(&D_00542D10, 4));
             n = l->count;
             {
                 HO h;
-                func_003C5BB0(&h, &l->idx);
-                ip = func_00183B30(m, &h);
-                func_00183730(&h, -1);
+                cCollisionModel_Address_int_ctor(&h, &l->idx);
+                ip = cCollisionModel_Data_GetFaceIndices(m, &h);
+                cCollisionModel_Address_int_dtor(&h, -1);
             }
             for (k = 0; k < n; k++, ip++) {
                 int t = *ip;
-                CtTri* tr = func_003C0CF0(m, t);
-                V4* a = func_00231EC0(m, tr->v[0]);
-                V4* b = func_00231EC0(m, tr->v[1]);
-                V4* c = func_00231EC0(m, tr->v[2]);
-                if (func_003C5B80(m, a, b, c)) func_003C58A0(out, m, tr, t);
+                CtTri* tr = cCollisionModel_Data_GetFace(m, t);
+                V4* a = cCollisionModel_Data_GetVertex(m, tr->v[0]);
+                V4* b = cCollisionModel_Data_GetVertex(m, tr->v[1]);
+                V4* c = cCollisionModel_Data_GetVertex(m, tr->v[2]);
+                if (cCollisionModel_Data_TestFace(m, a, b, c)) cCollisionFaceCollector_AddFace(out, m, tr, t);
             }
-            SetMpg(func_003C5BC0(&D_00542D10, 3));
+            SetMpg(cVU0Man_GetProgAddr(&D_00542D10, 3));
         }
     }
 }

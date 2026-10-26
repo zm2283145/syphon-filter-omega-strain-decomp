@@ -50,8 +50,32 @@ extern void SmokeField_dtor();
 extern void SnowField_Draw();
 extern void SnowField_Update();
 extern void SnowField_dtor();
+extern void cGOBJ_CheckBullet();
+extern void cGOBJ_GetBBox();
+extern void cGOBJ_GetChildList_void();
+extern void cGOBJ_GetChildList_void_2();
+extern void cGOBJ_GetFloorPlane();
+extern void cGOBJ_GetLosPosition();
+extern void cGOBJ_GetMovementState();
+extern void cGOBJ_GetNumSubTargets();
+extern void cGOBJ_GetStatus();
+extern void cGOBJ_GetSubTargetAimAdjust();
+extern void cGOBJ_GetTargetPriority();
+extern void cGOBJ_HasHeadset();
+extern void cGOBJ_Init();
+extern void cGOBJ_InitNetwork();
+extern void cGOBJ_IsAimed();
+extern void cGOBJ_IsGeneratorCreated();
+extern void cGOBJ_IsNetworked();
+extern void cGOBJ_Load();
+extern void cGOBJ_ScaleBBox();
+extern void cGOBJ_SetStatus();
 extern void cGOBJ_v35();
 extern void cGOBJ_v39();
+extern void cNIEventBase_GetChildList_void();
+extern void cNIEventBase_GetChildList_void_2();
+extern void cNIEventBase_GetVUM();
+extern void cNIEventBase_IsNetworked();
 extern void cNIEventLight_dtor();
 extern void cNIEventLight_v01();
 extern void cNIEventLight_v0B();
@@ -64,6 +88,7 @@ extern void cNIEventLight_v48();
 extern void cNINotice_dtor();
 extern void cNINotice_v01();
 extern void cNINotice_v03();
+extern void cNetMsg_Pack();
 extern void cNetSpawnParticleMsg_dtor();
 extern void cNetSpawnParticleMsg_v01();
 extern void cNetSpawnParticleMsg_v04();
@@ -81,102 +106,77 @@ extern void cNode_v29();
 extern void cNode_v2A();
 extern void cNode_v2B();
 extern void cNode_v3A();
-extern void func_0012ED00();
-extern void func_0012ED30();
-extern void func_0012ED40();
-extern void func_0012ED50();
-extern void func_0013E060();
-extern void func_0013EE60();
+extern void cPARTICLE_GOBJ_ScriptHandleMessage();
+extern void cPARTICLE_GOBJ_getSOBJClassId();
+extern void cSystem_IsDeliverable();
+extern void cSystem_NetDisable();
+extern void cSystem_NetEnable();
+extern void cSystem_SendCreated();
 extern void func_00140E90();
-extern void func_00148870();
-extern void func_00153860();
-extern void func_0015BFB0();
-extern void func_0015BFC0();
-extern void func_0015BFD0();
-extern void func_0015BFE0();
-extern void func_0015BFF0();
-extern void func_0015C000();
-extern void func_0015C010();
-extern void func_0015C020();
-extern void func_0015C030();
-extern void func_0015C040();
-extern void func_0015C050();
-extern void func_0015C080();
-extern void func_0015C090();
-extern void func_0015C0A0();
-extern void func_0023EE90();
-extern void func_0023FCD0();
-extern void func_0023FCE0();
-extern void func_0023FCF0();
-extern void func_002823E0();
-extern void func_003926A0();
-extern void func_003926B0();
-extern void func_003CE9E0();
-extern void func_003CE9F0();
 
 void *D_004DBB40[8] = {
     0, 0, &cNetSpawnParticleMsg_dtor, &cNetSpawnParticleMsg_v01,
-    &func_002823E0, &Message_GetScriptTypeKey, &cNetSpawnParticleMsg_v04, &cNetSpawnParticleMsg_v05,
+    &cNetMsg_Pack, &Message_GetScriptTypeKey, &cNetSpawnParticleMsg_v04, &cNetSpawnParticleMsg_v05,
 };
 
 void *SnowField_vtable[68] = {
     0, 0, &SnowField_dtor, &Object_HandleMessage,
-    &GObj_GetID, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
-    &cNode_v06, &cNode_v07, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &func_003926A0, &func_003926B0, &cNode_v0D,
+    &GObj_GetID, &Object_GetAttachedOrSelf, &cGOBJ_IsNetworked, &cSystem_SendCreated,
+    &cNode_v06, &cNode_v07, &cSystem_NetEnable, &cSystem_NetDisable,
+    &cSystem_IsDeliverable, &cPARTICLE_GOBJ_getSOBJClassId, &cPARTICLE_GOBJ_ScriptHandleMessage, &cNode_v0D,
     &ParticleGob_ResetTime, &ParticleGob_RequestPar, &SnowField_Update, &Actor_BasePreLogic,
     &Actor_BaseWorldUpdate, &Actor_VirtualNop, &SnowField_Draw, &ParticleGob_OnPresent,
     &ParticleGob_OnAbsent, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
-    &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
-    &func_0015BFF0, &func_0015BFE0, &ParticleGob_GetBounds, &ParticleGob_ScaleBBox,
+    &cGOBJ_HasHeadset, &cGOBJ_SetStatus, &cGOBJ_GetStatus, &cGOBJ_IsGeneratorCreated,
+    &cGOBJ_GetChildList_void_2, &cGOBJ_GetChildList_void, &ParticleGob_GetBounds, &ParticleGob_ScaleBBox,
     &Object_AttachTransform, &Player_GetActiveWeapon, &cNode_v24, &cNode_v25,
     &cNode_v26, &cNode_v27, &cNode_v28, &cNode_v29,
-    &cNode_v2A, &cNode_v2B, &func_0015C010, &func_00153860,
-    &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &cGOBJ_v35,
+    &cNode_v2A, &cNode_v2B, &cGOBJ_GetTargetPriority, &cGOBJ_GetLosPosition,
+    &Object_GetEye, &cGOBJ_GetMovementState, &func_00140E90, &cGOBJ_GetSubTargetAimAdjust,
+    &cGOBJ_GetNumSubTargets, &cGOBJ_IsAimed, &Node_GetWorldMatrix, &cGOBJ_v35,
     &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &cGOBJ_v39,
-    &cNode_v3A, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
-    &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
+    &cNode_v3A, &GObj_GetWorldMatrix, &cGOBJ_GetFloorPlane, &cGOBJ_InitNetwork,
+    &Actor_ApplyContactDamage, &cGOBJ_CheckBullet, &GObj_GetLifeState, &Controller_DeathNotice,
 };
 
 void *D_004DBC70[68] = {
     0, 0, &SmokeField_dtor, &Object_HandleMessage,
-    &GObj_GetID, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
-    &cNode_v06, &cNode_v07, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &func_003926A0, &func_003926B0, &cNode_v0D,
+    &GObj_GetID, &Object_GetAttachedOrSelf, &cGOBJ_IsNetworked, &cSystem_SendCreated,
+    &cNode_v06, &cNode_v07, &cSystem_NetEnable, &cSystem_NetDisable,
+    &cSystem_IsDeliverable, &cPARTICLE_GOBJ_getSOBJClassId, &cPARTICLE_GOBJ_ScriptHandleMessage, &cNode_v0D,
     &ParticleGob_ResetTime, &ParticleGob_RequestPar, &SmokeField_Update, &Actor_BasePreLogic,
     &Actor_BaseWorldUpdate, &Actor_VirtualNop, &SmokeField_Draw, &ParticleGob_OnPresent,
     &ParticleGob_OnAbsent, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
-    &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
-    &func_0015BFF0, &func_0015BFE0, &ParticleGob_GetBounds, &ParticleGob_ScaleBBox,
+    &cGOBJ_HasHeadset, &cGOBJ_SetStatus, &cGOBJ_GetStatus, &cGOBJ_IsGeneratorCreated,
+    &cGOBJ_GetChildList_void_2, &cGOBJ_GetChildList_void, &ParticleGob_GetBounds, &ParticleGob_ScaleBBox,
     &Object_AttachTransform, &Player_GetActiveWeapon, &cNode_v24, &cNode_v25,
     &cNode_v26, &cNode_v27, &cNode_v28, &cNode_v29,
-    &cNode_v2A, &cNode_v2B, &func_0015C010, &func_00153860,
-    &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &cGOBJ_v35,
+    &cNode_v2A, &cNode_v2B, &cGOBJ_GetTargetPriority, &cGOBJ_GetLosPosition,
+    &Object_GetEye, &cGOBJ_GetMovementState, &func_00140E90, &cGOBJ_GetSubTargetAimAdjust,
+    &cGOBJ_GetNumSubTargets, &cGOBJ_IsAimed, &Node_GetWorldMatrix, &cGOBJ_v35,
     &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &cGOBJ_v39,
-    &cNode_v3A, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
-    &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
+    &cNode_v3A, &GObj_GetWorldMatrix, &cGOBJ_GetFloorPlane, &cGOBJ_InitNetwork,
+    &Actor_ApplyContactDamage, &cGOBJ_CheckBullet, &GObj_GetLifeState, &Controller_DeathNotice,
 };
 
 void *D_004DBD80[68] = {
     0, 0, &FireEffectObj_dtor, &Object_HandleMessage,
-    &GObj_GetID, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
-    &cNode_v06, &cNode_v07, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &func_003926A0, &func_003926B0, &cNode_v0D,
+    &GObj_GetID, &Object_GetAttachedOrSelf, &cGOBJ_IsNetworked, &cSystem_SendCreated,
+    &cNode_v06, &cNode_v07, &cSystem_NetEnable, &cSystem_NetDisable,
+    &cSystem_IsDeliverable, &cPARTICLE_GOBJ_getSOBJClassId, &cPARTICLE_GOBJ_ScriptHandleMessage, &cNode_v0D,
     &ParticleGob_ResetTime, &ParticleGob_RequestPar, &FireEffectObj_Update, &Actor_BasePreLogic,
     &Actor_BaseWorldUpdate, &Actor_VirtualNop, &FireEffectObj_Draw, &ParticleGob_OnPresent,
     &ParticleGob_OnAbsent, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
-    &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
-    &func_0015BFF0, &func_0015BFE0, &ParticleGob_GetBounds, &ParticleGob_ScaleBBox,
+    &cGOBJ_HasHeadset, &cGOBJ_SetStatus, &cGOBJ_GetStatus, &cGOBJ_IsGeneratorCreated,
+    &cGOBJ_GetChildList_void_2, &cGOBJ_GetChildList_void, &ParticleGob_GetBounds, &ParticleGob_ScaleBBox,
     &Object_AttachTransform, &Player_GetActiveWeapon, &cNode_v24, &cNode_v25,
     &cNode_v26, &cNode_v27, &cNode_v28, &cNode_v29,
-    &cNode_v2A, &cNode_v2B, &func_0015C010, &func_00153860,
-    &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &cGOBJ_v35,
+    &cNode_v2A, &cNode_v2B, &cGOBJ_GetTargetPriority, &cGOBJ_GetLosPosition,
+    &Object_GetEye, &cGOBJ_GetMovementState, &func_00140E90, &cGOBJ_GetSubTargetAimAdjust,
+    &cGOBJ_GetNumSubTargets, &cGOBJ_IsAimed, &Node_GetWorldMatrix, &cGOBJ_v35,
     &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &cGOBJ_v39,
-    &cNode_v3A, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
-    &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
+    &cNode_v3A, &GObj_GetWorldMatrix, &cGOBJ_GetFloorPlane, &cGOBJ_InitNetwork,
+    &Actor_ApplyContactDamage, &cGOBJ_CheckBullet, &GObj_GetLifeState, &Controller_DeathNotice,
 };
 
 void *D_004DBE90[8] = {
@@ -191,23 +191,23 @@ void *D_004DBEB0[8] = {
 
 void *D_004DBED0[78] = {
     0, 0, &cNIEventLight_dtor, &cNIEventLight_v01,
-    &GObj_GetID, &Object_GetAttachedOrSelf, &func_0023FCF0, &func_0012ED00,
-    &cNode_v06, &cNode_v07, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &cNIEventLight_v0B, &cNIEventLight_v0C, &cNode_v0D,
-    &func_003CE9F0, &func_003CE9E0, &cNIEventLight_v10, &NiEvent_PreLogic,
+    &GObj_GetID, &Object_GetAttachedOrSelf, &cNIEventBase_IsNetworked, &cSystem_SendCreated,
+    &cNode_v06, &cNode_v07, &cSystem_NetEnable, &cSystem_NetDisable,
+    &cSystem_IsDeliverable, &cNIEventLight_v0B, &cNIEventLight_v0C, &cNode_v0D,
+    &cGOBJ_Init, &cGOBJ_Load, &cNIEventLight_v10, &NiEvent_PreLogic,
     &Actor_BaseWorldUpdate, &Actor_VirtualNop, &cNode_v14, &cNIEventLight_v15,
     &cNIEventLight_v16, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
-    &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
-    &func_0023FCE0, &func_0023FCD0, &func_0013EE60, &func_0015C000,
+    &cGOBJ_HasHeadset, &cGOBJ_SetStatus, &cGOBJ_GetStatus, &cGOBJ_IsGeneratorCreated,
+    &cNIEventBase_GetChildList_void_2, &cNIEventBase_GetChildList_void, &cGOBJ_GetBBox, &cGOBJ_ScaleBBox,
     &Object_AttachTransform, &Player_GetActiveWeapon, &cNode_v24, &cNode_v25,
     &cNode_v26, &cNode_v27, &cNode_v28, &cNode_v29,
-    &cNode_v2A, &cNode_v2B, &func_0015C010, &func_00153860,
-    &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &cGOBJ_v35,
+    &cNode_v2A, &cNode_v2B, &cGOBJ_GetTargetPriority, &cGOBJ_GetLosPosition,
+    &Object_GetEye, &cGOBJ_GetMovementState, &func_00140E90, &cGOBJ_GetSubTargetAimAdjust,
+    &cGOBJ_GetNumSubTargets, &cGOBJ_IsAimed, &Node_GetWorldMatrix, &cGOBJ_v35,
     &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &cGOBJ_v39,
-    &cNode_v3A, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
-    &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
+    &cNode_v3A, &GObj_GetWorldMatrix, &cGOBJ_GetFloorPlane, &cGOBJ_InitNetwork,
+    &Actor_ApplyContactDamage, &cGOBJ_CheckBullet, &GObj_GetLifeState, &Controller_DeathNotice,
     &cNIEventLight_v42, &NiEvent_Play, &NiEvent_Stop, &NiEvent_Reset,
-    &NiEvent_UpdateNode, &func_0023EE90, &cNIEventLight_v48, &NiPositionTrack_Update,
+    &NiEvent_UpdateNode, &cNIEventBase_GetVUM, &cNIEventLight_v48, &NiPositionTrack_Update,
     &NiSwitchTrack_Update, &NiEventLight_Step,
 };

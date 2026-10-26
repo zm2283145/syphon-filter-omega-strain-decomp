@@ -8,7 +8,7 @@
 
 extern void* RootCollection_FindByKey(void*, int);
 
-int func_001A0280(char* self) {
+int cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void_2(char* self) {
     return *(int*)(self + 176);
 }
 

@@ -17,7 +17,7 @@ extern Obj26C8* HudMarkers_GetHighlight(Sub26C8* s);
 extern void HudMarkers_SetHighlight(Sub26C8* s, int v);
 extern void HudMap_Commit(Self26C8* s);
 extern void HudMap_NextMarker(Self26C8* s);
-void func_0026C830(Self26C8* s, Obj26C8* o) {
+void cMap_TargetRemoved(Self26C8* s, Obj26C8* o) {
     unsigned char ok = 1;
     if (!(o->kind == 1 || o->kind == 2)) ok = 0;
     if (ok && o == HudMarkers_GetHighlight(s->sub)) {

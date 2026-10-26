@@ -18,10 +18,10 @@
 
 
 extern ListPos* List_InsertBefore(ListPos* result, void* list, ListPos* pos, int value);
-extern OwnedVec* func_003E1960(OwnedVec* v);
+extern OwnedVec* std_vector_imp_SubScriptPtr_1_ctor(OwnedVec* v);
 
 /* push_back on a list whose sentinel node is at +4. */
-ListPos* func_003E1900(void* list, int value) {
+ListPos* std_list_SymbolTablePtr_push_back(void* list, int value) {
     ListPos end;
     ListPos result;
 
@@ -29,8 +29,8 @@ ListPos* func_003E1900(void* list, int value) {
     return List_InsertBefore(&result, list, &end, value);
 }
 
-OwnedVec* func_003E1930(OwnedVec* v) {
-    func_003E1960(v);
+OwnedVec* cArray_SubScriptPtr_ctor(OwnedVec* v) {
+    std_vector_imp_SubScriptPtr_1_ctor(v);
     v->unk0C = 1;
     return v;
 }
@@ -41,18 +41,18 @@ static inline void merge_flush_func_003E1900(void) {}
 
 /* merge_units: begin func_003E1960 */
 #pragma push /* merge_units */
-extern OwnedVec* func_003E19B0(OwnedVec* v);
+extern OwnedVec* std_vector_imp_FuncDefPtr_1_ctor(OwnedVec* v);
 
 /* Clears the three PtrVec words. */
-OwnedVec* func_003E1960(OwnedVec* v) {
+OwnedVec* std_vector_imp_SubScriptPtr_1_ctor(OwnedVec* v) {
     v->unk0 = 0;
     v->count = 0;
     v->data = 0;
     return v;
 }
 
-OwnedVec* func_003E1980(OwnedVec* v) {
-    func_003E19B0(v);
+OwnedVec* cArray_FuncDefPtr_ctor(OwnedVec* v) {
+    std_vector_imp_FuncDefPtr_1_ctor(v);
     v->unk0C = 1;
     return v;
 }
@@ -63,18 +63,18 @@ static inline void merge_flush_func_003E1960(void) {}
 
 /* merge_units: begin func_003E19B0 */
 #pragma push /* merge_units */
-extern OwnedVec* func_003E1A00(OwnedVec* v);
+extern OwnedVec* std_vector_imp_VarDefPtr_1_ctor(OwnedVec* v);
 
 /* Clears the three PtrVec words. */
-OwnedVec* func_003E19B0(OwnedVec* v) {
+OwnedVec* std_vector_imp_FuncDefPtr_1_ctor(OwnedVec* v) {
     v->unk0 = 0;
     v->count = 0;
     v->data = 0;
     return v;
 }
 
-OwnedVec* func_003E19D0(OwnedVec* v) {
-    func_003E1A00(v);
+OwnedVec* cArray_VarDefPtr_ctor(OwnedVec* v) {
+    std_vector_imp_VarDefPtr_1_ctor(v);
     v->unk0C = 1;
     return v;
 }
@@ -86,7 +86,7 @@ static inline void merge_flush_func_003E19B0(void) {}
 /* merge_units: begin func_003E1A00 */
 #pragma push /* merge_units */
 /* Clears the three PtrVec words. */
-OwnedVec* func_003E1A00(OwnedVec* v) {
+OwnedVec* std_vector_imp_VarDefPtr_1_ctor(OwnedVec* v) {
     v->unk0 = 0;
     v->count = 0;
     v->data = 0;

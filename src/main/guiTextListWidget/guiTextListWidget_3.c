@@ -45,7 +45,7 @@ typedef struct Widget {
 
 extern char D_004E0C80[];
 extern "C" void GuiArrayWidget_ctor(Widget* self);
-extern "C" void func_00421F10(Anim* anim);
+extern "C" void std_vector_Item_ctor(Anim* anim);
 
 /* Constructor: base init, vtable D_004E0C80, animation sub-object, default mode 2 and colour/scale defaults. */
 extern "C" Widget* GuiTextListWidget_ctor(Widget* self)
@@ -54,7 +54,7 @@ extern "C" Widget* GuiTextListWidget_ctor(Widget* self)
     GuiArrayWidget_ctor(self);
     self->vtable = D_004E0C80;
     anim = &self->anim;
-    func_00421F10(anim);
+    std_vector_Item_ctor(anim);
     anim->enabled = 1;
     self->flags |= 0x80;
     self->mode = 2;
@@ -97,7 +97,7 @@ extern "C" Widget* GuiTextListWidget_ctor(Widget* self)
 extern "C" {
 extern char D_004E0D20[];
 extern char D_0049AF00[];
-void func_00423000(TextListEntryVec* entries, int flags);
+void std_vector_deleter_Item_dtor(TextListEntryVec* entries, int flags);
 void func_0013A040(void* state, int flags);
 void GuiWidget_Destroy(TextRenderWidget* self, int flags);
 void Mem_Free(int pool, void* allocation, char* file, int line);
@@ -107,7 +107,7 @@ void operator_delete(void* allocation);
 static inline void destroy_storage(TextListEntryVec* entries)
 {
     if (entries)
-        func_00423000(entries, 0);
+        std_vector_deleter_Item_dtor(entries, 0);
 }
 
 static inline void destroy_vector(TextListEntryVec* entries)
@@ -117,7 +117,7 @@ static inline void destroy_vector(TextListEntryVec* entries)
 }
 
 /* Destroy both vector layers before optional object deletion. */
-extern "C" TextListEntryVec* func_00421CD0(TextListEntryVec* self, short deleteFlag)
+extern "C" TextListEntryVec* cArray_Item_dtor(TextListEntryVec* self, short deleteFlag)
 {
     if (self) {
         destroy_vector(self);
@@ -128,7 +128,7 @@ extern "C" TextListEntryVec* func_00421CD0(TextListEntryVec* self, short deleteF
 }
 
 /* Destroy vector storage before optional object deletion. */
-extern "C" TextListEntryVec* func_00421D40(TextListEntryVec* self, short deleteFlag)
+extern "C" TextListEntryVec* std_vector_Item_dtor(TextListEntryVec* self, short deleteFlag)
 {
     if (self) {
         destroy_storage(self);

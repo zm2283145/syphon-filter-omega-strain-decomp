@@ -33,7 +33,7 @@ int func_0030BC98(Conn_30C418* c, unsigned char* ok);
 int func_00310C90(void* h, char* name, int a, int b);
 int func_00310D20(void* h, Blob_30C418** out);
 int func_00310C30(void* h);
-void func_002F5DB0(void* p);
+void rt_comm_destroy(void* p);
 void* memset(void* d, int c, unsigned int n);
 
 int func_0030C418(Conn_30C418* c)
@@ -57,7 +57,7 @@ int func_0030C418(Conn_30C418* c)
     D_00491354 = r;
     func_00310C30(c->req->h);
     c->req->h = 0;
-    func_002F5DB0(c->req->p0);
+    rt_comm_destroy(c->req->p0);
     c->req->p0 = 0;
     c->req->cb(c, r, c->req->flags);
     c->req->cb = 0;
@@ -133,7 +133,7 @@ int func_0030C5E8(Conn_30C5E8* c)
     }
     func_00310C30(c->req->h);
     c->req->h = 0;
-    func_002F5DB0(c->req->p0);
+    rt_comm_destroy(c->req->p0);
     c->req->p0 = 0;
     c->req->cb(c, r, c->req->flags);
     c->req->cb = 0;

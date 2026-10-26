@@ -1,9 +1,9 @@
 #pragma cplusplus on
 #include "types.h"
 #include "vtable_chain_dtor.h"
-extern "C" void func_003B4630();
+extern "C" void cSkaNode_PlaybackGroupId();
 extern void * const D_004DFC50[];
-extern "C" VtableChainObject* func_001F2A00(VtableChainObject* self,
+extern "C" VtableChainObject* cSkaNode_dtor(VtableChainObject* self,
                                    short deleteFlag)
 {
     if (self) {
@@ -13,4 +13,4 @@ extern "C" VtableChainObject* func_001F2A00(VtableChainObject* self,
     }
     return self;
 }
-void * const D_004DFC50[8] = { (void*)0x0, (void*)0x0, (void*)func_001F2A00, (void*)0x0, (void*)func_003B4630, (void*)0x0, (void*)0x0, (void*)0x0 };
+void * const D_004DFC50[8] = { (void*)0x0, (void*)0x0, (void*)cSkaNode_dtor, (void*)0x0, (void*)cSkaNode_PlaybackGroupId, (void*)0x0, (void*)0x0, (void*)0x0 };

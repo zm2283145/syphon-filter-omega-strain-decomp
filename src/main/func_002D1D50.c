@@ -2,7 +2,7 @@
 
 extern char D_005723C8[];
 
-void func_002D1D50(void) {
+void cNetHuman_NetHumanDeleteCallback(void) {
     int v1;
     int cond;
 

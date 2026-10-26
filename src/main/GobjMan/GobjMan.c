@@ -25,7 +25,7 @@ extern "C" {
 extern GobjScope* g_GobjRootScope;
 extern unsigned char g_GobjDeleting;
 extern char D_004BECA8[]; /* "GobjMan.cc" */
-int func_0012F2B0(void); /* returns its argument + 0xC: here &obj->id */
+int cSystem_GetObjectID_void(void); /* returns its argument + 0xC: here &obj->id */
 #if 0 /* merge_units */
 void IdVec_Find(IdIter* out, PtrVec* v, int id);
 #endif /* merge_units */
@@ -60,7 +60,7 @@ static inline bool CanDelete(GobjScope* scope, int id)
 extern "C" void Gobj_TryDelete(GobjVirt* obj)
 {
     GobjScope* root = g_GobjRootScope;
-    int id = func_0012F2B0();
+    int id = cSystem_GetObjectID_void();
     if (CanDelete(root, id)) {
         g_GobjDeleting = 1;
         if (obj) {
@@ -397,7 +397,7 @@ static inline void merge_flush_func_0040C540(void) {}
 
 extern void ActorWorld_FlushRemovals(void);
 
-/* Thunk to ActorWorld_FlushRemovals (calls func_0040B510 on every scope, newest first). */
+/* Thunk to ActorWorld_FlushRemovals (calls cBaseObjList_Purge on every scope, newest first). */
 void ActorWorld_FlushPending(void) {
     ActorWorld_FlushRemovals();
 }
@@ -419,12 +419,12 @@ struct GobjIter { GobjVirt_0040C5D0** p; };
 struct GobjIterB : GobjIter { GobjIterB() {} };
 /*
  * AllocGuard with out-of-line constructor/destructor calls
- * (func_00136DA0 / func_0012F530) instead of the inlined ones.
+ * (cTimerDisable_ctor / cTimerDisable_dtor) instead of the inlined ones.
  */
 struct AllocGuardCall;
-extern "C" void func_0012F530(AllocGuardCall* g, int f);
-extern "C" void func_00136DA0(AllocGuardCall* g);
-struct AllocGuardCall { char c; AllocGuardCall() { func_00136DA0(this); } __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~AllocGuardCall() { func_0012F530(this, -1); } };
+extern "C" void cTimerDisable_dtor(AllocGuardCall* g, int f);
+extern "C" void cTimerDisable_ctor(AllocGuardCall* g);
+struct AllocGuardCall { char c; AllocGuardCall() { cTimerDisable_ctor(this); } __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~AllocGuardCall() { cTimerDisable_dtor(this, -1); } };
 extern "C" {
 #if 0 /* merge_units */
 extern void* g_GobjWorldScope;
@@ -437,14 +437,14 @@ extern Pool_40C5D0* D_00571760;
 extern char D_00571C10[]; /* global id -> object map (GobjMap) */
 GobjIterB PtrVec_Begin(int v);
 void PtrVec_End(GobjIter* out, int v);
-int func_001339A0(void* p);
+int cObjList_cGOBJPtr_GetList(void* p);
 void PtrVec_Dtor_134E80(void* p, int f);
 #if 0 /* merge_units */
 void GobjScope_Dtor(void* p, int f);
 #endif /* merge_units */
 #define GobjScope_Dtor(a0, a1) ((void)GobjScope_Dtor((a0), (short)(a1))) /* merge_units */
 
-void func_0040CAC0(void* p);
+void std_tree_pair_cObjectId_value_compare_clear(void* p);
 }
 static inline void DeleteObject(GobjVirt_0040C5D0* o) { AllocGuard g; o->Dtor(-1); Mem_Free(0, o, D_004BECA8, 0x9B); }
 static inline bool IterNe(const GobjIter& a, const GobjIter& b) { return !(a.p == b.p); }
@@ -463,10 +463,10 @@ extern "C" void IdMgr_Destroy(void)
         void* root = g_GobjRootScope;
         GobjIter end;
         unsigned char wasDeleting;
-        PtrVec_End(&end, func_001339A0(root));
+        PtrVec_End(&end, cObjList_cGOBJPtr_GetList(root));
         wasDeleting = g_GobjDeleting;
         g_GobjDeleting = 1;
-        GobjIter it = PtrVec_Begin(func_001339A0(root));
+        GobjIter it = PtrVec_Begin(cObjList_cGOBJPtr_GetList(root));
         while (IterNe(it, end)) {
             GobjVirt_0040C5D0* o = *it.p;
             if (((GobjEntry*)o)->magic == (int)GOBJ_ALIVE_MAGIC) DeleteObject(o);
@@ -474,7 +474,7 @@ extern "C" void IdMgr_Destroy(void)
         }
         g_GobjDeleting = wasDeleting;
     }
-    func_0040CAC0(D_00571C10);
+    std_tree_pair_cObjectId_value_compare_clear(D_00571C10);
     DeleteScope(g_GobjWorldScope, 0xA0);
     DeleteScope(g_GobjRootScope, 0xA1);
     g_GobjWorldScope = 0;

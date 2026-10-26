@@ -94,7 +94,7 @@ extern int g_TextureMgr;
 extern short Tex_FindInList(int lib, __int128 name);
 extern short TexCache_LoadErrorTexture(int lib);
 
-void func_0038E030(Obj8E030* o)
+void cMan_GetTextureIDs(Obj8E030* o)
 {
     int lib = g_TextureMgr;
     int i;

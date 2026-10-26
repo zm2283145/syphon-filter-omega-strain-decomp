@@ -13,8 +13,8 @@ typedef struct {
 typedef struct { char pad[0x60]; Sub sub; } P;
 typedef struct { char pad[0x8C]; P *p; } O;
 extern char g_AgentPartCache[];
-extern int func_004027E0(void *t, __int128 key);
-extern void func_004022E0(void *t, __int128 key, E *e, short *a, short *b, unsigned char u, signed char s);
+extern int FindTex__7MonsterF1(void *t, __int128 key);
+extern void Monster_FindTheTexture(void *t, __int128 key, E *e, short *a, short *b, unsigned char u, signed char s);
 
 void GuiAgentModify_AdvancePatchA(O *o, int idx)
 {
@@ -22,7 +22,7 @@ void GuiAgentModify_AdvancePatchA(O *o, int idx)
     char *lo, *hi, *b;
     int i;
     k.q = o->p->sub.e[idx].key;
-    if (func_004027E0(g_AgentPartCache, k.q) != -1)
+    if (FindTex__7MonsterF1(g_AgentPartCache, k.q) != -1)
         return;
     
     b = k.c;
@@ -43,9 +43,9 @@ void GuiAgentModify_AdvancePatchA(O *o, int idx)
         } else {
             (*lo)++;
         }
-        if (func_004027E0(g_AgentPartCache, k.q) != -1) {
+        if (FindTex__7MonsterF1(g_AgentPartCache, k.q) != -1) {
             Sub *s = &o->p->sub;
-            func_004022E0(g_AgentPartCache, k.q, &s->e[idx], &s->a[idx], &s->b[idx], s->u, s->s);
+            Monster_FindTheTexture(g_AgentPartCache, k.q, &s->e[idx], &s->a[idx], &s->b[idx], s->u, s->s);
             o->p->sub.e[idx].key = k.q;
             return;
         }

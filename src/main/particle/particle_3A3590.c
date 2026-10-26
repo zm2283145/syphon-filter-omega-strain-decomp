@@ -11,7 +11,7 @@
 /* merge_units: begin func_003A3590 */
 #pragma push /* merge_units */
 /* Return the begin iterator. */
-DEFINE_ITER_BEGIN(func_003A3590)
+DEFINE_ITER_BEGIN(std_list_cParticleDefinitionPtr_begin_void)
 #pragma pop /* merge_units */
 /* merge_units: end func_003A3590 */
 

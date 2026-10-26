@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_002BC780(void) {
+int _sceMcCoreMakeSpeckOutList(void) {
     return 1;
 }

@@ -51,7 +51,7 @@ extern "C" unsigned char g_IsMultiplayer;
 extern "C" char g_cEnableMsgClass[];
 extern "C" char D_004E0880[];
 extern "C" void Event_Construct(C1Msg_21A9* m, void* type);
-extern "C" void func_003FF930(C1Msg_21A9* m, int target);
+extern "C" void cEnableMsg_SendEnabled(C1Msg_21A9* m, int target);
 extern "C" void cMessage_dtor(C1Msg_21A9* m, int flags);
 #pragma opt_strength_reduction off
 extern "C" void cGameGOBJ_Enable(C1Obj_21A9* o)
@@ -63,7 +63,7 @@ extern "C" void cGameGOBJ_Enable(C1Obj_21A9* o)
         msg.vtbl = D_004E0880;
         msg.id = -1;
         msg.size = 0x40;
-        func_003FF930(&msg, o->target);
+        cEnableMsg_SendEnabled(&msg, o->target);
         msg.vtbl = D_004E0880;
         cMessage_dtor(&msg, 0);
     }

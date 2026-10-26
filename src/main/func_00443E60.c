@@ -6,5 +6,5 @@
 
 #include "types.h"
 
-void func_00443E60(void) {
+void SFOLobby_DumpMemInfo(void) {
 }

@@ -36,7 +36,7 @@ extern void* const cNode_vtable[];
 extern char D_004EA770[];
 extern M_C88 g_IdentityMatrix;
 void cGOBJ_ctor(Node_C88* self, int* id, int n, char* name);
-void func_0015C860(Rel_C88* r);
+void std_vector_tNodeLink_ctor(Rel_C88* r);
 Node_C88* cNode_ctor2(Node_C88* self, int a, int b, int c, float x, float y, float z);
 }
 typedef void (*SetM_C88)(Node_C88*, M_C88*, int);
@@ -45,7 +45,7 @@ Node_C88* cNode_ctor2(Node_C88* self, int a, int b, int c, float x, float y, flo
     int id = -1;
     cGOBJ_ctor(self, &id, 10, D_004EA770);
     *(void**)self = (void*)cNode_vtable;
-    { Rel_C88* r = &self->x68; func_0015C860(r); r->d = 1; }
+    { Rel_C88* r = &self->x68; std_vector_tNodeLink_ctor(r); r->d = 1; }
     {
         M_C88 m = g_IdentityMatrix;
         self->x64 = a;
@@ -71,7 +71,7 @@ static inline void merge_flush_func_0015C880(void) {}
 
 DEFINE_RESIZE_ELEMENT(Elem8, 8)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_0015C9A0, Elem8, Vector_Insert_15CC70, func_0015CB10)
+DEFINE_VECTOR_RESIZE(std_vector_imp_tNodeLink_resize, Elem8, Vector_Insert_15CC70, std_vector_imp_tNodeLink_erase)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_0015C9A0 */

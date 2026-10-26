@@ -220,7 +220,7 @@ extern char D_004BC3D8[];
 extern char D_004BC3E0[];
 extern char D_004BC3E8[];
 
-void func_0036CA70(void* p);
+void DELAY_DELETE_ARRAY(void* p);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 int Appearance_GetBodyKind(App390940* app);
 int Appearance_GetToneDigit(App390940* app);
@@ -229,7 +229,7 @@ int Appearance_FindPairByType(App390940* app, char* type);
 int String_CompareN(char* a, char* b, int n);
 int MeshCache_FindSlot(char* cache, __int128 name);
 void MeshCache_Load(char* cache, __int128 name, char* ctx, char* arg);
-void func_00401290(char* cache, App390940* app, char* x, __int128 a, __int128 b, int kind, int tone);
+void SwapPartDependencies__7MonsterFR3SKLR8ManParts11UiUi(char* cache, App390940* app, char* x, __int128 a, __int128 b, int kind, int tone);
 void ActorModel_SwitchBodyPacking(Self390940* self, App390940* src);
 }
 
@@ -325,7 +325,7 @@ extern "C" void ActorModel_SwitchBodyPacking(Self390940* self, App390940* src)
     for (; i < self->x23C0; i++) {
         void* e = ((void**)self->x2340)[(unsigned)i];
         if (e) {
-            func_0036CA70(e);
+            DELAY_DELETE_ARRAY(e);
             ((int*)self->x2340)[i] = 0;
         }
     }
@@ -365,7 +365,7 @@ extern "C" void ActorModel_SwitchBodyPacking(Self390940* self, App390940* src)
         j = Appearance_FindPairByType(src, D_004BC3C8);
         if (j != -1) {
             ((__int128*)self->app.pairs)[s5 * 2] = src->pairs[j].a;
-            func_00401290(g_AgentPartCache, &self->app, self->x1EC0, self->app.pairs[s5].a, src->pairs[j].a,
+            SwapPartDependencies__7MonsterFR3SKLR8ManParts11UiUi(g_AgentPartCache, &self->app, self->x1EC0, self->app.pairs[s5].a, src->pairs[j].a,
                           self->x2C0C, self->x2C0D);
         } else {
             j = Appearance_FindPairByType(src, D_004BC3D0);
@@ -385,13 +385,13 @@ extern "C" void ActorModel_SwitchBodyPacking(Self390940* self, App390940* src)
                     String_Copy(t + 0xA, D_004BC3E8);
                     MeshP390940(self, &tmp);
                     ((__int128*)self->app.pairs)[s5 * 2] = tmp;
-                    func_00401290(g_AgentPartCache, &self->app, self->x1EC0, self->app.pairs[s5].a, tmp,
+                    SwapPartDependencies__7MonsterFR3SKLR8ManParts11UiUi(g_AgentPartCache, &self->app, self->x1EC0, self->app.pairs[s5].a, tmp,
                                   self->x2C0C, self->x2C0D);
                 } else if (s4 != -1 && !s3) {
                     String_Copy(t + 0xA, D_004BC3E0);
                     MeshP390940(self, &tmp);
                     ((__int128*)self->app.pairs)[s5 * 2] = tmp;
-                    func_00401290(g_AgentPartCache, &self->app, self->x1EC0, self->app.pairs[s5].a, tmp,
+                    SwapPartDependencies__7MonsterFR3SKLR8ManParts11UiUi(g_AgentPartCache, &self->app, self->x1EC0, self->app.pairs[s5].a, tmp,
                                   self->x2C0C, self->x2C0D);
                 }
             }

@@ -1,4 +1,4 @@
-void func_002EFE68(unsigned int *a, unsigned int n)
+void lintDecrement(unsigned int *a, unsigned int n)
 {
     unsigned int i;
     i = 0;

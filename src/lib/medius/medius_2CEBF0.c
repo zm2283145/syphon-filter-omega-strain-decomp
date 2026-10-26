@@ -5,7 +5,7 @@
 extern int D_0048C410;
 
 /* Stores a value into a global setting. */
-void func_002CEBF0(int value)
+void MGCLSetServerPort(int value)
 {
     D_0048C410 = value;
 }

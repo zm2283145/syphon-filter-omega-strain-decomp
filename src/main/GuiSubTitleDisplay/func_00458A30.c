@@ -35,16 +35,16 @@ extern "C" {
 void *Mem_Alloc(int, unsigned int, char *, int);
 void Mem_Free(int, void *, char *, int);
 int Libc_Sscanf(char *, char *, ...);
-void func_00136DA0(int *);
-void func_0012F530(int *, int);
+void cTimerDisable_ctor(int *);
+void cTimerDisable_dtor(int *, int);
 int Font_GetLineHeight(int);
 int Font_GetStringWidth(int, char *, int);
 void GuiSubTitleDisplay_ComputeTimings(SubDisp *);
-void func_00459320(SubList *, int);
-int func_00459380(int *, SubList **);
-void func_004593A0(SubDisp *);
-int func_004598C0(SubNode **, SubList *, SubNode **, SubVal *);
-SubList *func_00459BB0(SubList *);
+void cLList_TextAtom_dtor(SubList *, int);
+int std_vector_cLList_TextAtomPtr_push_back(int *, SubList **);
+void GuiSubTitleDisplay_DestroyTextLines(SubDisp *);
+int std_list_deleter_TextAtom_insert(SubNode **, SubList *, SubNode **, SubVal *);
+SubList *std_list_deleter_TextAtom_ctor(SubList *);
 extern char D_004C1EB0[];
 extern char D_004C1ED0[];
 extern char D_004C1ED8[];
@@ -59,16 +59,16 @@ static inline void Push(SubList *l, SubVal *v)
 {
     SubNode *res;
     SubNode *pos = (SubNode *)&l->first;
-    func_004598C0(&res, l, &pos, v);
+    std_list_deleter_TextAtom_insert(&res, l, &pos, v);
 }
 
 static inline void FreeList(SubList *l)
 {
     int guard;
-    func_00136DA0(&guard);
-    func_00459320(l, -1);
+    cTimerDisable_ctor(&guard);
+    cLList_TextAtom_dtor(l, -1);
     Mem_Free(0, l, D_004C1EB0, 0x124);
-    func_0012F530(&guard, -1);
+    cTimerDisable_dtor(&guard, -1);
 }
 
 int GuiSubTitleDisplay_Parse(SubDisp *self)
@@ -85,7 +85,7 @@ int GuiSubTitleDisplay_Parse(SubDisp *self)
     char buf[0x20];
     int maxw;
 
-    func_004593A0(self);
+    GuiSubTitleDisplay_DestroyTextLines(self);
     p = self->text;
     if (p == 0)
         return 0;
@@ -107,7 +107,7 @@ int GuiSubTitleDisplay_Parse(SubDisp *self)
             nl = (SubList *)Mem_Alloc(0, 0xC, D_004C1EB0, 0x67);
         }
         if (nl)
-            func_00459BB0(nl);
+            std_list_deleter_TextAtom_ctor(nl);
         list = nl;
     }
     for (;;) {
@@ -181,7 +181,7 @@ int GuiSubTitleDisplay_Parse(SubDisp *self)
                 nf = 0;
                 Libc_Sscanf(buf, D_004C1ED0, &nf);
                 Push(list, &val);
-                func_00459380(self->lines, &list);
+                std_vector_cLList_TextAtomPtr_push_back(self->lines, &list);
                 {
                     SubList *nl;
                     {
@@ -189,7 +189,7 @@ int GuiSubTitleDisplay_Parse(SubDisp *self)
                         nl = (SubList *)Mem_Alloc(0, 0xC, D_004C1EB0, 0xD9);
                     }
                     if (nl)
-                        func_00459BB0(nl);
+                        std_list_deleter_TextAtom_ctor(nl);
                     list = nl;
                 }
                 val.f = 0;
@@ -223,7 +223,7 @@ int GuiSubTitleDisplay_Parse(SubDisp *self)
                 }
                 if (found == false)
                     Push(list, &val);
-                func_00459380(self->lines, &list);
+                std_vector_cLList_TextAtomPtr_push_back(self->lines, &list);
                 {
                     SubList *nl;
                     {
@@ -231,7 +231,7 @@ int GuiSubTitleDisplay_Parse(SubDisp *self)
                         nl = (SubList *)Mem_Alloc(0, 0xC, D_004C1EB0, 0x111);
                     }
                     if (nl)
-                        func_00459BB0(nl);
+                        std_list_deleter_TextAtom_ctor(nl);
                     list = nl;
                 }
                 val.f = 0;
@@ -245,7 +245,7 @@ int GuiSubTitleDisplay_Parse(SubDisp *self)
     if (val.i != 0 || val.a != 0.0f)
         Push(list, &val);
     if (list->count != 0) {
-        func_00459380(self->lines, &list);
+        std_vector_cLList_TextAtomPtr_push_back(self->lines, &list);
     } else {
         FreeList(list);
     }

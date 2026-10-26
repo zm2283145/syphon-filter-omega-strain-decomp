@@ -1,5 +1,5 @@
 #include "types.h"
-extern void func_001AE280(char*, int);
+extern void MEMCLEAR16(char*, int);
 #pragma optimization_level 1
 char* MotionRegistry_MakeKey(char* dst, char* src)
 {
@@ -14,7 +14,7 @@ char* MotionRegistry_MakeKey(char* dst, char* src)
         }
         dst[i] = 0;
     } else {
-        func_001AE280(dst, 2);
+        MEMCLEAR16(dst, 2);
     }
     return dst;
 }

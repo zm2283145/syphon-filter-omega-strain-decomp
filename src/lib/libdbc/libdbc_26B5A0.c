@@ -18,13 +18,13 @@ typedef struct {
 } Ent_b5a0;
 
 extern Dev_b5a0 D_004FBB88[];
-extern int func_0026B838(int dev);
-extern int func_0026B960(int dev);
-extern Ent_b5a0 *func_0026B8F8(int dev);
-extern void func_0026B7C0(int dev);
+extern int scePad2LinkDriver(int dev);
+extern int scePad2CheckDma(int dev);
+extern Ent_b5a0 *scePad2GetSide2(int dev);
+extern void scePad2InitDmaDBuff(int dev);
 extern int sceDbcReceiveData(int a, int b, int *len, unsigned char *out);
 
-int func_0026B5A0(int dev)
+int scePad2GetState(int dev)
 {
     unsigned char data;
     int len;
@@ -32,12 +32,12 @@ int func_0026B5A0(int dev)
     Ent_b5a0 *p;
 
     if (D_004FBB88[dev].active == 0) {
-        if (func_0026B838(dev) < 0) return 0;
+        if (scePad2LinkDriver(dev) < 0) return 0;
     }
-    if (func_0026B960(dev) != 0) {
-        p = func_0026B8F8(dev);
+    if (scePad2CheckDma(dev) != 0) {
+        p = scePad2GetSide2(dev);
         if (p->active == 0) {
-            if (func_0026B838(dev) < 0) goto fail;
+            if (scePad2LinkDriver(dev) < 0) goto fail;
         }
         data = p->b0;
     } else {
@@ -52,7 +52,7 @@ int func_0026B5A0(int dev)
         if (sceDbcReceiveData(dev, c, &len, &data) < 0) {
         fail:
             D_004FBB88[dev].active = 0;
-            func_0026B7C0(dev);
+            scePad2InitDmaDBuff(dev);
             return 0;
         }
     }

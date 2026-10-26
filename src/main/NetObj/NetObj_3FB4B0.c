@@ -33,13 +33,13 @@ extern "C" {
 NMap* NetMap_Lookup(void);
 NObj* Object_LookupById(int* id);
 void* Mem_Alloc(int, int, char*, int);
-void* func_00436C00(void* p);
-void func_004344A0(void* mgr, int id, int val);
+void* cNPCInfoObject_ctor(void* p);
+void cNPCInfoObject_SetOwner_uint_int(void* mgr, int id, int val);
 extern void* D_0055C988;
 extern char D_004BE228[];
 }
 
-extern "C" void func_003FB4B0(int id, int val) {
+extern "C" void cNetObj_SetOwner(int id, int val) {
     NMap* m = NetMap_Lookup();
     int key = id;
     NObj* o = Object_LookupById(&key);
@@ -52,10 +52,10 @@ extern "C" void func_003FB4B0(int id, int val) {
                     AllocGuard g;
                     p = Mem_Alloc(0, 1, D_004BE228, 0x20C);
                 }
-                if (p) p = func_00436C00(p);
+                if (p) p = cNPCInfoObject_ctor(p);
                 D_0055C988 = p;
             }
-            func_004344A0(D_0055C988, id, val);
+            cNPCInfoObject_SetOwner_uint_int(D_0055C988, id, val);
             } else {
                 m->unk4 = val;
             }

@@ -3,4 +3,4 @@
 #include "buf_holder_dtor.h"
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_00136600)
+DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_cNodePtr_1_dtor)

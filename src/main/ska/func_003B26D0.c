@@ -5,6 +5,6 @@
 
 #include "types.h"
 
-int func_003B26D0(char* self) {
+int cSkaAnimDataFrame_ConstIterator_Vector(char* self) {
     return *(int*)(self + 0);
 }

@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-List* func_00383660(List* l) {
+List* std_list_deleter_int_ctor(List* l) {
     l->count = 0;
     l->first = l->last = &l->first;
     return l;

@@ -11,7 +11,7 @@
 #include "types.h"
 #include "owned_buffer8_dtor_deep.h"
 
-DEFINE_OWNED_BUFFER8_DTOR_DEEP(func_00352020, D_004BACB8)
+DEFINE_OWNED_BUFFER8_DTOR_DEEP(std_vector_StatType_dtor, D_004BACB8)
 #pragma pop /* merge_units */
 /* merge_units: end func_00352020 */
 
@@ -35,9 +35,9 @@ struct V3521A0 { unsigned int cap; unsigned int count; VRElem20* data; };
 extern "C" {
 extern char D_004BABF0[];
 void* Mem_PlacementNew(unsigned int size, void* p);
-void func_00352320(void* dst, const VRElem20* src);
+void MissionStats_StatsRequirement_ctor(void* dst, const VRElem20* src);
 }
-extern "C" void func_003521A0(V3521A0* v, const VRElem20* first, const VRElem20* last)
+extern "C" void std_vector_imp_StatsRequirement_init(V3521A0* v, const VRElem20* first, const VRElem20* last)
 {
     unsigned int n = last - first;
     if (v->count > 0x4CCCCC) {
@@ -51,7 +51,7 @@ extern "C" void func_003521A0(V3521A0* v, const VRElem20* first, const VRElem20*
         VRElem20* p = v->data;
         for (; first != last; first++, p++) {
             void* o = Mem_PlacementNew(sizeof(VRElem20), p);
-            if (o) func_00352320(o, first);
+            if (o) MissionStats_StatsRequirement_ctor(o, first);
             v->count++;
         }
     }

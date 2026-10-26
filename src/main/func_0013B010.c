@@ -1,7 +1,7 @@
 #include "types.h"
 extern void* Ptr_Identity(void* p);
-extern void* func_0013B0D0(void* p);
-extern void* func_0013B0C0(void* p);
+extern void* cCollisionModel_FaceProperties_ctor(void* p);
+extern void* cCollisionModel_FaceLocator_ctor(void* p);
 
 typedef struct Hit13B {
     Q m[3];                 /* 0x00 */
@@ -20,12 +20,12 @@ typedef struct R13B {
     int unk90;              /* 0x90 */
 } R13B;
 
-extern Hit13B* func_0013B0E0(Hit13B* d, Hit13B* s);
+extern Hit13B* cCollisionFace_opAssign(Hit13B* d, Hit13B* s);
 
 /* lq/sq quad copy halves (128-bit GPR load/store; no C equivalent) */
 static inline __int128 GL(const void* s) { __int128 q; __asm__ volatile("lq %0, 0(%1)" : "=&r"(q) : "r"(s) : "memory"); return q; }
 static inline void GS(void* d, __int128 q) { __asm__ volatile("sq %0, 0(%1)" : : "r"(q), "r"(d) : "memory"); }
-R13B* func_0013B010(R13B* d, R13B* s)
+R13B* cLosResult_ctor_cLosResultR(R13B* d, R13B* s)
 {
     Hit13B* h;
     Q* p;
@@ -42,9 +42,9 @@ R13B* func_0013B010(R13B* d, R13B* s)
         p++;
     } while (p != &h->m[3]);
     Ptr_Identity(&h->t);
-    func_0013B0D0(h->b);
-    func_0013B0C0(h->ip);
-    func_0013B0E0(h, &s->hit);
+    cCollisionModel_FaceProperties_ctor(h->b);
+    cCollisionModel_FaceLocator_ctor(h->ip);
+    cCollisionFace_opAssign(h, &s->hit);
     d->unk90 = s->unk90;
     return d;
 }

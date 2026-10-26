@@ -24,7 +24,7 @@ extern char D_004F5348[];
 
 void __register_global_object(void* obj, void* dtor, void* rec);
 void* func_001EDCC0(void* self, short flag);
-void* func_001E0E50(void* self, short flag);
+void* cBitArray_5_dtor(void* self, short flag);
 int HumanColQueryMask_And(Mask* out, Mask* a, Mask* b);
 int HumanColQueryMask_Not(Mask* out, Mask* a);
 int HumanColQueryMask_Equals(Mask* a, Mask* b);
@@ -100,8 +100,8 @@ int Edge_LedgeProbeMask(Mask* out, void* self, Mask* q)
             HumanColQueryMask_Not(&n, q);
             HumanColQueryMask_And(&u, &n, &e->forbid);
             ok = HumanColQueryMask_Equals(&u, &e->forbid);
-            func_001E0E50(&u, -1);
-            func_001E0E50(&n, -1);
+            cBitArray_5_dtor(&u, -1);
+            cBitArray_5_dtor(&n, -1);
             if (ok) res.w[e->bit / 32] |= 1 << (e->bit & 31);
         }
     }

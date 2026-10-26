@@ -17,7 +17,7 @@
 
 
 /* vtable stub shared by several classes: returns 0. */
-int func_00148870(void) {
+int cGOBJ_IsGeneratorCreated(void) {
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */

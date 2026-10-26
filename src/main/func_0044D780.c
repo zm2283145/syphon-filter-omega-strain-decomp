@@ -6,13 +6,13 @@ int String_Copy(char *, char *);
 int Lobby_GetTime();                                
 int SFOLobby_CallUpdateHook(char * , int, int);                      
 int SFOLobby_Poll(char * , int, int, int);             
-int func_0046C7A0(char *, char *);                        
+int MediusGetBuddyInvitations(char *, char *);                        
 int memset(char *, int, int);                                
 extern int D_00497890;
-extern char func_00446740;
+extern char SFOLobby_Callback_GetBuddyInvitations;
 
 typedef struct { char p0[552]; int f228; int f22C; char p230[28]; int f24C; } PS0_0044D780;
-void func_0044D780(PS0_0044D780 *arg0) {
+void SFOLobby_ContactGetInvites(PS0_0044D780 *arg0) {
     int sp30[8];
     int temp_v0;
 
@@ -20,7 +20,7 @@ void func_0044D780(PS0_0044D780 *arg0) {
         arg0->f228 = 1;
         memset(sp30, 0, 0x15);
         String_Copy(sp30, "1");
-        arg0->f24C = func_0046C7A0(sp30, &func_00446740);
+        arg0->f24C = MediusGetBuddyInvitations(sp30, &SFOLobby_Callback_GetBuddyInvitations);
         if (arg0->f24C == 0) {
             temp_v0 = Lobby_GetTime();
             arg0->f22C = 0;

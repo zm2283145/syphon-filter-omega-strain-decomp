@@ -3,4 +3,4 @@
 #include "trivial_dtor.h"
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_003AB3E0)
+DEFINE_TRIVIAL_DTOR(cSkeletonData_dtor)

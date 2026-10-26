@@ -4,7 +4,7 @@ typedef struct {
     char pad3210[0x3248 - 0x3210];
     int x3248;
 } O_280390;
-void func_00280390(float* out, O_280390* o, signed char mode, int flag)
+void ModifyCameraTrackingPoint_ForHuman(float* out, O_280390* o, signed char mode, int flag)
 {
     switch (mode) {
     case 0:

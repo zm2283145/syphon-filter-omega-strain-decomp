@@ -9,7 +9,7 @@
 
 /* merge_units: begin func_003B2450 */
 #pragma push /* merge_units */
-int func_003B2450(int a0) {
+int cQuaternion_IsUnitQuatIdentity(int a0) {
     int v0, v1;
     float f0, f1;
     int cond, fcc;
@@ -35,7 +35,7 @@ static inline void merge_flush_func_003B2450(void) {}
 /* merge_units: begin func_003B2480 */
 #pragma push /* merge_units */
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
-V4* func_003B2480(V4* a) {
+V4* cQuaternion_Negate(V4* a) {
     asm {
         lqc2 vf1, 0x0(a)
         vmulax.xyzw ACC, vf0, vf0x

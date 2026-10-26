@@ -1,6 +1,6 @@
 #include "types.h"
-extern void func_001F3A70(void*);
+extern void std_list_cSkaSwitchItemPtr_ctor(void*);
 #pragma optimization_level 1
 /* Calls the initializer on p and returns p. */
-void* func_001F3A30(void* p) { func_001F3A70(p); return p; }
+void* cLList_cSkaSwitchItemPtr_ctor(void* p) { std_list_cSkaSwitchItemPtr_ctor(p); return p; }
 #pragma optimization_level reset

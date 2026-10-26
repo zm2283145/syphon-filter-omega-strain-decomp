@@ -4,14 +4,14 @@
 #pragma mpwc_relax on
 /*fc*/
 int List_Begin();                       
-int func_0027AA80();                      
-int func_0027AC70();                        
-int func_0027AC80();                       
-int func_0027AC90();                                  
-int func_0027B4E0();                            
+int std_list_GameInfoPtr_generic_iterator_ctor();                      
+int cLListIterator_GameInfoPtr_ctor();                        
+int std_list_GameInfoPtr_end();                       
+int cHudNetLobby_DeactivateControls();                                  
+int cHudNetLobby_SetActive();                            
 int IeElement_SetShown();                            
 
-void func_0027AB60(char * arg0) {
+void cHudNetLobby_InitCurrentScreen(char * arg0) {
     int sp3C;
     char * sp38;
     int sp34;
@@ -19,7 +19,7 @@ void func_0027AB60(char * arg0) {
     int temp_v0;
     char * var_s0;
 
-    func_0027AC90();
+    cHudNetLobby_DeactivateControls();
     temp_v0 = F_(arg0, 0x3C, int);
     if (temp_v0 == 0) {
         F_(arg0, 0x38, int) = 0;
@@ -31,18 +31,18 @@ void func_0027AB60(char * arg0) {
         F_(arg0, 0x38, int) = 0;
         IeElement_SetShown(F_(arg0, 0x28, int), 1);
         List_Begin(&sp34, arg0 + 0x2C);
-        func_0027AA80(&sp38, &sp34);
+        std_list_GameInfoPtr_generic_iterator_ctor(&sp38, &sp34);
         var_s0 = sp38;
-        func_0027AC80(&sp30, arg0 + 0x2C);
-        func_0027AC70(&sp3C, &sp30);
+        std_list_GameInfoPtr_end(&sp30, arg0 + 0x2C);
+        cLListIterator_GameInfoPtr_ctor(&sp3C, &sp30);
         if ((int)var_s0 != (int)sp3C) {
             do {
                 IeElement_SetShown(F_(F_(var_s0, 0x8, int), 0x14, int), 1);
                 var_s0 = (char *)(F_(var_s0, 0x4, int));
-                func_0027AC80(&sp30, arg0 + 0x2C);
-                func_0027AC70(&sp3C, &sp30);
+                std_list_GameInfoPtr_end(&sp30, arg0 + 0x2C);
+                cLListIterator_GameInfoPtr_ctor(&sp3C, &sp30);
             } while ((int)var_s0 != (int)sp3C);
         }
     }
-    func_0027B4E0(arg0);
+    cHudNetLobby_SetActive(arg0);
 }

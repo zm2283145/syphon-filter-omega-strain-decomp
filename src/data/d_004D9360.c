@@ -2,10 +2,10 @@
 
 extern void Event_PackHeader();
 extern void Message_GetScriptTypeKey();
+extern void cMoveMsg_Template_Clone();
 extern void func_0014B100();
-extern void func_0015BBB0();
 
 void *D_004D9360[8] = {
-    0, 0, &func_0014B100, &func_0015BBB0,
+    0, 0, &func_0014B100, &cMoveMsg_Template_Clone,
     &Event_PackHeader, &Message_GetScriptTypeKey, 0, 0,
 };

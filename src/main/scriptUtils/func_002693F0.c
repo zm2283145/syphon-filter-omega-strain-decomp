@@ -8,7 +8,7 @@
 #include "scriptUtils_types.h"
 
 extern void* cNodeList_ctor(void* obj);
-extern int func_002697E0(void* obj);
+extern int cNodeList_SOBJ_toInt(void* obj);
 extern void* Group_FromHandle(void* obj);
 
 void Debug_PrintStub(void) {
@@ -16,5 +16,5 @@ void Debug_PrintStub(void) {
 
 /* Script native: CreateNodeList(args[0]). */
 int Script_CreateNodeList(ScriptArg* args) {
-    return func_002697E0(cNodeList_ctor(Group_FromHandle(args[0].p)));
+    return cNodeList_SOBJ_toInt(cNodeList_ctor(Group_FromHandle(args[0].p)));
 }

@@ -26,11 +26,11 @@ extern char *strncpy(char *d, const char *s, unsigned int n);
 extern int func_0030ECC0(UpnpE148 *u);
 extern int func_0030B5F0(char *a, char *b, char *host, unsigned short *port);
 extern int func_00310988(int *p, int kind, int arg);
-extern int func_002F5C98(UpCtxE148 *c, char *host, unsigned short port, AddrE148 *a);
+extern int rt_comm_create(UpCtxE148 *c, char *host, unsigned short port, AddrE148 *a);
 extern int func_00310C30(int h);
-extern int func_002F5DB0(int s);
+extern int rt_comm_destroy(int s);
 extern int Socket_WriteConnected(int s, char *buf, unsigned short len, unsigned short *written);
-extern int func_003060D8(void *p);
+extern int rt_time_get_time_stamp(void *p);
 int func_0030E148(UpnpE148 *u, int cb)
 {
     int r;
@@ -53,20 +53,20 @@ int func_0030E148(UpnpE148 *u, int cb)
         memset(&addr, 0, sizeof(addr));
         addr.b = 0x800;
         addr.a = 0;
-        if (func_002F5C98(u->ctx, host, port, &addr) != 0) {
+        if (rt_comm_create(u->ctx, host, port, &addr) != 0) {
             func_00310C30(u->ctx->conn);
             return 5;
         }
         sprintf(u->ctx->req, D_004B0158, u->ctx->path, host, port);
         if (Socket_WriteConnected(u->ctx->sock, u->ctx->req, strlen(u->ctx->req), &written) != 0
             || strlen(u->ctx->req) != written) {
-            func_002F5DB0(u->ctx->sock);
+            rt_comm_destroy(u->ctx->sock);
             func_00310C30(u->ctx->conn);
             return 8;
         }
     }
     u->state = 2;
-    func_003060D8(u->ctx->timer);
+    rt_time_get_time_stamp(u->ctx->timer);
     u->ctx->cb = cb;
     return 0;
 }

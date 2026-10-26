@@ -7,13 +7,13 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern void func_001F3530(void);
+extern void std_list_cSkaTransBLENDPtr_generic_iterator_1_opMul(void);
 
 /* Address of the data pointer. */
-char** func_001F3510(ObjVec* v) {
+char** std_vector_deleter_cSkaTransBLEND_data_void(ObjVec* v) {
     return &v->data;
 }
 
-void func_001F3520(void) {
-    func_001F3530();
+void cConstLListIterator_cSkaTransBLENDPtr_opMul(void) {
+    std_list_cSkaTransBLENDPtr_generic_iterator_1_opMul();
 }

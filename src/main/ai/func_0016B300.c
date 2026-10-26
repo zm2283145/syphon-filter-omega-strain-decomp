@@ -5,7 +5,7 @@
 
 #include "types.h"
 
-Word* func_0016B300(Word* dst, Word* src) {
+Word* cConstLListIterator_cActiveListItemPtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }

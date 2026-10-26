@@ -11,7 +11,7 @@ extern int g_TextureMgr;
 
 #pragma push
 #pragma opt_common_subs off
-void func_0043C810(char * arg0) {
+void GuiBitmapWidget_ClearBitmap(char * arg0) {
     struct { int f20[4]; } sl;
     int temp_a1;
 

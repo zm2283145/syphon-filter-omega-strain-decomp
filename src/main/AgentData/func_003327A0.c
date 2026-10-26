@@ -6,37 +6,37 @@
 
 #include "types.h"
 
-int func_003327A0(Iter* a, Iter* b) {
+int cArray_charPtr_Iterator_opNe(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 
-Iter* func_003327C0(Iter* it) {
+Iter* cArray_charPtr_Iterator_opInc(Iter* it) {
     it->p++;
     return it;
 }
 
-Word* func_003327E0(Word* dst, Word* src) {
+Word* cArray_charPtr_Iterator_ctor_IteratorR(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-int func_003327F0(char* self) {
+int cArray_charPtr_Iterator_opMul(char* self) {
     return *(int*)(self + 0);
 }
 
-void func_00332800(Iter* out, PtrVec* v) {
+void cArray_charPtr_End(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
 
-void func_00332820(Iter* out, PtrVec* v) {
+void cArray_charPtr_Begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 
-Word* func_00332830(Word* dst, Word* src) {
+Word* cArray_charPtr_Iterator_ctor_wrapiteratorR(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_00332840(Iter* out, PtrVec* v) {
+void std_vector_charPtr_end(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }

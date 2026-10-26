@@ -146,29 +146,29 @@ void Appearance_ReorderParts(Man_E10* m);
 int Appearance_GetBodyKind(void* app);
 int Appearance_GetToneDigit(void* app);
 void cVUM_GOBJ_InitModel(Model_E10* m, char* name);
-void func_00290BB0(Word_E10* w, int n);
-void func_00290A50(SVec_E10* v, Word_E10* w, unsigned char f);
+void cArrayCapacity_ctor(Word_E10* w, int n);
+void cArray_cSkeletonBBoxContributionPtr_ctor(SVec_E10* v, Word_E10* w, unsigned char f);
 V4_E10* Vec4_Set(V4_E10* v, float x, float y, float z, float w);
-void func_002909C0(Sph_E10* s, int bone, float r, V4_E10* off);
-void func_002909A0(SVec_E10* v, Sph_E10** p);
-void func_001B06F0(Sph_E10* s, int f);
-void* func_00290990(Model_E10* m);
+void cSkeletonBBoxContribution_ctor(Sph_E10* s, int bone, float r, V4_E10* off);
+void cArray_cSkeletonBBoxContributionPtr_PushBackActual(SVec_E10* v, Sph_E10** p);
+void cSkeletonBBoxContribution_dtor(Sph_E10* s, int f);
+void* cSKM_GOBJ_GetSkeleton_void_2(Model_E10* m);
 void FrontEnd_SetNodeSpheres(void* n, SVec_E10* v);
-void func_001AF880(SVec_E10* v, int f);
+void cArray_cSkeletonBBoxContributionPtr_dtor(SVec_E10* v, int f);
 void Model_Attach(void* a, void* b);
 void AnimModel_InitAnim(void* a);
 void Model_HardMeshAttachPoints(Man_E10* m);
-void func_0038E030(Man_E10* m);
+void cMan_GetTextureIDs(Man_E10* m);
 void ActorModel_Setup(Man_E10* m, int flag);
 void Skel_ApplyScalePreset(Man_E10* m, int a);
 int AgentPartCache_FindMesh(void* db, __int128 key);
 int AgentPartCache_FindTexture(void* db, __int128 key);
 void GuiAgentModify_Refresh(Self_E10* self);
-void func_002888C0(Aw_E10* a);
+void std_vector_charPtr_ctor_void_2(Aw_E10* a);
 void* Agent_GetSelected(void* p, int n);
 void AgentData_FilterAwards(void* ag, Aw_E10* a);
 void AgentPartCache_Lock(void* db, Aw_E10* a);
-void func_002887C0(Aw_E10* a, int flags);
+void std_vector_charPtr_dtor_void_2(Aw_E10* a, int flags);
 Self_E10* GuiAgentModify_ctor(Self_E10* self);
 }
 
@@ -216,37 +216,37 @@ static inline void Spheres_E10(Model_E10* md)
                 Sph_E10 arr[12];
                 V4_E10 t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11;
                 int k;
-                func_00290BB0(&w, 0x15);
-                func_00290A50(&vec, &w, 1);
-                func_002909C0(&arr[0], 0, 0.75f, Splat_E10(&t0, 0.0f));
-                func_002909C0(&arr[1], 4, 0.41666666f, Splat_E10(&t1, 0.0f));
-                func_002909C0(&arr[2], 6, 0.41666666f, Splat_E10(&t2, 0.0f));
-                func_002909C0(&arr[3], 0xC, 0.75f, Splat_E10(&t3, 0.0f));
-                func_002909C0(&arr[4], 0x10, 0.75f, Splat_E10(&t4, 0.0f));
-                func_002909C0(&arr[5], 0xE, 1.0f, Splat_E10(&t5, 0.0f));
-                func_002909C0(&arr[6], 0xD, 0.33333334f, Splat_E10(&t6, 0.0f));
-                func_002909C0(&arr[7], 0xF, 0.33333334f, Splat_E10(&t7, 0.0f));
-                func_002909C0(&arr[8], 0x11, 0.33333334f, Splat_E10(&t8, 0.0f));
-                func_002909C0(&arr[9], 0x12, 0.33333334f, Splat_E10(&t9, 0.0f));
-                func_002909C0(&arr[10], 0x13, 0.6666667f, Splat_E10(&t10, 0.0f));
-                func_002909C0(&arr[11], 0x14, 0.6666667f, Splat_E10(&t11, 0.0f));
+                cArrayCapacity_ctor(&w, 0x15);
+                cArray_cSkeletonBBoxContributionPtr_ctor(&vec, &w, 1);
+                cSkeletonBBoxContribution_ctor(&arr[0], 0, 0.75f, Splat_E10(&t0, 0.0f));
+                cSkeletonBBoxContribution_ctor(&arr[1], 4, 0.41666666f, Splat_E10(&t1, 0.0f));
+                cSkeletonBBoxContribution_ctor(&arr[2], 6, 0.41666666f, Splat_E10(&t2, 0.0f));
+                cSkeletonBBoxContribution_ctor(&arr[3], 0xC, 0.75f, Splat_E10(&t3, 0.0f));
+                cSkeletonBBoxContribution_ctor(&arr[4], 0x10, 0.75f, Splat_E10(&t4, 0.0f));
+                cSkeletonBBoxContribution_ctor(&arr[5], 0xE, 1.0f, Splat_E10(&t5, 0.0f));
+                cSkeletonBBoxContribution_ctor(&arr[6], 0xD, 0.33333334f, Splat_E10(&t6, 0.0f));
+                cSkeletonBBoxContribution_ctor(&arr[7], 0xF, 0.33333334f, Splat_E10(&t7, 0.0f));
+                cSkeletonBBoxContribution_ctor(&arr[8], 0x11, 0.33333334f, Splat_E10(&t8, 0.0f));
+                cSkeletonBBoxContribution_ctor(&arr[9], 0x12, 0.33333334f, Splat_E10(&t9, 0.0f));
+                cSkeletonBBoxContribution_ctor(&arr[10], 0x13, 0.6666667f, Splat_E10(&t10, 0.0f));
+                cSkeletonBBoxContribution_ctor(&arr[11], 0x14, 0.6666667f, Splat_E10(&t11, 0.0f));
                 for (k = 0; k < 12; k++) {
-                    Sph_E10* sp; Sph_E10** pp = &sp; sp = &arr[k]; func_002909A0(&vec, pp);
+                    Sph_E10* sp; Sph_E10** pp = &sp; sp = &arr[k]; cArray_cSkeletonBBoxContributionPtr_PushBackActual(&vec, pp);
                 }
-                func_001B06F0(&arr[11], -1);
-                func_001B06F0(&arr[10], -1);
-                func_001B06F0(&arr[9], -1);
-                func_001B06F0(&arr[8], -1);
-                func_001B06F0(&arr[7], -1);
-                func_001B06F0(&arr[6], -1);
-                func_001B06F0(&arr[5], -1);
-                func_001B06F0(&arr[4], -1);
-                func_001B06F0(&arr[3], -1);
-                func_001B06F0(&arr[2], -1);
-                func_001B06F0(&arr[1], -1);
-                func_001B06F0(&arr[0], -1);
-                FrontEnd_SetNodeSpheres(func_00290990(md), &vec);
-                func_001AF880(&vec, -1);
+                cSkeletonBBoxContribution_dtor(&arr[11], -1);
+                cSkeletonBBoxContribution_dtor(&arr[10], -1);
+                cSkeletonBBoxContribution_dtor(&arr[9], -1);
+                cSkeletonBBoxContribution_dtor(&arr[8], -1);
+                cSkeletonBBoxContribution_dtor(&arr[7], -1);
+                cSkeletonBBoxContribution_dtor(&arr[6], -1);
+                cSkeletonBBoxContribution_dtor(&arr[5], -1);
+                cSkeletonBBoxContribution_dtor(&arr[4], -1);
+                cSkeletonBBoxContribution_dtor(&arr[3], -1);
+                cSkeletonBBoxContribution_dtor(&arr[2], -1);
+                cSkeletonBBoxContribution_dtor(&arr[1], -1);
+                cSkeletonBBoxContribution_dtor(&arr[0], -1);
+                FrontEnd_SetNodeSpheres(cSKM_GOBJ_GetSkeleton_void_2(md), &vec);
+                cArray_cSkeletonBBoxContributionPtr_dtor(&vec, -1);
             }
 }
 static inline void QAsgB_E10(void* d0, const void* s0) { void* d = d0; const void* s = s0; __int128 t; __asm__ volatile("lq %0, 0x0(%1)" : "=r"(t) : "r"(s) : "memory"); __asm__ volatile("sq %0, 0x0(%1)" : : "r"(t), "r"(d) : "memory"); }
@@ -284,7 +284,7 @@ static inline void Tail_E10(Self_E10* self, V4_E10& v)
                 { QAsgB_E10(&m->pos, &v); m->pos.w = 1.0f; }
             }
             { Man_E10* mm = &self->model->man; mm->b2DA0 = 1; }
-            func_0038E030(&self->model->man);
+            cMan_GetTextureIDs(&self->model->man);
             {
                 int c;
                 Model_E10* m;
@@ -441,11 +441,11 @@ extern "C" Self_E10* GuiAgentModify_ctor(Self_E10* p0)
     self->fB4[6] = D_0056F9B0.f[6];
     {
         Aw_E10* pa = &a;
-        func_002888C0(pa);
+        std_vector_charPtr_ctor_void_2(pa);
         pa->bC = 1;
         AgentData_FilterAwards(Agent_GetSelected(g_Game, -1), pa);
         AgentPartCache_Lock(g_AgentPartCache, pa);
-        func_002887C0(pa, -1);
+        std_vector_charPtr_dtor_void_2(pa, -1);
     }
     return self;
 }

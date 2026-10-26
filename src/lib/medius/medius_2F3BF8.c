@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_002F3BF8(int a0) {
+int GetUsedSequencerCount(int a0) {
     int tmp0;
 
     tmp0 = *(int*)((char*)a0 + 8);

@@ -15,20 +15,20 @@
 #pragma push /* merge_units */
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V_5E40;
 typedef struct { V_5E40 a; V_5E40 b; float c; float d; int e; } T_5E40;
-T_5E40* func_003E5E40(T_5E40* d, const T_5E40* s); /* gsynth: defined below */
+T_5E40* cDestinationParams_ctor_cDestinationParamsR(T_5E40* d, const T_5E40* s); /* gsynth: defined below */
 #pragma cplusplus on
 extern "C" {
 void* Mem_Alloc(int pool, int size, char* file, int line);
 extern char D_004E0100[];
 #if 0 /* merge_units */
-void func_003E5E40(void* dst, void* src);
+void cDestinationParams_ctor_cDestinationParamsR(void* dst, void* src);
 #endif /* merge_units */
-#define func_003E5E40(a0, a1) ((void)func_003E5E40((T_5E40 *)(a0), (const T_5E40 *)(a1))) /* merge_units */
+#define cDestinationParams_ctor_cDestinationParamsR(a0, a1) ((void)cDestinationParams_ctor_cDestinationParamsR((T_5E40 *)(a0), (const T_5E40 *)(a1))) /* merge_units */
 
 void cMessage_ctor3(void* self, void* other);
 }
 struct PM5D70 { void* vtable; char pad[8]; int wC; char pad2[0x20]; char payload[0x30]; };
-extern "C" PM5D70* func_003E5D70(PM5D70* self)
+extern "C" PM5D70* cCharActionMsg_DestinationParams_Clone(PM5D70* self)
 {
     PM5D70* p;
     {
@@ -37,13 +37,13 @@ extern "C" PM5D70* func_003E5D70(PM5D70* self)
     }
     if (p) {
         cMessage_ctor3(p, self);
-        func_003E5E40(p->payload, self->payload);
+        cDestinationParams_ctor_cDestinationParamsR(p->payload, self->payload);
         p->vtable = D_004E0100;
     }
     p->wC = self->wC;
     return p;
 }
-#undef func_003E5E40 /* merge_units */
+#undef cDestinationParams_ctor_cDestinationParamsR /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003E5D70(void) {}
 #pragma pop /* merge_units */
@@ -57,7 +57,7 @@ static inline V_5E40* VAsg_(V_5E40* d, const V_5E40* s) { *d = *s; return d; }
 #pragma opt_dead_assignments off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-T_5E40* func_003E5E40(T_5E40* d, const T_5E40* s) {
+T_5E40* cDestinationParams_ctor_cDestinationParamsR(T_5E40* d, const T_5E40* s) {
     void* r;
     r = VAsg_(&d->a, &s->a); r = VAsg_(&d->b, &s->b); d->c = s->c; d->d = s->d; d->e = s->e; r = d;
     return r;

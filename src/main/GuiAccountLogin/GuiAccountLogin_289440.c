@@ -49,7 +49,7 @@ static inline void Assign_00289440(S_00289440* self, Str_00289440* d, int id)
     String_AssignString(d, &t);
     String_Dtor(&t, 0);
 }
-extern "C" void func_00289440(S_00289440* self)
+extern "C" void GuiAccountLogin_LoginAccount(S_00289440* self)
 {
     void* g = DME_GetLobby();
     unsigned char ok;
@@ -165,14 +165,14 @@ int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_00289990* d, int e);
 #define FrontEnd_OpenPopup(a0, a1, a2, a3, a4, a5) (FrontEnd_OpenPopup((a0), (a1), (a2), (char *)(a3), (S_00289440 *)(a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_00289440(S_00289990* self);
+void GuiAccountLogin_LoginAccount(S_00289990* self);
 #endif /* merge_units */
-#define func_00289440(a0) ((void)func_00289440((S_00289440 *)(a0))) /* merge_units */
+#define GuiAccountLogin_LoginAccount(a0) ((void)GuiAccountLogin_LoginAccount((S_00289440 *)(a0))) /* merge_units */
 
-void func_00288E90(S_00289990* self);
+void GuiAccountLogin_RegisterAccount(S_00289990* self);
 Ui_00289990* Gui_GetScreenStack(void);
-void func_0028A230(S_00289990* self);
-void func_0028A180(S_00289990* self);
+void GuiAccountLogin_EditUserName(S_00289990* self);
+void GuiAccountLogin_EditPassword(S_00289990* self);
 char* strncpy(char* d, const char* s, int n);
 void GuiScreen_Navigate(S_00289990* self, int a);
 int GuiScreen_HandleInput(S_00289990* self, Ev_00289990* ev);
@@ -208,19 +208,19 @@ extern "C" int GuiAccountLogin_HandleInput(S_00289990* self, Ev_00289990* ev)
         bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x80 && ev->f6 == 0;
         if (b) {
             if (!self->bAD)
-                func_00289440(self);
+                GuiAccountLogin_LoginAccount(self);
             else
-                func_00288E90(self);
+                GuiAccountLogin_RegisterAccount(self);
             return 1;
         } else {
             bool c = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x2000 && ev->f6 == 0;
             if (c) {
                 if (Gui_GetScreenStack()->f20 == self->p88) {
-                    func_0028A230(self);
+                    GuiAccountLogin_EditUserName(self);
                     return 1;
                 }
                 if (Gui_GetScreenStack()->f20 == self->p90) {
-                    func_0028A180(self);
+                    GuiAccountLogin_EditPassword(self);
                     return 1;
                 }
             }
@@ -246,7 +246,7 @@ extern "C" int GuiAccountLogin_HandleInput(S_00289990* self, Ev_00289990* ev)
 #undef D_004FFC04 /* merge_units */
 #undef GuiScreen_GetLobbyString /* merge_units */
 #undef FrontEnd_OpenPopup /* merge_units */
-#undef func_00289440 /* merge_units */
+#undef GuiAccountLogin_LoginAccount /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00289990 */
 
@@ -274,24 +274,24 @@ extern char D_004A9718[];
 extern char D_004A9720[];
 int GuiScreen_HandleEvent(S_00289C80* self, void* w, int msg, int sub);
 #if 0 /* merge_units */
-void func_0028A230(S_00289C80* self);
+void GuiAccountLogin_EditUserName(S_00289C80* self);
 #endif /* merge_units */
-#define func_0028A230(a0) (func_0028A230((S_00289990 *)(a0))) /* merge_units */
+#define GuiAccountLogin_EditUserName(a0) (GuiAccountLogin_EditUserName((S_00289990 *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_0028A180(S_00289C80* self);
+void GuiAccountLogin_EditPassword(S_00289C80* self);
 #endif /* merge_units */
-#define func_0028A180(a0) (func_0028A180((S_00289990 *)(a0))) /* merge_units */
+#define GuiAccountLogin_EditPassword(a0) (GuiAccountLogin_EditPassword((S_00289990 *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_00289440(S_00289C80* self);
+void GuiAccountLogin_LoginAccount(S_00289C80* self);
 #endif /* merge_units */
-#define func_00289440(a0) ((void)func_00289440((S_00289440 *)(a0))) /* merge_units */
+#define GuiAccountLogin_LoginAccount(a0) ((void)GuiAccountLogin_LoginAccount((S_00289440 *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_00288E90(S_00289C80* self);
+void GuiAccountLogin_RegisterAccount(S_00289C80* self);
 #endif /* merge_units */
-#define func_00288E90(a0) (func_00288E90((S_00289990 *)(a0))) /* merge_units */
+#define GuiAccountLogin_RegisterAccount(a0) (GuiAccountLogin_RegisterAccount((S_00289990 *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 void* Gui_GetScreenStack(void);
@@ -331,15 +331,15 @@ extern "C" int GuiAccountLogin_HandleEvent(S_00289C80* self, void* w, int msg, i
     if (m == 2) {
         Txt_00289C80* a = self->p88;
         if (w == a && self->p8C) {
-            func_0028A230(self);
+            GuiAccountLogin_EditUserName(self);
         } else if (w == self->p90 && self->p94) {
-            func_0028A180(self);
+            GuiAccountLogin_EditPassword(self);
         } else if (w == self->p98) {
             D_00506378 = 1;
             if (!self->bAD)
-                func_00289440(self);
+                GuiAccountLogin_LoginAccount(self);
             else
-                func_00288E90(self);
+                GuiAccountLogin_RegisterAccount(self);
             D_00506378 = 0;
         } else if (w == self->p8C) {
             if (a)
@@ -427,7 +427,7 @@ extern "C" int GuiAccountLogin_HandleEvent(S_00289C80* self, void* w, int msg, i
             }
             if (sub == 0x25) {
                 self->bA4 = 1;
-                func_0028A230(self);
+                GuiAccountLogin_EditUserName(self);
                 return 1;
             }
         }
@@ -435,10 +435,10 @@ extern "C" int GuiAccountLogin_HandleEvent(S_00289C80* self, void* w, int msg, i
     return GuiScreen_HandleEvent(self, w, msg, sub);
 }
 #undef D_004FFC04 /* merge_units */
-#undef func_0028A230 /* merge_units */
-#undef func_0028A180 /* merge_units */
-#undef func_00289440 /* merge_units */
-#undef func_00288E90 /* merge_units */
+#undef GuiAccountLogin_EditUserName /* merge_units */
+#undef GuiAccountLogin_EditPassword /* merge_units */
+#undef GuiAccountLogin_LoginAccount /* merge_units */
+#undef GuiAccountLogin_RegisterAccount /* merge_units */
 #undef Gui_GetScreenStack /* merge_units */
 #undef AgentData_GetName /* merge_units */
 #undef SaveAgentWidget_Rename /* merge_units */

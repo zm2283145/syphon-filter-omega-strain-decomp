@@ -14,7 +14,7 @@ int func_001AE360(void) {
 }
 
 /* Set the float at +0x3C to 1.0 and clear the word at +0x4C. */
-void func_001AE370(char* self) {
+void cLosRequestMessage_MakeSureWValuesAreCorrect(char* self) {
     *(float*)(self + 60) = 1.0f;
     *(int*)(self + 76) = 0;
 }

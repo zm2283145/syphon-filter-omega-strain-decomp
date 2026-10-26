@@ -15,16 +15,16 @@ typedef struct {
     int unkC0;          /* 0xC0 */
 } S;
 extern char D_004F8350[];
-extern void func_002666F0(Sub*);
-extern void func_00266B80(void*);
-extern void func_002666D0(void* registry, S** self);
+extern void std_vector_TaserPoint_ctor(Sub*);
+extern void std_list_deleter_TaserPulse_ctor(void*);
+extern void std_vector_cAirTaserPtr_push_back(void* registry, S** self);
 /* Constructor: initialises members and registers the object in the global registry. */
 S* HeldItem_Construct(S* self, int owner)
 {
     Sub* sub = &self->sub;
-    func_002666F0(sub);
+    std_vector_TaserPoint_ctor(sub);
     sub->ready = 1;
-    func_00266B80(self->list);
+    std_list_deleter_TaserPulse_ctor(self->list);
     self->state = -2;
     self->count = 0;
     self->owner = owner;
@@ -32,6 +32,6 @@ S* HeldItem_Construct(S* self, int owner)
     self->unk0 = 0;
     self->unkC = 0;
     self->unkC0 = 0;
-    func_002666D0(D_004F8350, &self);
+    std_vector_cAirTaserPtr_push_back(D_004F8350, &self);
     return self;
 }

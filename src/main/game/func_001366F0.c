@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-Rel* func_001366F0(Rel* r) {
+Rel* std_vector_cArray_int_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

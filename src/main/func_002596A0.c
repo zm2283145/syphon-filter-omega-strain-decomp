@@ -11,7 +11,7 @@ int* func_002596A0(PtrVec* v) {
     return v->data + v->count;
 }
 
-void func_002596C0(Iter* out, void* self, Iter* src) {
+void std_list_cAreaEffectPtr_generic_iterator_ctor(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }
 

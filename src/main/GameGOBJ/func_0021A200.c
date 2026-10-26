@@ -67,13 +67,13 @@ void cMessage_dtor(void* m, int flags);
 void Transport_Send(int target, BlastMsg* msg, int a, int b);
 void VisionFx_RequestFlash(void* fx, V* v, float a, float b, float c, float d);
 void* World_GetActorArray(void);
-Vec* func_001339A0(void* arr);
+Vec* cObjList_cGOBJPtr_GetList(void* arr);
 void PtrVec_Begin(It* out, Vec* v);
 void PtrVec_End(It* out, Vec* v);
-void func_00133980(It* out, It* in);
+void cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(It* out, It* in);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void SchedEvent_Init(void* e, int t, int a, int b);
-void func_0021A800(Handle* h);
+void cSafePtr_cGOBJ_ctor_void(Handle* h);
 void Ptr_Identity(V* v);
 void ObjHandle_Set(Handle* h, Obj* o);
 void Vec4_Copy(V* d, V* s);
@@ -100,8 +100,8 @@ static inline BlastEvent* NewBlast(int t, Obj* a, int dmg, Obj* src, unsigned ch
     if (e) {
         SchedEvent_Init(e, t, 1, 0);
         e->vt = D_004DAEB0;
-        func_0021A800(&e->tgt);
-        func_0021A800(&e->src);
+        cSafePtr_cGOBJ_ctor_void(&e->tgt);
+        cSafePtr_cGOBJ_ctor_void(&e->src);
         Ptr_Identity(&e->pos);
         ObjHandle_Set(&e->tgt, a);
         e->dmg = dmg;
@@ -118,8 +118,8 @@ static inline bool Standing(Obj* o) { bool r = false; if (o->b2D && o->b2C) r = 
 static inline bool Alive(Obj* o) { bool r = false; if (Standing(o) && ((o->b2E != 0) ^ 1)) r = true; return r; }
 static inline bool DeadOk(void) { unsigned char r; if (g_IsMultiplayer) r = D_005721C0; else r = true; return r; }
 static inline int HumanKey(void) { int* p = &g_HumanActorClassKey; return *p; }
-static inline void GetBegin(It* o, Vec* v) { It tb; PtrVec_Begin(&tb, v); func_00133980(o, &tb); }
-static inline void GetEnd(It* o, Vec* v) { It te; PtrVec_End(&te, v); func_00133980(o, &te); }
+static inline void GetBegin(It* o, Vec* v) { It tb; PtrVec_Begin(&tb, v); cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(o, &tb); }
+static inline void GetEnd(It* o, Vec* v) { It te; PtrVec_End(&te, v); cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(o, &te); }
 /* the extra inline level orders the iterator temps like retail */
 static inline void GetBegin2(It* o, Vec* v) { GetBegin(o, v); }
 static inline void GetEnd2(It* o, Vec* v) { GetEnd(o, v); }
@@ -158,9 +158,9 @@ extern "C" void Blast_Prepare(Obj* obj, int dmg, float fdmg, float r0, float r1,
     It it;
     It end;
     Obj* a;
-    GetBegin2(&it, func_001339A0(arr));
+    GetBegin2(&it, cObjList_cGOBJPtr_GetList(arr));
     bool local = !obj || obj->b14;
-    while (GetEnd2(&end, func_001339A0(arr)), Ne(&it, &end)) {
+    while (GetEnd2(&end, cObjList_cGOBJPtr_GetList(arr)), Ne(&it, &end)) {
         a = *it.p;
         if (skipHumans && a->classKey == HumanKey()) goto next;
         if (!a) goto next;

@@ -5,7 +5,7 @@ extern float D_004E1C6C;
 extern float Math_Powf(float, float);
 typedef struct { int pad0; float y; } S;
 
-short func_0031E548(S* s, short h)
+short nemAgcCalc(S* s, short h)
 {
     float d, e, r;
     int v = (h > 0) ? h : 0xB0;

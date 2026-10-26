@@ -9,7 +9,7 @@
 static const unsigned int dat_00497DE0[1] = { 0x0 };
 extern char D_005984D8[];
 
-int func_0046E478(void) {
+int MediusUniqueCallbackFileCancelOperationResponseHandler(void) {
     int v0;
     int cond;
 
@@ -24,7 +24,7 @@ ret:
     return v0;
 }
 
-int func_0046E4A8(void) {
+int MediusUniqueCallbackGetUniverseInformationHandler(void) {
     int v0;
     int cond;
 

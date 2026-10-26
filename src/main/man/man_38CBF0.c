@@ -21,7 +21,7 @@ typedef struct {
     char pad2c0c[0x2D96 - 0x2C0C];
     short x2d96;
 } F38CBF0;
-extern void func_0036CA70(void*);
+extern void DELAY_DELETE_ARRAY(void*);
 void ActorModel_Deactivate(F38CBF0* p)
 {
     int i;
@@ -29,7 +29,7 @@ void ActorModel_Deactivate(F38CBF0* p)
     p->x2d96 = 0;
     for (i = 0; i < p->count; i++) {
         if (p->items[i]) {
-            func_0036CA70(p->items[i]);
+            DELAY_DELETE_ARRAY(p->items[i]);
             p->items[i] = 0;
         }
     }
@@ -42,7 +42,7 @@ static inline void merge_flush_func_0038CBF0(void) {}
 /* merge_units: begin func_0038CC70 */
 #pragma push /* merge_units */
 #include "fileman_entry.h"
-extern void* func_0036E140(void* entry, const char* name, int a, int b);
+extern void* cFileMan_EncodeFilename_charP_cFileIOP_bool(void* entry, const char* name, int a, int b);
 extern int Fstream_GetLoader(void);
 extern int Fstream_ReleaseNoCallback(int mgr, void* entry, int flag);
 extern void Tex_Release(int mgr, int handle, int flags);
@@ -64,7 +64,7 @@ void ActorModel_Release(Cc70Obj* self)
         char path[0x100];
         Resource_Construct(&e);
         sprintf(path, "%s.HOG", self);
-        func_0036E140(&e, path, 0, 0);
+        cFileMan_EncodeFilename_charP_cFileIOP_bool(&e, path, 0, 0);
         Fstream_ReleaseNoCallback(Fstream_GetLoader(), &e, 1);
         self->dirty = 0;
         FileMan_Release(&e, -1);

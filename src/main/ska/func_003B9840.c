@@ -10,7 +10,7 @@ struct TT_3B9840 { unsigned int count; TN_3B9840* root; int pad; TN_3B9840* left
 extern "C" { extern char D_004BCEF0[]; }
 extern "C" { char D_004BCF98[] = "allocator.hh"; }
 extern "C" {
-void func_0013CD40(void* node, void* root);
+void std_red_black_tree_1_balance_insert(void* node, void* root);
 }
 /* 3-quad copy loop (hand-written in the original) */
 static inline void Copy3(void* d0, const void* s0)
@@ -33,7 +33,7 @@ static inline void Copy3(void* d0, const void* s0)
 }
 /* with opt_propagation/opt_common_subs off, max_size() - 1 is computed at run time */
 static inline unsigned int MaxSize() { unsigned int r; r = 0xFFFFFFFFU; return r; }
-extern "C" TN_3B9840* func_003B9840(TT_3B9840* tree, TN_3B9840* parent, int left, int first, const TV_3B9840* src)
+extern "C" TN_3B9840* std_tree_pair_cString16N_value_compare_cAllocator_pair_insert_node_at_nodeP_bool_bool_pairR(TT_3B9840* tree, TN_3B9840* parent, int left, int first, const TV_3B9840* src)
 {
     if (tree->count > MaxSize() - 1) {
         Libc_Fprintf(D_00489738->stream, D_004BCEF0);
@@ -53,7 +53,7 @@ extern "C" TN_3B9840* func_003B9840(TT_3B9840* tree, TN_3B9840* parent, int left
     else
         parent->right = node;
     tree->count++;
-    func_0013CD40(node, tree->root);
+    std_red_black_tree_1_balance_insert(node, tree->root);
     if (first)
         tree->leftmost = node;
     return node;

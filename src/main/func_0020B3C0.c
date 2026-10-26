@@ -1,10 +1,10 @@
 #include "types.h"
 #pragma optimization_level 1
 
-extern void func_0020B3E0(void);
+extern void details_compressed_pair_imp_cAllocator_cSkaTransBLEND_int_1_first_void_2(void);
 
-/* Wrapper: calls func_0020B3E0. */
-void func_0020B3C0(void)
+/* Wrapper: calls details_compressed_pair_imp_cAllocator_cSkaTransBLEND_int_1_first_void_2. */
+void std_vector_deleter_cSkaTransBLEND_alloc_void_2(void)
 {
-    func_0020B3E0();
+    details_compressed_pair_imp_cAllocator_cSkaTransBLEND_int_1_first_void_2();
 }

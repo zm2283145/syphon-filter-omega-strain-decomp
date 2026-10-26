@@ -21,8 +21,8 @@ float Fixed14ToFloat(int value)
 static inline float fmin_(float a, float b) { float r = 0.0f; asm { min.s r, a, b } return r; }
 struct V { float x, y, z, w; V& operator=(const V& o) { __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(t) : "r"(this), "r"(&o) : "memory"); void* xx = this; /* dead on purpose: retail keeps this addiu */ return *this; } } __attribute__((aligned(16)));
 struct T80 { V a; V b; float c; float d; int e; };
-extern "C" T80* func_003E4880(T80* t, const V* a, const V* b, float c, float d, int e);
-T80* func_003E4880(T80* t, const V* a, const V* b, float c, float d, int e) {
+extern "C" T80* cDestinationParams_ctor_cVectorR_cPlaneR_float_float(T80* t, const V* a, const V* b, float c, float d, int e);
+T80* cDestinationParams_ctor_cVectorR_cPlaneR_float_float(T80* t, const V* a, const V* b, float c, float d, int e) {
     t->a = *a;
     t->b = *b;
     t->c = c;
@@ -65,7 +65,7 @@ extern char D_004E0840[];         /* Msg3E43D0 vtable */
 extern char g_ActorActionMsgClass[];         /* Msg3E43D0 type descriptor */
 extern void* cMessage_ctor5(void* self, void* type, void* arg);
 
-Vec4* func_003E4920(Vec4* v, float x, float y, float z, float w) {
+Vec4* cPlane_ctor_float_float_float_float(Vec4* v, float x, float y, float z, float w) {
     v->x = x;
     v->y = y;
     v->z = z;
@@ -74,7 +74,7 @@ Vec4* func_003E4920(Vec4* v, float x, float y, float z, float w) {
 }
 
 /* Builds the message from explicit values. */
-Msg3E43D0* func_003E4940(Msg3E43D0* self, void* arg, int a, int b) {
+Msg3E43D0* cCharActionMsg_ctor_messagebaseR_int_eParamType(Msg3E43D0* self, void* arg, int a, int b) {
     cMessage_ctor5(self, g_ActorActionMsgClass, arg);
     self->vtable = D_004E0840;
     self->unk24 = a;
@@ -105,7 +105,7 @@ static inline V4* V4_Set(V4* v, float x, float y, float z, float w) { v->x = x; 
 /* GCC-style volatile lq/sq quad copy (c57da idiom): keeps the unfolded address registers */
 static inline void V4_Copy(V4* d, V4* s) { __int128 q; __asm__ volatile("lq %0, 0(%2); sq %0, 0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
 static inline void Sub_Set(Sub* s, V4* v, float a, float b, bool f, V4* d) { V4_Copy(d, v); s->f40 = a; s->f44 = b; s->b48 = f ? 1 : 0; }
-extern "C" int func_003E49B0(int a, int b, int c, Packet* p0) {
+extern "C" int cCharActionMsg_MotionParams_NetCharActionMotionParamsReq(int a, int b, int c, Packet* p0) {
     Msg msg; V4 v;
     if (!D_005723C8) D_005723C8 = 1;
     if (D_005721D0) {
@@ -149,7 +149,7 @@ void cMessage_dtor(Msg_003E4AF0*,int);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) (cMessage_dtor((Msg *)(a0), (a1))) /* merge_units */
 
-int func_003E4AF0(int a,int b,int c,Packet_003E4AF0*p0){
+int cCharActionMsg_ObjectId_Int_Scalar_Bool_NetCharActionNetObjectIdIntScalarBoolReq(int a,int b,int c,Packet_003E4AF0*p0){
  Msg_003E4AF0 msg;Packet_003E4AF0*p;
  if(!D_005723C8)D_005723C8=1;
  p=p0;if(D_005721D0){void**obj;cMessage_ctor5(&msg,g_ActorActionMsgClass,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E0160;msg.a=p->a;msg.b=p->b;msg.time=p->time;msg.enabled=p->enabled;
@@ -182,7 +182,7 @@ void cMessage_dtor(Msg_003E4BE0*,int);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) (cMessage_dtor((Msg *)(a0), (a1))) /* merge_units */
 
-int func_003E4BE0(int a,int b,int c,Packet_003E4BE0*p0){
+int cCharActionMsg_ObjectId_Int_NetCharActionNetObjectIdIntReq(int a,int b,int c,Packet_003E4BE0*p0){
  Msg_003E4BE0 msg;Packet_003E4BE0*p;
  if(!D_005723C8)D_005723C8=1;
  p=p0;if(D_005721D0){void**obj;cMessage_ctor5(&msg,g_ActorActionMsgClass,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E0180;msg.a=p->a;msg.b=p->b;
@@ -215,7 +215,7 @@ void cMessage_dtor(Msg_003E4CC0*,int);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) (cMessage_dtor((Msg *)(a0), (a1))) /* merge_units */
 
-int func_003E4CC0(int a,int b,int c,Packet_003E4CC0*p0){
+int cCharActionMsg_ObjectId_NetCharActionNetObjectIDReq(int a,int b,int c,Packet_003E4CC0*p0){
  Msg_003E4CC0 msg;Packet_003E4CC0*p;
  if(!D_005723C8)D_005723C8=1;
  p=p0;if(D_005721D0){void**obj;cMessage_ctor5(&msg,g_ActorActionMsgClass,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E01A0;msg.a=p->a;
@@ -251,7 +251,7 @@ void cMessage_dtor(Msg_003E4DA0*,int);
 
 static inline float GetX(Packet_003E4DA0*p){return p->vec.x;}
 static inline void CopyV(V4Local*d,V4Local*s){float y;float z;float w;float x;w=s->w;z=s->z;y=s->y;x=s->x;d->x=x;d->y=y;d->z=z;d->w=w;}
-int func_003E4DA0(int a,int b,int c,Packet_003E4DA0*p0){
+int cCharActionMsg_Vector_NetCharActionVectorReq(int a,int b,int c,Packet_003E4DA0*p0){
  Msg_003E4DA0 msg;Packet_003E4DA0*p;
  if(!D_005723C8)D_005723C8=1;
  p=p0;if(D_005721D0){void**obj;cMessage_ctor5(&msg,g_ActorActionMsgClass,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E0140;CopyV(&msg.vec,&p->vec);
@@ -284,7 +284,7 @@ void cMessage_dtor(Msg_003E4E90*,int);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) (cMessage_dtor((Msg *)(a0), (a1))) /* merge_units */
 
-int func_003E4E90(int a,int b,int c,Packet_003E4E90*p0){
+int cCharActionMsg_Scalar_NetCharActionScalarReq(int a,int b,int c,Packet_003E4E90*p0){
  Msg_003E4E90 msg;Packet_003E4E90*p;
  if(!D_005723C8)D_005723C8=1;
  p=p0;if(D_005721D0){void**obj;cMessage_ctor5(&msg,g_ActorActionMsgClass,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E01C0;msg.a=p->a;
@@ -317,7 +317,7 @@ void cMessage_dtor(Msg_003E4F70*,int);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) (cMessage_dtor((Msg *)(a0), (a1))) /* merge_units */
 
-int func_003E4F70(int a,int b,int c,Packet_003E4F70*p0){
+int cCharActionMsg_Int_NetCharActionIntReq(int a,int b,int c,Packet_003E4F70*p0){
  Msg_003E4F70 msg;Packet_003E4F70*p;
  if(!D_005723C8)D_005723C8=1;
  p=p0;if(D_005721D0){void**obj;cMessage_ctor5(&msg,g_ActorActionMsgClass,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E01E0;msg.a=(int)p->a;
@@ -333,23 +333,23 @@ int func_003E4F70(int a,int b,int c,Packet_003E4F70*p0){
 
 /* merge_units: begin func_003E5060 */
 #pragma push /* merge_units */
-extern int func_002E9A10(void* reg);
+extern int NetRegisterMessageStart(void* reg);
 extern int Event_UnpackHeader(void* desc);
-extern int func_003FF2C0(void);
-extern int func_002E9A98(void* desc, void* field, int size, int count);
-extern int func_002E9F08(void* t, void* fn);
+extern int cCharActionMsg_RegisterFields(void);
+extern int NetMessageField(void* desc, void* field, int size, int count);
+extern int NetRegisterApplicationMessage(void* t, void* fn);
 extern int D_0055A218;
-extern void func_003E4240(void);
-unsigned char func_003E5060(void* reg)
+extern void cCharActionMsg_InteractParams_NetCharActionInteractParamsReq(void);
+unsigned char cCharActionMsg_InteractParams_InitNet(void* reg)
 {
     struct { long long file; char padC[4]; int fC; int f10; char f14[16]; char f24[12]; } L;
     unsigned char ok = 0;
-    if (func_002E9A10(reg) == 0 && func_003FF2C0() != 0
-        && func_002E9A98(&L.file, &L.fC, 4, 1) == 0
-        && func_002E9A98(&L.file, &L.f10, 4, 1) == 0
-        && func_002E9A98(&L.file, L.f14, 16, 1) == 0
-        && func_002E9A98(&L.file, L.f24, 12, 1) == 0
-        && func_002E9F08(&D_0055A218, func_003E4240) == 0)
+    if (NetRegisterMessageStart(reg) == 0 && cCharActionMsg_RegisterFields() != 0
+        && NetMessageField(&L.file, &L.fC, 4, 1) == 0
+        && NetMessageField(&L.file, &L.f10, 4, 1) == 0
+        && NetMessageField(&L.file, L.f14, 16, 1) == 0
+        && NetMessageField(&L.file, L.f24, 12, 1) == 0
+        && NetRegisterApplicationMessage(&D_0055A218, cCharActionMsg_InteractParams_NetCharActionInteractParamsReq) == 0)
         ok = 1;
     return ok;
 }
@@ -360,16 +360,16 @@ unsigned char func_003E5060(void* reg)
 #pragma push /* merge_units */
 extern int D_0055A210;
 extern void func_003E4430(void);
-unsigned char func_003E5120(void* reg)
+unsigned char cCharActionMsg_DestinationParams_InitNet(void* reg)
 {
     struct { long long file; char f8[12]; char f14[16]; short f24; short f26; } L;
     unsigned char ok = 0;
-    if (func_002E9A10(reg) == 0 && func_003FF2C0() != 0
-        && func_002E9A98(&L.file, L.f8, 12, 1) == 0
-        && func_002E9A98(&L.file, L.f14, 16, 1) == 0
-        && func_002E9A98(&L.file, &L.f24, 2, 1) == 0
-        && func_002E9A98(&L.file, &L.f26, 2, 1) == 0
-        && func_002E9F08(&D_0055A210, func_003E4430) == 0)
+    if (NetRegisterMessageStart(reg) == 0 && cCharActionMsg_RegisterFields() != 0
+        && NetMessageField(&L.file, L.f8, 12, 1) == 0
+        && NetMessageField(&L.file, L.f14, 16, 1) == 0
+        && NetMessageField(&L.file, &L.f24, 2, 1) == 0
+        && NetMessageField(&L.file, &L.f26, 2, 1) == 0
+        && NetRegisterApplicationMessage(&D_0055A210, func_003E4430) == 0)
         ok = 1;
     return ok;
 }

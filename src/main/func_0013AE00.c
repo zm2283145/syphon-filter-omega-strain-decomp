@@ -1,6 +1,6 @@
 #include "types.h"
 
-void func_0013AE00(int a0, int a1) {
+void cLosManager_cCollisionModelList_Game_DeleteRequest(int a0, int a1) {
     int cond;
 
     cond = a1 == 0;

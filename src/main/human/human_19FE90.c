@@ -31,10 +31,10 @@ void* Root_GetParent(void*);
 void* Root_GetWorldPlacement(void*);
 void Transform_SetOrientation(Plc*, void*);
 void Placement_Invert(Plc*);
-void func_00132840(V*);
+void cQuaternion_ctor_void(V*);
 void Quat_Multiply(V*, V*, V*);
-void func_00132800(V*, V*);
-void func_0019FE90(struct S* s, Plc* in);
+void cQuaternion_ctor_cQuaternionR(V*, V*);
+void cSkaAnimAnchor_TreeNode_SetSkeletonTarget_WorldSpace(struct S* s, Plc* in);
 }
 
 struct S {
@@ -77,7 +77,7 @@ static inline void VAdd3(V* s, V* d) {
     }
 }
 
-void func_0019FE90(S* s, Plc* in)
+void cSkaAnimAnchor_TreeNode_SetSkeletonTarget_WorldSpace(S* s, Plc* in)
 {
     {
         Plc* d = &s->p;
@@ -93,9 +93,9 @@ void func_0019FE90(S* s, Plc* in)
         p = &s->p;
         V r;
         V q;
-        func_00132840(&q);
+        cQuaternion_ctor_void(&q);
         Quat_Multiply(&q, &pi->rot, &p->rot);
-        func_00132800(&r, &q);
+        cQuaternion_ctor_cQuaternionR(&r, &q);
         p->rot = r;
         QRot(&p->pos, &pi->rot);
         VAdd3(&pi->pos, &p->pos);
@@ -119,7 +119,7 @@ extern void* Root_GetParent(R*);
 extern void* Root_GetWorldPlacement(void*);
 extern V4* Placement_GetQuat(void*);
 extern V4* Quat_Assign(V4*, V4*);
-extern V4* func_0019D4E0(V4*);
+extern V4* cQuaternion_InvertUnitQuat(V4*);
 static inline void QRot_(V4* q, V4* v) {
     asm {
         lqc2 vf1, 0x0(v)
@@ -146,13 +146,13 @@ static inline void QRot_(V4* q, V4* v) {
 #pragma peephole off
 #pragma opt_propagation off
 /* Sets the local orientation quat; when parented, rotates it into the parent's frame. */
-void func_0019FFC0(R* self, V4* q)
+void cSkaAnimAnchor_TreeNode_SetDeltaPos_WorldSpace(R* self, V4* q)
 {
     V4 t;
     {V4* d = &self->q; asm { .set reorder } *d = *q;}
     if (self->parent) {
         Quat_Assign(&t, Placement_GetQuat(Root_GetWorldPlacement(Root_GetParent(self))));
-        func_0019D4E0(&t);
+        cQuaternion_InvertUnitQuat(&t);
         QRot_(&t, &self->q);
     }
     self->dirty = 1;
@@ -185,7 +185,7 @@ static inline void Remove_1A0080(PtrVec_1A0080* v, int value)
     fill = 0;
     PtrVector_Resize(v, last + 1, &fill);
 }
-void func_001A0080(O_1A0080* o)
+void cTreeNode_cSkaAnimAnchor_TreeNodeData_DetachParent(O_1A0080* o)
 {
     if (o->owner) {
         Remove_1A0080(&o->owner->list, (int)o);

@@ -11,7 +11,7 @@
 #include "buf_holder_dtor.h"
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_0040BDB0)
+DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_cBaseObjListPtr_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0040BDB0 */
 
@@ -27,11 +27,11 @@ DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_0040BDB0)
 
 extern int PtrVec_Reserve(int, int);
 
-int func_0040BEA0(int a0, int a1) {
+int std_vector_cBaseObjListPtr_reserve(int a0, int a1) {
     return PtrVec_Reserve(a0, a1);
 }
 
-Rel* func_0040BEB0(Rel* r) {
+Rel* std_vector_cBaseObjListPtr_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

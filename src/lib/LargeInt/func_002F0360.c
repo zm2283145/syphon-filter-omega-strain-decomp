@@ -1,12 +1,12 @@
 typedef struct { int w[32]; } B_002F0360;
 extern unsigned int func_002F1C38(B_002F0360 *);
 extern void LargeInt_SetInt(B_002F0360 *, int);
-extern void func_002F1FD8(B_002F0360 *, unsigned int);
-extern void func_002F1EA0(B_002F0360 *, unsigned int);
-extern int func_002F1E20(B_002F0360 *, B_002F0360 *);
+extern void ShiftLeft(B_002F0360 *, unsigned int);
+extern void ShiftRight(B_002F0360 *, unsigned int);
+extern int IsNotSmaller(B_002F0360 *, B_002F0360 *);
 extern void LargeInt_Sub(B_002F0360 *, B_002F0360 *);
-extern void func_002EFDC8(B_002F0360 *, unsigned int);
-void func_002F0360(B_002F0360 *out, B_002F0360 *x, B_002F0360 *y)
+extern void lintSetBit(B_002F0360 *, unsigned int);
+void QUO(B_002F0360 *out, B_002F0360 *x, B_002F0360 *y)
 {
     B_002F0360 a;
     B_002F0360 b;
@@ -21,21 +21,21 @@ void func_002F0360(B_002F0360 *out, B_002F0360 *x, B_002F0360 *y)
     LargeInt_SetInt(&q, 0);
     ny = nb;
     if (nb < na) {
-        func_002F1FD8(&b, na - nb);
+        ShiftLeft(&b, na - nb);
         nb = na;
     }
     while (na >= ny) {
         if (na < nb) {
-            func_002F1EA0(&b, nb - na);
+            ShiftRight(&b, nb - na);
             nb = na;
         }
-        if (func_002F1E20(&a, &b)) {
+        if (IsNotSmaller(&a, &b)) {
             LargeInt_Sub(&a, &b);
             na = func_002F1C38(&a);
-            func_002EFDC8(&q, nb - ny);
+            lintSetBit(&q, nb - ny);
         } else if (ny < nb) {
             nb--;
-            func_002F1EA0(&b, 1);
+            ShiftRight(&b, 1);
         } else {
             break;
         }

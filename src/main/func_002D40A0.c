@@ -29,7 +29,7 @@ extern void Mtx_MakeAxisRotation(M4*, float, float, float, float);
 extern void Event_Construct(Msg* m, void* type);
 extern int TeleportMsg_IsMode3(Msg* m);
 extern void* func_00133EC0(void* obj);
-extern void func_0015A400(V4* out, void* v);
+extern void cVector_Copy_WSet0(V4* out, void* v);
 extern void Vec4_CopyAsPoint(V4* out, void* v);
 extern void Mtx_SetRotationTranslation(void* data, void* obj, V4* v);
 extern void Event_Send(Msg* m, void* target, int immediate);
@@ -38,13 +38,13 @@ extern int WeaponInv_IsFullAuto(void*);
 extern void NpcPerception_ResetView(void*);
 extern void NpcPath_Start(void*);
 extern void func_0014FC60(Self*);
-extern void func_0015F9B0(void*, int, int, void*);
+extern void cPathNavigator_Request_int_int_cVectorP(void*, int, int, void*);
 }
 /* bool-returning wrapper keeps the sltu/xori + beqz form */
 static inline bool Idle(Obj* o) { return !(o->b2E != 0); }
 /* volatile lq/sq quad copy idiom keeps the unfolded address registers */
 static inline void V4_Copy(V4* d, const V4* s) { __int128 q; __asm__ volatile("lq %0, 0(%2); sq %0, 0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
-extern "C" void func_002D40A0(Self* self)
+extern "C" void cNetNPC_Activate(Self* self)
 {
     if (self->b159) {
         Obj* o = self->obj;
@@ -87,7 +87,7 @@ extern "C" void func_002D40A0(Self* self)
                 m->vtable = D_004D9360;
                 m->b24 = 2;
                 if (TeleportMsg_IsMode3(m)) {
-                    func_0015A400(&a2, func_00133EC0(&mtx));
+                    cVector_Copy_WSet0(&a2, func_00133EC0(&mtx));
                     v = &a2;
                 } else {
                     Vec4_CopyAsPoint(&b2, func_00133EC0(&mtx));
@@ -111,9 +111,9 @@ extern "C" void func_002D40A0(Self* self)
             func_0014FC60(self);
             if (self->bf1) {
                 if (self->x20C >= 0) {
-                    func_0015F9B0(self->x1B0, self->x208, self->x20C, 0);
+                    cPathNavigator_Request_int_int_cVectorP(self->x1B0, self->x208, self->x20C, 0);
                 } else {
-                    func_0015F9B0(self->x1B0, self->x208, -1, self->vec);
+                    cPathNavigator_Request_int_int_cVectorP(self->x1B0, self->x208, -1, self->vec);
                 }
                 self->bf1 = 0;
             }

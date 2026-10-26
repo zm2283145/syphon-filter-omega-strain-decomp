@@ -28,7 +28,7 @@ extern unsigned char g_IsMultiplayer;
 extern char D_0051F0C0[],D_004DE510[];
 void Event_Construct(CxStartMsg*,void*);
 void cMessage_dtor(CxStartMsg*,int);
-void func_002D7BE0(CxStartMsg*,int,CxStartRoute*);
+void cNetPathMsg_SendPath(CxStartMsg*,int,CxStartRoute*);
 void NpcPath_HoldNode(CxStartPath*,int);
 int NpcRoute_Step(CxStartPath*);
 }
@@ -36,7 +36,7 @@ static inline void CxStart_Construct(CxStartMsg*m,CxStartMsg*loc){Event_Construc
 static inline void CxStart_Destroy(CxStartMsg*m,CxStartMsg*loc){loc->vt=D_004DE510;cMessage_dtor(m,0);}
 #pragma opt_propagation off
 extern "C" int NpcRoute_Start(CxStartPath*self){
- if(g_IsMultiplayer && self->actor->networked){CxStartMsg msg;CxStartMsg*m=&msg;CxStart_Construct(m,&msg);func_002D7BE0(m,self->actor->id,self->route);CxStart_Destroy(m,&msg);}
+ if(g_IsMultiplayer && self->actor->networked){CxStartMsg msg;CxStartMsg*m=&msg;CxStart_Construct(m,&msg);cNetPathMsg_SendPath(m,self->actor->id,self->route);CxStart_Destroy(m,&msg);}
  if(self->hold){self->hold=0;NpcPath_HoldNode(self,-1);}
  self->remaining=self->route->count;
  int n=self->remaining;
@@ -325,7 +325,7 @@ static inline void QCopy_13E0(void* dst, void* src, int n0)
         .set reorder
     }
 }
-void func_001613E0(void* src, void* dst)
+void cPathNavigatorTransfer_Put(void* src, void* dst)
 {
     QCopy_13E0(dst, src, 0x70);
 }
@@ -372,7 +372,7 @@ static inline void QCopy_1450(void* dst, void* src, int n0)
         .set reorder
     }
 }
-void func_00161450(void* dst, void* src)
+void cPathNavigatorTransfer_Get(void* dst, void* src)
 {
     QCopy_1450(dst, src, 0x70);
 }
@@ -444,7 +444,7 @@ unsigned char NpcPath_RebuildRoute(void* svc, int id, int arg, S_14C0* s);
 
 }
 #pragma opt_common_subs off
-extern "C" void func_001614C0(void* src, S_14C0* self)
+extern "C" void cPathTransfer_Put(void* src, S_14C0* self)
 {
     QCopy_14C0(self, src, 0x20);
     if (!self->buf) {
@@ -470,7 +470,7 @@ static inline void merge_flush_func_001614C0(void) {}
 /* merge_units: begin func_00161610 */
 #pragma push /* merge_units */
 typedef struct { __int128 q; int x10; int x14; int x18; int pad1c; int* list; int pad24; int count; } S_1610;
-void func_00161610(S_1610* dst, S_1610* src)
+void cPathTransfer_Get(S_1610* dst, S_1610* src)
 {
     dst->q = src->q;
     dst->x10 = src->x10;
@@ -494,15 +494,15 @@ static inline void merge_flush_func_00161610(void) {}
 #pragma push
 #pragma cplusplus on
 struct T_1720 { char pad[0x14]; int last; int first; char pad1C[4]; int* ids; int pad24; int n; };
-extern "C" T_1720* func_00161720(T_1720* t, short del); /* gsynth: defined below */
+extern "C" T_1720* cPathNavigator_dtor(T_1720* t, short del); /* gsynth: defined below */
 #pragma pop
 
-extern void func_00136DA0(int* g);
-extern void func_0012F530(int* g, int flag);
+extern void cTimerDisable_ctor(int* g);
+extern void cTimerDisable_dtor(int* g, int flag);
 #if 0 /* merge_units */
-extern void func_00161720(void* p, int flag);
+extern void cPathNavigator_dtor(void* p, int flag);
 #endif /* merge_units */
-#define func_00161720(a0, a1) ((void)func_00161720((void *)(a0), (short)(a1))) /* merge_units */
+#define cPathNavigator_dtor(a0, a1) ((void)cPathNavigator_dtor((void *)(a0), (short)(a1))) /* merge_units */
 
 extern void operator_delete(void* p);
 typedef struct { char pad[0x74]; void* p; } S_1680;
@@ -512,17 +512,17 @@ S_1680* func_00161680(S_1680* self, short flag)
         void* p = self->p;
         if (p) {
             int g[1];
-            func_00136DA0(g);
-            func_00161720(p, -1);
+            cTimerDisable_ctor(g);
+            cPathNavigator_dtor(p, -1);
             Mem_Free(0, p, D_0049C1B8, 0x542);
-            func_0012F530(g, -1);
+            cTimerDisable_dtor(g, -1);
         }
         if (flag > 0)
             operator_delete(self);
     }
     return self;
 }
-#undef func_00161720 /* merge_units */
+#undef cPathNavigator_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00161680(void) {}
 #pragma pop /* merge_units */
@@ -535,7 +535,7 @@ static inline void merge_flush_func_00161680(void) {}
 extern "C" {
 void operator_delete(void* p);
 }
-extern "C" T_1720* func_00161720(T_1720* t, short del)
+extern "C" T_1720* cPathNavigator_dtor(T_1720* t, short del)
 {
     if (t) {
         int* a;

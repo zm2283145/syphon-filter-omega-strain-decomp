@@ -8,7 +8,7 @@
 extern int List_InsertBefore(int* result, List* list, void** pos, int value);
 
 /* Append value at the end of the list (insert before the sentinel at +4). */
-int func_003B1260(List* list, int value) {
+int std_list_cSkaPlaybackGroupPtr_push_back(List* list, int value) {
     struct {
         void* pos;
         int result;

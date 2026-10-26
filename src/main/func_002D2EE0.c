@@ -3,7 +3,7 @@
 typedef struct { char pad[0x30]; void* net; } Npc2EE0;
 typedef struct { char pad[0x78]; int netId; } Node2EE0;
 extern void cNPC_v7B(Npc2EE0* o, Node2EE0* n);
-void func_002D2EE0(Npc2EE0* o, Node2EE0* n)
+void cNetNPC_RestrictMovementToNodeGroup(Npc2EE0* o, Node2EE0* n)
 {
     if (NpcAuth_IsLocal())
         cNPC_v7B(o, n);

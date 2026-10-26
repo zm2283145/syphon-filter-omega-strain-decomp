@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern int func_00326690(int, int);
+extern int AdjustTime(int, int);
 
-int func_00326720(int a0) {
-    return func_00326690(a0, -540);
+int sceScfGetGMTfromRTC(int a0) {
+    return AdjustTime(a0, -540);
 }

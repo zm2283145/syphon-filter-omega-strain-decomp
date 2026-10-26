@@ -11,15 +11,15 @@ extern int D_00571FA4;
 extern int D_00571FA8;
 extern int D_00571FAC;
 extern char InterfaceMgr_dtor;
-extern char func_00413EA0;
-extern char func_00413F00;
+extern char cInterfaceManager_Entry_dtor;
+extern char cInterfaceManager_Entry_ctor;
 
-void func_004D7040(void) {
+void StaticInit_interface_manager(void) {
     char *var_s0;
     int var_v1;
 
     var_s0 = &D_00571DC0;
-    __construct_array(&D_00571DC0, &func_00413F00, &func_00413EA0, 0x18, 20);
+    __construct_array(&D_00571DC0, &cInterfaceManager_Entry_ctor, &cInterfaceManager_Entry_dtor, 0x18, 20);
     var_v1 = 0;
     D_00571FA0 = 0;
     D_00571FA4 = 0;

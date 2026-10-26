@@ -2,7 +2,7 @@
 #include "npc_auth.h"
 typedef struct { char pad[0x30]; void* net; } Npc3690;
 typedef struct { char pad[0x78]; int netId; } Gobj3690;
-void func_002D3690(Npc3690* o, Gobj3690* g)
+void cNetNPC_Teleport(Npc3690* o, Gobj3690* g)
 {
     int id;
     if (g)

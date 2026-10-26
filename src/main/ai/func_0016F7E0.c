@@ -10,7 +10,7 @@ extern char D_004D92A0[];
 extern char D_004D92C0[];
 extern char D_004DFD80[]; /* cMessage vtable */
 
-Word* func_0016F7E0(Word* dst, Word* src) {
+Word* cObjectId_ctor_cObjectIdR(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }

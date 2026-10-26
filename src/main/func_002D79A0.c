@@ -8,7 +8,7 @@
 #include "loose02_types.h"
 
 /* Writes the object's position as a homogeneous vector (w = 1). */
-void func_002D79A0(PosObj38* self, Vec4* out) {
+void cNetPathMsg_GetDestination(PosObj38* self, Vec4* out) {
     float x;
     float y;
     float z;

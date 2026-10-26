@@ -37,13 +37,13 @@ static inline void merge_flush_func_001B97F0(void) {}
 /* merge_units: begin func_001B9900 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x24]; int a; char pad28[8]; float x, y, z; } TS_1B9900;
-extern void func_001B99E0(float f);
+extern void cNetMsg_PutFloat(float f);
 void cNetThrowStarMsg_v04(TS_1B9900* self)
 {
     NetW2_write32(self->a);
-    func_001B99E0(self->x);
-    func_001B99E0(self->y);
-    func_001B99E0(self->z);
+    cNetMsg_PutFloat(self->x);
+    cNetMsg_PutFloat(self->y);
+    cNetMsg_PutFloat(self->z);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001B9900(void) {}

@@ -10,7 +10,7 @@
 extern int Vector_Insert_1EEF30(Vec16Array* v, FlagElem16* pos, int n, int value);
 
 /* push_back(value) on an array of 16-byte elements. */
-int func_001E1130(Vec16Array* v, int value) {
+int cArray_cEdgeGroup_PushBackActual(Vec16Array* v, int value) {
     int count;
     FlagElem16* data;
 

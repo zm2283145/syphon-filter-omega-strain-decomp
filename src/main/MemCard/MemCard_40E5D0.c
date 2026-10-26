@@ -18,15 +18,15 @@ extern char D_00571C50[];
 extern int sprintf(char*, const char*, ...);
 extern int func_002B5F48(int*, int*);
 extern void MemCard_InfoCycle(S40E5D0*);
-extern void func_0040EED0(S40E5D0*);
-extern void func_0040EC80(S40E5D0*);
-extern void func_0040E980(S40E5D0*);
-extern void func_0040EAE0(S40E5D0*);
+extern void MemCard_MemCardMakeSFO(S40E5D0*);
+extern void MemCard_MemCardWriteMan(S40E5D0*);
+extern void MemCard_MemCardUpdateMan(S40E5D0*);
+extern void MemCard_MemCardRenameMan(S40E5D0*);
 extern void func_002B50E0(int);
 extern void func_002B53B0(int, char*, int, int, int);
 extern void func_002B5628(int, char*);
-extern void func_002B51E0(int, char*);
-int func_0040E5D0(S40E5D0* s) {
+extern void sceMc2GetInfoAsync(int, char*);
+int MemCard_MemCardMain(S40E5D0* s) {
     s->r = func_002B5F48(&s->x570, &s->res);
     if (s->r == 0) {
         return s->busy ? s->busy : s->state;
@@ -55,13 +55,13 @@ int func_0040E5D0(S40E5D0* s) {
         }
         break;
     case 2:
-        func_0040EED0(s);
+        MemCard_MemCardMakeSFO(s);
         break;
     case 3:
-        func_0040EC80(s);
+        MemCard_MemCardWriteMan(s);
         break;
     case 4:
-        func_0040E980(s);
+        MemCard_MemCardUpdateMan(s);
         break;
     case 5:
         switch (s->sub) {
@@ -124,7 +124,7 @@ int func_0040E5D0(S40E5D0* s) {
     case 7:
         switch (s->sub) {
         case 0:
-            func_002B51E0(s->ent[0].h, s->path);
+            sceMc2GetInfoAsync(s->ent[0].h, s->path);
             s->sub = 1;
             break;
         case 1:
@@ -143,7 +143,7 @@ int func_0040E5D0(S40E5D0* s) {
         }
         break;
     case 9:
-        func_0040EAE0(s);
+        MemCard_MemCardRenameMan(s);
         break;
     }
     return s->state;
@@ -156,7 +156,7 @@ int func_0040E5D0(S40E5D0* s) {
 extern char D_004BED60[];
 extern void func_002B5490(int, char*, int, int, int);
 
-void func_0040E980(S40E5D0* s) {
+void MemCard_MemCardUpdateMan(S40E5D0* s) {
     switch (s->sub) {
     case 0:
         sprintf(D_00571C50, D_004BED60, D_00494010, s->ent[s->idx].name);
@@ -202,7 +202,7 @@ void func_0040E980(S40E5D0* s) {
 extern void func_002B5A08(int, char*, char*);
 extern char* String_Copy(char*, const char*);
 
-void func_0040EAE0(S40E5D0* s) {
+void MemCard_MemCardRenameMan(S40E5D0* s) {
     switch (s->sub) {
     case 0:
         sprintf(D_00571C50, D_004BED60, D_00494010, s->ent[s->idx].name);
@@ -257,7 +257,7 @@ void func_0040EAE0(S40E5D0* s) {
 #pragma push /* merge_units */
 extern void func_002B5570(int);
 
-void func_0040EC80(S40E5D0* s) {
+void MemCard_MemCardWriteMan(S40E5D0* s) {
     char* buf;
     sprintf(D_00571C50, D_004BED60, D_00494010, s->ent[s->idx].name);
     buf = D_00571C50;
@@ -337,7 +337,7 @@ void func_0040EC80(S40E5D0* s) {
 #pragma push /* merge_units */
 extern void func_002B57D0(int, char*);
 
-void func_0040EED0(S40E5D0* s) {
+void MemCard_MemCardMakeSFO(S40E5D0* s) {
     char buf[0x80];
     switch (s->sub) {
     case 0:

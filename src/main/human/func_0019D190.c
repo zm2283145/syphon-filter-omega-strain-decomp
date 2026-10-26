@@ -11,7 +11,7 @@ void* func_0019D190(char* self) {
     return self + 16;
 }
 
-void* func_0019D1A0(void* self) {
+void* cMatrix_GetXAxis(void* self) {
     return self;
 }
 
@@ -32,11 +32,11 @@ Mtx34* Mtx34_Copy(Mtx34* dst, Mtx34* src) {
     return dst;
 }
 
-void* func_0019D220(char* self) {
+void* std_vector_deleter_cTargetZRotationStackSlot_data(char* self) {
     return self + 8;
 }
 
-int func_0019D230(char* self) {
+int std_vector_imp_cTargetZRotationStackSlot_size(char* self) {
     return *(int*)(self + 4);
 }
 

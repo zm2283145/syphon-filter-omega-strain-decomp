@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_002D7728(void) {
+int jpeg_encode(void) {
     return -1;
 }

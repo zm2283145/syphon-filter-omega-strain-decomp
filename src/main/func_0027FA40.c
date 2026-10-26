@@ -59,14 +59,14 @@ struct Cam {
 extern "C" {
 extern void PlayerCamera_LookAtLock(Cam*, Vec3f*, int, int, int, Quat*);
 extern void Mtx_ToEuler(Vec3f*, float*);
-extern float func_00280040(Vec3f*);
-extern float* func_00280050(Vec3f*);
-extern Vec3f* func_00280060(Vec3f*);
-extern float func_0027FF80(Vec3f*);
-extern float* func_0027FF90(Vec3f*);
-extern float func_0027FFA0(Vec3f*);
-extern float* func_0027FFB0(Vec3f*);
-extern Vec3f* func_0027FF60(Vec3f*, Vec3f*);
+extern float cEulerAngle_T_1_2_X_void(Vec3f*);
+extern float* cEulerAngle_T_1_2_X_void_2(Vec3f*);
+extern Vec3f* cEulerAngle_T_1_2_ctor_void(Vec3f*);
+extern float cEulerAngle_T_1_2_Z_void(Vec3f*);
+extern float* cEulerAngle_T_1_2_Z_void_2(Vec3f*);
+extern float cEulerAngle_T_1_2_Y_void(Vec3f*);
+extern float* cEulerAngle_T_1_2_Y_void_2(Vec3f*);
+extern Vec3f* cEulerAngle_T_1_2_ctor_cEulerAngleTR(Vec3f*, Vec3f*);
 extern float Math_WrapAnglePi(float);
 extern float Math_Cos(float);
 extern float Math_Sin(float);
@@ -77,11 +77,11 @@ static inline float Abs(float x) { float r = 0.0f; asm { abs.s r, x } return r; 
 static inline void Wrap(Vec3f* t, Vec3f& d)
 {
     Vec3f r;
-    func_00280060(&r);
-    *func_00280050(&r) = Math_WrapAnglePi(func_00280040(&d));
-    *func_0027FFB0(&r) = Math_WrapAnglePi(func_0027FFA0(&d));
-    *func_0027FF90(&r) = Math_WrapAnglePi(func_0027FF80(&d));
-    func_0027FF60(t, &r);
+    cEulerAngle_T_1_2_ctor_void(&r);
+    *cEulerAngle_T_1_2_X_void_2(&r) = Math_WrapAnglePi(cEulerAngle_T_1_2_X_void(&d));
+    *cEulerAngle_T_1_2_Y_void_2(&r) = Math_WrapAnglePi(cEulerAngle_T_1_2_Y_void(&d));
+    *cEulerAngle_T_1_2_Z_void_2(&r) = Math_WrapAnglePi(cEulerAngle_T_1_2_Z_void(&d));
+    cEulerAngle_T_1_2_ctor_cEulerAngleTR(t, &r);
 }
 extern "C" void PlayerCamera_UpdateR1Pick(Cam* self, Quat* out)
 {

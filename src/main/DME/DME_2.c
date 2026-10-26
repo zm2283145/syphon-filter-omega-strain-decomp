@@ -16,7 +16,7 @@
 
 extern "C" {
 int Mem_Alloc(int, int, char *, int);
-int func_00453E20(int); /* SFOLobby constructor ("MediusLobby") */
+int SFOLobby_ctor(int); /* SFOLobby constructor ("MediusLobby") */
 extern unsigned char g_ProfileLockEnabled;
 extern int g_DmeLobby;
 extern signed char g_DmeLobbyActive;
@@ -31,7 +31,7 @@ extern "C" void DME_CreateLobby(void) {
         lobby = Mem_Alloc(0, 0x26B0, "DME.cc", 0x75D);
         }
         if (lobby != 0) {
-            lobby = func_00453E20(lobby);
+            lobby = SFOLobby_ctor(lobby);
         }
         g_DmeLobby = lobby;
     }

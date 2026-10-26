@@ -5,4 +5,4 @@
 #define VIFC_COPY(d, s) (*(d) = *(s))
 struct E_0022A360 { int f0; };
 static char D_004A6440[] = "vector::insert length error\n";
-DEFINE_VECTOR_INSERT_FILL_CSE(Vector_Insert_22A360, E_0022A360, 0x1800000, 0xC00000, D_004A6440, D_004A6460, 0x5C, func_0022A770, void func_001C4480(Vector_Insert_22A360_V* v, int flags);, func_001C4480(&tmp, -1), VIFC_ASSIGN, VIFC_COPY)
+DEFINE_VECTOR_INSERT_FILL_CSE(Vector_Insert_22A360, E_0022A360, 0x1800000, 0xC00000, D_004A6440, D_004A6460, 0x5C, std_swap_vectordeleterR_vectordeleterR_18, void std_vector_deleter_cString4_dtor(Vector_Insert_22A360_V* v, int flags);, std_vector_deleter_cString4_dtor(&tmp, -1), VIFC_ASSIGN, VIFC_COPY)

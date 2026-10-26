@@ -88,21 +88,21 @@ extern char D_004A7210[];
 void Event_Construct(Msg_242B40* m, void* type);
 void Transport_Send(int a, Msg_242B40* m, int b, int c);
 void cMessage_dtor(Msg_242B40* m, int flags);
-void func_00242E30(It_242B40* out, char* l);
+void std_list_tCalloutPtr_begin(It_242B40* out, char* l);
 void CalloutList_End(It_242B40* out, char* l);
-void func_002426A0(It_242B40* out, It_242B40* in);
-void func_0015AF40(It_242B40* out, It_242B40* in);
+void cLListIterator_tCalloutPtr_ctor(It_242B40* out, It_242B40* in);
+void std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(It_242B40* out, It_242B40* in);
 void List_Erase(It_242B40* out, char* l, It_242B40* pos);
 void IeElement_EvaluateAt(int a, float f);
 void IeElement_SetShown(int a, int b);
 void IeElement_SetText(int a, int b);
 void HudTracker_Kill(int a);
 
-static inline void BeginI_(It_242B40* out, char* l) { It_242B40 t; func_00242E30(&t, l); func_002426A0(out, &t); }
+static inline void BeginI_(It_242B40* out, char* l) { It_242B40 t; std_list_tCalloutPtr_begin(&t, l); cLListIterator_tCalloutPtr_ctor(out, &t); }
 static inline void Begin_(It_242B40* out, char* l) { BeginI_(out, l); }
-static inline void EndI_(It_242B40* out, char* l) { It_242B40 t; CalloutList_End(&t, l); func_002426A0(out, &t); }
+static inline void EndI_(It_242B40* out, char* l) { It_242B40 t; CalloutList_End(&t, l); cLListIterator_tCalloutPtr_ctor(out, &t); }
 static inline void End_(It_242B40* out, char* l) { EndI_(out, l); }
-static inline void EraseI_(char* l, Node_242B40* n) { It_242B40 ac; It_242B40 a8; It_242B40 a4; ac.n = n; func_0015AF40(&a4, &ac); List_Erase(&a8, l, &a4); }
+static inline void EraseI_(char* l, Node_242B40* n) { It_242B40 ac; It_242B40 a8; It_242B40 a4; ac.n = n; std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&a4, &ac); List_Erase(&a8, l, &a4); }
 
 #pragma opt_dead_assignments off
 int Hud_ClearCallout(char* o, int* key, int id, signed char flag, int send)

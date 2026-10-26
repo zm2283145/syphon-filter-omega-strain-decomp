@@ -6,9 +6,9 @@
 
 #include "types.h"
 
-extern int func_002BC910(void);
+extern int delete_mc2_socket(void);
 
-int func_002BCA68(void) {
-    func_002BC910();
+int my_close(void) {
+    delete_mc2_socket();
     return 0;
 }

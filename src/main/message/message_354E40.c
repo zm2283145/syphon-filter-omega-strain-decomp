@@ -38,7 +38,7 @@ void* Agent_GetSelected(void* p, int i);
 void func_00296FA0(L4E40* l);
 void func_00299360(L4E40* l, int flags);
 void AgentData_GetAwardRows(void* ag, unsigned char kind, L4E40* l);
-void func_0041C0F0(W4E40* w, int v);
+void GuiTextWidget_SetDisableWrap(W4E40* w, int v);
 void GuiTextWidget_SetText(W4E40* w, int text, int f);
 int Loc_LookupText(const char* key);
 enum E4E40on { ON0, ON1 };
@@ -77,7 +77,7 @@ void GuiPersonnelMenu_Setup(O4E40* self, const char* a, const char* b, unsigned 
             l.aC = 1;
             AgentData_GetAwardRows(ag, kind, &l);
             if (arg < l.size()) {
-                func_0041C0F0(w, 1);
+                GuiTextWidget_SetDisableWrap(w, 1);
                 E4E40** pd = &l.data;
                 E4E40* e = *pd + arg;
                 GuiTextWidget_SetText(w, e->id, 0);
@@ -92,7 +92,7 @@ void GuiPersonnelMenu_Setup(O4E40* self, const char* a, const char* b, unsigned 
                 name = D_0048C160[self->arg];
             if (name) {
                 GuiTextWidget_SetText(w, Loc_LookupText(name), 0);
-                func_0041C0F0(w, 1);
+                GuiTextWidget_SetDisableWrap(w, 1);
             }
             self->on = false;
             GuiPersonnelMenu_ToggleDetail(self, ON0);

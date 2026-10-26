@@ -35,15 +35,15 @@ void GuiCanvas_UpdatePads(Unk415870* self) {
 /* merge_units: begin func_004158C0 */
 #pragma push /* merge_units */
 typedef struct { char p[0x14]; unsigned short flags; char p16[0x3B]; unsigned char b51; unsigned char b52; } W4158C0;
-extern void func_003D1770(void* p);
-extern void func_003D1730(void* p);
-void func_004158C0(W4158C0* w, int on)
+extern void cUSBKeybd_Init(void* p);
+extern void cUSBKeybd_SetKeyMode(void* p);
+void GuiCanvas_Activate(W4158C0* w, int on)
 {
     if ((unsigned char)on == ((w->flags & 4) != 0)) return;
     if (on) w->flags |= 4; else w->flags &= ~4;
     if (w->b52 && (w->flags & 4) && w->b51) {
-        func_003D1770(D_0055A700);
-        func_003D1730(D_0055A700);
+        cUSBKeybd_Init(D_0055A700);
+        cUSBKeybd_SetKeyMode(D_0055A700);
     }
 }
 #pragma pop /* merge_units */
@@ -81,10 +81,10 @@ struct U_415950 {
 };
 extern "C" {
 void List_Begin(LIt_415950* out, void* list);
-void func_0028C0B0(LIt_415950* out, LIt_415950* in);
-void func_0028C0A0(LIt_415950* out, void* list);
-void func_0028C090(LIt_415950* out, LIt_415950* in);
-void func_002CCE50(List_415950* list, W_415950** v);
+void std_list_GuiWidgetPtr_generic_iterator_ctor(LIt_415950* out, LIt_415950* in);
+void std_list_GuiWidgetPtr_end(LIt_415950* out, void* list);
+void cLListIterator_GuiWidgetPtr_ctor_listR(LIt_415950* out, LIt_415950* in);
+void std_list_GuiWidgetPtr_push_back_GuiWidgetPR(List_415950* list, W_415950** v);
 void List_Erase(LIt_415950* out, List_415950* list, LIt_415950* pos);
 W_415950** func_00415B20(List_415950* list);
 }
@@ -113,16 +113,16 @@ extern "C" void GuiCanvas_UpdateStack(W_415950* o, float dt)
             o->b50 = 0;
         }
         List_Begin(&beginTmp, o->children);
-        func_0028C0B0(&it, &beginTmp);
+        std_list_GuiWidgetPtr_generic_iterator_ctor(&it, &beginTmp);
         n = it.node;
-        func_0028C0A0(&endTmp, o->children);
-        func_0028C090(&last, &endTmp);
+        std_list_GuiWidgetPtr_end(&endTmp, o->children);
+        cLListIterator_GuiWidgetPtr_ctor_listR(&last, &endTmp);
         if (n != last.node) {
             do {
-                func_002CCE50(&o->queue, &n->value);
+                std_list_GuiWidgetPtr_push_back_GuiWidgetPR(&o->queue, &n->value);
                 n = n->next;
-                func_0028C0A0(&endTmp, o->children);
-                func_0028C090(&last, &endTmp);
+                std_list_GuiWidgetPtr_end(&endTmp, o->children);
+                cLListIterator_GuiWidgetPtr_ctor_listR(&last, &endTmp);
             } while (n != last.node);
         }
         o->busy = 1;

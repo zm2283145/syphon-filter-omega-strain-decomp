@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046D090(void) {
+int MediusUniqueCallbackAddToIgnoreListRequestHandler(void) {
     return 44;
 }

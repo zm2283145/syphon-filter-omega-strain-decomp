@@ -49,10 +49,10 @@ static inline void merge_flush_func_003E0AB0(void) {}
 /* merge_units: begin func_003E0BE0 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x3C]; unsigned char m3C; } T0BE0;
-extern T0BE0* func_003E0C30(int a);
+extern T0BE0* cScriptInterpreter_findCls(int a);
 T0BE0* ScriptMgr_FindResource(int a)
 {
-    T0BE0* p = func_003E0C30(a);
+    T0BE0* p = cScriptInterpreter_findCls(a);
     if (p && p->m3C)
         return p;
     return 0;

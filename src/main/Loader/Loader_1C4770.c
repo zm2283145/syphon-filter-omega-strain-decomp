@@ -21,10 +21,10 @@ struct R1C4770 { N1C4770* node; unsigned char inserted; };
 extern "C" {
 static const unsigned int dat_0048A320[2] = { 0x1, 0x0 };
 static const unsigned int dat_0048A328[2] = { 0 };
-int func_0013C310(const K1C4770* a, const K1C4770* b);
+int std_basic_string_char_char_traits_char_compare_basicstringR(const K1C4770* a, const K1C4770* b);
 N1C4770* Tree_Insert_1C4F20(T1C4770* t, N1C4770* parent, bool left, bool leftmost, const K1C4770* k); }
-static inline int K1C4770_less(const K1C4770* a, const K1C4770* b) { int r = func_0013C310(a, b) < 0; return r; }
-extern "C" void func_001C4770(R1C4770* out, T1C4770* t, const K1C4770* k)
+static inline int K1C4770_less(const K1C4770* a, const K1C4770* b) { int r = std_basic_string_char_char_traits_char_compare_basicstringR(a, b) < 0; return r; }
+extern "C" void std_tree_pair_cString_value_compare_insert_one_pairR_2(R1C4770* out, T1C4770* t, const K1C4770* k)
 {
     N1C4770* j;
     N1C4770* y;
@@ -66,6 +66,6 @@ static inline void merge_flush_func_001C4770(void) {}
 #pragma push /* merge_units */
 #pragma cplusplus on
 DEFINE_ERASE_ELEMENT(E1C4890, 16)
-DEFINE_VECTOR_ERASE_DESTROY(func_001C4890, E1C4890, func_001C4980, func_0013B2E0)
+DEFINE_VECTOR_ERASE_DESTROY(std_vector_imp_cArray_int_erase, E1C4890, std_msl_copy_cArray_int_copy, cArray_int_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_001C4890 */

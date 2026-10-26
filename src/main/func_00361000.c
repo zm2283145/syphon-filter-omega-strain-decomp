@@ -59,8 +59,8 @@ void AgentData_GetRatings(void* ag, Vec_1000* v);
 void AgentData_GetAwardRows(void* ag, int a, Vec_1000* v);
 void GuiBitmapWidget_SetImage(void* w, char* name, int img);
 void* DME_GetLobby(void);
-int func_0044A0D0(void* lb, int id, int f);
-int func_0044D670(void* lb, int id, int f);
+int SFOLobby_CellContainsAgent(void* lb, int id, int f);
+int SFOLobby_ContactListContainsAgent(void* lb, int id, int f);
 void GuiAgentInfo_Refresh(Self_1000* self);
 }
 
@@ -176,7 +176,7 @@ extern "C" void GuiAgentInfo_Refresh(Self_1000* self)
         } else {
             unsigned char ok;
             if (self->bF4) {
-                ok = !func_0044A0D0(lb, self->xF8, 1);
+                ok = !SFOLobby_CellContainsAgent(lb, self->xF8, 1);
                 {
                     W_1000* w = self->w118;
                     if (ok) w->flags |= 4;
@@ -185,7 +185,7 @@ extern "C" void GuiAgentInfo_Refresh(Self_1000* self)
             } else {
                 self->w118->flags &= ~4;
             }
-            ok = !func_0044D670(lb, self->xF8, 1);
+            ok = !SFOLobby_ContactListContainsAgent(lb, self->xF8, 1);
             {
                 W_1000* w = self->w114;
                 if (ok) w->flags |= 4;

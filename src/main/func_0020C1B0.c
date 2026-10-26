@@ -1,6 +1,6 @@
 #include "types.h"
-extern void func_0020C1D0(void);
-/* Wrapper around func_0020C1D0. */
+extern void details_compressed_pair_imp_cAllocator_cSkaSwitchItem_int_1_first_void(void);
+/* Wrapper around details_compressed_pair_imp_cAllocator_cSkaSwitchItem_int_1_first_void. */
 #pragma optimization_level 1
-void func_0020C1B0(void) { func_0020C1D0(); }
+void std_vector_deleter_cSkaSwitchItem_alloc_void(void) { details_compressed_pair_imp_cAllocator_cSkaSwitchItem_int_1_first_void(); }
 #pragma optimization_level reset

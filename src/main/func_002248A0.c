@@ -45,7 +45,7 @@ struct It {
 };
 extern "C" {
 extern void* D_004FFD48;
-void* func_00224AB0(void* list);
+void* cObjList_cTerrainPtr_GetList(void* list);
 void LosRegionArray_Begin(It* it, void* node);
 void LosRegionArray_End(It* it, void* node);
 }
@@ -56,9 +56,9 @@ extern "C" LosRegion* LosRegion_FindGlobal(const V* p)
     LosRegion* found = 0;
     It it;
     It e;
-    LosRegionArray_End(&e, func_00224AB0(list));
+    LosRegionArray_End(&e, cObjList_cTerrainPtr_GetList(list));
     It b;
-    LosRegionArray_Begin(&b, func_00224AB0(list));
+    LosRegionArray_Begin(&b, cObjList_cTerrainPtr_GetList(list));
     for (it = b; it != e; ++it) {
         LosRegion* r = *it.q.p;
         V d = BoxDelta(p, r->GetBounds());

@@ -6,8 +6,8 @@ typedef struct { int a, b, c; } Val_4640;
 typedef struct { Name32_4640 key; Val_4640* val; } Pair_4640;
 typedef struct { char pad[0x44]; Tree tree; } Self_4640;
 typedef struct { int node; char ins; } Res_4640;
-extern "C" void func_003B47F0(Iter* out, Tree* t);
-extern "C" void func_003B47E0(Iter* out, Iter* in);
+extern "C" void std_map_cString16N_2_cSkaAnimationBlendPtr_cAllocator_pair_end(Iter* out, Tree* t);
+extern "C" void cAssocArray_cString16N_2_cSkaAnimationBlendPtr_Iterator_ctor(Iter* out, Iter* in);
 extern "C" void NamedRootMap_Find(Iter* out, Tree* t, Name32_4640* key);
 extern "C" void MotionRegistry_MapInsert(Res_4640* out, Tree* t, Pair_4640* v);
 extern "C" void* Mem_Alloc(int a, int size, char* file, int line);
@@ -26,7 +26,7 @@ static inline void QCopy_4640(void* d0, void* s0) { int n = 2; __int128 t; void*
     }
 }
 static inline Iter* ItCopy_4640(Iter* d, Iter* s) { d->p = s->p; return d; }
-static inline int End_4640(Iter* out, Tree* t) { Iter e; func_003B47F0(&e, t); func_003B47E0(out, &e); return 0; }
+static inline int End_4640(Iter* out, Tree* t) { Iter e; std_map_cString16N_2_cSkaAnimationBlendPtr_cAllocator_pair_end(&e, t); cAssocArray_cString16N_2_cSkaAnimationBlendPtr_Iterator_ctor(out, &e); return 0; }
 static inline Iter* Sel_4640(Iter* a, int b) { return a; }
 static inline Iter* Find_4640(Iter* out, Tree* t, Name32_4640* n) { Iter f; NamedRootMap_Find(&f, t, n); return ItCopy_4640(out, &f); }
 #pragma opt_common_subs off

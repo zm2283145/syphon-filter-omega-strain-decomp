@@ -5,14 +5,14 @@ typedef struct Rec0C {
     char b[0x24];
 } Rec0C;
 
-extern void func_0020B0F0(Rec0C*, Rec0C*);
+extern void cSkaTransBLEND_opAssign(Rec0C*, Rec0C*);
 
 /* Copies [first, last) backwards ending at destEnd; returns the new destination begin. */
-Rec0C* func_0020B1B0(Rec0C* first, Rec0C* last, Rec0C* destEnd) {
+Rec0C* std_copy_backward_cSkaTransBLEND_copy_backward(Rec0C* first, Rec0C* last, Rec0C* destEnd) {
     while (last > first) {
         destEnd--;
         last--;
-        func_0020B0F0(destEnd, last);
+        cSkaTransBLEND_opAssign(destEnd, last);
     }
     return destEnd;
 }

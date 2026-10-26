@@ -9,12 +9,12 @@ extern unsigned char g_GameState;
 extern char D_0051F0A8[], D_004DE4D0[];
 extern void Event_Construct(Msg2D7190* e, void* type);
 extern void** NetMap_Lookup(int);
-extern void func_002D63E0(void*, int, int, int, int);
+extern void cNetNPCMsgs_DoNPCMethod(void*, int, int, int, int);
 extern void cMessage_dtor(Msg2D7190*, int);
 }
 #pragma push
 #pragma opt_propagation off
-extern "C" int func_002D7190(int a0, int a1, int a2, Pk2D7190* arg) {
+extern "C" int cNetNPCMsgs_NetNPCMsgsCallback(int a0, int a1, int a2, Pk2D7190* arg) {
     NetRecvGuard g;
     if (D_005721D0 && g_GameState != 0x14) {
         Msg2D7190 msg;
@@ -29,7 +29,7 @@ extern "C" int func_002D7190(int a0, int a1, int a2, Pk2D7190* arg) {
         msg.f34 = p->f10;
         msg.f38 = p->f14;
         obj = NetMap_Lookup(p->f4);
-        if (obj && *obj) func_002D63E0(*obj, p->f8, p->fC, p->f10, p->f14);
+        if (obj && *obj) cNetNPCMsgs_DoNPCMethod(*obj, p->f8, p->fC, p->f10, p->f14);
         msg.vt = D_004DE4D0;
         cMessage_dtor(&msg, 0);
     }

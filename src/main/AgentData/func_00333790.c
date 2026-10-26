@@ -6,6 +6,6 @@
 #include "types.h"
 #include "AgentData_types.h"
 
-char* func_00333790(ByteVec* v, int i) {
+char* std_vector_eAchievementState_opIndex(ByteVec* v, int i) {
     return v->data + i;
 }

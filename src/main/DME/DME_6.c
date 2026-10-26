@@ -93,7 +93,7 @@ int DME_StartThread(void) {
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
-int func_002EBCE0(char *);
+int NetGetTime(char *);
 int Gui_GetScreenStack();
 int GuiWidget_SendEvent(int, int, int, int, int);
 int Net_ConnectGameByName();
@@ -118,7 +118,7 @@ void Net_RetryConnect(void) {
     D_005724B0 = DME_STATE_CONNECTING;
     D_005721F0 = 0;
     if (Net_ConnectGameByName() == 0) {
-        func_002EBCE0(&netTime);
+        NetGetTime(&netTime);
         return;
     }
     retries = g_DmeConnectRetries + 1;

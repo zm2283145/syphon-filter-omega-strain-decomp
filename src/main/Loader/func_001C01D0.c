@@ -23,26 +23,26 @@ extern char D_004FFBC0[];
 int sprintf(char* buf, const char* fmt, ...);
 Arc_1C01D0* Archive_Open(void* a, char* name, int b, int c);
 void* Mem_Alloc(int pool, int size, char* file, int line);
-void func_001C0810(void*);
-void func_001C07C0(void*);
-void func_001C0720(void*);
-void func_001C05E0(void*);
-void func_001C0540(void*);
+void cArray_cString4_ctor(void*);
+void cArray_charPtr_ctor(void*);
+void cAssocArray_cString16N_3_int_ctor(void*);
+void cArray_cSkaNodePtr_ctor(void*);
+void cAssocArray_cString16N_2_cSkaAnimationBlendPtr_ctor(void*);
 int Hog_GetMemberInPlace(Arc_1C01D0* a, int i);
 int Hog_GetEntrySize(Arc_1C01D0* a, int i);
 char* Archive_GetMemberName(Arc_1C01D0* a, int i);
-void func_003B6270(Ska_1C01D0* p, int a, int b, Arc_1C01D0* c);
+void cSkaAnimationSet_InitWithSkasFile_And_AddAllAnimationsFromSkaHog(Ska_1C01D0* p, int a, int b, Arc_1C01D0* c);
 void String_CtorCStr_13B480(Str_1C01D0* s, char* c);
-void func_001BFF20(It_1C01D0* out, Str_1C01D0* s);
-void func_001BFEE0(It_1C01D0* out, Str_1C01D0* s);
-int func_001BFE90(It_1C01D0* a, It_1C01D0* b);
-char* func_001BFED0(It_1C01D0* a);
-void func_001BFEB0(It_1C01D0* a);
+void std_basic_string_char_char_traits_char_begin(It_1C01D0* out, Str_1C01D0* s);
+void std_basic_string_char_char_traits_char_end(It_1C01D0* out, Str_1C01D0* s);
+int std_opNe_wrapiteratorR_wrapiteratorR(It_1C01D0* a, It_1C01D0* b);
+char* std_wrap_iterator_basic_string_char_charPtr_opMul(It_1C01D0* a);
+void std_wrap_iterator_basic_string_char_charPtr_opInc(It_1C01D0* a);
 int String_AssignCStr_1C43A0(Str_1C01D0* a, char* b);
 void MotionGraph_RunBuilders(Ska_1C01D0* p);
 void String_CopyCtor(Str_1C01D0* d, Str_1C01D0* s);
-void func_001C0500(Pair_1C01D0* out, Str_1C01D0* k, Ska_1C01D0* v);
-void func_001C4770(Ins_1C01D0* out, void* t, Pair_1C01D0* k);
+void std_make_pair_cString_cSkaAnimationSetP(Pair_1C01D0* out, Str_1C01D0* k, Ska_1C01D0* v);
+void std_tree_pair_cString_value_compare_insert_one_pairR_2(Ins_1C01D0* out, void* t, Pair_1C01D0* k);
 void String_Dtor(void* s, int f);
 }
 extern "C" void Level_LoadSkas(void* self, void* fs)
@@ -65,28 +65,28 @@ extern "C" void Level_LoadSkas(void* self, void* fs)
         }
         if (p) {
             p->f0 = 0;
-            func_001C0810(p->v4);
-            func_001C07C0(p->v14);
-            func_001C0720(p->v24);
-            func_001C05E0(p->v34);
-            func_001C0540(p->v44);
+            cArray_cString4_ctor(p->v4);
+            cArray_charPtr_ctor(p->v14);
+            cAssocArray_cString16N_3_int_ctor(p->v24);
+            cArray_cSkaNodePtr_ctor(p->v34);
+            cAssocArray_cString16N_2_cSkaAnimationBlendPtr_ctor(p->v44);
             p->f54 = 0;
             p->f58 = 0;
         }
         {
             int x = Hog_GetMemberInPlace(a, i);
-            func_003B6270(p, x, Hog_GetEntrySize(a, i), tex);
+            cSkaAnimationSet_InitWithSkasFile_And_AddAllAnimationsFromSkaHog(p, x, Hog_GetEntrySize(a, i), tex);
         }
         {
             Str_1C01D0 s;
             It_1C01D0 it;
             It_1C01D0 end;
             String_CtorCStr_13B480(&s, Archive_GetMemberName(a, i));
-            func_001BFF20(&it, &s);
-            func_001BFEE0(&end, &s);
-            while (func_001BFE90(&it, &end)) {
-                if (*func_001BFED0(&it) >= 'a' && *func_001BFED0(&it) <= 'z') *func_001BFED0(&it) -= 0x20;
-                func_001BFEB0(&it);
+            std_basic_string_char_char_traits_char_begin(&it, &s);
+            std_basic_string_char_char_traits_char_end(&end, &s);
+            while (std_opNe_wrapiteratorR_wrapiteratorR(&it, &end)) {
+                if (*std_wrap_iterator_basic_string_char_charPtr_opMul(&it) >= 'a' && *std_wrap_iterator_basic_string_char_charPtr_opMul(&it) <= 'z') *std_wrap_iterator_basic_string_char_charPtr_opMul(&it) -= 0x20;
+                std_wrap_iterator_basic_string_char_charPtr_opInc(&it);
             }
             if (!String_AssignCStr_1C43A0(&s, "FEMALE.SKAS") || !String_AssignCStr_1C43A0(&s, "MALE.SKAS"))
                 MotionGraph_RunBuilders(p);
@@ -96,10 +96,10 @@ extern "C" void Level_LoadSkas(void* self, void* fs)
                 Pair_1C01D0 pa;
                 Pair_1C01D0 pb;
                 String_CopyCtor(&t, &s);
-                func_001C0500(&pa, &t, p);
+                std_make_pair_cString_cSkaAnimationSetP(&pa, &t, p);
                 String_CopyCtor(&pb.key, &pa.key);
                 pb.val = pa.val;
-                func_001C4770(&r, D_004FFBC0, &pb);
+                std_tree_pair_cString_value_compare_insert_one_pairR_2(&r, D_004FFBC0, &pb);
                 String_Dtor(&pb, 0);
                 String_Dtor(&pa, 0);
                 String_Dtor(&t, 0);

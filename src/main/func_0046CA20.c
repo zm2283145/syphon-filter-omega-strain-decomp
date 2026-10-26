@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046CA20(void) {
+int MediusUniqueCallbackAccountLogoutRequestHandler(void) {
     return 38;
 }

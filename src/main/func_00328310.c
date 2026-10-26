@@ -9,12 +9,12 @@ typedef struct {
 } O_328310;
 extern char D_004B8790[];
 void String_CtorEmpty(void* s);
-void func_003284E0(void* s);
+void cArray_Slide_ctor(void* s);
 void String_CtorCStr_13B480(Str_328310* s, char* c);
 void String_AssignString(Str_328310* d, Str_328310* s);
 void String_Dtor(void* s, int f);
-void func_00329A70(void* v, E_328310* pos, int n, E_328310* e);
-void func_0032A110(void* s, int f);
+void std_vector_imp_Section_insert(void* v, E_328310* pos, int n, E_328310* e);
+void std_vector_deleter_Slide_dtor(void* s, int f);
 
 int GuiSlideShow_AddCategory(O_328310* o, char* s)
 {
@@ -24,16 +24,16 @@ int GuiSlideShow_AddCategory(O_328310* o, char* s)
     Sub_328310* m;
     String_CtorEmpty(&e);
     m = &e.sub;
-    func_003284E0(m);
+    cArray_Slide_ctor(m);
     { Str_328310* p = &t; String_CtorCStr_13B480(p, s ? s : D_004B8790); }
     String_AssignString(&e.name, &t);
     String_Dtor(&t, 0);
     e.x = 0;
-    func_00329A70(o->v48, o->v50 + o->n4C, 1, &e);
+    std_vector_imp_Section_insert(o->v48, o->v50 + o->n4C, 1, &e);
     r = o->n4C - 1;
     if (m) {
         if (m) {
-            if (m) func_0032A110(m, 0);
+            if (m) std_vector_deleter_Slide_dtor(m, 0);
         }
     }
     String_Dtor(&e, 0);

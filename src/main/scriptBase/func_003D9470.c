@@ -10,7 +10,7 @@ extern char D_004BD3E0[];
 extern char D_004BD408[];
 }
 
-extern "C" void func_003D9470(Vec_9470* v, unsigned int n, const V3_9470* val)
+extern "C" void std_vector_imp_EnumField_init(Vec_9470* v, unsigned int n, const V3_9470* val)
 {
     if (n) {
         if (n > 0x800000) {

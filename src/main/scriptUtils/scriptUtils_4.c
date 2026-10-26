@@ -40,21 +40,21 @@ extern "C" {
 extern SgList D_004F83C0;
 extern SgList D_004F83E0;
 void List_Begin(SgIt* out, SgList* l);
-SgIt* func_002686D0(SgIt* dst, SgIt* src);
-void func_002686C0(SgIt* out, SgList* l);
-SgIt* func_002686B0(SgIt* dst, SgIt* src);
-SgIt* func_002686A0(SgIt* dst, SgIt* src);
-void func_00268690(SgIt* out, SgList* l);
-SgIt* func_00268680(SgIt* dst, SgIt* src);
+SgIt* std_list_cNodeListPtr_generic_iterator_ctor(SgIt* dst, SgIt* src);
+void std_list_cNodeListPtr_end(SgIt* out, SgList* l);
+SgIt* cLListIterator_cNodeListPtr_ctor(SgIt* dst, SgIt* src);
+SgIt* std_list_ArrayPtr_generic_iterator_ctor(SgIt* dst, SgIt* src);
+void std_list_ArrayPtr_end(SgIt* out, SgList* l);
+SgIt* cLListIterator_ArrayPtr_ctor_listR(SgIt* dst, SgIt* src);
 void ObjectList_EraseRange(SgIt* out, SgList* l, SgIt* first, SgIt* last);
 void Object_Unregister(void* o);
 void Object_DeleteLater(void* o, float t);
 void ScriptUtils_ReleaseAll(void);
 }
-static inline void Begin1(SgIt* out, SgList* l) { SgIt b; List_Begin(&b, l); func_002686D0(out, &b); }
-static inline void End1(SgIt* out, SgList* l) { SgIt t; func_002686C0(&t, l); func_002686B0(out, &t); }
-static inline void Begin2(SgIt* out, SgList* l) { SgIt b; List_Begin(&b, l); func_002686A0(out, &b); }
-static inline void End2(SgIt* out, SgList* l) { SgIt t; func_00268690(&t, l); func_00268680(out, &t); }
+static inline void Begin1(SgIt* out, SgList* l) { SgIt b; List_Begin(&b, l); std_list_cNodeListPtr_generic_iterator_ctor(out, &b); }
+static inline void End1(SgIt* out, SgList* l) { SgIt t; std_list_cNodeListPtr_end(&t, l); cLListIterator_cNodeListPtr_ctor(out, &t); }
+static inline void Begin2(SgIt* out, SgList* l) { SgIt b; List_Begin(&b, l); std_list_ArrayPtr_generic_iterator_ctor(out, &b); }
+static inline void End2(SgIt* out, SgList* l) { SgIt t; std_list_ArrayPtr_end(&t, l); cLListIterator_ArrayPtr_ctor_listR(out, &t); }
 static inline void Begin1x(SgIt* out, SgList* l) { Begin1(out, l); }
 static inline void End1x(SgIt* out, SgList* l) { End1(out, l); }
 static inline void Begin2x(SgIt* out, SgList* l) { Begin2(out, l); }

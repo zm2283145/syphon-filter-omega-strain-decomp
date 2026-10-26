@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_002E6090(int a0) {
+int NetClientIndexToClientIndexPacket(int a0) {
     return (a0 & 255);
 }

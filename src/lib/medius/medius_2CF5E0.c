@@ -1,6 +1,6 @@
 extern short D_0048C414;
 extern int D_0048C3D8;
-extern int func_002EC738(int);
+extern int NetDisconnect(int);
 extern void printf(char *, int);
 int Medius_DisconnectServer(void)
 {
@@ -8,7 +8,7 @@ int Medius_DisconnectServer(void)
     if (D_0048C414 != 1) return -0xC;
     {
         int *pc = &D_0048C3D8;
-        r = func_002EC738(*pc);
+        r = NetDisconnect(*pc);
         *pc = -1;
     }
     if (r) {

@@ -1,22 +1,22 @@
 #include "types.h"
 typedef struct { char pad[0x48]; char sub[0x60]; int mA8; } T5D80;
 extern void sceMpegCreate(T5D80* t, int a, int b);
-extern void func_0010B450(T5D80* t, int id, void* cb, int z);
-extern void func_003F5650(void* sub, int a, int b, int c, int d, int e);
-extern void func_003F57B0(void);
-extern void func_003F5780(void);
-extern void func_003F5750(void);
-extern void func_003F5720(void);
-extern void func_003F56D0(void);
-int func_003F5D80(T5D80* t, int a, int b, int c, int d, int e, int f, int g)
+extern void sceMpegAddCallback(T5D80* t, int id, void* cb, int z);
+extern void viBufCreate(void* sub, int a, int b, int c, int d, int e);
+extern void mpegError(void);
+extern void mpegNodata(void);
+extern void mpegStopDMA(void);
+extern void mpegRestartDMA(void);
+extern void mpegTS(void);
+int videoDecCreate(T5D80* t, int a, int b, int c, int d, int e, int f, int g)
 {
     sceMpegCreate(t, a, b);
-    func_0010B450(t, 0, (void*)func_003F57B0, 0);
-    func_0010B450(t, 1, (void*)func_003F5780, 0);
-    func_0010B450(t, 2, (void*)func_003F5750, 0);
-    func_0010B450(t, 3, (void*)func_003F5720, 0);
-    func_0010B450(t, 5, (void*)func_003F56D0, 0);
+    sceMpegAddCallback(t, 0, (void*)mpegError, 0);
+    sceMpegAddCallback(t, 1, (void*)mpegNodata, 0);
+    sceMpegAddCallback(t, 2, (void*)mpegStopDMA, 0);
+    sceMpegAddCallback(t, 3, (void*)mpegRestartDMA, 0);
+    sceMpegAddCallback(t, 5, (void*)mpegTS, 0);
     t->mA8 = 0;
-    func_003F5650(t->sub, c, d, e, f, g);
+    viBufCreate(t->sub, c, d, e, f, g);
     return 1;
 }

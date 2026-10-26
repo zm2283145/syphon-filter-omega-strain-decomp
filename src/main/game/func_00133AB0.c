@@ -42,10 +42,10 @@ extern V D_00537D80;
 extern char g_LightMgr[];
 extern int DarknessDecreaser;
 extern int NpcDarknessDecreaser;
-void* func_00134100(Vec* v);
-void func_001340C0(It* out, void* v);
-void func_001340E0(It* out, void* v);
-It* func_001340D0(It* d, It* s);
+void* cObjList_cHumanPtr_GetList(Vec* v);
+void cArray_cHumanPtr_Begin(It* out, void* v);
+void cArray_cHumanPtr_End(It* out, void* v);
+It* cArray_cHumanPtr_ConstIterator_ctor(It* d, It* s);
 void LightMgr_GatherModelLights(void* m, unsigned int mask, unsigned int flags, void* out);
 int Actor_IsFlashlightOn(Actor* a);
 void Actor_UpdateStealthLight(void);
@@ -94,8 +94,8 @@ static inline bool Live(Actor* p) { return !p->removed; }
 static inline void Scale(V* r, const V& v, float k) { r->z = v.z / k; r->y = v.y / k; r->x = v.x / k; r->w = 0.0f; }
 static inline bool Active(Actor* p) { bool r = 0; if (Alive(p) && Live(p)) r = 1; return r; }
 static inline bool Player(Ctl* c) { bool yes = false; if (c) if (c->IsPlayer()) yes = true; return yes; }
-static inline void Begin(It* o, Vec* v) { It t; func_001340C0(&t, func_00134100(v)); func_001340D0(o, &t); }
-static inline void End(It* o, Vec* v) { It t; func_001340E0(&t, func_00134100(v)); func_001340D0(o, &t); }
+static inline void Begin(It* o, Vec* v) { It t; cArray_cHumanPtr_Begin(&t, cObjList_cHumanPtr_GetList(v)); cArray_cHumanPtr_ConstIterator_ctor(o, &t); }
+static inline void End(It* o, Vec* v) { It t; cArray_cHumanPtr_End(&t, cObjList_cHumanPtr_GetList(v)); cArray_cHumanPtr_ConstIterator_ctor(o, &t); }
 
 void Actor_UpdateStealthLight(void)
 {

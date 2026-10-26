@@ -8,10 +8,10 @@
 typedef struct { unsigned int psize : 8; unsigned int dsize : 24; void *dest; int cid; unsigned int opt; } CmdHdr;
 typedef struct { unsigned int src; unsigned int dest; unsigned int size; unsigned int attr; } DmaT;
 extern void *D_004E2D60;
-extern void func_0010FB10(void *, int);
+extern void sceSifWriteBackDCache(void *, int);
 extern unsigned int sceSifSetDma(DmaT *, int);
 extern unsigned int isceSifSetDma(DmaT *, int);
-unsigned int func_0010F810(int cid, int mode, CmdHdr *pkt, int pktsize, void *src, void *dest, int size)
+unsigned int _sceSifSendCmd(int cid, int mode, CmdHdr *pkt, int pktsize, void *src, void *dest, int size)
 {
     DmaT dmat[2];
     int count;
@@ -27,7 +27,7 @@ unsigned int func_0010F810(int cid, int mode, CmdHdr *pkt, int pktsize, void *sr
         pkt->dest = dest;
         pkt->dsize = size;
         if (mode & 4)
-            func_0010FB10(src, size);
+            sceSifWriteBackDCache(src, size);
     } else {
         pkt->dest = 0;
         pkt->dsize = 0;
@@ -38,7 +38,7 @@ unsigned int func_0010F810(int cid, int mode, CmdHdr *pkt, int pktsize, void *sr
     pkt->cid = cid;
     pkt->psize = pktsize;
     dmat[count].attr = 0x44;
-    func_0010FB10(pkt, pktsize);
+    sceSifWriteBackDCache(pkt, pktsize);
     count++;
     if (mode & 1)
         return isceSifSetDma(dmat, count);
@@ -49,26 +49,26 @@ unsigned int func_0010F810(int cid, int mode, CmdHdr *pkt, int pktsize, void *sr
 
 /* merge_units: begin func_0010F948 */
 #if 0 /* merge_units */
-extern int func_0010F810(int a, int z, int b, int c, int d, int e, int f);
+extern int _sceSifSendCmd(int a, int z, int b, int c, int d, int e, int f);
 #endif /* merge_units */
-#define func_0010F810(a0, a1, a2, a3, a4, a5, a6) ((int)func_0010F810((a0), (a1), (CmdHdr *)(a2), (a3), (void *)(a4), (void *)(a5), (a6))) /* merge_units */
+#define _sceSifSendCmd(a0, a1, a2, a3, a4, a5, a6) ((int)_sceSifSendCmd((a0), (a1), (CmdHdr *)(a2), (a3), (void *)(a4), (void *)(a5), (a6))) /* merge_units */
 
-int func_0010F948(int a, int b, int c, int d, int e, int f)
+int sceSifSendCmd(int a, int b, int c, int d, int e, int f)
 {
-    return func_0010F810(a, 0, b, c, d, e, f);
+    return _sceSifSendCmd(a, 0, b, c, d, e, f);
 }
-#undef func_0010F810 /* merge_units */
+#undef _sceSifSendCmd /* merge_units */
 /* merge_units: end func_0010F948 */
 
 /* merge_units: begin func_0010F988 */
 #if 0 /* merge_units */
-extern int func_0010F810(int a, int z, int b, int c, int d, int e, int f);
+extern int _sceSifSendCmd(int a, int z, int b, int c, int d, int e, int f);
 #endif /* merge_units */
-#define func_0010F810(a0, a1, a2, a3, a4, a5, a6) ((int)func_0010F810((a0), (a1), (CmdHdr *)(a2), (a3), (void *)(a4), (void *)(a5), (a6))) /* merge_units */
+#define _sceSifSendCmd(a0, a1, a2, a3, a4, a5, a6) ((int)_sceSifSendCmd((a0), (a1), (CmdHdr *)(a2), (a3), (void *)(a4), (void *)(a5), (a6))) /* merge_units */
 
-int func_0010F988(int a, int b, int c, int d, int e, int f)
+int isceSifSendCmd(int a, int b, int c, int d, int e, int f)
 {
-    return func_0010F810(a, 1, b, c, d, e, f);
+    return _sceSifSendCmd(a, 1, b, c, d, e, f);
 }
-#undef func_0010F810 /* merge_units */
+#undef _sceSifSendCmd /* merge_units */
 /* merge_units: end func_0010F988 */

@@ -81,7 +81,7 @@ extern char D_004B88F0[];
 extern char g_Game[];
 extern G *D_004FFC04;
 void GuiPersonnelScreen_Init(Self *self);
-void func_00299510(void *p);
+void std_vector_deleter_tAchievementInfo_clear(void *p);
 int Agent_GetSelected(void *a, int i);
 void AgentData_GetRatings(int agent, void *p);
 W *GuiWidget_FindChildByName(void *self, char *name);
@@ -97,7 +97,7 @@ extern "C" void GuiRatings_Init(Self *self)
     char text[64];
 
     GuiPersonnelScreen_Init(self);
-    func_00299510(&self->list);
+    std_vector_deleter_tAchievementInfo_clear(&self->list);
     AgentData_GetRatings(Agent_GetSelected(g_Game, -1), &self->list);
     grp = GuiWidget_FindChildByName(self, D_00492BB8);
     if (grp == 0)

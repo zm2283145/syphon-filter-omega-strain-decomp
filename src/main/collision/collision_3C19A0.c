@@ -12,20 +12,20 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int func_00181E80(int, int *);                             
-int func_00182260(int, int *);                             
+int cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress(int, int *);                             
+int cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_2(int, int *);                             
 
-void func_003C19A0(int arg0) {
+void cCollisionModel_Data_BoundingBox(int arg0) {
     int sp1C;
     int sp18;
 
     if (F_(arg0, 0x4, int) > 0) {
         sp1C = F_(arg0, 0x8, int);
-        func_00182260(arg0, &sp1C);
+        cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_2(arg0, &sp1C);
         return;
     }
     sp18 = F_(arg0, 0x10, int);
-    func_00181E80(arg0, &sp18);
+    cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress(arg0, &sp18);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003C19A0(void) {}
@@ -88,8 +88,8 @@ typedef struct ColHdr {
 } ColHdr;
 
 extern void Vec4_Assign(V4* d, V4* s);
-extern char* func_003C21D0(Bytes4* p);
-extern Bytes4* func_003C21A0(Bytes4* dst, Bytes4* src);
+extern char* tFaceFlags_ctor(Bytes4* p);
+extern Bytes4* tFaceFlags_opAssign(Bytes4* dst, Bytes4* src);
 extern void Sphere_FromCenter(V4* out, V4* a, V4* b);
 extern void Vec4_Cross(V4* out, V4* a, V4* b);
 extern float Vec4_Length(V4* v);
@@ -119,19 +119,19 @@ static inline void Col_FixTri(char* tri, V4* verts, int v)
     if (v < 5) {
         p = tri;
         Vec4_Assign(&n, (V4*)tri);
-        func_003C21D0(&col);
+        tFaceFlags_ctor(&col);
         if (v < 4) {
             ip = idx; p += 0x30;
             for (j = 0; j < 3; j++) {
                 ip[j] = *(int*)p; p += 4;
             }
-            func_003C21A0(&col, (Bytes4*)p);
+            tFaceFlags_opAssign(&col, (Bytes4*)p);
         } else {
             ip = idx; p += 0x10;
             for (j2 = 0; j2 < 3; j2++) {
                 ip[j2] = *(int*)p; p += 4;
             }
-            func_003C21A0(&col, (Bytes4*)p);
+            tFaceFlags_opAssign(&col, (Bytes4*)p);
         }
         Sphere_FromCenter(&e1, &verts[idx[1]], &verts[idx[0]]);
         Sphere_FromCenter(&e2, &verts[idx[2]], &verts[idx[0]]);
@@ -143,7 +143,7 @@ static inline void Col_FixTri(char* tri, V4* verts, int v)
         for (j3 = 0; j3 < 3; j3++) {
             ((ColTri*)tri)->idx[j3] = ip[j3];
         }
-        func_003C21A0((Bytes4*)((ColTri*)tri)->col, &col);
+        tFaceFlags_opAssign((Bytes4*)((ColTri*)tri)->col, &col);
     }
 }
 

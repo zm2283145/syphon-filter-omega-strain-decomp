@@ -23,9 +23,9 @@ extern "C" {
 extern char D_004EE550[];
 extern "C" void Event_PackHeader();
 extern "C" void Message_GetScriptTypeKey();
-extern "C" void func_0014D610();
-extern "C" void func_0015B690();
-void * const D_004D9340[8] = { (void*)0x0, (void*)0x0, (void*)func_0014D610, (void*)func_0015B690, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
+extern "C" void cAIMessage_dtor();
+extern "C" void cAIMessage_Clone();
+void * const D_004D9340[8] = { (void*)0x0, (void*)0x0, (void*)cAIMessage_dtor, (void*)cAIMessage_Clone, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 extern void Event_Construct(AiMsg_f3* m, void* type);
 extern void Event_Send(AiMsg_f3* m, void* target, int immediate);
 extern void cMessage_dtor(AiMsg_f3* m, int flags);

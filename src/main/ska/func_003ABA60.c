@@ -4,4 +4,4 @@
 #include "vtable_base_dtor.h"
 
 /* Message destructor: restore vtable, run cMessage base, optionally delete. */
-DEFINE_VTABLE_BASE_DTOR(func_003ABA60, D_004DFBD0, cMessage_dtor)
+DEFINE_VTABLE_BASE_DTOR(cSkaAnimEventMessage_dtor, D_004DFBD0, cMessage_dtor)

@@ -18,9 +18,9 @@ int Net_GetTalkerName(void* p);
 int func_004651F0(void);
 void func_00437950(int v);
 int Net_GetClock(int v);
-int func_002CAB70(void* p);
+int cGameFrontEnd_IsMessageBoxAwake_void_2(void* p);
 int GuiGameScreen_IsChooseMenuVisible(void* p);
-void func_00242740(G_464D20* g);
+void cHud_ActivateQuickChat(G_464D20* g);
 M_464D20* Gui_GetScreenStack(void);
 void GuiCanvas_CheckControllers(O_464D20* o, float dt);
 
@@ -66,9 +66,9 @@ void func_00464D20(O_464D20* o, float dt)
                 if (!func_004651F0() || o->f70 < Net_GetClock(1)) {
                     func_00437950(0);
                     (*(int*)D_00497BF0) = -1;
-                } else if (!g_LoadoutPending && !func_002CAB70(D_004FFC04) && !g_Hud->b6A9 && !g_Hud->b6A8
+                } else if (!g_LoadoutPending && !cGameFrontEnd_IsMessageBoxAwake_void_2(D_004FFC04) && !g_Hud->b6A9 && !g_Hud->b6A8
                            && !g_Hud->b6AA && !GuiGameScreen_IsChooseMenuVisible(g_Hud->f6A4) && !g_LocalPlayer->f178) {
-                    func_00242740(g_Hud);
+                    cHud_ActivateQuickChat(g_Hud);
                 }
             }
             o->f70 = 0;

@@ -25,14 +25,14 @@ struct Flag_66960 {
 struct E_66960 {};
 struct Ptr_66960 : E_66960 { Node_66960* p; Ptr_66960(const E_66960& e, Node_66960* n) : E_66960(e), p(n) {} };
 struct Holder_66960;
-extern "C" void func_00266B70(Holder_66960* h);
+extern "C" void details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_6(Holder_66960* h);
 struct Holder_66960 {
     int* alloc;
     Node_66960* node;
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~Holder_66960()
     {
         if (node) {
-            func_00266B70(this);
+            details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_6(this);
             Node_66960* p = node;
             if (p) {
                 AllocGuard guard;
@@ -45,7 +45,7 @@ struct Holder_66960 {
 static inline Node_66960* NewNode() { AllocGuard guard; return (Node_66960*)Mem_Alloc(0, 0x60, D_004A8270, 0x5C); }
 #pragma push
 #pragma opt_propagation off
-extern "C" int func_00266960(Node_66960** result, List_66960* list, Node_66960** pos, const Val_66960* value)
+extern "C" int std_list_deleter_TaserPulse_insert(Node_66960** result, List_66960* list, Node_66960** pos, const Val_66960* value)
 {
     Node_66960* n;
     int* alloc = &list->alloc;

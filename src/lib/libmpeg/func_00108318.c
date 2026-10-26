@@ -1,32 +1,32 @@
 typedef void (*Handler)(void *);
-extern void func_0010C668(void *);
-extern void func_0010C498(void *);
-extern void func_0010C5C8(void *);
-extern void func_00108790(void *);
-extern void func_00108950(void *);
+extern void _unknown_extension(void *);
+extern void _sequenceExtension(void *);
+extern void _sequenceDisplayExtension(void *);
+extern void _quantMatrixExtension(void *);
+extern void _copyrightExtension(void *);
 extern void _sequenceScalableExtension(void *);
-extern void func_00108858(void *);
-extern void func_00108440(void *);
+extern void _pictureDisplayExtension(void *);
+extern void _pictureCodingExtension(void *);
 extern void _pictureSpatialScalableExtension(void *);
 extern void _pictureTemporalScalableExtension(void *);
 
-extern void func_00108048(void *);
-extern unsigned func_00107CA8(void *,int),func_00107ED8(void *,int);
-extern void func_00107DC8(void *,int);
-void func_00108318(void *ctx){
- Handler handlers[11]={func_0010C668,func_0010C498,func_0010C5C8,func_00108790,func_00108950,_sequenceScalableExtension,func_0010C668,func_00108858,func_00108440,_pictureSpatialScalableExtension,_pictureTemporalScalableExtension};unsigned code;
- func_00108048(ctx);
- while((code=func_00107CA8(ctx,32))==0x1b5 || code==0x1b2){
+extern void _nextStartCode(void *);
+extern unsigned _peepBit(void *,int),_nextBit(void *,int);
+extern void _flushBuf(void *,int);
+void _extensionAndUserData(void *ctx){
+ Handler handlers[11]={_unknown_extension,_sequenceExtension,_sequenceDisplayExtension,_quantMatrixExtension,_copyrightExtension,_sequenceScalableExtension,_unknown_extension,_pictureDisplayExtension,_pictureCodingExtension,_pictureSpatialScalableExtension,_pictureTemporalScalableExtension};unsigned code;
+ _nextStartCode(ctx);
+ while((code=_peepBit(ctx,32))==0x1b5 || code==0x1b2){
   if(code==0x1b5){
    unsigned ext;
-   func_00107DC8(ctx,32);
-   ext=func_00107ED8(ctx,4);
+   _flushBuf(ctx,32);
+   ext=_nextBit(ctx,4);
    ext=ext<=10?ext:0;
    handlers[ext](ctx);
-   func_00108048(ctx);
+   _nextStartCode(ctx);
   }else{
-   func_00107DC8(ctx,32);
-   func_00108048(ctx);
+   _flushBuf(ctx,32);
+   _nextStartCode(ctx);
   }
  }
 }

@@ -19,7 +19,7 @@ extern float D_004C0398;
 
 void GuiWidget_Update(void* self, float dt);
 float Math_FMod(float a, float b);
-void* func_001D3E20(Mtx* m);
+void* cMatrix_ctor_void(Mtx* m);
 void Mtx_MakeAxisRotation(Mtx* m, float x, float y, float z, float a);
 void Mtx_Multiply(Mtx* d, Mtx* s);
 
@@ -37,7 +37,7 @@ void GuiWeaponDisplay_Update(WeaponDisplay* self, float dt)
         a = 3.0f * self->angle;
         a = kPi * (a / 180.0f); /* const local for kPi gives retail constant-load order */
         { Mtx* m = &self->mtx; VU0_UnitMatrix(m); }
-        func_001D3E20(&rot);
+        cMatrix_ctor_void(&rot);
         Mtx_MakeAxisRotation(&rot, D_004C0390, D_004C0394, D_004C0398, a);
         Mtx_Multiply(&self->mtx, &rot);
     }

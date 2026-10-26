@@ -7,7 +7,7 @@
 #include "types.h"
 #include "human_types.h"
 
-Vec4* func_0019E660(Vec4* v, float w) {
+Vec4* cVector_SetW(Vec4* v, float w) {
     v->w = w;
     return v;
 }

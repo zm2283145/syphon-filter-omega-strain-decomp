@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-void func_003CA3E0(Iter* out, Tree* t) {
+void std_list_deleter_tQueuedMessage_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 #pragma pop /* merge_units */
@@ -25,7 +25,7 @@ void func_003CA3E0(Iter* out, Tree* t) {
 typedef struct { int m0; int m4; int m8; } TA3F0;
 extern void ObjectList_EraseRange_3C9EA0(int* out, TA3F0* self, int* first, int* last);
 extern void operator_delete(void* p);
-TA3F0* func_003CA3F0(TA3F0* self, short del)
+TA3F0* std_list_deleter_tQueuedMessage_dtor(TA3F0* self, short del)
 {
     if (self) {
         int r;
@@ -45,14 +45,14 @@ TA3F0* func_003CA3F0(TA3F0* self, short del)
 /* merge_units: begin func_003CA460 */
 #pragma push /* merge_units */
 typedef struct { int m0; void* m4; } TB5C0;
-extern void func_003CA530(TB5C0* t, void* n);
-TB5C0* func_003CA460(TB5C0* t, short del)
+extern void std_tree_pair_int_value_compare_cAllocator_pair_destroy_nodeP(TB5C0* t, void* n);
+TB5C0* cAssocArray_int_cLList_tQueuedMessage_dtor(TB5C0* t, short del)
 {
     if (t) {
         if (t) {
             if (t) {
                 if (t->m4)
-                    func_003CA530(t, t->m4);
+                    std_tree_pair_int_value_compare_cAllocator_pair_destroy_nodeP(t, t->m4);
             }
         }
         if (del > 0)
@@ -69,6 +69,6 @@ TB5C0* func_003CA460(TB5C0* t, short del)
 #include "base_dtor_chain.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_003CA4D0, func_003CA360)
+DEFINE_BASE_DTOR_CHAIN(cLList_tQueuedMessage_dtor, std_list_imp_tQueuedMessage_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003CA4D0 */

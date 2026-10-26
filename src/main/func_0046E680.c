@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046E680(void) {
+int MediusUtilAddGameWorldRequestHandler(void) {
     return 456;
 }

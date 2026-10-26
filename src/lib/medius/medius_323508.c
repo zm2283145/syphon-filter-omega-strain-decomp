@@ -6,12 +6,12 @@
 
 #include "types.h"
 
-extern int func_003231D8(int);
+extern int setVuFftMode(int);
 
-int func_00323508(void) {
+int nciEnableVu0Optimizations(void) {
     int a0, v0, v1;
 
-    v0 = func_003231D8(a0);
+    v0 = setVuFftMode(a0);
     v1 = 0 + 6165;
     if (v0 == 0) v1 = 0;
     v0 = v1;

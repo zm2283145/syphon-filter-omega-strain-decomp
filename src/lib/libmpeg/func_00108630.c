@@ -1,7 +1,7 @@
-extern int func_00107ED8(void *, int);
-extern void func_00107DC8(void *, int);
+extern int _nextBit(void *, int);
+extern void _flushBuf(void *, int);
 
-void func_00108630(void *m)
+void _extrainfo(void *m)
 {
-    while (func_00107ED8(m, 1)) func_00107DC8(m, 8);
+    while (_nextBit(m, 1)) _flushBuf(m, 8);
 }

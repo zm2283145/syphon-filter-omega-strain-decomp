@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-extern int func_00107A38(int, int);
+extern int _ipuVdec(int, int);
 
-int func_00106738(int a0) {
+int _dmVector(int a0) {
     int tmp0;
 
-    tmp0 = func_00107A38(a0, 3);
+    tmp0 = _ipuVdec(a0, 3);
     return tmp0;
 }

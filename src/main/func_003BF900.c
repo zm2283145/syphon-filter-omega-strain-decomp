@@ -7,7 +7,7 @@ extern float func_003BF9E0(V4* p);
 extern void Vec4_Scale(V4* out, V4* v, float s);
 extern V4* Vec4_NormalizeXYZInPlace(V4* v);
 extern V4* Vec4_Assign(V4* d, V4* s);
-extern void func_001E1D00(V4* p, V4* v);
+extern void cCollisionFace_SetUnitNormal(V4* p, V4* v);
 #pragma push
 #pragma opt_unroll_loops off
 #pragma opt_rotateloops off
@@ -31,6 +31,6 @@ void func_003BF900(V4* dst, V4* src) {
     Vec4_Cross(&c, &a, &b);
     Vec4_Scale(&d, &c, func_003BF9E0(dst));
     Vec4_Assign(&e, Vec4_NormalizeXYZInPlace(&d));
-    func_001E1D00(dst, &e);
+    cCollisionFace_SetUnitNormal(dst, &e);
 }
 #pragma pop

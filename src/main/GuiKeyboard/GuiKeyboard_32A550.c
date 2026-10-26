@@ -46,9 +46,9 @@ struct V32A5A0 { unsigned int cap; unsigned int count; VRElem20* data; };
 extern "C" {
 extern char D_004B88C0[];
 void* Mem_PlacementNew(unsigned int size, void* p);
-void func_0032A730(void* dst, const VRElem20* src);
+void GuiSlideShow_Slide_ctor(void* dst, const VRElem20* src);
 }
-extern "C" void func_0032A5A0(V32A5A0* v, const VRElem20* first, const VRElem20* last)
+extern "C" void std_vector_imp_Slide_init(V32A5A0* v, const VRElem20* first, const VRElem20* last)
 {
     unsigned int n = last - first;
     if (v->count > 0x22E8BA) {
@@ -62,7 +62,7 @@ extern "C" void func_0032A5A0(V32A5A0* v, const VRElem20* first, const VRElem20*
         VRElem20* p = v->data;
         for (; first != last; first++, p++) {
             void* o = Mem_PlacementNew(sizeof(VRElem20), p);
-            if (o) func_0032A730(o, first);
+            if (o) GuiSlideShow_Slide_ctor(o, first);
             v->count++;
         }
     }

@@ -6,11 +6,11 @@
 
 /* merge_units: begin func_0010FE80 */
 typedef struct { char pad[0x1C]; char *x1C; int x20; } TblFE80;
-extern char *func_0010FE50(TblFE80 *, int);
+extern char *_sceRpcGetFPacket(TblFE80 *, int);
 
-char *func_0010FE80(TblFE80 *t, int idx)
+char *_sceRpcGetFPacket2(TblFE80 *t, int idx)
 {
-    if (idx < 0 || idx >= t->x20) return func_0010FE50(t, idx);
+    if (idx < 0 || idx >= t->x20) return _sceRpcGetFPacket(t, idx);
     return t->x1C + (idx << 6);
 }
 /* merge_units: end func_0010FE80 */
@@ -21,7 +21,7 @@ typedef struct { void *pkt_addr; int rpc_id; int sema_id; unsigned int mode; } R
 typedef struct { RpcHdrFEC0 hdr; unsigned int command; void *buff; void *gp; void (*end_function)(void *); void *end_param; void *server; } RpcClientFEC0;
 typedef struct { char pad[0x1C]; RpcClientFEC0 *client; unsigned int cid; void *server; void *buff; } RpcRendFEC0;
 extern int iSignalSema(int);
-extern void func_0010FE30(void *);
+extern void _sceRpcFreePacket_void(void *);
 static __inline__ void *ChangeGP_FEC0(void *gp)
 {
     void *old;
@@ -29,7 +29,7 @@ static __inline__ void *ChangeGP_FEC0(void *gp)
     __asm__ volatile("move %0, $gp\n\tmove $gp, %1" : "=&r"(old) : "r"(gp) : "memory");
     return old;
 }
-void func_0010FEC0(RpcRendFEC0 *req)
+void _request_end_void(RpcRendFEC0 *req)
 {
     RpcClientFEC0 *client;
     switch (req->cid) {
@@ -52,7 +52,7 @@ void func_0010FEC0(RpcRendFEC0 *req)
     {
         RpcClientFEC0 *c = req->client;
         if (c->hdr.sema_id >= 0) iSignalSema(c->hdr.sema_id);
-        func_0010FE30(c->hdr.pkt_addr);
+        _sceRpcFreePacket_void(c->hdr.pkt_addr);
         c->hdr.pkt_addr = 0;
     }
 }

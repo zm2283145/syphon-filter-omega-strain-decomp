@@ -26,12 +26,12 @@ extern "C" {
 char D_004BFB88[] = "allocator.hh";
 extern unsigned char D_004941E0;
 extern unsigned char D_004941E8;
-TransferTimerNode* func_00431030(RbTree* tree, TransferTreeNode* parent,
+TransferTimerNode* std_tree_pair_int_value_compare_insert_node_at_nodeP_bool_bool_pairR_5(RbTree* tree, TransferTreeNode* parent,
                                 bool left, bool leftmost, const TransferTimerValue* value);
 }
 
 /* Unlink a timer node and advance the minimum iterator when needed. */
-extern "C" void func_0042F760(RbTree* tree, TransferTimerIterator* position)
+extern "C" void std_tree_pair_int_value_compare_erase_tree_5(RbTree* tree, TransferTimerIterator* position)
 {
     transfer_tree_erase<D_004BFB88>(tree, &position->node);
 }
@@ -40,11 +40,11 @@ extern "C" void func_0042F760(RbTree* tree, TransferTimerIterator* position)
 #pragma peephole on
 
 /* Insert a timer ID or return its existing map entry. */
-extern "C" void func_0042F8A0(TransferInsertResult* result, RbTree* tree,
+extern "C" void std_tree_pair_int_value_compare_insert_one_pairR_4(TransferInsertResult* result, RbTree* tree,
                              const TransferTimerValue* value)
 {
     TransferTreeInsert<TransferTimerNode, TransferTimerValue, TransferInsertResult,
-                       func_00431030, &D_004941E0, &D_004941E8>::insert(result, tree, value);
+                       std_tree_pair_int_value_compare_insert_node_at_nodeP_bool_bool_pairR_5, &D_004941E0, &D_004941E8>::insert(result, tree, value);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0042F760(void) {}
@@ -59,63 +59,63 @@ static inline void merge_flush_func_0042F760(void) {}
 extern "C" {
 extern char D_004BFB88[];
 void func_0042F970(RbTree* tree, TransferTreeNode* node);
-void func_0042FC50(RbTree* tree, TransferTreeNode* node);
-void func_0042FF30(RbTree* tree, TransferTreeNode* node);
-void func_00430210(RbTree* tree, TransferTreeNode* node);
-void* func_00431310(RbTree* tree);
-void func_00431300(void* allocator, GobjId* value);
-void* func_004312F0(RbTree* tree);
-void func_00431250(void* allocator, TransferTreeNode* node, int count);
-void func_004311A0(TransferTreeNode* node, int pool, int flags, char* file, int line);
+void std_tree_pair_int_value_compare_destroy_nodeP_3(RbTree* tree, TransferTreeNode* node);
+void std_tree_pair_int_value_compare_destroy_nodeP_4(RbTree* tree, TransferTreeNode* node);
+void std_tree_pair_int_value_compare_destroy_nodeP_5(RbTree* tree, TransferTreeNode* node);
+void* std_tree_pair_int_value_compare_alloc_void_4(RbTree* tree);
+void cAllocator_pair_int_destroy_pairP_6(void* allocator, GobjId* value);
+void* std_tree_pair_int_value_compare_node_alloc_void_4(RbTree* tree);
+void cAllocator_node_deallocate_nodeP_uint_16(void* allocator, TransferTreeNode* node, int count);
+void opDelete_nodeP_int_bool_charP_etc_16(TransferTreeNode* node, int pool, int flags, char* file, int line);
 
 extern char D_004BFB98[];
-void* func_00431020(RbTree* tree);
-void func_00431010(void* allocator, GobjId* value);
-void* func_00431000(RbTree* tree);
-void func_00430F60(void* allocator, TransferTreeNode* node, int count);
-void func_00430EB0(TransferTreeNode* node, int pool, int flags, char* file, int line);
+void* std_tree_pair_int_value_compare_alloc_void_3(RbTree* tree);
+void cAllocator_pair_int_destroy_pairP_5(void* allocator, GobjId* value);
+void* std_tree_pair_int_value_compare_node_alloc_void_3(RbTree* tree);
+void cAllocator_node_deallocate_nodeP_uint_15(void* allocator, TransferTreeNode* node, int count);
+void opDelete_nodeP_int_bool_charP_etc_15(TransferTreeNode* node, int pool, int flags, char* file, int line);
 
 extern char D_004BFBA8[];
-void* func_00430D30(RbTree* tree);
-void func_00430D20(void* allocator, GobjId* value);
-void* func_00430D10(RbTree* tree);
+void* std_tree_pair_short_value_compare_alloc(RbTree* tree);
+void std_allocator_pair_short_destroy(void* allocator, GobjId* value);
+void* std_tree_pair_short_value_compare_node_alloc(RbTree* tree);
 void func_00430C70(void* allocator, TransferTreeNode* node, int count);
-void func_00430BC0(TransferTreeNode* node, int pool, int flags, char* file, int line);
+void opDelete_nodeP_int_bool_charP_etc_14(TransferTreeNode* node, int pool, int flags, char* file, int line);
 
 extern char D_004BFBB8[];
-void* func_004307D0(RbTree* tree);
-void func_004307C0(void* allocator, GobjId* value);
-void* func_004307B0(RbTree* tree);
-void func_00430710(void* allocator, TransferTreeNode* node, int count);
-void func_00430660(TransferTreeNode* node, int pool, int flags, char* file, int line);
+void* std_tree_pair_int_value_compare_alloc_void_2(RbTree* tree);
+void cAllocator_pair_int_destroy_pairP_4(void* allocator, GobjId* value);
+void* std_tree_pair_int_value_compare_node_alloc_void_2(RbTree* tree);
+void cAllocator_node_deallocate_nodeP_uint_14(void* allocator, TransferTreeNode* node, int count);
+void opDelete_nodeP_int_bool_charP_etc_13(TransferTreeNode* node, int pool, int flags, char* file, int line);
 }
 
 /* Destroy timer-map nodes in postorder through the original allocator layers. */
 extern "C" void func_0042F970(RbTree* tree, TransferTreeNode* node)
 {
-    TransferTreeDestroy<func_0042F970, func_00431310, func_00431300, func_004312F0,
-                        func_00431250, func_004311A0, D_004BFB88>::destroy(tree, node);
+    TransferTreeDestroy<func_0042F970, std_tree_pair_int_value_compare_alloc_void_4, cAllocator_pair_int_destroy_pairP_6, std_tree_pair_int_value_compare_node_alloc_void_4,
+                        cAllocator_node_deallocate_nodeP_uint_16, opDelete_nodeP_int_bool_charP_etc_16, D_004BFB88>::destroy(tree, node);
 }
 
 /* Destroy reference-map nodes without releasing the separately owned references. */
-extern "C" void func_0042FC50(RbTree* tree, TransferTreeNode* node)
+extern "C" void std_tree_pair_int_value_compare_destroy_nodeP_3(RbTree* tree, TransferTreeNode* node)
 {
-    TransferTreeDestroy<func_0042FC50, func_00431020, func_00431010, func_00431000,
-                        func_00430F60, func_00430EB0, D_004BFB98>::destroy(tree, node);
+    TransferTreeDestroy<std_tree_pair_int_value_compare_destroy_nodeP_3, std_tree_pair_int_value_compare_alloc_void_3, cAllocator_pair_int_destroy_pairP_5, std_tree_pair_int_value_compare_node_alloc_void_3,
+                        cAllocator_node_deallocate_nodeP_uint_15, opDelete_nodeP_int_bool_charP_etc_15, D_004BFB98>::destroy(tree, node);
 }
 
 /* Destroy pending-message map nodes after their messages have been released. */
-extern "C" void func_0042FF30(RbTree* tree, TransferTreeNode* node)
+extern "C" void std_tree_pair_int_value_compare_destroy_nodeP_4(RbTree* tree, TransferTreeNode* node)
 {
-    TransferTreeDestroy<func_0042FF30, func_00430D30, func_00430D20, func_00430D10,
-                        func_00430C70, func_00430BC0, D_004BFBA8>::destroy(tree, node);
+    TransferTreeDestroy<std_tree_pair_int_value_compare_destroy_nodeP_4, std_tree_pair_short_value_compare_alloc, std_allocator_pair_short_destroy, std_tree_pair_short_value_compare_node_alloc,
+                        func_00430C70, opDelete_nodeP_int_bool_charP_etc_14, D_004BFBA8>::destroy(tree, node);
 }
 
 /* Destroy owned-object map nodes after the entry allocations have been released. */
-extern "C" void func_00430210(RbTree* tree, TransferTreeNode* node)
+extern "C" void std_tree_pair_int_value_compare_destroy_nodeP_5(RbTree* tree, TransferTreeNode* node)
 {
-    TransferTreeDestroy<func_00430210, func_004307D0, func_004307C0, func_004307B0,
-                        func_00430710, func_00430660, D_004BFBB8>::destroy(tree, node);
+    TransferTreeDestroy<std_tree_pair_int_value_compare_destroy_nodeP_5, std_tree_pair_int_value_compare_alloc_void_2, cAllocator_pair_int_destroy_pairP_4, std_tree_pair_int_value_compare_node_alloc_void_2,
+                        cAllocator_node_deallocate_nodeP_uint_14, opDelete_nodeP_int_bool_charP_etc_13, D_004BFBB8>::destroy(tree, node);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0042F970(void) {}

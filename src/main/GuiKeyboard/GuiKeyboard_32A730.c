@@ -38,7 +38,7 @@ static inline void StrCopy2_32A730(ShortStr* self, const ShortStr* src)
         String_Replace(self, 0, 0, src->u.l.data, src->u.l.data + len, tag);
     }
 }
-extern "C" E_32A730* func_0032A730(E_32A730* self, const E_32A730* src)
+extern "C" E_32A730* GuiSlideShow_Slide_ctor(E_32A730* self, const E_32A730* src)
 {
     StrCopy_32A730(&self->name, &src->name);
     self->val = src->val;
@@ -63,21 +63,21 @@ extern "C" {
 extern char D_004B88A0[];
 extern char D_004B88C0[];
 char D_004B8850[] = "vector::assign length error\n";
-void func_00329930(TStr* d, const TStr* s);
-void func_003282A0(E2A870* p, int f);
+void cString_opAssign(TStr* d, const TStr* s);
+void GuiSlideShow_Slide_dtor(E2A870* p, int f);
 void* Mem_PlacementNew(unsigned int size, void* p);
 #if 0 /* merge_units */
-void func_0032A730(void* d, const E2A870* s);
+void GuiSlideShow_Slide_ctor(void* d, const E2A870* s);
 #endif /* merge_units */
-#define func_0032A730(a0, a1) ((void)func_0032A730((E_32A730 *)(a0), (const E_32A730 *)(a1))) /* merge_units */
+#define GuiSlideShow_Slide_ctor(a0, a1) ((void)GuiSlideShow_Slide_ctor((E_32A730 *)(a0), (const E_32A730 *)(a1))) /* merge_units */
 
-void func_0032AB90(V2A870* v);
-void func_0032A190(void* allocation, int pool, int destroy, char* file, int line);
+void std_vector_deleter_Slide_clear(V2A870* v);
+void opDelete_SlideP_int_bool_charP_etc(void* allocation, int pool, int destroy, char* file, int line);
 }
 static inline const unsigned int& Min2A870(const unsigned int& a, const unsigned int& b) { return b < a ? b : a; }
 static inline E2A870* Alloc2A870(unsigned int n) { AllocGuard g; return (E2A870*)Mem_Alloc(0, n * sizeof(E2A870), D_004B88C0, 0x5C); }
 
-extern "C" void func_0032A870(V2A870* v, const E2A870* first, const E2A870* last)
+extern "C" void std_vector_imp_Slide_do_assign(V2A870* v, const E2A870* first, const E2A870* last)
 {
     unsigned int n = last - first;
     if (n <= v->cap) {
@@ -85,9 +85,9 @@ extern "C" void func_0032A870(V2A870* v, const E2A870* first, const E2A870* last
         E2A870* p = v->data;
         E2A870* e = p + m;
         for (; p < e; p++, first++) {
-            func_00329930(&p->a, &first->a);
+            cString_opAssign(&p->a, &first->a);
             p->b = first->b;
-            func_00329930(&p->c, &first->c);
+            cString_opAssign(&p->c, &first->c);
             p->d = first->d;
             p->e = first->e;
             p->f = first->f;
@@ -96,13 +96,13 @@ extern "C" void func_0032A870(V2A870* v, const E2A870* first, const E2A870* last
         if (n < v->count) {
             E2A870* e2 = v->data + v->count;
             for (; p < e2; p++)
-                func_003282A0(p, -1);
+                GuiSlideShow_Slide_dtor(p, -1);
             v->count = n;
         } else if (v->count < n) {
             for (; first != last; first++, p++) {
                 void* m = Mem_PlacementNew(sizeof(E2A870), p);
                 if (m)
-                    func_0032A730(m, first);
+                    GuiSlideShow_Slide_ctor(m, first);
                 v->count++;
             }
         }
@@ -111,10 +111,10 @@ extern "C" void func_0032A870(V2A870* v, const E2A870* first, const E2A870* last
             Libc_Fprintf(D_00489738->stream, D_004B8850);
             Libc_Abort();
         }
-        func_0032AB90(v);
+        std_vector_deleter_Slide_clear(v);
         if (v->data) {
             if (v->data)
-                func_0032A190(v->data, 0, 0, D_004B88A0, 100);
+                opDelete_SlideP_int_bool_charP_etc(v->data, 0, 0, D_004B88A0, 100);
             v->data = 0;
             v->cap = 0;
         }
@@ -128,12 +128,12 @@ extern "C" void func_0032A870(V2A870* v, const E2A870* first, const E2A870* last
             for (; first != last; first++, p++) {
                 void* m = Mem_PlacementNew(sizeof(E2A870), p);
                 if (m)
-                    func_0032A730(m, first);
+                    GuiSlideShow_Slide_ctor(m, first);
                 v->count++;
             }
         }
     }
 }
-#undef func_0032A730 /* merge_units */
+#undef GuiSlideShow_Slide_ctor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0032A870 */

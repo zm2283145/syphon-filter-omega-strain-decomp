@@ -15,19 +15,19 @@ extern "C" float AnimGroup_IsReady(void* list, int id); /* gsynth: defined below
 #pragma pop
 typedef struct { char pad[0xE0]; float start; float cur; char grp[4]; } S3AC530;
 typedef struct { float a; float b; } R3AC530;
-extern int func_003AC6D0(void);
+extern int cSkaSystem_Request_PlaybackGroupId(void);
 #if 0 /* merge_units */
 extern float AnimGroup_IsReady(void* grp, int x);
 #endif /* merge_units */
 #define AnimGroup_IsReady(a0, a1) (AnimGroup_IsReady((a0), (a1))) /* merge_units */
 
-int func_003AC530(S3AC530* p, R3AC530* r)
+int IsReadyForNextAnim(S3AC530* p, R3AC530* r)
 {
     float d;
     if (p->start != -1.0f) {
         d = p->start - p->cur;
     } else {
-        d = AnimGroup_IsReady(p->grp, func_003AC6D0());
+        d = AnimGroup_IsReady(p->grp, cSkaSystem_Request_PlaybackGroupId());
     }
     return d <= 0.5f * (r->a + r->b);
 }
@@ -43,24 +43,24 @@ static inline void merge_flush_func_003AC530(void) {}
 struct C4Anim3AC { char pad[0x1C]; float x1C; char p20[4]; float x24; char p28[9]; unsigned char complete; };
 struct C4It3AC { void* p; C4It3AC() {} C4It3AC(const C4It3AC& o) : p(o.p) {} };
 extern "C" {
-C4It3AC func_00198B90(void* list);
+C4It3AC cArray_cString_REnd(void* list);
 C4It3AC func_00198B60(void* list);
-bool func_001989E0(C4It3AC* a, C4It3AC* b);
-void func_00198A00(C4It3AC* it);
-C4Anim3AC** func_00198B50(C4It3AC* it);
-bool func_00198A20(C4Anim3AC* a, int id);
+bool opNe_cConstLListIteratorR_cConstLListIteratorR(C4It3AC* a, C4It3AC* b);
+void cConstLListIterator_cSkaPlaybackGroupPtr_opInc(C4It3AC* it);
+C4Anim3AC** cConstLListIterator_cSkaPlaybackGroupPtr_opMul(C4It3AC* it);
+bool cSkaPlaybackGroup_CheckId(C4Anim3AC* a, int id);
 }
 inline float Ready(C4Anim3AC* a) { if (a->complete) return 0.0f; return a->x1C * (1.0f - a->x24); }
 extern "C" float AnimGroup_IsReady(void* list, int id) {
     C4Anim3AC* found = 0;
-    C4It3AC it = func_00198B90(list);
+    C4It3AC it = cArray_cString_REnd(list);
     C4It3AC end = func_00198B60(list);
-    while (func_001989E0(&it, &end)) {
-        if (func_00198A20(*func_00198B50(&it), id)) {
-            found = *func_00198B50(&it);
+    while (opNe_cConstLListIteratorR_cConstLListIteratorR(&it, &end)) {
+        if (cSkaPlaybackGroup_CheckId(*cConstLListIterator_cSkaPlaybackGroupPtr_opMul(&it), id)) {
+            found = *cConstLListIterator_cSkaPlaybackGroupPtr_opMul(&it);
             break;
         }
-        func_00198A00(&it);
+        cConstLListIterator_cSkaPlaybackGroupPtr_opInc(&it);
     }
     return found ? Ready(found) : 0.0f;
 }

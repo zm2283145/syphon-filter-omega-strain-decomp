@@ -1,6 +1,6 @@
 #include "types.h"
 
-/* func_0042BA00: append an 8-byte entry to the first of three fixed queues (80 entries each);
+/* cNellyMoser_nmsAddBlockToBuffer: append an 8-byte entry to the first of three fixed queues (80 entries each);
  * returns the entry size, or 0 when the queue is full. */
 
 typedef struct { int a; int b; } Item;
@@ -18,7 +18,7 @@ static inline void Copy8(void* d, const void* s) { long long t; asm volatile { l
 
 /* keeps the switch on the overwritten argument unfolded (retail: li a0,1 and a 3/2/1 compare chain) */
 #pragma opt_propagation off
-int func_0042BA00(int queue, Item* it)
+int cNellyMoser_nmsAddBlockToBuffer(int queue, Item* it)
 {
     queue = 1;
     switch (queue) {

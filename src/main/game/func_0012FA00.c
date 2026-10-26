@@ -5,14 +5,14 @@ typedef struct Color4 {
 } Color4;
 
 extern char* g_Hud;
-extern void func_003FA190(void*);
+extern void cInfoBar_SetScrollDelay(void*);
 extern void Notify_Insert(void*, void*, Color4*, int, int);
 
 /* Global: SetScrollDelay - resets the HUD scroller and starts it with a white color. */
 void Global_SetScrollDelay(void) {
     char* hud = g_Hud;
     Color4 white;
-    func_003FA190(hud + 0x100);
+    cInfoBar_SetScrollDelay(hud + 0x100);
     white.r = 1.0f;
     white.g = 1.0f;
     white.b = 1.0f;

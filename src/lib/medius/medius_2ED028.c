@@ -13,7 +13,7 @@ extern unsigned int D_0058DF6C;
 extern Ent_D028 D_00590358[];
 extern unsigned int D_00525408[];
 extern void *memcpy(void *, const void *, unsigned int);
-int func_002ED028(int *out, int a, int b, int d, int c, Blk_D028 *info)
+int NetIObjectField(int *out, int a, int b, int d, int c, Blk_D028 *info)
 {
     int n;
     unsigned int cnt;
@@ -53,7 +53,7 @@ typedef struct { int off; int a; int b; int kind; } E2ED168;
 typedef struct { int a; int n; char p[0x20]; E2ED168 *e[(0x228 - 0x28) / 4]; } U2ED168;
 typedef struct { int a; int cnt; char p[0x20]; E2ED168 *objs[64]; int vals[64]; } S2ED168;
 extern U2ED168 D_0058BD18[];
-void func_002ED168(S2ED168 *s, U2ED168 *u, int base)
+void RegisterChildStructure(S2ED168 *s, U2ED168 *u, int base)
 {
     int i;
     E2ED168 *e;
@@ -62,7 +62,7 @@ void func_002ED168(S2ED168 *s, U2ED168 *u, int base)
         e = u->e[i];
         if (s->cnt >= 64) return;
         if (e->kind >= 16) {
-            func_002ED168(s, &D_0058BD18[e->kind], base + e->off);
+            RegisterChildStructure(s, &D_0058BD18[e->kind], base + e->off);
         } else {
             s->vals[s->cnt] = base + e->off;
             s->objs[s->cnt] = e;

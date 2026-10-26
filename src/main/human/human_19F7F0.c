@@ -215,14 +215,14 @@ static inline void merge_flush_func_0019F890(void) {}
 
 /* merge_units: begin func_0019FD60 */
 #pragma push /* merge_units */
-extern void* func_001913D0(void* r);
-extern int func_0019FDE0(void* v);
+extern void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(void* r);
+extern int cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Empty(void* v);
 extern void** PtrVec_Back(void* v);
-extern void func_0019FDF0(void* r, void* c);
+extern void cSkaAnimAnchor_TreeNode_DetachChild(void* r, void* c);
 void Root_ClearChildren(void* r)
 {
-    while (!func_0019FDE0(func_001913D0(r))) {
-        func_0019FDF0(r, *PtrVec_Back(func_001913D0(r)));
+    while (!cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Empty(cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(r))) {
+        cSkaAnimAnchor_TreeNode_DetachChild(r, *PtrVec_Back(cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(r)));
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

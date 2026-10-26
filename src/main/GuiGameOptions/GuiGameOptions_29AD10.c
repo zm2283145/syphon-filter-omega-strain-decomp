@@ -89,7 +89,7 @@ void GuiArrayWidget_Select(Menu_29AE60* m, int a, int sel);
 static inline unsigned char IsLocal_29AE60(Plr_29AE60* p) { unsigned char r = 0; if (p->ctl && p->ctl->IsLocal()) r = 1; return r; }
 static inline int LocalId_29AE60(Plr_29AE60* p) { int id; if (g_IsMultiplayer) { if (IsLocal_29AE60(p)) id = ((p->flags & 0x7F000000) >> 24) - 1; else id = -1; } else id = 0; return id; }
 static inline void SetFlag_29AE60(Wid_29AE60* w, unsigned short bit, unsigned char on) { if (on) w->flags |= bit; else w->flags &= ~bit; }
-extern "C" void func_0029AE60(Self_29AE60* self)
+extern "C" void GuiGameOptions_UpdateKickList(Self_29AE60* self)
 {
     int i;
     Plr_29AE60* p;

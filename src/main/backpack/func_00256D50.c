@@ -14,6 +14,6 @@ int CrateSnapshotList_Append(List* list, int value) {
     return List_InsertBefore(&it[1], list, &it[0], value);
 }
 
-int* func_00256D80(PtrVec* v, int i) {
+int* std_vector_cBackpackPtr_opIndex(PtrVec* v, int i) {
     return v->data + i;
 }

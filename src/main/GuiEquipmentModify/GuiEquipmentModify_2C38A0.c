@@ -13,7 +13,7 @@
 
 /* Copy a range of 60-byte elements backward by assignment. */
 DEFINE_COPY_BACKWARD_ELEMENT(Elem60, 60)
-DEFINE_RANGE_COPY_BACKWARD_ASSIGN(func_002C38A0, Elem60, func_001BECC0)
+DEFINE_RANGE_COPY_BACKWARD_ASSIGN(func_002C38A0, Elem60, cSplinedMotion_Scalar0To1_opAssign)
 #pragma pop /* merge_units */
 /* merge_units: end func_002C38A0 */
 

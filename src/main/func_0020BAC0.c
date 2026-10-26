@@ -2,7 +2,7 @@
 
 #pragma optimization_level 1
 /* Swaps two ints (unit built at -O1). */
-void func_0020BAC0(int* a, int* b)
+void std_swap_cSkaSwitchItemPR_cSkaSwitchItemPR(int* a, int* b)
 {
     int t = *a;
     *a = *b;

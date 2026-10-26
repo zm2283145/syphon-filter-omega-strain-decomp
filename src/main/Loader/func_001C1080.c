@@ -13,7 +13,7 @@ int PtrVec_PushBack_1C1080(PtrVec* v, int value) {
 }
 
 /* Zero-initialise a three-word vector. */
-Rel* func_001C10A0(Rel* r) {
+Rel* std_vector_int_ctor_void(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

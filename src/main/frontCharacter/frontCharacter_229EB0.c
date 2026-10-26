@@ -24,10 +24,10 @@ int Mem_Free();
 
 extern "C" {
 /*fc*/
-int func_001AF7A0(...);                                  
+int cHuman_UnInitStatics(...);                                  
 int Hog_Unload(...);                            
-int func_003B62E0(...);                            
-int func_00404FD0(...);                            
+int cSkaAnimationSet_dtor(...);                            
+int Monster_dtor(...);                            
 extern int D_004F77A0;
 extern unsigned char g_ProfileLockEnabled;
 extern char g_AgentPartCache;
@@ -35,7 +35,7 @@ extern int D_005712F0;
 extern int D_005712F4;
 }
 #pragma opt_common_subs off
-extern "C" void func_00229EB0(char * arg0) {
+extern "C" void CCI_Screen_ScreenCleanup(char * arg0) {
     int temp_s0;
     char * temp_a0;
     char * temp_a0_2;
@@ -43,7 +43,7 @@ extern "C" void func_00229EB0(char * arg0) {
     char * temp_a0_4;
     char * temp_a0_5;
 
-    func_00404FD0(&g_AgentPartCache, -1);
+    Monster_dtor(&g_AgentPartCache, -1);
     D_005712F0 = 0;
     D_005712F4 = 0;
     temp_a0 = (char *)(F_(arg0, 0x4, int));
@@ -74,11 +74,11 @@ extern "C" void func_00229EB0(char * arg0) {
     temp_s0 = D_004F77A0;
     {
         AllocGuard g;
-    func_003B62E0(temp_s0, -1);
+    cSkaAnimationSet_dtor(temp_s0, -1);
     Mem_Free(0, temp_s0, "frontCharacter.cc", 0x8F);
     }
     D_004F77A0 = 0;
-    func_001AF7A0();
+    cHuman_UnInitStatics();
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00229EB0(void) {}
@@ -95,11 +95,11 @@ void FrontEnd_LoadIdleClip(void); /* gsynth: defined below */
 
 extern "C" {
 char * Mem_Alloc(int, int, char *, int);                      
-int func_001C0540(char * );                            
-int func_001C05E0(char * );                            
-int func_001C0720(char * );                            
-int func_001C07C0(char * );                            
-int func_001C0810(char * );                            
+int cAssocArray_cString16N_2_cSkaAnimationBlendPtr_ctor(char * );                            
+int cArray_cSkaNodePtr_ctor(char * );                            
+int cAssocArray_cString16N_3_int_ctor(char * );                            
+int cArray_charPtr_ctor(char * );                            
+int cArray_cString4_ctor(char * );                            
 #if 0 /* merge_units */
 int FrontEnd_LoadIdleClip();
 #endif /* merge_units */
@@ -113,7 +113,7 @@ extern char * D_004F77A0;
 #define D_004F77A0 (*(char **)&D_004F77A0) /* merge_units */
 
 }
-extern "C" void func_0022A040(int arg0, int arg1) {
+extern "C" void CCI_Screen_ScreenInit(int arg0, int arg1) {
     char * temp_s2;
 
     {
@@ -122,11 +122,11 @@ extern "C" void func_0022A040(int arg0, int arg1) {
     }
     if (temp_s2 != NULL) {
         F_(temp_s2, 0x0, int) = 0;
-        func_001C0810(temp_s2 + 4);
-        func_001C07C0(temp_s2 + 0x14);
-        func_001C0720(temp_s2 + 0x24);
-        func_001C05E0(temp_s2 + 0x34);
-        func_001C0540(temp_s2 + 0x44);
+        cArray_cString4_ctor(temp_s2 + 4);
+        cArray_charPtr_ctor(temp_s2 + 0x14);
+        cAssocArray_cString16N_3_int_ctor(temp_s2 + 0x24);
+        cArray_cSkaNodePtr_ctor(temp_s2 + 0x34);
+        cAssocArray_cString16N_2_cSkaAnimationBlendPtr_ctor(temp_s2 + 0x44);
         F_(temp_s2, 0x54, int) = 0;
         F_(temp_s2, 0x58, int) = 0;
     }
@@ -144,9 +144,9 @@ static inline void merge_flush_func_0022A040(void) {}
 /* merge_units: begin func_0022A140 */
 #pragma push /* merge_units */
 extern void Human_InitStatics(void);
-extern int func_0036E140(void* h, const char* name, int arg, int opt);
-extern void func_003B5310(void* a, void* e);
-extern int func_0022A200(void* v, void* value);
+extern int cFileMan_EncodeFilename_charP_cFileIOP_bool(void* h, const char* name, int arg, int opt);
+extern void cSkaAnimationSet_AddAnimation_cFileManR(void* a, void* e);
+extern int cArray_cString4_PushBackActual(void* v, void* value);
 extern char D_004A6340[];
 extern char D_004A6360[];
 #if 0 /* merge_units */
@@ -165,8 +165,8 @@ void FrontEnd_LoadIdleClip(void)
     const char* s;
     Human_InitStatics();
     Resource_Construct(&e);
-    func_0036E140(&e, D_004A6340, 0, 0);
-    func_003B5310(D_004F77A0, &e);
+    cFileMan_EncodeFilename_charP_cFileIOP_bool(&e, D_004A6340, 0, 0);
+    cSkaAnimationSet_AddAnimation_cFileManR(D_004F77A0, &e);
     done = 0;
     for (i = 0, s = D_004A6360; i < 4; i++) {
         char c = *s;
@@ -175,7 +175,7 @@ void FrontEnd_LoadIdleClip(void)
         tag[i] = done ? 0 : c;
         s++;
     }
-    func_0022A200(D_004F77A0 + 4, tag);
+    cArray_cString4_PushBackActual(D_004F77A0 + 4, tag);
     FileMan_Release(&e, -1);
 }
 #undef D_004F77A0 /* merge_units */

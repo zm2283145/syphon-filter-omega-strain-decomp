@@ -6,7 +6,7 @@ void Mem_Free(int pool, void* p, char* file, int line);
 void operator_delete(void* p);
 }
 typedef struct { unsigned char owns; char pad[3]; int len; void* buf; } S_CC0F0;
-extern "C" S_CC0F0* func_003CC0F0(S_CC0F0* self, short flag)
+extern "C" S_CC0F0* cDB_dtor(S_CC0F0* self, short flag)
 {
     if (self) {
         if (self->owns) {

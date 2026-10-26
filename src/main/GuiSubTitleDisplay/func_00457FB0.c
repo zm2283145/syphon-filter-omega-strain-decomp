@@ -8,16 +8,16 @@
 
 extern int GuiWidget_Update(void* self, float dt);
 
-int* func_00457FB0(int* self, int value) {
+int* std_list_deleter_TextAtom_generic_iterator_ctor(int* self, int value) {
     *self = value;
     return self;
 }
 
-void* func_00457FC0(char* self) {
+void* std_list_deleter_TextAtom_tail(char* self) {
     return self + 4;
 }
 
-void* func_00457FD0(void* self) {
+void* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_12(void* self) {
     return self;
 }
 

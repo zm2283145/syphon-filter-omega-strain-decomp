@@ -30,13 +30,13 @@ extern float D_004A0408;
 void* RootCollection_FindByKey(void* coll, void* key);
 void* Root_GetWorldPlacement(void* r);
 V* Placement_GetPosition(void* p);
-void func_00182760(Box* d, Box* s);
+void cBox_ctor_cBoxR(Box* d, Box* s);
 void Box_Union(Box* a, Box* b);
 void ActorPhys_GatherBounds(Phys* self, Box* out);
 }
 static inline void AddXYZ(V* a, const V* b) { __asm__ volatile("lqc2 $vf1, 0x0(%0); lqc2 $vf2, 0x0(%1); vadd.xyz $vf1, $vf1, $vf2; sqc2 $vf1, 0x0(%0)" : : "r"(a), "r"(b) : "memory"); }
 static inline void SubV(V* r, const V* a, const V* b) { __asm__ volatile("lqc2 $vf1, 0x0(%1); lqc2 $vf2, 0x0(%2); vsub.xyzw $vf1, $vf1, $vf2; sqc2 $vf1, 0x0(%0)" : : "r"(r), "r"(a), "r"(b) : "memory"); }
-static inline void UnionInto(Box* o, Box* a, Box* b) { Box r; func_00182760(&r, a); Box_Union(&r, b); func_00182760(o, &r); }
+static inline void UnionInto(Box* o, Box* a, Box* b) { Box r; cBox_ctor_cBoxR(&r, a); Box_Union(&r, b); cBox_ctor_cBoxR(o, &r); }
 static inline V operator-(const V& a, const V& b) { V r; SubV(&r, &a, &b); return r; }
 
 void ActorPhys_GatherBounds(Phys* self, Box* out)

@@ -5,7 +5,7 @@ struct Val_1C4F20 { int a, b, c; int d; };
 extern "C" {
 extern char D_0049F2E0[];
 void String_CopyCtor(void* d, const void* s);
-void func_0013CD40(void* node, void* root);
+void std_red_black_tree_1_balance_insert(void* node, void* root);
 }
 extern "C" TONode* Tree_Insert_1C4F20(TOTree* tree, TONode* parent, int left, int first, const Val_1C4F20* src)
 {
@@ -27,7 +27,7 @@ extern "C" TONode* Tree_Insert_1C4F20(TOTree* tree, TONode* parent, int left, in
     else
         parent->right = node;
     tree->count++;
-    func_0013CD40(node, tree->root);
+    std_red_black_tree_1_balance_insert(node, tree->root);
     if (first)
         tree->leftmost = node;
     return node;

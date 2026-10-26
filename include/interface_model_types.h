@@ -38,7 +38,7 @@ typedef struct FloatVec3 {
     float v[3];
 } FloatVec3;
 
-/* Object constructed by func_003F1C10 (vtable D_004E0800); 0x18 bytes. */
+/* Object constructed by cAnimator_ctor (vtable D_004E0800); 0x18 bytes. */
 typedef struct IfModelItem {
     void* vtable;                   /* 0x00 */
     int unk04;                      /* 0x04 */

@@ -1,6 +1,6 @@
 #include "types.h"
 typedef struct { __int128 a, b, c, d, e, f; } M_62F0;
-M_62F0* func_003C62F0(M_62F0* d, M_62F0* m)
+M_62F0* cRayMatrix_opAssign(M_62F0* d, M_62F0* m)
 {
     __int128 t0, t1;
     t0 = m->a; t1 = m->b;

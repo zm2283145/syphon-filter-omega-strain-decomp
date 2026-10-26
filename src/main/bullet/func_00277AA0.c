@@ -74,8 +74,8 @@ void* Mem_Alloc(int pool, int size, char* file, int line);
 void* Tracer_Create(void* p, int id, Mtx* m, float scale);
 int* SpecFx_GetEffectDef(int id);
 void Vec4_Copy(void* d, const void* s);
-void func_00139BB0(void* d, const void* s);
-void func_00139BA0(void* d, const void* s);
+void cCollisionModel_FaceProperties_opAssign(void* d, const void* s);
+void cCollisionModel_FaceLocator_opAssign(void* d, const void* s);
 void Bullet_InitFromRequest(Bullet* b, Req* r);
 }
 static inline const int& IdOf(Tracked* p) { if (p) return p->serial; int m = -1; return m; }
@@ -109,8 +109,8 @@ void Bullet_InitFromRequest(Bullet* b, Req* r)
     Vec4_Copy(&b->tr.v[2], &r->tr.v[2]);
     Vec4_Copy(&b->tr.v[3], &r->tr.v[3]);
     b->tr.b50 = r->tr.b50;
-    func_00139BB0(&b->tr.s40, &r->tr.s40);
-    func_00139BA0(&b->tr.s60, &r->tr.s60);
+    cCollisionModel_FaceProperties_opAssign(&b->tr.s40, &r->tr.s40);
+    cCollisionModel_FaceLocator_opAssign(&b->tr.s60, &r->tr.s60);
     b->tr.b51 = r->tr.b51;
     b->tr.b52 = r->tr.b52;
     b->hit = *(V*)&r->hit;

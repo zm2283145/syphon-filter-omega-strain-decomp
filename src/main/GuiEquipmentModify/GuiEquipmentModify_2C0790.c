@@ -421,33 +421,33 @@ void Mtx44_SetRotation(M4_1100* m, float a, float b, float c, float d, float e, 
 Model_1100* PlayerSlots_Get(void* a);
 WDef_1100* WeaponDb_Get(void* db, int id);
 int Appearance_GetBodyKind(void* app);
-void func_00391020(Man_1100* m, void* p);
+void cMan_AddDisguise(Man_1100* m, void* p);
 void Skel_Rebind(Model_1100* m, Man_1100* src);
 void Appearance_ReorderParts(Man_1100* m);
 void cVUM_GOBJ_InitModel(Model_1100* m, char* name);
-void func_00290BB0(Word_1100* w, int n);
-void func_00290A50(SVec_1100* v, Word_1100* w, unsigned char f);
+void cArrayCapacity_ctor(Word_1100* w, int n);
+void cArray_cSkeletonBBoxContributionPtr_ctor(SVec_1100* v, Word_1100* w, unsigned char f);
 V4_1100* Vec4_Set(V4_1100* v, float x, float y, float z, float w);
-void func_002909C0(Sph_1100* s, int bone, float r, V4_1100* off);
-void func_002909A0(SVec_1100* v, Sph_1100** p);
-void func_001B06F0(Sph_1100* s, int f);
-void* func_00290990(Model_1100* m);
+void cSkeletonBBoxContribution_ctor(Sph_1100* s, int bone, float r, V4_1100* off);
+void cArray_cSkeletonBBoxContributionPtr_PushBackActual(SVec_1100* v, Sph_1100** p);
+void cSkeletonBBoxContribution_dtor(Sph_1100* s, int f);
+void* cSKM_GOBJ_GetSkeleton_void_2(Model_1100* m);
 void FrontEnd_SetNodeSpheres(void* n, SVec_1100* v);
-void func_001AF880(SVec_1100* v, int f);
-void func_001AF160(It_1100* it, void* tab, char* key);
-void func_001AF150(It_1100* it, void* tab);
-int func_001AF130(It_1100* a, It_1100* b);
-void** func_001AF120(It_1100* it);
+void cArray_cSkeletonBBoxContributionPtr_dtor(SVec_1100* v, int f);
+void cAssocArray_cString_cSkaAnimationSetPtr_Find(It_1100* it, void* tab, char* key);
+void cAssocArray_cString_cSkaAnimationSetPtr_End(It_1100* it, void* tab);
+int cAssocArray_cString_cSkaAnimationSetPtr_Iterator_opNe(It_1100* a, It_1100* b);
+void** cAssocArray_cString_cSkaAnimationSetPtr_Iterator_opMul(It_1100* it);
 void Model_Attach(void* a, void* b);
 void AnimModel_InitAnim(void* a);
 void MotionTokens_Init(Arr7_1100* a);
-void func_0018A8C0(Y_1100* y);
+void cArray_cTimedEvent_ctor_void(Y_1100* y);
 void MotionRequest_Construct(void* mr, Str_1100* s);
-void func_0018A710(Sel_1100* d, Sel_1100* s);
+void cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(Sel_1100* d, Sel_1100* s);
 void func_001BE5A0(Y_1100* y, int f);
 void __destroy_array(void* a, void* dtor, int size, int n);
 void func_0018A210(void* p, int f);
-void func_0018A700(Word_1100* w, int a);
+void cSkaPlaybackGroupId_ctor_int(Word_1100* w, int a);
 void Actor_ResolveMotionSelection(Req_1100* r, int* sel, Word_1100* w, void* m);
 float Model_GetFirstFloat(void* m);
 V4_1100* AnimRate_Init(Rate_1100* r, float f);
@@ -457,13 +457,13 @@ extern "C" {
 void Vec4_Copy_18A350(Rate_1100* d, V4_1100* s);
 void AnimEvent_Construct(Ev_1100* e);
 int MotionRequest_GetMode(Req_1100* r);
-int func_0018A2E0(Req_1100* r);
-float func_0018A2D0(Req_1100* r);
+int cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(Req_1100* r);
+float cSkaRequestStream_AnimationPacket_GetDuration(Req_1100* r);
 float func_0018A2C0(Req_1100* r);
 void AnimCtl_InstallMotion(Anim_1100* a, int sel, int b, Rate_1100* r, Word_1100* w, Ev_1100* e0, Ev_1100* e1, int c, float f0, float f1);
 void AnimEvent_dtor(Ev_1100* e, int f);
 void Model_HardMeshAttachPoints(Man_1100* m);
-void func_0038E030(Man_1100* m);
+void cMan_GetTextureIDs(Man_1100* m);
 void ActorModel_Setup(Man_1100* m, int flag);
 void Skel_ApplyScalePreset(Man_1100* m, int a);
 Self_1100* GuiEquipmentModify_ctor(Self_1100* self);
@@ -493,8 +493,8 @@ static inline Wpn_1100* GetW_1100(Man_1100* m, int o) { return *(Wpn_1100**)((ch
 struct V4R_1100 { float x, y, z, w; V4R_1100(const float& a, const float& b, const float& c, const float& d) { x = a; y = b; z = c; w = d; } V4R_1100(const float& a, const float& b, const float& c) { x = a; y = b; z = c; } } __attribute__((aligned(16)));
 static inline void* Alloc_1100(int n, int line) { AllocGuard g; return Mem_Alloc(0, n, D_004AC5C0, line); }
 
-static inline void SelInit_1100(Sel_1100* s0) { Sel_1100* s = s0; s->b0 = 0; MotionTokens_Init(&s->arr); func_0018A8C0(&s->y); }
-static inline void ReqInit2_1100(Req_1100* r0, Str_1100* str0, Sel_1100* sel) { Str_1100* str = str0; Req_1100* r = r0; r->b0 = 0; MotionRequest_Construct(r->mr, str); r->b48 = 3; func_0018A710(&r->sel, sel); r->f98 = -1.0f; r->f9C = 0; }
+static inline void SelInit_1100(Sel_1100* s0) { Sel_1100* s = s0; s->b0 = 0; MotionTokens_Init(&s->arr); cArray_cTimedEvent_ctor_void(&s->y); }
+static inline void ReqInit2_1100(Req_1100* r0, Str_1100* str0, Sel_1100* sel) { Str_1100* str = str0; Req_1100* r = r0; r->b0 = 0; MotionRequest_Construct(r->mr, str); r->b48 = 3; cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(&r->sel, sel); r->f98 = -1.0f; r->f9C = 0; }
 static inline void Spheres_1100(Model_1100* md)
 {
             Word_1100 w;
@@ -503,37 +503,37 @@ static inline void Spheres_1100(Model_1100* md)
             Sph_1100 arr[12];
             V4_1100 t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11;
             int k;
-            func_00290BB0(&w, 0x15);
-            func_00290A50(&vec, &w, 1);
-            func_002909C0(&arr[0], 0, 0.75f, Splat_1100(&t0, 0.0f));
-            func_002909C0(&arr[1], 4, 0.41666666f, Splat_1100(&t1, 0.0f));
-            func_002909C0(&arr[2], 6, 0.41666666f, Splat_1100(&t2, 0.0f));
-            func_002909C0(&arr[3], 0xC, 0.75f, Splat_1100(&t3, 0.0f));
-            func_002909C0(&arr[4], 0x10, 0.75f, Splat_1100(&t4, 0.0f));
-            func_002909C0(&arr[5], 0xE, 1.0f, Splat_1100(&t5, 0.0f));
-            func_002909C0(&arr[6], 0xD, 0.33333334f, Splat_1100(&t6, 0.0f));
-            func_002909C0(&arr[7], 0xF, 0.33333334f, Splat_1100(&t7, 0.0f));
-            func_002909C0(&arr[8], 0x11, 0.33333334f, Splat_1100(&t8, 0.0f));
-            func_002909C0(&arr[9], 0x12, 0.33333334f, Splat_1100(&t9, 0.0f));
-            func_002909C0(&arr[10], 0x13, 0.6666667f, Splat_1100(&t10, 0.0f));
-            func_002909C0(&arr[11], 0x14, 0.6666667f, Splat_1100(&t11, 0.0f));
+            cArrayCapacity_ctor(&w, 0x15);
+            cArray_cSkeletonBBoxContributionPtr_ctor(&vec, &w, 1);
+            cSkeletonBBoxContribution_ctor(&arr[0], 0, 0.75f, Splat_1100(&t0, 0.0f));
+            cSkeletonBBoxContribution_ctor(&arr[1], 4, 0.41666666f, Splat_1100(&t1, 0.0f));
+            cSkeletonBBoxContribution_ctor(&arr[2], 6, 0.41666666f, Splat_1100(&t2, 0.0f));
+            cSkeletonBBoxContribution_ctor(&arr[3], 0xC, 0.75f, Splat_1100(&t3, 0.0f));
+            cSkeletonBBoxContribution_ctor(&arr[4], 0x10, 0.75f, Splat_1100(&t4, 0.0f));
+            cSkeletonBBoxContribution_ctor(&arr[5], 0xE, 1.0f, Splat_1100(&t5, 0.0f));
+            cSkeletonBBoxContribution_ctor(&arr[6], 0xD, 0.33333334f, Splat_1100(&t6, 0.0f));
+            cSkeletonBBoxContribution_ctor(&arr[7], 0xF, 0.33333334f, Splat_1100(&t7, 0.0f));
+            cSkeletonBBoxContribution_ctor(&arr[8], 0x11, 0.33333334f, Splat_1100(&t8, 0.0f));
+            cSkeletonBBoxContribution_ctor(&arr[9], 0x12, 0.33333334f, Splat_1100(&t9, 0.0f));
+            cSkeletonBBoxContribution_ctor(&arr[10], 0x13, 0.6666667f, Splat_1100(&t10, 0.0f));
+            cSkeletonBBoxContribution_ctor(&arr[11], 0x14, 0.6666667f, Splat_1100(&t11, 0.0f));
             for (k = 0; k < 12; k++) {
-Sph_1100* sp; Sph_1100** pp = &sp; sp = &arr[k]; func_002909A0(&vec, pp);
+Sph_1100* sp; Sph_1100** pp = &sp; sp = &arr[k]; cArray_cSkeletonBBoxContributionPtr_PushBackActual(&vec, pp);
             }
-            func_001B06F0(&arr[11], -1);
-            func_001B06F0(&arr[10], -1);
-            func_001B06F0(&arr[9], -1);
-            func_001B06F0(&arr[8], -1);
-            func_001B06F0(&arr[7], -1);
-            func_001B06F0(&arr[6], -1);
-            func_001B06F0(&arr[5], -1);
-            func_001B06F0(&arr[4], -1);
-            func_001B06F0(&arr[3], -1);
-            func_001B06F0(&arr[2], -1);
-            func_001B06F0(&arr[1], -1);
-            func_001B06F0(&arr[0], -1);
-            FrontEnd_SetNodeSpheres(func_00290990(md), &vec);
-            func_001AF880(&vec, -1);
+            cSkeletonBBoxContribution_dtor(&arr[11], -1);
+            cSkeletonBBoxContribution_dtor(&arr[10], -1);
+            cSkeletonBBoxContribution_dtor(&arr[9], -1);
+            cSkeletonBBoxContribution_dtor(&arr[8], -1);
+            cSkeletonBBoxContribution_dtor(&arr[7], -1);
+            cSkeletonBBoxContribution_dtor(&arr[6], -1);
+            cSkeletonBBoxContribution_dtor(&arr[5], -1);
+            cSkeletonBBoxContribution_dtor(&arr[4], -1);
+            cSkeletonBBoxContribution_dtor(&arr[3], -1);
+            cSkeletonBBoxContribution_dtor(&arr[2], -1);
+            cSkeletonBBoxContribution_dtor(&arr[1], -1);
+            cSkeletonBBoxContribution_dtor(&arr[0], -1);
+            FrontEnd_SetNodeSpheres(cSKM_GOBJ_GetSkeleton_void_2(md), &vec);
+            cArray_cSkeletonBBoxContributionPtr_dtor(&vec, -1);
             }
 }
 static inline void Install_1100(Anim_1100* an, int* selp, Req_1100* rq, Word_1100* wp)
@@ -549,7 +549,7 @@ static inline void Install_1100(Anim_1100* an, int* selp, Req_1100* rq, Word_110
                 an->b5 = 0;
                 AnimEvent_Construct(&e0);
                 AnimEvent_Construct(&e1);
-                AnimCtl_InstallMotion(an, *selp, MotionRequest_GetMode(rq), &rate, wp, &e0, &e1, func_0018A2E0(rq), func_0018A2D0(rq), func_0018A2C0(rq));
+                AnimCtl_InstallMotion(an, *selp, MotionRequest_GetMode(rq), &rate, wp, &e0, &e1, cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(rq), cSkaRequestStream_AnimationPacket_GetDuration(rq), func_0018A2C0(rq));
                 AnimEvent_dtor(&e1, -1);
                 AnimEvent_dtor(&e0, -1);
 }
@@ -560,9 +560,9 @@ static inline void FindAnim_1100(Self_1100* self, int kind)
             void* a;
             char* nm;
             if (kind == 1) nm = D_004AC298; else { nm = D_004AC288; asm { .set reorder } }
-            func_001AF160(&it, D_004FFBC0, nm);
-            func_001AF150(&end, D_004FFBC0);
-            if (func_001AF130(&it, &end)) a = *func_001AF120(&it);
+            cAssocArray_cString_cSkaAnimationSetPtr_Find(&it, D_004FFBC0, nm);
+            cAssocArray_cString_cSkaAnimationSetPtr_End(&end, D_004FFBC0);
+            if (cAssocArray_cString_cSkaAnimationSetPtr_Iterator_opNe(&it, &end)) a = *cAssocArray_cString_cSkaAnimationSetPtr_Iterator_opMul(&it);
             else { a = 0; asm { .set reorder } }
             {
                 void** an = (void**)((char*)self->model + 0x2EC0);
@@ -578,7 +578,7 @@ static inline void Motion_1100(Model_1100* md, Req_1100* rq)
             Anim_1100* an = (Anim_1100*)(c + 0x34);
             int sel;
             Word_1100 w[3];
-            func_0018A700(w, -1);
+            cSkaPlaybackGroupId_ctor_int(w, -1);
             Actor_ResolveMotionSelection(rq, &sel, w, an->f0);
             if (sel) {
                 Install_1100(an, &sel, rq, w);
@@ -615,14 +615,14 @@ static inline void F_1100(Self_1100* self, M4_1100* mtx, Req_1100* req)
             }
             if (!g_IsMultiplayer && D_0055DE94) {
                 void* a = D_0055DE98[Appearance_GetBodyKind(APP_1100(MAN(self->plr)))].p;
-                if (a) func_00391020(MAN(self->plr), a);
+                if (a) cMan_AddDisguise(MAN(self->plr), a);
             }
             Skel_Rebind(self->model, MAN(self->plr));
         } else {
             { int n = 0x44; int i = D_00493A60; Model_1100* m = self->model; QCopy_1100(APP_1100(MAN(m)), &D_0055D510[i], n); }
             if (!g_IsMultiplayer && D_0055DE94) {
                 void* a = D_0055DE98[Appearance_GetBodyKind(APP_1100(MAN(self->model)))].p;
-                if (a) func_00391020(MAN(self->model), a);
+                if (a) cMan_AddDisguise(MAN(self->model), a);
             }
         }
         self->f100 = self->fFC;
@@ -742,7 +742,7 @@ extern "C" Self_1100* GuiEquipmentModify_ctor(Self_1100* p0)
             self->model = p;
         }
         F_1100(self, &mtx, &req);
-    func_0038E030(MAN(self->model));
+    cMan_GetTextureIDs(MAN(self->model));
     SetI_1100(self->model, 1);
     ActorModel_Setup(MAN(self->model), 1);
     Skel_ApplyScalePreset(MAN(self->model), -1);

@@ -7,6 +7,6 @@
 #include "xlib_types.h"
 
 /* Set flag unkA78. */
-void func_0037E310(XlibObj* self) {
+void XLib_Restore(XlibObj* self) {
     self->unkA78 = 1;
 }

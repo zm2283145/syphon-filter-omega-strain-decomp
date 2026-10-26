@@ -20,7 +20,7 @@ extern int GuiCommandCenter_OpenPanel(GuiCommandCenter* self, int arg);
 extern void GuiCommandCenter_Reset(GuiCommandCenter* self);
 extern int GuiCommandCenter_Select(GuiCommandCenter* self, int selection, int arg);
 extern int GuiCommandCenter_GetDefaultSlot(GuiCommandCenter* self);
-extern void func_00298310(void);
+extern void GuiCommandCenter_ClearStaticGuiState(void);
 extern void GuiCommandCenter_RestoreSelection(GuiCommandCenter* self);
 
 /* Refreshes the screen, picking a default selection when none is set. */
@@ -36,7 +36,7 @@ int GuiCommandCenter_RestoreState(GuiCommandCenter* self) {
 
 /* Resets the selection state and the shared globals. */
 void GuiCommandCenter_ClearState(GuiCommandCenter* self) {
-    func_00298310();
+    GuiCommandCenter_ClearStaticGuiState();
     self->selection = -1;
     self->unk2D0 = 0;
     self->unk2D4 = 0;
@@ -47,7 +47,7 @@ void GuiCommandCenter_ClearState(GuiCommandCenter* self) {
 }
 
 /* Clears the shared text buffers and index. */
-void func_00298310(void) {
+void GuiCommandCenter_ClearStaticGuiState(void) {
     D_0048B7A0 = 0;
     D_0048B7A8[0] = 0;
     D_0048B7A4 = -1;

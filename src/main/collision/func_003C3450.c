@@ -38,11 +38,11 @@ struct ATri {
 extern "C" {
 unsigned char ColQuery_ExecuteMoving(CQ* q, int a, int b);
 unsigned char ColQuery_ExecuteStatic(CQ* q, int a, int b);
-void func_0013B0D0(void* p);
-void func_0013B0C0(void* p);
+void cCollisionModel_FaceProperties_ctor(void* p);
+void cCollisionModel_FaceLocator_ctor(void* p);
 void Col_ReconstructSourceTriangle(ATri* t, V* src);
 }
-inline ATri::ATri(V* src) { ATri* p = this; PV* it = p->v; do { Ptr_Identity(it); it++; } while (it != p->v + 3); Ptr_Identity(&p->n); func_0013B0D0(p->x40); func_0013B0C0(p->x60); Col_ReconstructSourceTriangle(p, src); }
+inline ATri::ATri(V* src) { ATri* p = this; PV* it = p->v; do { Ptr_Identity(it); it++; } while (it != p->v + 3); Ptr_Identity(&p->n); cCollisionModel_FaceProperties_ctor(p->x40); cCollisionModel_FaceLocator_ctor(p->x60); Col_ReconstructSourceTriangle(p, src); }
 extern "C" unsigned char ColQuery_Execute(CQ* q, int a, int b)
 {
     unsigned char hit;

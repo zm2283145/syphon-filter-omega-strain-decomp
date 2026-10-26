@@ -12,8 +12,8 @@
 #pragma mpwc_relax on
 int Service_Lookup(char *, char *);                       
 int SoundMgr_UnloadLevel(int);                               
-int func_002B4E50();                                  
-int func_002B4FA8(int);                               
+int sceMc2End();                                  
+int sceMc2DeleteSocket(int);                               
 int Renderer_Teardown(char *);                               
 extern char D_004F2CC0;
 extern char g_Game;
@@ -21,7 +21,7 @@ extern char g_Video;
 extern int *g_MemCard;
 
 
-void func_0029EC50(void) {
+void ShutdownForLaunchExec(void) {
     int temp_v0;
     int var_a0;
 
@@ -32,9 +32,9 @@ void func_0029EC50(void) {
     }
     var_a0 = g_MemCard ? *g_MemCard : -1;
     if (var_a0 != -1) {
-        func_002B4FA8(var_a0);
+        sceMc2DeleteSocket(var_a0);
     }
-    func_002B4E50();
+    sceMc2End();
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0029EC50 */

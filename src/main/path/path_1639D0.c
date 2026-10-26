@@ -34,7 +34,7 @@ static inline void MemberDtor_3A3210(Member_3A3210* m)
     }
 }
 
-extern "C" Obj_3A3210* func_001639D0(Obj_3A3210* self, short deleteFlag)
+extern "C" Obj_3A3210* cInsertList_cNodeIndex_dtor(Obj_3A3210* self, short deleteFlag)
 {
     if (self) {
         self->vtable = D_004D9740;
@@ -56,7 +56,7 @@ static inline void merge_flush_func_001639D0(void) {}
 #include "vtable_chain_dtor.h"
 
 /* Deleting destructor: restore the vtable chain, optionally delete. */
-DEFINE_VTABLE_CHAIN_DTOR2(func_00163A70, D_004D9730, D_004D9720)
+DEFINE_VTABLE_CHAIN_DTOR2(cInsertList_cNodeIndex_cStartNode_dtor, D_004D9730, D_004D9720)
 #pragma pop /* merge_units */
 /* merge_units: end func_00163A70 */
 
@@ -134,9 +134,9 @@ struct CxRelIt{CxRelLink*link;};
 struct CxRelTag{};
 struct CxRelPredicate{CxRelTag tag;CxRelReq**req;CxRelPredicate(const CxRelTag&t,CxRelReq**p):tag(t),req(p){} };
 extern "C" {
-void func_0015F770(CxRelIt*,CxRelList*);
-void func_0015F760(CxRelIt*,CxRelIt*);
-void func_0015F750(CxRelIt*,CxRelList*);
+void std_list_cPathSystemRequestPtr_begin_void(CxRelIt*,CxRelList*);
+void cLListIterator_cPathSystemRequestPtr_ctor(CxRelIt*,CxRelIt*);
+void std_list_cPathSystemRequestPtr_end_void(CxRelIt*,CxRelList*);
 #if 0 /* merge_units */
 void NpcRouteMgr_FreeRequest(CxRelManager*,CxRelReq*);
 #endif /* merge_units */
@@ -145,11 +145,11 @@ void NpcRouteMgr_FreeRequest(CxRelManager*,CxRelReq*);
 void ActiveList_EraseMatching(CxRelList*,CxRelPredicate);
 }
 static inline CxRelActor* CxRel_Get(CxRelReq* req){bool isNull;bool ok;CxRelActor* actor;actor=req->actor;isNull=!actor;ok=true;if(!isNull)if(actor->serial!=req->serial)ok=false;return ok ? actor:0;}
-static inline void CxRel_First0(CxRelIt*out,CxRelList*l){CxRelIt tmp;func_0015F770(&tmp,l);func_0015F760(out,&tmp);}
+static inline void CxRel_First0(CxRelIt*out,CxRelList*l){CxRelIt tmp;std_list_cPathSystemRequestPtr_begin_void(&tmp,l);cLListIterator_cPathSystemRequestPtr_ctor(out,&tmp);}
 static inline void CxRel_First00(CxRelIt*out,CxRelList*l){CxRel_First0(out,l);}
 static inline CxRelLink* CxRel_First(CxRelList*l){CxRelIt out;CxRel_First00(&out,l);return out.link;}
 static inline CxRelIt CxRel_Begin(CxRelList*l){CxRelIt out;CxRelIt converted;CxRel_First00(&converted,l);out.link=converted.link;return out;}
-static inline void CxRel_End0(CxRelIt*out,CxRelList*l){CxRelIt tmp;func_0015F750(&tmp,l);func_0015F760(out,&tmp);}
+static inline void CxRel_End0(CxRelIt*out,CxRelList*l){CxRelIt tmp;std_list_cPathSystemRequestPtr_end_void(&tmp,l);cLListIterator_cPathSystemRequestPtr_ctor(out,&tmp);}
 static inline void CxRel_End00(CxRelIt*out,CxRelList*l){CxRel_End0(out,l);}
 static inline CxRelLink* CxRel_End(CxRelList*l){CxRelIt out;CxRel_End00(&out,l);return out.link;}
 static inline void CxRel_Erase(CxRelList*l,const CxRelTag& tag,CxRelReq**req){CxRelPredicate p(tag,req);ActiveList_EraseMatching(l,p);}
@@ -189,13 +189,13 @@ struct CxIqLink {CxIqLink* next;CxIqLink* prev;CxIqReq* req;};
 struct CxIqList {int count;void* unused;CxIqLink* head;};
 struct CxIqManager {char pad[0x20];CxIqList queue;};
 struct CxIqIt { CxIqLink* link;CxIqReq* Req(){return link->req;} };
-extern "C" void func_00163FA0(CxIqIt*,CxIqList*);
-extern "C" void func_00163F90(CxIqIt*,CxIqIt*);
-extern "C" void func_00163F60(CxIqIt*,CxIqList*);
+extern "C" void std_list_cPathSystemRequestPtr_begin_void_2(CxIqIt*,CxIqList*);
+extern "C" void cConstLListIterator_cPathSystemRequestPtr_ctor(CxIqIt*,CxIqIt*);
+extern "C" void std_list_cPathSystemRequestPtr_end_void_2(CxIqIt*,CxIqList*);
 static inline CxIqActor* CxIq_Get(CxIqReq* req){bool isNull;bool ok;CxIqActor* actor;actor=req->actor;isNull=!actor;ok=true;if(!isNull)if(actor->serial!=req->serial)ok=false;return ok ? actor:0;}
-static inline void CxIq_Begin0(CxIqIt*out,CxIqList*l){CxIqIt temp;func_00163FA0(&temp,l);func_00163F90(out,&temp);}
+static inline void CxIq_Begin0(CxIqIt*out,CxIqList*l){CxIqIt temp;std_list_cPathSystemRequestPtr_begin_void_2(&temp,l);cConstLListIterator_cPathSystemRequestPtr_ctor(out,&temp);}
 static inline CxIqIt CxIq_Begin(CxIqList* l){CxIqIt converted;CxIq_Begin0(&converted,l);return converted;}
-static inline void CxIq_End0(CxIqIt*out,CxIqList*l){CxIqIt temp;func_00163F60(&temp,l);func_00163F90(out,&temp);}
+static inline void CxIq_End0(CxIqIt*out,CxIqList*l){CxIqIt temp;std_list_cPathSystemRequestPtr_end_void_2(&temp,l);cConstLListIterator_cPathSystemRequestPtr_ctor(out,&temp);}
 static inline CxIqLink* CxIq_End(CxIqList*l){CxIqIt out;CxIq_End0(&out,l);return out.link;}
 extern "C" CxIqReq* NpcRoute_IsQueued(CxIqManager* self,CxIqActor* actor,int mask){
     CxIqReq* result=0;

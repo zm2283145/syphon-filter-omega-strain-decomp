@@ -9,19 +9,19 @@
 extern int Gs_MakeTex1(TexEntry*);
 
 /* Address of the entry's embedded sub-object. */
-void* func_00379700(TexEntry* self) {
+void* cTexture_GetTEX0_1(TexEntry* self) {
     return self->body;
 }
 
-int func_00379710(TexEntry* self) {
+int cTexture_GetPSM(TexEntry* self) {
     return self->info->unk0A;
 }
 
-int func_00379720(TexEntry* self) {
+int cTexture_GetHeight(TexEntry* self) {
     return self->info->unk06;
 }
 
-int func_00379730(TexEntry* self) {
+int cTexture_GetWidth(TexEntry* self) {
     return self->info->unk04;
 }
 
@@ -29,7 +29,7 @@ TexEntry* Tex_GetRecord(TexRegistry* reg, int index) {
     return reg->entries[index];
 }
 
-Words4* func_00379760(Words4* self, int a, int b, int c, int d) {
+Words4* tIRGBA_ctor(Words4* self, int a, int b, int c, int d) {
     self->a = a;
     self->b = b;
     self->c = c;
@@ -37,17 +37,17 @@ Words4* func_00379760(Words4* self, int a, int b, int c, int d) {
     return self;
 }
 
-void func_00379780(void) {
+void cDmaMan_EndChain_int(void) {
 }
 
-int func_00379790(TexRegistry* reg, int index) {
+int cTexMan_GetTEX1_1(TexRegistry* reg, int index) {
     return Gs_MakeTex1(reg->entries[index]);
 }
 
-void* func_003797B0(TexRegistry* reg, int index) {
+void* cTexMan_GetTEX0_1(TexRegistry* reg, int index) {
     return reg->entries[index]->body;
 }
 
-int func_003797D0(Manager37F9D0* self) {
+int XLib_GetTexMan(Manager37F9D0* self) {
     return self->unk1058;
 }

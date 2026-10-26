@@ -61,7 +61,7 @@ int cHotbox_v04(void) {
 #include "buf_holder_dtor.h"
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR(func_001736C0)
+DEFINE_BUF_HOLDER_DTOR(std_vector_cHotboxPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_001736C0 */
 
@@ -71,6 +71,6 @@ DEFINE_BUF_HOLDER_DTOR(func_001736C0)
 #include "base_dtor_chain.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_001737B0, func_00173810)
+DEFINE_BASE_DTOR_CHAIN(cArray_cHotboxPtr_dtor, std_vector_imp_cHotboxPtr_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_001737B0 */

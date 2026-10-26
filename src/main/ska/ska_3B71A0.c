@@ -23,7 +23,7 @@ int Mem_Free();
 #pragma cplusplus on
 
 /* String substring constructor. */
-DEFINE_SHORT_STRING_SUBSTR_CTOR(func_003B71A0)
+DEFINE_SHORT_STRING_SUBSTR_CTOR(std_basic_string_char_char_traits_char_ctor_basicstringR_uint_uint_cAllocatorR)
 #pragma pop /* merge_units */
 /* merge_units: end func_003B71A0 */
 
@@ -43,8 +43,8 @@ extern char D_004A6460[];
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 void Libc_Abort(void);
 void Libc_Fprintf(void* s, char* msg);
-void func_0022A770(Vec_3B7270* a, Vec_3B7270* b);
-void func_001C4F10(Vec_3B7270* a);
+void std_swap_vectordeleterR_vectordeleterR_18(Vec_3B7270* a, Vec_3B7270* b);
+void std_vector_deleter_cString4_clear(Vec_3B7270* a);
 }
 
 static inline E_3B7270* Alloc_3B7270(unsigned int n) { AllocGuard g; return (E_3B7270*)Mem_Alloc(0, n * sizeof(E_3B7270), D_004A6460, 0x5C); }
@@ -74,8 +74,8 @@ extern "C" void AnchorKeys_Reserve(Vec_3B7270* v0, unsigned int n0)
                 new (d) E_3B7270(*s);
                 tmp.count++;
             }
-            func_0022A770(&tmp, v);
-            func_001C4F10(&tmp);
+            std_swap_vectordeleterR_vectordeleterR_18(&tmp, v);
+            std_vector_deleter_cString4_clear(&tmp);
             {
                 E_3B7270* p = tmp.data;
                 if (p) { if (p) { AllocGuard g; Mem_Free(0, p, D_0049F388, 0x64); } }

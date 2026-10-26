@@ -31,7 +31,7 @@ extern void* g_TextureMgr;
 extern int Tdx_Relocate(void* tdx, int data, int* extra);
 extern void Tex_BuildGsRegisters(void* out, void* out2, int data, int extra);
 
-void func_003809E0(Tex_3809E0* t, void* out)
+void StreamedTextureCallback(Tex_3809E0* t, void* out)
 {
     int extra = 0;
     int d = t->altData ? t->altData : t->data;
@@ -79,10 +79,10 @@ typedef struct A40File {
 extern char D_004BC2C8[];
 extern int String_CompareNoCase(const char*, const char*);
 extern int TexMan_LoadNewTexture(A40Mgr* o, A40File* f, char* name);
-extern int func_00380C90(A40It* a, A40It* b);
-extern void func_00380CB0(A40It* out, void* list);
-extern void func_00380CC0(A40It* out, A40It* it, int n);
-extern void func_00380CE0(A40It* out, void* list, A40It* it);
+extern int opNe_cLListIteratorR_cLListIteratorR_7(A40It* a, A40It* b);
+extern void cLList_int_End(A40It* out, void* list);
+extern void cLListIterator_int_opInc(A40It* out, A40It* it, int n);
+extern void cLList_int_Erase(A40It* out, void* list, A40It* it);
 extern int* func_00380D20(A40It* it);
 extern void func_00380D30(A40It* out, void* list);
 
@@ -121,12 +121,12 @@ int TexMan_FindOrLoad(A40Mgr* o, A40File* f) {
     if (idx >= 0) {
         if (o->tex[idx]->refCount == 0) {
             func_00380D30(&it, o->list);
-            for (func_00380CB0(&e, o->list); func_00380C90(&it, &e); func_00380CB0(&e, o->list)) {
+            for (cLList_int_End(&e, o->list); opNe_cLListIteratorR_cLListIteratorR_7(&it, &e); cLList_int_End(&e, o->list)) {
                 if (idx == *func_00380D20(&it)) {
-                    func_00380CE0(&r, o->list, &it);
+                    cLList_int_Erase(&r, o->list, &it);
                     break;
                 }
-                func_00380CC0(&t, &it, 0);
+                cLListIterator_int_opInc(&t, &it, 0);
             }
         }
         o->tex[idx]->refCount++;

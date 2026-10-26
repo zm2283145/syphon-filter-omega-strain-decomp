@@ -8,7 +8,7 @@
 
 extern int String_CopyCtor(int, int);
 
-int func_00207310(int a0, int a1) {
+int cString_ctor_cStringR(int a0, int a1) {
     String_CopyCtor(a0, a1);
     return a0;
 }

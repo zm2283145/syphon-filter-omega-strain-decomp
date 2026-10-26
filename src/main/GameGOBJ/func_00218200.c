@@ -55,10 +55,10 @@ extern char g_TeleportMsgClass[];
 extern char D_004D9360[];
 void* Mtx_GetIdentity();
 void* Mtx_SetRotationTranslation(void* d, void* r, void* t);
-V func_0015A400(const V& v);
-int* func_00172990(PtrVec* v, int i);
+V cVector_Copy_WSet0(const V& v);
+int* std_vector_cGOBJPtr_opIndex(PtrVec* v, int i);
 void func_002186A0(PHVec* v);
-PHandle* func_002186B0(PHandle* d, PHandle* s);
+PHandle* cSafePtr_cGOBJ_opAssign_cSafePtrR(PHandle* d, PHandle* s);
 PHandle* func_002186D0(PHVec* v, int i);
 int func_002186E0(PHVec* v);
 void PathObj_PropagateMovement(PathObj* self, M m, int msg);
@@ -67,7 +67,7 @@ static inline int IsNullNV(void* p) { return (p != 0) ^ 1; }
 static inline int EqNV(int a, int b) { return (unsigned)(a ^ b) < 1; }
 static inline PMover* WGet(PHandle* h) { bool ok = 1; if (!IsNullNV(h->object) && !EqNV(h->object->id, h->id)) ok = 0; unsigned char k = ok; return k ? h->object : 0; }
 static inline void SetRT(void* d, void* r, const V& t) { Mtx_SetRotationTranslation(d, r, (void*)&t); }
-static inline void SetPose(void* d, void* r, const V& p) { SetRT(d, r, func_0015A400(p)); }
+static inline void SetPose(void* d, void* r, const V& p) { SetRT(d, r, cVector_Copy_WSet0(p)); }
 static inline int** KData(PtrVec* v) { return &v->data; }
 static inline void* KidAt(PtrVec* v, int i) { return (void*)(*KData(v))[i]; }
 static inline void SetPose1(void* d, void* r, const V& p) { SetPose(d, r, p); }
@@ -76,7 +76,7 @@ static inline void Erase(PHVec* v, int i)
     int n = func_002186E0(v);
     if (i >= 0 && i < n) {
         for (int j = i + 1; j < n; j++)
-            func_002186B0(func_002186D0(v, j - 1), func_002186D0(v, j));
+            cSafePtr_cGOBJ_opAssign_cSafePtrR(func_002186D0(v, j - 1), func_002186D0(v, j));
         func_002186A0(v);
     }
 }
@@ -111,7 +111,7 @@ void PathObj_PropagateMovement(PathObj* self, M m, int msg)
         }
     }
     for (i = 0; i < self->nKids; i++) {
-        PSrc* s = ((PKid*)*func_00172990(&self->kidv, i))->src;
+        PSrc* s = ((PKid*)*std_vector_cGOBJPtr_opIndex(&self->kidv, i))->src;
         M x;
         CopyM(&x, s->Xform());
         M w = MMul(m, x);

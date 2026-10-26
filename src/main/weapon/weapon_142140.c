@@ -11,7 +11,7 @@
 #pragma push /* merge_units */
 extern void HeldItem_Reset(int);
 
-void func_00142140(int a0) {
+void cWeapon_SetAmmoPlayerDeath(int a0) {
     int cond;
 
     a0 = *(int*)(char*)a0;

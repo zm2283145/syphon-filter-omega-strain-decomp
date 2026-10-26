@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046DA40(void) {
+int MediusUniqueCallbackChatToggleRequestHandler(void) {
     return 44;
 }

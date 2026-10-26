@@ -39,7 +39,7 @@ extern void GuiStack_SwapScreens(void*, void*, Item*);
 #define GuiStack_SwapScreens(a0, a1, a2) (GuiStack_SwapScreens((a0), (a1), (int)(a2))) /* merge_units */
 
 /* Resets the game flag, creates a UI item and adds it with the given argument. */
-void func_002A0440(void* arg)
+void GuiOnlineOfflineSelect_LaunchOffline(void* arg)
 {
     Item* item;
     FrontEnd_SetOnlineMode(D_004FFC04, 0);
@@ -81,7 +81,7 @@ extern void GuiStack_SwapScreens(void* target, void* self, void* handle);
 
 
 /* Resets HUD state and registers self with a handle created from the two names. */
-void func_002A04C0(void* self)
+void GuiOnlineOfflineSelect_LaunchOnline(void* self)
 {
     void* handle;
     D_00532FE8 = 0;
@@ -112,7 +112,7 @@ extern void GuiStack_SwapScreens(void* mgr, void* self, Widget* w);
 
 
 /* Creates a widget from two names, flags it and registers it for self. */
-void func_002A0540(void* self)
+void GuiOnlineOfflineSelect_LaunchLAN(void* self)
 {
     Widget* w = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AAEB0, D_004AAEC8);
     w->flag = 1;

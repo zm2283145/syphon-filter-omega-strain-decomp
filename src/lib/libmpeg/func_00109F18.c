@@ -10,9 +10,9 @@ typedef struct {
     int size;
 } BitStream9f18;
 
-extern void func_00109F70(BitStream9f18 *s, int n);
+extern void _sysbitFlush(BitStream9f18 *s, int n);
 
-void func_00109F18(BitStream9f18 *s, unsigned char *p, unsigned char *start, int size)
+void _sysbitInit(BitStream9f18 *s, unsigned char *p, unsigned char *start, int size)
 {
     s->base = p;
     s->ptr = p;
@@ -22,5 +22,5 @@ void func_00109F18(BitStream9f18 *s, unsigned char *p, unsigned char *start, int
     s->start = start;
     s->end = start + size;
     s->size = size;
-    func_00109F70(s, 0);
+    _sysbitFlush(s, 0);
 }

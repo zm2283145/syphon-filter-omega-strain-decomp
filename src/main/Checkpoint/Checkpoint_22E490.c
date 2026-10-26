@@ -31,9 +31,9 @@ extern void Event_Construct(Evt0022E4F0* e, void* type);
 extern void MsgQueue_QueueClone(Evt0022E4F0* e, void* obj, int a, int b);
 extern void cMessage_dtor(Evt0022E4F0* e, int f);
 extern char D_0055C7A0[];
-extern void func_001BB080(Node0022E4F0** out, void* map, int* key);
-extern void func_0021D360(void* out, void* map);
-extern void func_0021D350(Node0022E4F0** out, void* in);
+extern void std_tree_pair_int_value_compare_find_intR(Node0022E4F0** out, void* map, int* key);
+extern void std_map_int_netSystemField_end(void* out, void* map);
+extern void cAssocArray_int_netSystemField_Iterator_ctor(Node0022E4F0** out, void* in);
 extern char D_004DB8B0[];
 extern char g_NotifyCheckpointMsgClass[];
 extern unsigned char D_005721D0;
@@ -55,10 +55,10 @@ extern "C" int cNotifyCheckpointMsg_NetReceive(int a0, int a1, int a2, Arg0022E4
         Event_Construct(&e, g_NotifyCheckpointMsgClass);
         e.vt = D_004DB8B0;
         k[0] = a->a4;
-        func_001BB080(it, D_0055C7A0, k);
+        std_tree_pair_int_value_compare_find_intR(it, D_0055C7A0, k);
         n = it[0];
-        func_0021D360(tmp, D_0055C7A0);
-        func_0021D350(end, tmp);
+        std_map_int_netSystemField_end(tmp, D_0055C7A0);
+        cAssocArray_int_netSystemField_Iterator_ctor(end, tmp);
         if (Eq0022E4F0(n, end[0]) ^ 1) MsgQueue_QueueClone(&e, n->val, 0, 0);
         e.vt = D_004DB8B0;
         cMessage_dtor(&e, 0);
@@ -74,9 +74,9 @@ static inline void merge_flush_func_0022E4F0(void) {}
 /* merge_units: begin func_0022E5E0 */
 #pragma push /* merge_units */
 typedef struct { int a; char name[0x40]; } Proto0022E5E0;
-extern int func_002E9A10(void* reg);
+extern int NetRegisterMessageStart(void* reg);
 extern int Event_UnpackHeader(void* d);
-extern int func_002E9A98(void* d, void* field, int size, int count);
+extern int NetMessageField(void* d, void* field, int size, int count);
 extern int NetMsg_RegisterType(void* type, int version, void* factory);
 extern char D_004F7948[];
 extern void cAddCheckpointMsg_NetReceive(void);
@@ -84,9 +84,9 @@ unsigned char cAddCheckpointMsg_NetRegister(void* reg)
 {
     struct { long long file; Proto0022E5E0 p; } L;
     unsigned char ok = 0;
-    if (func_002E9A10(reg) == 0 && Event_UnpackHeader(&L.file) != 0 &&
-        func_002E9A98(&L.file, &L.p.a, 4, 1) == 0 &&
-        func_002E9A98(&L.file, L.p.name, 0x40, 0x40) == 0 &&
+    if (NetRegisterMessageStart(reg) == 0 && Event_UnpackHeader(&L.file) != 0 &&
+        NetMessageField(&L.file, &L.p.a, 4, 1) == 0 &&
+        NetMessageField(&L.file, L.p.name, 0x40, 0x40) == 0 &&
         NetMsg_RegisterType(D_004F7948, 2, cAddCheckpointMsg_NetReceive) == 0)
         ok = 1;
     return ok;

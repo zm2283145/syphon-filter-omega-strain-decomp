@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-void* func_001ADD40(char* self) {
+void* cSkaSystem_RequestTransition_CrossFadeInDuration(char* self) {
     return self + 60;
 }
 
-int func_001ADD50(char* self) {
+int cPointer_cSkaNode_opMul(char* self) {
     return *(int*)(self + 0);
 }
 
@@ -22,6 +22,6 @@ void* func_001ADD70(char* self) {
     return self + 36;
 }
 
-int func_001ADD80(char* self) {
+int cSkaSystem_RequestTransition_HasAnim(char* self) {
     return *(unsigned int*)(self + 48) != 0;
 }

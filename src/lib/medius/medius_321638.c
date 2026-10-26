@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_00321638(int a0, int a1) {
+int nciDecodeNeedsInputSase3200(int a0, int a1) {
     int tmp0;
     unsigned char tmp1;
 

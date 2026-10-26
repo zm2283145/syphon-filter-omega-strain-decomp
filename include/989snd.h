@@ -28,7 +28,7 @@
 #define SND_CMD_AUTO_VOL             0x22 /* snd_AutoVol(handle, vol, duration, dir) */
 /*
  * Ids whose wrapper is not identified yet (kept as literals in the source):
- *   8    func_003A8240()        no arguments
+ *   8    snd_ResolveBankXREFS()        no arguments
  *   0xB  snd_SetPlaybackMode(x)       one word
  *   0x18 snd_StopAllSounds()        no arguments, sent at sound shutdown
  *   0x21 snd_RestartVAGStream(...)     six words plus callback/user data

@@ -12,12 +12,12 @@ struct E3ZIt {
 };
 
 extern "C" E3ZIt* List_End_13D890(E3ZIt* out, E3ZList* l);
-extern "C" E3ZIt* func_0013D870(E3ZIt* out, E3ZNode* n);
-extern "C" E3ZIt* func_0013D840(E3ZIt* out, E3ZList* l);
-extern "C" E3ZIt* func_0013D830(E3ZIt* out, E3ZIt* src);
+extern "C" E3ZIt* std_list_cScenePtr_generic_iterator_1_ctor(E3ZIt* out, E3ZNode* n);
+extern "C" E3ZIt* std_list_cScenePtr_begin(E3ZIt* out, E3ZList* l);
+extern "C" E3ZIt* cConstLListIterator_cScenePtr_ctor(E3ZIt* out, E3ZIt* src);
 
 /* Finds the list entry whose key matches. */
-extern "C" E3ZItem* func_0013D770(E3ZList* l, int key) {
+extern "C" E3ZItem* cSceneManager_GetSceneBelongingTo(E3ZList* l, int key) {
     E3ZIt it;
     E3ZIt c;
     E3ZIt e;
@@ -25,10 +25,10 @@ extern "C" E3ZItem* func_0013D770(E3ZList* l, int key) {
     E3ZIt b;
     E3ZNode* end;
     List_End_13D890(&a, l);
-    func_0013D870(&e, a.p.n);
+    std_list_cScenePtr_generic_iterator_1_ctor(&e, a.p.n);
     end = e.p.n;
-    func_0013D840(&b, l);
-    func_0013D830(&c, &b);
+    std_list_cScenePtr_begin(&b, l);
+    cConstLListIterator_cScenePtr_ctor(&c, &b);
     for (it = c; it.p.n != end; ++it) {
         E3ZItem* d = *it;
         if (d->key == key) {

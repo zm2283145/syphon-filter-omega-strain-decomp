@@ -68,8 +68,8 @@ public:
 };
 
 extern "C" {
-int func_00182260(Tab_3947A0* t, int* key);
-int func_00181E80(Tab_3947A0* t, int* key);
+int cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_2(Tab_3947A0* t, int* key);
+int cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress(Tab_3947A0* t, int* key);
 }
 
 static inline unsigned char Valid_3947A0(Ref_3947A0* r) { return r->valid != 0; }
@@ -87,10 +87,10 @@ extern "C" int cVUM_GOBJ_v20(Obj_3947A0* o)
             int v;
             if (t->count > 0) {
                 int k = t->key;
-                v = func_00182260(t, &k);
+                v = cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_2(t, &k);
             } else {
                 int k = t->key2;
-                v = func_00181E80(t, &k);
+                v = cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress(t, &k);
             }
             r = v;
         }

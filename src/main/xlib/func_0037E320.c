@@ -5,7 +5,7 @@ extern "C" {
 extern char D_004BC200[];
 extern char D_00537F80[];
 void Mem_Free(int heap, void* p, char* file, int line);
-void func_00375CD0(void* p);
+void cDmaMan_Reset(void* p);
 void Video_FreeDeferredBuffers(void* p, int a);
 void Tex_Release(void* p, int id, int a);
 void TexMan_Destroy(void* p, int flag);
@@ -25,7 +25,7 @@ extern "C" void Renderer_Teardown(S_0037E320* self)
 {
     int i;
     if (self->flags == -1) return;
-    func_00375CD0(D_00537F80);
+    cDmaMan_Reset(D_00537F80);
     if (!(self->flags & 8)) {
         for (i = 0; i < 6; i++) {
             E1_0037E320* e = &self->e1[i];

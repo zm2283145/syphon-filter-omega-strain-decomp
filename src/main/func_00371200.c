@@ -9,28 +9,28 @@ extern void Renderer_SetReceiverConsts(S* o, unsigned int flags);
 extern char D_00538080[];
 extern char D_00537F80[];
 extern int D_00492F70;
-extern void func_003701A0(void*);
+extern void cVU1Man_NewProgBatch(void*);
 extern void Vu1_UploadMicrocode(void*, int);
-extern void func_00370110(void*, int);
-extern int func_00375B40(void*, unsigned char, int);
+extern void cDmaMan_RegisterModel(void*, int);
+extern int cDmaMan_BeginChain_eDmaChannel_int(void*, unsigned char, int);
 extern void DmaPacket_Close(void*, unsigned char, void*);
-extern long long func_003700F0(int a, int b, int c);
-extern int func_003700D0(void* table, int index);
+extern long long DMATAG3(int a, int b, int c);
+extern int cVU1Man_GetMSCAL(void* table, int index);
 
 static inline QW* Emit(QW* p, int num, int addr, int src)
 {
-    p->a = func_003700F0(num, 3, src);
+    p->a = DMATAG3(num, 3, src);
     p->b = (u64_t)(unsigned int)(addr | 0x8000 | (num << 16) | 0x6C000000) << 32;
     return p + 1;
 }
 
 
 #define EMIT_BODY(TAG, REGS, MC, NQ)                                                   \
-    func_003701A0(D_00538080);                                                        \
+    cVU1Man_NewProgBatch(D_00538080);                                                        \
     Vu1_UploadMicrocode(D_00538080, MC);                                              \
     ep = (E*)((char*)o + o->cur * 56 + 0xFB0);                                        \
-    func_00370110(D_00537F80, D_00492F70);                                            \
-    p = (QW*)func_00375B40(D_00537F80, 1, o->base * NQ);                              \
+    cDmaMan_RegisterModel(D_00537F80, D_00492F70);                                            \
+    p = (QW*)cDmaMan_BeginChain_eDmaChannel_int(D_00537F80, 1, o->base * NQ);                              \
     for (i = 0; i < o->base; i++) {                                                   \
         int k = i + (o->n - o->base);                                                 \
         m = o->arr[k];                                                                \
@@ -40,7 +40,7 @@ static inline QW* Emit(QW* p, int num, int addr, int src)
             addr = 0;                                                                 \
             p = Emit(p, 0xC, addr, (int)&ep->pk[k]);                                  \
             addr += 0xC;                                                              \
-            p->a = func_003700F0(m, 3, b);                                            \
+            p->a = DMATAG3(m, 3, b);                                            \
             p->b = (u64_t)(unsigned int)(addr | 0x8000 | (m << 16) | 0x6C000000) << 32; \
             addr += m;                                                                \
             b += m * 16;                                                              \
@@ -60,7 +60,7 @@ static inline QW* Emit(QW* p, int num, int addr, int src)
                 f += m * 16;                                                          \
             }                                                                         \
             p->a = 0x10000000;                                                        \
-            p->b = (u64_t)(unsigned int)func_003700D0(D_00538080, MC) << 32;          \
+            p->b = (u64_t)(unsigned int)cVU1Man_GetMSCAL(D_00538080, MC) << 32;          \
             p++;                                                                      \
         }                                                                             \
     }                                                                                 \

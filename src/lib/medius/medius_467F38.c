@@ -8,20 +8,20 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int func_00467DD0(int);                                 
-int func_00467DF0(int );                            
+int MediusSetProcessingState(int);                                 
+int MediusSetClientAddrList(int );                            
 
-void func_00467F38(int arg0) {
+void MediusResolveAddrCallback(int arg0) {
     if (F_(arg0, 0x4, int) != 0) {
-        func_00467DD0(2);
+        MediusSetProcessingState(2);
         return;
     }
     if (F_(arg0, 0x0, int) == 0) {
-        func_00467DD0(2);
+        MediusSetProcessingState(2);
         return;
     }
-    func_00467DF0(arg0 + 8);
-    func_00467DD0(1);
+    MediusSetClientAddrList(arg0 + 8);
+    MediusSetProcessingState(1);
 }
 /* merge_units: end func_00467F38 */
 
@@ -32,7 +32,7 @@ typedef struct { char b[0xEC]; } S_EC;
 extern int D_00497E24;
 extern S_C4 D_00587E08;
 extern S_EC D_00587ED0;
-void func_00467F90(int type, void* data)
+void MediusSetQueuedRequest(int type, void* data)
 {
     D_00497E24 = type;
     switch (type) {
@@ -47,7 +47,7 @@ void func_00467F90(int type, void* data)
 /* merge_units: end func_00467F90 */
 
 /* merge_units: begin func_00468148 */
-void func_00468148(int *arg0) {
+void MediusGetQueuedRequestType(int *arg0) {
     *arg0 = D_00497E24;
 }
 /* merge_units: end func_00468148 */
@@ -65,7 +65,7 @@ extern SB D_00587ED0;
 #endif /* merge_units */
 #define D_00587ED0 (*(SB*)&D_00587ED0) /* merge_units */
 
-void func_00468158(void* dst)
+void MediusGetQueuedRequest(void* dst)
 {
     switch (D_00497E24) {
     case 44:

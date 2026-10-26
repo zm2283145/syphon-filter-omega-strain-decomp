@@ -4,7 +4,7 @@ typedef struct { char pad[0x2E4]; float f2E4; char pad2E8[0x310 - 0x2E8]; V4 pos
 #pragma peephole off
 #pragma opt_common_subs off
 #pragma opt_propagation off
-void func_001A3170(V4* out, H_3170* h, float t)
+void cHumanCollisionRoutine_PredictNextVelocity(V4* out, H_3170* h, float t)
 {
     V4 b;
     V4 v;

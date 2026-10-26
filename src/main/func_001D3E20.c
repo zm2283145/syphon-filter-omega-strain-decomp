@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_001D3E20(void* self) {
+void* cMatrix_ctor_void(void* self) {
     return self;
 }

@@ -374,9 +374,9 @@ void Event_Construct(void* p, char* name);
 #endif /* merge_units */
 #define Event_Construct(a0, a1) (Event_Construct((Msg *)(a0), (void *)(a1))) /* merge_units */
 
-void func_001584B0(void* p);
-int func_0012F2B0(void* p);
-int func_001584A0(int v);
+void cNetworkTransferNpc_ctor_void(void* p);
+int cSystem_GetObjectID_void(void* p);
+int cObjectId_GetEncodedValue(int v);
 void func_00148B50(void* p, void* npc);
 void func_00158490(void* p, int v);
 }
@@ -389,8 +389,8 @@ static inline void Ev_Init(Ev_8350* p, Ctl_8350* c)
 {
     Event_Construct(p, D_0051EE58);
     p->vt = ((char*)D_004DE110);
-    func_001584B0((char*)p + 0x30);
-    p->x24 = func_001584A0(func_0012F2B0(c));
+    cNetworkTransferNpc_ctor_void((char*)p + 0x30);
+    p->x24 = cObjectId_GetEncodedValue(cSystem_GetObjectID_void(c));
 }
 extern "C" Ev_8350* cNPC_v22(NPC_8350* self)
 {

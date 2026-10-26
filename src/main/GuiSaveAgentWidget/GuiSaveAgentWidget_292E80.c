@@ -28,9 +28,9 @@ struct AoFocus {
 extern "C" {
     AoStack*Gui_GetScreenStack();
     void GuiScreen_SetFocus(void*,void*);
-    void func_002888C0(AoVec*);
-    void func_002887C0(AoVec*,int);
-    char**func_002888B0(AoVec*,int);
+    void std_vector_charPtr_ctor_void_2(AoVec*);
+    void std_vector_charPtr_dtor_void_2(AoVec*,int);
+    char**std_vector_charPtr_opIndex_uint_2(AoVec*,int);
     void PtrVector_Resize(AoVec*,int,int*);
     void MemCardWrap_Enumerate(void*,AoVec*);
     void MemCardWrap_Rename(void*,const char*,const char*);
@@ -64,16 +64,16 @@ extern "C" void AgentOpen_BuildSlotList(GuiSaveAgentWidget*self) {
     char decoded[16],oldname[32],newname[32],label[16];
     GuiWidget* focus=Gui_GetScreenStack()->focus;
     unsigned char clearFocus=0,haveSlot=0;
-    func_002888C0(&files);
+    std_vector_charPtr_ctor_void_2(&files);
     files.owned=1;
-    func_002888C0(&slots);
+    std_vector_charPtr_ctor_void_2(&slots);
     slots.owned=1;
     MemCardWrap_Enumerate(g_MemCard,&files);
     zero=0;
     PtrVector_Resize(&slots,8,&zero);
     for(int i=0;i<slots.vec.b;i++)AO_DATA(slots)[i]=0;
     for(int i=0;i<files.vec.b;i++) {
-        if(!strchr(AO_DATA(files)[i],'.')&&(D_00499C70[(signed char)**func_002888B0(&files,i)+1]&4)&&AgentFile_DecodeName(AO_DATA(files)[i],decoded,&slot,16))AO_DATA(slots)[slot]=AO_DATA(files)[i];
+        if(!strchr(AO_DATA(files)[i],'.')&&(D_00499C70[(signed char)**std_vector_charPtr_opIndex_uint_2(&files,i)+1]&4)&&AgentFile_DecodeName(AO_DATA(files)[i],decoded,&slot,16))AO_DATA(slots)[slot]=AO_DATA(files)[i];
     }
     unsigned char popup=0;
     int popupId;
@@ -138,8 +138,8 @@ extern "C" void AgentOpen_BuildSlotList(GuiSaveAgentWidget*self) {
         AoStack*stack=Gui_GetScreenStack();
         GuiScreen_SetFocus(stack,((AoFocus*)self)->GetFocus());
     }
-    func_002887C0(&slots,-1);
-    func_002887C0(&files,-1);
+    std_vector_charPtr_dtor_void_2(&slots,-1);
+    std_vector_charPtr_dtor_void_2(&files,-1);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00292E80 */
@@ -150,7 +150,7 @@ extern "C" void AgentOpen_BuildSlotList(GuiSaveAgentWidget*self) {
 #include "base_dtor_chain.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_002933E0, func_002886D0)
+DEFINE_BASE_DTOR_CHAIN(func_002933E0, std_vector_imp_charPtr_1_dtor_void_2)
 #pragma pop /* merge_units */
 /* merge_units: end func_002933E0 */
 

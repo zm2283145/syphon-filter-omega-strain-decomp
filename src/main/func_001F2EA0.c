@@ -6,9 +6,9 @@
 
 #include "types.h"
 
-extern int func_001F2ED0(int, int);
+extern int std_list_deleter_voidPtr_generic_iterator_1_ctor(int, int);
 
-int func_001F2EA0(int a0, int a1) {
-    func_001F2ED0(a0, a1);
+int std_list_cSkaSwitchItemPtr_generic_iterator_1_ctor_listR(int a0, int a1) {
+    std_list_deleter_voidPtr_generic_iterator_1_ctor(a0, a1);
     return a0;
 }

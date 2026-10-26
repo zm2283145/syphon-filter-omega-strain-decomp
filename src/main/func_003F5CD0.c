@@ -8,17 +8,17 @@
 #include "loose04_types.h"
 
 /* Swaps in a new value and returns the old one. */
-int func_003F5CD0(Unk3F5CD0* self, int value) {
+int videoDecSetState(Unk3F5CD0* self, int value) {
     int old = self->unkA8;
 
     self->unkA8 = value;
     return old;
 }
 
-int func_003F5CE0(Unk3F5CD0* self) {
+int videoDecGetState(Unk3F5CD0* self) {
     return self->unkA8;
 }
 
-void func_003F5CF0(Unk3F5CD0* self) {
+void videoDecAbort(Unk3F5CD0* self) {
     self->unkA8 = 1;
 }

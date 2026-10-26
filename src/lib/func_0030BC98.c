@@ -26,13 +26,13 @@ typedef struct {
 
 extern char D_004AFAA0[];
 extern char D_004AFAA8[];
-int func_002F6090(int a, char* b, unsigned short c, unsigned short* out);
+int rt_comm_receive(int a, char* b, unsigned short c, unsigned short* out);
 char* strstr(char* s, char* pat);
 char* strncpy(char* d, const char* s, unsigned int n);
 int func_0030B760(char* buf, SsdpRespHdr* r);
 int func_00310C90(int h, char* p, unsigned short n, int z);
 int func_00310CC0(int h, unsigned char* done, SsdpCtx* c);
-void func_003060F0(void* timer, unsigned int* out);
+void rt_time_elapsed(void* timer, unsigned int* out);
 
 int func_0030BC98(SsdpObj* o, unsigned char* done)
 {
@@ -44,7 +44,7 @@ int func_0030BC98(SsdpObj* o, unsigned char* done)
 
     {
         register int e asm("$3");
-        e = func_002F6090(o->ctx->h, o->ctx->buf, 0x800, &n);
+        e = rt_comm_receive(o->ctx->h, o->ctx->buf, 0x800, &n);
         if (e != 0) {
             { register int d asm("$4"); d = 1; *done = d; }
             if (e == 0xD)
@@ -84,7 +84,7 @@ int func_0030BC98(SsdpObj* o, unsigned char* done)
         if (func_00310CC0(c->h2, done, c) != 0)
             return 4;
     } else {
-        func_003060F0(o->ctx->timer, &t);
+        rt_time_elapsed(o->ctx->timer, &t);
         if (t > 30000)
             return 6;
     }

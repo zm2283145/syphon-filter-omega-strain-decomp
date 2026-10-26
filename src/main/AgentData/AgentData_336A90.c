@@ -22,7 +22,7 @@
 extern "C" {
 char D_004B99B8[] = "allocator.hh";
 }
-DEFINE_OWNED_BUFFER8_DTOR_DEEP(func_00336A90, D_004B99B8)
+DEFINE_OWNED_BUFFER8_DTOR_DEEP(std_vector_eRequirementState_dtor, D_004B99B8)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00336A90(void) {}
 #pragma pop /* merge_units */
@@ -33,6 +33,6 @@ static inline void merge_flush_func_00336A90(void) {}
 #pragma cplusplus on
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_00336B80)
+DEFINE_TRIVIAL_DTOR(cBitArray_224_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00336B80 */

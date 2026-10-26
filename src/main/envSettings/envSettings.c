@@ -156,7 +156,7 @@ struct Light_ { char pad[0x18]; float invLen2; char pad1C[4]; V4E dir; };
 extern "C" {
 extern char g_LightMgr[];
 extern float D_00554ED4;
-EV3* func_00178420(EV3* dst, EV3* src);
+EV3* tRGB_opAssign(EV3* dst, EV3* src);
 Light_* LightMgr_FindByTypeAndId(void* mgr, int type, int id);
 void EnvController_ActivateFirst(EnvCtl* c, Env* e);
 }
@@ -184,14 +184,14 @@ void EnvController_ActivateFirst(EnvCtl* c, Env* e)
         c->a28 = old->f60;
         c->a30 = old->f68;
         c->a38 = old->f6C;
-        func_00178420(&c->c40, &old->c70);
-        func_00178420(&c->c58, &old->c84);
+        tRGB_opAssign(&c->c40, &old->c70);
+        tRGB_opAssign(&c->c58, &old->c84);
         c->b24 = e->f80;
         c->b2C = e->f60;
         c->b34 = e->f68;
         c->b3C = e->f6C;
-        func_00178420(&c->c4C, &e->c70);
-        func_00178420(&c->c64, &e->c84);
+        tRGB_opAssign(&c->c4C, &e->c70);
+        tRGB_opAssign(&c->c64, &e->c84);
         c->blending = 1;
     }
     c->cur = e;

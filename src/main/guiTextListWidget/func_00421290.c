@@ -8,7 +8,7 @@ void String_CtorEmpty(void* string);
 GuiStreamString* String_CtorCStr_13B480(GuiStreamString* string, const char* text);
 void String_AssignString(void* destination, const void* source);
 void String_Dtor(void* string, int flags);
-void func_00422A50(TextListEntryVec* entries, TextListEntry* position,
+void std_vector_imp_Item_insert(TextListEntryVec* entries, TextListEntry* position,
                    int count, const TextListEntry* value);
 void GuiArrayWidget_Select(TextRenderWidget* self, int first, int second);
 void operator_delete(void* allocation);
@@ -28,7 +28,7 @@ extern "C" int GuiTextListWidget_AddItem(TextRenderWidget* self, const char* tex
     String_Dtor(&temporary, 0);
     entry.unk0C = value;
     entry.unk10 = style;
-    func_00422A50(&self->entries, self->entries.data + self->entries.count, 1, &entry);
+    std_vector_imp_Item_insert(&self->entries, self->entries.data + self->entries.count, 1, &entry);
     ((TextListLayout*)self)->set_extent(1, self->entries.count);
     GuiArrayWidget_Select(self, 0, 0);
     String_Dtor(entry.text, 0);
@@ -42,7 +42,7 @@ static inline void destroy_entry(TextListEntry* entry)
 }
 
 /* Destroy an entry's string before optionally freeing the entry itself. */
-extern "C" TextListEntry* func_00421380(TextListEntry* self, short deleteFlag)
+extern "C" TextListEntry* GuiTextListWidget_Item_dtor(TextListEntry* self, short deleteFlag)
 {
     if (self) {
         destroy_entry(self);

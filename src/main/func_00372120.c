@@ -37,13 +37,13 @@ struct Ctx {
 };
 extern "C" {
 unsigned char func_00372B30(Light* l);
-V* func_00372B20(Light* l);
-V* func_00372B10(Light* l);
+V* cParallelLight_GetDirection(Light* l);
+V* cLightSrc_GetPosition(Light* l);
 float func_00372B00(Light* l);
 float func_00372AF0(Light* l);
 float func_00372AE0(Light* l);
-V* func_00372AD0(Light* l);
-float func_00372AC0(Light* l);
+V* cSceneLight_GetDirection(Light* l);
+float cSceneLight_GetFalloffAngleCos(Light* l);
 void Vec4_Copy(V* d, const V* s);
 void Sphere_FromCenter(V* o, const V* a, const V* b);
 float Vec4_Length(const V* v);
@@ -64,11 +64,11 @@ static inline float Intensity(Light* l, Ctx* c, V* d)
     float k = 1.0f;
     switch (func_00372B30(l)) {
     case 2:
-        if (d) Vec4_Copy(d, func_00372B20(l));
+        if (d) Vec4_Copy(d, cParallelLight_GetDirection(l));
         break;
     case 4: {
         V t;
-        Sphere_FromCenter(&t, func_00372B10(l), &c->pos);
+        Sphere_FromCenter(&t, cLightSrc_GetPosition(l), &c->pos);
         k = Vec4_Length(&t);
         if (d) {
             d->x = t.x / k;
@@ -81,7 +81,7 @@ static inline float Intensity(Light* l, Ctx* c, V* d)
     }
     case 0x10: {
         V t;
-        Sphere_FromCenter(&t, func_00372B10(l), &c->pos);
+        Sphere_FromCenter(&t, cLightSrc_GetPosition(l), &c->pos);
         float len = Vec4_Length(&t);
         V n;
         Ptr_Identity(&n);
@@ -92,8 +92,8 @@ static inline float Intensity(Light* l, Ctx* c, V* d)
         if (d) Vec4_Copy(d, &n);
         k = Falloff(l, len);
         if (func_00372AE0(l) != 1.0f) {
-            float dot = Vec4_Dot3(func_00372AD0(l), &n);
-            float lo = func_00372AC0(l);
+            float dot = Vec4_Dot3(cSceneLight_GetDirection(l), &n);
+            float lo = cSceneLight_GetFalloffAngleCos(l);
             if (!(dot <= lo)) {
                 float hi = func_00372AE0(l);
                 if (dot < hi)

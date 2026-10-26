@@ -16,24 +16,24 @@
  */
 
 
-int func_001A6FC0(Iter* a, Iter* b) {
+int std_opEq_wrapiteratorR_wrapiteratorR(Iter* a, Iter* b) {
     return a->p == b->p;
 }
 
-int func_001A6FE0(char* self) {
+int std_wrap_iterator_vector_cTreeNodePtr_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtrPtr_opMul(char* self) {
     return *(int*)(self + 0);
 }
 
-void func_001A6FF0(Iter* out, PtrVec* v) {
+void std_vector_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_end(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
 
-Word* func_001A7010(Word* dst, Word* src) {
+Word* std_wrap_iterator_vector_cTreeNodePtr_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtrPtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_001A7020(Iter* out, PtrVec* v) {
+void std_vector_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -45,7 +45,7 @@ static inline void merge_flush_func_001A6FC0(void) {}
 #pragma push /* merge_units */
 typedef struct { int unk0; void* p; } S;
 /* Returns whether the second field is null. */
-int func_001A7030(S* s) { return s->p == 0; }
+int std_vector_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_empty(S* s) { return s->p == 0; }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001A7030(void) {}
 #pragma pop /* merge_units */
@@ -53,11 +53,11 @@ static inline void merge_flush_func_001A7030(void) {}
 
 /* merge_units: begin func_001A7040 */
 #pragma push /* merge_units */
-int* func_001A7040(PtrVec* v) {
+int* std_vector_pod_int_end(PtrVec* v) {
     return v->data + v->count;
 }
 
-int func_001A7060(char* self) {
+int std_vector_pod_int_begin(char* self) {
     return *(int*)(self + 8);
 }
 

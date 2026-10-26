@@ -20,7 +20,7 @@ typedef struct cGameLight {
 } cGameLight;
 
 /* If the pending flag (+0x64) is set: clears it and, when active && enabled && !hidden, calls the light (+0x60) virtual +0x30. */
-extern "C" void func_00179A90(cGameLight* self)
+extern "C" void cGameLight_TurnOff(cGameLight* self)
 {
     if (self->pending) {
         bool on;

@@ -22,14 +22,14 @@ extern int g_Hud;
 extern Holder_26D810* g_LocalPlayer;
 Hum_26D810* Object_LookupById(M_26D810* id);
 void List_Begin_16E880(int* out, int* list);
-void func_0026C390(Node_26D810** out, int b);
-void func_0026C320(int* out, int* list);
-void func_0026C350(Node_26D810** out, int* e);
+void std_list_cHudTargetInfoPtr_generic_iterator_1_ctor(Node_26D810** out, int b);
+void std_list_cHudTargetInfoPtr_end_void(int* out, int* list);
+void cConstLListIterator_cHudTargetInfoPtr_ctor(Node_26D810** out, int* e);
 void Hud_ClearCallout(int a, M_26D810* m, int n, int b, int c);
 void HudMap_ClearCallouts(Self_26D810* self);
 }
-static inline Node_26D810* Begin_26D810(int* list) { Node_26D810* n; int b; List_Begin_16E880(&b, list); func_0026C390(&n, b); return n; }
-static inline void End_26D810(Node_26D810** out, int* list) { int e; func_0026C320(&e, list); func_0026C350(out, &e); }
+static inline Node_26D810* Begin_26D810(int* list) { Node_26D810* n; int b; List_Begin_16E880(&b, list); std_list_cHudTargetInfoPtr_generic_iterator_1_ctor(&n, b); return n; }
+static inline void End_26D810(Node_26D810** out, int* list) { int e; std_list_cHudTargetInfoPtr_end_void(&e, list); cConstLListIterator_cHudTargetInfoPtr_ctor(out, &e); }
 
 void HudMap_ClearCallouts(Self_26D810* self)
 {
@@ -81,14 +81,14 @@ Hum_26D940* Object_LookupById(M_26D940* id);
 #define Object_LookupById(a0) ((Hum_26D940 *)Object_LookupById((M_26D810 *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_0026C390(Node_26D940** out, int b);
+void std_list_cHudTargetInfoPtr_generic_iterator_1_ctor(Node_26D940** out, int b);
 #endif /* merge_units */
-#define func_0026C390(a0, a1) (func_0026C390((Node_26D810 * *)(a0), (a1))) /* merge_units */
+#define std_list_cHudTargetInfoPtr_generic_iterator_1_ctor(a0, a1) (std_list_cHudTargetInfoPtr_generic_iterator_1_ctor((Node_26D810 * *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_0026C350(Node_26D940** out, int* e);
+void cConstLListIterator_cHudTargetInfoPtr_ctor(Node_26D940** out, int* e);
 #endif /* merge_units */
-#define func_0026C350(a0, a1) (func_0026C350((Node_26D810 * *)(a0), (a1))) /* merge_units */
+#define cConstLListIterator_cHudTargetInfoPtr_ctor(a0, a1) (cConstLListIterator_cHudTargetInfoPtr_ctor((Node_26D810 * *)(a0), (a1))) /* merge_units */
 
 void Hud_FormatPlayerCalloutName(Buf_26D940* b, int key, int c);
 void Hud_ShowCallout(int a, M_26D940* m, char* text, int n, int b, int c, float f0, float f1);
@@ -96,8 +96,8 @@ void HudMap_AddPlayerCallouts(Self_26D940* self);
 }
 static inline unsigned char IsPlayer_26D940(Hum_26D940* h) { unsigned char r = 0; if (h->ctl && h->ctl->IsPlayer()) r = 1; return r; }
 static inline int LocalId_26D940(Hum_26D940* h) { int id; if (g_IsMultiplayer) { if (IsPlayer_26D940(h)) id = ((h->flags & 0x7F000000) >> 24) - 1; else id = -1; } else id = 0; return id; }
-static inline Node_26D940* Begin_26D940(int* list) { Node_26D940* n; int b; List_Begin_16E880(&b, list); func_0026C390(&n, b); return n; }
-static inline void End_26D940(Node_26D940** out, int* list) { int e; func_0026C320(&e, list); func_0026C350(out, &e); }
+static inline Node_26D940* Begin_26D940(int* list) { Node_26D940* n; int b; List_Begin_16E880(&b, list); std_list_cHudTargetInfoPtr_generic_iterator_1_ctor(&n, b); return n; }
+static inline void End_26D940(Node_26D940** out, int* list) { int e; std_list_cHudTargetInfoPtr_end_void(&e, list); cConstLListIterator_cHudTargetInfoPtr_ctor(out, &e); }
 
 void HudMap_AddPlayerCallouts(Self_26D940* self)
 {
@@ -132,8 +132,8 @@ void HudMap_AddPlayerCallouts(Self_26D940* self)
 }
 #undef g_LocalPlayer /* merge_units */
 #undef Object_LookupById /* merge_units */
-#undef func_0026C390 /* merge_units */
-#undef func_0026C350 /* merge_units */
+#undef std_list_cHudTargetInfoPtr_generic_iterator_1_ctor /* merge_units */
+#undef cConstLListIterator_cHudTargetInfoPtr_ctor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0026D940(void) {}
 #pragma pop /* merge_units */

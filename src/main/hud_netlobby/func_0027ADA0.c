@@ -2,14 +2,14 @@
 typedef struct { float r, g, b, a; } Col27AD;
 typedef struct { char pad0[4]; void* p4; char pad8[4]; void* pC; char pad10[0x1C]; int count; char pad30[8]; int sel; int mode; } Menu27AD;
 extern unsigned char D_00504040;
-extern void func_0027B4E0(Menu27AD* s);
+extern void cHudNetLobby_SetActive(Menu27AD* s);
 extern void IeElement_SetColour(void* o, Col27AD* c);
 
-void func_0027ADA0(Menu27AD* s)
+void cHudNetLobby_UpdateGameAvailable(Menu27AD* s)
 {
     if (s->mode == 0 && s->count && D_00504040 && s->sel == 0) {
         s->sel = 1;
-        func_0027B4E0(s);
+        cHudNetLobby_SetActive(s);
     }
     if (s->count == 0) {
         Col27AD a, b;

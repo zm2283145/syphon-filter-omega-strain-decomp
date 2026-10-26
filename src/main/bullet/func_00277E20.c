@@ -12,11 +12,11 @@ extern float D_0048B348;
 void* Service_Lookup(void* a, void* b);
 int LosMgr_TraceBullet(void* mgr, V* a, struct LosHit* b, V* c, V d, int e1, void* e2, int g, unsigned char h, unsigned char i, void* j, unsigned char k);
 void Mtx_Copy(void* d, const void* s);
-void func_00139B00(void* d, const void* s);
+void cCollisionFace_ctor_cCollisionFaceR(void* d, const void* s);
 void Vec4_Assign(void* d, const void* s);
 void Vec4_Copy(V* d, const V* s);
-void func_00139BB0(void* d, const void* s);
-void func_00139BA0(void* d, const void* s);
+void cCollisionModel_FaceProperties_opAssign(void* d, const void* s);
+void cCollisionModel_FaceLocator_opAssign(void* d, const void* s);
 void Bullet_InitFromRequest(struct Bullet* b, struct Req* r);
 struct Bullet* BulletPool_Request(struct Req* req);
 }
@@ -65,7 +65,7 @@ struct TrCopy {
     unsigned char b50, b51, b52; char p53[0xD];
     Sub60 s60;
     TrCopy() {}
-    TrCopy(const TrCopy& o) { func_00139B00(this, &o); }
+    TrCopy(const TrCopy& o) { cCollisionFace_ctor_cCollisionFaceR(this, &o); }
 };
 struct Req {
     Mtx m;
@@ -83,7 +83,7 @@ struct Req {
     float fE4;
     Req() {}
 };
-static inline void CopyReq(Req* d, const Req* s) { Mtx_Copy(&d->m, &s->m); d->f40 = s->f40; d->f44 = s->f44; d->f48 = s->f48; d->f4C = s->f4C; func_00139B00(&d->tr, &s->tr); Vec4_Assign(&d->hit, &s->hit); d->fD0 = s->fD0; d->fD4 = s->fD4; d->fD5 = s->fD5; d->fD6 = s->fD6; d->fD8 = s->fD8; d->fDC = s->fDC; d->fE0 = s->fE0; d->fE4 = s->fE4; }
+static inline void CopyReq(Req* d, const Req* s) { Mtx_Copy(&d->m, &s->m); d->f40 = s->f40; d->f44 = s->f44; d->f48 = s->f48; d->f4C = s->f4C; cCollisionFace_ctor_cCollisionFaceR(&d->tr, &s->tr); Vec4_Assign(&d->hit, &s->hit); d->fD0 = s->fD0; d->fD4 = s->fD4; d->fD5 = s->fD5; d->fD6 = s->fD6; d->fD8 = s->fD8; d->fDC = s->fDC; d->fE0 = s->fE0; d->fE4 = s->fE4; }
 struct BulletReq : Req {};
 struct Bullet { char pad[0x115]; unsigned char active; char pad116[0x150 - 0x116]; };
 extern "C" Bullet D_004FFE60[];
@@ -97,7 +97,7 @@ Bullet* BulletPool_Request(Req* req)
     V start = *(V*)&req->m.r[3];
     start += (*(V*)&req->m.r[1]) * D_0048B348;
     unsigned char ok = (unsigned char)LosMgr_TraceBullet(svc, &hit, &res, &start, (*(V*)&req->m.r[1]) * req->fD8, req->f44, 0, 0, 0x10, 0x80, D_00504030, 1);
-    Req r; Req* d = &r; const Req* s = req; Mtx_Copy(&d->m, &s->m); d->f40 = s->f40; d->f44 = s->f44; d->f48 = s->f48; d->f4C = s->f4C; func_00139B00(&d->tr, &s->tr); Vec4_Assign(&d->hit, &s->hit); d->fD0 = s->fD0; d->fD4 = s->fD4; d->fD5 = s->fD5; d->fD6 = s->fD6; d->fD8 = s->fD8; d->fDC = s->fDC; d->fE0 = s->fE0; d->fE4 = s->fE4;
+    Req r; Req* d = &r; const Req* s = req; Mtx_Copy(&d->m, &s->m); d->f40 = s->f40; d->f44 = s->f44; d->f48 = s->f48; d->f4C = s->f4C; cCollisionFace_ctor_cCollisionFaceR(&d->tr, &s->tr); Vec4_Assign(&d->hit, &s->hit); d->fD0 = s->fD0; d->fD4 = s->fD4; d->fD5 = s->fD5; d->fD6 = s->fD6; d->fD8 = s->fD8; d->fDC = s->fDC; d->fE0 = s->fE0; d->fE4 = s->fE4;
     if (ok) {
         V h = hit;
         r.fD8 = Len(h - *(V*)&req->m.r[3]);
@@ -107,8 +107,8 @@ Bullet* BulletPool_Request(Req* req)
         Vec4_Copy((V*)&r.tr.v[2], (V*)&res.arr[2]);
         Vec4_Copy((V*)&r.tr.v[3], &res.normal);
         r.tr.b50 = res.b50;
-        func_00139BB0(&r.tr.s40, &res.b40);
-        func_00139BA0(&r.tr.s60, &res.x60);
+        cCollisionModel_FaceProperties_opAssign(&r.tr.s40, &res.b40);
+        cCollisionModel_FaceLocator_opAssign(&r.tr.s60, &res.x60);
         r.tr.b51 = res.b51;
         r.tr.b52 = res.b52;
         r.hit = h;

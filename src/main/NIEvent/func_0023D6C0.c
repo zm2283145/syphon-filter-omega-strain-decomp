@@ -7,6 +7,6 @@
 #include "types.h"
 
 /* Address of element i in an array of 0x40-byte records whose base pointer is at +8. */
-char* func_0023D6C0(char* self, int i) {
+char* std_vector_VectorKey_opIndex(char* self, int i) {
     return *(char**)(self + 8) + (i << 6);
 }

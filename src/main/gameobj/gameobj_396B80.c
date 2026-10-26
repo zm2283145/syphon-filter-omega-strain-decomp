@@ -20,15 +20,15 @@
 /* Destroy every 0x1D0-byte element from the back, then empty the array. */
 typedef struct { unsigned char b[0x1D0]; } Elem_396B80;
 typedef struct { int pad0; int count; Elem_396B80* data; } Arr_396B80;
-extern void func_003BA9A0(Elem_396B80* e, int flag);
+extern void cBone_dtor(Elem_396B80* e, int flag);
 
-void func_00396B80(Arr_396B80* a)
+void std_vector_deleter_cBone_clear(Arr_396B80* a)
 {
     Elem_396B80* first = a->data;
     Elem_396B80* last = first + a->count;
     while (first < last) {
         last--;
-        func_003BA9A0(last, -1);
+        cBone_dtor(last, -1);
     }
     a->count = 0;
 }
@@ -56,25 +56,25 @@ static inline void merge_flush_func_00396C10(void) {}
 #pragma push
 #pragma cplusplus on
 struct P1C9F10 { char pad[0x10]; char memberA[0x110]; char memberB[4]; };
-extern "C" P1C9F10* func_00396D80(P1C9F10* self, short deleteFlag); /* gsynth: defined below */
+extern "C" P1C9F10* cSkaAnimAnchorListEntry_dtor(P1C9F10* self, short deleteFlag); /* gsynth: defined below */
 #pragma pop
 typedef struct { char d[0x180]; } g2E180;
 typedef struct { int pad0; int size; g2E180* data; } g2Vec180;
 #if 0 /* merge_units */
-extern void func_00396D80(g2E180* e, int flag);
+extern void cSkaAnimAnchorListEntry_dtor(g2E180* e, int flag);
 #endif /* merge_units */
-#define func_00396D80(a0, a1) ((void)func_00396D80((void *)(a0), (short)(a1))) /* merge_units */
+#define cSkaAnimAnchorListEntry_dtor(a0, a1) ((void)cSkaAnimAnchorListEntry_dtor((void *)(a0), (short)(a1))) /* merge_units */
 
-void func_00396D00(g2Vec180* v) {
+void std_vector_deleter_cSkaAnimAnchorListEntry_clear(g2Vec180* v) {
     g2E180* b = v->data;
     g2E180* e = b + v->size;
     while (b < e) {
         --e;
-        func_00396D80(e, -1);
+        cSkaAnimAnchorListEntry_dtor(e, -1);
     }
     v->size = 0;
 }
-#undef func_00396D80 /* merge_units */
+#undef cSkaAnimAnchorListEntry_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00396D00(void) {}
 #pragma pop /* merge_units */
@@ -85,16 +85,16 @@ static inline void merge_flush_func_00396D00(void) {}
 #pragma push
 #pragma cplusplus on
 struct Root_396DF0 { unsigned char pad[0xB4]; int list; };
-extern "C" Root_396DF0* func_00396DF0(Root_396DF0* self, short deleteFlag); /* gsynth: defined below */
+extern "C" Root_396DF0* cSkaAnimAnchor_TreeNode_dtor(Root_396DF0* self, short deleteFlag); /* gsynth: defined below */
 #pragma pop
 #pragma cplusplus on
 extern "C" {
 #if 0 /* merge_units */
-void func_00396DF0(void* member, int flags);
+void cSkaAnimAnchor_TreeNode_dtor(void* member, int flags);
 #endif /* merge_units */
-#define func_00396DF0(a0, a1) ((void)func_00396DF0((Root_396DF0 *)(a0), (short)(a1))) /* merge_units */
+#define cSkaAnimAnchor_TreeNode_dtor(a0, a1) ((void)cSkaAnimAnchor_TreeNode_dtor((Root_396DF0 *)(a0), (short)(a1))) /* merge_units */
 
-void func_00397120(void* member, int flags);
+void cArray_FixedSize_cVector_4_dtor(void* member, int flags);
 #if 0 /* merge_units */
 void operator_delete(void* p);
 #endif /* merge_units */
@@ -102,18 +102,18 @@ void operator_delete(void* p);
 
 }
 
-extern "C" P1C9F10* func_00396D80(P1C9F10* self, short deleteFlag)
+extern "C" P1C9F10* cSkaAnimAnchorListEntry_dtor(P1C9F10* self, short deleteFlag)
 {
     if (self) {
         if (self->memberA) {
-            func_00397120(self->memberB, -1);
-            func_00396DF0(self->memberA, -1);
+            cArray_FixedSize_cVector_4_dtor(self->memberB, -1);
+            cSkaAnimAnchor_TreeNode_dtor(self->memberA, -1);
         }
         if (deleteFlag > 0) operator_delete(self);
     }
     return self;
 }
-#undef func_00396DF0 /* merge_units */
+#undef cSkaAnimAnchor_TreeNode_dtor /* merge_units */
 #undef operator_delete /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00396D80(void) {}
@@ -130,46 +130,46 @@ struct VP_396DF0 { V4_396DF0 a, b; };
 
 
 extern "C" {
-int func_001A0280(Root_396DF0* r);
+int cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void_2(Root_396DF0* r);
 VP_396DF0* Root_GetWorldPlacement(Root_396DF0* r);
 V4_396DF0* Root_GetWorldMotion(Root_396DF0* r);
 VP_396DF0* SceneRoot_GetPoseCache(Root_396DF0* r);
 void VecPair_Copy(VP_396DF0* dst, VP_396DF0* src);
 void Vec4_Assign(V4_396DF0* dst, V4_396DF0* src);
-void func_001A0080(Root_396DF0* r);
+void cTreeNode_cSkaAnimAnchor_TreeNodeData_DetachParent(Root_396DF0* r);
 void Root_SetWorldPlacement(Root_396DF0* r, VP_396DF0* p);
-void func_0019FFC0(Root_396DF0* r, V4_396DF0* m);
-void func_0019FE90(Root_396DF0* r, VP_396DF0* p);
-void* func_001913D0(Root_396DF0* r);
-int func_0019FDE0(void* v);
+void cSkaAnimAnchor_TreeNode_SetDeltaPos_WorldSpace(Root_396DF0* r, V4_396DF0* m);
+void cSkaAnimAnchor_TreeNode_SetSkeletonTarget_WorldSpace(Root_396DF0* r, VP_396DF0* p);
+void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(Root_396DF0* r);
+int cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Empty(void* v);
 int* PtrVec_Back(void* v);
-void func_0019FDF0(Root_396DF0* r, int child);
-void func_00397080(Root_396DF0* r);
-void* func_00396F30(void* p, short deleteFlag);
+void cSkaAnimAnchor_TreeNode_DetachChild(Root_396DF0* r, int child);
+void cTreeNode_cSkaAnimAnchor_TreeNodeData_DetachChildren(Root_396DF0* r);
+void* cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_dtor(void* p, short deleteFlag);
 void operator_delete(void* allocation);
 }
 
-extern "C" Root_396DF0* func_00396DF0(Root_396DF0* self, short deleteFlag)
+extern "C" Root_396DF0* cSkaAnimAnchor_TreeNode_dtor(Root_396DF0* self, short deleteFlag)
 {
     if (self) {
-        if (func_001A0280(self)) {
+        if (cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void_2(self)) {
             VP_396DF0 place;
             V4_396DF0 motion;
             VP_396DF0 other;
             VecPair_Copy(&place, Root_GetWorldPlacement(self));
             Vec4_Assign(&motion, Root_GetWorldMotion(self));
             VecPair_Copy(&other, SceneRoot_GetPoseCache(self));
-            func_001A0080(self);
+            cTreeNode_cSkaAnimAnchor_TreeNodeData_DetachParent(self);
             Root_SetWorldPlacement(self, &place);
-            func_0019FFC0(self, &motion);
-            func_0019FE90(self, &other);
+            cSkaAnimAnchor_TreeNode_SetDeltaPos_WorldSpace(self, &motion);
+            cSkaAnimAnchor_TreeNode_SetSkeletonTarget_WorldSpace(self, &other);
         }
-        while (!func_0019FDE0(func_001913D0(self)))
-            func_0019FDF0(self, *PtrVec_Back(func_001913D0(self)));
+        while (!cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Empty(cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(self)))
+            cSkaAnimAnchor_TreeNode_DetachChild(self, *PtrVec_Back(cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(self)));
         if (self) {
-            func_001A0080(self);
-            func_00397080(self);
-            func_00396F30(&self->list, -1);
+            cTreeNode_cSkaAnimAnchor_TreeNodeData_DetachParent(self);
+            cTreeNode_cSkaAnimAnchor_TreeNodeData_DetachChildren(self);
+            cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_dtor(&self->list, -1);
         }
         if (deleteFlag > 0)
             operator_delete(self);
@@ -186,6 +186,6 @@ static inline void merge_flush_func_00396DF0(void) {}
 #pragma cplusplus on
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_00396F30, func_00396F90)
+DEFINE_BASE_DTOR_CHAIN(cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_dtor, std_vector_imp_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00396F30 */

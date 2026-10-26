@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046D880(void) {
+int MediusUniqueCallbackAccountDeleteRequestHandler(void) {
     return 70;
 }

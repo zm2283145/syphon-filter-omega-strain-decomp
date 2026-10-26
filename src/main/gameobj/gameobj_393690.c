@@ -13,17 +13,17 @@
 #define NULL 0
 #pragma mpwc_relax on
 /*fc*/
-int func_001A09F0();                        
-int func_001A0A10();                               
-int func_001A0A30();                               
-int func_001A0AD0();                             
-int func_001A0AE0();                             
-int func_001A0AF0();                          
-int func_001A0B10();                          
-int func_001A0B20();                             
-int func_001AD940();                      
+int cArray_cSkaAnimAnchorListEntry_Iterator_opNe();                        
+int cArray_cSkaAnimAnchorListEntry_Iterator_opInc();                               
+int cSkaAnimAnchor_DetachParent();                               
+int cSkaAnimAnchorListEntry_Anchor();                             
+int cArray_cSkaAnimAnchorListEntry_Iterator_opArrow();                             
+int cArray_cSkaAnimAnchorListEntry_End();                          
+int cArray_cSkaAnimAnchorListEntry_Begin();                          
+int cSkaParams_GetAnimAnchorList();                             
+int cArray_cTreeNode_cSkaSystemPtrPtr_Remove_OrderNotPreserved();                      
 
-void func_00393690(int arg0) {
+void cSkaSystem_DetachParent(int arg0) {
     int sp3C;
     int sp38;
     char * sp34;
@@ -31,20 +31,20 @@ void func_00393690(int arg0) {
     int temp_v1_2;
     char * temp_v1;
 
-    temp_v0 = func_001A0B20(arg0 + 0x10);
-    func_001A0B10(&sp3C, temp_v0);
-    func_001A0AF0(&sp38, temp_v0);
-    if (func_001A09F0(&sp3C, &sp38) != 0) {
+    temp_v0 = cSkaParams_GetAnimAnchorList(arg0 + 0x10);
+    cArray_cSkaAnimAnchorListEntry_Begin(&sp3C, temp_v0);
+    cArray_cSkaAnimAnchorListEntry_End(&sp38, temp_v0);
+    if (cArray_cSkaAnimAnchorListEntry_Iterator_opNe(&sp3C, &sp38) != 0) {
         do {
-            func_001A0A30(func_001A0AD0(func_001A0AE0(&sp3C)));
-            func_001A0A10(&sp3C);
-        } while (func_001A09F0(&sp3C, &sp38) != 0);
+            cSkaAnimAnchor_DetachParent(cSkaAnimAnchorListEntry_Anchor(cArray_cSkaAnimAnchorListEntry_Iterator_opArrow(&sp3C)));
+            cArray_cSkaAnimAnchorListEntry_Iterator_opInc(&sp3C);
+        } while (cArray_cSkaAnimAnchorListEntry_Iterator_opNe(&sp3C, &sp38) != 0);
     }
     temp_v1 = (char *)(arg0 + 0x100);
     sp34 = temp_v1;
     temp_v1_2 = F_(*(char * volatile *)&sp34, 0x4, int);
     if (temp_v1_2 != 0) {
-        func_001AD940(temp_v1_2 + 8, &sp34);
+        cArray_cTreeNode_cSkaSystemPtrPtr_Remove_OrderNotPreserved(temp_v1_2 + 8, &sp34);
         F_(sp34, 0x4, int) = 0;
     }
 }
@@ -126,22 +126,22 @@ typedef struct Actor {
 extern char D_004DF740[];
 extern void cGOBJ_ctor(Actor* self, int* name, int type, int* extra);
 extern void ManModel_ClearAttachPoints(void*);
-extern void func_00393FA0(void*);
+extern void cArray_cBoneScale_ctor(void*);
 extern void SkelNode_Construct(SkelNode*);
-extern void func_00393F30(void*, int, SkelNode*);
-extern void func_003BA9A0(SkelNode*, int);
+extern void cArray_cBone_ctor(void*, int, SkelNode*);
+extern void cBone_dtor(SkelNode*, int);
 extern void Bounds_SetEmpty(void*);
 extern void Vec4_SetOrigin(V4*);
 extern void Vec4_Assign(V4*, V4*);
-extern void func_00393A40(void*, void*, void*);
-extern void func_003939D0(void*, Anim**);
+extern void cSkaParams_ctor(void*, void*, void*);
+extern void cTreeNode_cSkaSystemPtr_ctor(void*, Anim**);
 extern void AnimModel_InitAnim(Anim*);
 
 static inline void Anim_ctor(Anim* a, void* owner)
 {
     a->x0 = 0;
-    func_00393A40(a->x10, owner, 0);
-    func_003939D0(a->x100, &a);
+    cSkaParams_ctor(a->x10, owner, 0);
+    cTreeNode_cSkaSystemPtr_ctor(a->x100, &a);
     AnimModel_InitAnim(a);
 }
 
@@ -154,13 +154,13 @@ Actor* Actor_Construct(Actor* me, int* name, int* extra)
     ManModel_ClearAttachPoints(self->x60);
     s = &self->x2E50;
     s->x0 = 0;
-    func_00393FA0(s->x4);
+    cArray_cBoneScale_ctor(s->x4);
     s->x14 = 0;
     {
         SkelNode n;
         SkelNode_Construct(&n);
-        func_00393F30(s->x18, 0, &n);
-        func_003BA9A0(&n, -1);
+        cArray_cBone_ctor(s->x18, 0, &n);
+        cBone_dtor(&n, -1);
     }
     s->x28 = 0;
     Bounds_SetEmpty(s->x30);

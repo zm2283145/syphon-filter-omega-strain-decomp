@@ -83,61 +83,61 @@ void TeamRelations_Teardown(void);
 void WaterFx_Clear(void* p);
 void WeaponDb_LoadResources(void* p);
 void World_UnloadSkelHog(World_134640* w);
-void func_001309A0(World_134640* w);
-void func_00130B10(World_134640* w);
-void func_00132A40(World_134640* w);
+void cGameSystem_DestroyAnimationSets(World_134640* w);
+void cGameSystem_RemoveVUMGOBJNames(World_134640* w);
+void cGameSystem_DestroyPlayerCameraAndScene(World_134640* w);
 void LevelEnd_RunDebrief(World_134640* w, int mode);
-void func_00135020(void);
-void func_00136BD0(World_134640* w);
-void func_00136CD0(World_134640* w);
-void func_0013E070(void* p);
-void func_0016F4D0(void);
-void func_00170570(void);
-void func_00170D30(void* p);
-void func_001784B0(void* p);
-void func_001AF7A0(void);
-void func_001C3B00(void* p);
+void cCollisionSystem_cBox_UnInitStatics(void);
+void cGameSystem_ClearNodeGroups(World_134640* w);
+void cGameSystem_ClearNodeList(World_134640* w);
+void cScene_DeactivateAll(void* p);
+void cAI_SystemClear(void);
+void ResetInteractBoxes(void);
+void cHotboxMan_ClearLists(void* p);
+void cEnvMan_Reset(void* p);
+void cHuman_UnInitStatics(void);
+void cLoader_DeallocateAllAnimationBuffers(void* p);
 void Snd_StopAndFlushAll(void* p);
 void SoundMgr_UnloadLevel(void* p);
-void func_00224140(void* p);
-void func_002261C0(void* p);
-void func_0022D3C0(void* p);
-void func_00236F80(void);
-void func_00238F20(void);
+void cGOBJActivationMan_Clear(void* p);
+void cObjectiveMan_DeactivateObjectiveScreen(void* p);
+void cTargetManager_Reset(void* p);
+void nSfxLoader_UnloadEffects(void);
+void cNIEventFXTrack_FreeStringTable(void);
 void HudObject_dtor(void* p, int f);
-void func_002569C0(void);
-void func_00257150(void);
+void cBackpack_PurgeCrateSaves(void);
+void cBackpack_Reset(void);
 void VisionFx_Prepare(void* p);
 void VisionMgr_SetPendingMode(void* p, int a, int b);
 void ScriptUtils_ReleaseAll(void);
 void PadRumble_Stop(void);
 void Pad_EnableVibration(int a);
 void TremorList_Free(void* p, int f);
-void func_00275550(void);
+void cBulletManager_Reset(void);
 void DecalMgr_dtor(void* p, int f);
-void func_003A3670(void* p);
-void func_003C2A80(void);
-VDel_134640* func_003CAB50(World_134640* w, void* s);
-void func_003D0FB0(void* p);
+void cParticleSystem_Clear(void* p);
+void nCollision_UnInitStatics(void);
+VDel_134640* cSystemContainer_RemoveSystem(World_134640* w, void* s);
+void cTextSystem_Clear(void* p);
 void* TextManager_Get(void);
-void func_003D5750(void* p);
-void func_003E56F0(void);
+void cShadowMan_Purge(void* p);
+void cCharActionMsg_DestinationParams_ClearPrevMsg(void);
 void FStream_CancelRequests(void* p);
 void* Fstream_GetLoader(void);
 void EffectService_ReleaseAll(void);
-void func_003FDBB0(void);
-void func_00404FD0(void* p, int a);
-void func_00407BE0(void);
-void func_00408EA0(void* p);
+void nGlobalization_UnloadLevelStrings(void);
+void Monster_dtor(void* p, int a);
+void SKLHog_DeleteIdentities(void);
+void cMaterialPropertiesTable_Reset(void* p);
 void GobjScopeBase_Dtor(void* p, int f);
 void MotionManager_Shutdown(void);
 void* DME_GetLobby(void);
 void DME_StopThread(void);
 void DME_StartThread(void);
 void Net_CleanupGame(void);
-void func_0042B2D0(void);
-void func_0042E6D0(void);
-void func_0044E340(void* p);
+void cDME_Restart(void);
+void cNetObjectMgr_Reset(void);
+void SFOLobby_ExitGame(void* p);
 void ItemTable_GetModel(void);
 }
 
@@ -178,12 +178,12 @@ extern "C" void World_Teardown(World_134640* w)
     void* svc;
     int mode;
     bool had;
-    func_002569C0();
+    cBackpack_PurgeCrateSaves();
     svc = Service_Lookup(w, D_004F2CC0);
     if (svc) Snd_StopAndFlushAll(svc);
     {
         void* om = ObjMan_GetService();
-        if (om) func_002261C0(om);
+        if (om) cObjectiveMan_DeactivateObjectiveScreen(om);
     }
     {
         void* p = w->fEC;
@@ -207,33 +207,33 @@ extern "C" void World_Teardown(World_134640* w)
     WaterFx_Clear(w->fE4);
     g_VisionNight = 0;
     g_VisionThermal = 0;
-    func_00275550();
-    func_00238F20();
+    cBulletManager_Reset();
+    cNIEventFXTrack_FreeStringTable();
     Script_Cleanup(D_00555070);
     ScriptUtils_ReleaseAll();
     TeamRelations_Teardown();
-    func_003FDBB0();
-    func_00136BD0(w);
-    func_001784B0(w->f84);
+    nGlobalization_UnloadLevelStrings();
+    cGameSystem_ClearNodeGroups(w);
+    cEnvMan_Reset(w->f84);
     Clear_134640(&w->l9C);
-    func_00170D30(w->f80);
-    func_00170570();
-    func_0022D3C0(g_TargetVisMgr);
-    func_00408EA0(D_0053BB90);
+    cHotboxMan_ClearLists(w->f80);
+    ResetInteractBoxes();
+    cTargetManager_Reset(g_TargetVisMgr);
+    cMaterialPropertiesTable_Reset(D_0053BB90);
     EffectService_ReleaseAll();
-    func_00136CD0(w);
-    func_00257150();
+    cGameSystem_ClearNodeList(w);
+    cBackpack_Reset();
     mode = 0;
     if (g_IsMultiplayer) {
         if (TakeFlag_134640()) {
             if (D_005723B0 == 1) mode = 1;
             else if (D_005723B0 == 2) mode = 2;
         }
-        func_0042E6D0();
-        func_003E56F0();
-        func_0042B2D0();
+        cNetObjectMgr_Reset();
+        cCharActionMsg_DestinationParams_ClearPrevMsg();
+        cDME_Restart();
         if (!w->b1C7) {
-            if (DME_GetLobby()) func_0044E340(DME_GetLobby());
+            if (DME_GetLobby()) SFOLobby_ExitGame(DME_GetLobby());
             Net_CleanupGame();
         }
     }
@@ -251,15 +251,15 @@ extern "C" void World_Teardown(World_134640* w)
         e->c = 0;
     }
     Clear_134640(&w->lC4);
-    func_003D0FB0(TextManager_Get());
-    func_00224140(ActivationMgr_Get());
-    func_00130B10(w);
-    func_001C3B00(w->f88);
-    func_00132A40(w);
+    cTextSystem_Clear(TextManager_Get());
+    cGOBJActivationMan_Clear(ActivationMgr_Get());
+    cGameSystem_RemoveVUMGOBJNames(w);
+    cLoader_DeallocateAllAnimationBuffers(w->f88);
+    cGameSystem_DestroyPlayerCameraAndScene(w);
     WeaponDb_LoadResources(w->f1E0);
     ItemTable_GetModel();
     if (svc) SoundMgr_UnloadLevel(svc);
-    func_0013E070(w->fD0);
+    cScene_DeactivateAll(w->fD0);
     EventQueue_ClearAll();
     IdMgr_Destroy();
     {
@@ -276,8 +276,8 @@ extern "C" void World_Teardown(World_134640* w)
     }
     w->f1F4 = 0;
     w->f1F8 = 0;
-    func_003A3670(D_0053B540);
-    func_0016F4D0();
+    cParticleSystem_Clear(D_0053B540);
+    cAI_SystemClear();
     {
         void* p = w->fDC;
         AllocGuard g;
@@ -285,25 +285,25 @@ extern "C" void World_Teardown(World_134640* w)
         Mem_Free(0, p, D_0049A890, 0x35C);
     }
     w->fDC = 0;
-    func_001309A0(w);
+    cGameSystem_DestroyAnimationSets(w);
     World_UnloadSkelHog(w);
     {
-        VDel_134640* p = func_003CAB50(w, Service_Lookup(w, g_LosCheckService));
+        VDel_134640* p = cSystemContainer_RemoveSystem(w, Service_Lookup(w, g_LosCheckService));
         AllocGuard g;
         p->Del(-1);
         Mem_Free(0, p, D_0049A890, 0x366);
     }
-    func_00135020();
-    func_003C2A80();
-    func_001AF7A0();
+    cCollisionSystem_cBox_UnInitStatics();
+    nCollision_UnInitStatics();
+    cHuman_UnInitStatics();
     MotionManager_Shutdown();
     Destroy_134640();
-    func_003C2A80();
+    nCollision_UnInitStatics();
     LightMgr_FreePools(g_LightMgr);
-    func_00236F80();
-    func_003D5750(D_00543790);
-    func_00404FD0(g_AgentPartCache, -1);
-    func_00407BE0();
+    nSfxLoader_UnloadEffects();
+    cShadowMan_Purge(D_00543790);
+    Monster_dtor(g_AgentPartCache, -1);
+    SKLHog_DeleteIdentities();
     FStream_CancelRequests(Fstream_GetLoader());
     ObjMan_DeleteAll(Service_Lookup(w, D_004F7578));
     if (had) DME_StopThread();
@@ -323,22 +323,22 @@ static inline void merge_flush_func_00134640(void) {}
 struct O_00134E00 { void* vt; char m4[0x10]; char m14[4]; };
 extern "C" {
 extern char D_004DA2F0[];
-extern "C" void func_00136350();
-extern "C" void func_00138580();
-extern "C" void func_00138590();
-extern "C" void func_001385A0();
-void * const D_004D9140[8] = { (void*)0x0, (void*)0x0, (void*)func_00136350, (void*)func_00138580, (void*)func_00138590, (void*)func_001385A0, (void*)0x0, (void*)0x0 };
-void func_00134FD0(void* m, short f);
+extern "C" void cCollisionModelList_dtor();
+extern "C" void cCollisionModelList_GetList();
+extern "C" void cCollisionModelList_SetCenterOfActivation();
+extern "C" void cCollisionModelList_Prepare();
+void * const D_004D9140[8] = { (void*)0x0, (void*)0x0, (void*)cCollisionModelList_dtor, (void*)cCollisionModelList_GetList, (void*)cCollisionModelList_SetCenterOfActivation, (void*)cCollisionModelList_Prepare, (void*)0x0, (void*)0x0 };
+void cArray_FixedCapacity_cGOBJPtr_2_dtor(void* m, short f);
 void PtrVec_Dtor_134E80(void* m, short f);
 void operator_delete(void* p);
 }
-extern "C" O_00134E00* func_00134E00(O_00134E00* self, short del)
+extern "C" O_00134E00* cCollisionModelList_Game_dtor(O_00134E00* self, short del)
 {
     if (self) {
         self->vt = D_004DA2F0;
         if (self) {
             self->vt = ((char*)D_004D9140);
-            func_00134FD0(self->m14, -1);
+            cArray_FixedCapacity_cGOBJPtr_2_dtor(self->m14, -1);
             PtrVec_Dtor_134E80(self->m4, -1);
         }
         if (del > 0) operator_delete(self);

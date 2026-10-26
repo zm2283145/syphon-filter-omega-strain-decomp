@@ -6,9 +6,9 @@
 
 #include "types.h"
 
-extern int func_001F35B0(int);
+extern int std_list_cSkaTransBLENDPtr_generic_iterator_1_ctor_listR(int);
 
-int func_001F3580(int a0) {
-    func_001F35B0(a0);
+int cConstLListIterator_cSkaTransBLENDPtr_ctor(int a0) {
+    std_list_cSkaTransBLENDPtr_generic_iterator_1_ctor_listR(a0);
     return a0;
 }

@@ -8,7 +8,7 @@
 
 int D_00497CAC = 0;
 
-int func_0046DF58(void) {
+int MediusUniqueCallbackBillingLoginResponseHandler(void) {
     int v0;
     int cond;
 
@@ -23,6 +23,6 @@ ret:
     return v0;
 }
 
-int func_0046DF88(void) {
+int MediusUniqueCallbackBillingInfoRequestHandler(void) {
     return 132;
 }

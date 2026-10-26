@@ -141,8 +141,8 @@ void GuiOnlineConnect_DnasRetry(S_0029E440* self);
 void Renderer_Teardown(void* p);
 void* Service_Lookup(void* a, void* b);
 void SoundMgr_UnloadLevel(void* svc);
-void func_002B4FA8(int id);
-void func_002B4E50(void);
+void sceMc2DeleteSocket(int id);
+void sceMc2End(void);
 void* String_CStr_189540(void* p);
 void SFOLobby_LaunchNetGui(void* a, char* b);
 #if 0 /* merge_units */
@@ -216,8 +216,8 @@ extern "C" int GuiOnlineConnect_HandleEvent(S_0029E440* self, void* w, int msg, 
                     SoundMgr_UnloadLevel(svc);
                 id = g_MemCard ? *g_MemCard : -1;
                 if (id != -1)
-                    func_002B4FA8(id);
-                func_002B4E50();
+                    sceMc2DeleteSocket(id);
+                sceMc2End();
                 SFOLobby_LaunchNetGui(String_CStr_189540(D_004FFBA4), (*(char**)dat_0048B988));
             } else if (sub == 0x1F) {
                 self->f88 = 5;

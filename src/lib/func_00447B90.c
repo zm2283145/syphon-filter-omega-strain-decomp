@@ -8,7 +8,7 @@
 
 extern int SFOLobby_NoInstance(void);
 
-int func_00447B90(void) {
+int SFOLobby_Callback_MediusErrorMessage(void) {
     int tmp0;
 
     tmp0 = SFOLobby_NoInstance();

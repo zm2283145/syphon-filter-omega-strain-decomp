@@ -15,41 +15,41 @@
 #include "loose04_types.h"
 
 /* Iterator inequality. */
-int func_003D20F0(L4Iter* a, L4Iter* b) {
+int opNe_cConstLListIteratorR_cConstLListIteratorR_5(L4Iter* a, L4Iter* b) {
     return a->node != b->node;
 }
 
 /* end(): iterator at the tree header. */
-void func_003D2110(Iter* out, Tree* t) {
+void cLList_cAnimTexturePtr_End(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
 /* Iterator increment. */
-L4Iter* func_003D2120(L4Iter* it) {
+L4Iter* cConstLListIterator_cAnimTexturePtr_opInc(L4Iter* it) {
     it->node = it->node->next;
     return it;
 }
 
-void* func_003D2140(void* self) {
+void* cTexture_GetName(void* self) {
     return self;
 }
 
-int func_003D2150(Word* self) {
+int cAnimTexture_GetTextureId(Word* self) {
     return self->value;
 }
 
 /* Iterator dereference. */
-int* func_003D2160(L4Iter* it) {
+int* cConstLListIterator_cAnimTexturePtr_opMul(L4Iter* it) {
     return &it->node->value;
 }
 
-Word* func_003D2170(Word* dst, Word* src) {
+Word* cConstLListIterator_cAnimTexturePtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
 /* begin() of a PtrVec. */
-void func_003D2180(Iter* out, PtrVec* v) {
+void cLList_cAnimTexturePtr_Begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 #pragma pop /* merge_units */
@@ -62,46 +62,46 @@ typedef struct { char p0[0x44]; Anim3D2190* anim; char p48[4]; int frame; char p
 typedef struct { int idx; char p4[0x10]; unsigned int count; char p18[0x10]; int cur; } Ent3D2190;
 typedef struct { char p0[8]; Tex3D2190** list; } Mgr3D2190;
 extern int Tex_GetRecord(int, int);
-extern int func_003797D0(char*);
+extern int XLib_GetTexMan(char*);
 #if 0 /* merge_units */
-extern int func_003D20F0(int*, int);
+extern int opNe_cConstLListIteratorR_cConstLListIteratorR_5(int*, int);
 #endif /* merge_units */
-#define func_003D20F0(a0, a1) (func_003D20F0((L4Iter *)(a0), (L4Iter *)(a1))) /* merge_units */
+#define opNe_cConstLListIteratorR_cConstLListIteratorR_5(a0, a1) (opNe_cConstLListIteratorR_cConstLListIteratorR_5((L4Iter *)(a0), (L4Iter *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_003D2110(int*, int);
+extern void cLList_cAnimTexturePtr_End(int*, int);
 #endif /* merge_units */
-#define func_003D2110(a0, a1) (func_003D2110((Iter *)(a0), (Tree *)(a1))) /* merge_units */
+#define cLList_cAnimTexturePtr_End(a0, a1) (cLList_cAnimTexturePtr_End((Iter *)(a0), (Tree *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_003D2120(int*);
+extern void cConstLListIterator_cAnimTexturePtr_opInc(int*);
 #endif /* merge_units */
-#define func_003D2120(a0) ((void)func_003D2120((L4Iter *)(a0))) /* merge_units */
+#define cConstLListIterator_cAnimTexturePtr_opInc(a0) ((void)cConstLListIterator_cAnimTexturePtr_opInc((L4Iter *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_003D2140(int);
+extern int cTexture_GetName(int);
 #endif /* merge_units */
-#define func_003D2140(a0) ((int)func_003D2140((void *)(a0))) /* merge_units */
+#define cTexture_GetName(a0) ((int)cTexture_GetName((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_003D2150(Ent3D2190*);
+extern int cAnimTexture_GetTextureId(Ent3D2190*);
 #endif /* merge_units */
-#define func_003D2150(a0) (func_003D2150((Word *)(a0))) /* merge_units */
+#define cAnimTexture_GetTextureId(a0) (cAnimTexture_GetTextureId((Word *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern Ent3D2190** func_003D2160(int*);
+extern Ent3D2190** cConstLListIterator_cAnimTexturePtr_opMul(int*);
 #endif /* merge_units */
-#define func_003D2160(a0) ((Ent3D2190 * *)func_003D2160((L4Iter *)(a0))) /* merge_units */
+#define cConstLListIterator_cAnimTexturePtr_opMul(a0) ((Ent3D2190 * *)cConstLListIterator_cAnimTexturePtr_opMul((L4Iter *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_003D2170(int*, int*);
+extern int cConstLListIterator_cAnimTexturePtr_ctor(int*, int*);
 #endif /* merge_units */
-#define func_003D2170(a0, a1) ((int)func_003D2170((Word *)(a0), (Word *)(a1))) /* merge_units */
+#define cConstLListIterator_cAnimTexturePtr_ctor(a0, a1) ((int)cConstLListIterator_cAnimTexturePtr_ctor((Word *)(a0), (Word *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_003D2180(int*, int);
+extern void cLList_cAnimTexturePtr_Begin(int*, int);
 #endif /* merge_units */
-#define func_003D2180(a0, a1) (func_003D2180((Iter *)(a0), (PtrVec *)(a1))) /* merge_units */
+#define cLList_cAnimTexturePtr_Begin(a0, a1) (cLList_cAnimTexturePtr_Begin((Iter *)(a0), (PtrVec *)(a1))) /* merge_units */
 
 extern int strcmp(int, int);
 extern char g_Video[];
@@ -121,18 +121,18 @@ int db;
     Tex3D2190* t;
 
     found = 0;
-    func_003D2180(b, list);
-    func_003D2170(it, b);
-    func_003D2110(a, list);
-    while (func_003D20F0(it, func_003D2170(e, a)) != 0) {
-        ent = *func_003D2160(it);
-        db = func_003797D0(g_Video);
-        if (strcmp(func_003D2140(Tex_GetRecord(db, func_003D2150(ent))), name) == 0) {
+    cLList_cAnimTexturePtr_Begin(b, list);
+    cConstLListIterator_cAnimTexturePtr_ctor(it, b);
+    cLList_cAnimTexturePtr_End(a, list);
+    while (opNe_cConstLListIteratorR_cConstLListIteratorR_5(it, cConstLListIterator_cAnimTexturePtr_ctor(e, a)) != 0) {
+        ent = *cConstLListIterator_cAnimTexturePtr_opMul(it);
+        db = XLib_GetTexMan(g_Video);
+        if (strcmp(cTexture_GetName(Tex_GetRecord(db, cAnimTexture_GetTextureId(ent))), name) == 0) {
             found = ent;
             break;
         }
-        func_003D2120(it);
-        func_003D2110(a, list);
+        cConstLListIterator_cAnimTexturePtr_opInc(it);
+        cLList_cAnimTexturePtr_End(a, list);
     }
     if (found != 0) {
         n = found->cur - 1;
@@ -148,14 +148,14 @@ int db;
     }
 }
 #pragma pop
-#undef func_003D20F0 /* merge_units */
-#undef func_003D2110 /* merge_units */
-#undef func_003D2120 /* merge_units */
-#undef func_003D2140 /* merge_units */
-#undef func_003D2150 /* merge_units */
-#undef func_003D2160 /* merge_units */
-#undef func_003D2170 /* merge_units */
-#undef func_003D2180 /* merge_units */
+#undef opNe_cConstLListIteratorR_cConstLListIteratorR_5 /* merge_units */
+#undef cLList_cAnimTexturePtr_End /* merge_units */
+#undef cConstLListIterator_cAnimTexturePtr_opInc /* merge_units */
+#undef cTexture_GetName /* merge_units */
+#undef cAnimTexture_GetTextureId /* merge_units */
+#undef cConstLListIterator_cAnimTexturePtr_opMul /* merge_units */
+#undef cConstLListIterator_cAnimTexturePtr_ctor /* merge_units */
+#undef cLList_cAnimTexturePtr_Begin /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003D2190 */
 
@@ -166,44 +166,44 @@ typedef struct { char p0[0x44]; Anim3D2320* anim; char p48[4]; int frame; char p
 typedef struct { int idx; char p4[0x10]; unsigned int count; char p18[0x10]; int cur; } Ent3D2320;
 typedef struct { char p0[8]; Tex3D2320** list; } Mgr3D2320;
 #if 0 /* merge_units */
-extern int func_003D20F0(int*, int);
+extern int opNe_cConstLListIteratorR_cConstLListIteratorR_5(int*, int);
 #endif /* merge_units */
-#define func_003D20F0(a0, a1) (func_003D20F0((L4Iter *)(a0), (L4Iter *)(a1))) /* merge_units */
+#define opNe_cConstLListIteratorR_cConstLListIteratorR_5(a0, a1) (opNe_cConstLListIteratorR_cConstLListIteratorR_5((L4Iter *)(a0), (L4Iter *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_003D2110(int*, int);
+extern void cLList_cAnimTexturePtr_End(int*, int);
 #endif /* merge_units */
-#define func_003D2110(a0, a1) (func_003D2110((Iter *)(a0), (Tree *)(a1))) /* merge_units */
+#define cLList_cAnimTexturePtr_End(a0, a1) (cLList_cAnimTexturePtr_End((Iter *)(a0), (Tree *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_003D2120(int*);
+extern void cConstLListIterator_cAnimTexturePtr_opInc(int*);
 #endif /* merge_units */
-#define func_003D2120(a0) ((void)func_003D2120((L4Iter *)(a0))) /* merge_units */
+#define cConstLListIterator_cAnimTexturePtr_opInc(a0) ((void)cConstLListIterator_cAnimTexturePtr_opInc((L4Iter *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_003D2140(int);
+extern int cTexture_GetName(int);
 #endif /* merge_units */
-#define func_003D2140(a0) ((int)func_003D2140((void *)(a0))) /* merge_units */
+#define cTexture_GetName(a0) ((int)cTexture_GetName((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_003D2150(Ent3D2320*);
+extern int cAnimTexture_GetTextureId(Ent3D2320*);
 #endif /* merge_units */
-#define func_003D2150(a0) (func_003D2150((Word *)(a0))) /* merge_units */
+#define cAnimTexture_GetTextureId(a0) (cAnimTexture_GetTextureId((Word *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern Ent3D2320** func_003D2160(int*);
+extern Ent3D2320** cConstLListIterator_cAnimTexturePtr_opMul(int*);
 #endif /* merge_units */
-#define func_003D2160(a0) ((Ent3D2320 * *)func_003D2160((L4Iter *)(a0))) /* merge_units */
+#define cConstLListIterator_cAnimTexturePtr_opMul(a0) ((Ent3D2320 * *)cConstLListIterator_cAnimTexturePtr_opMul((L4Iter *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_003D2170(int*, int*);
+extern int cConstLListIterator_cAnimTexturePtr_ctor(int*, int*);
 #endif /* merge_units */
-#define func_003D2170(a0, a1) ((int)func_003D2170((Word *)(a0), (Word *)(a1))) /* merge_units */
+#define cConstLListIterator_cAnimTexturePtr_ctor(a0, a1) ((int)cConstLListIterator_cAnimTexturePtr_ctor((Word *)(a0), (Word *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_003D2180(int*, int);
+extern void cLList_cAnimTexturePtr_Begin(int*, int);
 #endif /* merge_units */
-#define func_003D2180(a0, a1) (func_003D2180((Iter *)(a0), (PtrVec *)(a1))) /* merge_units */
+#define cLList_cAnimTexturePtr_Begin(a0, a1) (cLList_cAnimTexturePtr_Begin((Iter *)(a0), (PtrVec *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern Mgr3D2320* g_TextureMgr;
@@ -225,18 +225,18 @@ int db;
     Tex3D2320* t;
 
     found = 0;
-    func_003D2180(b, list);
-    func_003D2170(it, b);
-    func_003D2110(a, list);
-    while (func_003D20F0(it, func_003D2170(e, a)) != 0) {
-        ent = *func_003D2160(it);
-        db = func_003797D0(g_Video);
-        if (strcmp(func_003D2140(Tex_GetRecord(db, func_003D2150(ent))), name) == 0) {
+    cLList_cAnimTexturePtr_Begin(b, list);
+    cConstLListIterator_cAnimTexturePtr_ctor(it, b);
+    cLList_cAnimTexturePtr_End(a, list);
+    while (opNe_cConstLListIteratorR_cConstLListIteratorR_5(it, cConstLListIterator_cAnimTexturePtr_ctor(e, a)) != 0) {
+        ent = *cConstLListIterator_cAnimTexturePtr_opMul(it);
+        db = XLib_GetTexMan(g_Video);
+        if (strcmp(cTexture_GetName(Tex_GetRecord(db, cAnimTexture_GetTextureId(ent))), name) == 0) {
             found = ent;
             break;
         }
-        func_003D2120(it);
-        func_003D2110(a, list);
+        cConstLListIterator_cAnimTexturePtr_opInc(it);
+        cLList_cAnimTexturePtr_End(a, list);
     }
     if (found != 0) {
         n = found->cur + 1;
@@ -252,14 +252,14 @@ int db;
     }
 }
 #pragma pop
-#undef func_003D20F0 /* merge_units */
-#undef func_003D2110 /* merge_units */
-#undef func_003D2120 /* merge_units */
-#undef func_003D2140 /* merge_units */
-#undef func_003D2150 /* merge_units */
-#undef func_003D2160 /* merge_units */
-#undef func_003D2170 /* merge_units */
-#undef func_003D2180 /* merge_units */
+#undef opNe_cConstLListIteratorR_cConstLListIteratorR_5 /* merge_units */
+#undef cLList_cAnimTexturePtr_End /* merge_units */
+#undef cConstLListIterator_cAnimTexturePtr_opInc /* merge_units */
+#undef cTexture_GetName /* merge_units */
+#undef cAnimTexture_GetTextureId /* merge_units */
+#undef cConstLListIterator_cAnimTexturePtr_opMul /* merge_units */
+#undef cConstLListIterator_cAnimTexturePtr_ctor /* merge_units */
+#undef cLList_cAnimTexturePtr_Begin /* merge_units */
 #undef g_TextureMgr /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003D2320 */
@@ -274,9 +274,9 @@ struct Raw_24B0 { int p; };
 struct S_24B0 { int a, b, c; unsigned char dirty; };
 extern "C" {
 Raw_24B0 List_Begin(void*);
-Raw_24B0 func_003D2610(void*);
-void func_003D2620(char**, const Raw_24B0&);
-void func_003D2600(char**, const Raw_24B0&);
+Raw_24B0 std_list_cAnimTexturePtr_end(void*);
+void std_list_cAnimTexturePtr_generic_iterator_ctor(char**, const Raw_24B0&);
+void cLListIterator_cAnimTexturePtr_ctor_listR(char**, const Raw_24B0&);
 }
 extern "C" void ListenerList_Update(S_24B0* self, float dt) {
     char* end1;
@@ -284,9 +284,9 @@ extern "C" void ListenerList_Update(S_24B0* self, float dt) {
     if (self->dirty) {
         char* it;
         char* n;
-        func_003D2620(&it, List_Begin(self));
+        std_list_cAnimTexturePtr_generic_iterator_ctor(&it, List_Begin(self));
         n = it;
-        while ((func_003D2600(&end1, func_003D2610(self)), n != end1)) {
+        while ((cLListIterator_cAnimTexturePtr_ctor_listR(&end1, std_list_cAnimTexturePtr_end(self)), n != end1)) {
             F_(n, 0x8, Obj_24B0*)->Reset();
             n = F_(n, 0x4, char*);
         }
@@ -295,9 +295,9 @@ extern "C" void ListenerList_Update(S_24B0* self, float dt) {
     {
         char* it;
         char* n;
-        func_003D2620(&it, List_Begin(self));
+        std_list_cAnimTexturePtr_generic_iterator_ctor(&it, List_Begin(self));
         n = it;
-        while ((func_003D2600(&end2, func_003D2610(self)), n != end2)) {
+        while ((cLListIterator_cAnimTexturePtr_ctor_listR(&end2, std_list_cAnimTexturePtr_end(self)), n != end2)) {
             F_(n, 0x8, Obj_24B0*)->Update(dt);
             n = F_(n, 0x4, char*);
         }

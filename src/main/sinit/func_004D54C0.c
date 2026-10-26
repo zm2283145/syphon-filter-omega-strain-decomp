@@ -5,7 +5,7 @@ extern V4_4D54C0 D_0053B660;
 extern V4_4D54C0 D_0053B670;
 extern struct { int n; float v[0x103]; } D_0053B6A0;
 extern char D_0053B544[], D_0053B540[], D_0053B528[];
-extern char func_003A6240[];
+extern char cParticleSystem_dtor[];
 extern void ScalarCollection_Init(void* p);
 extern void __register_global_object(void* obj, void* dtor, void* link);
 extern int Random_Next(void);
@@ -13,7 +13,7 @@ void StaticInit_ParticleRandomTable(void)
 {
     int i;
     ScalarCollection_Init(D_0053B544);
-    __register_global_object(D_0053B540, func_003A6240, D_0053B528);
+    __register_global_object(D_0053B540, cParticleSystem_dtor, D_0053B528);
     D_004BC550.x = 0.0f;
     D_004BC550.y = 0.0f;
     D_004BC550.z = 1.0f;

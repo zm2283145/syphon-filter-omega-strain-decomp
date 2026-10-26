@@ -31,8 +31,8 @@ typedef struct Obj {
     Ctx *ctx;
 } Obj;
 extern void FlushCache(int a);
-extern int func_0034A4C0(Ctx *p, int size, int *avail, unsigned char *out);
-extern int func_0034C9A0(void *a, void *b, int n);
+extern int libnetb_block_create_space(Ctx *p, int size, int *avail, unsigned char *out);
+extern int libnetb_trans_data(void *a, void *b, int n);
 extern void *memcpy(void *d, const void *s, unsigned int n);
 
 int IopRing_Send(Obj *o, void *src, int size, int p3, Name16 *p4, int p5, int *out, int *err)
@@ -63,7 +63,7 @@ int IopRing_Send(Obj *o, void *src, int size, int p3, Name16 *p4, int p5, int *o
         *err = c->err;
         return 1;
     }
-    r = func_0034A4C0(c, size, &avail, &ready);
+    r = libnetb_block_create_space(c, size, &avail, &ready);
     if (r != 0)
         return r;
     if (ready == 1) {
@@ -81,10 +81,10 @@ int IopRing_Send(Obj *o, void *src, int size, int p3, Name16 *p4, int p5, int *o
         b->f3C = ready;
         b->self = (int)b;
         memcpy((char *)b + 0x40, src, size);
-        r = func_0034C9A0((char *)b + 0x40, c->remote + off, n);
+        r = libnetb_trans_data((char *)b + 0x40, c->remote + off, n);
         if (r != 0)
             return r;
-        r = func_0034C9A0(b, c->remote + cur, 0x40);
+        r = libnetb_trans_data(b, c->remote + cur, 0x40);
         if (r != 0)
             return r;
         c->cur = c->cur + avail;

@@ -40,7 +40,7 @@ extern "C" {
 extern char D_004E1730[];
 void GuiWidget_ctor(void* p);
 void Resource_Construct(void* m);
-void func_00460E90(Sub_60CF0* s);
+void cArray_tQuip_ctor(Sub_60CF0* s);
 void GuiPersonnelMenu_ctor(void* m);
 }
 #pragma opt_propagation off
@@ -68,7 +68,7 @@ extern "C" W_60CF0* GuiEndGameAwards_ctor(W_60CF0* self)
     p->w180 = 0;
     p->b186 = 0;
     s = &self->sub;
-    func_00460E90(s);
+    cArray_tQuip_ctor(s);
     GuiPersonnelMenu_ctor(s->menu);
     s->x10 = 0;
     s->x1B0 = 0;

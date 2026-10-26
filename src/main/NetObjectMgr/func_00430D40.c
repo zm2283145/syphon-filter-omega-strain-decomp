@@ -11,7 +11,7 @@ extern char D_004BFB98[];
 typedef TransferTreeAllocator<TransferReference*, D_004BFB58, D_004BFB98> ReferenceAllocator;
 
 /* Allocate and link a registered-reference map node. */
-extern "C" ReferenceAllocator::Node* func_00430D40(
+extern "C" ReferenceAllocator::Node* std_tree_pair_int_value_compare_insert_node_at_nodeP_bool_bool_pairR_4(
     RbTree* tree, ReferenceAllocator::Node* parent, int left, int first,
     const ReferenceAllocator::Value* value)
 {
@@ -19,14 +19,14 @@ extern "C" ReferenceAllocator::Node* func_00430D40(
 }
 
 /* Release a reference node through the caller's allocator context. */
-extern "C" void func_00430EB0(
+extern "C" void opDelete_nodeP_int_bool_charP_etc_15(
     ReferenceAllocator::Node* node, int pool, int flags, char* file, int line)
 {
     ReferenceAllocator::release(node, pool, flags, file, line);
 }
 
 /* Release one reference node using the map's allocation metadata. */
-extern "C" void func_00430F60(void* allocator, ReferenceAllocator::Node* node, int count)
+extern "C" void cAllocator_node_deallocate_nodeP_uint_15(void* allocator, ReferenceAllocator::Node* node, int count)
 {
     ReferenceAllocator::deallocate(allocator, node, count);
 }

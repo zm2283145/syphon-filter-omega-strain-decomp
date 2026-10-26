@@ -24,6 +24,6 @@ DEFINE_BUF_HOLDER_DTOR(func_0013A040)
 
 /* Destroy a vector through its allocator, optionally delete. */
 extern "C" { char D_0049AE00[] = "allocator.hh"; }
-DEFINE_VECTOR_RELEASE_DTOR(func_0013A130, func_0013B430, func_0013A1B0, D_0049AE00)
+DEFINE_VECTOR_RELEASE_DTOR(func_0013A130, std_vector_deleter_cLosRequest_cCollisionModelList_Game_clear, opDelete_cLosRequestP_int_bool_charP_etc, D_0049AE00)
 #pragma pop /* merge_units */
 /* merge_units: end func_0013A130 */

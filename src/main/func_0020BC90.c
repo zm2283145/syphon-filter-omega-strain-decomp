@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_0020BC90(void* self) {
+void* cAllocator_cSkaSwitchItem_ctor_cAllocatorR(void* self) {
     return self;
 }

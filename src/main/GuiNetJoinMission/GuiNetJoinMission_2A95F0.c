@@ -3,7 +3,7 @@
 extern "C" {
 extern "C" void GuiOnlineOptions_GetClassName();
 extern "C" void GuiOnlineOptions_IsType();
-extern "C" void func_002A97E0();
+extern "C" void GuiOnlineOptions_SaveDone();
 extern "C" void GuiOnlineOptions_HandleEvent();
 extern "C" void GuiOnlineOptions_HandleInput();
 extern "C" void GuiOnlineOptions_Deactivate();
@@ -42,4 +42,4 @@ extern "C" O2A95F0* GuiOnlineOptions_dtor(O2A95F0* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DDAF0[28] = { (void*)0x0, (void*)0x0, (void*)GuiOnlineOptions_dtor, (void*)GuiOnlineOptions_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiScreen_Wake, (void*)GuiScreen_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiOnlineOptions_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiScreen_Update, (void*)GuiOnlineOptions_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiOnlineOptions_GetClassName, (void*)GuiOnlineOptions_IsType, (void*)func_002A97E0, (void*)GuiScreen_PollLobby, (void*)GuiOnlineOptions_Activate, (void*)GuiOnlineOptions_Deactivate, (void*)0x0 };
+void * const D_004DDAF0[28] = { (void*)0x0, (void*)0x0, (void*)GuiOnlineOptions_dtor, (void*)GuiOnlineOptions_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiScreen_Wake, (void*)GuiScreen_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiOnlineOptions_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiScreen_Update, (void*)GuiOnlineOptions_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiOnlineOptions_GetClassName, (void*)GuiOnlineOptions_IsType, (void*)GuiOnlineOptions_SaveDone, (void*)GuiScreen_PollLobby, (void*)GuiOnlineOptions_Activate, (void*)GuiOnlineOptions_Deactivate, (void*)0x0 };

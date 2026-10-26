@@ -115,7 +115,7 @@ static inline void merge_flush_func_00342CD0(void) {}
 #pragma push /* merge_units */
 #pragma push
 #pragma opt_propagation off
-void func_00342DC0(Obj *o, float dt)
+void GuiAgentModify_UserInterfaceRotate(Obj *o, float dt)
 {
     int flags = g_Pad0HeldMask;
     float step = 3.1415927f * (dt / 30.0f);

@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_002D7748(void) {
+int GetBlockCount(void) {
     return -1;
 }

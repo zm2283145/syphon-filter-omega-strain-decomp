@@ -113,13 +113,13 @@ struct Widget {
     int unk94; /* +0x94 */
 };
 
-extern "C" void func_00421F90(int* sub);
+extern "C" void std_vector_deleter_Item_clear(int* sub);
 extern "C" void GuiArrayWidget_Select(Widget* self, int a, int b);
 
 /* Resets the +0x90 sub-object, calls virtual +0x5C(1, +0x94), then GuiArrayWidget_Select(self, 0, 0). */
 extern "C" void GuiTextListWidget_Clear(Widget* self)
 {
-    func_00421F90(&self->sub90);
+    std_vector_deleter_Item_clear(&self->sub90);
     self->Method5C(1, self->unk94);
     GuiArrayWidget_Select(self, 0, 0);
 }

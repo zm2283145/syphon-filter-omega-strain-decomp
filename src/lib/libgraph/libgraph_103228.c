@@ -38,7 +38,7 @@ typedef struct {
 #define SCE_GS_SET_XYZ(x, y, z) \
     ((u_long)(x) | ((u_long)(y) << 16) | ((u_long)(z) << 32))
 
-int func_00103228(sceGsClear *cp, short ztest, short x, short y, short w, short h,
+int sceGsSetDefClear(sceGsClear *cp, short ztest, short x, short y, short w, short h,
                   u_char r, u_char g, u_char b, u_char a, u_int z)
 {
     cp->testaaddr = 0x47;
@@ -147,16 +147,16 @@ typedef struct { short sceGsInterMode; short sceGsOutMode; short sceGsFFMode; sh
 
 extern sceGsGParam *sceGsGetGParam(void);
 extern void sceGsSetDefDispEnv(sceGsDispEnv *disp, short psm, short w, short h, short dx, short dy);
-extern int func_00103040(sceGsDrawEnv1 *draw, short psm, short w, short h, short ztest, short zpsm);
+extern int sceGsSetDefDrawEnv(sceGsDrawEnv1 *draw, short psm, short w, short h, short ztest, short zpsm);
 #if 0 /* merge_units */
-extern int func_00103228(sceGsClear_00103418 *cp, short ztest, short x, short y, short w, short h,
+extern int sceGsSetDefClear(sceGsClear_00103418 *cp, short ztest, short x, short y, short w, short h,
                          unsigned char r, unsigned char g, unsigned char b, unsigned char a, unsigned int z);
 #endif /* merge_units */
-#define func_00103228(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10) (func_00103228((sceGsClear *)(a0), (a1), (a2), (a3), (a4), (a5), (u_char)(a6), (u_char)(a7), (u_char)(a8), (u_char)(a9), (u_int)(a10))) /* merge_units */
+#define sceGsSetDefClear(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10) (sceGsSetDefClear((sceGsClear *)(a0), (a1), (a2), (a3), (a4), (a5), (u_char)(a6), (u_char)(a7), (u_char)(a8), (u_char)(a9), (u_int)(a10))) /* merge_units */
 
-extern int func_00102F78(short psm, short w, short h);
+extern int sceGszbufaddr(short psm, short w, short h);
 
-void func_00103418(sceGsDBuffDc *db, short psm, short w, short h, short ztest, short zpsm, short clear)
+void sceGsSetDefDBuff(sceGsDBuffDc *db, short psm, short w, short h, short ztest, short zpsm, short clear)
 {
     sceGsGParam *gp = sceGsGetGParam();
         int zbp;
@@ -164,11 +164,11 @@ void func_00103418(sceGsDBuffDc *db, short psm, short w, short h, short ztest, s
 
     sceGsSetDefDispEnv(&db->disp[0], psm, w, h, 0, 0);
     sceGsSetDefDispEnv(&db->disp[1], psm, w, h, 0, 0);
-    func_00103040(&db->draw0, psm, w, h, ztest, zpsm);
-    func_00103040(&db->draw1, psm, w, h, ztest, zpsm);
+    sceGsSetDefDrawEnv(&db->draw0, psm, w, h, ztest, zpsm);
+    sceGsSetDefDrawEnv(&db->draw1, psm, w, h, ztest, zpsm);
     if (clear) {
-        func_00103228(&db->clear0, ztest, 2048 - (w >> 1), 2048 - (h >> 1), w, h, 0, 0, 0, 0, 0);
-        func_00103228(&db->clear1, ztest, 2048 - (w >> 1), 2048 - (h >> 1), w, h, 0, 0, 0, 0, 0);
+        sceGsSetDefClear(&db->clear0, ztest, 2048 - (w >> 1), 2048 - (h >> 1), w, h, 0, 0, 0, 0, 0);
+        sceGsSetDefClear(&db->clear1, ztest, 2048 - (w >> 1), 2048 - (h >> 1), w, h, 0, 0, 0, 0, 0);
     }
     *(u_long128 *)&db->giftag0 = 0;
     *(u_long128 *)&db->giftag1 = 0;
@@ -180,28 +180,28 @@ void func_00103418(sceGsDBuffDc *db, short psm, short w, short h, short ztest, s
     db->giftag1.EOP = 1;
     db->giftag1.NREG = 1;
     db->giftag1.REGS0 = 0xE;
-    zbp = func_00102F78(psm, w, h);
+    zbp = sceGszbufaddr(psm, w, h);
     if ((*(u_long *)gp & 0x0000FFFF0000FFFFULL) == 0x0000000100000001ULL || gp->sceGsInterMode == 0) {
         half = zbp >> 1;
         db->disp[1].dispfb.FBP = half;
         db->draw0.frame1.FBP = zbp >> 1;
     }
 }
-#undef func_00103228 /* merge_units */
+#undef sceGsSetDefClear /* merge_units */
 /* merge_units: end func_00103418 */
 
 /* merge_units: begin func_001036B0 */
-extern void func_00102EB8(void *);
+extern void sceGsPutDispEnv(void *);
 #if 0 /* merge_units */
 extern int sceGsPutDrawEnv(void *);
 #endif /* merge_units */
 #define sceGsPutDrawEnv(a0) (sceGsPutDrawEnv((unsigned long *)(a0))) /* merge_units */
 
-int func_001036B0(char *db, int field)
+int sceGsSwapDBuff(char *db, int field)
 {
     int odd = field & 1;
     int r;
-    func_00102EB8(db + odd * 0x28);
+    sceGsPutDispEnv(db + odd * 0x28);
     if (odd) r = sceGsPutDrawEnv(db + 0x140);
     else r = sceGsPutDrawEnv(db + 0x50);
     return r;
@@ -216,19 +216,19 @@ extern GsInfo3710 *sceGsGetGParam(void);
 #endif /* merge_units */
 #define sceGsGetGParam() ((GsInfo3710 *)sceGsGetGParam()) /* merge_units */
 
-extern void func_0010D5F0(void);
-extern long func_0010D680(void);
+extern void VSync(void);
+extern long VSync2(void);
 
 int sceGsSyncV(void)
 {
     GsInfo3710 *g = sceGsGetGParam();
     long v;
     if (g->x8 == 0) {
-        func_0010D5F0();
+        VSync();
         if (g->x0 != 1) return 1;
         return (int)((*(volatile unsigned long *)0x12001000 >> 13) & 1);
     }
-    v = (func_0010D680() >> 13) & 1;
+    v = (VSync2() >> 13) & 1;
     if (g->x0 != 1) return 1;
     return (int)v;
 }

@@ -6,13 +6,13 @@
 
 #include "types.h"
 
-extern int func_001F3030(void);
+extern int std_list_imp_voidPtr_size(void);
 extern int Vector_Reserve_20C2A0(int, int);
 
 int Vector_Reserve_20C2A0_Thunk_1F3010(int a0, int a1) {
     return Vector_Reserve_20C2A0(a0, a1);
 }
 
-int func_001F3020(void) {
-    return func_001F3030();
+int cLList_cSkaSwitchItemPtr_Size(void) {
+    return std_list_imp_voidPtr_size();
 }

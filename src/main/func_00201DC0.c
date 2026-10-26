@@ -1,12 +1,12 @@
 #include "types.h"
 
 typedef struct { int unk0; int unk4; int unk8; } Obj;
-extern void func_00201E00(Obj* self, int a, int b);
+extern void compressed_pair_cAllocator_cSkaBlendSequenceItem_int_ctor_cAllocatorR_uint(Obj* self, int a, int b);
 
 /* Constructor: base init then clears +4/+8. */
-Obj* func_00201DC0(Obj* self, int a)
+Obj* std_vector_deleter_cSkaBlendSequenceItem_ctor_cAllocatorR(Obj* self, int a)
 {
-    func_00201E00(self, a, 0);
+    compressed_pair_cAllocator_cSkaBlendSequenceItem_int_ctor_cAllocatorR_uint(self, a, 0);
     self->unk4 = 0;
     self->unk8 = 0;
     return self;

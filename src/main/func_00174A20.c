@@ -8,7 +8,7 @@ extern char D_0049CA60[];
 extern char D_0049CAD8[];
 }
 
-extern "C" void func_00174A20(V_00174A20* v, unsigned int n, const int* val)
+extern "C" void std_vector_imp_cObjectId_init(V_00174A20* v, unsigned int n, const int* val)
 {
     if (n) {
         if (n > 0x1800000) {

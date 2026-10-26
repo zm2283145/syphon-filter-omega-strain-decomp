@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046DBC0(void) {
+int MediusUniqueCallbackSetLocalizationParamsRequestHandler(void) {
     return 48;
 }

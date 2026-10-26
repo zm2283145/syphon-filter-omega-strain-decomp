@@ -1,7 +1,7 @@
 extern int DIntr(void);
 extern void EIntr(void);
 
-void func_00109700(unsigned int addr, int size)
+void receiveDataFromIPU(unsigned int addr, int size)
 {
     int s = DIntr();
     *(volatile unsigned int *)0x1000B010 = (addr & 0x0FFFFFFF) | 0x80000000;

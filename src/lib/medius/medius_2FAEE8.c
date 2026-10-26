@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_002FAEE8(int a0) {
+int rt_list_buf_get_data_size(int a0) {
     int v0;
     int cond;
 
@@ -20,7 +20,7 @@ ret:
     return v0;
 }
 
-int func_002FAF00(int a0) {
+int rt_list_buf_get_next(int a0) {
     int v0;
     int cond;
 
@@ -34,7 +34,7 @@ ret:
     return v0;
 }
 
-int func_002FAF18(int a0) {
+int rt_list_buf_is_valid(int a0) {
     int v0, v1;
     int cond;
 

@@ -53,7 +53,7 @@ void GuiWidget_Init(Screen* s);
 W* GuiWidget_FindChildByName(void* self, char* name);
 void GuiScoresEquip_FigureCallback(void);
 void func_0041C0D0(W* w, int on);
-void func_0041C0F0(W* w, int on);
+void GuiTextWidget_SetDisableWrap(W* w, int on);
 int sprintf(char* buf, const char* fmt, ...);
 void GuiWidget_SendEvent(Screen* s, W* to, int ev, int name, int data);
 void GuiScoresEquip_Init(Screen* s);
@@ -83,7 +83,7 @@ void GuiScoresEquip_Init(Screen* s)
             s->grid[i][j] = FindAs(s, D_00492D10[j], D_004A7520);
             if (s->grid[i][j]) {
                 func_0041C0D0(s->grid[i][j], 1);
-                func_0041C0F0(s->grid[i][j], 1);
+                GuiTextWidget_SetDisableWrap(s->grid[i][j], 1);
             }
         }
     }
@@ -134,8 +134,8 @@ void GuiScoresEquip_Init(Screen* s)
 #include "child_list_iter.h"
 
 /* Set or clear flag 2 on every other child. */
-extern "C" void func_0035CFB0(ChildWidget* o, int on);
-void func_0035CFB0(ChildWidget* o, int on)
+extern "C" void MakeChildrenVisible(ChildWidget* o, int on);
+void MakeChildrenVisible(ChildWidget* o, int on)
 {
     ChildIter e;
     void* l;
@@ -179,14 +179,14 @@ W35D0A0* GuiWidget_FindChildByName(void* self, char* name);
 
 char* Loc_LookupText(char* key);
 void GuiTextWidget_SetText(W35D0A0* w, char* text, int flags);
-void func_0035D0A0(S35D0A0* o, int mode);
+void GuiScoresEquip_SetScreen(S35D0A0* o, int mode);
 }
 static inline W35D0A0* cast35D0A0(W35D0A0* w)
 {
     return (w && w->IsA(D_004A9870)) ? w : 0;
 }
 /* Switches the screen between its two modes: toggles two widgets and relabels a third. */
-void func_0035D0A0(S35D0A0* o, int mode)
+void GuiScoresEquip_SetScreen(S35D0A0* o, int mode)
 {
     W35D0A0* a;
     W35D0A0* b;
@@ -390,33 +390,33 @@ void Mtx44_SetRotation(M4_D430* m, float a, float b, float c, float d, float e, 
 int Appearance_GetBodyKind(void* app);
 void Appearance_ReorderParts(Man_D430* m);
 void cVUM_GOBJ_InitModel(Model_D430* m, char* name);
-void func_001AF160(It_D430* it, void* tab, char* key);
-void func_001AF150(It_D430* it, void* tab);
-int func_001AF130(It_D430* a, It_D430* b);
-void** func_001AF120(It_D430* it);
+void cAssocArray_cString_cSkaAnimationSetPtr_Find(It_D430* it, void* tab, char* key);
+void cAssocArray_cString_cSkaAnimationSetPtr_End(It_D430* it, void* tab);
+int cAssocArray_cString_cSkaAnimationSetPtr_Iterator_opNe(It_D430* a, It_D430* b);
+void** cAssocArray_cString_cSkaAnimationSetPtr_Iterator_opMul(It_D430* it);
 void Model_Attach(void* a, void* b);
 void AnimModel_InitAnim(void* a);
 void MotionTokens_Init(Arr7_D430* a);
-void func_0018A8C0(Y_D430* y);
+void cArray_cTimedEvent_ctor_void(Y_D430* y);
 void MotionRequest_Construct(void* mr, Str_D430* s);
-void func_0018A710(Sel_D430* d, Sel_D430* s);
+void cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(Sel_D430* d, Sel_D430* s);
 void func_001BE5A0(Y_D430* y, int f);
 void __destroy_array(void* a, void* dtor, int size, int n);
 void func_0018A210(void* p, int f);
-void func_0018A700(Word_D430* w, int a);
+void cSkaPlaybackGroupId_ctor_int(Word_D430* w, int a);
 void Actor_ResolveMotionSelection(Req_D430* r, int* sel, Word_D430* w, void* m);
 float Model_GetFirstFloat(void* m);
 V4_D430* AnimRate_Init(Rate_D430* r, float f);
 void Vec4_Copy_18A350(Rate_D430* d, V4_D430* s);
 void AnimEvent_Construct(Ev_D430* e);
 int MotionRequest_GetMode(Req_D430* r);
-int func_0018A2E0(Req_D430* r);
-float func_0018A2D0(Req_D430* r);
+int cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(Req_D430* r);
+float cSkaRequestStream_AnimationPacket_GetDuration(Req_D430* r);
 float func_0018A2C0(Req_D430* r);
 void AnimCtl_InstallMotion(Anim_D430* a, int sel, int b, Rate_D430* r, Word_D430* w, Ev_D430* e0, Ev_D430* e1, int c, float f0, float f1);
 void AnimEvent_dtor(Ev_D430* e, int f);
 void Model_HardMeshAttachPoints(Man_D430* m);
-void func_0038E030(Man_D430* m);
+void cMan_GetTextureIDs(Man_D430* m);
 void ActorModel_Setup(Man_D430* m, int flag);
 void Skel_ApplyScalePreset(Man_D430* m, int a);
 Self_D430* GuiScoresEquip_BuildActor(Self_D430* self);
@@ -443,8 +443,8 @@ static inline void Q3_D430(void* a0, const void* b0, void* c0, float z) { void* 
 static inline void Q3B_D430(void* a0, const void* b0, void* c0, const void* e0) { void* d1 = a0; const void* s1 = b0; void* d2 = c0; __int128 q = 0; q = *(const __int128*)s1; *(__int128*)d1 = q; { const void* s2 = e0; q = *(const __int128*)s2; *(__int128*)d2 = q; } }
 static inline void Q3C_D430(void* a0, const void* b0, void* c0, V4C_D430* e0, float z) { void* d1 = a0; const void* s1 = b0; void* d2 = c0; __int128 q = 0; q = *(const __int128*)s1; *(__int128*)d1 = q; { V4C_D430* rr = e0; rr->x = 0.0f; rr->y = 0.0f; rr->z = z; { const void* s2 = rr; q = *(const __int128*)s2; *(__int128*)d2 = q; } } } static inline void Q3D_D430(void* a0, const void* b0, void* c0, V4C_D430& rr, float z) { void* d1 = a0; const void* s1 = b0; void* d2 = c0; __int128 q = 0; q = *(const __int128*)s1; *(__int128*)d1 = q; { rr.x = 0.0f; rr.y = 0.0f; rr.z = z; { const void* s2 = &rr; q = *(const __int128*)s2; *(__int128*)d2 = q; } } } static inline void* Alloc_D430(int n, int line) { AllocGuard g; return Mem_Alloc(0, n, D_004BB600, line); }
 
-static inline void SelInit_D430(Sel_D430* s0) { Sel_D430* s = s0; s->b0 = 0; MotionTokens_Init(&s->arr); func_0018A8C0(&s->y); }
-static inline void ReqInit2_D430(Req_D430* r0, Str_D430* str0, Sel_D430* sel) { Str_D430* str = str0; Req_D430* r = r0; r->b0 = 0; MotionRequest_Construct(r->mr, str); r->b48 = 3; func_0018A710(&r->sel, sel); r->f98 = -1.0f; FLD(r, int, 0x9C) = 0; }
+static inline void SelInit_D430(Sel_D430* s0) { Sel_D430* s = s0; s->b0 = 0; MotionTokens_Init(&s->arr); cArray_cTimedEvent_ctor_void(&s->y); }
+static inline void ReqInit2_D430(Req_D430* r0, Str_D430* str0, Sel_D430* sel) { Str_D430* str = str0; Req_D430* r = r0; r->b0 = 0; MotionRequest_Construct(r->mr, str); r->b48 = 3; cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(&r->sel, sel); r->f98 = -1.0f; FLD(r, int, 0x9C) = 0; }
 static inline void Install_D430(Anim_D430* an, int* selp, Req_D430* rq, Word_D430* wp)
 {
                 Rate_D430 rate;
@@ -458,7 +458,7 @@ static inline void Install_D430(Anim_D430* an, int* selp, Req_D430* rq, Word_D43
                 an->b5 = 0;
                 AnimEvent_Construct(&e0);
                 AnimEvent_Construct(&e1);
-                AnimCtl_InstallMotion(an, *selp, MotionRequest_GetMode(rq), &rate, wp, &e0, &e1, func_0018A2E0(rq), func_0018A2D0(rq), func_0018A2C0(rq));
+                AnimCtl_InstallMotion(an, *selp, MotionRequest_GetMode(rq), &rate, wp, &e0, &e1, cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(rq), cSkaRequestStream_AnimationPacket_GetDuration(rq), func_0018A2C0(rq));
                 AnimEvent_dtor(&e1, -1);
                 AnimEvent_dtor(&e0, -1);
 }
@@ -469,9 +469,9 @@ static inline void FindAnim_D430(Self_D430* self, int i, int kind)
             void* a;
             char* nm;
             if (kind == 1) nm = D_004BB4C8; else { nm = D_004BB4B8; asm { .set reorder } }
-            func_001AF160(&it, D_004FFBC0, nm);
-            func_001AF150(&end, D_004FFBC0);
-            if (func_001AF130(&it, &end)) a = *func_001AF120(&it);
+            cAssocArray_cString_cSkaAnimationSetPtr_Find(&it, D_004FFBC0, nm);
+            cAssocArray_cString_cSkaAnimationSetPtr_End(&end, D_004FFBC0);
+            if (cAssocArray_cString_cSkaAnimationSetPtr_Iterator_opNe(&it, &end)) a = *cAssocArray_cString_cSkaAnimationSetPtr_Iterator_opMul(&it);
             else { a = 0; asm { .set reorder } }
             {
                 void** an = (void**)((char*)self->models[i] + 0x2EC0);
@@ -487,7 +487,7 @@ static inline void Motion_D430(Model_D430* md, Req_D430* rq)
             Anim_D430* an = (Anim_D430*)(c + 0x34);
             int sel;
             Word_D430 w[3];
-            func_0018A700(w, -1);
+            cSkaPlaybackGroupId_ctor_int(w, -1);
             Actor_ResolveMotionSelection(rq, &sel, w, an->f0);
             if (sel) {
                 Install_D430(an, &sel, rq, w);
@@ -648,7 +648,7 @@ extern "C" Self_D430* GuiScoresEquip_BuildActor(Self_D430* p0)
                 Else_D430(self, i, kind, &tbl, &req);
             }
             Tail_D430(self, i);
-            func_0038E030(MAN(self->models[i]));
+            cMan_GetTextureIDs(MAN(self->models[i]));
             { Model_D430* mm = self->models[i]; FLD(mm, int, 0x2C30) = 1; }
             ActorModel_Setup(MAN(self->models[i]), 1);
             Skel_ApplyScalePreset(MAN(self->models[i]), -1);

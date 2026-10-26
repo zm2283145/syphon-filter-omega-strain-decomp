@@ -10,9 +10,9 @@ extern "C" {
 void Mem_Free(int, void*, char*, int);
 void ObjectList_EraseRange(int*, void*, LNode**, LNode**);
 void Fstream_StartRequest(void*, int);
-void func_003EB950(LNode** it, LSelf* self);
-void func_003EB8F0(LNode** it, int n);
-void** func_003EB8E0(LNode** it);
+void std_list_cFSDataPtr_begin(LNode** it, LSelf* self);
+void std_advance_listR_int(LNode** it, int n);
+void** std_list_cFSDataPtr_generic_iterator_opMul(LNode** it);
 extern char D_004BE010[];
 extern char D_00493990;
 }
@@ -28,9 +28,9 @@ static inline void* ListAt(LSelf* s, int n) {
 }
 static inline void* At(LSelf* s, int i) {
     LNode* it;
-    func_003EB950(&it, s);
-    func_003EB8F0(&it, i);
-    return *func_003EB8E0(&it);
+    std_list_cFSDataPtr_begin(&it, s);
+    std_advance_listR_int(&it, i);
+    return *std_list_cFSDataPtr_generic_iterator_opMul(&it);
 }
 
 extern "C" void FStream_CancelRequests(LSelf* self) {

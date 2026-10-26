@@ -300,7 +300,7 @@ typedef struct GuiMissionListObj {
     int unk11C;                     /* 0x11C */
 } GuiMissionListObj;
 
-/* Object behind the global pointer D_004FFC04 (stepped every frame by func_00169390). */
+/* Object behind the global pointer D_004FFC04 (stepped every frame by cMachine_NetUpdate). */
 typedef struct GameMachine {
     char pad00[0x2A];
     unsigned char unk2A;            /* 0x2A */
@@ -356,7 +356,7 @@ typedef struct WeaponLinkL2 {
 
 /* -------------------------------------------- copyable value records --- */
 
-/* 0x1C-byte record copied by func_002C5E20. */
+/* 0x1C-byte record copied by cPathTransfer_opAssign. */
 typedef struct Rec1C {
     Q q;                            /* 0x00 */
     int unk10;                      /* 0x10 */
@@ -364,7 +364,7 @@ typedef struct Rec1C {
     int unk18;                      /* 0x18 */
 } Rec1C;
 
-/* 0x22-byte record copied by func_002C5EE0. */
+/* 0x22-byte record copied by cAiTargetTransfer_opAssign. */
 typedef struct Rec22 {
     Q q;                            /* 0x00 */
     float unk10;                    /* 0x10 */
@@ -375,7 +375,7 @@ typedef struct Rec22 {
     unsigned char unk21;            /* 0x21 */
 } Rec22;
 
-/* 0x1C-byte record reset by func_00316A00. */
+/* 0x1C-byte record reset by cTargetInfo_Init. */
 typedef struct Rec316A00 {
     unsigned char unk00;            /* 0x00 */
     unsigned char unk01;            /* 0x01 */
@@ -430,7 +430,7 @@ typedef struct Controller2D {
     int unk210;                     /* 0x210 */
 } Controller2D;
 
-/* Object with a position at +0x38 (func_002D79A0). */
+/* Object with a position at +0x38 (cNetPathMsg_GetDestination). */
 typedef struct PosObj38 {
     char pad00[0x38];
     float x;                        /* 0x38 */
@@ -451,7 +451,7 @@ typedef struct Obj2D9 {
 
 /* --------------------------------- parameter blocks (0x00318xxx) --- */
 
-/* Parameter block reached through ParamOwner.params (func_00318300..). */
+/* Parameter block reached through ParamOwner.params (NellySetPitchOffsetSase3200..). */
 typedef struct ParamBlock {
     char pad00[0x1C];
     float unk1C;                    /* 0x1C */
@@ -466,12 +466,12 @@ typedef struct ParamBlock {
 
 typedef struct ParamOwner {
     char pad00[0x38];
-    float scale;                    /* 0x38: used by func_003182E0 */
+    float scale;                    /* 0x38: used by VoiceFontVoicing */
     char pad3C[0x48 - 0x3C];
     ParamBlock* params;            /* 0x48 */
 } ParamOwner;
 
-/* Object holding a screen pointer at +0x88 (func_002A7DD0). */
+/* Object holding a screen pointer at +0x88 (GuiMessageBox_SetEditBufferSize). */
 typedef struct ScreenRefHolder {
     char pad00[0x88];
     GuiScreen* screen;              /* 0x88 */
@@ -483,7 +483,7 @@ typedef struct EnableSuperJumpMsg {
     unsigned char enable;           /* 0x24 */
 } EnableSuperJumpMsg;
 
-/* Object with float settings at +0x24 / +0x2C (func_0031FC10 / func_0031FC20). */
+/* Object with float settings at +0x24 / +0x2C (NellySetPFactorSase3200 / NellySetEFactorSase3200). */
 typedef struct FloatSettings {
     char pad00[0x24];
     float unk24;                    /* 0x24 */
@@ -494,11 +494,11 @@ typedef struct FloatSettings {
 /* Object with an embedded record at +0x48 and an index at +0x58 (GuiSlideShow_Clear). */
 typedef struct Obj328630 {
     char pad00[0x48];
-    char unk48[0x10];               /* 0x48: reset by func_0032A280 */
+    char unk48[0x10];               /* 0x48: reset by std_vector_deleter_Section_clear */
     int unk58;                      /* 0x58 */
 } Obj328630;
 
-/* Copyable record (func_0032A050): base part, owning vector at +0x0C, word at +0x1C. */
+/* Copyable record (GuiSlideShow_Section_ctor): base part, owning vector at +0x0C, word at +0x1C. */
 typedef struct Rec32A050 {
     char pad00[0x0C];               /* 0x00: copied by String_CopyCtor */
     OwnedRel vec;                   /* 0x0C */
@@ -528,7 +528,7 @@ typedef struct RtObj210 {
     int unk210;                     /* 0x210 */
 } RtObj210;
 
-/* Small state record checked by func_002F67C0. */
+/* Small state record checked by rt_comm_is_valid_channel. */
 typedef struct RtState {
     unsigned char unk00;            /* 0x00 */
     unsigned char unk01;            /* 0x01 */
@@ -550,7 +550,7 @@ typedef struct Obj850 {
     int unk850;                     /* 0x850 */
 } Obj850;
 
-/* Two-float pair (func_00318C50). */
+/* Two-float pair (UpdateLDPDA_MBlk). */
 typedef struct Float2 {
     float a;                        /* 0x00 */
     float b;                        /* 0x04 */

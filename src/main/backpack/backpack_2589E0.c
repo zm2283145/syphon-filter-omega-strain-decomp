@@ -30,12 +30,12 @@ static inline void writeFloat(float f)
 }
 
 typedef struct { char pad[0x24]; int a; int b; void* crate; } cCrateInteractMsg;
-extern void func_00282020(void* crate);
+extern void cNetMsg_PutGOBJ(void* crate);
 
 /* cCrateInteractMsg virtual 4: serializes the crate, then writes both values little-endian. */
 void cCrateInteractMsg_v04(cCrateInteractMsg* self)
 {
-    func_00282020(self->crate);
+    cNetMsg_PutGOBJ(self->crate);
     write32(self->a);
     write32(self->b);
 }

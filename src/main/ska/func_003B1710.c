@@ -6,7 +6,7 @@
 #include "ska_types.h"
 
 /* Iterator equality. */
-int func_003B1710(Iter* a, Iter* b) {
+int cSkaPlaybackItem_HasSameAnimation(Iter* a, Iter* b) {
     return a->p == b->p;
 }
 

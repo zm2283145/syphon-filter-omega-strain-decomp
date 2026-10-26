@@ -9,14 +9,14 @@
 extern "C" {
 /*fc*/
 int Mem_Free(...);                       
-int func_0037B2C0(...);                        
-int func_0037B2D0(...);                          
-char * func_0037B2E0(...);                        
+int std_list_deleter_tDataDelRec_generic_iterator_ctor(...);                        
+int std_list_deleter_tDataDelRec_tail(...);                          
+char * details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_9(...);                        
 int List_Erase_37FBA0(...);              
 extern unsigned char g_ProfileLockEnabled;
 }
 #pragma inline_depth(10)
-static inline int ite0(char *l) { int r; func_0037B2C0(&r, func_0037B2D0(l)); return r; }
+static inline int ite0(char *l) { int r; std_list_deleter_tDataDelRec_generic_iterator_ctor(&r, std_list_deleter_tDataDelRec_tail(l)); return r; }
 static inline void er0(char *l, char *n) { int sp84; char *sp80; sp80 = n; List_Erase_37FBA0(&sp84, l, &sp80); }
 static inline void er1(char *l, char *n) { er0(l, n); }
 static inline int ite1(char *l) { return ite0(l); }
@@ -28,7 +28,7 @@ extern "C" void Video_FreeDeferredBuffers(char * arg0, int arg1) {
     int temp_s0_2;
 
     if (F_(arg0, 0x1108, int) != 0) {
-        var_s2 = (char *)(F_(func_0037B2E0(arg0 + 0x110C), 0x4, int));
+        var_s2 = (char *)(F_(details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_9(arg0 + 0x110C), 0x4, int));
         while (ite0(arg0 + 0x1108) != (int)var_s2) {
                 F_(var_s2, 0x10, int) = (int) (F_(var_s2, 0x10, int) - 1);
                 if ((F_(var_s2, 0x10, int) == 0) || (arg1 != 0)) {

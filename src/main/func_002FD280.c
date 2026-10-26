@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_002FD280(void) {
+int rt_msg_client_isend_client_set(void) {
     return 3;
 }

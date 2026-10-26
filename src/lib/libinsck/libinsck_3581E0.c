@@ -2,10 +2,10 @@ typedef struct N81E0 { struct N81E0 *next; struct N81E0 *prev; int tid; int err;
 int D_00492CCC = 0;
 N81E0 *D_00492CD0 = 0;
 N81E0 *D_00492CD4 = 0;
-extern void func_0034B7E8(void *);
-extern void func_00357D88(void *);
-extern void *func_00357D50(int);
-extern int func_003581C0(void);
+extern void sceLibnetTerminate(void *);
+extern void my_free(void *);
+extern void *my_malloc(int);
+extern int unblock(void);
 extern int func_00358158(void);
 extern int GetThreadId(void);
 extern int sceLibnetInitialize(void *, unsigned int, int, int);
@@ -26,12 +26,12 @@ N81E0 *Insck_GetThreadContext(int flag)
         else D_00492CD0 = x;
         if (n->next) n->next->prev = n->prev;
         else D_00492CD4 = n->prev;
-        func_0034B7E8(n->x14);
-        func_00357D88(n->x50);
-        func_00357D88(n);
+        sceLibnetTerminate(n->x14);
+        my_free(n->x50);
+        my_free(n);
         D_00492CCC--;
     }
-    n = func_00357D50(0x64);
+    n = my_malloc(0x64);
     if (n) {
         unsigned int mask;
         n->tid = tid;
@@ -39,15 +39,15 @@ N81E0 *Insck_GetThreadContext(int flag)
         n->x5C = 0x2000;
         n->x60 = 0x20;
         mask = 0xFFFFFFC0;
-        n->x50 = func_00357D50(0x87F);
+        n->x50 = my_malloc(0x87F);
         if (n->x50 == 0) goto fail;
         n->x54 = (int)(n->x50 + 0x3F) & -0x40;
         if (sceLibnetInitialize(n->x14, (n->x58 + 0x63) & mask, n->x5C, n->x60) < 0) {
-            func_00357D88(n->x50);
+            my_free(n->x50);
 fail:
-            func_00357D88(n);
+            my_free(n);
             D_00492CCC--;
-            func_003581C0();
+            unblock();
             return 0;
         }
         n->next = D_00492CD0;

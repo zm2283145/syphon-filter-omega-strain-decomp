@@ -1,5 +1,5 @@
 #include "types.h"
-void func_003196B0(float* vec, int n, float* mat, float* out, int rows) {
+void CompPredCoef(float* vec, int n, float* mat, float* out, int rows) {
     int r;
     int j;
     float sum;

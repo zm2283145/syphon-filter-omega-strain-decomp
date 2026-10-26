@@ -60,7 +60,7 @@ extern DmaBuf* D_00537F88;
 extern int D_00539330;
 extern int D_00539340[][1024];
 long* DmaPacket_Reserve(void* q, int i, int id, int qwc, int addr, int flag);
-void func_003BB360(TexEntry* e, unsigned int lo, unsigned int hi);
+void cTexture_UploadBoth(TexEntry* e, unsigned int lo, unsigned int hi);
 }
 
 static inline void TexCache_Reset(TexCache* self)
@@ -78,7 +78,7 @@ static inline void TexCache_Reset(TexCache* self)
     self->u48C = self->base;
 }
 
-extern "C" void func_00382190(TexCache* self)
+extern "C" void cTexMan_EndLockedBatch(TexCache* self)
 {
     bool dirty = false;
     unsigned int addr;
@@ -112,7 +112,7 @@ extern "C" void func_00382190(TexCache* self)
             if (e && !(e->u60 & e->u61)) {
                 if (self->u14) self->size = (self->size - 0x20) & ~0x1F;
                 self->size -= e->info->hE + e->info->h1A;
-                func_003BB360(e, self->size, self->size + (e->info->hE + e->info->h1A) - 4);
+                cTexture_UploadBoth(e, self->size, self->size + (e->info->hE + e->info->h1A) - 4);
             }
         }
         p = DmaPacket_Reserve(D_00537F80, 2, 7, 2, 0, 0);
@@ -155,7 +155,7 @@ static inline void merge_flush_func_00382190(void) {}
 extern "C" {
 }
 
-extern "C" void func_00382190(TexCache* self);
+extern "C" void cTexMan_EndLockedBatch(TexCache* self);
 
 extern "C" void TexMan_UploadSlots(TexCache* self)
 {
@@ -165,7 +165,7 @@ extern "C" void TexMan_UploadSlots(TexCache* self)
     long* p;
 
     if (self->u15) {
-        func_00382190(self);
+        cTexMan_EndLockedBatch(self);
         return;
     }
     self->u16 = 1;
@@ -195,7 +195,7 @@ extern "C" void TexMan_UploadSlots(TexCache* self)
             TexEntry* e = self->entries[self->list[j]];
             if (e && !(e->u60 & e->u61)) {
                 if (self->u14) self->u48C = (self->u48C + 0x20) & ~0x1F;
-                func_003BB360(e, self->u48C, self->u48C + (e->info->hE + e->info->h1A) - 4);
+                cTexture_UploadBoth(e, self->u48C, self->u48C + (e->info->hE + e->info->h1A) - 4);
                 self->u48C += e->info->hE + e->info->h1A;
             }
         }
@@ -240,7 +240,7 @@ static inline void merge_flush_func_00382540(void) {}
 extern "C" {
 }
 
-extern "C" void func_00382910(TexCache* self)
+extern "C" void cTexMan_EndBatch(TexCache* self)
 {
     /* declaration order chosen to reproduce the original register allocation */
     short* lp;
@@ -283,7 +283,7 @@ extern "C" void func_00382910(TexCache* self)
             while (n2 > 0) {
                 e2 = self->entries[*lp2++];
                 if (e2 && !(e2->u60 & e2->u61)) {
-                    func_003BB360(e2, self->u48C, self->u48C + (e2->info->hE + e2->info->h1A) - 4);
+                    cTexture_UploadBoth(e2, self->u48C, self->u48C + (e2->info->hE + e2->info->h1A) - 4);
                     self->u48C += e2->info->hE + e2->info->h1A;
                 }
                 n2--;
@@ -324,9 +324,9 @@ extern "C" void func_00382910(TexCache* self)
 typedef struct { char p0[0x60]; signed char f60; signed char f61; unsigned char active; } E382C30;
 typedef struct N382C30 { int p0; struct N382C30* next; int key; } N382C30;
 typedef struct { char p0[4]; int state; E382C30** items; char pC[0x410]; int count; char list420[4]; } M382C30;
-extern void func_00380250(N382C30** out, int it);
-extern int func_00380260(void* list);
-extern N382C30* func_00380270(void* list, int off);
+extern void std_list_deleter_int_generic_iterator_ctor_nodebaseP(N382C30** out, int it);
+extern int std_list_deleter_int_tail(void* list);
+extern N382C30* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_10(void* list, int off);
 extern void List_Erase_383560(int* out, void* list, N382C30** it);
 #pragma push
 #pragma opt_common_subs off
@@ -345,8 +345,8 @@ void TexMan_ReleaseSlot(M382C30* m, int idx)
         e->active = 0;
         (*(E382C30**)((char*)m->items + off))->f60 = 0;
         (*(E382C30**)((char*)m->items + off))->f61 = 0;
-        n = func_00380270(m->list420, off)->next;
-        func_00380250(end, func_00380260(&m->count));
+        n = details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_10(m->list420, off)->next;
+        std_list_deleter_int_generic_iterator_ctor_nodebaseP(end, std_list_deleter_int_tail(&m->count));
         if (n != end[0]) {
 loop:
             if (idx == n->key) {
@@ -354,7 +354,7 @@ loop:
                 List_Erase_383560(r, &m->count, it);
             } else {
                 n = n->next;
-                func_00380250(end, func_00380260(&m->count));
+                std_list_deleter_int_generic_iterator_ctor_nodebaseP(end, std_list_deleter_int_tail(&m->count));
                 if (n != end[0]) goto loop;
             }
         }
@@ -403,22 +403,22 @@ struct TexCache_00382D30 {
 
 extern "C" {
 #if 0 /* merge_units */
-ListNode* func_00380260(IntList* list);
+ListNode* std_list_deleter_int_tail(IntList* list);
 #endif /* merge_units */
-#define func_00380260(a0) ((ListNode *)func_00380260((void *)(a0))) /* merge_units */
+#define std_list_deleter_int_tail(a0) ((ListNode *)std_list_deleter_int_tail((void *)(a0))) /* merge_units */
 
 
-ListIter* func_00382EC0(ListIter* it, ListNode* node);
-void func_00382EB0(ListIter* out, IntList* list);
-ListIter* func_00382EA0(ListIter* dst, ListIter* src);
-ListIter* func_00164940(ListIter* result, IntList* list, ListIter* pos, int* value);
+ListIter* std_list_deleter_int_generic_iterator_ctor_nodeP(ListIter* it, ListNode* node);
+void std_list_deleter_int_end(ListIter* out, IntList* list);
+ListIter* cLListIterator_int_ctor(ListIter* dst, ListIter* src);
+ListIter* std_list_deleter_int_insert(ListIter* result, IntList* list, ListIter* pos, int* value);
 }
 
 static inline void List_End(IntList* list, ListIter* out)
 {
     ListIter tmp;
-    func_00382EB0(&tmp, list);
-    func_00382EA0(out, &tmp);
+    std_list_deleter_int_end(&tmp, list);
+    cLListIterator_int_ctor(out, &tmp);
 }
 
 static inline bool List_Contains(IntList* list, int value)
@@ -427,7 +427,7 @@ static inline bool List_Contains(IntList* list, int value)
     ListIter it;
     ListNode* n;
 
-    func_00382EC0(&it, func_00380260(list)->next);
+    std_list_deleter_int_generic_iterator_ctor_nodeP(&it, std_list_deleter_int_tail(list)->next);
     n = it.node;
     while (List_End(list, &end), n != end.node) {
         if (value == n->value) return true;
@@ -441,11 +441,11 @@ static inline void List_PushFront(IntList* list, int* v)
     ListIter result;
     ListIter pos;
     pos.node = list->next;
-    func_00164940(&result, list, &pos, v);
+    std_list_deleter_int_insert(&result, list, &pos, v);
 }
 
 #pragma opt_common_subs off
-extern "C" void func_00382D30(TexCache_00382D30* self, int idx)
+extern "C" void cTexMan_LockVram(TexCache_00382D30* self, int idx)
 {
     int i;
     int off = (i = idx) * 4;
@@ -462,6 +462,6 @@ extern "C" void func_00382D30(TexCache_00382D30* self, int idx)
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00382D30(void) {}
-#undef func_00380260 /* merge_units */
+#undef std_list_deleter_int_tail /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00382D30 */

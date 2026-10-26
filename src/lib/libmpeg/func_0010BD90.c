@@ -1,4 +1,4 @@
-extern int func_0010B488(void *o, int *id);
+extern int _dispatchMpegCallback(void *o, int *id);
 extern int Mpeg_PrintError(const char *msg);
 int func_0010BD90(char *o, const char *msg)
 {
@@ -7,7 +7,7 @@ int func_0010BD90(char *o, const char *msg)
         int cb[2];
         cb[1] = (int)msg;
         cb[0] = 0;
-        return func_0010B488(t, cb);
+        return _dispatchMpegCallback(t, cb);
     }
     return Mpeg_PrintError(msg);
 }

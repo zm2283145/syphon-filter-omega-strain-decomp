@@ -6,7 +6,7 @@
 int ScalarCollection_Init();                       
 int __construct_array();                
 int __register_global_object();          
-int func_00437470();                     
+int std_tree_pair_tNPCInfoPtr_value_compare_ctor();                     
 extern char D_00582820;
 extern char D_00582AA0;
 extern char D_00582AB0;
@@ -20,25 +20,25 @@ extern char D_00582B20;
 extern char D_00582B30;
 extern char D_00582B40;
 extern char D_00582B50;
-extern char func_004374F0;
-extern char func_00437550;
-extern char func_004375B0;
+extern char cAssocArray_tNPCInfoPtr_bool_dtor;
+extern char cLList_tNPCInfoPtr_dtor;
+extern char cNPCInfoObject_tBoolStruct_ctor;
 
-void func_004D7640(void) {
+void StaticInit_NPCInfoObject(void) {
     int sp1C;
     int sp18;
 
-    __construct_array(&D_00582820, &func_004375B0, 0, 4, 145);
+    __construct_array(&D_00582820, &cNPCInfoObject_tBoolStruct_ctor, 0, 4, 145);
     ScalarCollection_Init(&D_00582AB0);
-    __register_global_object(&D_00582AB0, &func_00437550, &D_00582AA0);
+    __register_global_object(&D_00582AB0, &cLList_tNPCInfoPtr_dtor, &D_00582AA0);
     ScalarCollection_Init(&D_00582AD0);
-    __register_global_object(&D_00582AD0, &func_00437550, &D_00582AC0);
+    __register_global_object(&D_00582AD0, &cLList_tNPCInfoPtr_dtor, &D_00582AC0);
     ScalarCollection_Init(&D_00582AF0);
-    __register_global_object(&D_00582AF0, &func_00437550, &D_00582AE0);
+    __register_global_object(&D_00582AF0, &cLList_tNPCInfoPtr_dtor, &D_00582AE0);
     ScalarCollection_Init(&D_00582B10);
-    __register_global_object(&D_00582B10, &func_00437550, &D_00582B00);
+    __register_global_object(&D_00582B10, &cLList_tNPCInfoPtr_dtor, &D_00582B00);
     ScalarCollection_Init(&D_00582B30);
-    __register_global_object(&D_00582B30, &func_00437550, &D_00582B20);
-    func_00437470(&D_00582B50, &sp1C, &sp18);
-    __register_global_object(&D_00582B50, &func_004374F0, &D_00582B40);
+    __register_global_object(&D_00582B30, &cLList_tNPCInfoPtr_dtor, &D_00582B20);
+    std_tree_pair_tNPCInfoPtr_value_compare_ctor(&D_00582B50, &sp1C, &sp18);
+    __register_global_object(&D_00582B50, &cAssocArray_tNPCInfoPtr_bool_dtor, &D_00582B40);
 }

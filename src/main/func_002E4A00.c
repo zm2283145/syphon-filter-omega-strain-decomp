@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-extern int func_002E47B0(int arg);
-extern int func_002E5860(int arg);
+extern int NetUpdateAll(int arg);
+extern int NetProcessEchoRequests(int arg);
 
-void func_002E4A00(void) {
-    if (func_002E47B0(0) == 0) {
-        func_002E5860(0);
+void NetITick(void) {
+    if (NetUpdateAll(0) == 0) {
+        NetProcessEchoRequests(0);
     }
 }

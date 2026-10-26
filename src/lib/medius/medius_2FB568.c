@@ -9,7 +9,7 @@
 extern char D_004908E0[];
 extern char D_004908E4[];
 
-int func_002FB568(int a0, int a1) {
+int rt_memory_register_callbacks(int a0, int a1) {
     *(int*)D_004908E0 = a0;
     *(int*)D_004908E4 = a1;
     return 0;

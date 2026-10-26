@@ -14,18 +14,18 @@ struct RNode {
     Vec kids;               /* 0xB4 */
 };
 extern "C" {
-RNode** func_001A7060(Vec* v);
-RNode** func_001A7040(Vec* v);
-unsigned char func_001A7030(Vec* v);
-It* func_001A7020(It* out, Vec* v);
-It* func_001A7010(It* d, It* s);
-It* func_001A6FF0(It* out, Vec* v);
-unsigned char func_001A6FC0(It* a, It* b);
-RNode** func_001A6FE0(It* it);
+RNode** std_vector_pod_int_begin(Vec* v);
+RNode** std_vector_pod_int_end(Vec* v);
+unsigned char std_vector_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_empty(Vec* v);
+It* std_vector_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_begin(It* out, Vec* v);
+It* std_wrap_iterator_vector_cTreeNodePtr_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtrPtr_ctor(It* d, It* s);
+It* std_vector_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_end(It* out, Vec* v);
+unsigned char std_opEq_wrapiteratorR_wrapiteratorR(It* a, It* b);
+RNode** std_wrap_iterator_vector_cTreeNodePtr_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtrPtr_opMul(It* it);
 }
 static inline bool NotEmpty(Vec* v) { return !(v->count == 0); }
-static inline bool NotEmpty2(Vec* v) { return !(func_001A7030(v) != 0); }
-static inline bool NotEnd(It* a, It* b) { return !(func_001A6FC0(a, b) != 0); }
+static inline bool NotEmpty2(Vec* v) { return !(std_vector_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_empty(v) != 0); }
+static inline bool NotEnd(It* a, It* b) { return !(std_opEq_wrapiteratorR_wrapiteratorR(a, b) != 0); }
 static inline bool Neq(RNode** a, RNode** b) { return !(a == b); }
 /* Marks each child (and each grandchild's subtree) dirty. */
 extern "C" void Root_PropagateChildren(RNode* self)
@@ -34,8 +34,8 @@ extern "C" void Root_PropagateChildren(RNode* self)
         RNode* n;
         RNode** end;
         RNode** it;
-        it = func_001A7060(&self->kids);
-        end = func_001A7040(&self->kids);
+        it = std_vector_pod_int_begin(&self->kids);
+        end = std_vector_pod_int_end(&self->kids);
         for (; Neq(it, end); it++) {
             n = *it;
             n->dirty0 = 1;
@@ -46,22 +46,22 @@ extern "C" void Root_PropagateChildren(RNode* self)
                 It last;
                 It t0;
                 It t1;
-                func_001A7020(&t0, &n->kids);
-                func_001A7010(&cur, &t0);
-                func_001A6FF0(&t1, &n->kids);
-                func_001A7010(&last, &t1);
+                std_vector_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_begin(&t0, &n->kids);
+                std_wrap_iterator_vector_cTreeNodePtr_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtrPtr_ctor(&cur, &t0);
+                std_vector_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_end(&t1, &n->kids);
+                std_wrap_iterator_vector_cTreeNodePtr_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtrPtr_ctor(&last, &t1);
                 for (; NotEnd(&cur, &last); cur.p++) {
-                    RootDirtyNode* c = (RootDirtyNode*)*func_001A6FE0(&cur);
+                    RootDirtyNode* c = (RootDirtyNode*)*std_wrap_iterator_vector_cTreeNodePtr_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtrPtr_opMul(&cur);
                     RootDirtyIt ci;
                     RootDirtyIt ce;
                     c->dirty0 = 1;
                     c->dirty1 = 1;
                     c->dirty2 = 1;
-                    if (func_001913E0(c)) {
-                        func_001913C0(&ci, func_001913D0(c));
-                        func_001913A0(&ce, func_001913D0(c));
-                        for (; func_001912A0(&ci, &ce); func_001912C0(&ci))
-                            func_001912E0(*func_00191390(&ci));
+                    if (cTreeNode_cSkaAnimAnchor_TreeNodeData_HasChildren(c)) {
+                        cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Begin(&ci, cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(c));
+                        cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_End(&ce, cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(c));
+                        for (; cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opNe(&ci, &ce); cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opInc(&ci))
+                            cSkaAnimAnchor_TreeNode_TellNeedToUpdate(*cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opMul(&ci));
                     }
                 }
             }

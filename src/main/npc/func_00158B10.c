@@ -5,9 +5,9 @@
 
 #include "npc_types.h"
 
-extern void func_0015BB90(void* self);
+extern void std_list_deleter_cLookAtListItem_ctor(void* self);
 
-void* func_00158B10(void* self) {
-    func_0015BB90(self);
+void* cNPC_cActiveSlot_ctor(void* self) {
+    std_list_deleter_cLookAtListItem_ctor(self);
     return self;
 }

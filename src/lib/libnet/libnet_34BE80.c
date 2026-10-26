@@ -8,11 +8,11 @@
 typedef struct { int type; int f4; int id; int mode; } NetIf_E80;
 typedef struct { int f0; int f4; int f8[6]; int f20; } NetCfg_E80;
 extern int Net_AllocZeroed(NetIf_E80 **pp, int size);
-extern int func_0034CF80(NetIf_E80 *o);
-extern int func_002FB3C0(NetIf_E80 **pp);
-extern int func_0034ACC8(void *cd, int *buf, void *src);
-extern int func_0034D028(NetIf_E80 *o);
-int func_0034BE80(void *cd, int *buf, NetIf_E80 **out, NetCfg_E80 *cfg)
+extern int libnetb_alloc_bufs(NetIf_E80 *o);
+extern int rt_memory_free(NetIf_E80 **pp);
+extern int sceInetCreate(void *cd, int *buf, void *src);
+extern int libnetb_free_bufs(NetIf_E80 *o);
+int sceBInetCreate(void *cd, int *buf, NetIf_E80 **out, NetCfg_E80 *cfg)
 {
     NetIf_E80 *o;
     int r;
@@ -25,14 +25,14 @@ int func_0034BE80(void *cd, int *buf, NetIf_E80 **out, NetCfg_E80 *cfg)
     if (o->type == 0) o->mode = cfg->f0;
     else if (o->type == 3) o->mode = 4;
     else o->mode = 0;
-    if (func_0034CF80(o) != 0) {
-        func_002FB3C0(&o);
+    if (libnetb_alloc_bufs(o) != 0) {
+        rt_memory_free(&o);
         return -0x1F5;
     }
-    r = func_0034ACC8(cd, buf, cfg->f8);
+    r = sceInetCreate(cd, buf, cfg->f8);
     if (r < 0) {
-        func_0034D028(o);
-        func_002FB3C0(&o);
+        libnetb_free_bufs(o);
+        rt_memory_free(&o);
         return r;
     }
     o->id = r;
@@ -44,10 +44,10 @@ int func_0034BE80(void *cd, int *buf, NetIf_E80 **out, NetCfg_E80 *cfg)
 /* merge_units: begin func_0034BFA8 */
 typedef struct NetCtx_FA8 { int f0; int f4; int f8; int state; int f10; int f14; int f18; char *f1C; struct NetCtx_FA8 *f20; char pad[0x10]; int f34; int f38; } NetCtx_FA8;
 typedef struct { int f0; int f4; int f8; int fC; char pad[0x10]; NetCtx_FA8 *tx; NetCtx_FA8 *rx; } NetObj_FA8;
-extern int func_0034D080(void *cd, NetCtx_FA8 *c);
-extern int func_0034D128(void *cd, NetCtx_FA8 *c);
-extern int func_0034AD40(void *cd, int *buf, int a, int b);
-extern int func_0034C9A0(void *a, void *b, int n);
+extern int libnetb_prepare_async_receive(void *cd, NetCtx_FA8 *c);
+extern int libnetb_prepare_async_send(void *cd, NetCtx_FA8 *c);
+extern int sceInetOpen(void *cd, int *buf, int a, int b);
+extern int libnetb_trans_data(void *a, void *b, int n);
 static __inline__ void ctx_init(NetCtx_FA8 *c, NetObj_FA8 *o, int mode)
 {
     c->state = mode;
@@ -59,7 +59,7 @@ static __inline__ void ctx_init(NetCtx_FA8 *c, NetObj_FA8 *o, int mode)
     c->f14 = 0;
     c->f18 = 0x2000;
 }
-int func_0034BFA8(void *cd, int *buf, NetObj_FA8 *o, int flag)
+int sceBInetOpen(void *cd, int *buf, NetObj_FA8 *o, int flag)
 {
     NetCtx_FA8 *c;
     int skip = 0;
@@ -77,11 +77,11 @@ int func_0034BFA8(void *cd, int *buf, NetObj_FA8 *o, int flag)
     c->f8 = o->fC;
     c->f14 = 0;
     c->f18 = 0x2000;
-    if (func_0034D080(cd, o->tx) != 0) return -0x1F5;
+    if (libnetb_prepare_async_receive(cd, o->tx) != 0) return -0x1F5;
     ctx_init(o->rx, o, mode);
-    if (func_0034D128(cd, o->rx) != 0) return -0x1F5;
+    if (libnetb_prepare_async_send(cd, o->rx) != 0) return -0x1F5;
     if (!skip) {
-        r = func_0034AD40(cd, buf, o->f8, flag);
+        r = sceInetOpen(cd, buf, o->f8, flag);
         if (r == 0 || (r == -0x1F4 && o->f0 == 2)) {
             o->rx->state = 0;
             o->tx->state = 0;
@@ -89,8 +89,8 @@ int func_0034BFA8(void *cd, int *buf, NetObj_FA8 *o, int flag)
             o->rx->state = 3;
             o->tx->state = 3;
         }
-        if (func_0034C9A0(o->rx, o->rx->f20, 16) != 0) return -0x1F5;
-        if (func_0034C9A0(o->tx, o->tx->f20, 16) != 0) return -0x1F5;
+        if (libnetb_trans_data(o->rx, o->rx->f20, 16) != 0) return -0x1F5;
+        if (libnetb_trans_data(o->tx, o->tx->f20, 16) != 0) return -0x1F5;
     } else r = 0;
     return r;
 }
@@ -100,16 +100,16 @@ int func_0034BFA8(void *cd, int *buf, NetObj_FA8 *o, int flag)
 typedef struct { int a; int b; int id; } NetObj_168;
 extern int sceSifMCallRpc(void *cd, unsigned int fno, unsigned int mode, void *send, int ssize, void *recv, int rsize, void *end, void *edata);
 #if 0 /* merge_units */
-extern int func_0034D028(NetObj_168 *p);
+extern int libnetb_free_bufs(NetObj_168 *p);
 #endif /* merge_units */
-#define func_0034D028(a0) (func_0034D028((NetIf_E80 *)(a0))) /* merge_units */
+#define libnetb_free_bufs(a0) (libnetb_free_bufs((NetIf_E80 *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_002FB3C0(NetObj_168 **pp);
+extern int rt_memory_free(NetObj_168 **pp);
 #endif /* merge_units */
-#define func_002FB3C0(a0) (func_002FB3C0((NetIf_E80 * *)(a0))) /* merge_units */
+#define rt_memory_free(a0) (rt_memory_free((NetIf_E80 * *)(a0))) /* merge_units */
 
-int func_0034C168(void *cd, int *buf, NetObj_168 *p, int x)
+int sceBInetClose(void *cd, int *buf, NetObj_168 *p, int x)
 {
     NetObj_168 *q;
     int r;
@@ -118,11 +118,11 @@ int func_0034C168(void *cd, int *buf, NetObj_168 *p, int x)
     buf[1] = x;
     q = p;
     r = sceSifMCallRpc(cd, 0x66, 0, buf, 16, buf, 16, 0, 0);
-    if (func_0034D028(q) != 0 || func_002FB3C0(&q) != 0) return -0x1F5;
+    if (libnetb_free_bufs(q) != 0 || rt_memory_free(&q) != 0) return -0x1F5;
     return r < 0 ? -0x1F5 : 0;
 }
-#undef func_0034D028 /* merge_units */
-#undef func_002FB3C0 /* merge_units */
+#undef libnetb_free_bufs /* merge_units */
+#undef rt_memory_free /* merge_units */
 /* merge_units: end func_0034C168 */
 
 /* merge_units: begin func_0034C200 */
@@ -134,8 +134,8 @@ extern int sceSifSetDma(NetReq_200 *req, int n);
 extern int sceSifDmaStat(int h);
 extern void printf(const char *s);
 extern void *memcpy(void *d, const void *s, unsigned int n);
-extern int func_0034C8E0(NetObj_200 *o, int *out);
-int func_0034C200(void *cd, int *buf, NetObj_200 *o, void *dst, int len, int *out)
+extern int sceBInetIsOpened(NetObj_200 *o, int *out);
+int sceBInetRecv(void *cd, int *buf, NetObj_200 *o, void *dst, int len, int *out)
 {
     NetCtx_200 *c;
     NetReq_200 req;
@@ -147,7 +147,7 @@ int func_0034C200(void *cd, int *buf, NetObj_200 *o, void *dst, int len, int *ou
     c = o->ctx;
     FlushCache(0);
     if (c->fC != 0) {
-        r = func_0034C8E0(o, &l);
+        r = sceBInetIsOpened(o, &l);
         if (r != 0) return r;
         if (l == 0) return 0;
     }
@@ -173,26 +173,26 @@ int func_0034C200(void *cd, int *buf, NetObj_200 *o, void *dst, int len, int *ou
 /* merge_units: end func_0034C200 */
 
 /* merge_units: begin func_0034C348 */
-extern int func_0034CA38(int a, int b, int c, int d, int e, int g, int *out, int *err);
-int func_0034C348(void *cd, void *buf, int a, int b, int c, int d, int e, int g, int h)
+extern int libnetb_recv_from(int a, int b, int c, int d, int e, int g, int *out, int *err);
+int sceBInetRecvFrom(void *cd, void *buf, int a, int b, int c, int d, int e, int g, int h)
 {
     int out;
     int err = -0x1F5;
     if (cd == 0 || h < -1 || buf == 0) return -0x1F5;
     if (c == 0) return 0;
-    if (func_0034CA38(a, b, c, d, e, g, &out, &err) == 0) return out;
+    if (libnetb_recv_from(a, b, c, d, e, g, &out, &err) == 0) return out;
     return err ? err : -0x1F5;
 }
 /* merge_units: end func_0034C348 */
 
 /* merge_units: begin func_0034C3D8 */
-extern int func_0034CC60(int a, int b, int c, int *out, int *err);
-int func_0034C3D8(void *cd, void *buf, int a, int b, int c)
+extern int libnetb_recv_echo(int a, int b, int c, int *out, int *err);
+int sceBInetRecvEcho(void *cd, void *buf, int a, int b, int c)
 {
     int out = 0;
     int err = -0x1F5;
     if (cd == 0) return -0x1F5;
-    if (func_0034CC60(a, b, c, &out, &err) == 0) return out;
+    if (libnetb_recv_echo(a, b, c, &out, &err) == 0) return out;
     return err ? err : -0x1F5;
 }
 /* merge_units: end func_0034C3D8 */

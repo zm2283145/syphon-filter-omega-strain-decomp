@@ -6,7 +6,7 @@ void Mem_Free(int pool, void* p, char* file, int line);
 }
 class O3E56F0 { public: virtual void Destroy(int flags); };
 extern "C" O3E56F0* D_0055A228;
-extern "C" void func_003E56F0(void)
+extern "C" void cCharActionMsg_DestinationParams_ClearPrevMsg(void)
 {
     O3E56F0* p = D_0055A228;
     if (p) {

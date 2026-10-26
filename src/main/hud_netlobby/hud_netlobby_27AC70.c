@@ -14,12 +14,12 @@
 
 #include "types.h"
 
-Word* func_0027AC70(Word* dst, Word* src) {
+Word* cLListIterator_GameInfoPtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_0027AC80(Iter* out, Tree* t) {
+void std_list_GameInfoPtr_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 #pragma pop /* merge_units */
@@ -44,27 +44,27 @@ typedef struct {
 extern void IeElement_SetShown(void* widget, int visible);
 extern void IeElement_EvaluateAt(void* widget, float alpha);
 extern void List_Begin(Iter27A* out, List27A* list);
-extern void func_0027AA80(Iter27A* out, Iter27A* in);
+extern void std_list_GameInfoPtr_generic_iterator_ctor(Iter27A* out, Iter27A* in);
 #if 0 /* merge_units */
-extern void func_0027AC80(Iter27A* out, List27A* list);
+extern void std_list_GameInfoPtr_end(Iter27A* out, List27A* list);
 #endif /* merge_units */
-#define func_0027AC80(a0, a1) (func_0027AC80((Iter *)(a0), (Tree *)(a1))) /* merge_units */
+#define std_list_GameInfoPtr_end(a0, a1) (std_list_GameInfoPtr_end((Iter *)(a0), (Tree *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_0027AC70(Iter27A* out, Iter27A* in);
+extern void cLListIterator_GameInfoPtr_ctor(Iter27A* out, Iter27A* in);
 #endif /* merge_units */
-#define func_0027AC70(a0, a1) ((void)func_0027AC70((Word *)(a0), (Word *)(a1))) /* merge_units */
+#define cLListIterator_GameInfoPtr_ctor(a0, a1) ((void)cLListIterator_GameInfoPtr_ctor((Word *)(a0), (Word *)(a1))) /* merge_units */
 
 
 static inline ListNode27A* List_End(List27A* list, Iter27A* raw, Iter27A* end)
 {
-    func_0027AC80(raw, list);
-    func_0027AC70(end, raw);
+    std_list_GameInfoPtr_end(raw, list);
+    cLListIterator_GameInfoPtr_ctor(end, raw);
     return end->node;
 }
 
 /* Hides all of the panel's widgets (and fades some to 0), including every item widget in its list. */
-void func_0027AC90(Panel27A* p)
+void cHudNetLobby_DeactivateControls(Panel27A* p)
 {
     Iter27A endRaw;
     Iter27A beginRaw;
@@ -79,7 +79,7 @@ void func_0027AC90(Panel27A* p)
     IeElement_EvaluateAt(p->w10, 0.0f);
     IeElement_SetShown(p->w28, 0);
     List_Begin(&beginRaw, &p->items);
-    func_0027AA80(&it, &beginRaw);
+    std_list_GameInfoPtr_generic_iterator_ctor(&it, &beginRaw);
     node = it.node;
     if (node != List_End(&p->items, &endRaw, &end)) {
         do {
@@ -89,7 +89,7 @@ void func_0027AC90(Panel27A* p)
         } while (node != List_End(&p->items, &endRaw, &end));
     }
 }
-#undef func_0027AC80 /* merge_units */
-#undef func_0027AC70 /* merge_units */
+#undef std_list_GameInfoPtr_end /* merge_units */
+#undef cLListIterator_GameInfoPtr_ctor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0027AC90 */

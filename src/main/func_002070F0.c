@@ -2,7 +2,7 @@
 extern int String_Length(void* s);
 extern char* String_CStr_Thunk(void* s);
 #pragma optimization_level 1
-char* func_002070F0(char* dst, void* s)
+char* cString16N_2_ctor_cStringR(char* dst, void* s)
 {
     int i;
     for (i = 0; i < 31; i++) {

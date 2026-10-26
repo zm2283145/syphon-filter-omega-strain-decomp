@@ -12,8 +12,8 @@ typedef struct {
     int owner;
 } RecursiveLock;
 
-extern int func_00302610(int *);
-extern int func_00302548(RecursiveLock *);
+extern int rt_mutex_platform_get_thread_id(int *);
+extern int rt_mutex_platform_lock(RecursiveLock *);
 
 int RecursiveLock_Acquire(RecursiveLock *l, int *out)
 {
@@ -21,14 +21,14 @@ int RecursiveLock_Acquire(RecursiveLock *l, int *out)
     int r;
     if (l == 0) return 2;
     if (l->init != 1) return 2;
-    r = func_00302610(&self);
+    r = rt_mutex_platform_get_thread_id(&self);
     if (r != 0) return r;
     if (l->count != 0 && self == l->owner) {
         l->count++;
     } else {
-        r = func_00302548(l);
+        r = rt_mutex_platform_lock(l);
         if (r != 0) return r;
-        r = func_00302610(&l->owner);
+        r = rt_mutex_platform_get_thread_id(&l->owner);
         if (r != 0) return r;
         l->count++;
     }
@@ -38,9 +38,9 @@ int RecursiveLock_Acquire(RecursiveLock *l, int *out)
 /* merge_units: end func_00302260 */
 
 /* merge_units: begin func_00302308 */
-extern int func_00302578(RecursiveLock *, unsigned char *);
+extern int rt_mutex_platform_lock_no_block(RecursiveLock *, unsigned char *);
 
-int func_00302308(RecursiveLock *l, int *out)
+int rt_mutex_lock_no_block(RecursiveLock *l, int *out)
 {
     unsigned char got = 0;
     int self;
@@ -49,15 +49,15 @@ int func_00302308(RecursiveLock *l, int *out)
     if (l->init != 1) return 2;
     if (out == 0) return 2;
     *out = 0;
-    r = func_00302610(&self);
+    r = rt_mutex_platform_get_thread_id(&self);
     if (r != 0) return r;
     if (l->count != 0 && self == l->owner) {
         *out = ++l->count;
     } else {
-        r = func_00302578(l, &got);
+        r = rt_mutex_platform_lock_no_block(l, &got);
         if (r != 0) return r;
         if (got == 1) {
-            r = func_00302610(&l->owner);
+            r = rt_mutex_platform_get_thread_id(&l->owner);
             if (r != 0) return r;
             *out = ++l->count;
         }

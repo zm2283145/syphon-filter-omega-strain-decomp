@@ -11,6 +11,6 @@ AgentCreateEntry* func_0028D5D0(AgentCreateEntryVec* v, int i) {
     return v->data + i;
 }
 
-Rec12* func_0028D5F0(Rec12Vec* v, int i) {
+Rec12* cArray_cBoneScale_opIndex(Rec12Vec* v, int i) {
     return v->data + i;
 }

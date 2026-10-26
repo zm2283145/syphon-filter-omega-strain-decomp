@@ -8,7 +8,7 @@ extern int D_005721A8;
 extern unsigned char D_005721C0;
 extern unsigned char g_IsMultiplayer;
 int NetGame_InitLocalSlot(int*, int);
-int func_002EBBA0(int, int*);
+int NetGetPeerToPeerHostClientIndex(int, int*);
 
 static inline int NetLocalId(void)
 {
@@ -30,7 +30,7 @@ static inline int NetObjId(void)
         id = NetLocalId();
     } else {
         int tmp[1];
-        func_002EBBA0(D_005721A8, tmp);
+        NetGetPeerToPeerHostClientIndex(D_005721A8, tmp);
         id = tmp[0];
     }
     return id;

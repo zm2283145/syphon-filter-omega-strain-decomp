@@ -83,7 +83,7 @@ static inline T_45D710* W_Get(W_45D710* w)
     return w->main;
 }
 
-void func_0045D710(O_45D710* o)
+void GuiGameScreen_WeaponRestoreTransparency(O_45D710* o)
 {
     int i;
     for (i = 0; i < o->n; i++) {
@@ -120,7 +120,7 @@ typedef struct {
 extern int D_00497B08;
 void PtrVector_Resize(void* v, unsigned int n, int* fill);
 
-void func_0045D7F0(O_45D710_0045D7F0* o)
+void GuiGameScreen_WeaponSaveTransparency(O_45D710_0045D7F0* o)
 {
     int i;
     PtrVector_Resize(o->vec80, o->n, &D_00497B08);

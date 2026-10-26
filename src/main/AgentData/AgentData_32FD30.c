@@ -24,7 +24,7 @@ int Script_cAgentData_GetClearancePoints(AgentScriptArg* args) {
     return points;
 }
 
-void func_0032FD60(void) {
+void cAgentData_SOBJ_init(void) {
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0032FD30(void) {}

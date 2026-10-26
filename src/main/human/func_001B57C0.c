@@ -76,31 +76,31 @@ void WeaponInv_Dtor(void*, int);
 void Node_ReleaseComponent58(Npc*);
 void Actor_ShockReaction(Npc*, unsigned char, int, float);
 int func_002D2210(Net*);
-void func_002EC2A8(int);
-void func_001B31A0(Iter*, char*);
-void func_001B3170(Iter*, char*, int*);
-int func_001B3150(Iter*, Iter*);
+void NetFreeObject(int);
+void cAssocArray_int_netSystemField_End(Iter*, char*);
+void cAssocArray_int_netSystemField_Find(Iter*, char*, int*);
+int cAssocArray_int_netSystemField_Iterator_opNe(Iter*, Iter*);
 int ReceiverMap_Erase(char*, Iter*);
-void func_00436C00(int*);
-void func_00433CE0(int*, void*);
-void func_00436BA0(int*, int);
-void func_003FB720(Npc*);
+void cNPCInfoObject_ctor(int*);
+void cNPCInfoObject_Deactivate(int*, void*);
+void cNPCInfoObject_dtor(int*, int);
+void cNetObj_RemovePlayer_cGOBJP(Npc*);
 void Flashlight_Destroy(void*, int);
-void func_001BE780(void*, int);
+void std_vector_deleter_tItem_dtor(void*, int);
 void SoundStopMsg_Ctor(Msg*, char*, Npc*);
 void Event_Send(Msg*, char*, int);
 void FileMan_Release(void*, int);
 void cMessage_dtor(Msg*, int);
 void Actor_UnlinkAll(Npc*);
 void cCheckpoint_dtor(void*, int);
-void func_00136300(void*, int);
-void func_00136350(void*, int);
-void func_001B5F90(void*, int);
-void func_001B5F40(void*, int);
+void cActivationTracker_dtor(void*, int);
+void cCollisionModelList_dtor(void*, int);
+void cAimComponentList_dtor(void*, int);
+void cArray_FixedSize_bool_10_dtor(void*, int);
 void func_0017ED20(void*, int);
-void func_001B5ED0(void*, int);
-void func_001B5E70(void*, int);
-void func_001B5E20(void*, int);
+void cHumanMotionParams_cTargetZRotationStack_dtor(void*, int);
+void cSplinedMotion_Angle_dtor(void*, int);
+void cStatesWithHistory_1_dtor(void*, int);
 void Actor_Destroy(Npc*, int);
 void operator_delete(void*);
 }
@@ -108,11 +108,11 @@ void operator_delete(void*);
 static inline void Unreg(int key)
 {
     Iter e, f;
-    func_001B31A0(&e, D_0055C7A0);
-    func_001B3170(&f, D_0055C7A0, &key);
-    if (func_001B3150(&e, &f)) {
+    cAssocArray_int_netSystemField_End(&e, D_0055C7A0);
+    cAssocArray_int_netSystemField_Find(&f, D_0055C7A0, &key);
+    if (cAssocArray_int_netSystemField_Iterator_opNe(&e, &f)) {
         Iter g;
-        func_001B3170(&g, D_0055C7A0, &key);
+        cAssocArray_int_netSystemField_Find(&g, D_0055C7A0, &key);
         ReceiverMap_Erase(D_0055C7A0, &g);
     }
 }
@@ -164,15 +164,15 @@ extern "C" Npc* Npc_Dtor(Npc* a, short flag)
         if (g_IsMultiplayer) {
             Net* n = a->p3584;
             if (n) {
-                if (func_002D2210(n)) func_002EC2A8(n->w24);
+                if (func_002D2210(n)) NetFreeObject(n->w24);
                 a->p3584 = 0;
             }
             Unreg(a->w10);
-            func_00436C00(&loc);
-            func_00433CE0(&loc, a->aC);
-            func_00436BA0(&loc, -1);
+            cNPCInfoObject_ctor(&loc);
+            cNPCInfoObject_Deactivate(&loc, a->aC);
+            cNPCInfoObject_dtor(&loc, -1);
         }
-        if (IsOn(a)) func_003FB720(a);
+        if (IsOn(a)) cNetObj_RemovePlayer_cGOBJP(a);
         {
             void* p = a->p33EC;
             if (p) {
@@ -207,7 +207,7 @@ extern "C" Npc* Npc_Dtor(Npc* a, short flag)
         {
             void* p = a->p3528;
             AllocGuard g;
-            if (p) if (p) if (p) if (p) func_001BE780(p, 0);
+            if (p) if (p) if (p) if (p) std_vector_deleter_tItem_dtor(p, 0);
             Mem_Free(0, p, D_0049D8D0, 0x412);
         }
         if (!(a->f33BC < 0.0f)) SendDeath(a);
@@ -215,22 +215,22 @@ extern "C" Npc* Npc_Dtor(Npc* a, short flag)
         cCheckpoint_dtor(a->m33F0, -1);
         if (&a->vt32A0) {
             a->vt32A0 = D_004DA2F0;
-            func_00136300(a->m32E0, -1);
-            func_00136350(&a->vt32A0, 0);
+            cActivationTracker_dtor(a->m32E0, -1);
+            cCollisionModelList_dtor(&a->vt32A0, 0);
         }
         if (a->m320C) {
-            func_001B5F90(a->m3258, -1);
-            func_001B5F90(a->m3250, -1);
-            func_001B5F90(a->m3248, -1);
-            func_001B5F40(a->m3234, -1);
-            func_001B5F40(a->m3220, -1);
-            func_001B5F40(a->m320C, -1);
+            cAimComponentList_dtor(a->m3258, -1);
+            cAimComponentList_dtor(a->m3250, -1);
+            cAimComponentList_dtor(a->m3248, -1);
+            cArray_FixedSize_bool_10_dtor(a->m3234, -1);
+            cArray_FixedSize_bool_10_dtor(a->m3220, -1);
+            cArray_FixedSize_bool_10_dtor(a->m320C, -1);
         }
         if (a->m3030) {
             func_0017ED20(a->m30F0, -1);
-            func_001B5ED0(a->m3088, -1);
-            func_001B5E70(a->m3050, -1);
-            func_001B5E20(a->m3030, -1);
+            cHumanMotionParams_cTargetZRotationStack_dtor(a->m3088, -1);
+            cSplinedMotion_Angle_dtor(a->m3050, -1);
+            cStatesWithHistory_1_dtor(a->m3030, -1);
         }
         Actor_Destroy(a, 0);
         if (flag > 0) operator_delete(a);

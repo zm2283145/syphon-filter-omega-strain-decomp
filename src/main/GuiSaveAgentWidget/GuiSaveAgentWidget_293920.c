@@ -29,7 +29,7 @@ int GuiSaveAgentWidget_IsType(void* self, const char* name)
  */
 
 
-int func_00293950(void) {
+int GuiWidget_onInput(void) {
     return 0;
 }
 #pragma pop /* merge_units */

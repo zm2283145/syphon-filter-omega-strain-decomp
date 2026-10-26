@@ -7,26 +7,26 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern int func_001F2D60(ObjVec*, int);
-extern char* func_001F2DB0(ObjVec*);
-extern char** func_001F2DF0(ObjVec*);
+extern int std_vector_imp_cSkaSwitchItem_push_back(ObjVec*, int);
+extern char* std_vector_imp_cSkaSwitchItem_end(ObjVec*);
+extern char** std_vector_deleter_cSkaSwitchItem_data(ObjVec*);
 extern int Vector_Insert_20B570(ObjVec*, char*, int, int);
 
-void func_001F2D50(ObjVec* v, int value) {
-    func_001F2D60(v, value);
+void std_vector_cSkaSwitchItem_push_back(ObjVec* v, int value) {
+    std_vector_imp_cSkaSwitchItem_push_back(v, value);
 }
 
 /* Append one element at the end. */
-int func_001F2D60(ObjVec* v, int value) {
-    return Vector_Insert_20B570(v, func_001F2DB0(v), 1, value);
+int std_vector_imp_cSkaSwitchItem_push_back(ObjVec* v, int value) {
+    return Vector_Insert_20B570(v, std_vector_imp_cSkaSwitchItem_end(v), 1, value);
 }
 
 /* End pointer for 20-byte elements. */
-char* func_001F2DB0(ObjVec* v) {
+char* std_vector_imp_cSkaSwitchItem_end(ObjVec* v) {
     char** data;
     int count;
 
-    data = func_001F2DF0(v);
+    data = std_vector_deleter_cSkaSwitchItem_data(v);
     count = v->count;
     return *data + count * 20;
 }

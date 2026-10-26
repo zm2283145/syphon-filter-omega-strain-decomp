@@ -8,7 +8,7 @@ extern char D_004DE260[];
 }
 union V4_E100 { struct { float x, y, z, w; } f; struct { char c[16]; } s; };
 struct Msg2530 { void* vtable; int a, b, c, d, e, f, g; char h; char p1[3]; V4_E100 v; };
-extern "C" Msg2530* func_002D15C0(Msg2530* src)
+extern "C" Msg2530* cNetGeneratorDeleteMsg_Clone(Msg2530* src)
 {
     Msg2530* p;
     {

@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_002D83B0(void) {
+int cNetPlayer_HandleMessage(void) {
     return 0;
 }

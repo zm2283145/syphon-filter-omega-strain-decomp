@@ -113,9 +113,9 @@ int Actor_IsInvulnerable(Tgt* t);
 void Hud_ShowCallout(float a, float b, int c, void* pos, void* name, int d, int e, int f);
 void Vector_Insert_266BA0(void* a, Mtx* m, int n, Seg* s);
 void ParticleInst_Update(float dt, int a, Mtx* m, int b);
-void func_00264BB0(HeldItem* h, Tgt* t, int part);
-void func_00265790(float a, HeldItem* h, int b);
-int func_00265910(HeldItem* h);
+void cAirTaser_BeginShocking_cHumanP_int(HeldItem* h, Tgt* t, int part);
+void cAirTaser_SmoothLine(float a, HeldItem* h, int b);
+int cAirTaser_LosBlocked(HeldItem* h);
 }
 static inline float Abs(float x) { float r = 0.0f; asm { abs.s r, x } return r; }
 static inline float Clamp(float v, float lo, float hi) { float r = 0.0f; asm { max.s r, v, lo } asm { min.s r, r, hi } return r; }
@@ -166,7 +166,7 @@ static inline void Emit(HeldItem* self, const V4& p) {
 }
 extern "C" void HeldItem_UpdateFlight(HeldItem* self, float dt) {
     unsigned char live = self->ctl->b14;
-    if (live && func_00265910(self)) {
+    if (live && cAirTaser_LosBlocked(self)) {
         HeldItem_Release(self);
         return;
     }
@@ -252,13 +252,13 @@ extern "C" void HeldItem_UpdateFlight(HeldItem* self, float dt) {
             VObj58* o = t->x58;
             bool blocked = false;
             if (o && o->Check(held, mine)) blocked = true;
-            if (blocked || t->x320C == 2 || t->x320C == 0x1A || Actor_IsInvulnerable(t) || t->b346A || func_00265910(self)) {
+            if (blocked || t->x320C == 2 || t->x320C == 0x1A || Actor_IsInvulnerable(t) || t->b346A || cAirTaser_LosBlocked(self)) {
                 HeldItem_Release(self);
             } else if ((m2 || q.hit == 3) && t->x33A0) {
                 Hud_ShowCallout(5.0f, 0.0f, g_Hud, (char*)t + 0xC, D_004A8210, -1, 0, 0);
                 HeldItem_Release(self);
             } else {
-                func_00264BB0(self, t, q.part);
+                cAirTaser_BeginShocking_cHumanP_int(self, t, q.part);
             }
         } else {
             HeldItem_Release(self);
@@ -270,7 +270,7 @@ extern "C" void HeldItem_UpdateFlight(HeldItem* self, float dt) {
         *(V4*)self->Segs() = *(V4*)m.m[3];
     }
     if (self->trail) self->trail->Update(&b);
-    func_00265790(1.0f, self, 1);
+    cAirTaser_SmoothLine(1.0f, self, 1);
     if (live && self->b8 == 1 && !(self->xB0 <= (float)self->owner->x3C)) {
         self->Clear();
         HeldItem_Release(self);

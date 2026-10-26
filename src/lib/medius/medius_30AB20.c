@@ -11,7 +11,7 @@ typedef struct { int sock; char pad[0x44]; unsigned char b48; } ScfSock;
 typedef struct { int f0; int f4; int addr[4]; unsigned short port; char pad[0x5A]; int f74; } ScfPeer;
 extern void *memset(void *d, int c, unsigned int n);
 extern int Socket_WriteAddressed(int sock, void *addr, unsigned short port, void *data, int len, unsigned short *sent);
-int func_0030AB20(ScfSock *s, ScfPeer *e)
+int rt_udp_send_reset(ScfSock *s, ScfPeer *e)
 {
     ScfHdr hdr;
     unsigned short sent = 0;
@@ -30,7 +30,7 @@ int func_0030AB20(ScfSock *s, ScfPeer *e)
 
 /* merge_units: begin func_0030ABA8 */
 typedef struct { unsigned char kind; unsigned char id; unsigned short pad; int val; int pad2; } ScfHdr_0030ABA8;
-int func_0030ABA8(ScfSock *s, void *addr, unsigned short port, int val)
+int rt_udp_reset(ScfSock *s, void *addr, unsigned short port, int val)
 {
     ScfHdr_0030ABA8 hdr;
     unsigned short sent = 0;
@@ -73,10 +73,10 @@ typedef struct { unsigned char b[12]; } ScfAddr12;
 typedef struct { union { unsigned int w; unsigned char flags; } u; int val; int seq; } ScfHdr_0030ACD8;
 typedef struct { unsigned int type; char pad[0x30]; int list; char pad2[0x48]; unsigned int f80; unsigned int f84; char pad3[0x8]; } ScfPeer_0030ACD8;
 typedef struct { int sock; ScfPeer_0030ACD8 *ents; } ScfSock_0030ACD8;
-extern int func_002FABD0(int *list, void **node);
-extern unsigned int func_002FAEE8(void *node);
-extern char *func_002FAED0(void *node);
-extern void *func_002FAF00(void *node);
+extern int rt_list_buf_get_head(int *list, void **node);
+extern unsigned int rt_list_buf_get_data_size(void *node);
+extern char *rt_list_buf_get_data_ptr(void *node);
+extern void *rt_list_buf_get_next(void *node);
 
 int RtUdp_CheckDuplicate(ScfSock_0030ACD8 *s, ScfPeer_0030ACD8 *e, ScfHdr_0030ACD8 *p, unsigned char *dup)
 {
@@ -93,16 +93,16 @@ int RtUdp_CheckDuplicate(ScfSock_0030ACD8 *s, ScfPeer_0030ACD8 *e, ScfHdr_0030AC
             if ((int)(e->f84 - p->seq) >= 0 && e->f84 != 0) {
                 *dup = 1;
             } else {
-                if (func_002FABD0(&e->list, &node) != 0) return 10;
+                if (rt_list_buf_get_head(&e->list, &node) != 0) return 10;
                 while (node != 0) {
-                    if (func_002FAEE8(node) != 0) {
-                        *(ScfAddr12 *)&hd = *(ScfAddr12 *)func_002FAED0(node);
+                    if (rt_list_buf_get_data_size(node) != 0) {
+                        *(ScfAddr12 *)&hd = *(ScfAddr12 *)rt_list_buf_get_data_ptr(node);
                         if (((hd.u.w & 6) == 6 || (hd.u.flags & 4)) && hd.seq == p->seq) {
                             *dup = 1;
                             break;
                         }
                     }
-                    node = func_002FAF00(node);
+                    node = rt_list_buf_get_next(node);
                 }
             }
         } else if (p->u.flags & 2) {
@@ -128,7 +128,7 @@ typedef struct {
     unsigned int srtt;
     unsigned int rto;
 } RtUdpRtt;
-extern void func_003060F0(int *timer, unsigned int *elapsed);
+extern void rt_time_elapsed(int *timer, unsigned int *elapsed);
 int RtUdp_UpdateRtt(void *ctx, RtUdpRtt *r, unsigned char flags, int seq)
 {
     unsigned int elapsed;
@@ -137,7 +137,7 @@ int RtUdp_UpdateRtt(void *ctx, RtUdpRtt *r, unsigned char flags, int seq)
     if (ctx == 0) return ret;
     if (r == 0) return ret;
     if (((flags & 6) == 6 || (flags & 4)) && r->pending != 0 && seq == r->pending) {
-        func_003060F0(r->timer, &elapsed);
+        rt_time_elapsed(r->timer, &elapsed);
         srtt = r->srtt;
         rttvar = r->rttvar;
         if (srtt == 0) {
@@ -164,9 +164,9 @@ int RtUdp_UpdateRtt(void *ctx, RtUdpRtt *r, unsigned char flags, int seq)
 typedef struct { int sock; char pad[0x20]; void *buf1; void *buf2; char pad2[0xC]; unsigned int mtu; char pad3[0xA]; unsigned short port; unsigned int idx; } ScfSock_0030AF68;
 typedef struct { int a; unsigned int size; int c; } ScfSockOpt;
 extern int Net_AllocZeroed(void *out, unsigned long n);
-extern int func_002F5C98(int *sock, int a, unsigned short port, ScfSockOpt *opt);
-extern int func_002F5BB0(void);
-extern int func_002F65C8(int sock, unsigned short *port);
+extern int rt_comm_create(int *sock, int a, unsigned short port, ScfSockOpt *opt);
+extern int rt_comm_startup(void);
+extern int rt_comm_get_local_port(int sock, unsigned short *port);
 extern int D_00491310;
 extern unsigned short D_00491314;
 extern void *D_00491318;
@@ -187,14 +187,14 @@ int RtUdp_Init(ScfSock_0030AF68 *s)
             memset(&opt, 0, 12);
             opt.size = 0x5AA;
             opt.a = 1;
-            r = func_002F5C98(&D_00491310, 0, D_00491314, &opt);
+            r = rt_comm_create(&D_00491310, 0, D_00491314, &opt);
             if (r == 5) {
-                if (func_002F5BB0() != 0) return 16;
-                if (func_002F5C98(&D_00491310, 0, D_00491314, &opt) != 0) return 16;
+                if (rt_comm_startup() != 0) return 16;
+                if (rt_comm_create(&D_00491310, 0, D_00491314, &opt) != 0) return 16;
             } else if (r != 0) {
                 return 16;
             }
-            if (func_002F65C8(D_00491310, &D_00491314) != 0) return 16;
+            if (rt_comm_get_local_port(D_00491310, &D_00491314) != 0) return 16;
             s->port = D_00491314;
         }
         if (D_00529860[s->idx] == 0) {
@@ -211,14 +211,14 @@ int RtUdp_Init(ScfSock_0030AF68 *s)
         memset(&opt, 0, 12);
         opt.size = s->mtu + 12;
         opt.a = 1;
-        r = func_002F5C98(&s->sock, 0, s->port, &opt);
+        r = rt_comm_create(&s->sock, 0, s->port, &opt);
         if (r == 5) {
-            if (func_002F5BB0() != 0) return 16;
-            if (func_002F5C98(&s->sock, 0, s->port, &opt) != 0) return 16;
+            if (rt_comm_startup() != 0) return 16;
+            if (rt_comm_create(&s->sock, 0, s->port, &opt) != 0) return 16;
         } else if (r != 0) {
             return 16;
         }
-        if (func_002F65C8(s->sock, &s->port) != 0) return 16;
+        if (rt_comm_get_local_port(s->sock, &s->port) != 0) return 16;
     }
     return 0;
 }
@@ -235,8 +235,8 @@ typedef struct {
     char pad2C[0x1C];
     unsigned int idx;
 } ScfSock_0030B220;
-extern void func_002F5DB0(int sock);
-extern void func_002FB3C0(void *pp);
+extern void rt_comm_destroy(int sock);
+extern void rt_memory_free(void *pp);
 extern void func_0030DED8(void *p);
 extern void *D_00491320;
 extern unsigned char D_00491324;
@@ -247,7 +247,7 @@ extern ScfSock_0030B220 *D_00529860[8];
 
 
 /* Closes an RT UDP socket; the shared socket is torn down when its last user goes. */
-int func_0030B220(ScfSock_0030B220 *s)
+int rt_udp_destroy_shared_channel_data(ScfSock_0030B220 *s)
 {
     int last = 1;
     unsigned int i;
@@ -258,12 +258,12 @@ int func_0030B220(ScfSock_0030B220 *s)
             if (D_00529860[i] != 0) last = 0;
         }
         if (last) {
-            func_002F5DB0(D_00491310);
+            rt_comm_destroy(D_00491310);
             D_00491310 = 0;
             D_00491314 = 0;
-            func_002FB3C0(&D_00491318);
+            rt_memory_free(&D_00491318);
             D_00491318 = 0;
-            func_002FB3C0(&D_0049131C);
+            rt_memory_free(&D_0049131C);
             D_0049131C = 0;
             if (D_00491320 != 0) {
                 func_0030DED8(D_00491320);
@@ -272,9 +272,9 @@ int func_0030B220(ScfSock_0030B220 *s)
             }
         }
     } else {
-        func_002F5DB0(s->sock);
-        func_002FB3C0(&s->buf1);
-        func_002FB3C0(&s->buf2);
+        rt_comm_destroy(s->sock);
+        rt_memory_free(&s->buf1);
+        rt_memory_free(&s->buf2);
         if (s->ext != 0) {
             func_0030DED8(s->ext);
             s->ext = 0;
@@ -303,7 +303,7 @@ extern ScfSock_0030B338 *D_00529860[8];
 
 
 /* Flushes pending notifications: fires each pending socket's callback with event -2. */
-void func_0030B338(int a0, int abort, int a2, int a3, int t0, ScfSock_0030B338 *s)
+void rt_udp_uber_resolve_cb(int a0, int abort, int a2, int a3, int t0, ScfSock_0030B338 *s)
 {
     unsigned int i;
 

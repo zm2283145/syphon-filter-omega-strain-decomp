@@ -1,7 +1,7 @@
 typedef struct { float x, y, z; int pad; int st; int p14[3]; int *list; int p24; int n; } S7BE0b;
 typedef struct { char p0[0x2C]; int last; int first; char bool34; char p35[3]; float x, y, z; } S7BE0a;
 extern void Transport_Send(int, S7BE0a *, int, int);
-void func_002D7BE0(S7BE0a *m, int t, S7BE0b *s)
+void cNetPathMsg_SendPath(S7BE0a *m, int t, S7BE0b *s)
 {
     if (s->n) {
         m->last = s->list[s->n - 1];

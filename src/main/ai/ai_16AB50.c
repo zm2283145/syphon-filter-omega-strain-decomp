@@ -111,16 +111,16 @@ extern int ScriptFilter_Dispatch(int, int, int);
 extern int* func_0022F170(void);
 extern int* func_0026ED30(void);
 extern int* func_0026ED70(void);
-extern int* func_0026EDF0(void);
-extern int* func_0026EE30(void);
-extern int* func_0026EEC0(void);
-extern int* func_0026EF10(void);
-extern int* func_0026EF50(void);
-extern int* func_0026EF90(void);
-extern int* func_0026F030(void);
-extern int* func_0026F080(void);
-extern int* func_0026F0B0(void);
-extern int* func_0026F0F0(void);
+extern int* cAIBodyMovedMsg_SOBJ_getClassId(void);
+extern int* cAIPickupableAwarenessMsg_SOBJ_getClassId(void);
+extern int* cAIWeaponFiredMsg_SOBJ_getClassId(void);
+extern int* cAINewAwarenessMsg_SOBJ_getClassId(void);
+extern int* cAIDestinationReachedMsg_SOBJ_getClassId(void);
+extern int* cAIWaypointReachedMsg_SOBJ_getClassId(void);
+extern int* cAITimeElapsedMsg_SOBJ_getClassId(void);
+extern int* cAIDeadMsg_SOBJ_getClassId(void);
+extern int* cAIDeactivatedMsg_SOBJ_getClassId(void);
+extern int* cAIActivatedMsg_SOBJ_getClassId(void);
 extern int ScriptType_AddAccepted(int, int);
 extern void ScriptType_SetParent(int, int);
 
@@ -133,25 +133,25 @@ int ScriptType_cAI_Init(void) {
 
     key = func_0022F170();
     ScriptType_SetParent(*(int*)D_004EE5E0, *key);
-    key = func_0026F0F0();
+    key = cAIActivatedMsg_SOBJ_getClassId();
     ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
-    key = func_0026F0B0();
+    key = cAIDeactivatedMsg_SOBJ_getClassId();
     ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
-    key = func_0026F080();
+    key = cAIDeadMsg_SOBJ_getClassId();
     ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
-    key = func_0026F030();
+    key = cAITimeElapsedMsg_SOBJ_getClassId();
     ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
-    key = func_0026EF90();
+    key = cAIWaypointReachedMsg_SOBJ_getClassId();
     ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
-    key = func_0026EF50();
+    key = cAIDestinationReachedMsg_SOBJ_getClassId();
     ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
-    key = func_0026EF10();
+    key = cAINewAwarenessMsg_SOBJ_getClassId();
     ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
-    key = func_0026EEC0();
+    key = cAIWeaponFiredMsg_SOBJ_getClassId();
     ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
-    key = func_0026EE30();
+    key = cAIPickupableAwarenessMsg_SOBJ_getClassId();
     ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
-    key = func_0026EDF0();
+    key = cAIBodyMovedMsg_SOBJ_getClassId();
     ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
     key = func_0026ED70();
     ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
@@ -160,7 +160,7 @@ int ScriptType_cAI_Init(void) {
 }
 
 /* Address of the cAI script-type key. */
-int func_0016AD70(void) {
+int cAI_SOBJ_getClassId(void) {
     return (int)D_004EE5D8;
 }
 

@@ -5,7 +5,7 @@
 #pragma optimization_level 1
 
 /* Swaps two ints. */
-void func_0020AE60(int* a, int* b) {
+void std_swap_cSkaTransBLENDPR_cSkaTransBLENDPR(int* a, int* b) {
     int tmp = *a;
     *a = *b;
     *b = tmp;

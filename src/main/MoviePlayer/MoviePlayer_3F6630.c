@@ -23,7 +23,7 @@ static inline void Send3F6630(void* src, void* dest, int size)
     while (sceSifSetDma(&t, 1) == 0) {
     }
 }
-extern "C" int func_003F6630(void* self, char* dst, int len, char* dst2, int len2, char* src, int n1, char* src2, int n2)
+extern "C" int sendToIOP2area(void* self, char* dst, int len, char* dst2, int len2, char* src, int n1, char* src2, int n2)
 {
     if (len + len2 < n1 + n2) {
         int over = (n1 + n2) - (len + len2);
@@ -151,7 +151,7 @@ int func_003F6A90(char * arg0) {
 /* merge_units: begin func_003F6B00 */
 #pragma push /* merge_units */
 typedef struct { int state; unsigned char kind; char pad[0x2B]; unsigned int m30; int m34; int m38; int m3C; int m40; int m44; } T6B00;
-void func_003F6B00(T6B00* t, int n)
+void audioDecEndPut(T6B00* t, int n)
 {
     if (t->state == 0) {
         if (t->kind != 4) {
@@ -178,7 +178,7 @@ void func_003F6B00(T6B00* t, int n)
 /* merge_units: begin func_003F6BE0 */
 #pragma push /* merge_units */
 typedef struct { int state; unsigned char kind; char pad[3]; char buf[0x28]; int m30; int m34; int m38; int m3C; int m40; } T6BE0;
-void func_003F6BE0(T6BE0* t, int* p1, int* n1, int* p2, int* n2)
+void audioDecBeginPut(T6BE0* t, int* p1, int* n1, int* p2, int* n2)
 {
     if (t->state == 0) {
         if (t->kind != 4) {
@@ -224,10 +224,10 @@ void func_003F6BE0(T6BE0* t, int* p1, int* n1, int* p2, int* n2)
 
 #include "loose04_types.h"
 
-extern int func_003A6C80(void);
+extern int snd_ResetMovieSound(void);
 
-void func_003F6CD0(Unk3F6CD0* self) {
-    func_003A6C80();
+void audioDecReset(Unk3F6CD0* self) {
+    snd_ResetMovieSound();
     self->unk00 = 0;
     self->unk30 = 0;
     self->unk38 = 0;
@@ -243,17 +243,17 @@ void func_003F6CD0(Unk3F6CD0* self) {
 /* merge_units: begin func_003F6D20 */
 #pragma push /* merge_units */
 typedef struct { int state; unsigned char mode; char p5[0xF]; int f14; int f18; char p1C[0x2C]; char* buf; int pos; char p50[0xC]; int size; } S3F6D20;
-extern void func_003A6C20(char* buf, int pos, char* end, unsigned int a, int b);
+extern void snd_StartMovieSoundEx(char* buf, int pos, char* end, unsigned int a, int b);
 #pragma push
 #pragma opt_common_subs off
 #pragma opt_propagation off
-void func_003F6D20(S3F6D20* s)
+void audioDecStart(S3F6D20* s)
 {
     if (s->mode != 3) {
         char* b = s->buf;
-        func_003A6C20(b, s->pos / 1024 * 1024, b + s->size, 0, 0);
+        snd_StartMovieSoundEx(b, s->pos / 1024 * 1024, b + s->size, 0, 0);
     } else {
-        func_003A6C20(s->buf, s->pos / 1024 * 1024, (char*)s->size, s->f14, s->f18);
+        snd_StartMovieSoundEx(s->buf, s->pos / 1024 * 1024, (char*)s->size, s->f14, s->f18);
     }
     s->state = 2;
 }
@@ -267,13 +267,13 @@ typedef struct { int state; unsigned char mode; char p5[0xF]; int f14; int f18; 
 #pragma push
 #pragma opt_common_subs off
 #pragma opt_propagation off
-void func_003F6DC0(S3F6DC0* s)
+void audioDecResume(S3F6DC0* s)
 {
     if (s->mode != 3) {
         char* b = s->buf;
-        func_003A6C20(b, s->pos / 1024 * 1024, b + s->size, 0, 0);
+        snd_StartMovieSoundEx(b, s->pos / 1024 * 1024, b + s->size, 0, 0);
     } else {
-        func_003A6C20(s->buf, s->pos / 1024 * 1024, (char*)s->size, s->f14, s->f18);
+        snd_StartMovieSoundEx(s->buf, s->pos / 1024 * 1024, (char*)s->size, s->f14, s->f18);
     }
     s->state = 2;
 }
@@ -285,13 +285,13 @@ void func_003F6DC0(S3F6DC0* s)
 #pragma push /* merge_units */
 typedef struct { int state; unsigned char mode; char pad[0x43]; int offset; char pad2[0x10]; int time; } Timer3F6;
 
-extern int func_003A6C70(Timer3F6* self);
+extern int snd_PauseMovieSound(Timer3F6* self);
 
 /* Resets the timer state and computes its time, minus the offset unless in mode 3. */
-void func_003F6E60(Timer3F6* self)
+void audioDecPause(Timer3F6* self)
 {
     self->state = 3;
-    self->time = func_003A6C70(self);
+    self->time = snd_PauseMovieSound(self);
     if (self->mode != 3)
         self->time -= self->offset;
 }
@@ -300,10 +300,10 @@ void func_003F6E60(Timer3F6* self)
 
 /* merge_units: begin func_003F6EB0 */
 #pragma push /* merge_units */
-extern int func_003A6C60(void);
+extern int snd_CloseMovieSound(void);
 
-int func_003F6EB0(void) {
-    func_003A6C60();
+int audioDecDelete(void) {
+    snd_CloseMovieSound();
     return 1;
 }
 #pragma pop /* merge_units */
@@ -312,7 +312,7 @@ int func_003F6EB0(void) {
 /* merge_units: begin func_003F6ED0 */
 #pragma push /* merge_units */
 typedef struct { int state; unsigned char kind; char pad[0x2B]; unsigned int m30; int m34; int m38; int m3C; int m40; int m44; int m48; int m4C; int m50; int m54; int m58; int m5C; } T6ED0;
-extern int func_003A6C90(int size, int a, int b, int c, int d, int kind);
+extern int snd_InitMovieSoundEx(int size, int a, int b, int c, int d, int kind);
 int func_003F6ED0(T6ED0* t, int a, int b, unsigned char kind)
 {
     t->state = 0;
@@ -334,7 +334,7 @@ int func_003F6ED0(T6ED0* t, int a, int b, unsigned char kind)
         t->m4C = 0x400;
     else
         t->m4C = 0xC000;
-    t->m48 = func_003A6C90(t->m4C, 0x1000, 0x400, 0, 2, t->kind);
+    t->m48 = snd_InitMovieSoundEx(t->m4C, 0x1000, 0x400, 0, 2, t->kind);
     return t->m48 >= 0;
 }
 #pragma pop /* merge_units */
@@ -344,7 +344,7 @@ int func_003F6ED0(T6ED0* t, int a, int b, unsigned char kind)
 #pragma push /* merge_units */
 extern int D_0055C210;
 
-void func_003F6F90(void) {
+void endDisplay(void) {
     D_0055C210 = 0;
 }
 #pragma pop /* merge_units */

@@ -3,4 +3,4 @@
 #include "trivial_dtor.h"
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_001D7C90)
+DEFINE_TRIVIAL_DTOR(cJointInfo_dtor)

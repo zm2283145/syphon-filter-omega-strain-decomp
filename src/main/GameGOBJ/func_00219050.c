@@ -4,7 +4,7 @@
 
 #include "gobj_types.h"
 
-Elem16* func_00219050(Elem16Vec* v, int i) {
+Elem16* std_vector_cVector_opIndex(Elem16Vec* v, int i) {
     return &v->data[i];
 }
 

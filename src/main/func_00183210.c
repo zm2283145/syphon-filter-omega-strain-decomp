@@ -8,7 +8,7 @@
 #include "loose00_types.h"
 
 /* Data part (+0x10) of the node at +0x04. */
-char* func_00183210(NodeRef* self) {
+char* cCollisionModel_BoundingSphere_LocalSpace(NodeRef* self) {
     return self->node + 16;
 }
 

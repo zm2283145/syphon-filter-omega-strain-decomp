@@ -74,14 +74,14 @@ extern long long D_005392D8;
 extern long long D_004BC1B0;
 extern float D_00539170[4];
 extern char D_004AB158[];
-void func_0037A1E0(char* p);
-void func_0037E310(char* p);
+void XLib_ClearZBuffer(char* p);
+void XLib_Restore(char* p);
 float Math_CosThunk(float);
 float Math_SinThunk(float);
 void Mtx44_SetRotation(M* m, float, float, float, float, float, float, float, float, float);
 M* Mtx_Copy(M* d, const M* s);
 M* Mtx_InvertRigid(M* m);
-void func_001D3E20(TM* m);
+void cMatrix_ctor_void(TM* m);
 void Mtx_MakeAxisRotation(TM* m, float x, float y, float z, float a);
 void Mtx_Multiply(M* a, TM* b);
 Root* RootCollection_FindByKey(void* c, char* key);
@@ -251,7 +251,7 @@ static inline M Inverse(const M& m) { M t; return M(Mtx_InvertRigid(Mtx_Copy(&t,
 static inline void Rot2(M* m, const V& ax, float a)
 {
     TM t;
-    func_001D3E20(&t);
+    cMatrix_ctor_void(&t);
     Mtx_MakeAxisRotation(&t, ax.x, ax.y, ax.z, a);
     Mtx_Multiply(m, &t);
 }
@@ -274,7 +274,7 @@ extern "C" void GuiScoresEquip_UpdateFigures(Self* self0)
     int j;
     Self* self = self0;
     int saved;
-    func_0037A1E0(g_Video);
+    XLib_ClearZBuffer(g_Video);
     saved = g_DrawMode;
     e.x = 0.0f; e.y = 5.0f; e.z = 1.5f; e.w = 1.0f;
     *STK(D_00538C64 + 1) = *STK(D_00538C64);
@@ -361,7 +361,7 @@ extern "C" void GuiScoresEquip_UpdateFigures(Self* self0)
             }
         }
     }
-    func_0037E310(g_Video);
+    XLib_Restore(g_Video);
     {
         Slot* s = SLOT(D_00538C60);
         s->cam.f2E0 = 0;

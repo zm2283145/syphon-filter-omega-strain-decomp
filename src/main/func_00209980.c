@@ -1,10 +1,10 @@
 #include "types.h"
 #pragma optimization_level 1
 
-extern int func_00201E80(void);
-extern void func_002099B0(int);
+extern int std_vector_deleter_cSkaBlendSequenceItem_alloc_void(void);
+extern void cAllocator_cSkaBlendSequenceItem_max_size(int);
 
-/* Passes the result of func_00201E80 to func_002099B0. */
-void func_00209980(void) {
-    func_002099B0(func_00201E80());
+/* Passes the result of std_vector_deleter_cSkaBlendSequenceItem_alloc_void to cAllocator_cSkaBlendSequenceItem_max_size. */
+void std_vector_imp_cSkaBlendSequenceItem_max_size(void) {
+    cAllocator_cSkaBlendSequenceItem_max_size(std_vector_deleter_cSkaBlendSequenceItem_alloc_void());
 }

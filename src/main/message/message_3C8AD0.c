@@ -74,7 +74,7 @@ void* s = D_005390F0; __int128 t; void* d = vu + 1;
 #include "trivial_dtor.h"
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_003C8BF0)
+DEFINE_TRIVIAL_DTOR(cBBoxMan_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003C8BF0 */
 
@@ -89,7 +89,7 @@ DEFINE_TRIVIAL_DTOR(func_003C8BF0)
 
 extern int D_00543610;          /* Message script type key */
 
-void func_003C8C40(void) {
+void cMessage_SOBJ_init(void) {
 }
 
 int* Message_GetScriptTypeKeyPtr(void) {

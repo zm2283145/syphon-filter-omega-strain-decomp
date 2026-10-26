@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose02_types.h"
 
-void func_00318C50(Float2* self, float a, float b) {
+void UpdateLDPDA_MBlk(Float2* self, float a, float b) {
     self->b = b;
     self->a = a;
 }

@@ -15,7 +15,7 @@ typedef struct {
     int head;
 } ReqQueue;
 
-int func_003F48B0(ReqQueue* q, Req* r)
+int viBufModifyPts(ReqQueue* q, Req* r)
 {
     int i;
     int size;

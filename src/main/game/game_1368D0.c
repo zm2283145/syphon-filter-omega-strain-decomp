@@ -51,7 +51,7 @@ extern void* Archive_Open(void* self, char* path, int a, int b);
 #endif /* merge_units */
 #define Archive_Open(a0, a1, a2, a3) (Archive_Open((a0), (void *)(a1), (a2), (a3))) /* merge_units */
 
-extern void func_003E2140(void* interp, void* script);
+extern void cScriptInterpreter_SetHog(void* interp, void* script);
 extern void ScriptMgr_LoadScript(void* interp, const char* name, int a);
 extern int cScriptInterpreter_CheckAllReferences(void* interp);
 extern void cScriptInterpreter_ExecuteInitCode(void* interp);
@@ -62,7 +62,7 @@ void IArcade_Init(void* self)
 {
     char path[0x80];
     sprintf(path, D_0049AB30, D_0048B2F8);
-    func_003E2140(D_00555070, Archive_Open(self, path, 0, 0));
+    cScriptInterpreter_SetHog(D_00555070, Archive_Open(self, path, 0, 0));
     ScriptMgr_LoadScript(D_00555070, D_0049AB48, 0);
     cScriptInterpreter_CheckAllReferences(D_00555070);
     cScriptInterpreter_ExecuteInitCode(D_00555070);
@@ -88,7 +88,7 @@ static inline void merge_flush_func_00136990(void) {}
 extern int WeaponDb_PreloadLevel(int, int, int);
 
 /* Forwards (a1, a2) to WeaponDb_PreloadLevel on the object at +0x1E0; always returns 1. */
-int func_00136A70(char* self, int a1, int a2) {
+int cGameSystem_LoadWeaponDB(char* self, int a1, int a2) {
     WeaponDb_PreloadLevel(*(int*)(self + 0x1E0), a1, a2);
     return 1;
 }

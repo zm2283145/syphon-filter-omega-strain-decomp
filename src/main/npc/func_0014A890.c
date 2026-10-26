@@ -57,19 +57,19 @@ extern void NpcThinkList_RemoveActor(Actor_A890* actor);
 extern void ActiveList_EraseMatching(PtrVec* v, Pred_A890 p);
 extern void NpcAi_AddToDeadList(PtrVec* v, cNPC_A890** self);
 extern void List_Begin(Iter* out, Tree* t);
-extern Word* func_0014AB70(Word* dst, Word* src);
-extern void func_0014AB80(Iter* out, Tree* t);
-extern Word* func_0014ABC0(Word* dst, Word* src);
-extern Word* func_0014ABD0(Word* dst, Word* src);
-extern void func_0014ABE0(Iter* out, PtrVec* v);
-extern Word* func_0014ABF0(Word* dst, Word* src);
-extern int func_0014AC00(Iter* a, Iter* b);
-extern void func_0014AC20(Iter* out, PtrVec* v);
-extern Iter* func_0014AC30(Iter* it);
-extern cNPC_A890** func_0014AC50(Iter* it);
-extern Iter* func_0014AC60(Iter* dst, Iter* src);
-extern void func_0014AC70(Iter* out, PtrVec* v);
-extern Iter* func_0014AC80(Iter* self);
+extern Word* cLListIterator_cActiveListItemPtr_ctor(Word* dst, Word* src);
+extern void std_list_cActiveListItemPtr_end_void(Iter* out, Tree* t);
+extern Word* std_list_cActiveListItemPtr_generic_iterator_ctor(Word* dst, Word* src);
+extern Word* cLListIterator_cNPCPtr_ctor_listR(Word* dst, Word* src);
+extern void std_list_cNPCPtr_end(Iter* out, PtrVec* v);
+extern Word* cLListIterator_cNPCPtr_ctor_cLListIteratorR(Word* dst, Word* src);
+extern int opNe_cLListIteratorR_cLListIteratorR(Iter* a, Iter* b);
+extern void cLList_cNPCPtr_End(Iter* out, PtrVec* v);
+extern Iter* cLListIterator_cNPCPtr_opInc(Iter* it);
+extern cNPC_A890** cLListIterator_cNPCPtr_opMul(Iter* it);
+extern Iter* cLListIterator_cNPCPtr_opAssign(Iter* dst, Iter* src);
+extern void cLList_cNPCPtr_Begin(Iter* out, PtrVec* v);
+extern Iter* cLListIterator_cNPCPtr_ctor_void(Iter* self);
 }
 
 /* Sets the NPC active flag (networked or via vtable), then adds or removes it from the AI think/dead lists. */
@@ -106,31 +106,31 @@ extern "C" void cNPC_v73(cNPC_A890* self, char on, int send)
         return;
     }
     if (on) {
-        func_0014AC80(&it);
-        func_0014AC70(&b, &g_NpcDeadList);
-        func_0014AC60(&it, &b);
-        func_0014AC20(&end, &g_NpcDeadList);
-        while (func_0014AC00(&it, &end)) {
-            if (*func_0014AC50(&it) == self) {
+        cLListIterator_cNPCPtr_ctor_void(&it);
+        cLList_cNPCPtr_Begin(&b, &g_NpcDeadList);
+        cLListIterator_cNPCPtr_opAssign(&it, &b);
+        cLList_cNPCPtr_End(&end, &g_NpcDeadList);
+        while (opNe_cLListIteratorR_cLListIteratorR(&it, &end)) {
+            if (*cLListIterator_cNPCPtr_opMul(&it) == self) {
                 break;
             }
-            func_0014AC30(&it);
-            func_0014AC20(&end, &g_NpcDeadList);
+            cLListIterator_cNPCPtr_opInc(&it);
+            cLList_cNPCPtr_End(&end, &g_NpcDeadList);
         }
-        func_0014ABF0(&w4, (Word*)&it);
+        cLListIterator_cNPCPtr_ctor_cLListIteratorR(&w4, (Word*)&it);
         x = w4.value;
-        func_0014ABE0(&end2, &g_NpcDeadList);
-        func_0014ABD0(&w3, (Word*)&end2);
+        std_list_cNPCPtr_end(&end2, &g_NpcDeadList);
+        cLListIterator_cNPCPtr_ctor_listR(&w3, (Word*)&end2);
         if (x != w3.value) {
             NpcThinkList_Add(self->actor);
             ActiveList_EraseMatching(&g_NpcDeadList, Pred_A890(e, &self));
         }
     } else {
         List_Begin(&b2, &g_NpcThinkList);
-        func_0014ABC0(&w1, (Word*)&b2);
+        std_list_cActiveListItemPtr_generic_iterator_ctor(&w1, (Word*)&b2);
         n = (Node_A890*)w1.value;
-        func_0014AB80(&end3, &g_NpcThinkList);
-        func_0014AB70(&w2, (Word*)&end3);
+        std_list_cActiveListItemPtr_end_void(&end3, &g_NpcThinkList);
+        cLListIterator_cActiveListItemPtr_ctor(&w2, (Word*)&end3);
         while (n != (Node_A890*)w2.value) {
             Actor_A890* actor = self->actor;
             Handle_A890* h = n->h;
@@ -149,8 +149,8 @@ extern "C" void cNPC_v73(cNPC_A890* self, char on, int send)
                 return;
             }
             n = n->next;
-            func_0014AB80(&end3, &g_NpcThinkList);
-            func_0014AB70(&w2, (Word*)&end3);
+            std_list_cActiveListItemPtr_end_void(&end3, &g_NpcThinkList);
+            cLListIterator_cActiveListItemPtr_ctor(&w2, (Word*)&end3);
         }
     }
 }

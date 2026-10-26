@@ -8,7 +8,7 @@
 
 unsigned int D_0048B370[1] = { 0x0 };
 
-int func_0027C618(int a0) {
+int sceNetcnfifSetFNoDecode(int a0) {
     *(int*)((char*)D_0048B370) = a0;
     return 0;
 }

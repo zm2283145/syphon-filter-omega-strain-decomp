@@ -10,15 +10,15 @@ typedef struct { char pad[0x180]; int h180; UpnpEnt *ent; int count; int f18C; i
 
 extern int RtUdp_UpdateTransport(int h);
 extern int RtUdp_DrainReceive(UpnpObj *o);
-extern int func_00304FC8(UpnpObj *o);
-int func_003036B8(UpnpObj *o)
+extern int rt_p2p_complete_connection(UpnpObj *o);
+int rt_p2p_update(UpnpObj *o)
 {
     int ret = 2;
     if (o == 0) return ret;
     if (RtUdp_UpdateTransport(o->h180) != 0) return 7;
     ret = RtUdp_DrainReceive(o);
     if (ret != 0) return ret;
-    ret = func_00304FC8(o);
+    ret = rt_p2p_complete_connection(o);
     __asm__ __volatile__("");
     return ret;
 }
@@ -67,7 +67,7 @@ extern int RtUdp_SendToPeerEndpoint(Obj3858 *o, int idx, unsigned char flag, voi
 #endif /* merge_units */
 #define RtUdp_SendToPeerEndpoint(a0, a1, a2, a3, a4) (RtUdp_SendToPeerEndpoint((UpnpObj_00303710 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
-int func_00303858(Obj3858 *o, unsigned char v)
+int rt_p2p_receive_broadcasts(Obj3858 *o, unsigned char v)
 {
     Msg3858 m;
     int r = 0;

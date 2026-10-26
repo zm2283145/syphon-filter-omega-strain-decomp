@@ -47,7 +47,7 @@ extern "C" {
     extern TxManager* g_TextureMgr;
     extern int g_VisionThermal,D_0055DE90;
     extern short D_0053B360[],D_0053B362,D_0053B364,D_0053B366,D_0053B368;
-    void func_00382910(TxManager*);
+    void cTexMan_EndBatch(TxManager*);
 }
 static inline void tx_queue(TxManager* m,int id){
     unsigned n=m->count;
@@ -95,7 +95,7 @@ extern "C" long long ManModel_BindLodTexture(TxModel* self,int which,int overrid
         tx_queue(mgr,D_0053B364);
         tx_queue(mgr,D_0053B366);
         tx_queue(mgr,D_0053B368);
-        func_00382910(mgr);
+        cTexMan_EndBatch(mgr);
         struct Scratch {
             char pad[0xa50];
             long long values[40];
@@ -167,7 +167,7 @@ extern "C" long long ManModel_BindLodTexture(TxModel* self,int which,int overrid
             }
         }
     } if(self->extra)tx_queue(mgr,D_0055DE90);
-    func_00382910(mgr);
+    cTexMan_EndBatch(mgr);
     if(which==0)ids=self->cur;
     else ids=self->prev;
     long long*dst=(long long*)0x70000a50;

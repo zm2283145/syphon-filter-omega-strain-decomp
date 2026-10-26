@@ -97,7 +97,7 @@ extern void Backpack_QueryAmmo(Owner_2526F0* o, int id, int* a, int* b, int* c);
 extern WeaponDef_2526F0* WeaponDb_Get(int db, int id);
 extern int WeaponInv_GetSpare(Inv_2526F0* inv, int slot);
 extern int WeaponInv_GetClip(Inv_2526F0* inv, int slot);
-extern int func_00143DE0(Inv_2526F0* inv, int ammo);
+extern int cWeapon_AdjustMaxClips(Inv_2526F0* inv, int ammo);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern int ItemInv_Count(void* items, int id);
 extern void IeElement_SetData(void* label, Icon_2526F0* icon);
@@ -234,7 +234,7 @@ extern "C" int Pickup_BuildPromptText(Self_2526F0* self, Ctx_2526F0* ctx) {
                 int clip;
                 wd = WeaponDb_Get(db, wid);
                 spare = WeaponInv_GetSpare(inv, slot);
-                maxSpare = wd->unk70 * func_00143DE0(inv, wd->unk74);
+                maxSpare = wd->unk70 * cWeapon_AdjustMaxClips(inv, wd->unk74);
                 clip = WeaponInv_GetClip(inv, slot);
                 if (isSlot4) {
                     sprintf(line1, D_004A79F0, spare);

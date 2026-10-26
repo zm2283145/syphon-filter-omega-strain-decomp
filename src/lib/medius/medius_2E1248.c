@@ -26,9 +26,9 @@ extern unsigned char D_0048C4AC;
 extern int D_0048C4B0;
 extern void *memset(void *p, int c, unsigned int n);
 extern char *strncpy(char *d, const char *s, unsigned int n);
-extern int func_00303130(int h, Req2E1248 *req);
+extern int rt_p2p_incoming_peer(int h, Req2E1248 *req);
 
-int func_002E1248(In2E1248 *in, Res2E1248 *r)
+int NetSetIncomingClient(In2E1248 *in, Res2E1248 *r)
 {
     Req2E1248 req;
     unsigned int i;
@@ -64,7 +64,7 @@ int func_002E1248(In2E1248 *in, Res2E1248 *r)
             req.port1 = in->e[i].port;
         }
     }
-    if (func_00303130(D_0048C4B0, &req))
+    if (rt_p2p_incoming_peer(D_0048C4B0, &req))
         r->code = 0x25;
     else
         r->code = 0;

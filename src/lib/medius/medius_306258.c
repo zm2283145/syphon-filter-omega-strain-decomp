@@ -8,13 +8,13 @@
 typedef struct { int sec; int usec; } ScfTime;
 const unsigned int D_00491300[2] = { 0x0, 0x0 };
 extern ScfTime D_00529828;
-extern int func_003060D8(ScfTime *tv);
-int func_00306258(void)
+extern int rt_time_get_time_stamp(ScfTime *tv);
+int rt_time_initialize(void)
 {
     unsigned char *flag = &(*(unsigned char*)D_00491300);
     int ret = 1;
     if (*flag == 1) return ret;
-    ret = func_003060D8(&D_00529828);
+    ret = rt_time_get_time_stamp(&D_00529828);
     if (ret == 0) *flag = 1;
     return ret;
 }
@@ -22,7 +22,7 @@ int func_00306258(void)
 
 /* merge_units: begin func_003062A8 */
 typedef struct { unsigned int sec; unsigned int usec; } Tv62A8;
-int func_003062A8(Tv62A8 *a, Tv62A8 *b, Tv62A8 *d)
+int rt_time_calc_diff(Tv62A8 *a, Tv62A8 *b, Tv62A8 *d)
 {
     int ret = 2;
     if (a == 0) return ret;

@@ -2,7 +2,7 @@
 typedef struct { char pad[0xC]; int id; } Who_F240;
 typedef struct { Who_F240* who; int id; float val; int z; unsigned char b; } Ev_F240;
 typedef struct { char pad[0x160]; int limit; char pad164[2]; unsigned char flag; char pad167[0x1B8 - 0x167]; char* list; } S_F240;
-void func_0015B9A0(void* out, void* list, void* pos, Ev_F240* e);
+void std_list_deleter_cLookAtListItem_insert(void* out, void* list, void* pos, Ev_F240* e);
 void NpcLook_AddPoint(S_F240* self, Who_F240* who, int t, float val)
 {
     if (t >= self->limit) {
@@ -22,7 +22,7 @@ void NpcLook_AddPoint(S_F240* self, Who_F240* who, int t, float val)
         list = self->list;
         if (list) {
             pos = list + 4;
-            func_0015B9A0(out, list, &pos, &e);
+            std_list_deleter_cLookAtListItem_insert(out, list, &pos, &e);
         }
         self->flag = 1;
     }

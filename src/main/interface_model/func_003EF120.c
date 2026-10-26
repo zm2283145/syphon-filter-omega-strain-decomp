@@ -11,31 +11,31 @@ extern "C" {
 extern char D_004BE030[];
 extern int g_TextureMgr;
 void Mem_Free(int pool, void* p, char* file, int line);
-It_3EF120 func_003ED850(void* l);
-void func_003ED860(It_3EF120* out, It_3EF120* in);
-It_3EF120 func_003ED870(void* l);
+It_3EF120 std_list_cInterfaceElementPtr_end(void* l);
+void cLListIterator_cInterfaceElementPtr_ctor(It_3EF120* out, It_3EF120* in);
+It_3EF120 std_list_cInterfaceElementPtr_begin(void* l);
 void Tex_Release(int a, int b, int c);
 void ReceiverList_Dtor_3EF5E0(void* p, int f);
 void String_Dtor(void* p, int f);
 void operator_delete(void* p);
-Self_3EF120* func_003EF120(Self_3EF120* self, short f);
+Self_3EF120* cInterfaceModel_dtor(Self_3EF120* self, short f);
 }
-struct ItE_3EF120 : It_3EF120 { ItE_3EF120(const It_3EF120& t) { func_003ED860((It_3EF120*)this, (It_3EF120*)&t); } };struct Self_3EF120 {
+struct ItE_3EF120 : It_3EF120 { ItE_3EF120(const It_3EF120& t) { cLListIterator_cInterfaceElementPtr_ctor((It_3EF120*)this, (It_3EF120*)&t); } };struct Self_3EF120 {
     char pad0[0x18]; int h18; char pad1c[0x6C - 0x1C];
     unsigned short n6C; unsigned short n6E; char pad70[0x80 - 0x70];
     VObj_3EF120** a80; Self_3EF120** a84; void* p88; char l8C[0xD0 - 0x8C];
     void* pD0; void* pD4;
 };
-static inline ItE_3EF120 B0_3EF120(void* l) { return ItE_3EF120(func_003ED870(l)); }
-static inline ItE_3EF120 E0_3EF120(void* l) { return ItE_3EF120(func_003ED850(l)); }
+static inline ItE_3EF120 B0_3EF120(void* l) { return ItE_3EF120(std_list_cInterfaceElementPtr_begin(l)); }
+static inline ItE_3EF120 E0_3EF120(void* l) { return ItE_3EF120(std_list_cInterfaceElementPtr_end(l)); }
 static inline ItE_3EF120 BeginE_3EF120(void* l) { return B0_3EF120(l); }
 static inline ItE_3EF120 End_3EF120(void* l) { return E0_3EF120(l); }
 static inline bool Ne_3EF120(const It_3EF120& a, const ItE_3EF120& b) { return a.n != b.n; }
 static inline void FreeV_3EF120(VObj_3EF120* o, int line) { AllocGuard g; o->dtor(-1); Mem_Free(0, o, D_004BE030, line); }
-static inline void FreeS_3EF120(Self_3EF120* o, int line) { AllocGuard g; func_003EF120(o, -1); Mem_Free(0, o, D_004BE030, line); }
+static inline void FreeS_3EF120(Self_3EF120* o, int line) { AllocGuard g; cInterfaceModel_dtor(o, -1); Mem_Free(0, o, D_004BE030, line); }
 static inline void FreeP_3EF120(void* o, int line) { AllocGuard g; Mem_Free(0, o, D_004BE030, line); }
 
-extern "C" Self_3EF120* func_003EF120(Self_3EF120* self, short f)
+extern "C" Self_3EF120* cInterfaceModel_dtor(Self_3EF120* self, short f)
 {
     if (self) {
         It_3EF120 it = BeginE_3EF120(self->l8C);

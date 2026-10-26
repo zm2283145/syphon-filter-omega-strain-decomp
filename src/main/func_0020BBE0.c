@@ -6,11 +6,11 @@ typedef struct Obj3 {
     int unk8;
 } Obj3;
 
-extern void func_0020BC20(Obj3* self, int arg, int flags);
+extern void compressed_pair_cAllocator_cSkaSwitchItem_int_ctor_cAllocatorR_uint(Obj3* self, int arg, int flags);
 
 /* Constructor: base init with (arg, 0), then clears the two following words. */
-Obj3* func_0020BBE0(Obj3* self, int arg) {
-    func_0020BC20(self, arg, 0);
+Obj3* std_vector_deleter_cSkaSwitchItem_ctor_cAllocatorR(Obj3* self, int arg) {
+    compressed_pair_cAllocator_cSkaSwitchItem_int_ctor_cAllocatorR_uint(self, arg, 0);
     self->unk4 = 0;
     self->unk8 = 0;
     return self;

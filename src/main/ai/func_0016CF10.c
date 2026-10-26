@@ -38,12 +38,12 @@ float Weapon_GetHeldRange(void*);
 void __register_global_object(void*, void*, void*);
 void cMessage_dtor(void*, int);
 void List_Erase(void*, void*, void*);
-void func_0015AF40(void*, void*);
-void func_0016BB80(void*, void*);
-void func_0016BB90(void*, void*);
-void func_0016BBA0(void*, void*);
-void func_0016DB20(void*, void*);
-void func_0016DB30(void*, void*);
+void std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(void*, void*);
+void std_list_cTargetAwarenessPtr_end_void(void*, void*);
+void cLListIterator_cTargetAwarenessPtr_ctor(void*, void*);
+void std_list_cTargetAwarenessPtr_begin(void*, void*);
+void std_list_cTargetAwarenessPtr_generic_iterator_ctor(void*, void*);
+void std_list_cTargetAwarenessPtr_generic_iterator_opCast(void*, void*);
 void StaticInit_FloorContactVecs(void*, int);
 extern char D_0049C650[];
 extern int g_HumanActorClassKey;
@@ -133,12 +133,12 @@ static inline void FreeRec(ARec* r, int line) {
     if (g_ProfileLockEnabled) Alloc_Unlock(9);
     g_ProfileLockDepth--;
 }
-static inline void Er2(void* recs, void* a, Raw* t) { char y[4], x[4]; void* pa = a; func_0016DB30(x, pa); List_Erase(y, recs, x); func_0016DB20(t, y); }
-static inline void Er1(void* recs, AIt* it, AIt* r) { Raw t; char a[4]; func_0015AF40(a, it); Er2(recs, a, &t); r->p = t.p; }
-static inline void Bg2(void* recs, AIt* b) { void* s; func_0016BBA0(&s, recs); func_0016BB90(b, &s); }
+static inline void Er2(void* recs, void* a, Raw* t) { char y[4], x[4]; void* pa = a; std_list_cTargetAwarenessPtr_generic_iterator_opCast(x, pa); List_Erase(y, recs, x); std_list_cTargetAwarenessPtr_generic_iterator_ctor(t, y); }
+static inline void Er1(void* recs, AIt* it, AIt* r) { Raw t; char a[4]; std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(a, it); Er2(recs, a, &t); r->p = t.p; }
+static inline void Bg2(void* recs, AIt* b) { void* s; std_list_cTargetAwarenessPtr_begin(&s, recs); cLListIterator_cTargetAwarenessPtr_ctor(b, &s); }
 /* Retail reserves two unused depth-1 iterator slots above the erase temps; dead address-taken locals reproduce them. */
 static inline void Bg1(void* recs, AIt* b) { AIt u1, u2; void* q1 = &u1; void* q2 = &u2; Bg2(recs, b); }
-static inline void En2(void* recs, AIt* e) { void* s; func_0016BB80(&s, recs); func_0016BB90(e, &s); }
+static inline void En2(void* recs, AIt* e) { void* s; std_list_cTargetAwarenessPtr_end_void(&s, recs); cLListIterator_cTargetAwarenessPtr_ctor(e, &s); }
 static inline void En1(void* recs, AIt* e) { En2(recs, e); }
 extern "C" void NpcPerception_UpdateRecords(SfAiPerception* p, float dt) {
     SfAiPerception* self = p;

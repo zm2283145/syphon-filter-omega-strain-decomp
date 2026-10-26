@@ -32,7 +32,7 @@ int printf(const char*, ...);
 int sceSifBindRpc(void*, unsigned int, int);
 void snd_SendIOPCommandAndWait(int, int, void*);
 
-void func_003A8A90(unsigned int flags)
+void snd_StartSoundSystemEx(unsigned int flags)
 {
     int* args[2];
 

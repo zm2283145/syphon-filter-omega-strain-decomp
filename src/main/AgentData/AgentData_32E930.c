@@ -15,11 +15,11 @@
 #include "loose03_types.h"
 
 /* Inserts count copies of *value at pos (vector insert). */
-extern int func_003385A0(Vec24* v, Elem24* pos, int count, Elem24* value);
+extern int std_vector_imp_RatingRecord_insert(Vec24* v, Elem24* pos, int count, Elem24* value);
 
 /* push_back: insert one element at the end. */
-int func_0032E930(Vec24* v, Elem24* value) {
-    return func_003385A0(v, &v->data[v->count], 1, value);
+int cArray_RatingRecord_PushBackActual(Vec24* v, Elem24* value) {
+    return std_vector_imp_RatingRecord_insert(v, &v->data[v->count], 1, value);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0032E930 */
@@ -32,9 +32,9 @@ typedef struct { char data[0x1C]; } RatingReq;
 extern char D_00532AD0[];
 extern void* RatingRow_Construct(RatingReq* r, int a, int b, int c, int d, int e, int f);
 #if 0 /* merge_units */
-extern void func_0032E930(void* registry, void* item);
+extern void cArray_RatingRecord_PushBackActual(void* registry, void* item);
 #endif /* merge_units */
-#define func_0032E930(a0, a1) ((void)func_0032E930((Vec24 *)(a0), (Elem24 *)(a1))) /* merge_units */
+#define cArray_RatingRecord_PushBackActual(a0, a1) ((void)cArray_RatingRecord_PushBackActual((Vec24 *)(a0), (Elem24 *)(a1))) /* merge_units */
 int Script_cAgentData__RegisterRating_2(ScriptArg* args)
 {
     RatingReq r;
@@ -50,19 +50,19 @@ int Script_cAgentData__RegisterRating_2(ScriptArg* args)
     b2 = args[2].b;
     p1[0] = args[1].i;
     p0[0] = args[0].i;
-    func_0032E930(D_00532AD0, RatingRow_Construct(&r, *(int*)p0, *(int*)p1, b2, *(int*)p3, *(int*)p4, *(int*)p5));
+    cArray_RatingRecord_PushBackActual(D_00532AD0, RatingRow_Construct(&r, *(int*)p0, *(int*)p1, b2, *(int*)p3, *(int*)p4, *(int*)p5));
     return 0;
 }
-#undef func_0032E930 /* merge_units */
+#undef cArray_RatingRecord_PushBackActual /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0032E960 */
 
 /* merge_units: begin func_0032E9D0 */
 #pragma push /* merge_units */
 #if 0 /* merge_units */
-extern void func_0032E930(void* registry, void* item);
+extern void cArray_RatingRecord_PushBackActual(void* registry, void* item);
 #endif /* merge_units */
-#define func_0032E930(a0, a1) ((void)func_0032E930((Vec24 *)(a0), (Elem24 *)(a1))) /* merge_units */
+#define cArray_RatingRecord_PushBackActual(a0, a1) ((void)cArray_RatingRecord_PushBackActual((Vec24 *)(a0), (Elem24 *)(a1))) /* merge_units */
 int Script_cAgentData__RegisterRating(ScriptArg* args)
 {
     RatingReq r;
@@ -76,9 +76,9 @@ int Script_cAgentData__RegisterRating(ScriptArg* args)
     b2 = args[2].b;
     p1[0] = args[1].i;
     p0[0] = args[0].i;
-    func_0032E930(D_00532AD0, RatingRow_Construct(&r, *(int*)p0, *(int*)p1, b2, *(int*)p3, *(int*)p4, 0));
+    cArray_RatingRecord_PushBackActual(D_00532AD0, RatingRow_Construct(&r, *(int*)p0, *(int*)p1, b2, *(int*)p3, *(int*)p4, 0));
     return 0;
 }
-#undef func_0032E930 /* merge_units */
+#undef cArray_RatingRecord_PushBackActual /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0032E9D0 */

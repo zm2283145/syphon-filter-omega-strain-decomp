@@ -5,7 +5,7 @@
 typedef struct { float re; float im; } Complex;
 
 /* out = conj(table[index]) * a  (complex multiply by the conjugate of a table entry). */
-void func_00319B18(Complex* a, Complex* table, int index, Complex* out)
+void RotScaleVQ2(Complex* a, Complex* table, int index, Complex* out)
 {
     Complex* b = &table[index];
     out->re = b->re * a->re + b->im * a->im;

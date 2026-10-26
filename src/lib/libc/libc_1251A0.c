@@ -35,7 +35,7 @@ extern unsigned long Libgcc_Umoddi3(unsigned long, unsigned long);
 #define long_sub_size_t(x, y) \
   (((x) < (y)) ? -(long)((y) - (x)) : (long)((x) - (y)))
 
-void* func_001251A0(struct _reent* reent_ptr, size_t alignment, size_t bytes)
+void* Newlib_MemalignR(struct _reent* reent_ptr, size_t alignment, size_t bytes)
 {
     INTERNAL_SIZE_T nb;
     char* m;

@@ -101,12 +101,12 @@ static inline void write32(int v)
 }
 
 typedef struct { char pad[0x24]; int a; int b; void* item; } cInventoryMsg_00258600;
-extern void func_00282020(void* item);
+extern void cNetMsg_PutGOBJ(void* item);
 
 /* cInventoryMsg virtual 4: serializes the item, then writes two 32-bit values. */
 void cInventoryMsg_v04(cInventoryMsg_00258600* self)
 {
-    func_00282020(self->item);
+    cNetMsg_PutGOBJ(self->item);
     write32(self->a);
     write32(self->b);
 }

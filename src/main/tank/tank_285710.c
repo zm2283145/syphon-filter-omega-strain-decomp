@@ -178,7 +178,7 @@ extern char D_004A93D0;
 extern unsigned char g_ProfileLockEnabled;
 }
 typedef struct { char p0[104]; int f68; } PS0_00285AA0;
-extern "C" void func_00285AA0(PS0_00285AA0 *arg0, int arg1, char * arg2) {
+extern "C" void cTank_SetRightTread(PS0_00285AA0 *arg0, int arg1, char * arg2) {
     char * temp_s0;
     char * temp_s0_2;
 
@@ -215,7 +215,7 @@ static inline void merge_flush_func_00285AA0(void) {}
 extern "C" {
 }
 typedef struct { char p0[100]; int f64; } PS0_00285C00;
-extern "C" void func_00285C00(PS0_00285C00 *arg0, int arg1, char * arg2) {
+extern "C" void cTank_SetLeftTread(PS0_00285C00 *arg0, int arg1, char * arg2) {
     char * temp_s0;
     char * temp_s0_2;
 

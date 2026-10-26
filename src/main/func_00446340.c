@@ -13,7 +13,7 @@ extern unsigned char D_004978F8;
 extern char* D_00584530[4];
 extern int D_00584540;
 
-unsigned char func_00446340(char* str, int len) {
+unsigned char ParseSystemMessage(char* str, int len) {
     int sep;
     unsigned int i;
     int n;

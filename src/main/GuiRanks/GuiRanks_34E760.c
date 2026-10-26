@@ -16,7 +16,7 @@
 
 extern char g_RankRows[];
 
-int func_0034E760(void) {
+int cAgentData_GetRanks(void) {
     return (int)g_RankRows;
 }
 #pragma pop /* merge_units */
@@ -31,9 +31,9 @@ extern char g_Game[];
 extern int GuiTextListWidget_GetItemId(void* key);
 extern void* Agent_GetSelected(void* list, int index);
 #if 0 /* merge_units */
-extern EntryTable* func_0034E760(void);
+extern EntryTable* cAgentData_GetRanks(void);
 #endif /* merge_units */
-#define func_0034E760() ((EntryTable *)func_0034E760()) /* merge_units */
+#define cAgentData_GetRanks() ((EntryTable *)cAgentData_GetRanks()) /* merge_units */
 
 extern void GuiPersonnelScreen_ShowItem(Obj48* o, int idx, int value);
 /* Looks up the entry index for the key and applies its value. */
@@ -43,11 +43,11 @@ void GuiRanks_Show(Obj48* o)
     if (idx != -1) {
         Entry36* e;
         Agent_GetSelected(g_Game, -1);
-        e = &func_0034E760()->entries[idx];
+        e = &cAgentData_GetRanks()->entries[idx];
         GuiPersonnelScreen_ShowItem(o, idx, e->value);
     }
 }
-#undef func_0034E760 /* merge_units */
+#undef cAgentData_GetRanks /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0034E770 */
 

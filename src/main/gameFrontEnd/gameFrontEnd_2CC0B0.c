@@ -20,7 +20,7 @@
 #pragma cplusplus on
 
 /* Deleting destructor that runs the member destructor. */
-DEFINE_MEMBER_DTOR_CHAIN(func_002CC0B0, func_00299360)
+DEFINE_MEMBER_DTOR_CHAIN(cArray_tAchievementInfo_dtor_void_2, func_00299360)
 #pragma pop /* merge_units */
 /* merge_units: end func_002CC0B0 */
 
@@ -29,6 +29,6 @@ DEFINE_MEMBER_DTOR_CHAIN(func_002CC0B0, func_00299360)
 #pragma cplusplus on
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_002CC120, func_00299360)
+DEFINE_BASE_DTOR_CHAIN(std_vector_tAchievementInfo_dtor_void_2, func_00299360)
 #pragma pop /* merge_units */
 /* merge_units: end func_002CC120 */

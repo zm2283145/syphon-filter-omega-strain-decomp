@@ -15,7 +15,7 @@ typedef struct {
 extern void* Vec4_GetZero(void);
 extern void Vec4_Assign(void* d, void* s);
 extern void Quat_SetIdentity(Q_1D8610* q);
-extern void func_00132800(Q_1D8610* d, Q_1D8610* s);
+extern void cQuaternion_ctor_cQuaternionR(Q_1D8610* d, Q_1D8610* s);
 E_1D8610* UpperBodyLook_ClearRecords(E_1D8610* arr)
 {
     E_1D8610* e = arr;
@@ -32,13 +32,13 @@ E_1D8610* UpperBodyLook_ClearRecords(E_1D8610* arr)
         e->b5 = 0;
         Vec4_Assign(&e->v10, Vec4_GetZero());
         Quat_SetIdentity(&qa);
-        func_00132800(&e->q20, &qa);
+        cQuaternion_ctor_cQuaternionR(&e->q20, &qa);
         Quat_SetIdentity(&qb);
-        func_00132800(&e->q30, &qb);
+        cQuaternion_ctor_cQuaternionR(&e->q30, &qb);
         Quat_SetIdentity(&qc);
-        func_00132800(&e->q40, &qc);
+        cQuaternion_ctor_cQuaternionR(&e->q40, &qc);
         Quat_SetIdentity(&qd);
-        func_00132800(&e->q50, &qd);
+        cQuaternion_ctor_cQuaternionR(&e->q50, &qd);
         e->w60 = 0;
         e++;
     } while (e != arr + 2);

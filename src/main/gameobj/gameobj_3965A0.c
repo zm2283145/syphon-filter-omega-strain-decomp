@@ -10,18 +10,18 @@
 /* merge_units: begin func_003965A0 */
 #pragma push /* merge_units */
 typedef struct { void** data; int count; } G1Vec;
-extern void* func_00171EC0(G1Vec* v);
-extern void* func_001A0280(void* p);
-extern void func_00393380(void* p);
+extern void* std_vector_pod_int_data(G1Vec* v);
+extern void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void_2(void* p);
+extern void cSkaAnimAnchor_TreeNode_DetachParent(void* p);
 typedef struct { char pad[0xB4]; G1Vec v; } G1Obj;
 #pragma opt_loop_invariants off
-void func_003965A0(G1Obj* o)
+void cSkaAnimAnchor_TreeNode_DetachChildren(G1Obj* o)
 {
     while (o->v.count != 0) {
         G1Vec* v = &o->v;
-        void* e = ((void**)*(void**)func_00171EC0(v))[v->count - 1];
-        if (func_001A0280(e) == o)
-            func_00393380(e);
+        void* e = ((void**)*(void**)std_vector_pod_int_data(v))[v->count - 1];
+        if (cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void_2(e) == o)
+            cSkaAnimAnchor_TreeNode_DetachParent(e);
     }
 }
 #pragma opt_loop_invariants reset
@@ -39,21 +39,21 @@ typedef struct { int w[8]; } Iter_396620;
 typedef struct { unsigned char pad[0x14]; int count; } Arr_396620;
 
 extern "C" {
-void func_00397840(Iter_396620* out, Arr_396620* a, int index);
+void std_deque_deleter_common_cSkaSystem_Request_make_iterator(Iter_396620* out, Arr_396620* a, int index);
 void Array_DestroyRange(Arr_396620* a, Iter_396620* first, Iter_396620* last);
-void* func_003966B0(Arr_396620* a, short deleteFlag);
+void* std_deque_deleter_common_cSkaSystem_Request_dtor(Arr_396620* a, short deleteFlag);
 void operator_delete(void* allocation);
 }
 
-extern "C" Arr_396620* func_00396620(Arr_396620* self, short deleteFlag)
+extern "C" Arr_396620* std_deque_deleter_cSkaSystem_Request_dtor(Arr_396620* self, short deleteFlag)
 {
     if (self) {
         Iter_396620 first;
         Iter_396620 last;
-        func_00397840(&last, self, self->count);
-        func_00397840(&first, self, 0);
+        std_deque_deleter_common_cSkaSystem_Request_make_iterator(&last, self, self->count);
+        std_deque_deleter_common_cSkaSystem_Request_make_iterator(&first, self, 0);
         Array_DestroyRange(self, &first, &last);
-        func_003966B0(self, 0);
+        std_deque_deleter_common_cSkaSystem_Request_dtor(self, 0);
         if (deleteFlag > 0)
             operator_delete(self);
     }

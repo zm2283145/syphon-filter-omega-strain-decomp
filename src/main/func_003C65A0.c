@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-void* func_003C65A0(void* self) {
+void* cRayMatrix_ctor_void(void* self) {
     return self;
 }
 
-void func_003C65B0(char* self) {
+void std_vector_cCollisionFace_clear(char* self) {
     *(int*)(self + 4) = 0;
 }

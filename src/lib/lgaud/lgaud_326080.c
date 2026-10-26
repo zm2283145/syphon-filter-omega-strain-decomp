@@ -11,7 +11,7 @@ int sceClose(int);
 int sceRead(int, signed char *, int);                      
 extern signed char D_004914A8;
 
-signed char *func_00326080(void) {
+signed char *GetRomName(void) {
     int temp_v0;
 
     if (D_004914A8 == 0) {
@@ -29,30 +29,30 @@ signed char *func_00326080(void) {
 #define NULL 0
 #pragma mpwc_relax on
 #if 0 /* merge_units */
-int func_00326080();
+int GetRomName();
 #endif /* merge_units */
-#define func_00326080() ((int)func_00326080()) /* merge_units */
+#define GetRomName() ((int)GetRomName()) /* merge_units */
 
 
-int func_003260F0(void) {
+int IsT10K(void) {
     if (F_(&D_004914A8, 0x0, signed char) == 0) {
-        func_00326080();
+        GetRomName();
     }
     return F_(&D_004914A8, 0x4, signed char) == 0x54;
 }
-#undef func_00326080 /* merge_units */
+#undef GetRomName /* merge_units */
 /* merge_units: end func_003260F0 */
 
 /* merge_units: begin func_00326130 */
 extern void GetOsdConfigParam(void *);
-extern int func_003260F0(void);
+extern int IsT10K(void);
 extern unsigned char D_004914A4;
-int func_00326130(void)
+int sceScfGetLanguage(void)
 {
     unsigned int c;
     int r;
     GetOsdConfigParam(&c);
-    if (func_003260F0()) {
+    if (IsT10K()) {
         r = D_004914A4;
     } else {
         GetOsdConfigParam(&c);

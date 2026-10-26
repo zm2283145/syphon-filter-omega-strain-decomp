@@ -11,13 +11,13 @@ extern V4_7B20 D_004F3030[];
 extern V4_7B20 D_004F2D90[];
 extern unsigned char D_0048A6A0[];
 extern unsigned char D_0048A6C0[];
-extern void func_001D7DE0(V_7B20* v);
-extern T_7B20* func_001D7D20(T_7B20* d, V4_7B20* s, V4_7B20* q);
-extern void func_001D7CE0(void* d, T_7B20* s);
-extern void func_001D7C90(T_7B20* t, int f);
+extern void InitializeStaticDataIfNotInitialized(V_7B20* v);
+extern T_7B20* cJointInfo_ctor(T_7B20* d, V4_7B20* s, V4_7B20* q);
+extern void cJointInfo_opAssign(void* d, T_7B20* s);
+extern void cJointInfo_dtor(T_7B20* t, int f);
 void UpperBody_BuildChainTable(V_7B20* v)
 {
-    func_001D7DE0(v);
+    InitializeStaticDataIfNotInitialized(v);
     if (!D_004F47B0) {
         int i;
         R_7B20* r;
@@ -31,9 +31,9 @@ void UpperBody_BuildChainTable(V_7B20* v)
         for (i = 0, q = D_004F2D90, p = D_004F3030, a = D_0048A6A0, b = D_0048A6C0; i < 21; i++, q++, p++, a++, b++) {
             T_7B20 t;
             r = &UpperBodyNodeTable[i];
-            func_001D7D20(&t, p, q);
-            func_001D7CE0(r->xf, &t);
-            func_001D7C90(&t, -1);
+            cJointInfo_ctor(&t, p, q);
+            cJointInfo_opAssign(r->xf, &t);
+            cJointInfo_dtor(&t, -1);
             r->b70 = *a;
             r->bB8 = *b;
         }

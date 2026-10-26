@@ -1,7 +1,7 @@
 extern float D_004B64C0[];
 extern float D_004B6640[];
-extern void func_00322738(float *re, float *im, int n);
-void func_003227E0(float *re, float *im, int n)
+extern void bitreverse(float *re, float *im, int n);
+void fftCore4CFG(float *re, float *im, int n)
 {
     int nb = 1;
     float *tw;
@@ -70,7 +70,7 @@ void func_003227E0(float *re, float *im, int n)
         pr -= 4;
         pi -= 4;
     }
-    func_00322738(re, im, nb * 4);
+    bitreverse(re, im, nb * 4);
 }
 
 

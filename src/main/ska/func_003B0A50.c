@@ -24,14 +24,14 @@ extern "C" {
 extern float D_004BCD68;
 float Math_Cos(float);
 float Math_Sin(float);
-char* func_003B17B0(void* v, int i);
-float func_003B17A0(char* c);
+char* cArray_cSkaSliderValue_opIndex(void* v, int i);
+float cSkaSliderValue_opCast_float(char* c);
 int AnimContext_GetCount(void* s);
 void** PtrStack_Top(void* s);
 void* AnimBlend_GetGroupCollection(void* b);
 void AnimContribution_Init(AnimContribution* c, Sel* clip, const V* q, float w);
 void AnimGroup_AddContribution(void* g, AnimContribution* c, int id, float w);
-void func_003B0CB0(AnimContribution* c, int f);
+void cSkaPlaybackItem_dtor(AnimContribution* c, int f);
 }
 static inline void Submit(Sel* self, const V* r, char* ctx, float w)
 {
@@ -43,15 +43,15 @@ static inline void Submit(Sel* self, const V* r, char* ctx, float w)
             AnimContribution c;
             AnimContribution_Init(&c, self, r, w);
             AnimGroup_AddContribution(AnimBlend_GetGroupCollection(blend), &c, id, wt);
-            func_003B0CB0(&c, -1);
+            cSkaPlaybackItem_dtor(&c, -1);
         }
     }
 }
 static inline void Submit2(Sel* self, const V* r, char* ctx, float w) { Submit(self, r, ctx, w); }
-extern "C" void func_003B0A50(Sel* self, const V* q, char* ctx, float t)
+extern "C" void cSkaRotatableAnim_UpdateNodes(Sel* self, const V* q, char* ctx, float t)
 {
     if (t < D_004BCD68) return;
-    float k = func_003B17A0(func_003B17B0(ctx + 0x78, self->ch));
+    float k = cSkaSliderValue_opCast_float(cArray_cSkaSliderValue_opIndex(ctx + 0x78, self->ch));
     V quat;
     V aa;
     float ang = self->lo + k * (self->hi - self->lo);

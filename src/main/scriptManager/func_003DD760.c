@@ -15,6 +15,6 @@ void func_003DD770(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-int* func_003DD780(PtrVec* v, int i) {
+int* cArray_intPtr_opIndex_int(PtrVec* v, int i) {
     return v->data + i;
 }

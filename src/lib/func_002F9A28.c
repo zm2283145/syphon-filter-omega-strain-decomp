@@ -1,14 +1,14 @@
 typedef struct { int x0, x4, x8, xC, x10, x14, x18, x1C, x20, x24, x28, x2C; } P2F9A28;
 extern void Sha1_Digest(char *buf, int len, unsigned int *out, int n);
 /* same-unit callee stub: weak, in a section the link discards; restores retail branch-likely choices */
-int __attribute__((weak, section(".dtors_drop"))) func_002F7D28(int a) { return 0; }
+int __attribute__((weak, section(".dtors_drop"))) IsNullRCKey(int a) { return 0; }
 /* same-unit callee stub: weak, in a section the link discards; restores retail branch-likely choices */
-int __attribute__((weak, section(".dtors_drop"))) func_002F7CE8(int a) { return 0; }
-extern void func_002F3728(int st, int key, unsigned int hdr);
-extern void func_002F3810(int st, char *buf, int len);
-extern void func_002F4CD0(int key, char *in, char *out, int len);
-extern void func_004769A4(char *a, char *b);
-unsigned int func_002F9A28(P2F9A28 *p, P2F9A28 *q, char *buf, int len)
+int __attribute__((weak, section(".dtors_drop"))) IsNullRSAKey(int a) { return 0; }
+extern void RCSaltyInitialize(int st, int key, unsigned int hdr);
+extern void RCEncrypt(int st, char *buf, int len);
+extern void RSAEncrypt(int key, char *in, char *out, int len);
+extern void KM_GetSoftwareKeyPair(char *a, char *b);
+unsigned int KM_Encrypt2(P2F9A28 *p, P2F9A28 *q, char *buf, int len)
 {
     char k1[64];
     char k2[64];
@@ -22,28 +22,28 @@ unsigned int func_002F9A28(P2F9A28 *p, P2F9A28 *q, char *buf, int len)
     }
     if (!p)
         return 0;
-    if (q && !func_002F7D28(q->x18)) {
+    if (q && !IsNullRCKey(q->x18)) {
         r = (hdr & 0x1FFFFFFF) | 0x60000000;
         if (len) {
-            func_002F3728(q->x10, q->x18, r);
-            func_002F3810(q->x10, buf, len);
+            RCSaltyInitialize(q->x10, q->x18, r);
+            RCEncrypt(q->x10, buf, len);
         }
-    } else if (!func_002F7D28(p->x2C) && (p->x14 != 0xFFFF || !q || func_002F7CE8(q->xC))) {
+    } else if (!IsNullRCKey(p->x2C) && (p->x14 != 0xFFFF || !q || IsNullRSAKey(q->xC))) {
         r = (hdr & 0x1FFFFFFF) | 0x20000000;
         if (len) {
-            func_002F3728(p->x24, p->x2C, r);
-            func_002F3810(p->x24, buf, len);
+            RCSaltyInitialize(p->x24, p->x2C, r);
+            RCEncrypt(p->x24, buf, len);
         }
-    } else if (q && !func_002F7CE8(q->xC) && (p->x14 == 0xFFFF || func_002F7D28(q->x18))) {
+    } else if (q && !IsNullRSAKey(q->xC) && (p->x14 == 0xFFFF || IsNullRCKey(q->x18))) {
         r = (hdr & 0x1FFFFFFF) | 0xE0000000;
         if (len)
-            func_002F4CD0(q->xC, buf, buf, len);
-    } else if (q->x8 != 0xFFFF && !func_002F7CE8(p->x1C) && p->x14 != 0xFFFF && ((unsigned)p->x10 == 0xFFFFFFFF || (unsigned)p->x10 >> 31 == 0)) {
-        func_004769A4(k1, k2);
-        if (!func_002F7CE8((int)k1)) {
+            RSAEncrypt(q->xC, buf, buf, len);
+    } else if (q->x8 != 0xFFFF && !IsNullRSAKey(p->x1C) && p->x14 != 0xFFFF && ((unsigned)p->x10 == 0xFFFFFFFF || (unsigned)p->x10 >> 31 == 0)) {
+        KM_GetSoftwareKeyPair(k1, k2);
+        if (!IsNullRSAKey((int)k1)) {
             r = (hdr & 0x1FFFFFFF) | 0x80000000;
             if (len)
-                func_002F4CD0((int)k1, buf, buf, len);
+                RSAEncrypt((int)k1, buf, buf, len);
         }
     }
     return r;

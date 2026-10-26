@@ -5,20 +5,20 @@
 
 #include "npc_types.h"
 
-Word* func_0014EE50(Word* self, int value) {
+Word* std_list_deleter_cLookAtListItem_generic_iterator_ctor_nodebaseP(Word* self, int value) {
     self->value = value;
     return self;
 }
 
-Word* func_0014EE60(Word* self, int value) {
+Word* std_list_deleter_cLookAtListItem_generic_iterator_ctor_nodeP(Word* self, int value) {
     self->value = value;
     return self;
 }
 
-void* func_0014EE70(char* self) {
+void* std_list_deleter_cLookAtListItem_tail(char* self) {
     return self + 4;
 }
 
-void* func_0014EE80(void* self) {
+void* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_3(void* self) {
     return self;
 }

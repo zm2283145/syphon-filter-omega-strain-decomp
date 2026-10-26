@@ -47,7 +47,7 @@
 extern "C" {
 char D_0049EDE0[] = "charEventMsg.hh";
 }
-DEFINE_NET_MSG_CLONE1(func_001B9FC0, 0x30, D_0049EDE0, 0x4D, D_004DA950, NMC_W(0x24); NMC_W(0x28); NMC_W(0x2C))
+DEFINE_NET_MSG_CLONE1(cCharEventMsg_Clone, 0x30, D_0049EDE0, 0x4D, D_004DA950, NMC_W(0x24); NMC_W(0x28); NMC_W(0x2C))
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001B9FC0(void) {}
 #pragma pop /* merge_units */
@@ -56,6 +56,6 @@ static inline void merge_flush_func_001B9FC0(void) {}
 /* merge_units: begin func_001BA0D0 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-DEFINE_VT8_CHAIN_DTOR(func_001BA0D0, D_004DA970, D_004D9DE0)
+DEFINE_VT8_CHAIN_DTOR(cHumanRespawnCB_dtor, D_004DA970, D_004D9DE0)
 #pragma pop /* merge_units */
 /* merge_units: end func_001BA0D0 */

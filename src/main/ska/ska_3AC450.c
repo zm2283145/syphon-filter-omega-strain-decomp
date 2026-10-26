@@ -19,7 +19,7 @@ typedef struct {
 } BlockRing;
 
 /* Returns the address of element pos: 8 elements of 0xF8 bytes per block, blocks in a ring. */
-char* func_003AC450(BlockRing* r)
+char* std_deque_deleter_common_cSkaSystem_Request_front(BlockRing* r)
 {
     unsigned int pos = r->pos;
     unsigned int block = (r->first + (pos >> 3)) % r->count;
@@ -50,12 +50,12 @@ extern char** Ring_SlotAt(void* blocks, unsigned int block);
 #endif /* merge_units */
 #define Ring_SlotAt(a0, a1) ((char * *)Ring_SlotAt((void *)(a0), (a1))) /* merge_units */
 
-extern void* func_003AC520(void* self);
+extern void* std_deque_deleter_common_cSkaSystem_Request_buf(void* self);
 
 /* Address of entry (first + index) in a block array of 248-byte entries, eight per block. */
-char* func_003AC4A0(SkaBlockArray* self, int index) {
+char* std_deque_cSkaSystem_Request_opIndex(SkaBlockArray* self, int index) {
     int i = index + self->first;
-    return *Ring_SlotAt(func_003AC520(self), (unsigned int)i >> 3) + (i & 7) * 248;
+    return *Ring_SlotAt(std_deque_deleter_common_cSkaSystem_Request_buf(self), (unsigned int)i >> 3) + (i & 7) * 248;
 }
 #undef Ring_SlotAt /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -76,7 +76,7 @@ static inline void merge_flush_func_003AC4F0(void) {}
 
 /* merge_units: begin func_003AC520 */
 #pragma push /* merge_units */
-void* func_003AC520(void* self) {
+void* std_deque_deleter_common_cSkaSystem_Request_buf(void* self) {
     return self;
 }
 /* merge_units: generate this block's code under its own pragmas */

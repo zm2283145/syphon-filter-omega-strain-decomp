@@ -15,7 +15,7 @@
 int Script_Load(int, int, int);                       
 int Script_PrintWarning(char *, int);                          
 int ScriptMgr_BuildScriptPath(char *, int, char *, int);                          
-int func_003E12D0(char * , int);                     
+int cScriptInterpreter_findContext(char * , int);                     
 
 int ScriptMgr_ReloadScript(char * arg0, int arg1) {
     int temp_v0;
@@ -25,7 +25,7 @@ int ScriptMgr_ReloadScript(char * arg0, int arg1) {
     temp_v0 = ScriptMgr_BuildScriptPath(arg0, arg1, "so", 0);
     Script_PrintWarning("reloading %s...", temp_v0);
     var_s0 = 0;
-    temp_v0_2 = func_003E12D0(arg0, temp_v0);
+    temp_v0_2 = cScriptInterpreter_findContext(arg0, temp_v0);
     if (temp_v0_2 != 0) {
         var_s0 = Script_Load(temp_v0_2, F_(arg0, 0x4E90, int), 0) & 0xFF;
     }
@@ -50,14 +50,14 @@ int Script_Load(char * , int, int);
 #endif /* merge_units */
 #define Script_Load(a0, a1, a2) (Script_Load((int)(a0), (a1), (a2))) /* merge_units */
                   
-int func_001C07C0(char * );                            
-int func_003983E0(char * );                          
-int func_003D8E30(char * );               
-int func_003E12D0();                                
-int func_003E1900(char * , void **);                   
-int func_003E1930(char * );                            
-int func_003E1980(char * );                            
-int func_003E19D0(char * );                            
+int cArray_charPtr_ctor(char * );                            
+int cArray_intPtr_ctor(char * );                          
+int cArray_int_ctor(char * );               
+int cScriptInterpreter_findContext();                                
+int std_list_SymbolTablePtr_push_back(char * , void **);                   
+int cArray_SubScriptPtr_ctor(char * );                            
+int cArray_FuncDefPtr_ctor(char * );                            
+int cArray_VarDefPtr_ctor(char * );                            
 extern char D_004BD4C0;
 extern char D_004BD890;
 extern unsigned char g_ProfileLockEnabled;
@@ -70,7 +70,7 @@ int ScriptMgr_LoadScript(char * arg0, int arg1, int arg2) {
     char * temp_s2;
 
     var_s2 = 1;
-    if (func_003E12D0() == 0) {
+    if (cScriptInterpreter_findContext() == 0) {
         temp_s0 = ScriptMgr_BuildScriptPath(arg0, arg1, &D_004BD890, arg2);
         if (g_ProfileLockEnabled != 0) {
             Alloc_Lock(9);
@@ -82,20 +82,20 @@ int ScriptMgr_LoadScript(char * arg0, int arg1, int arg2) {
         }
         g_ProfileLockDepth -= 1;
         if (temp_s2 != NULL) {
-            func_003E19D0(temp_s2);
-            func_003E1980(temp_s2 + 0x10);
-            func_003983E0(temp_s2 + 0x20);
-            func_003D8E30(temp_s2 + 0x30);
-            func_003D8E30(temp_s2 + 0x40);
-            func_003E1930(temp_s2 + 0x50);
-            func_001C07C0(temp_s2 + 0x60);
-            func_001C07C0(temp_s2 + 0x70);
+            cArray_VarDefPtr_ctor(temp_s2);
+            cArray_FuncDefPtr_ctor(temp_s2 + 0x10);
+            cArray_intPtr_ctor(temp_s2 + 0x20);
+            cArray_int_ctor(temp_s2 + 0x30);
+            cArray_int_ctor(temp_s2 + 0x40);
+            cArray_SubScriptPtr_ctor(temp_s2 + 0x50);
+            cArray_charPtr_ctor(temp_s2 + 0x60);
+            cArray_charPtr_ctor(temp_s2 + 0x70);
             F_(temp_s2, 0x88, int) = 0;
             F_(temp_s2, 0x84, int) = 0;
         }
         sp5C = temp_s2;
         var_s2 = Script_Load(temp_s2, F_(arg0, 0x4E90, int), temp_s0);
-        func_003E1900(arg0 + 0xC, &sp5C);
+        std_list_SymbolTablePtr_push_back(arg0 + 0xC, &sp5C);
         if (var_s2) Script_PrintWarning("loaded %s...", temp_s0); else Script_PrintWarning("couldn't load script %s...", temp_s0);
     }
     return var_s2;
@@ -108,13 +108,13 @@ static inline void merge_flush_func_003E1720(void) {}
 
 /* merge_units: begin func_003E18A0 */
 #pragma push /* merge_units */
-extern void func_003D83A0(void* self, short del);
+extern void std_vector_imp_FuncDefPtr_1_dtor(void* self, short del);
 extern void operator_delete(void* p);
-void* func_003E18A0(void* self, short del)
+void* cArray_FuncDefPtr_dtor(void* self, short del)
 {
     if (self) {
         if (self)
-            func_003D83A0(self, 0);
+            std_vector_imp_FuncDefPtr_1_dtor(self, 0);
         if (del > 0)
             operator_delete(self);
     }

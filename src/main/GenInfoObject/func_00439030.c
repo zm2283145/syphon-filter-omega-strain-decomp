@@ -7,19 +7,19 @@ extern "C" {
 #include "net_owner_map.h"
 extern "C" {
 void Mem_Free(int pool, void* p, char* file, int line);
-void func_0043B200(void* map, NetOwnNode** n);
+void std_tree_pair_tGenInfoPtr_value_compare_erase(void* map, NetOwnNode** n);
 void Map_Clear(void* map);
 }
-extern "C" void func_00439030(NetOwnEnt* tbl)
+extern "C" void cGenInfoObject_DoPendingActDeacts(NetOwnEnt* tbl)
 {
     NetOwnIt it;
     NetOwnIt end;
     NetOwnIt b;
     NetOwnNode* cur; NetOwnEnt* found; unsigned char flag; NetOwnEnt* k;
-    func_00439380(&b, D_00583900);
+    std_tree_pair_tGenInfoPtr_value_compare_begin(&b, D_00583900);
     found = 0;
     it = b;
-    while (func_00439360(&end, func_00439370(D_00583900)), NetOwn_Ne(&it, &end)) {
+    while (cAssocArray_tGenInfoPtr_bool_Iterator_ctor(&end, std_map_tGenInfoPtr_bool_end(D_00583900)), NetOwn_Ne(&it, &end)) {
         int i;
         cur = it.node;
         k = cur->v.first;
@@ -38,7 +38,7 @@ extern "C" void func_00439030(NetOwnEnt* tbl)
         }
         {
             NetOwnNode* c = cur;
-            func_0043B200(D_00583900, &c);
+            std_tree_pair_tGenInfoPtr_value_compare_erase(D_00583900, &c);
         }
     }
     Map_Clear(D_00583900);

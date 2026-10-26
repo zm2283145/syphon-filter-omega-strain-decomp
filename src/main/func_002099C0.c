@@ -1,10 +1,10 @@
 #include "types.h"
 typedef struct { char c; } Tag002099C0;
-extern int func_002099F0(void* a, void* b, Tag002099C0 tag);
+extern int std_distance_cSkaBlendSequenceItemP_cSkaBlendSequenceItemP_randomaccessiteratortag(void* a, void* b, Tag002099C0 tag);
 #pragma optimization_level 1
-int func_002099C0(void* a, void* b)
+int std_distance_cSkaBlendSequenceItemP_cSkaBlendSequenceItemP(void* a, void* b)
 {
     Tag002099C0 tag;
-    return func_002099F0(a, b, tag);
+    return std_distance_cSkaBlendSequenceItemP_cSkaBlendSequenceItemP_randomaccessiteratortag(a, b, tag);
 }
 #pragma optimization_level reset

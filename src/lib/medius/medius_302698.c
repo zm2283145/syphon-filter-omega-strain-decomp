@@ -19,12 +19,12 @@ typedef struct {
 typedef struct { unsigned short f0; int f4; int f8; int fC; int f10; int f14; int f18; int f1C; void *f20; O *f24; } P;
 extern int Net_AllocZeroed(void *, int);
 extern void *memset(void *, int, unsigned int);
-extern int func_003039B8();
+extern int rt_udp_event_cb();
 extern int func_002FB2D8(void *, unsigned long long);
-extern int func_00306E10(int *, P *);
-extern void func_002F80C0(int, int);
-extern void func_002F8368(int, int, int);
-int func_00302698(Cfg *cfg, O **out)
+extern int rt_udp_create(int *, P *);
+extern void KM_Initialize(int, int);
+extern void KM_Create(int, int, int);
+int rt_p2p_create(Cfg *cfg, O **out)
 {
     P p;
     O *o;
@@ -57,7 +57,7 @@ int func_00302698(Cfg *cfg, O **out)
     p.f14 = cfg->f10;
     p.f18 = cfg->f14;
     p.f1C = cfg->f18;
-    p.f20 = func_003039B8;
+    p.f20 = rt_udp_event_cb;
     p.f24 = o;
     r2 = Net_AllocZeroed(&o->tbl, 0x2800);
     if (o == 0) return 3; if (r2 != 0) return 3;
@@ -67,9 +67,9 @@ int func_00302698(Cfg *cfg, O **out)
     }
     r3 = func_002FB2D8(o->f190, o->f18C);
     if (o == 0) return 3; if (r3 != 0) return 3;
-    r4 = func_00306E10(&o->h, &p);
+    r4 = rt_udp_create(&o->h, &p);
     if (o->h == 0) return 4; if (r4 != 0) return 4;
-    func_002F80C0(-1, cfg->f1C);
-    func_002F8368(-1, 0, 0);
+    KM_Initialize(-1, cfg->f1C);
+    KM_Create(-1, 0, 0);
     return 0;
 }

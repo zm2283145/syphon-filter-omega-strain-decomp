@@ -9,8 +9,8 @@ typedef struct P1FEA8 {
 typedef union { float *p; int i; } TblU;
 extern TblU D_004E1D5C;
 extern TblU D_004E1D58;
-extern void func_0031B190(float *buf, int a, int b);
-void func_0031FEA8(int n0, int n1, int n2, int len, short *out,
+extern void RealInverseFft(float *buf, int a, int b);
+void FftTripleSumCosOlAdd(int n0, int n1, int n2, int len, short *out,
                    P1FEA8 *p0, P1FEA8 *p1, P1FEA8 *p2,
                    float d0, float d1, float d2)
 {
@@ -50,7 +50,7 @@ void func_0031FEA8(int n0, int n1, int n2, int len, short *out,
         buf[idx * 2 + 1] += a * D_004E1D58.p[k];
         ph += d2;
     }
-    func_0031B190(buf, 9, 8);
+    RealInverseFft(buf, 9, 8);
     if (half > 0) a = 1.0f / half; else a = 0.0f;
     src = buf + (512 - half);
     /* pinned registers: retail's global/local FP allocation for the crossfade loop */

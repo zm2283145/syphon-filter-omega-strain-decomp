@@ -7,17 +7,17 @@
 /* merge_units: begin func_00306BC0 */
 #include "types.h"
 
-extern int func_00306108(int, int);
+extern int rt_time_elapsed_secs(int, int);
 
-int func_00306BC0(int a0, int a1) {
-    return func_00306108(a0, a1);
+int rt_time_platform_fast_elapsed_secs(int a0, int a1) {
+    return rt_time_elapsed_secs(a0, a1);
 }
 /* merge_units: end func_00306BC0 */
 
 /* merge_units: begin func_00306BD8 */
-extern int func_00306158(int, int);
+extern int rt_time_elapsed_msecs(int, int);
 
-int func_00306BD8(int a0, int a1) {
-    return func_00306158(a0, a1);
+int rt_time_platform_fast_elapsed_msecs(int a0, int a1) {
+    return rt_time_elapsed_msecs(a0, a1);
 }
 /* merge_units: end func_00306BD8 */

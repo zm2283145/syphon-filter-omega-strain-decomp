@@ -85,14 +85,14 @@ static inline void merge_flush_func_00147150(void) {}
 #pragma push /* merge_units */
 extern void WeaponDb_LoadResources(void* self);
 extern void FileMan_Release(void* p, int flag);
-extern void func_003CC0F0(void* self, int flag);
+extern void cDB_dtor(void* self, int flag);
 extern void operator_delete(void* p);
-void* func_00147390(char* self, short flag)
+void* cWeaponDB_dtor(char* self, short flag)
 {
     if (self) {
         WeaponDb_LoadResources(self);
         FileMan_Release(self + 0x1C, -1);
-        func_003CC0F0(self, 0);
+        cDB_dtor(self, 0);
         if (flag > 0)
             operator_delete(self);
     }

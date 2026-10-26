@@ -11,7 +11,7 @@
 #include "buf_holder_dtor.h"
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_00282620)
+DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_void_cSystem_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00282620 */
 
@@ -27,7 +27,7 @@ DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_00282620)
 
 extern int D_00506218;
 
-Rel* func_00282710(Rel* r) {
+Rel* std_vector_void_cSystem_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
@@ -99,10 +99,10 @@ void cBeamMsg_NetReceive(void* target)
 
 /* merge_units: begin func_00282900 */
 #pragma push /* merge_units */
-extern void func_00282020(void*);
+extern void cNetMsg_PutGOBJ(void*);
 
 void cBeamMsg_v04(PtrMsg* self) {
-    func_00282020(self->who);
+    cNetMsg_PutGOBJ(self->who);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00282900 */

@@ -10,15 +10,15 @@ extern "C" {
 extern char D_0049C650[];
 void Mem_Free(int pool, void* allocation, char* file, int line);
 It_C8D0 NpcPerception_FindRecord(void* map, int key);
-E_C8D0 func_0016BB80(void* map);
-It_C8D0 func_0016BB90(const E_C8D0& e);
-R_C8D0 func_0015AF40(const It_C8D0& it);
+E_C8D0 std_list_cTargetAwarenessPtr_end_void(void* map);
+It_C8D0 cLListIterator_cTargetAwarenessPtr_ctor(const E_C8D0& e);
+R_C8D0 std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(const It_C8D0& it);
 void List_Erase(void* out, void* map, const R_C8D0& r);
 }
 extern "C" void NpcPerception_RemoveAwareness(S_C8D0* self, int key)
 {
     It_C8D0 it = NpcPerception_FindRecord(self->map, key);
-    It_C8D0 end = func_0016BB90(func_0016BB80(self->map));
+    It_C8D0 end = cLListIterator_cTargetAwarenessPtr_ctor(std_list_cTargetAwarenessPtr_end_void(self->map));
     if (it.n != end.n) {
         void* v = it.n->val;
         {
@@ -28,7 +28,7 @@ extern "C" void NpcPerception_RemoveAwareness(S_C8D0* self, int key)
         {
             It_C8D0 pos = it;
             char out[4];
-            R_C8D0 r = func_0015AF40(pos);
+            R_C8D0 r = std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(pos);
             List_Erase(out, self->map, r);
         }
     }

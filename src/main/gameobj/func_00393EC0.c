@@ -4,15 +4,15 @@
 
 #include "gobj_types.h"
 
-extern Quad4* func_00393EF0(Quad4* q);
-extern RelFlag* func_00393F60(RelFlag* r);
+extern Quad4* _cdeque_deleter_int_1_ctor(Quad4* q);
+extern RelFlag* std_vector_imp_cBone_ctor(RelFlag* r);
 
-Quad4* func_00393EC0(Quad4* q) {
-    func_00393EF0(q);
+Quad4* cdeque_cSkaSystem_RequestPtr_ctor(Quad4* q) {
+    _cdeque_deleter_int_1_ctor(q);
     return q;
 }
 
-Quad4* func_00393EF0(Quad4* q) {
+Quad4* _cdeque_deleter_int_1_ctor(Quad4* q) {
     q->unk0 = 0;
     q->unk4 = 0;
     q->unk8 = 0.0f;
@@ -21,7 +21,7 @@ Quad4* func_00393EF0(Quad4* q) {
 }
 
 /* Clears the first two words and sets the two floats to FLT_MAX. */
-Quad4* func_00393F10(Quad4* q) {
+Quad4* cSkaCrossFadeDuration_ctor_void(Quad4* q) {
     q->unk0 = 0;
     q->unk4 = 0;
     q->unk8 = 3.4028234663852886e38f;
@@ -29,8 +29,8 @@ Quad4* func_00393F10(Quad4* q) {
     return q;
 }
 
-RelFlag* func_00393F30(RelFlag* r) {
-    func_00393F60(r);
+RelFlag* cArray_cBone_ctor(RelFlag* r) {
+    std_vector_imp_cBone_ctor(r);
     r->flag = 1;
     return r;
 }

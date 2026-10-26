@@ -7,7 +7,7 @@ extern "C" void* memset(void*, int, int);
 extern "C" void* memcpy(void*, const void*, int);
 extern "C" char* strncpy(char*, const char*, int);
 extern "C" int String_CompareNoCase(const char*, const char*);
-extern "C" int func_00446340(char*, int);
+extern "C" int ParseSystemMessage(char*, int);
 extern "C" void LobbyArray_Append(void*, void*);
 extern "C" int D_00584540;
 extern "C" char* D_00584530;
@@ -15,7 +15,7 @@ extern "C" char* D_00584534;
 extern "C" char* D_00584538;
 extern "C" char* D_00585E60;
 
-extern "C" void func_00445F90(LMsg* m) {
+extern "C" void SFOLobby_Callback_SystemMessage(LMsg* m) {
     char buf[0x200];
     LBig big;
     LSmall sm;
@@ -27,7 +27,7 @@ extern "C" void func_00445F90(LMsg* m) {
     if (m->len >= 0x200) return;
     memset(buf, 0, 0x200);
     memcpy(buf, m->data, m->len);
-    r = func_00446340(buf, m->len);
+    r = ParseSystemMessage(buf, m->len);
     code = r;
     if ((code == 0 || code == 9) && (code != 0 || m->type == 100)) {
         memset(&big, 0, sizeof(big));

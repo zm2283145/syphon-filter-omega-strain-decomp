@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_0046C840(void) {
+void RemoteClientLeavesCallback(void) {
 
 }

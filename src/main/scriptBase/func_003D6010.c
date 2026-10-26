@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-Rel* func_003D6010(Rel* r) {
+Rel* std_vector_intPtr_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

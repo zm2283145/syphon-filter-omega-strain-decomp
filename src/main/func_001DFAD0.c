@@ -1,6 +1,6 @@
 #pragma cplusplus on
 #pragma peephole off
-/* func_001DFAD0: matched by c80nm. The copy address registers follow the order the
+/* cBoneIk_cPose_ctor: matched by c80nm. The copy address registers follow the order the
    pointer locals are declared in (src, then the second dst, then the copy-src/dst). */
 typedef struct { int x, y, z, w; } __attribute__((aligned(16))) V4;
 struct V { float x, y, z, w; } __attribute__((aligned(16)));
@@ -21,7 +21,7 @@ static inline void VF0(void* d) { __asm__ volatile("sqc2 vf0, 0x0(%0)" : : "r"(d
 static inline void Cp0(void* d, const void* s) { __int128 t; asm { lq t, 0(s)
  sq t, 0(d) } }
 static inline void Cp1(void* d, const void* s) { __int128 t; __asm__ volatile("lq %0, 0(%1); sq %0, 0(%2)" : "=r"(t) : "r"(s), "r"(d) : "memory"); }
-extern "C" T* func_001DFAD0(T* d)
+extern "C" T* cBoneIk_cPose_ctor(T* d)
 {
     V tC; V tD; V tA; V tB;
     VF0(&tA);

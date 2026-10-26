@@ -351,7 +351,7 @@ typedef struct { void* vt; char pad4[0xC]; Mat_3CDFF0 m; unsigned char f50; } Xf
 extern "C" {
 extern char D_004DF6A0[];
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
-Xf_3CDFF0* func_0036FCF0(void* p, Mat_3CDFF0* m);
+Xf_3CDFF0* cXformNode_ctor_cMatrixR(void* p, Mat_3CDFF0* m);
 }
 static inline void* Alloc_3CDFF0(unsigned int n, int line) { AllocGuard g; return Mem_Alloc(0, n, D_004BD228, line); }
 
@@ -361,7 +361,7 @@ extern "C" void Object_AttachTransform(ObjV_3CDFF0* self, Mat_3CDFF0* m, int fla
     if (!self->xf) {
         if (flag) {
             Xf_3CDFF0* x = (Xf_3CDFF0*)Alloc_3CDFF0(0xC0, 0x151);
-            if (x) x = func_0036FCF0(x, m);
+            if (x) x = cXformNode_ctor_cMatrixR(x, m);
             self->xf = x;
         } else {
             Xf2_3CDFF0* y = (Xf2_3CDFF0*)Alloc_3CDFF0(0x60, 0x153);
@@ -711,7 +711,7 @@ public:
 typedef struct { int a; int b; } D2_WeakRef;
 typedef struct { char pad[0x30]; int id; char pad2[0x24]; D2_Logic* logic; } D2_ActorBase;
 extern "C" D2_WeakRef* WeakRef_Capture(D2_WeakRef* r, void* obj);
-extern "C" void func_003CE6C0(void* mgr, int* id, D2_WeakRef* r);
+extern "C" void cAssocMultiArray_int_cSafePtr_cGOBJ_Add(void* mgr, int* id, D2_WeakRef* r);
 extern "C" void* g_MotionManager;
 extern "C" void Actor_BaseLogicUpdate(D2_ActorBase* a) {
     if (a->logic != 0) {
@@ -721,7 +721,7 @@ extern "C" void Actor_BaseLogicUpdate(D2_ActorBase* a) {
         D2_WeakRef ref;
         int id[1];
         id[0] = a->id;
-        func_003CE6C0(g_MotionManager, id, WeakRef_Capture(&ref, a));
+        cAssocMultiArray_int_cSafePtr_cGOBJ_Add(g_MotionManager, id, WeakRef_Capture(&ref, a));
     }
 }
 #pragma cplusplus reset

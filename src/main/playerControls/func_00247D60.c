@@ -127,9 +127,9 @@ int TargetVis_Test(void* v, Obj* a, Obj* b, int delay, bool force);
 char* Agent_GetSelected(void* list, int idx);
 int AgentData_HasUnlock(char* agent, unsigned char bit);
 Obj* Targeting_AutoPick(Obj* actor, Obj* prev);
-void func_002494E0(Input* s, Obj* actor, int a2, int* a3, int t0);
-void func_00249420(Input* s, Obj* actor, int* a2, char a3);
-void func_00249490(Input* s, Obj* actor, V* v);
+void cPlayerControls_NetSetTarget(Input* s, Obj* actor, int a2, int* a3, int t0);
+void cPlayerControls_NetAimWeapon(Input* s, Obj* actor, int* a2, char a3);
+void cPlayerControls_NetSetManualTarget(Input* s, Obj* actor, V* v);
 int Inventory_GetEquipMode(char* inv);
 int Actor_IsFlashlightOn(Obj* actor);
 int func_00159570(void* p);
@@ -261,8 +261,8 @@ extern "C" void Player_RunTargeting(Input* self, void* cam, Obj* actor, bool r1,
         MsgId(id).Send(actor);
         MsgAim(id, self->sub).Send(actor);
         if (g_IsMultiplayer) {
-            func_002494E0(self, actor, HGet(&self->lock)->f10, &id, self->sub);
-            func_00249420(self, actor, &id, 1);
+            cPlayerControls_NetSetTarget(self, actor, HGet(&self->lock)->f10, &id, self->sub);
+            cPlayerControls_NetAimWeapon(self, actor, &id, 1);
         }
     } else {
         bool mode5;
@@ -274,11 +274,11 @@ extern "C" void Player_RunTargeting(Input* self, void* cam, Obj* actor, bool r1,
             pt = XformR(V(0.0f, 5000.0f, z, 0.0f), actor->GetMtx());
             MsgB(0x3F, 0).Send(actor);
             MsgPt(pt).Send(actor);
-            if (g_IsMultiplayer) func_00249490(self, actor, &pt);
+            if (g_IsMultiplayer) cPlayerControls_NetSetManualTarget(self, actor, &pt);
         } else {
             MsgB(0x3F, 0).Send(actor);
             MsgFlag(D_0048AEE8).Send(actor);
-            if (g_IsMultiplayer) func_00249420(self, actor, &id, 0);
+            if (g_IsMultiplayer) cPlayerControls_NetAimWeapon(self, actor, &id, 0);
         }
     }
     {

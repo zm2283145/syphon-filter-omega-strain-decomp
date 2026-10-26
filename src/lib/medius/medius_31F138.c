@@ -1,6 +1,6 @@
 extern float D_004B5BE8[];
 
-void func_0031F138(float *a, float g, float *c)
+void lpcToCepstrum(float *a, float g, float *c)
 {
     int n, k;
     int p = 12;

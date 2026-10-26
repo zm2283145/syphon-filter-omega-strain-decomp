@@ -113,7 +113,7 @@ Game_002A1780* DME_GetLobby(void);
 #endif /* merge_units */
 #define DME_GetLobby() ((Game_002A1780 *)DME_GetLobby()) /* merge_units */
 
-void func_004426B0(Game_002A1780* g);
+void SFOLobby_MissionScreenExit(Game_002A1780* g);
 unsigned char SFOLobby_JoinRoom(Game_002A1780* g, void* cb, void* a, void* b, void* c);
 char* GuiScreen_GetLobbyString(Self_002A1780* self, int a, int b, int c, int d, int e);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, Self_002A1780* d, int e);
@@ -148,7 +148,7 @@ extern "C" void GuiMissionSetup_Activate(Self_002A1780* self)
     if (g) {
         if (g->state == 4) {
             asm { .set reorder }
-            func_004426B0(g);
+            SFOLobby_MissionScreenExit(g);
         } else {
             asm { .set reorder }
             if (g->state != 5) {

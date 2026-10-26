@@ -14,15 +14,15 @@ extern float D_004E1CC0;
 extern const float D_004E1BB8;
 extern const float D_004E1C30;
 extern const float D_004E1BEC;
-extern void func_0031AD68(float *a, int p, float *c, int n, float gain);
+extern void NellyAsToCs(float *a, int p, float *c, int n, float gain);
 
-void func_00317550(float *lpc, float *cep, float *err, float *dist, int p, float gain)
+void Cepstrum4VocalFry(float *lpc, float *cep, float *err, float *dist, int p, float gain)
 {
     float tmp[13];
     float d;
     int i;
 
-    func_0031AD68(lpc, p, tmp, 13, gain);
+    NellyAsToCs(lpc, p, tmp, 13, gain);
     *err = __builtin_fabsf(cep[0] - tmp[0]);
     *dist = 0;
     for (i = 1; i < 13; i++) {
@@ -45,7 +45,7 @@ void func_00317550(float *lpc, float *cep, float *err, float *dist, int p, float
 typedef struct { float f0; int x4; void *buf; } Obj7680;
 extern void *(*D_004E1D34)(int n, int size);
 extern void *(*D_004E1D3C)(void *d, int c, int n);
-int func_00317680(Obj7680 **out)
+int NellyInitVocalFry(Obj7680 **out)
 {
     Obj7680 *o;
     void *b;
@@ -67,7 +67,7 @@ int func_00317680(Obj7680 **out)
 /* merge_units: begin func_00317728 */
 typedef struct { char pad[8]; void *buf; } Obj7728;
 extern void (*D_004E1D38)(void *p);
-int func_00317728(Obj7728 **pp)
+int NellyFreeVocalFry(Obj7728 **pp)
 {
     Obj7728 *o = *pp;
     if (o != 0) {

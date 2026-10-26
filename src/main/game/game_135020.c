@@ -26,7 +26,7 @@ extern "C" {
 extern void* D_004EA0C0;
 void func_00139DF0(void* p, short f);
 }
-extern "C" void func_00135020(void)
+extern "C" void cCollisionSystem_cBox_UnInitStatics(void)
 {
     void* p = D_004EA0C0;
     if (p) {
@@ -145,30 +145,30 @@ void World_SetupView(World_1350E0* w);
 void World_UpdateZoneTrackers(void* z);
 void Game_AllocStreamBuffer(World_1350E0* w);
 void Game_CreateHud(World_1350E0* w);
-void func_001360D0(int n);
-void func_001365E0(void* p);
-void func_001366F0(void* p);
+void cCollisionSystem_cBox_InitStatics(int n);
+void std_vector_cNodePtr_ctor(void* p);
+void std_vector_cArray_int_ctor(void* p);
 void Game_LoadParResources(void* p);
-Zone_1350E0* func_0013D770(void* z, int id);
-void* func_0013D9F0(void);
+Zone_1350E0* cSceneManager_GetSceneBelongingTo(void* z, int id);
+void* GetSceneManager(void);
 void LoadingScreen_Start(void* a, int b, char* c);
 Snd_1350E0* App_GetInstance(void);
-void func_0016F510(void);
+void cAI_SystemInit(void);
 void Human_InitStatics(void);
 void Level_LoadSkas(int a, void* b);
 void SoundMgr_LoadLevel(void* p);
 void SoundMgr_Init(void* p);
-void func_00257380(void);
+void cBackpack_InitLevel(void);
 void Pad_EnableVibration(unsigned char b);
 void* DecalMgr_ctor(void* p, int a, int b);
 void LevelSelect_FindByName(void* a, void* b);
 void AgentData_StartLevel(void* a, int b);
 int FileMan_FindMember(Path_1350E0* p);
 void FileMan_Release(void* p, int f);
-void func_0036E4B0(Path_1350E0* p, char* name, int a, int b);
+void cFileMan_ctor_charP_cFileIOP_bool(Path_1350E0* p, char* name, int a, int b);
 void ParticleSystem_Construct(void* p, int n);
 void Script_AddChild(World_1350E0* w, void* p);
-void func_003E2140(void* m, int a);
+void cScriptInterpreter_SetHog(void* m, int a);
 void MaterialProps_ResolveEffects(void* a, int b);
 void GobjScopeBase_Ctor(void* p, int n, void* arr);
 void MotionManager_Init(void);
@@ -192,7 +192,7 @@ extern "C" void World_Setup(World_1350E0* w)
         if (c->fC4 == -1) LevelSelect_FindByName(c, w->f140);
     }
     Game_AllocStreamBuffer(w);
-    func_003E2140(D_00555070, IArcade_Init(w->f3C));
+    cScriptInterpreter_SetHog(D_00555070, IArcade_Init(w->f3C));
     Awards_Init(w);
     for (i = 0; i < 4; i++) {
         if (D_00489BA8) {
@@ -215,13 +215,13 @@ extern "C" void World_Setup(World_1350E0* w)
         if (p) GobjScopeBase_Ctor(p, 0x3E8, World_GetActorArray());
         w->f1F8 = p;
     }
-    func_00257380();
+    cBackpack_InitLevel();
     App_GetInstance();
     if (w->f98 == 0) {
         Coll_1350E0* p;
         { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; p = (Coll_1350E0*)Mem_Alloc(0, 0x10, D_0049A890, 0x1EC); if (g_ProfileLockEnabled) Alloc_Unlock(9); g_ProfileLockDepth--; }
         if (p) {
-            func_001366F0(p);
+            std_vector_cArray_int_ctor(p);
             p->bC = 1;
         }
         w->f98 = p;
@@ -230,14 +230,14 @@ extern "C" void World_Setup(World_1350E0* w)
         Coll_1350E0* p;
         { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; p = (Coll_1350E0*)Mem_Alloc(0, 0x10, D_0049A890, 0x1EF); if (g_ProfileLockEnabled) Alloc_Unlock(9); g_ProfileLockDepth--; }
         if (p) {
-            func_001365E0(p);
+            std_vector_cNodePtr_ctor(p);
             p->bC = 1;
         }
         w->f90 = p;
     }
     Loc_LoadMissionPool(D_0048B2F8, g_LevelDirName);
     sprintf(path, D_0049AA70, D_0048B2F8, g_LevelDirName);
-    func_0036E4B0(&pf, path, 0, 0);
+    cFileMan_ctor_charP_cFileIOP_bool(&pf, path, 0, 0);
     if ((unsigned char)FileMan_FindMember(&pf)) {
         sprintf(path, D_0049AA90, D_0048B2F8);
     }
@@ -255,7 +255,7 @@ extern "C" void World_Setup(World_1350E0* w)
         if (p) ScalarCollection_Init(p);
         w->f8C = p;
     }
-    func_0016F510();
+    cAI_SystemInit();
     ScriptMgr_LoadScript(D_00555070, D_0049AAA8, 0);
     ScriptMgr_CallFunction(D_00555070, D_0049AAB0, 0);
     ColScratch_Init(0x96, 0, 0, 0);
@@ -263,7 +263,7 @@ extern "C" void World_Setup(World_1350E0* w)
     MotionManager_Init();
     Human_InitStatics();
     ColScratch_Init(0, 0, 0, 0);
-    func_001360D0(0x320);
+    cCollisionSystem_cBox_InitStatics(0x320);
     Pad_EnableVibration(w->f1DC->b5);
     {
         Los_1350E0* p;
@@ -306,10 +306,10 @@ extern "C" void World_Setup(World_1350E0* w)
     ShadowMgr_Construct(D_00543790);
     D_0053924C->bC = 1;
     {
-        Zone_1350E0* z = func_0013D770(func_0013D9F0(), w->fBC->f30);
+        Zone_1350E0* z = cSceneManager_GetSceneBelongingTo(GetSceneManager(), w->fBC->f30);
         z->b4 = 1;
     }
-    World_UpdateZoneTrackers(func_0013D9F0());
+    World_UpdateZoneTrackers(GetSceneManager());
     D_00489BA8 = 0;
     w->b1C4 = 0;
     w->b1C5 = 0;

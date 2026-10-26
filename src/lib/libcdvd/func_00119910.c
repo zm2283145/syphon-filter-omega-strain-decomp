@@ -27,10 +27,10 @@ extern int D_00488A40[];
 extern RpcCd D_00488A50;
 extern char D_00498E08[];
 extern char D_00498E20[];
-extern int func_00118E68(void);
-extern int func_00118CF8(int);
-extern void func_00118660(void *);
-extern void func_0010FB10(void *, int);
+extern int sceCdNcmdDiskReady(void);
+extern int _sceCd_ncmd_prechk(int);
+extern void _sceCd_cd_read_intr(void *);
+extern void sceSifWriteBackDCache(void *, int);
 extern int SignalSema(int);
 extern int sceSifCallRpc(RpcCd *, int, int, void *, int, void *, int, void *, void *);
 extern void scePrintf(const char *, ...);
@@ -41,11 +41,11 @@ int sceCdRead(int lsn, int sectors, void *buf, CdRMode *mode)
     int size;
 
     if ((D_004878B8 & 1) == 0) {
-        if (func_00118E68() == 6) {
+        if (sceCdNcmdDiskReady() == 6) {
             return 0;
         }
     }
-    if (func_00118CF8(4) == 0) {
+    if (_sceCd_ncmd_prechk(4) == 0) {
         return 0;
     }
     sd->lsn = lsn;
@@ -70,17 +70,17 @@ int sceCdRead(int lsn, int sectors, void *buf, CdRMode *mode)
     }
     D_00488A40[0] = 0;
     if ((D_004878B8 & 2) == 0) {
-        func_0010FB10(buf, size);
+        sceSifWriteBackDCache(buf, size);
     }
-    func_0010FB10(D_00488980, 144);
-    func_0010FB10(sd, 24);
-    func_0010FB10(D_00488A40, 4);
+    sceSifWriteBackDCache(D_00488980, 144);
+    sceSifWriteBackDCache(sd, 24);
+    sceSifWriteBackDCache(D_00488A40, 4);
     if (D_00487890 > 0) {
         scePrintf(D_00498E08);
     }
     D_004878D8 = 1;
     D_004878B4 = 1;
-    if (sceSifCallRpc(&D_00488A50, 1, 1, sd, 24, 0, 0, func_00118660, D_00488980) < 0) {
+    if (sceSifCallRpc(&D_00488A50, 1, 1, sd, 24, 0, 0, _sceCd_cd_read_intr, D_00488980) < 0) {
         D_004878D8 = 0;
         D_004878B4 = 0;
         SignalSema(D_004878A8);

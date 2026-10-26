@@ -59,11 +59,11 @@ typedef struct {
     LibA3B0 *lib;
 } CtxA3B0;
 
-extern void func_00109F18(BsA3B0 *, unsigned char *, unsigned char *, int);
-extern unsigned int func_00109F50(BsA3B0 *, int);
-extern unsigned char *func_0010A0F8(BsA3B0 *, int);
-extern int func_0010A7D8(BsA3B0 *, unsigned int *);
-extern int func_0010A998(LibA3B0 *, BsA3B0 *, PesA3B0 *);
+extern void _sysbitInit(BsA3B0 *, unsigned char *, unsigned char *, int);
+extern unsigned int _sysbitNext(BsA3B0 *, int);
+extern unsigned char *_sysbitPtr(BsA3B0 *, int);
+extern int _pack_header(BsA3B0 *, unsigned int *);
+extern int _PES_packet(LibA3B0 *, BsA3B0 *, PesA3B0 *);
 
 static __inline__ void *ChangeGP_A3B0(void *gp)
 {
@@ -79,7 +79,7 @@ static __inline__ void SetGP_A3B0(void *gp)
     __asm__ volatile("move $gp, %0" : : "r"(gp) : "memory");
 }
 
-int func_0010A3B0(CtxA3B0 *m, unsigned char *p, int n, unsigned char *start, int size)
+int sceMpegDemuxPssRing(CtxA3B0 *m, unsigned char *p, int n, unsigned char *start, int size)
 {
     BsA3B0 bs;
     HdrA3B0 hdr;
@@ -96,7 +96,7 @@ int func_0010A3B0(CtxA3B0 *m, unsigned char *p, int n, unsigned char *start, int
     int i;
     void *old;
 
-    func_00109F18(&bs, p, start, size);
+    _sysbitInit(&bs, p, start, size);
     b = &bs;
     for (i = 0; !deffunc && i < lib->count; i++) {
         if (hooks[i].key == 0xBDFF000000) {
@@ -106,18 +106,18 @@ int func_0010A3B0(CtxA3B0 *m, unsigned char *p, int n, unsigned char *start, int
         }
     }
     do {
-        if (func_00109F50(b, 32) == 0x1BA)
-            func_0010A7D8(b, hp->pack);
-        while (func_00109F50(b, 24) == 1 && func_00109F50(b, 32) != 0x1BA
-               && func_00109F50(b, 32) != 0x1B9 && b->pos < n * 8 && cont) {
-            func_0010A998(lib, b, &hp->pes);
+        if (_sysbitNext(b, 32) == 0x1BA)
+            _pack_header(b, hp->pack);
+        while (_sysbitNext(b, 24) == 1 && _sysbitNext(b, 32) != 0x1BA
+               && _sysbitNext(b, 32) != 0x1B9 && b->pos < n * 8 && cont) {
+            _PES_packet(lib, b, &hp->pes);
             if (n * 8 < b->pos)
                 continue;
             for (i = 0; i < lib->count; i++) {
                 if (hooks[i].key == (hp->pes.id & hooks[i].mask)) {
                     cb.type = CbA3B0_STR;
-                    cb.header = func_0010A0F8(b, hp->pes.x28);
-                    cb.data = func_0010A0F8(b, hp->pes.x20);
+                    cb.header = _sysbitPtr(b, hp->pes.x28);
+                    cb.data = _sysbitPtr(b, hp->pes.x20);
                     cb.len = hp->pes.x24;
                     cb.pts = hp->pes.pts;
                     cb.dts = hp->pes.dts;
@@ -129,8 +129,8 @@ int func_0010A3B0(CtxA3B0 *m, unsigned char *p, int n, unsigned char *start, int
             }
             if (i == lib->count && deffunc) {
                 cb.type = CbA3B0_STR;
-                cb.header = func_0010A0F8(b, hp->pes.x28);
-                cb.data = func_0010A0F8(b, hp->pes.x20);
+                cb.header = _sysbitPtr(b, hp->pes.x28);
+                cb.data = _sysbitPtr(b, hp->pes.x20);
                 cb.len = hp->pes.x24;
                 cb.pts = hp->pes.pts;
                 cb.dts = hp->pes.dts;
@@ -143,6 +143,6 @@ int func_0010A3B0(CtxA3B0 *m, unsigned char *p, int n, unsigned char *start, int
         }
         if (n * 8 < b->pos)
             break;
-    } while (func_00109F50(b, 32) == 0x1BA);
+    } while (_sysbitNext(b, 32) == 0x1BA);
     return ret;
 }

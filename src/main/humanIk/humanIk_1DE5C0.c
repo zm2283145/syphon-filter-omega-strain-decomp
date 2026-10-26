@@ -31,7 +31,7 @@ template <class T> static inline void Swap1DE5C0(T& a, T& b)
 }
 struct V3 { float v[3]; float w; V3(const V3& o) { for (int i = 0; i < 3; i++) v[i] = o.v[i]; } V3& operator=(const V3& o) { v[0] = o.v[0]; v[1] = o.v[1]; v[2] = o.v[2]; return *this; } };
 
-extern "C" void func_001DE5C0(unsigned int n, V3* data, unsigned int* order)
+extern "C" void ReorderList_uint_cJointLimitsP_uintP(unsigned int n, V3* data, unsigned int* order)
 {
     unsigned int* tmp;
     unsigned int i;
@@ -73,7 +73,7 @@ template <class T> static inline void Swap1DE870(T& a, T& b)
     b = t;
 }
 
-extern "C" void func_001DE870(unsigned int n, float* data, unsigned int* order)
+extern "C" void ReorderList_uint_floatP_uintP(unsigned int n, float* data, unsigned int* order)
 {
     unsigned int* tmp;
     unsigned int i;
@@ -108,7 +108,7 @@ static inline void merge_flush_func_001DE870(void) {}
 extern "C" {
 }
 
-extern "C" void func_001DEAD0(unsigned int n, unsigned char* data, unsigned int* order)
+extern "C" void ReorderList_uint_boolP_uintP(unsigned int n, unsigned char* data, unsigned int* order)
 {
     unsigned int* tmp;
     unsigned int i;
@@ -146,7 +146,7 @@ extern "C" {
 /* 1-byte signed enum: a plain char element allocates the swap temp differently */
 #pragma enumsalwaysint off
 enum E1DED30 { E1DED30_m = -1, E1DED30_p = 1 };
-extern "C" void func_001DED30(unsigned int n, E1DED30* data, unsigned int* order)
+extern "C" void ReorderList_uint_eAnimSourceP_uintP(unsigned int n, E1DED30* data, unsigned int* order)
 {
     unsigned int* tmp;
     unsigned int i;
@@ -184,7 +184,7 @@ extern "C" {
 /* 1-byte signed enum: a plain char element allocates the swap temp differently */
 #pragma enumsalwaysint off
 enum E1DEF90 { E1DEF90_m = -1, E1DEF90_p = 1 };
-extern "C" void func_001DEF90(unsigned int n, E1DEF90* data, unsigned int* order)
+extern "C" void ReorderList_uint_eAnimSourceP_uintP_2(unsigned int n, E1DEF90* data, unsigned int* order)
 {
     unsigned int* tmp;
     unsigned int i;

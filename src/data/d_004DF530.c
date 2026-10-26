@@ -22,12 +22,12 @@ extern void GuiWidget_FocusPrev();
 extern void GuiWidget_Load();
 extern void GuiWidget_OnEvent();
 extern void GuiWidget_SetFlag4();
-extern void func_00293950();
+extern void GuiWidget_onInput();
 
 void *GuiAgentDisplay_vtable[24] = {
     0, 0, &GuiAgentDisplay_dtor, &GuiAgentDisplay_Init,
     &GuiAgentDisplay_Deinit, &GuiWidget_SetFlag4, &GuiWidget_ClearFlag4, &GuiAgentDisplay_Wake,
-    &GuiWidget_BaseSleep, &GuiWidget_BubbleType0, &GuiWidget_BubbleType1, &func_00293950,
+    &GuiWidget_BaseSleep, &GuiWidget_BubbleType0, &GuiWidget_BubbleType1, &GuiWidget_onInput,
     &GuiAgentDisplay_Draw, &GuiWidget_BubbleActivate, &GuiAgentDisplay_Update, &GuiWidget_OnEvent,
     &GuiWidget_Load, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
     &GuiWidget_FocusPrev, &GuiAgentDisplay_GetClassName, &GuiAgentDisplay_IsType, 0,

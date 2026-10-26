@@ -10,7 +10,7 @@
 
 /* merge_units: begin func_00398B20 */
 #pragma push /* merge_units */
-void func_00398D90(PPMtx* d, PPMtx* s); /* gsynth: defined below */
+void cMatrix_GetInverseRot(PPMtx* d, PPMtx* s); /* gsynth: defined below */
 /* 0x00398B20 (mw38). Copy into tmp via "void* xx=&tmp; V* pt=&tmp; *pt=d;" fixes the s/d register swap. */
 #pragma cplusplus on
 #pragma always_inline on
@@ -78,16 +78,16 @@ extern "C" {
 void ParticleEmitterBase_Update(Obj* self, Mgr* mgr, M* m, float f, V* v);
 void PhysEmitter_StepParticles(Obj* self, M* m);
 #if 0 /* merge_units */
-void func_00398D90(M* d, M* s);
+void cMatrix_GetInverseRot(M* d, M* s);
 #endif /* merge_units */
-#define func_00398D90(a0, a1) (func_00398D90((PPMtx *)(a0), (PPMtx *)(a1))) /* merge_units */
+#define cMatrix_GetInverseRot(a0, a1) (cMatrix_GetInverseRot((PPMtx *)(a0), (PPMtx *)(a1))) /* merge_units */
 
 V* Mtx_TransformByTranspose(V* v, M* m);
 void* ParticleDefs_FindByName(void* mgr, void* key);
 Obj* ParticleEmitter_SpawnChildren(Mgr* mgr, Obj* ins, void* name, M* m, float f);
 extern char D_0053B540[];
 }
-static inline V* XformT(V* v, M* m) { M t; func_00398D90(&t, m); return Mtx_TransformByTranspose(v, &t); }
+static inline V* XformT(V* v, M* m) { M t; cMatrix_GetInverseRot(&t, m); return Mtx_TransformByTranspose(v, &t); }
 extern "C" void PhysEmitter_Update(Obj* self, Mgr* mgr, M* m, V* v, float f)
 {
     V tmp;
@@ -127,7 +127,7 @@ extern "C" void PhysEmitter_Update(Obj* self, Mgr* mgr, M* m, V* v, float f)
         }
     }
 }
-#undef func_00398D90 /* merge_units */
+#undef cMatrix_GetInverseRot /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00398B20(void) {}
 #pragma pop /* merge_units */
@@ -138,7 +138,7 @@ static inline void merge_flush_func_00398B20(void) {}
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-void func_00398D90(PPMtx* d, PPMtx* s)
+void cMatrix_GetInverseRot(PPMtx* d, PPMtx* s)
 {
     PP_TRANSPOSE33_COPY(d, s)
 }

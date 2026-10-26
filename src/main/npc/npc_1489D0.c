@@ -57,11 +57,11 @@ typedef struct { char pad[0x74]; void* obj; int arg; } Sub_89D0;
 typedef struct { char pad[0x1AC]; int id; Sub_89D0* sub; } Src_89D0;
 extern "C" {
 void* Mem_Alloc(int pool, int size, char* file, int line);
-void func_0016EFE0(void* dst, Src_89D0* obj);
-void func_0016E890(void* a, int id, void* b, void* c);
-void func_001613E0(void* dst, Sub_89D0* s);
+void cAiTransfer_Put(void* dst, Src_89D0* obj);
+void cAiTargetTransfer_Put(void* a, int id, void* b, void* c);
+void cPathNavigatorTransfer_Put(void* dst, Sub_89D0* s);
 void* NpcFollowerBuf_Init(void* p, int arg);
-void func_001614C0(void* dst, void* obj);
+void cPathTransfer_Put(void* dst, void* obj);
 }
 extern "C" void func_001489D0(char* self, Src_89D0* obj)
 {
@@ -70,9 +70,9 @@ extern "C" void func_001489D0(char* self, Src_89D0* obj)
     if (d)
         d += 0x60;
     QCopy_89D0(d, self, 0xF0);
-    func_0016EFE0(self + 0xF0, obj);
-    func_0016E890(self + 0x110, obj->id, self + 0x1D0, self + 0x1E0);
-    func_001613E0(self + 0x140, obj->sub);
+    cAiTransfer_Put(self + 0xF0, obj);
+    cAiTargetTransfer_Put(self + 0x110, obj->id, self + 0x1D0, self + 0x1E0);
+    cPathNavigatorTransfer_Put(self + 0x140, obj->sub);
     s = obj->sub;
     if (!s->obj) {
         void* p;
@@ -84,7 +84,7 @@ extern "C" void func_001489D0(char* self, Src_89D0* obj)
             p = NpcFollowerBuf_Init(p, s->arg);
         s->obj = p;
     }
-    func_001614C0(self + 0x1B0, s->obj);
+    cPathTransfer_Put(self + 0x1B0, s->obj);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001489D0(void) {}
@@ -137,10 +137,10 @@ typedef struct { char pad[0x74]; void* obj; int arg; } Sub_8B50;
 typedef struct { char pad[0x1AC]; int id; Sub_8B50* sub; } Src_8B50;
 extern "C" {
 extern char D_0049C080[];
-void func_0016F060(void* dst, Src_8B50* obj);
-void func_0016ECC0(void* a, int id, void* b, void* c);
-void func_00161450(void* dst, Sub_8B50* s);
-void func_00161610(void* dst, void* obj);
+void cAiTransfer_Get(void* dst, Src_8B50* obj);
+void cAiTargetTransfer_Get(void* a, int id, void* b, void* c);
+void cPathNavigatorTransfer_Get(void* dst, Sub_8B50* s);
+void cPathTransfer_Get(void* dst, void* obj);
 }
 extern "C" void func_00148B50(char* self, Src_8B50* obj)
 {
@@ -149,9 +149,9 @@ extern "C" void func_00148B50(char* self, Src_8B50* obj)
     if (d)
         d += 0x60;
     QCopy_8B50(self, d, 0xF0);
-    func_0016F060(self + 0xF0, obj);
-    func_0016ECC0(self + 0x110, obj->id, self + 0x1D0, self + 0x1E0);
-    func_00161450(self + 0x140, obj->sub);
+    cAiTransfer_Get(self + 0xF0, obj);
+    cAiTargetTransfer_Get(self + 0x110, obj->id, self + 0x1D0, self + 0x1E0);
+    cPathNavigatorTransfer_Get(self + 0x140, obj->sub);
     s = obj->sub;
     if (!s->obj) {
         void* p;
@@ -163,7 +163,7 @@ extern "C" void func_00148B50(char* self, Src_8B50* obj)
             p = NpcFollowerBuf_Init(p, s->arg);
         s->obj = p;
     }
-    func_00161610(self + 0x1B0, s->obj);
+    cPathTransfer_Get(self + 0x1B0, s->obj);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00148B50(void) {}

@@ -20,7 +20,7 @@ extern char D_004E09B0[];         /* GUI root vtable */
 extern int D_00572130;            /* GUI object instance counter */
 
 /* Constructor of a direct GuiObject subclass. */
-GuiObject* func_00416A90(GuiObject* self) {
+GuiObject* GuiDecorator_ctor(GuiObject* self) {
     self->vtable = D_004E09B0;
     D_00572130 = D_00572130 + 1;
     self->vtable = D_004E0960;
@@ -35,7 +35,7 @@ GuiObject* func_00416A90(GuiObject* self) {
 extern void operator_delete(void* allocation);
 
 /* Restore the base vtable, release the instance count, and optionally delete. */
-GuiObject* func_00416AD0(GuiObject* self, short deleteFlag) {
+GuiObject* GuiAbstractInterface_dtor(GuiObject* self, short deleteFlag) {
     if (self != 0) {
         self->vtable = D_004E09B0;
         D_00572130--;

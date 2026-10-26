@@ -14,15 +14,15 @@ void* Root_GetParent(R*);
 void* Root_GetWorldPlacement(void*);
 V4* Placement_GetQuat(void*);
 V4* Quat_Assign(V4*, V4*);
-V4* func_0019D4E0(V4*);
-int func_001913E0(R* n);
-void* func_001913D0(R* n);
-void func_001913C0(It* out, void* vec);
-void func_001913A0(It* out, void* vec);
-bool func_001912A0(It* a, It* b);
-R** func_00191390(It* it);
-void func_001912E0(R* n);
-void func_001912C0(It* it);
+V4* cQuaternion_InvertUnitQuat(V4*);
+int cTreeNode_cSkaAnimAnchor_TreeNodeData_HasChildren(R* n);
+void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(R* n);
+void cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Begin(It* out, void* vec);
+void cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_End(It* out, void* vec);
+bool cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opNe(It* a, It* b);
+R** cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opMul(It* it);
+void cSkaAnimAnchor_TreeNode_TellNeedToUpdate(R* n);
+void cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opInc(It* it);
 }
 static inline V4 QMul(const V4& a, const V4& b)
 {
@@ -38,15 +38,15 @@ extern "C" void Root_SetWorldOrientation(R* self, V4* q)
     self->q = *q;
     if (self->parent) {
         Quat_Assign(&t, Placement_GetQuat(Root_GetWorldPlacement(Root_GetParent(self))));
-        func_0019D4E0(&t);
+        cQuaternion_InvertUnitQuat(&t);
         { V4* pt = &t; V4* pq = &self->q; *pq = QMul(*pt, *pq); }
     }
     self->bA0 = 1;
-    if (func_001913E0(self)) {
+    if (cTreeNode_cSkaAnimAnchor_TreeNodeData_HasChildren(self)) {
         It it, end;
-        func_001913C0(&it, func_001913D0(self));
-        func_001913A0(&end, func_001913D0(self));
-        for (; func_001912A0(&it, &end); func_001912C0(&it))
-            func_001912E0(*func_00191390(&it));
+        cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Begin(&it, cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(self));
+        cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_End(&end, cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(self));
+        for (; cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opNe(&it, &end); cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opInc(&it))
+            cSkaAnimAnchor_TreeNode_TellNeedToUpdate(*cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opMul(&it));
     }
 }

@@ -28,13 +28,13 @@ extern void* g_HotboxTracker;
 void Event_Construct(void*, void*);
 void cMessage_dtor(void*, int);
 Svc* Service_Lookup(void*, void*);
-void* func_0013D9F0(void);
-void* func_0013D770(void* a, void* w);
+void* GetSceneManager(void);
+void* cSceneManager_GetSceneBelongingTo(void* a, void* w);
 Region_61D0* World_GetPlayerZone(void* r, V* p);
 Region_61D0* LosRegion_FindGlobal(V* p);
 Ref_61D0* WeakRef_Capture(Ref_61D0* r, Pack_61D0* o);
 void HandleVec_FindResolved(It_61D0* out, void* v, Ref_61D0* ref);
-void func_002564E0(It_61D0* out, void* v);
+void cArray_cSafePtr_cGOBJ_End(It_61D0* out, void* v);
 int func_002564C0(It_61D0* a, It_61D0* b);
 void HandleVec_PushBack(void* v, Ref_61D0* ref);
 void HotboxWorld_UpdateBoxBounds(void* mgr, void* hb, Pack_61D0* p, int a);
@@ -59,7 +59,7 @@ void Backpack_Place(Pack_61D0* p, Mtx_61D0* m, int drop)
     p->link->Detach();
     if (drop) {
         void* w = g_LocalPlayer->world;
-        void* r = func_0013D770(func_0013D9F0(), w);
+        void* r = cSceneManager_GetSceneBelongingTo(GetSceneManager(), w);
         {
             V pos; { const V* s = &m->r3; V* d = &pos; Q16(d, s); }
             p->region = World_GetPlayerZone(r, &pos);
@@ -88,7 +88,7 @@ void Backpack_Place(Pack_61D0* p, Mtx_61D0* m, int drop)
                         It_61D0 it;
                         It_61D0 end;
                         HandleVec_FindResolved(&it, o->packs, WeakRef_Capture(&r1, p));
-                        func_002564E0(&end, o->packs);
+                        cArray_cSafePtr_cGOBJ_End(&end, o->packs);
                         if (func_002564C0(&it, &end)) {
                             Ref_61D0 r2;
                             HandleVec_PushBack(o->packs, WeakRef_Capture(&r2, p));

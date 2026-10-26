@@ -4,11 +4,11 @@ typedef struct { char* p; } It_1BFD60;
 extern void String_CtorCStr_13B480(Str_1BFD60* s, char* c);
 extern void String_AssignString(Str_1BFD60* d, Str_1BFD60* s);
 extern void String_Dtor(Str_1BFD60* s, int f);
-extern void func_001BFF20(It_1BFD60* out, Str_1BFD60* s);
-extern void func_001BFEE0(It_1BFD60* out, Str_1BFD60* s);
-extern int func_001BFE90(It_1BFD60* a, It_1BFD60* b);
-extern char* func_001BFED0(It_1BFD60* a);
-extern void func_001BFEB0(It_1BFD60* a);
+extern void std_basic_string_char_char_traits_char_begin(It_1BFD60* out, Str_1BFD60* s);
+extern void std_basic_string_char_char_traits_char_end(It_1BFD60* out, Str_1BFD60* s);
+extern int std_opNe_wrapiteratorR_wrapiteratorR(It_1BFD60* a, It_1BFD60* b);
+extern char* std_wrap_iterator_basic_string_char_charPtr_opMul(It_1BFD60* a);
+extern void std_wrap_iterator_basic_string_char_charPtr_opInc(It_1BFD60* a);
 extern char* String_CStr(Str_1BFD60* s);
 extern void SkaRegistry_LoadAnimation(void* mgr, char* name);
 extern void* D_004FFBD8;
@@ -26,11 +26,11 @@ void Global_LoadAnimation(char* name)
         String_CtorCStr_13B480(&t, name);
         String_AssignString(&s, &t);
         String_Dtor(&t, 0);
-        func_001BFF20(&it, &s);
-        func_001BFEE0(&end, &s);
-        while (func_001BFE90(&it, &end)) {
-            if (*func_001BFED0(&it) >= 'A' && *func_001BFED0(&it) <= 'Z') *func_001BFED0(&it) += 0x20;
-            func_001BFEB0(&it);
+        std_basic_string_char_char_traits_char_begin(&it, &s);
+        std_basic_string_char_char_traits_char_end(&end, &s);
+        while (std_opNe_wrapiteratorR_wrapiteratorR(&it, &end)) {
+            if (*std_wrap_iterator_basic_string_char_charPtr_opMul(&it) >= 'A' && *std_wrap_iterator_basic_string_char_charPtr_opMul(&it) <= 'Z') *std_wrap_iterator_basic_string_char_charPtr_opMul(&it) += 0x20;
+            std_wrap_iterator_basic_string_char_charPtr_opInc(&it);
         }
     } else {
         Str_1BFD60 t2;

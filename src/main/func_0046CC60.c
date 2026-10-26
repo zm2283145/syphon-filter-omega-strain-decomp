@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046CC60(void) {
+int MediusUniqueCallbackJoinGameRequestHandler0(void) {
     return 128;
 }

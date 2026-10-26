@@ -37,36 +37,36 @@ typedef struct Sub412220 {
     int iB4;            /* 0xB4 */
 } Sub412220;
 
-extern int func_00412210(void* src);
-extern int func_004121F0(void* src);
-extern int func_004121D0(void* src);
-extern char* func_00412190(void* src, int col);
-extern SubVec4* func_00412180(void* src);
+extern int cSubtitleFeed_ItemPending(void* src);
+extern int cSubtitleFeed_GetDisplayFlags(void* src);
+extern int cSubtitleFeed_GetNumLines(void* src);
+extern char* cSubtitleFeed_GetText(void* src, int col);
+extern SubVec4* cSubtitleFeed_GetColor(void* src);
 extern SubVec4* SubtitleTrack_LoadCue(SubVec4* dst, SubVec4* src);
-extern float func_00412130(void* src);
-extern float func_00412110(void* src);
-extern int func_004120F0(void* src);
-extern void func_004120C0(void* src);
-extern void func_00412050(Sub412220* self);
+extern float cSubtitleFeed_GetStartTime(void* src);
+extern float cSubtitleFeed_GetEndTime(void* src);
+extern int cSubtitleFeed_GetLanguage(void* src);
+extern void cSubtitleFeed_NextItem(void* src);
+extern void cMovieSubtitles_ResetText(Sub412220* self);
 
 void MovieSubtitles_Start(Sub412220* self) {
     int i;
     self->iB4 = 0;
-    if (func_00412210(self->src)) {
-        self->iA4 = func_004121F0(self->src);
-        self->count = func_004121D0(self->src);
+    if (cSubtitleFeed_ItemPending(self->src)) {
+        self->iA4 = cSubtitleFeed_GetDisplayFlags(self->src);
+        self->count = cSubtitleFeed_GetNumLines(self->src);
         for (i = 0; i < self->count; i++) {
-            self->lines[i] = func_00412190(self->src, i);
+            self->lines[i] = cSubtitleFeed_GetText(self->src, i);
             self->lens[i] = strlen(self->lines[i]);
             self->pos[i] = 0;
         }
-        SubtitleTrack_LoadCue(&self->color, func_00412180(self->src));
-        self->f9C = func_00412130(self->src);
-        self->fA0 = func_00412110(self->src);
-        self->iA8 = func_004120F0(self->src);
-        func_004120C0(self->src);
+        SubtitleTrack_LoadCue(&self->color, cSubtitleFeed_GetColor(self->src));
+        self->f9C = cSubtitleFeed_GetStartTime(self->src);
+        self->fA0 = cSubtitleFeed_GetEndTime(self->src);
+        self->iA8 = cSubtitleFeed_GetLanguage(self->src);
+        cSubtitleFeed_NextItem(self->src);
     } else {
-        func_00412050(self);
+        cMovieSubtitles_ResetText(self);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

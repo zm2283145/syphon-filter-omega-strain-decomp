@@ -6,18 +6,18 @@ typedef struct { char p0[0x30]; void* queue; char p34[0x1E0 - 0x34]; int active;
 typedef struct { char p0[0x2C]; unsigned char b2C; unsigned char b2D; unsigned char b2E; char p2F[0x4C - 0x2F]; int team; } Obj2D4E70;
 extern int D_004EA770;
 extern char g_ActorActionMsgClass[], D_004E0840[];
-extern int func_002C4F20(Sub2D4E70*);
-extern void func_002D48F0(Self2D4E70*, Obj2D4E70*);
-extern void func_002D4B30(Self2D4E70*, Obj2D4E70*);
+extern int cAimWeapon_GetFireWeapon(Sub2D4E70*);
+extern void cNetNPC_AimFire(Self2D4E70*, Obj2D4E70*);
+extern void cNetNPC_AimNoFire(Self2D4E70*, Obj2D4E70*);
 extern void MsgQueue_QueueClone(void*, void*, int, int);
-void func_002D4E70(Self2D4E70* s, Obj2D4E70* o)
+void cNetNPC_AimFireWeapon(Self2D4E70* s, Obj2D4E70* o)
 {
     if (o) {
         int b = o->b2D != 0 && o->b2C != 0 && !(o->b2E != 0);
         if (b || o->team == D_004EA770) {
             if (s->active && s->sub && s->sub->ready) {
-                if (func_002C4F20(s->sub)) { func_002D48F0(s, o); return; }
-                else { func_002D4B30(s, o); return; }
+                if (cAimWeapon_GetFireWeapon(s->sub)) { cNetNPC_AimFire(s, o); return; }
+                else { cNetNPC_AimNoFire(s, o); return; }
             }
         }
     }

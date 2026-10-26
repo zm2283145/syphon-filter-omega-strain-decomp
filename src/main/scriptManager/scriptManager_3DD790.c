@@ -37,22 +37,22 @@ struct Mgr3DD790 {
 
 extern "C" {
 void* Mem_Alloc(int, int, char*, int);
-Var3DD790* func_003E10D0(Mgr3DD790*, char*, int);
+Var3DD790* cScriptInterpreter_findVar(Mgr3DD790*, char*, int);
 void Script_PrintWarning(char*, char*);
-Var3DD790* func_003D6190(void*, char*, int*, int*, int);
-void func_003D8C30(int, Var3DD790**);
+Var3DD790* VarDef_ctor(void*, char*, int*, int*, int);
+void std_vector_VarDefPtr_push_back(int, Var3DD790**);
 extern char D_004BD4C0[];
 extern char D_004BD4F0[];
 extern int D_00554F18;
 }
 
-extern "C" Var3DD790* func_003DD790(Mgr3DD790* m, char* name, int id, int* out, int t0, int t1, int t2)
+extern "C" Var3DD790* cScriptInterpreter_considerVar(Mgr3DD790* m, char* name, int id, int* out, int t0, int t1, int t2)
 {
     Var3DD790* r;
     Var3DD790* p;
     bool has;
 
-    r = func_003E10D0(m, name, id);
+    r = cScriptInterpreter_findVar(m, name, id);
     has = out != 0;
     if (r) {
         if (r->active && has && !t2)
@@ -79,12 +79,12 @@ extern "C" Var3DD790* func_003DD790(Mgr3DD790* m, char* name, int id, int* out, 
                 m->arr[m->count] = id;
                 m->count++;
             }
-            p = (Var3DD790*)func_003D6190(p, name, (int*)&m->count + m->count, out, 1);
+            p = (Var3DD790*)VarDef_ctor(p, name, (int*)&m->count + m->count, out, 1);
         }
         r = p;
         p->v14 = t0;
         r->b18 = t0 != 0;
-        func_003D8C30(D_00554F18, &r);
+        std_vector_VarDefPtr_push_back(D_00554F18, &r);
     }
     if (has)
         r->v1C = t1;
@@ -126,19 +126,19 @@ void* Mem_Alloc(int pool, int size, char* file, int line);
 #define Mem_Alloc(a0, a1, a2, a3) (Mem_Alloc((a0), (a1), (a2), (a3))) /* merge_units */
 
 char* Str_Duplicate(char*);
-Al3DD* func_00290BB0(Al3DD*, int);
-void func_003D8EF0(void*, Al3DD*, int);
-void func_003D8E80(void*, Al3DD*, int);
-void func_003D8E30(void*);
-void func_003D8E10(Mgr3DD*, Scr3DD**);
-void func_003D6D00(Scr3DD*, int, int, int, int, int);
-Info3DD* func_003E0C30(int, char*);
+Al3DD* cArrayCapacity_ctor(Al3DD*, int);
+void cArray_FieldDefPtr_ctor(void*, Al3DD*, int);
+void cArray_MemberFuncPtr_ctor(void*, Al3DD*, int);
+void cArray_int_ctor(void*);
+void std_vector_ClassDefPtr_push_back(Mgr3DD*, Scr3DD**);
+void ClassDef_init(Scr3DD*, int, int, int, int, int);
+Info3DD* cScriptInterpreter_findCls(int, char*);
 }
 static inline int Data3DD(Info3DD* i) { return i->on ? i->x8 : 0; }
-extern "C" Scr3DD* func_003DD9F0(int ctx, char* name, int noInit, char* parent, int a, int b, int c)
+extern "C" Scr3DD* cScriptInterpreter_considerClass(int ctx, char* name, int noInit, char* parent, int a, int b, int c)
 {
-    Scr3DD* s = (Scr3DD*)func_003E0C30(ctx, name);
-    Info3DD* p = parent ? func_003E0C30(ctx, parent) : 0;
+    Scr3DD* s = (Scr3DD*)cScriptInterpreter_findCls(ctx, name);
+    Info3DD* p = parent ? cScriptInterpreter_findCls(ctx, parent) : 0;
     int id = p ? p->id : -1;
     int d = (p && p->on) ? p->x8 : 0;
     if (!s) {
@@ -150,10 +150,10 @@ extern "C" Scr3DD* func_003DD9F0(int ctx, char* name, int noInit, char* parent, 
         if (n) {
             char* nm = Str_Duplicate(name);
             Al3DD t1;
-            func_003D8EF0(n->m4, func_00290BB0(&t1, 5), 1);
+            cArray_FieldDefPtr_ctor(n->m4, cArrayCapacity_ctor(&t1, 5), 1);
             Al3DD t2;
-            func_003D8E80(n->m14, func_00290BB0(&t2, 5), 1);
-            func_003D8E30(n->m24);
+            cArray_MemberFuncPtr_ctor(n->m14, cArrayCapacity_ctor(&t2, 5), 1);
+            cArray_int_ctor(n->m24);
             n->name = nm;
             n->x34 = 0;
             n->x3C = 0;
@@ -165,11 +165,11 @@ extern "C" Scr3DD* func_003DD9F0(int ctx, char* name, int noInit, char* parent, 
         }
         s = n;
         if (!noInit)
-            func_003D6D00(s, a, b, c, id, d);
+            ClassDef_init(s, a, b, c, id, d);
         s->x38 = D_00554F28->count + 100;
-        func_003D8E10(D_00554F28, &s);
+        std_vector_ClassDefPtr_push_back(D_00554F28, &s);
     } else if (!noInit) {
-        func_003D6D00(s, a, b, c, id, d);
+        ClassDef_init(s, a, b, c, id, d);
     }
     return s;
 }
@@ -197,48 +197,48 @@ extern PtrList* D_00554F18;
 #define D_00554F18 (*(PtrList **)&D_00554F18) /* merge_units */
 
 extern PtrList* D_00554F20;
-extern void func_003D6580(Writer* w, int size);
-extern int func_003D6570(Writer* w, int size);
-extern void func_003D63C0(Writer* w, int words);
-extern char* func_003D7510(void* key);
-extern void func_003D6730(void*, Writer*);
-extern void func_003D6B40(void*, Writer*);
-extern void func_003D68B0(void*, Writer*);
-extern void func_003D62D0(void*, Writer*);
+extern void ScriptFileBuff_put(Writer* w, int size);
+extern int ScriptFileBuff_charsToInts(Writer* w, int size);
+extern void ScriptFileBuff_expand(Writer* w, int words);
+extern char* cScriptBase_getClassName(void* key);
+extern void EnumDef_exportData(void*, Writer*);
+extern void ClassDef_exportNames(void*, Writer*);
+extern void ClassDef_exportFields(void*, Writer*);
+extern void VarDef_exportData(void*, Writer*);
 static inline void* At(PtrList* l, unsigned int i) { return l->data[i]; }
 static inline void Writer_PutInt(Writer* w, int v)
 {
-    func_003D63C0(w, 1);
+    ScriptFileBuff_expand(w, 1);
     *w->cursor++ = v;
 }
 static inline void Writer_PutString(Writer* w, char* s)
 {
     int size = strlen(s) + 1;
     int words;
-    func_003D6580(w, size);
-    words = func_003D6570(w, size);
-    func_003D63C0(w, words);
+    ScriptFileBuff_put(w, size);
+    words = ScriptFileBuff_charsToInts(w, size);
+    ScriptFileBuff_expand(w, words);
     String_Copy((char*)w->cursor, s);
     w->cursor += words;
 }
-void func_003DDC30(void* self, Writer* w)
+void cScriptInterpreter_exportData(void* self, Writer* w)
 {
     int n;
     int i;
     n = D_00554F30->count;
     Writer_PutInt(w, n);
     for (i = 0; i < n; i++)
-        func_003D6730(At(D_00554F30, i), w);
+        EnumDef_exportData(At(D_00554F30, i), w);
     n = D_00554F28->count;
     Writer_PutInt(w, n);
     for (i = 0; i < n; i++)
-        func_003D6B40(At(D_00554F28, i), w);
+        ClassDef_exportNames(At(D_00554F28, i), w);
     for (i = 0; i < n; i++)
-        func_003D68B0(At(D_00554F28, i), w);
+        ClassDef_exportFields(At(D_00554F28, i), w);
     n = D_00554F18->count;
     Writer_PutInt(w, n);
     for (i = 0; i < n; i++)
-        func_003D62D0(At(D_00554F18, i), w);
+        VarDef_exportData(At(D_00554F18, i), w);
     n = D_00554F20->count;
     Writer_PutInt(w, n);
     for (i = 0; i < n; i++) {
@@ -246,10 +246,10 @@ void func_003DDC30(void* self, Writer* w)
         e = (ScrEntry*)At(D_00554F20, i);
         Writer_PutString(w, e->name);
         na = e->count;
-        Writer_PutString(w, func_003D7510(e->ref->key));
+        Writer_PutString(w, cScriptBase_getClassName(e->ref->key));
         Writer_PutInt(w, na);
         for (j = 0; j < na; j++)
-            Writer_PutString(w, func_003D7510(e->args[(unsigned int)j]->key));
+            Writer_PutString(w, cScriptBase_getClassName(e->args[(unsigned int)j]->key));
     }
 }
 #undef D_00554F28 /* merge_units */

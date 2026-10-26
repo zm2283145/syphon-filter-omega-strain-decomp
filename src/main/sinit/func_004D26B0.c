@@ -5,7 +5,7 @@ extern int D_004A9264;
 extern int D_004A9268;
 extern int D_004A926C;
 
-void func_004D26B0(void) {
+void StaticInit_hud_netlobby(void) {
     D_004A9260 = 0x3F27AE14;
     D_004A9264 = 0x3F4DD2F2;
     D_004A9268 = 0x3F6B020C;

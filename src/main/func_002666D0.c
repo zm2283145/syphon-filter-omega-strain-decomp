@@ -10,17 +10,17 @@
 extern int PtrVec_Insert(PtrVec*, int*, int, int*);
 
 /* push_back */
-int func_002666D0(PtrVec* v, int* value) {
+int std_vector_cAirTaserPtr_push_back(PtrVec* v, int* value) {
     return PtrVec_Insert(v, v->data + v->count, 1, value);
 }
 
-Rel* func_002666F0(Rel* r) {
+Rel* std_vector_TaserPoint_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
     return r;
 }
 
-void func_00266710(PtrVec* v) {
+void std_vector_deleter_TaserPoint_clear(PtrVec* v) {
     v->count = 0;
 }

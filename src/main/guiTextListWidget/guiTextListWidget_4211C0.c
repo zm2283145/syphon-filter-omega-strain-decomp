@@ -22,7 +22,7 @@ static inline void NamedEntry_dtor(NamedEntry* e)
 }
 
 /* Removes the last entry of the vector and destroys it. */
-void func_004211C0(EntryVec* self)
+void cArray_Item_PopBack(EntryVec* self)
 {
     NamedEntry* last = &self->data[--self->count];
     if (last)
@@ -46,18 +46,18 @@ static inline void merge_flush_func_004211C0(void) {}
 extern void* String_AssignString(void* dst, void* src);
 
 /* TextListEntry copy constructor. */
-TextListEntry* func_00421210(TextListEntry* self, TextListEntry* src) {
+TextListEntry* GuiTextListWidget_Item_opAssign(TextListEntry* self, TextListEntry* src) {
     String_AssignString(self, src);
     self->unk0C = src->unk0C;
     self->unk10 = src->unk10;
     return self;
 }
 
-TextListEntry* func_00421260(TextListEntryVec* v, int i) {
+TextListEntry* std_vector_Item_opIndex(TextListEntryVec* v, int i) {
     return v->data + i;
 }
 
-int func_00421280(char* self) {
+int cArray_Item_Size(char* self) {
     return *(int*)(self + 4);
 }
 /* merge_units: generate this block's code under its own pragmas */

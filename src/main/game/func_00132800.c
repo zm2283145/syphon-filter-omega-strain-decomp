@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-Vec4* func_00132800(Vec4* d, Vec4* s) {
+Vec4* cQuaternion_ctor_cQuaternionR(Vec4* d, Vec4* s) {
     *d = *s;
     return d;
 }

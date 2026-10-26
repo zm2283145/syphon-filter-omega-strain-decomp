@@ -1,17 +1,17 @@
-extern void func_002BC960(void);
-extern void func_002BCA38(void);
-extern void func_002BCA68(void);
-extern void func_002BC828(void);
-extern int func_0027C410(void*,void*,int,int);
+extern void my_open(void);
+extern void my_read(void);
+extern void my_close(void);
+extern void initialize_mc2_socket(void);
+extern int sceNetcnfifCreateCallbackThread(void*,void*,int,int);
 extern char D_0051DCC0[];
-int func_002BCA88(int arg) {
+int sceNetcnfifCreateMc2Thread(int arg) {
  struct {int v; void (*a)(void),(*b)(void),(*c)(void);} callbacks;
  callbacks.v=1;
- callbacks.a=func_002BC960;
- callbacks.b=func_002BCA38;
- callbacks.c=func_002BCA68;
- func_002BC828();
- return func_0027C410(&callbacks,D_0051DCC0,0x1000,arg);
+ callbacks.a=my_open;
+ callbacks.b=my_read;
+ callbacks.c=my_close;
+ initialize_mc2_socket();
+ return sceNetcnfifCreateCallbackThread(&callbacks,D_0051DCC0,0x1000,arg);
 }
 
 

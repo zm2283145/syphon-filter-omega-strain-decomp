@@ -4,7 +4,7 @@ typedef struct { char pad[0xC]; int serial; } Tracked;
 typedef struct { Tracked* obj; int serial; } WeakRef;
 
 /* Returns the referenced object if it is still the same instance (serial matches), else 0. */
-Tracked* func_0027F7A0(WeakRef* self)
+Tracked* cSafePtr_cGOBJ_GetPtr_void_2(WeakRef* self)
 {
     Tracked* obj = self->obj;
     unsigned char valid = 1;

@@ -82,7 +82,7 @@ extern char D_00586610[], D_005867B0[], D_005862D0[], D_00586470[], D_00586950[]
 extern int GuiSound_Play(void*, void*);
 extern int GuiSound_Stop(void*, void*);
 extern int GuiCanvas_FinishDeferredPop(void*, void*, unsigned short, int, int);
-int func_00465A50(void* self, void* b, unsigned short type, int idx, int e)
+int GuiCommonCanvas_onMessage(void* self, void* b, unsigned short type, int idx, int e)
 {
     if (type == 0x10 || type == 0x11) {
         void* t = 0;

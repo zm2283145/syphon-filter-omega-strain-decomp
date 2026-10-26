@@ -24,7 +24,7 @@ int func_0045A928(void) {
     return tmp0;
 }
 
-int func_0045A948(int a0) {
+int sceNetGlueAbort(int a0) {
     int tmp0;
 
     tmp0 = Insck_Shutdown(a0, 0);

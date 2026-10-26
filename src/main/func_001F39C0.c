@@ -9,7 +9,7 @@
 
 extern void ScalarCollection_Init(ScalarCollection*);
 
-ScalarCollection* func_001F39C0(ScalarCollection* self) {
+ScalarCollection* std_list_imp_voidPtr_ctor(ScalarCollection* self) {
     ScalarCollection_Init(self);
     return self;
 }

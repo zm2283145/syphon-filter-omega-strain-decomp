@@ -1,7 +1,7 @@
 #pragma cplusplus on
 struct O_001379A0 { void* vt; char pad[0x4C]; char m[4]; };
 extern "C" {
-extern "C" void func_00293950();
+extern "C" void GuiWidget_onInput();
 extern "C" void GuiWidget_FocusPrev();
 extern "C" void GuiWidget_FocusNext();
 extern "C" void GuiWidget_FocusLast();
@@ -36,4 +36,4 @@ extern "C" O_001379A0* GuiBitmapWidget_dtor(O_001379A0* self, short del)
     }
     return self;
 }
-void * const D_004E0FC0[24] = { (void*)0x0, (void*)0x0, (void*)GuiBitmapWidget_dtor, (void*)GuiWidget_Init, (void*)GuiBitmapWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiBitmapWidget_Wake, (void*)GuiBitmapWidget_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_00293950, (void*)GuiBitmapWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiBitmapWidget_GetClassName, (void*)GuiBitmapWidget_IsType, (void*)0x0 };
+void * const D_004E0FC0[24] = { (void*)0x0, (void*)0x0, (void*)GuiBitmapWidget_dtor, (void*)GuiWidget_Init, (void*)GuiBitmapWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiBitmapWidget_Wake, (void*)GuiBitmapWidget_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiWidget_onInput, (void*)GuiBitmapWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiBitmapWidget_GetClassName, (void*)GuiBitmapWidget_IsType, (void*)0x0 };

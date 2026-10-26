@@ -8,20 +8,20 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int func_002CE748(int);                                 
-int func_002CE768(int );                            
+int MGCLSetProcessingState(int);                                 
+int MGCLSetClientAddrList(int );                            
 
-void func_002CE8B0(int arg0) {
+void MGCLResolveAddrCallback(int arg0) {
     if (F_(arg0, 0x4, int) != 0) {
-        func_002CE748(3);
+        MGCLSetProcessingState(3);
         return;
     }
     if (F_(arg0, 0x0, int) == 0) {
-        func_002CE748(3);
+        MGCLSetProcessingState(3);
         return;
     }
-    func_002CE768(arg0 + 8);
-    func_002CE748(1);
+    MGCLSetClientAddrList(arg0 + 8);
+    MGCLSetProcessingState(1);
 }
 /* merge_units: end func_002CE8B0 */
 
@@ -29,7 +29,7 @@ void func_002CE8B0(int arg0) {
 typedef struct { unsigned char b[76]; } BlkE908;
 extern int D_0048C408;
 extern BlkE908 D_0051F008;
-void func_002CE908(int mode, BlkE908 *src)
+void MGCLSetQueuedRequest(int mode, BlkE908 *src)
 {
     D_0048C408 = mode;
     if (mode == 0) D_0051F008 = *src;
@@ -37,7 +37,7 @@ void func_002CE908(int mode, BlkE908 *src)
 /* merge_units: end func_002CE908 */
 
 /* merge_units: begin func_002CE9E8 */
-void func_002CE9E8(BlkE908 *dst)
+void MGCLGetQueuedRequest(BlkE908 *dst)
 {
     if (D_0048C408 == 0) *dst = D_0051F008;
 }

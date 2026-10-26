@@ -20,9 +20,9 @@ struct V3B6F80 { unsigned int cap; unsigned int count; VRElem20* data; };
 extern "C" {
 extern char D_004A3F20[];
 void* Mem_PlacementNew(unsigned int size, void* p);
-void func_0020C020(void* dst, const VRElem20* src);
+void cSkaSwitchItem_ctor_cSkaSwitchItemR(void* dst, const VRElem20* src);
 }
-extern "C" void func_003B6F80(V3B6F80* v, const VRElem20* first, const VRElem20* last)
+extern "C" void std_vector_imp_cSkaSwitchItem_init(V3B6F80* v, const VRElem20* first, const VRElem20* last)
 {
     unsigned int n = last - first;
     if (v->count > 0x4CCCCC) {
@@ -36,7 +36,7 @@ extern "C" void func_003B6F80(V3B6F80* v, const VRElem20* first, const VRElem20*
         VRElem20* p = v->data;
         for (; first != last; first++, p++) {
             void* o = Mem_PlacementNew(sizeof(VRElem20), p);
-            if (o) func_0020C020(o, first);
+            if (o) cSkaSwitchItem_ctor_cSkaSwitchItemR(o, first);
             v->count++;
         }
     }
@@ -51,10 +51,10 @@ static inline void merge_flush_func_003B6F80(void) {}
 #pragma cplusplus off
 typedef struct { union { struct { unsigned int word; unsigned int length; char* data; } l; struct { unsigned char isLong : 1; unsigned char len : 7; char buf[11]; } s; } u; } ShortStr;
 
-/* Forward the character range of src (short or long form) to func_003B9410. */
-ShortStr* func_003B9410(ShortStr* self, const char* data, int arg, unsigned int len);
+/* Forward the character range of src (short or long form) to std_basic_string_char_char_traits_char_rfind_charP_uint_uint. */
+ShortStr* std_basic_string_char_char_traits_char_rfind_charP_uint_uint(ShortStr* self, const char* data, int arg, unsigned int len);
 
-ShortStr* func_003B7100(ShortStr* self, const ShortStr* src, int arg)
+ShortStr* std_basic_string_char_char_traits_char_rfind_basicstringR_uint(ShortStr* self, const ShortStr* src, int arg)
 {
     const char* data;
     unsigned int len;
@@ -65,7 +65,7 @@ ShortStr* func_003B7100(ShortStr* self, const ShortStr* src, int arg)
         data = src->u.l.data;
         len = src->u.l.length;
     }
-    return func_003B9410(self, data, arg, len);
+    return std_basic_string_char_char_traits_char_rfind_charP_uint_uint(self, data, arg, len);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003B7100(void) {}

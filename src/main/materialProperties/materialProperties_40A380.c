@@ -3,4 +3,4 @@
 #include "tree_erase3_strval.h"
 
 extern "C" { char D_004BEC78[] = "allocator.hh"; }
-DEFINE_TREE_ERASE3_STRVAL(func_0040A380, func_0040A870, func_0040A830, func_0040A840, func_0040A7D0, func_0040A6F0, D_004BEC78, func_004088D0, func_002071B0, func_0020A020, func_0020A050, func_00209FF0, func_00209F70, D_0049AE90)
+DEFINE_TREE_ERASE3_STRVAL(std_tree_pair_cString_value_compare_destroy_nodeP_3, std_tree_pair_cString_value_compare_alloc_void, std_tree_pair_cString_value_compare_node_alloc_void, cAllocator_pair_cString_destroy_pairP, cAllocator_node_deallocate_nodeP_uint_9, opDelete_nodeP_int_bool_charP_etc_8, D_004BEC78, std_pair_cString_char_dtor, details_compressed_pair_imp_rep_s_2_first_void, std_basic_string_char_char_traits_char_long_cap, std_basic_string_char_char_traits_char_long_pointer, std_basic_string_char_char_traits_char_alloc, opDelete_charP_int_bool_charP_etc, D_0049AE90)

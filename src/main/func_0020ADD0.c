@@ -1,11 +1,11 @@
 #include "types.h"
 
-extern void func_0020ADF0(void);
+extern void std_swap_vectordeleterR_vectordeleterR_15(void);
 
-/* Calls func_0020ADF0. */
+/* Calls std_swap_vectordeleterR_vectordeleterR_15. */
 #pragma optimization_level 1
-void func_0020ADD0(void)
+void std_vector_deleter_cSkaTransBLEND_swap(void)
 {
-    func_0020ADF0();
+    std_swap_vectordeleterR_vectordeleterR_15();
 }
 #pragma optimization_level reset

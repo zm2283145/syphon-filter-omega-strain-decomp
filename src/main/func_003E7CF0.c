@@ -8,7 +8,7 @@ extern void String_AssignString(String* dst, String* src);
 extern void String_Dtor(String* s, int flags);
 
 /* Sets defaults and resets the current name slot to ((char*)dat_004BDF28). */
-void func_003E7CF0(Obj* self)
+void cConsole_Activate(Obj* self)
 {
     String tmp;
     self->unk1 = 1;

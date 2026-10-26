@@ -4,5 +4,5 @@
 
 #include "gobj_types.h"
 
-void func_003951A0(void) {
+void cVUM_GOBJ_NextFrame(void) {
 }

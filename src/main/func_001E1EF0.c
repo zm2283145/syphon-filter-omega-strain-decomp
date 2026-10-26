@@ -7,10 +7,10 @@
 #include "types.h"
 #include "loose00_types.h"
 
-int func_001E1EF0(IntPair* p) {
+int cCollisionModel_FaceLocator_FaceIndex(IntPair* p) {
     return p->a;
 }
 
-int func_001E1F00(IntPair* p) {
+int cCollisionModel_FaceLocator_ParentModel(IntPair* p) {
     return p->b;
 }

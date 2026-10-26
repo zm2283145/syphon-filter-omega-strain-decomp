@@ -8,7 +8,7 @@
 
 #define INTERFACE_MODEL_SIZE 0xE0
 
-/* Interface model root (0xE0 bytes; built by func_003EF660). */
+/* Interface model root (0xE0 bytes; built by cInterfaceModel_ctor). */
 typedef struct InterfaceModel {
     char pad0[0x60];
     unsigned char unk60;        /* 0x60 set to 1 on the root */

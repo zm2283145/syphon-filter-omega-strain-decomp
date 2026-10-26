@@ -7,15 +7,15 @@
 #include "types.h"
 #include "loose01_types.h"
 
-Word* func_00262D60(Word* self, int value) {
+Word* std_list_deleter_TaserPulse_generic_iterator_ctor(Word* self, int value) {
     self->value = value;
     return self;
 }
 
-void* func_00262D70(char* self) {
+void* std_list_deleter_TaserPulse_tail(char* self) {
     return self + 4;
 }
 
-void* func_00262D80(void* self) {
+void* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_6(void* self) {
     return self;
 }

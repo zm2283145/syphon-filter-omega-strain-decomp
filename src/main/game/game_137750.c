@@ -22,7 +22,7 @@
 /* merge_units: begin func_00137750 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-DEFINE_TREE_ROOT_DTOR(func_00137750, func_0013A320)
+DEFINE_TREE_ROOT_DTOR(std_map_cString_cSkaAnimationSetPtr_dtor, std_tree_pair_cString_value_compare_destroy_nodeP)
 #pragma pop /* merge_units */
 /* merge_units: end func_00137750 */
 
@@ -31,7 +31,7 @@ DEFINE_TREE_ROOT_DTOR(func_00137750, func_0013A320)
 #pragma cplusplus on
 
 /* Destroy an object list: erase all nodes, optionally delete. */
-DEFINE_OBJ_LIST_DTOR(func_001377C0)
+DEFINE_OBJ_LIST_DTOR(std_list_cGOBJPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_001377C0 */
 
@@ -40,7 +40,7 @@ DEFINE_OBJ_LIST_DTOR(func_001377C0)
 #pragma cplusplus on
 
 /* Destroy an object list: erase all nodes, optionally delete. */
-DEFINE_OBJ_LIST_DTOR(func_00137840)
+DEFINE_OBJ_LIST_DTOR(std_list_cCAMERA_GOBJPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00137840 */
 
@@ -49,6 +49,6 @@ DEFINE_OBJ_LIST_DTOR(func_00137840)
 #pragma cplusplus on
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_001378C0, func_00137920)
+DEFINE_BASE_DTOR_CHAIN(cEnvMan_dtor, std_list_cEnvSettingsPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_001378C0 */

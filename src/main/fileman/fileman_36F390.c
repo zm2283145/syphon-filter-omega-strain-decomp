@@ -12,14 +12,14 @@ static inline void G1(void* d, void* s) { __int128 t; __asm__ volatile("lq %0, 0
 static inline void GMV(void* o, void* m, void* v) { __asm__ volatile("lqc2 vf8, 0x0(%2); lqc2 vf4, 0x0(%1); lqc2 vf5, 0x10(%1); lqc2 vf6, 0x20(%1); lqc2 vf7, 0x30(%1); vmulax.xyzw ACC, vf4, vf8x; vmadday.xyzw ACC, vf5, vf8y; vmaddaz.xyzw ACC, vf6, vf8z; vmaddw.xyzw vf12, vf7, vf8w; sqc2 vf12, 0x0(%0)" : : "r"(o), "r"(m), "r"(v) : "memory"); }
 typedef struct { int p; } It;
 extern "C" {
-void func_001CF100(It* it, void* c);
-void func_001CF0E0(It* it, void* c);
-int func_001CEF10(It* a, It* b);
-void** func_001CF0D0(It* it);
-void func_001CEF50(void* p);
-void func_001CEF30(It* it);
+void cArray_cXformNodePtr_Begin(It* it, void* c);
+void cArray_cXformNodePtr_End(It* it, void* c);
+int cArray_cXformNodePtr_ConstIterator_opNe(It* a, It* b);
+void** cArray_cXformNodePtr_ConstIterator_opMul(It* it);
+void cXformNode_SetNeedsUpdate(void* p);
+void cArray_cXformNodePtr_ConstIterator_opInc(It* it);
 void PtrVector_Resize(void* v, int n, int* fill);
-void func_0036F510(void* v, struct Xform** p);
+void std_vector_cXformNodePtr_push_back(void* v, struct Xform** p);
 M* Mtx_Transpose3x3(M* m);
 int Mtx_IsTranslationZero(M* m);
 V* func_00133EC0(M* m);
@@ -45,12 +45,12 @@ struct Xform {
         if (!dirty) {
             It* pe;
             dirty = 1;
-            func_001CF100(&b, &kids);
-            func_001CF0E0(&e, &kids);
+            cArray_cXformNodePtr_Begin(&b, &kids);
+            cArray_cXformNodePtr_End(&e, &kids);
             pe = &e;
-            while (func_001CEF10(&b, pe)) {
-                func_001CEF50(*func_001CF0D0(&b));
-                func_001CEF30(&b);
+            while (cArray_cXformNodePtr_ConstIterator_opNe(&b, pe)) {
+                cXformNode_SetNeedsUpdate(*cArray_cXformNodePtr_ConstIterator_opMul(&b));
+                cArray_cXformNodePtr_ConstIterator_opInc(&b);
             }
         }
     }
@@ -72,7 +72,7 @@ extern "C" void Xform_Attach(Xform* x, Xform* parent, int keep)
         if (p) {
             M m = self->GetWorld();
             self->parent = p;
-            func_0036F510(&p->kids, &self);
+            std_vector_cXformNodePtr_push_back(&p->kids, &self);
             if (keep) {
                 self->SetWorld(&m);
             } else {

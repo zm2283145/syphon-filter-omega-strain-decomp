@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-void* func_0019F420(void* self) {
+void* cBone_Xform(void* self) {
     return self;
 }
 

@@ -23,8 +23,8 @@ typedef struct Obj7C {
 
 extern int D_004E1560;
 extern void GuiWidget_ctor(Obj7C*);
-extern void func_004588E0(Sub10*);
-extern void func_00219DB0(Sub10*);
+extern void std_vector_cLList_TextAtomPtr_ctor(Sub10*);
+extern void std_vector_float_ctor(Sub10*);
 
 /* Constructor: base init, vtable, two sub-objects, cleared fields and flag bit 7. */
 Obj7C* GuiSubTitleDisplay_ctor(Obj7C* o) {
@@ -33,10 +33,10 @@ Obj7C* GuiSubTitleDisplay_ctor(Obj7C* o) {
     GuiWidget_ctor(o);
     a = &o->a;
     o->vtable = &D_004E1560;
-    func_004588E0(a);
+    std_vector_cLList_TextAtomPtr_ctor(a);
     a->active = 1;
     b = &o->b;
-    func_00219DB0(b);
+    std_vector_float_ctor(b);
     b->active = 1;
     o->unk48 = 0;
     o->unk50 = 0;

@@ -11,11 +11,11 @@ struct Hnd { Tgt* p; int id; };
 struct LNode { LNode* prev; LNode* next; Hnd h; };
 struct Gen;
 extern "C" {
-LNode* func_0021EDE0(LNode* n);
-LNode* func_0021E000(void* l);
-LNode** func_0021DFE0(LNode** it, LNode* n);
-void func_0043B190(void* ctx);
-int func_0043AA40(void* ctx, void* key);
+LNode* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_4(LNode* n);
+LNode* std_list_deleter_cSafePtr_cGOBJ_tail(void* l);
+LNode** std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(LNode** it, LNode* n);
+void cGenInfoObject_ctor(void* ctx);
+int cGenInfoObject_IsOwner(void* ctx, void* key);
 int Net_GetClock(int);
 int NpcAi_CountThinking(void);
 unsigned char Generator_SpawnTest(Gen* g, Gen* s);
@@ -42,20 +42,20 @@ void cGenerator_v10(Gen* self, float dt)
     char ctx[4];
     LNode* end;
     int cnt = 0;
-    LNode* n = func_0021EDE0(&self->head)->next;
+    LNode* n = details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_4(&self->head)->next;
     self->fBC += dt;
-    func_0021DFE0(&end, func_0021E000(&self->list90));
+    std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(&end, std_list_deleter_cSafePtr_cGOBJ_tail(&self->list90));
     while (n != end) {
         Hnd* h = &n->h;
         Tgt* t = HGet(h);
         if (t && t->State() != 3) cnt++;
         n = n->next;
-        func_0021DFE0(&end, func_0021E000(&self->list90));
+        std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(&end, std_list_deleter_cSafePtr_cGOBJ_tail(&self->list90));
     }
-    func_0043B190(ctx);
+    cGenInfoObject_ctor(ctx);
     if (self->bD1) return;
     if (g_IsMultiplayer) {
-        if (!func_0043AA40(ctx, self->key)) return;
+        if (!cGenInfoObject_IsOwner(ctx, self->key)) return;
         if (!(D_004F56B8 < Net_GetClock(1))) return;
     }
     if (!(g_MaxActiveNpcCount > NpcAi_CountThinking())) return;

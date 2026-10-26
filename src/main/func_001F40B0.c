@@ -7,26 +7,26 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern int func_001F40C0(ObjVec*, int);
-extern char* func_001F4110(ObjVec*);
-extern char** func_001F4150(ObjVec*);
+extern int std_vector_imp_cSkaBlendSequenceItem_push_back(ObjVec*, int);
+extern char* std_vector_imp_cSkaBlendSequenceItem_end_void(ObjVec*);
+extern char** std_vector_deleter_cSkaBlendSequenceItem_data_void(ObjVec*);
 extern int Vector_Insert_20A080(ObjVec*, char*, int, int);
 
-void func_001F40B0(ObjVec* v, int value) {
-    func_001F40C0(v, value);
+void std_vector_cSkaBlendSequenceItem_push_back(ObjVec* v, int value) {
+    std_vector_imp_cSkaBlendSequenceItem_push_back(v, value);
 }
 
 /* Append one element at the end. */
-int func_001F40C0(ObjVec* v, int value) {
-    return Vector_Insert_20A080(v, func_001F4110(v), 1, value);
+int std_vector_imp_cSkaBlendSequenceItem_push_back(ObjVec* v, int value) {
+    return Vector_Insert_20A080(v, std_vector_imp_cSkaBlendSequenceItem_end_void(v), 1, value);
 }
 
 /* End pointer for 12-byte elements. */
-char* func_001F4110(ObjVec* v) {
+char* std_vector_imp_cSkaBlendSequenceItem_end_void(ObjVec* v) {
     char** data;
     int count;
 
-    data = func_001F4150(v);
+    data = std_vector_deleter_cSkaBlendSequenceItem_data_void(v);
     count = v->count;
     return *data + count * 12;
 }

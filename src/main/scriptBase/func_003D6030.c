@@ -8,13 +8,13 @@
 
 extern "C" {
 int Mem_Alloc(...);                      
-int func_003D6010(...);                            
+int std_vector_intPtr_ctor(...);                            
 int memcpy(...);                            
 int strlen(...);                                    
 extern char D_004BD3B0;
 extern unsigned char g_ProfileLockEnabled;
 }
-extern "C" char * func_003D6030(char * arg0, int arg1, int arg2, signed char arg3) {
+extern "C" char * FuncDef_ctor_charP_intPintPint_bool(char * arg0, int arg1, int arg2, signed char arg3) {
     int temp_v1;
     int var_v0;
     int var_s1;
@@ -22,7 +22,7 @@ extern "C" char * func_003D6030(char * arg0, int arg1, int arg2, signed char arg
     int temp_s0_2;
 
     temp_s0 = arg0 + 8;
-    func_003D6010(temp_s0);
+    std_vector_intPtr_ctor(temp_s0);
     var_s1 = 0;
     F_(temp_s0, 0xC, signed char) = 1;
     if (arg1 != 0) {

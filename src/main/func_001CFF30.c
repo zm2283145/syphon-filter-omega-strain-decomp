@@ -8,7 +8,7 @@
 #include "loose00_types.h"
 
 /* Address of element index of a 0x1D0-byte record array. */
-Elem1D0* func_001CFF30(Vec1D0Array* v, int index) {
+Elem1D0* std_vector_cBone_opIndex(Vec1D0Array* v, int index) {
     Elem1D0* data;
 
     data = v->data;

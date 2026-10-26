@@ -46,7 +46,7 @@ extern "C" void Xform_ComputeWorld(Xform_EE10* x);
 #endif /* merge_units */
 #define Xform_ComputeWorld(a0) (Xform_ComputeWorld((Xform_ED40 *)(a0))) /* merge_units */
 
-extern "C" void func_0036F010(void* a, void* b, void* c);
+extern "C" void nMatrix_Multiply_NonTransposedMatrices(void* a, void* b, void* c);
 extern "C" void func_0036F090(void* a, void* b, void* c);
 extern "C" void Mtx_Copy_23E150(void* d, void* s);
 extern "C" void Xform_EvalAncestors(Xform_EE10* x)
@@ -66,7 +66,7 @@ extern "C" void Xform_EvalAncestors(Xform_EE10* x)
                 else Mtx_Copy_23E150(g->world, g->local);
                 g->dirty = 0;
             }
-            if (p->parent) func_0036F010(p->world, p->local, p->parent->world);
+            if (p->parent) nMatrix_Multiply_NonTransposedMatrices(p->world, p->local, p->parent->world);
             else {
                 /* declaration order sets the copy registers */
                 void* d = p->world;

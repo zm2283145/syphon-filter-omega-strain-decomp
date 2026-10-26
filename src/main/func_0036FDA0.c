@@ -9,7 +9,7 @@ extern char D_004DF640[];
 extern M4 g_IdentityMatrix;
 }
 struct R { int a, b, c; unsigned char own; };
-extern "C" R* func_0036FCD0(R* r);
+extern "C" R* std_vector_cXformNodePtr_ctor(R* r);
 struct XBase {
     void* vt;
     char pad04[0xC];
@@ -36,6 +36,6 @@ extern "C" X* Xform_Construct(X* x0)
     void* xx = &x->w; /* dead on purpose: retail keeps this addiu */
     s2 = &g_IdentityMatrix; d2 = &x->w; GQR(d2, s2);
     x->a0 = 0;
-    r = &x->rel; func_0036FCD0(r); r->own = 1;
+    r = &x->rel; std_vector_cXformNodePtr_ctor(r); r->own = 1;
     return x;
 }

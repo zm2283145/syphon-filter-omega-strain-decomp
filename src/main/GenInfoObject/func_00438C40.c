@@ -8,15 +8,15 @@ extern "C" {
 void Mem_Free(int, void*, char*, int);
 void List_Erase(int*, char*, int*);
 Raw_8C40 List_Begin(void*);
-Raw_8C40 func_00438E00(void*);
-void func_00438E10(char**, const Raw_8C40&);
-void func_00438DF0(char**, const Raw_8C40&);
-void func_0015AF40(int*, char**);
+Raw_8C40 std_list_tGenInfoPtr_end(void*);
+void std_list_tGenInfoPtr_generic_iterator_ctor(char**, const Raw_8C40&);
+void cLListIterator_tGenInfoPtr_ctor(char**, const Raw_8C40&);
+void std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(int*, char**);
 extern char D_005838D8;
 }
-#define Begin_8C40(o) func_00438E10(o, List_Begin(&D_005838D8))
-#define End_8C40(o) func_00438DF0(o, func_00438E00(&D_005838D8))
-extern "C" void func_00438C40(Ent_8C40* tbl) {
+#define Begin_8C40(o) std_list_tGenInfoPtr_generic_iterator_ctor(o, List_Begin(&D_005838D8))
+#define End_8C40(o) cLListIterator_tGenInfoPtr_ctor(o, std_list_tGenInfoPtr_end(&D_005838D8))
+extern "C" void cGenInfoObject_DoPendingOwner(Ent_8C40* tbl) {
     char* end;
     {
         char* e;
@@ -41,7 +41,7 @@ extern "C" void func_00438C40(Ent_8C40* tbl) {
                 int res;
                 int pos;
                 c = cur;
-                func_0015AF40(&pos, &c);
+                std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&pos, &c);
                 List_Erase(&res, &D_005838D8, &pos);
             }
         }

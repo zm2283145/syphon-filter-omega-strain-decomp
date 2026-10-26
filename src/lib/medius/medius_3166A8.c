@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_003166A8(void) {
+void lpcDestroy(void) {
 
 }

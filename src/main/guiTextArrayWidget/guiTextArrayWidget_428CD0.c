@@ -8,10 +8,10 @@ extern char D_004DFD80[];
 extern char D_004E0E60[];
 extern int D_00572190;
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
-int func_002E9A10(void);
+int NetRegisterMessageStart(void);
 int Event_UnpackHeader(NetworkValuePacket* packet);
-int func_002E9A98(NetworkValuePacket* packet, void* destination, int size, int count);
-int func_002E9F08(int* type, NetworkValueHandler callback);
+int NetMessageField(NetworkValuePacket* packet, void* destination, int size, int count);
+int NetRegisterApplicationMessage(int* type, NetworkValueHandler callback);
 int Event_PackHeader(NetworkValueEvent* self, int first, int* type, int third,
                       int fourth, unsigned int capacity, NetworkValuePacket* packet);
 int cActivateMsg_NetReceive(int first, int second, int third, const NetworkValuePacket* packet);
@@ -52,10 +52,10 @@ extern "C" bool cActivateMsg_NetRegister(void)
 {
     bool success = false;
     NetworkValuePacket packet;
-    if (!func_002E9A10() && Event_UnpackHeader(&packet) &&
-        !func_002E9A98(&packet, &packet.value, 4, 1) &&
-        !func_002E9A98(&packet, &packet.state, 1, 1) &&
-        !func_002E9F08(&D_00572190, cActivateMsg_NetReceive))
+    if (!NetRegisterMessageStart() && Event_UnpackHeader(&packet) &&
+        !NetMessageField(&packet, &packet.value, 4, 1) &&
+        !NetMessageField(&packet, &packet.state, 1, 1) &&
+        !NetRegisterApplicationMessage(&D_00572190, cActivateMsg_NetReceive))
         success = true;
     return success;
 }

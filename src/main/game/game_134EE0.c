@@ -22,7 +22,7 @@ char D_0049AF00[] = "allocator.hh";
 }
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_00134EE0)
+DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_cGOBJPtr_1_dtor)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00134EE0(void) {}
 #pragma pop /* merge_units */
@@ -33,6 +33,6 @@ static inline void merge_flush_func_00134EE0(void) {}
 #pragma cplusplus on
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_00134FD0)
+DEFINE_TRIVIAL_DTOR(cArray_FixedCapacity_cGOBJPtr_2_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00134FD0 */

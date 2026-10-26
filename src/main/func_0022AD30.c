@@ -128,10 +128,10 @@ Item* WeaponInv_GetHeldItem(Inv* inv);
 int TeamTable_AreEnemies(Tgt* a, Tgt* b);
 void Combat_HitDirection(Mtx3* m, V4* v, V4* out);
 Tgt* Controller_GetAimTarget(Ctl* c);
-WNode* func_0021EDE0(void* n);
-WNode* func_0021E000(void* l);
-WNode** func_0021DFE0(WIt* it, WNode* n);
-WNode** func_0021DFF0(WIt* it, WNode* n);
+WNode* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_4(void* n);
+WNode* std_list_deleter_cSafePtr_cGOBJ_tail(void* l);
+WNode** std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(WIt* it, WNode* n);
+WNode** std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodeP(WIt* it, WNode* n);
 int TargetVis_Test(void* mgr, Tgt* a, Tgt* b, int c, int d);
 void TargetVis_LeaveRecent(RList* l, Pred p);
 WIt WeakHandleList_Append(RList* list, const WIt& pos, HndT* h);
@@ -143,9 +143,9 @@ static inline bool NotVis(Tgt* a, Tgt* b) { return !TargetVis_Test(&g_TargetVisM
 static inline WIt Next(WIt& i) { return i++; }
 static inline WIt2 WBegin(WList& l) { WIt2 r(WorldObjList_Get(&l.list)->next); return r; }
 static inline WIt2 WEnd(WList& l) { WIt2 r(WorldObjList_Get(&l.list)); return r; }
-static inline WIt RHead(RList* l) { WIt r(func_0021EDE0(&l->head)->next); return r; }
-static inline WIt RBegin(RList* l) { WIt t; func_0021DFF0(&t, func_0021E000(l)->next); return t; }
-static inline WIt REnd(RList* l) { WIt t; func_0021DFE0(&t, func_0021E000(l)); return t; }
+static inline WIt RHead(RList* l) { WIt r(details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_4(&l->head)->next); return r; }
+static inline WIt RBegin(RList* l) { WIt t; std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodeP(&t, std_list_deleter_cSafePtr_cGOBJ_tail(l)->next); return t; }
+static inline WIt REnd(RList* l) { WIt t; std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(&t, std_list_deleter_cSafePtr_cGOBJ_tail(l)); return t; }
 static inline void RPush(RList* l, const HndT& h) { WNode* hd = (WNode*)&l->head; WeakHandleList_Append(l, WIt(hd), (HndT*)&h); }
 
 static inline V4 Xform(const Mtx& m, const V4& in) {

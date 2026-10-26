@@ -40,7 +40,7 @@ extern int cGOBJ_GetScriptTypeKeyPtr();
 extern int Script_RegisterNative_2();
 extern int Script_RegisterType();
 extern int Script_RegisterVariable();
-extern int* func_0022C640();
+extern int* TargSettings_SOBJ_getClassId();
 extern int TargetVisMgr_ctor();
 void StaticInit_RegisterTargetManager(void)
 {
@@ -48,8 +48,8 @@ void StaticInit_RegisterTargetManager(void)
     TargetVisMgr_ctor(g_TargetVisMgr);
     __register_global_object(g_TargetVisMgr, TargetVisMgr_dtor, D_004F77B0);
     D_004F78E8 = Script_RegisterType(D_004A65F8, ScriptType_TargSettings_Init, 0, 0);
-    D_004F78F0 = *func_0022C640();
-    D_004F78F8 = Script_RegisterVariable(D_004A6608, (int)D_0048AC60, func_0022C640());
+    D_004F78F0 = *TargSettings_SOBJ_getClassId();
+    D_004F78F8 = Script_RegisterVariable(D_004A6608, (int)D_0048AC60, TargSettings_SOBJ_getClassId());
     D_004F7900 = Script_RegisterVariable(D_004A6618, (int)D_0048AC68, D_00493888);
     D_004F7908 = Script_RegisterNative_2(Script_SetRadarBlip, D_00493880, D_004A6628, 1, cGOBJ_GetScriptTypeKeyPtr());
     D_004F7910 = Script_RegisterNative_2(Script_SetRadarBlip_2, D_00493880, D_004A6628, 2, cGOBJ_GetScriptTypeKeyPtr(), D_00493890);

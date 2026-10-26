@@ -29,7 +29,7 @@ extern int RtUdp_SendToPeerEndpoint(UpnpObj_230 *o, int peer, int type, void *da
 #endif /* merge_units */
 #define RtUdp_SendToPeerEndpoint(a0, a1, a2, a3, a4) (RtUdp_SendToPeerEndpoint((UpnpObj *)(a0), (a1), (unsigned char)(a2), (a3), (unsigned short)(a4))) /* merge_units */
 
-int func_00305230(UpnpObj_230 *o, int peer)
+int rt_p2p_send_my_broadcast_flag(UpnpObj_230 *o, int peer)
 {
     UpnpPkt_230 pkt;
     pkt.magic = 0xEFF0CDAB;

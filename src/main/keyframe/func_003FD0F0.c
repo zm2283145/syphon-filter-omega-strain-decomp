@@ -8,26 +8,26 @@ extern char D_004E0800[];
 extern char D_004E0820[];
 void Mem_Free(int pool, void* allocation, char* file, int line);
 void operator_delete(void* allocation);
-Word* func_003FCF60(Word* dst, Word* src);
-void func_003FCF70(Word* out, PtrVec* v);
-void func_003FCF90(Word* out, PtrVec* self, Word* src);
-int func_003FCFA0(PtrVec* v);
-void func_003F1B00(PtrVec* v, short deleteFlag);
+Word* cArray_cAnimatorPtr_Iterator_ctor(Word* dst, Word* src);
+void std_vector_cAnimatorPtr_end_void(Word* out, PtrVec* v);
+void std_vector_cAnimatorPtr_pointer2iterator_cAnimatorPPR(Word* out, PtrVec* self, Word* src);
+int std_vector_imp_cAnimatorPtr_1_begin_void(PtrVec* v);
+void std_vector_cAnimatorPtr_dtor(PtrVec* v, short deleteFlag);
 }
 
 struct Obj { virtual ~Obj(); };
 #pragma bool off
 static inline int Ne(int a, int b) { return !(a == b); }
 #pragma bool reset
-static inline void GetEnd(Word* out, PtrVec* v) { Word e; func_003FCF70(&e, v); func_003FCF60(out, &e); }
-static inline void GetBegin(Word* out, PtrVec* v) { Word b; b.value = func_003FCFA0(v); func_003FCF90(out, v, &b); }
+static inline void GetEnd(Word* out, PtrVec* v) { Word e; std_vector_cAnimatorPtr_end_void(&e, v); cArray_cAnimatorPtr_Iterator_ctor(out, &e); }
+static inline void GetBegin(Word* out, PtrVec* v) { Word b; b.value = std_vector_imp_cAnimatorPtr_1_begin_void(v); std_vector_cAnimatorPtr_pointer2iterator_cAnimatorPPR(out, v, &b); }
 struct Holder {
     char* vtable;
     char pad[0x14];
     PtrVec items;
 };
 
-extern "C" Holder* func_003FD0F0(Holder* self, short deleteFlag)
+extern "C" Holder* cKfAnimationContainer_dtor(Holder* self, short deleteFlag)
 {
     if (self) {
         Obj* o;
@@ -45,7 +45,7 @@ extern "C" Holder* func_003FD0F0(Holder* self, short deleteFlag)
             }
         }
         if (&self->items)
-            func_003F1B00(&self->items, -1);
+            std_vector_cAnimatorPtr_dtor(&self->items, -1);
         if (self)
             self->vtable = D_004E0800;
         if (deleteFlag > 0)

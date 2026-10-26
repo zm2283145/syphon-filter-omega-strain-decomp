@@ -46,7 +46,7 @@ int sprintf(char *buf, const char *fmt, ...);
 Agent0450 *Agent_GetSelected(void *a, int i);
 void PtrVec_PushBack_1C1080(VecI0450 *v, int *p);
 void func_0013A040(VecI0450 *v, int f);
-void func_001C10A0(VecI0450 *v);
+void std_vector_int_ctor_void(VecI0450 *v);
 void func_00296FA0(List0450 *l);
 void func_00299360(List0450 *l, short f);
 void AgentData_GetAwardRows(Agent0450 *a, unsigned char type, List0450 *out);
@@ -94,13 +94,13 @@ void GuiEndGameAwards_QueueVoices(Obj0450 *o)
     int idx;
     int n;
 
-    func_001C10A0(&v6);
+    std_vector_int_ctor_void(&v6);
     v6.owns = 1;
-    func_001C10A0(&v9);
+    std_vector_int_ctor_void(&v9);
     v9.owns = 1;
-    func_001C10A0(&v8);
+    std_vector_int_ctor_void(&v8);
     v8.owns = 1;
-    func_001C10A0(&v7);
+    std_vector_int_ctor_void(&v7);
     v7.owns = 1;
     n = g_IsMultiplayer ? 4 : 1;
     for (idx = 0; idx < n; idx++) {

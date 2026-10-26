@@ -91,17 +91,17 @@ extern char g_Video[];
 extern long long D_005381F8;
 extern long long D_004BC1B0[];
 void Renderer_BindTexture(void* m, int idx);
-void func_0025CD10(void* s);
-void func_0025CA40(void* s);
+void XLib_NewStrip(void* s);
+void XLib_NextBatchVert(void* s);
 void Renderer_FlushBatch(void* s);
 void Vec4_Copy(V* d, const V* s);
 void GuiBatch_AddVertexColor(V* d, const V* s);
 float GuiBatch_AddVertexUV(void);
 V* Vec4_Set(V* o, float x, float y, float z, float w);
-RLink* func_002B3950(RList* l);
-RIter* func_002B3940(RIter* it, RNode* n);
-void func_002B3930(RIter* out, RList* l);
-RIter* func_002B3920(RIter* d, RIter* s);
+RLink* std_list_deleter_tNode_tail(RList* l);
+RIter* std_list_deleter_tNode_generic_iterator_ctor_nodeP(RIter* it, RNode* n);
+void std_list_deleter_tNode_end(RIter* out, RList* l);
+RIter* cLListIterator_tNode_ctor(RIter* d, RIter* s);
 }
 #define D_00539224 (D_00539210.f24)
 #define D_00539228 (D_00539210.f28)
@@ -167,7 +167,7 @@ static inline void Emit_(const V& pos, const V4c& col, const V4c& uv)
     V tmp;
     Ent* e;
     float u;
-    func_0025CA40(g_Video);
+    XLib_NextBatchVert(g_Video);
     e = &RS->ents[D_00539210.f10];
     Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
     GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], (V*)&col);
@@ -180,9 +180,9 @@ static inline void TexFrame(TexMgr* m, int idx, unsigned int f) { Tex* t = m->te
 static inline unsigned char Prim(void) { if (g_DrawMode & 1) return 3; return 2; }
 static inline int Mode(void) { if (g_DrawMode & 1) return 0x41; return 0x62; }
 
-static inline RIter It0(RNode* n) { RIter t; func_002B3940(&t, n); return t; }
-static inline RIter Begin(RList* l) { return It0(func_002B3950(l)->next); }
-static inline void EndT(RIter* r, RList* l) { RIter t; func_002B3930(&t, l); func_002B3920(r, &t); }
+static inline RIter It0(RNode* n) { RIter t; std_list_deleter_tNode_generic_iterator_ctor_nodeP(&t, n); return t; }
+static inline RIter Begin(RList* l) { return It0(std_list_deleter_tNode_tail(l)->next); }
+static inline void EndT(RIter* r, RList* l) { RIter t; std_list_deleter_tNode_end(&t, l); cLListIterator_tNode_ctor(r, &t); }
 static inline RIter End(RList* l) { RIter r; EndT(&r, l); return r; }
 
 extern "C" void WaterFx_RenderRipples(Water* w)
@@ -221,7 +221,7 @@ extern "C" void WaterFx_RenderRipples(Water* w)
             e->c30 += D_00539224;
             e->c34 += D_00539224;
         }
-        func_0025CD10(g_Video);
+        XLib_NewStrip(g_Video);
         D_00539224 = 0;
         Emit(c0, V4c(1.0f, 1.0f, 1.0f, s), V4c(0.0f, 1.0f, 1.0f, 0.0f));
         Emit(c1, V4c(1.0f, 1.0f, 1.0f, a), V4c(0.0f, 0.0f, 1.0f, 0.0f));

@@ -2,20 +2,20 @@
 
 extern void Message_GetScriptTypeKey();
 extern void MusicTransitionEvent_Fire();
+extern void cCBData_IsReferencing();
+extern void cNetMsg_Pack();
 extern void cPlayQuipMsg_dtor();
 extern void cPlayQuipMsg_v01();
 extern void cPlayQuipMsg_v04();
 extern void cPlayQuipMsg_v05();
-extern void func_00177E20();
 extern void func_001CA6F0();
-extern void func_002823E0();
 
 void *D_004DAC70[8] = {
     0, 0, &cPlayQuipMsg_dtor, &cPlayQuipMsg_v01,
-    &func_002823E0, &Message_GetScriptTypeKey, &cPlayQuipMsg_v04, &cPlayQuipMsg_v05,
+    &cNetMsg_Pack, &Message_GetScriptTypeKey, &cPlayQuipMsg_v04, &cPlayQuipMsg_v05,
 };
 
 void *D_004DAC90[8] = {
-    0, 0, &func_001CA6F0, &func_00177E20,
+    0, 0, &func_001CA6F0, &cCBData_IsReferencing,
     &MusicTransitionEvent_Fire, 0, 0, 0,
 };

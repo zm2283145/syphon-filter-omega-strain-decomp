@@ -16,13 +16,13 @@ extern RbTree D_005826A0;
 extern RbTree D_00582700;
 extern char D_004BFB00[];
 void ObjMap_Find_42EDF0(TransferObjectIterator* result, RbTree* tree, const GobjId* id);
-TransferObjectIterator func_0042DF10(RbTree* tree);
-void func_0042DF00(TransferObjectIterator* result, const TransferObjectIterator& source);
-void func_0042F030(RbTree* tree, TransferObjectIterator* position);
+TransferObjectIterator std_map_int_tNetObjectPtr_end(RbTree* tree);
+void cAssocArray_int_tNetObjectPtr_Iterator_ctor(TransferObjectIterator* result, const TransferObjectIterator& source);
+void std_tree_pair_int_value_compare_erase_tree_3(RbTree* tree, TransferObjectIterator* position);
 void ObjMap_Find_42EEF0(TransferReferenceIterator* result, RbTree* tree, const GobjId* id);
-TransferReferenceIterator func_0042DA20(RbTree* tree);
-void func_0042DA10(TransferReferenceIterator* result, const TransferReferenceIterator& source);
-void func_0042F510(RbTree* tree, TransferReferenceIterator* position);
+TransferReferenceIterator std_map_int_tNetActivateTerrainObjectPtr_end(RbTree* tree);
+void cAssocArray_int_tNetActivateTerrainObjectPtr_Iterator_ctor(TransferReferenceIterator* result, const TransferReferenceIterator& source);
+void std_tree_pair_int_value_compare_erase_tree_4(RbTree* tree, TransferReferenceIterator* position);
 void Mem_Free(int pool, void* allocation, char* file, int line);
 }
 
@@ -30,17 +30,17 @@ static inline void erase_object(TransferObjectNode* node)
 {
     TransferObjectIterator position;
     position.node = node;
-    func_0042F030(&D_005826A0, &position);
+    std_tree_pair_int_value_compare_erase_tree_3(&D_005826A0, &position);
 }
 
 static inline void assign_end(TransferObjectIterator* result, RbTree* tree)
 {
-    func_0042DF00(result, func_0042DF10(tree));
+    cAssocArray_int_tNetObjectPtr_Iterator_ctor(result, std_map_int_tNetObjectPtr_end(tree));
 }
 
 static inline void assign_end(TransferReferenceIterator* result, RbTree* tree)
 {
-    func_0042DA10(result, func_0042DA20(tree));
+    cAssocArray_int_tNetActivateTerrainObjectPtr_Iterator_ctor(result, std_map_int_tNetActivateTerrainObjectPtr_end(tree));
 }
 
 static inline void object_end(TransferObjectIterator* result)
@@ -57,7 +57,7 @@ static inline void erase_reference(TransferReferenceNode* node)
 {
     TransferReferenceIterator position;
     position.node = node;
-    func_0042F510(&D_00582700, &position);
+    std_tree_pair_int_value_compare_erase_tree_4(&D_00582700, &position);
 }
 
 /* Remove the owned entry, then release its separately registered reference. */
@@ -164,12 +164,12 @@ extern char D_004D9300[];
 extern char D_004E0EA0[];
 extern void * const D_004E0F20[];
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
-void func_0042F170(TransferReferenceInsertResult* result, RbTree* tree, const TransferReferenceValue* value);
-void func_00436C00(int* shared);
-void func_00436BA0(int* shared, short flags);
-int func_00434440(int* shared, const GobjId* id);
-int func_00434380(int* shared, const GobjId* id);
-void func_003FB4B0(int id, int peer);
+void std_tree_pair_int_value_compare_insert_one_pairR_2(TransferReferenceInsertResult* result, RbTree* tree, const TransferReferenceValue* value);
+void cNPCInfoObject_ctor(int* shared);
+void cNPCInfoObject_dtor(int* shared, short flags);
+int cNPCInfoObject_GetOwner_cObjectIdR(int* shared, const GobjId* id);
+int cNPCInfoObject_GetPrevOwner(int* shared, const GobjId* id);
+void cNetObj_SetOwner(int id, int peer);
 int NetGame_InitLocalSlot(int* id, int session);
 int Player_GetIndex(unsigned int id);
 void Event_Construct(void* notice, const void* descriptor);
@@ -177,7 +177,7 @@ void Event_Send(void* notice, cGOBJ* object, int flags);
 void cMessage_dtor(void* notice, int flags);
 int Transport_Send(unsigned int id, const void* notice, int flags, int peer);
 void NetObjectMgr_AddTransferTimer(const GobjId* id);
-void func_0042D360(const GobjId* id, int peer);
+void cNetObjectMgr_TransferRequest(const GobjId* id, int peer);
 }
 
 static inline const GobjId* object_id(cGOBJ* object)
@@ -249,7 +249,7 @@ static inline void send_release(cGOBJ* object)
 }
 
 /* Activate network control of an object and notify its owner peer. */
-extern "C" void func_0042E180(cGOBJ* object, int peer)
+extern "C" void cNetObjectMgr_AddActivate(cGOBJ* object, int peer)
 {
     int shared;
     GobjId key;
@@ -261,8 +261,8 @@ extern "C" void func_0042E180(cGOBJ* object, int peer)
     key.word = object_id(object)->word;
     ObjMap_Find_42EDF0(&found, &D_005826A0, &key);
     TransferObjectNode* node = found.node;
-    func_00436C00(&shared);
-    func_0042DF00(&end, func_0042DF10(&D_005826A0));
+    cNPCInfoObject_ctor(&shared);
+    cAssocArray_int_tNetObjectPtr_Iterator_ctor(&end, std_map_int_tNetObjectPtr_end(&D_005826A0));
     if (node == end.node) {
         TransferObjectEntry* entry;
         {
@@ -288,18 +288,18 @@ extern "C" void func_0042E180(cGOBJ* object, int peer)
         TransferReferenceValue value;
         value.id.word = object_id(object)->word;
         value.reference = (TransferReference*)entry;
-        func_0042F170(&result, &D_005826A0, &value);
+        std_tree_pair_int_value_compare_insert_one_pairR_2(&result, &D_005826A0, &value);
     }
     if (peer >= 0) {
-        int owner = func_00434440(&shared, &((GobjEntry*)object)->id);
+        int owner = cNPCInfoObject_GetOwner_cObjectIdR(&shared, &((GobjEntry*)object)->id);
         if (owner < 0)
-            owner = func_00434380(&shared, &((GobjEntry*)object)->id);
-        func_003FB4B0(object->unk10, peer);
+            owner = cNPCInfoObject_GetPrevOwner(&shared, &((GobjEntry*)object)->id);
+        cNetObj_SetOwner(object->unk10, peer);
         if (owner != peer && owner >= 0) {
             if (owner != current_peer())
                 request_transfer(object, peer, owner);
             else
-                func_0042D360(&((GobjEntry*)object)->id, (short)peer);
+                cNetObjectMgr_TransferRequest(&((GobjEntry*)object)->id, (short)peer);
         } else {
             request_activate(object, object->unk10, peer);
         }
@@ -314,7 +314,7 @@ extern "C" void func_0042E180(cGOBJ* object, int peer)
             }
         }
     }
-    func_00436BA0(&shared, -1);
+    cNPCInfoObject_dtor(&shared, -1);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0042E180 */
@@ -327,21 +327,21 @@ extern "C" {
 extern RbTree D_005826C0;
 extern RbTree D_005826E0;
 extern RbTree D_00582720;
-void func_0042EB10(TransferObjectIterator* result, RbTree* tree);
-PendingTransferIterator func_0042EB00(RbTree* tree);
-PendingTransferIterator func_0042D780(RbTree* tree);
-void func_0042D770(PendingTransferIterator* result, const PendingTransferIterator& source);
-void func_0042EAF0(TransferReferenceIterator* result, RbTree* tree);
+void std_tree_pair_int_value_compare_begin_void_4(TransferObjectIterator* result, RbTree* tree);
+PendingTransferIterator std_map_int_cMessagePtr_begin(RbTree* tree);
+PendingTransferIterator std_map_int_cMessagePtr_end(RbTree* tree);
+void cAssocArray_int_cMessagePtr_Iterator_ctor(PendingTransferIterator* result, const PendingTransferIterator& source);
+void std_tree_pair_int_value_compare_begin_void_3(TransferReferenceIterator* result, RbTree* tree);
 void Tree_Successor(void* iterator);
-void func_0042EFF0(RbTree* tree);
-void func_0042F240(RbTree* tree);
-void func_0042F280(RbTree* tree);
+void std_tree_pair_int_value_compare_clear_void_2(RbTree* tree);
+void std_tree_pair_short_value_compare_clear(RbTree* tree);
+void std_tree_pair_int_value_compare_clear_void_3(RbTree* tree);
 void func_0042F4D0(RbTree* tree);
-void func_0042F720(RbTree* tree);
+void std_tree_pair_int_value_compare_clear_void_5(RbTree* tree);
 }
 
 /* Release owned references and pending messages, then clear their transfer maps. */
-extern "C" void func_0042E6D0(void)
+extern "C" void cNetObjectMgr_Reset(void)
 {
     TransferObjectIterator object;
     PendingTransferIterator pending;
@@ -351,9 +351,9 @@ extern "C" void func_0042E6D0(void)
     PendingTransferIterator pendingEnd;
     TransferReferenceIterator referenceEnd;
     TransferObjectIterator objectBegin;
-    func_0042EB10(&objectBegin, &D_005826A0);
+    std_tree_pair_int_value_compare_begin_void_4(&objectBegin, &D_005826A0);
     object.node = objectBegin.node;
-    while (func_0042DF00(&objectEnd, func_0042DF10(&D_005826A0)),
+    while (cAssocArray_int_tNetObjectPtr_Iterator_ctor(&objectEnd, std_map_int_tNetObjectPtr_end(&D_005826A0)),
            (object.node == objectEnd.node) ^ 1) {
         TransferObjectEntry* entry = object.node->entry;
         TransferReference* owned = entry->reference;
@@ -367,11 +367,11 @@ extern "C" void func_0042E6D0(void)
         }
         Tree_Successor(&object);
     }
-    func_0042EFF0(&D_005826A0);
-    func_0042F240(&D_005826C0);
-    func_0042D770(&pendingBegin, func_0042EB00(&D_005826E0));
+    std_tree_pair_int_value_compare_clear_void_2(&D_005826A0);
+    std_tree_pair_short_value_compare_clear(&D_005826C0);
+    cAssocArray_int_cMessagePtr_Iterator_ctor(&pendingBegin, std_map_int_cMessagePtr_begin(&D_005826E0));
     pending = pendingBegin;
-    while (func_0042D770(&pendingEnd, func_0042D780(&D_005826E0)),
+    while (cAssocArray_int_cMessagePtr_Iterator_ctor(&pendingEnd, std_map_int_cMessagePtr_end(&D_005826E0)),
            (pending.node == pendingEnd.node) ^ 1) {
         TransferMessage* message = pending.node->message;
         {
@@ -381,11 +381,11 @@ extern "C" void func_0042E6D0(void)
         }
         Tree_Successor(&pending);
     }
-    func_0042F280(&D_005826E0);
+    std_tree_pair_int_value_compare_clear_void_3(&D_005826E0);
     TransferReferenceIterator referenceBegin;
-    func_0042EAF0(&referenceBegin, &D_00582700);
+    std_tree_pair_int_value_compare_begin_void_3(&referenceBegin, &D_00582700);
     reference.node = referenceBegin.node;
-    while (func_0042DA10(&referenceEnd, func_0042DA20(&D_00582700)),
+    while (cAssocArray_int_tNetActivateTerrainObjectPtr_Iterator_ctor(&referenceEnd, std_map_int_tNetActivateTerrainObjectPtr_end(&D_00582700)),
            (reference.node == referenceEnd.node) ^ 1) {
         TransferReference* registered = reference.node->reference;
         {
@@ -395,7 +395,7 @@ extern "C" void func_0042E6D0(void)
         Tree_Successor(&reference);
     }
     func_0042F4D0(&D_00582700);
-    func_0042F720(&D_00582720);
+    std_tree_pair_int_value_compare_clear_void_5(&D_00582720);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0042E6D0 */

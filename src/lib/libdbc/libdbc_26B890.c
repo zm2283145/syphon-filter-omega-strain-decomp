@@ -15,7 +15,7 @@ extern Slot D_004FBB88[];
 extern void SyncDCache(Item* a, Item* b);
 
 /* Processes the slot's item block and returns whichever of its first two items has higher priority. */
-Item* func_0026B890(int idx)
+Item* scePad2GetSide(int idx)
 {
     Item* pair[2];
     Item* base = D_004FBB88[idx].items;
@@ -28,7 +28,7 @@ Item* func_0026B890(int idx)
 
 /* merge_units: begin func_0026B8F8 */
 /* Processes the slot's item block and returns whichever of its first two items has higher priority. */
-Item* func_0026B8F8(int idx)
+Item* scePad2GetSide2(int idx)
 {
     Item* pair[2];
     Item* base = D_004FBB88[idx].items;

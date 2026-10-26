@@ -53,10 +53,10 @@ extern char D_004C0FA8[];
 extern char D_004C0FB0[];
 extern void String_Copy(char*, char*);
 extern void func_00454010(void*);
-extern int func_00451ED0(S452B40*, char*);
-extern int func_004524C0(S452B40*, char*, char*);
-extern int func_00452050(S452B40*, int, void*);
-extern int func_00451BE0(S452B40*, int);
+extern int SFOLobby_FindChannel(S452B40*, char*);
+extern int SFOLobby_CreateChannel(S452B40*, char*, char*);
+extern int SFOLobby_JoinChannel(S452B40*, int, void*);
+extern int SFOLobby_HandleOverflowJoinChannel(S452B40*, int);
 
 static inline void SetErr_452B40(S452B40* self, unsigned char code, char* file, int line)
 {
@@ -67,25 +67,25 @@ static inline void SetErr_452B40(S452B40* self, unsigned char code, char* file, 
     }
 }
 
-int func_00452B40(S452B40* s, char* name)
+int SFOLobby_JoinMissionChannel(S452B40* s, char* name)
 {
     char pass[0x100];
     char info[0x60];
 
     String_Copy(pass, D_004C0FA8);
     func_00454010(info);
-    if (!func_00451ED0(s, name)) {
-        if (!func_004524C0(s, name, pass)) {
+    if (!SFOLobby_FindChannel(s, name)) {
+        if (!SFOLobby_CreateChannel(s, name, pass)) {
             SetErr_452B40(s, 0x17, D_004C0FB0, 0x457);
             return 0;
         }
-        if (!func_00452050(s, s->f1B38, info)) {
+        if (!SFOLobby_JoinChannel(s, s->f1B38, info)) {
             SetErr_452B40(s, 0x16, D_004C0FB0, 0x45C);
             return 0;
         }
         s->f1EB4 = s->f1B38;
         String_Copy(s->f1EB8, name);
-    } else if (!func_00451BE0(s, s->f1B80)) {
+    } else if (!SFOLobby_HandleOverflowJoinChannel(s, s->f1B80)) {
         return 0;
     }
     return 1;
@@ -98,17 +98,17 @@ int func_00452B40(S452B40* s, char* name)
 #include "SFOLobby_Main_types.h"
 
 extern void SFOLobby_DisconnectAuthServer(void);
-extern void func_004689B0(void);
-extern void func_002E9648(void);
+extern void MediusCloseBare(void);
+extern void NetClose(void);
 
 /* Run the requested cleanup operations and clear the lobby's pending field. */
-int func_00452C70(LobbyMain* self, int notify)
+int SFOLobby_ShutdownMedius(LobbyMain* self, int notify)
 {
     if (self->unk180 > 0)
         SFOLobby_DisconnectAuthServer();
     if (notify) {
-        func_004689B0();
-        func_002E9648();
+        MediusCloseBare();
+        NetClose();
     }
     self->unk1EA8 = 0;
     return 1;
@@ -165,21 +165,21 @@ typedef struct {
 } Net;
 
 extern void* memset(void*, int, unsigned int);
-extern void func_0042B000(void);
-extern void func_0042AFC0(void);
-extern void func_002E9480(Req1C*);
-extern void func_002E94E0(Req1C*, Res18*);
-extern void func_002F96B8(void*, void*);
-extern int func_00476998(void);
+extern void cDME_Init_PreLobby(void);
+extern void cDME_Init_PostLobby(void);
+extern void NetSetDefaultInitializeParams(Req1C*);
+extern void NetInitialize(Req1C*, Res18*);
+extern void KM_GenerateRSAKeyPair(void*, void*);
+extern int KM_GetSoftwareID(void);
 extern void srand(int);
 extern int Random_Next(void);
-extern int func_00468630(Cb14*, int*);
-extern void func_00352C30(void*);
-extern void func_00445F90(void);
-extern void func_00447C70(void);
-extern void func_00446640(void);
-extern void func_00447B90(void);
-extern void func_00447200(void);
+extern int MediusInitializeBare(Cb14*, int*);
+extern void KM_GetMediusPublicKey(void*);
+extern void SFOLobby_Callback_SystemMessage(void);
+extern void SFOLobby_Callback_LobbyChat(void);
+extern void SFOLobby_Callback_BuddyConfirmationRequest(void);
+extern void SFOLobby_Callback_MediusErrorMessage(void);
+extern void SFOLobby_Callback_ReassignGameMediusWorldID(void);
 extern int D_00572538;
 extern double SoftFloat_IntToDouble(int);
 extern double SoftFloat_FloatToDouble(float);
@@ -187,7 +187,7 @@ extern double SoftFloat_DoubleMultiply(double, double);
 extern double SoftFloat_DoubleSub(double, double);
 extern int SoftFloat_DoubleToInt(double);
 
-int func_00452CD0(Net* s)
+int SFOLobby_InitializeMediusBare(Net* s)
 {
     Req1C req;
     Res18 res;
@@ -196,10 +196,10 @@ int func_00452CD0(Net* s)
     int h;
     int x;
 
-    func_0042B000();
+    cDME_Init_PreLobby();
     memset(&req, 0, sizeof(req));
     memset(&res, 0, sizeof(res));
-    func_002E9480(&req);
+    NetSetDefaultInitializeParams(&req);
     memset(&buf, 0, sizeof(buf));
     s->b2409 = 1;
     if (s->cb2550 != 0) {
@@ -207,26 +207,26 @@ int func_00452CD0(Net* s)
     }
     s->b2409 = 0;
     if (!s->b23D6) {
-        func_002F96B8(buf.a, buf.b);
+        KM_GenerateRSAKeyPair(buf.a, buf.b);
     }
-    req.f4 = func_00476998();
+    req.f4 = KM_GetSoftwareID();
     req.f8 = s->b23D6 ? 0 : &buf;
     x = D_00572538;
     srand(SoftFloat_DoubleToInt(SoftFloat_DoubleSub(SoftFloat_IntToDouble(x), SoftFloat_DoubleMultiply(0.0625, SoftFloat_FloatToDouble((float)x)))));
     req.fC = Random_Next() % 1000 + 6000;
-    req.f14 = func_00445F90;
+    req.f14 = SFOLobby_Callback_SystemMessage;
     req.f10 = 1;
     req.f18 = 0;
-    func_002E94E0(&req, &res);
-    func_0042AFC0();
+    NetInitialize(&req, &res);
+    cDME_Init_PostLobby();
     memset(&cb, 0, sizeof(cb));
     memset(&h, 0, sizeof(h));
-    cb.f0 = func_00447C70;
-    cb.f4 = func_00446640;
-    cb.f8 = func_00447B90;
-    cb.fC = func_00447200;
+    cb.f0 = SFOLobby_Callback_LobbyChat;
+    cb.f4 = SFOLobby_Callback_BuddyConfirmationRequest;
+    cb.f8 = SFOLobby_Callback_MediusErrorMessage;
+    cb.fC = SFOLobby_Callback_ReassignGameMediusWorldID;
     cb.f10 = 30000;
-    s->f24C = func_00468630(&cb, &h);
+    s->f24C = MediusInitializeBare(&cb, &h);
     if (s->f24C == -0x13) {
         s->f24C = 0;
     }
@@ -240,9 +240,9 @@ int func_00452CD0(Net* s)
     }
     memset(s->buf1F3C, 0, sizeof(s->buf1F3C));
     if (!s->b23D6) {
-        func_00352C30(s->buf1F3C);
+        KM_GetMediusPublicKey(s->buf1F3C);
     }
-    s->f1EA8 = func_00476998();
+    s->f1EA8 = KM_GetSoftwareID();
     return 1;
 }
 #pragma pop /* merge_units */
@@ -258,15 +258,15 @@ int func_00452CD0(Net* s)
 
 
 /* Invokes the registered callback, if any, with (a0, a1). */
-void func_00452F30(LobbyMain* self, int a0, int a1) {
+void SFOLobby_StatsCallback(LobbyMain* self, int a0, int a1) {
     LobbyMainCallback cb = self->callback;
     if (cb != 0) {
         cb(a0, a1);
     }
 }
 
-/* Registers the callback used by func_00452F30. */
-void func_00452F60(LobbyMain* self, LobbyMainCallback cb) {
+/* Registers the callback used by SFOLobby_StatsCallback. */
+void SFOLobby_SetStatsCallback(LobbyMain* self, LobbyMainCallback cb) {
     self->callback = cb;
 }
 #pragma pop /* merge_units */
@@ -296,12 +296,12 @@ void SFOLobby_CallUpdateHook(char * arg0, int arg1, int arg2) {
 
 /* merge_units: begin func_00452FC0 */
 #pragma push /* merge_units */
-void func_00452FC0(LobbyMain* self, int value) {
+void SFOLobby_SetCallback(LobbyMain* self, int value) {
     self->unk2550 = value;
 }
 
 /* True when the state byte equals 5. */
-int func_00452FD0(LobbyMain* self) {
+int SFOLobby_IsFatalError(LobbyMain* self) {
     return self->state == 5;
 }
 
@@ -403,11 +403,11 @@ signed char SFOLobby_FormatError(E452* e, char* buf) {
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" {
-int func_002EC580(int *);
+int NetGetNetUpdateErrors(int *);
 int Lobby_GetTime(void);
-int func_00468D38(void);
-int func_00468DD8(void);
-int func_00468EF0(void);
+int MediusUpdate(void);
+int MediusUpdateUniverseInformation(void);
+int MediusUpdateBare(void);
 extern int D_00497928;
 extern unsigned char g_IsMultiplayer;
 extern char D_005723B8;
@@ -447,7 +447,7 @@ inline bool Port_IsReady(int arg0) {
         return false;
     }
     s.size = 0x18;
-    func_002EC580((int*)&s);
+    NetGetNetUpdateErrors((int*)&s);
     if (s.st[arg0] == 2)
         return true;
     return false;
@@ -469,12 +469,12 @@ extern "C" int SFOLobby_Poll(Conn4534A0* self, int start, int timeout, int flag)
     fallback = false;
     self->now = now;
     if (flag != 0) {
-        ok = func_00468DD8();
+        ok = MediusUpdateUniverseInformation();
     } else if (self->mode == 0xA && g_IsMultiplayer != 0) {
-        ok = func_00468EF0();
+        ok = MediusUpdateBare();
     } else {
         fallback = true;
-        ok = func_00468D38();
+        ok = MediusUpdate();
     }
     if (self->deadline == 0) {
         self->deadline = now + D_00497928;

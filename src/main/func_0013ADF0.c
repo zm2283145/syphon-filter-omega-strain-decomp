@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_0013ADF0(void* self) {
+void* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void(void* self) {
     return self;
 }

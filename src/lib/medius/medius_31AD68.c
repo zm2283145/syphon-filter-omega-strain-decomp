@@ -10,7 +10,7 @@ static const float D_004B5108[44] = {
     0x1.19652ap-6f, 0x1.12dba4p-6f,
 };
 
-void func_0031AD68(float *a, int p, float *c, int n, float gain)
+void NellyAsToCs(float *a, int p, float *c, int n, float gain)
 {
     int i, k, lim;
     float sum;

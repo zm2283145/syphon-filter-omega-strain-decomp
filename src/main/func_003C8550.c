@@ -17,7 +17,7 @@ typedef struct {
 extern Group8550 D_00493530[];
 extern unsigned int D_004937E0[];
 extern void* memset(void*, int, unsigned int);
-Obj8550* func_003C8550(Obj8550* o)
+Obj8550* cVU0Man_ctor(Obj8550* o)
 {
     int i;
     int j;

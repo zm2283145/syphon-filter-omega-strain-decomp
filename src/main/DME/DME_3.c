@@ -42,7 +42,7 @@ extern signed char D_005724B0;
 extern int Gui_GetScreenStack(void);
 extern void GuiWidget_SendEvent(int a, int b, int c, int d, int e);
 extern void NetGame_InitLocalSlot(int* out, int session);
-extern void func_002EBBA0(int session, int* out);
+extern void NetGetPeerToPeerHostClientIndex(int session, int* out);
 static inline int LocalSlot_h5(int session)
 {
     if (g_IsMultiplayer) {
@@ -71,7 +71,7 @@ void DME_OnConnectResult(NetConnInfo_h5* info)
         g_IsMultiplayer = 1;
         NetGame_InitLocalSlot(slot, info->session);
         D_00494178 = slot[0];
-        func_002EBBA0(info->session, slot);
+        NetGetPeerToPeerHostClientIndex(info->session, slot);
         if (slot[0] == LocalSlot_h5(D_005721A8) && Gui_GetScreenStack()) {
             GuiWidget_SendEvent(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x1E, 1, 0);
         }
@@ -102,7 +102,7 @@ extern unsigned char D_00572418[];  /* per-client "disconnected" flags */
 extern int g_DmeClientLevelInfo[];
 extern unsigned char D_005721C0;   /* this machine is the host */
 extern int snprintf(char* buf, int n, const char* fmt, ...);
-extern void func_0043B190(void* p);
+extern void cGenInfoObject_ctor(void* p);
 extern void func_0043ACB0(void* p, int id);
 }
 
@@ -123,7 +123,7 @@ extern "C" void DME_OnClientDisconnect(Pk429920* p)
     int slot;
     unsigned char ok;
     D_005723F0--;
-    func_002EBBA0(D_005721A8, &slot);
+    NetGetPeerToPeerHostClientIndex(D_005721A8, &slot);
     if (p->id == slot) {
         D_00572410 = 1;
         D_005721D8 = 1;
@@ -137,7 +137,7 @@ extern "C" void DME_OnClientDisconnect(Pk429920* p)
         else if (g_DmeClientLevelInfo[2] == -1) g_DmeClientLevelInfo[2] = 0;
         else if (g_DmeClientLevelInfo[1] == -1) g_DmeClientLevelInfo[1] = 0;
     }
-    func_0043B190(&buf);
+    cGenInfoObject_ctor(&buf);
     func_0043ACB0(&buf, p->id);
 }
 #undef D_005724B0 /* merge_units */

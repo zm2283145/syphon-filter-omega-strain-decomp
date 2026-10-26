@@ -14,11 +14,11 @@ V4_7D80* Quat_MulInPlace(V4_7D80* self, V4_7D80* o); /* gsynth: defined below */
 typedef struct { char pad[0xA0]; unsigned char dirty; } E2Ident;
 typedef struct { char pad[0x160]; int f160; } E2Root;
 extern E2Ident* Root_IdentityAccessor(E2Root*);
-extern void* func_001A7DE0(void*);
+extern void* cJointInfo_Limits_InJointSpace(void*);
 extern void Quat_Assign(void*, void*);
-extern int func_001A0280(E2Root*);
-extern void func_00132840(E2Quat*);
-extern void* func_001A73C0(E2Root*, E2Quat*);
+extern int cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void_2(E2Root*);
+extern void cQuaternion_ctor_void(E2Quat*);
+extern void* cSkaAnimAnchor_TreeNode_GetParentInverseRotation(E2Root*, E2Quat*);
 #if 0 /* merge_units */
 extern void Quat_MulInPlace(void*, void*);
 #endif /* merge_units */
@@ -27,10 +27,10 @@ extern void Quat_MulInPlace(void*, void*);
 extern void Root_PropagateChildren(E2Root*);
 void Root_SetWorldOrientationReset(E2Root* r, void* q) {
     E2Quat tmp;
-    Quat_Assign(func_001A7DE0((char*)Root_IdentityAccessor(r) + 0x50), q);
-    if (func_001A0280(r)) {
-        func_00132840(&tmp);
-        Quat_MulInPlace(func_001A7DE0((char*)Root_IdentityAccessor(r) + 0x50), func_001A73C0(r, &tmp));
+    Quat_Assign(cJointInfo_Limits_InJointSpace((char*)Root_IdentityAccessor(r) + 0x50), q);
+    if (cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void_2(r)) {
+        cQuaternion_ctor_void(&tmp);
+        Quat_MulInPlace(cJointInfo_Limits_InJointSpace((char*)Root_IdentityAccessor(r) + 0x50), cSkaAnimAnchor_TreeNode_GetParentInverseRotation(r, &tmp));
     }
     Root_IdentityAccessor(r)->dirty = 1;
     Root_PropagateChildren(r);

@@ -14,15 +14,15 @@
 
 #include "loose03_types.h"
 
-extern int func_003527A0(Member3527A0* dst, Member3527A0* src);
+extern int std_vector_pod_StatType_ctor(Member3527A0* dst, Member3527A0* src);
 
 /* Rec352320 copy constructor. */
-Rec352320* func_00352320(Rec352320* self, Rec352320* src) {
+Rec352320* MissionStats_StatsRequirement_ctor(Rec352320* self, Rec352320* src) {
     Member352320* body;
 
     self->unk00 = src->unk00;
     body = &self->unk04;
-    func_003527A0(&body->unk00, &src->unk04.unk00);
+    std_vector_pod_StatType_ctor(&body->unk00, &src->unk04.unk00);
     body->unk0C = src->unk04.unk0C;
     return self;
 }
@@ -36,7 +36,7 @@ Rec352320* func_00352320(Rec352320* self, Rec352320* src) {
 #include "types.h"
 #include "owned_buffer8_dtor.h"
 
-DEFINE_OWNED_BUFFER8_DTOR(func_00352380, D_004BACB8)
+DEFINE_OWNED_BUFFER8_DTOR(std_vector_pod_StatType_dtor, D_004BACB8)
 #pragma pop /* merge_units */
 /* merge_units: end func_00352380 */
 
@@ -51,21 +51,21 @@ extern "C" {
 extern char D_004BAC10[];
 extern char D_004BAC88[];
 extern char D_004BACC8[];
-void func_00352750(TStr* d, const TStr* s);
-void func_00351FC0(E2460* p, int f);
+void std_vector_pod_StatType_opAssign(TStr* d, const TStr* s);
+void MissionStats_StatsRequirement_dtor(E2460* p, int f);
 void* Mem_PlacementNew(unsigned int size, void* p);
 #if 0 /* merge_units */
-void func_00352320(void* d, const E2460* s);
+void MissionStats_StatsRequirement_ctor(void* d, const E2460* s);
 #endif /* merge_units */
-#define func_00352320(a0, a1) ((void)func_00352320((Rec352320 *)(a0), (Rec352320 *)(a1))) /* merge_units */
+#define MissionStats_StatsRequirement_ctor(a0, a1) ((void)MissionStats_StatsRequirement_ctor((Rec352320 *)(a0), (Rec352320 *)(a1))) /* merge_units */
 
-void func_00351F40(V2460* v);
-void func_003510F0(void* allocation, int pool, int destroy, char* file, int line);
+void std_vector_deleter_StatsRequirement_clear(V2460* v);
+void opDelete_StatsRequirementP_int_bool_charP_etc(void* allocation, int pool, int destroy, char* file, int line);
 }
 static inline const unsigned int& Min2460(const unsigned int& a, const unsigned int& b) { return b < a ? b : a; }
 static inline E2460* Alloc2460(unsigned int n) { AllocGuard g; return (E2460*)Mem_Alloc(0, n * sizeof(E2460), D_004BAC88, 0x5C); }
 
-extern "C" void func_00352460(V2460* v, const E2460* first, const E2460* last)
+extern "C" void std_vector_imp_StatsRequirement_do_assign(V2460* v, const E2460* first, const E2460* last)
 {
     unsigned int n = last - first;
     if (n <= v->cap) {
@@ -74,19 +74,19 @@ extern "C" void func_00352460(V2460* v, const E2460* first, const E2460* last)
         E2460* e = p + m;
         for (; p < e; p++, first++) {
             p->a = first->a;
-            func_00352750(&p->s, &first->s);
+            std_vector_pod_StatType_opAssign(&p->s, &first->s);
             p->c = first->c;
         }
         if (n < v->count) {
             E2460* e2 = v->data + v->count;
             for (; p < e2; p++)
-                func_00351FC0(p, -1);
+                MissionStats_StatsRequirement_dtor(p, -1);
             v->count = n;
         } else if (v->count < n) {
             for (; first != last; first++, p++) {
                 void* m = Mem_PlacementNew(sizeof(E2460), p);
                 if (m)
-                    func_00352320(m, first);
+                    MissionStats_StatsRequirement_ctor(m, first);
                 v->count++;
             }
         }
@@ -95,10 +95,10 @@ extern "C" void func_00352460(V2460* v, const E2460* first, const E2460* last)
             Libc_Fprintf(D_00489738->stream, D_004BAC10);
             Libc_Abort();
         }
-        func_00351F40(v);
+        std_vector_deleter_StatsRequirement_clear(v);
         if (v->data) {
             if (v->data)
-                func_003510F0(v->data, 0, 0, D_004BACC8, 100);
+                opDelete_StatsRequirementP_int_bool_charP_etc(v->data, 0, 0, D_004BACC8, 100);
             v->data = 0;
             v->cap = 0;
         }
@@ -112,12 +112,12 @@ extern "C" void func_00352460(V2460* v, const E2460* first, const E2460* last)
             for (; first != last; first++, p++) {
                 void* m = Mem_PlacementNew(sizeof(E2460), p);
                 if (m)
-                    func_00352320(m, first);
+                    MissionStats_StatsRequirement_ctor(m, first);
                 v->count++;
             }
         }
     }
 }
-#undef func_00352320 /* merge_units */
+#undef MissionStats_StatsRequirement_ctor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00352460 */

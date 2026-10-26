@@ -74,11 +74,11 @@ extern void cMessage_dtor(Msg_3E6910* m, int f);
 extern void String_CtorCStr_13B480(Str_3E6910* s, const char* c);
 extern void String_AssignString(Str_3E6910* d, Str_3E6910* s);
 extern void String_Dtor(Str_3E6910* s, int f);
-extern void func_001BFF20(It_3E6910* out, Str_3E6910* s);
-extern void func_001BFEE0(It_3E6910* out, Str_3E6910* s);
-extern int func_001BFE90(It_3E6910* a, It_3E6910* b);
-extern char* func_001BFED0(It_3E6910* a);
-extern void func_001BFEB0(It_3E6910* a);
+extern void std_basic_string_char_char_traits_char_begin(It_3E6910* out, Str_3E6910* s);
+extern void std_basic_string_char_char_traits_char_end(It_3E6910* out, Str_3E6910* s);
+extern int std_opNe_wrapiteratorR_wrapiteratorR(It_3E6910* a, It_3E6910* b);
+extern char* std_wrap_iterator_basic_string_char_charPtr_opMul(It_3E6910* a);
+extern void std_wrap_iterator_basic_string_char_charPtr_opInc(It_3E6910* a);
 extern char* String_CStr(Str_3E6910* s);
 
 static inline void KQ_Copy(void* dd, void* ss, int nn)
@@ -149,11 +149,11 @@ void Global_PerformAction_WithObject(Pt2_Tgt* t, char cat, Pt2_Hd* h, const char
         String_CtorCStr_13B480(&t1, name);
         String_AssignString(&s, &t1);
         String_Dtor(&t1, 0);
-        func_001BFF20(&it, &s);
-        func_001BFEE0(&end, &s);
-        while (func_001BFE90(&it, &end)) {
-            if (*func_001BFED0(&it) >= 'A' && *func_001BFED0(&it) <= 'Z') *func_001BFED0(&it) += 0x20;
-            func_001BFEB0(&it);
+        std_basic_string_char_char_traits_char_begin(&it, &s);
+        std_basic_string_char_char_traits_char_end(&end, &s);
+        while (std_opNe_wrapiteratorR_wrapiteratorR(&it, &end)) {
+            if (*std_wrap_iterator_basic_string_char_charPtr_opMul(&it) >= 'A' && *std_wrap_iterator_basic_string_char_charPtr_opMul(&it) <= 'Z') *std_wrap_iterator_basic_string_char_charPtr_opMul(&it) += 0x20;
+            std_wrap_iterator_basic_string_char_charPtr_opInc(&it);
         }
     } else {
         Str_3E6910 t2;

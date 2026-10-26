@@ -8,16 +8,16 @@
 #include "types.h"
 
 extern char D_004B35D0[];
-extern float func_00319C88(int, int, int);
+extern float ScalarLUT(int, int, int);
 
-float func_00317080(int a0) {
-    return func_00319C88((int)D_004B35D0, 64, a0);
+float UnQuanGainSC3(int a0) {
+    return ScalarLUT((int)D_004B35D0, 64, a0);
 }
 /* merge_units: end func_00317080 */
 
 /* merge_units: begin func_003170A8 */
 const float D_004B36D0[8] = { 0.0f, 0.142999992f, 0.28599999f, 0.429f, 0.571f, 0.714f, 0.857f, 1.0f };
-int func_003170A8(float a, float b, float c)
+int QuanPvSC3(float a, float b, float c)
 {
     int hi = 0, best = 0, i;
     float bd = c - ((float*)D_004B36D0)[0];

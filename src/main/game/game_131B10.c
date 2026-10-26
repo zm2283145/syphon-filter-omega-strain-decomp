@@ -9,7 +9,7 @@
 #pragma cplusplus on
 #include "vtable_base_dtor.h"
 
-DEFINE_VTABLE_BASE_DTOR(func_00131B10, D_004D9180, cMessage_dtor)
+DEFINE_VTABLE_BASE_DTOR(cLosRequestMessage_dtor, D_004D9180, cMessage_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00131B10 */
 
@@ -20,7 +20,7 @@ DEFINE_VTABLE_BASE_DTOR(func_00131B10, D_004D9180, cMessage_dtor)
 #include "trivial_dtor.h"
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_00131B70)
+DEFINE_TRIVIAL_DTOR(cCollisionFace_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00131B70 */
 
@@ -29,7 +29,7 @@ DEFINE_TRIVIAL_DTOR(func_00131B70)
 #pragma cplusplus on
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_00131BC0)
+DEFINE_TRIVIAL_DTOR(cCollisionModel_FaceProperties_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00131BC0 */
 

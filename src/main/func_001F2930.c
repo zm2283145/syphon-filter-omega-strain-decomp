@@ -1,4 +1,4 @@
 #pragma cplusplus on
 #include "types.h"
 #include "direct_base_dtor.h"
-DEFINE_DIRECT_BASE_DTOR(func_001F2930, func_0020C670)
+DEFINE_DIRECT_BASE_DTOR(std_vector_imp_cSkaTransBLEND_dtor, std_vector_deleter_cSkaTransBLEND_dtor)

@@ -8,6 +8,6 @@
 
 extern void cNode_v24(int);
 
-void func_00180B50(int a0) {
+void cGameCamera_SetRotation(int a0) {
     cNode_v24(a0);
 }

@@ -28,7 +28,7 @@ Arc_1457C0* Archive_Open(void* list, char* name, int a, int b);
 void Skf_Register(void* cache, Arc_1457C0* arc);
 void Appearance_LoadPartSortTable(void* cache, char* name);
 void* Mem_Alloc(int pool, int size, char* file, int line);
-void func_00146020(void* p);
+void std_vector_charPtr_ctor_void(void* p);
 void SklRegistry_LoadMission(char* a, char* b);
 void WeaponDb_LoadShellsArchive(Db_1457C0* self, Arc_1457C0* arc);
 void Hog_Register(void* hog, char* name, Arc_1457C0* arc, int z);
@@ -37,7 +37,7 @@ void MeshCache_RegisterNpcSkm(void* cache, Arc_1457C0* arc);
 void WeaponDb_Preload(Db_1457C0* self, int idx, char mode);
 void ManModel_ctor(Model_1457C0* m, char* name, int idx, int a, int b, int c, int d, int e);
 int String_CompareNoCase(char* a, char* b);
-void func_00146000(Vec_1457C0* v, char** s);
+void std_vector_charPtr_push_back_charPR(Vec_1457C0* v, char** s);
 int strlen(const char* s);
 char* strstr(char* a, char* b);
 void WeaponDb_LoadModel(Db_1457C0* self, char* name, void** out, int idx, int z, int cc, int x108);
@@ -139,7 +139,7 @@ void WeaponDb_PreloadLevel(Db_1457C0* self, PopReader* r, void* list)
         Skl_1457C0* s;
         { AllocGuard g; s = (Skl_1457C0*)Mem_Alloc(0, 16, D_0049B1D0, 736); }
         if (s) {
-            func_00146020(s);
+            std_vector_charPtr_ctor_void(s);
             s->ready = 1;
         }
         self->skl = (Vec_1457C0*)s;
@@ -209,7 +209,7 @@ void WeaponDb_PreloadLevel(Db_1457C0* self, PopReader* r, void* list)
             e->sklIdx = lk;
             if (lk >= self->skl->n) {
                 nm = e->skl;
-                func_00146000(self->skl, &nm);
+                std_vector_charPtr_push_back_charPR(self->skl, &nm);
             }
         } else {
             e->sklIdx = -1;

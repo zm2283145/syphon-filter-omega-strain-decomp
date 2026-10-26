@@ -7,13 +7,13 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern void func_001F2E10(void);
+extern void std_list_cSkaSwitchItemPtr_generic_iterator_1_opMul(void);
 
 /* Address of the data pointer. */
-char** func_001F2DF0(ObjVec* v) {
+char** std_vector_deleter_cSkaSwitchItem_data(ObjVec* v) {
     return &v->data;
 }
 
-void func_001F2E00(void) {
-    func_001F2E10();
+void cConstLListIterator_cSkaSwitchItemPtr_opMul(void) {
+    std_list_cSkaSwitchItemPtr_generic_iterator_1_opMul();
 }

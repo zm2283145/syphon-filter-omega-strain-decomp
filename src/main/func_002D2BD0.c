@@ -5,7 +5,7 @@ struct VO2D {
     virtual float GetD8(); /* +0xD8 */
 };
 static inline int Pos2D(float f) { int r = 0; if (f > 1e-6f) r = 1; return r; }
-extern "C" int func_002D2BD0(VO2D* o)
+extern "C" int cNetNPC_GetMoveMode(VO2D* o)
 { float f = o->GetD8(); int r; if (f > 1e-6f) r = 1; else r = 0; return r; }
 
 

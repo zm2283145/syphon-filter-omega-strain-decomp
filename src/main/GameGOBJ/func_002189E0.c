@@ -30,7 +30,7 @@ void Mtx_InvertRigid_13ECA0(Mtx* out, Mtx* in);
 Elem16* func_002181C0(void* v, int i);
 int func_002181D0(void* v);
 void PathObj_PropagateMovement(Obj* o, Mtx m, int f);
-void func_002189E0(Obj* self, int idx);
+void cPathedGOBJ_TeleportToPathPoint(Obj* self, int idx);
 }
 struct Obj {
     virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
@@ -120,7 +120,7 @@ static inline void MCopy(Mtx* d, Mtx* ss) { __int128 qa; __int128 qb; Mtx* s = s
  sq qb, 0x30(d)
  } }
 #pragma opt_common_subs off
-void func_002189E0(Obj* self, int idx) {
+void cPathedGOBJ_TeleportToPathPoint(Obj* self, int idx) {
     V4 oldPos;
     V4 pt;
     Mtx inv;

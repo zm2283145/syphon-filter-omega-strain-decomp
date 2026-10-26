@@ -23,7 +23,7 @@ extern "C" {
 extern float D_0049CFB8;
 /* float target declared before n: int/float args use separate registers, this order only changes arg scheduling */
 void AnimChannel_SetTarget(void* a, int idx, float target, unsigned int n, float dur, float damping);
-void func_0019D6C0(void* a, int idx, int n);
+void cSkaParams_SetSwitchNextGoalState(void* a, int idx, int n);
 void Actor_PrepareNeutralChannels(Actor* self, int b, int c, int d, int e);
 }
 static inline bool LnkIsA(Actor* l, Actor* a) { return ((Lnk*)l)->id == a->linkId; }
@@ -58,12 +58,12 @@ extern "C" void Actor_UpdatePairChannels(Actor* self)
         }
         {
             AnimBlk* blk = &self->blk;
-            func_0019D6C0(blk->anim, 4, mode);
+            cSkaParams_SetSwitchNextGoalState(blk->anim, 4, mode);
             AnimChannel_SetTarget(blk->anim, 14, t, 0, D_0049CFB8, 6.5f);
         }
         {
             AnimBlk* blk = &Link(self)->blk;
-            func_0019D6C0(blk->anim, 4, mode);
+            cSkaParams_SetSwitchNextGoalState(blk->anim, 4, mode);
             AnimChannel_SetTarget(blk->anim, 14, t, 0, D_0049CFB8, 6.5f);
         }
         unsigned char h = hold;

@@ -11,7 +11,7 @@
 #include "buf_holder_dtor.h"
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR(func_0040B920)
+DEFINE_BUF_HOLDER_DTOR(std_vector_cSystemPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0040B920 */
 
@@ -24,31 +24,31 @@ struct S40BA10 { int prio; A40BA10 a; A40BA10 b; };
 struct V40BA10;
 struct It40BA10 { S40BA10** p; };
 extern "C" {
-void func_0040BCA0(A40BA10* a);
-int func_001361D0(int* kind);
-void func_0040BC90(A40BA10* a, int v);
-void func_001C29F0(A40BA10* a);
+void std_vector_cSystemPtr_ctor(A40BA10* a);
+int cArrayCapacity_Int(int* kind);
+void std_vector_cSystemPtr_reserve(A40BA10* a, int v);
+void std_vector_cObjectId_ctor_void(A40BA10* a);
 V40BA10* GobjScope_GetList(void);
 void PtrVec_PushBack_40BC70(V40BA10* v, S40BA10** e);
-int func_0040BC60(V40BA10* v);
-void func_0040BC50(V40BA10* v, int n, S40BA10* const& fill);
-void func_0040BC10(It40BA10* out, V40BA10* v);
-void func_0040BC00(It40BA10* out, It40BA10* src);
-void func_0040BBD0(It40BA10* out, V40BA10* v);
-int func_0040BBB0(It40BA10* a, It40BA10* b);
-void func_0040BB90(It40BA10* it);
-S40BA10** func_0040BB80(It40BA10* it);
-S40BA10** func_0040BB70(V40BA10* v);
+int cArray_cBaseObjListPtr_Size(V40BA10* v);
+void cArray_cBaseObjListPtr_ResizeActual(V40BA10* v, int n, S40BA10* const& fill);
+void cArray_cBaseObjListPtr_RBegin(It40BA10* out, V40BA10* v);
+void cArray_cBaseObjListPtr_ReverseIterator_ctor(It40BA10* out, It40BA10* src);
+void cArray_cBaseObjListPtr_REnd(It40BA10* out, V40BA10* v);
+int cArray_cBaseObjListPtr_ReverseIterator_opNe(It40BA10* a, It40BA10* b);
+void cArray_cBaseObjListPtr_ReverseIterator_opInc(It40BA10* it);
+S40BA10** cArray_cBaseObjListPtr_ReverseIterator_opMul(It40BA10* it);
+S40BA10** cArray_cBaseObjListPtr_Front(V40BA10* v);
 }
 static inline void InitA40BA10(A40BA10* a, int* kind)
 {
-    func_0040BCA0(a);
-    func_0040BC90(a, func_001361D0(kind));
+    std_vector_cSystemPtr_ctor(a);
+    std_vector_cSystemPtr_reserve(a, cArrayCapacity_Int(kind));
     a->flag = 0;
 }
 static inline void InitB40BA10(A40BA10* b)
 {
-    func_001C29F0(b);
+    std_vector_cObjectId_ctor_void(b);
     b->flag = 1;
 }
 static inline void PushFront40BA10(V40BA10* v, S40BA10** x)
@@ -56,18 +56,18 @@ static inline void PushFront40BA10(V40BA10* v, S40BA10** x)
     It40BA10 src;
     It40BA10 dst;
     It40BA10 end;
-    func_0040BC50(v, func_0040BC60(v) + 1, 0);
-    func_0040BC10(&src, v);
-    func_0040BC00(&dst, &src);
-    func_0040BBD0(&end, v);
-    if (func_0040BBB0(&src, &end))
-        func_0040BB90(&src);
-    while (func_0040BBB0(&src, &end)) {
-        *func_0040BB80(&dst) = *func_0040BB80(&src);
-        func_0040BB90(&src);
-        func_0040BB90(&dst);
+    cArray_cBaseObjListPtr_ResizeActual(v, cArray_cBaseObjListPtr_Size(v) + 1, 0);
+    cArray_cBaseObjListPtr_RBegin(&src, v);
+    cArray_cBaseObjListPtr_ReverseIterator_ctor(&dst, &src);
+    cArray_cBaseObjListPtr_REnd(&end, v);
+    if (cArray_cBaseObjListPtr_ReverseIterator_opNe(&src, &end))
+        cArray_cBaseObjListPtr_ReverseIterator_opInc(&src);
+    while (cArray_cBaseObjListPtr_ReverseIterator_opNe(&src, &end)) {
+        *cArray_cBaseObjListPtr_ReverseIterator_opMul(&dst) = *cArray_cBaseObjListPtr_ReverseIterator_opMul(&src);
+        cArray_cBaseObjListPtr_ReverseIterator_opInc(&src);
+        cArray_cBaseObjListPtr_ReverseIterator_opInc(&dst);
     }
-    *func_0040BB70(v) = *x;
+    *cArray_cBaseObjListPtr_Front(v) = *x;
 }
 extern "C" S40BA10* GobjScopeBase_Ctor(S40BA10* self, int kind, int prio)
 {

@@ -57,7 +57,7 @@ class O_4C70 { public: int pad0; virtual void Destroy(int f); };
 struct S_4C70 { void* snd; char pad[0xD0]; O_4C70* obj; void* node; };
 extern "C" {
 extern char D_0049B1D0[];
-void func_00266470(void* p, int f);
+void cAirTaser_dtor(void* p, int f);
 #if 0 /* merge_units */
 void WeaponInv_StopLoopSound(S_4C70* self, int slot);
 #endif /* merge_units */
@@ -74,7 +74,7 @@ extern "C" S_4C70* WeaponInv_Dtor(S_4C70* self, short del)
         O_4C70* o;
         if (s) {
             AllocGuard g;
-            func_00266470(s, -1);
+            cAirTaser_dtor(s, -1);
             Mem_Free(0, s, D_0049B1D0, 0x4CE);
         }
         WeaponInv_StopLoopSound(self, 0);

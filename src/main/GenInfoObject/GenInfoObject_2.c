@@ -39,7 +39,7 @@ static inline int Get43AA40(int a) {
     }
     return 0;
 }
-int func_0043AA40(int d0, int *arg1) {
+int cGenInfoObject_IsOwner(int d0, int *arg1) {
     E43AA40 *e;
     E43AA40 *t = D_00583888;
     int key = *arg1;

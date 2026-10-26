@@ -40,9 +40,9 @@ struct It_9D40 {
     It_9D40& operator++() { p++; return *this; }
 };
 static inline bool HEq(const It_9D40* a, const It_9D40* b) { Node_9D40* bp = b->p; return a->p == bp; }
-extern "C" Node_9D40** func_001D5E80(Coll_9D40*);
-static inline It_9D40 HBegin(Coll_9D40* c) { It_9D40 r(*func_001D5E80(c)); return r; }
-static inline It_9D40 HEnd(Coll_9D40* c) { It_9D40 r(*func_001D5E80(c) + c->count); return r; }
+extern "C" Node_9D40** std_vector_deleter_cBone_data_void_2(Coll_9D40*);
+static inline It_9D40 HBegin(Coll_9D40* c) { It_9D40 r(*std_vector_deleter_cBone_data_void_2(c)); return r; }
+static inline It_9D40 HEnd(Coll_9D40* c) { It_9D40 r(*std_vector_deleter_cBone_data_void_2(c) + c->count); return r; }
 static inline void Mul_9D40(void* d, void* a, void* b) {
     __asm__ volatile(
         "lqc2 $vf4, 0x0(%1)\n"
@@ -106,11 +106,11 @@ extern "C" void HitVolumes_NodeMatrices(HitVolumes_9D40* self, Mtx_9D40* out, Mt
 #include "loose03_types.h"
 
 extern int SkelNodes_Construct(SkelNodes*);
-extern void func_003A9450(SkelNodes*);
+extern void cSkeleton_DestroyBones(SkelNodes*);
 
-void func_003A9F00(SkelNodes* self) {
+void cSkeleton_Deactivate(SkelNodes* self) {
     self->unk14 = 0;
-    func_003A9450(self);
+    cSkeleton_DestroyBones(self);
 }
 
 /* Sets unk14 then constructs the node set. */
@@ -173,12 +173,12 @@ typedef struct { char* name; int count; int a, b; } N3A9;
 extern "C" {
 extern void FileMan_FindMember(void*);
 extern void FileMan_LoadMemberSync(void*, int*, int);
-extern void func_0036DEC0(void*);
+extern void cFileMan_Close(void*);
 extern void* Mem_Alloc(int, int, char*, int);
 extern char D_004BCCF8[];
 extern unsigned int strlen(const char*);
 extern void String_Copy(char*, char*);
-extern void func_003AA130(void*, N3A9**);
+extern void std_list_cSkeletonDataBankEntryPtr_push_back(void*, N3A9**);
 }
 extern "C" void Skel_ReadFile(int* out, void* list, char* name, void* file) {
     int n[1];
@@ -188,7 +188,7 @@ extern "C" void Skel_ReadFile(int* out, void* list, char* name, void* file) {
     n[0] = 0;
     FileMan_FindMember(file);
     FileMan_LoadMemberSync(file, n, 0);
-    func_0036DEC0(file);
+    cFileMan_Close(file);
     cnt = n[0];
     {
         AllocGuard g;
@@ -206,7 +206,7 @@ extern "C" void Skel_ReadFile(int* out, void* list, char* name, void* file) {
         String_Copy(node->name, name);
     }
     tmp[0] = node;
-    func_003AA130(list, tmp);
+    std_list_cSkeletonDataBankEntryPtr_push_back(list, tmp);
     *out = cnt;
 }
 #pragma pop /* merge_units */

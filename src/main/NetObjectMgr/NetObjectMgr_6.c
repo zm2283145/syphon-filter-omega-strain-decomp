@@ -14,14 +14,14 @@
 
 #include "types.h"
 
-void* func_004307B0(char* self) {
+void* std_tree_pair_int_value_compare_node_alloc_void_2(char* self) {
     return self + 4;
 }
 
-void func_004307C0(void) {
+void cAllocator_pair_int_destroy_pairP_4(void) {
 }
 
-void* func_004307D0(void* self) {
+void* std_tree_pair_int_value_compare_alloc_void_2(void* self) {
     return self;
 }
 #pragma pop /* merge_units */
@@ -39,18 +39,18 @@ typedef struct Node_7E0 {
 void* func_00430A40(void* t);
 void* func_00430A20(void* t);
 void func_00430A30(void* a, int* v);
-void func_00430A10(void* a, Node_7E0* n, int count);
+void std_allocator_node_deallocate(void* a, Node_7E0* n, int count);
 void operator_delete(void* p);
-void func_004307E0(void* t, Node_7E0* n);
+void std_tree_pair_short_value_compare_destroy(void* t, Node_7E0* n);
 
 static inline void Leaf_7E0(void* t, Node_7E0* g)
 {
     if (g->left)
-        func_004307E0(t, g->left);
+        std_tree_pair_short_value_compare_destroy(t, g->left);
     if (g->right)
-        func_004307E0(t, g->right);
+        std_tree_pair_short_value_compare_destroy(t, g->right);
     func_00430A30(func_00430A40(t), &g->val);
-    func_00430A10(func_00430A20(t), g, 1);
+    std_allocator_node_deallocate(func_00430A20(t), g, 1);
 }
 
 static inline void Mid_7E0(void* t, Node_7E0* c)
@@ -65,7 +65,7 @@ static inline void Mid_7E0(void* t, Node_7E0* c)
     operator_delete(c);
 }
 
-void func_004307E0(void* t, Node_7E0* n)
+void std_tree_pair_short_value_compare_destroy(void* t, Node_7E0* n)
 {
     Node_7E0* c;
     if ((c = n->left) != 0)

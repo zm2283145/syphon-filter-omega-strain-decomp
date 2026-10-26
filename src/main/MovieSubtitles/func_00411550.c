@@ -10,7 +10,7 @@
 extern void Renderer_RefreshCamera(SubtitleEntry* entry);
 extern float Renderer_UpdateCameraMatrices(SubtitleOwner* owner);
 
-char* func_00411550(SubtitleOwner* owner) {
+char* XLib_GetCompMat(SubtitleOwner* owner) {
     Renderer_UpdateCameraMatrices(owner);
     return owner->unkEC0;
 }

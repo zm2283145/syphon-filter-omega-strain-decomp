@@ -10,7 +10,7 @@ int SetVTLBRefillHandler(int, int *);
 unsigned int D_00486598[2] = { 0x0, 0x0 };
 extern int func_00115E40;
 
-int func_001158F8(int arg0) {
+int SetTLBHandler(int arg0) {
     (*(int*)D_00486598) = arg0;
     SetVTLBRefillHandler(1, &func_00115E40);
     SetVTLBRefillHandler(2, &func_00115E40);
@@ -29,7 +29,7 @@ extern int SetVTLBRefillHandler(int, void *);
 
 extern int SetVCommonHandler(int, void *);
 
-unsigned int func_00115958(int n, int h)
+unsigned int SetDebugHandler(int n, int h)
 {
     int old;
     if ((unsigned int)(n - 1) >= 13) return 0xFFFFFFFF;

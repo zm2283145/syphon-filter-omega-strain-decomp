@@ -1,5 +1,5 @@
 typedef struct { unsigned int sec; unsigned int usec; } ScfTime;
-int func_00306440(ScfTime *tv, unsigned int *out)
+int rt_time_timestamp_to_usecs(ScfTime *tv, unsigned int *out)
 {
     int ret = 2;
     if (tv == 0) return ret;

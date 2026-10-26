@@ -1,11 +1,11 @@
 #include "types.h"
 
-extern void func_0020BF60(void);
+extern void std_copy_backward_cSkaSwitchItem_copy_backward(void);
 
-/* Calls func_0020BF60. */
+/* Calls std_copy_backward_cSkaSwitchItem_copy_backward. */
 #pragma optimization_level 1
-void func_0020BF40(void)
+void std_copy_backward_cSkaSwitchItemP_cSkaSwitchItemP_cSkaSwitchItemP(void)
 {
-    func_0020BF60();
+    std_copy_backward_cSkaSwitchItem_copy_backward();
 }
 #pragma optimization_level reset

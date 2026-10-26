@@ -1,9 +1,9 @@
 #include "types.h"
 #pragma optimization_level 1
 
-extern void func_001F3280(void);
+extern void std_list_imp_voidPtr_push_back(void);
 
-/* Forwards to func_001F3280. */
-void func_001F43D0(void) {
-    func_001F3280();
+/* Forwards to std_list_imp_voidPtr_push_back. */
+void std_list_cSkaBlendSequenceItemPtr_push_back(void) {
+    std_list_imp_voidPtr_push_back();
 }

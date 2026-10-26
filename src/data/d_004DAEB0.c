@@ -3,13 +3,13 @@
 extern void BlastEvent_Destruct();
 extern void Blast_DamageCall();
 extern void Event_PackHeader();
+extern void cCBData_IsReferencing();
 extern void cElevatorNotice_dtor();
 extern void cElevatorNotice_v01();
 extern void cElevatorNotice_v03();
-extern void func_00177E20();
 
 void *D_004DAEB0[8] = {
-    0, 0, &BlastEvent_Destruct, &func_00177E20,
+    0, 0, &BlastEvent_Destruct, &cCBData_IsReferencing,
     &Blast_DamageCall, 0, 0, 0,
 };
 

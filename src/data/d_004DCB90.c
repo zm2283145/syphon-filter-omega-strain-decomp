@@ -6,23 +6,23 @@ extern void cAIGOBJMsg_v02();
 extern void cAIPickupableAwarenessMsg_dtor();
 extern void cAIPickupableAwarenessMsg_v01();
 extern void cAIPickupableAwarenessMsg_v03();
+extern void cMap_TargetRemoved();
+extern void cMap_Update();
+extern void cMap_dtor();
 extern void cNetLocalTimerMsg_dtor();
 extern void cNetLocalTimerMsg_v01();
 extern void cNetLocalTimerMsg_v04();
 extern void cNetLocalTimerMsg_v05();
-extern void func_0026C7E0();
-extern void func_0026C830();
-extern void func_0026DDC0();
-extern void func_002823E0();
+extern void cNetMsg_Pack();
 
 void *D_004DCB90[8] = {
     0, 0, &cNetLocalTimerMsg_dtor, &cNetLocalTimerMsg_v01,
-    &func_002823E0, &Message_GetScriptTypeKey, &cNetLocalTimerMsg_v04, &cNetLocalTimerMsg_v05,
+    &cNetMsg_Pack, &Message_GetScriptTypeKey, &cNetLocalTimerMsg_v04, &cNetLocalTimerMsg_v05,
 };
 
 void *D_004DCBB0[8] = {
-    0, 0, &func_0026C7E0, &HudMap_OnTargetAdded,
-    &func_0026C830, &func_0026DDC0, 0, 0,
+    0, 0, &cMap_Update, &HudMap_OnTargetAdded,
+    &cMap_TargetRemoved, &cMap_dtor, 0, 0,
 };
 
 void *D_004DCBD0[8] = {

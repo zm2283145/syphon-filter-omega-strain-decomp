@@ -5,15 +5,15 @@
 
 #include "types.h"
 
-void func_00232EE0(Iter* out, Tree* t) {
+void std_list_cElementPtr_end_void(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-Word* func_00232EF0(Word* dst, Word* src) {
+Word* cLListIterator_cElementPtr_ctor_listR(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_00232F00(Iter* out, PtrVec* v) {
+void std_list_cElementPtr_begin_void(Iter* out, PtrVec* v) {
     out->p = v->data;
 }

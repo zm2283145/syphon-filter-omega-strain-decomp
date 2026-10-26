@@ -3,10 +3,10 @@
 #define REGI(a) (*(volatile int *)(a))
 extern int DIntr(void);
 extern void EIntr(void);
-extern void func_00107718(void *, unsigned int);
-extern void func_0010B488(int, int *);
+extern void _sendIpuCommand(void *, unsigned int);
+extern void _dispatchMpegCallback(int, int *);
 
-void func_00109788(void *m, unsigned int addr, int n)
+void _doCSC(void *m, unsigned int addr, int n)
 {
     int buf[8];
     int old;
@@ -19,9 +19,9 @@ void func_00109788(void *m, unsigned int addr, int n)
     REG(0x1000B000) = 0x100;
     if (old)
         EIntr();
-    func_00107718(m, n | 0x70000000);
+    _sendIpuCommand(m, n | 0x70000000);
     buf[0] = 4;
-    func_0010B488(F(m, 0x870, int), buf);
+    _dispatchMpegCallback(F(m, 0x870, int), buf);
     while ((REG(0x1000B000) >> 8) & 1)
         ;
     while (REGI(0x10002010) < 0)

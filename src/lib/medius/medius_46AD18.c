@@ -11,7 +11,7 @@ extern int D_00598650;
 unsigned int D_00497D90[1] = { 0x0 };
 extern int Medius_TerminateString(char *, int);
 extern int Net_SendLocked(int, int, int, int, int, int, void *);
-int func_0046AD18(char *a, int b)
+int MediusClearGameListFilter(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -25,7 +25,7 @@ int func_0046AD18(char *a, int b)
 /* merge_units: begin func_0046ADB8 */
 extern int D_00598658;
 int D_00497D94 = 0;
-int func_0046ADB8(char *a, int b)
+int MediusGetGameListFilter(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);

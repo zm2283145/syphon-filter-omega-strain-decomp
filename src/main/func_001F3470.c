@@ -7,26 +7,26 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern int func_001F3480(ObjVec*, int);
-extern char* func_001F34D0(ObjVec*);
-extern char** func_001F3510(ObjVec*);
+extern int std_vector_imp_cSkaTransBLEND_push_back(ObjVec*, int);
+extern char* std_vector_imp_cSkaTransBLEND_end_void(ObjVec*);
+extern char** std_vector_deleter_cSkaTransBLEND_data_void(ObjVec*);
 extern int Vector_Insert_20A910(ObjVec*, char*, int, int);
 
-void func_001F3470(ObjVec* v, int value) {
-    func_001F3480(v, value);
+void std_vector_cSkaTransBLEND_push_back(ObjVec* v, int value) {
+    std_vector_imp_cSkaTransBLEND_push_back(v, value);
 }
 
 /* Append one element at the end. */
-int func_001F3480(ObjVec* v, int value) {
-    return Vector_Insert_20A910(v, func_001F34D0(v), 1, value);
+int std_vector_imp_cSkaTransBLEND_push_back(ObjVec* v, int value) {
+    return Vector_Insert_20A910(v, std_vector_imp_cSkaTransBLEND_end_void(v), 1, value);
 }
 
 /* End pointer for 36-byte elements. */
-char* func_001F34D0(ObjVec* v) {
+char* std_vector_imp_cSkaTransBLEND_end_void(ObjVec* v) {
     char** data;
     int count;
 
-    data = func_001F3510(v);
+    data = std_vector_deleter_cSkaTransBLEND_data_void(v);
     count = v->count;
     return *data + count * 36;
 }

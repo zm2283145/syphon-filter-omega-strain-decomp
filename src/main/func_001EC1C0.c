@@ -1,4 +1,4 @@
-/* func_001EC1C0: ctor; function-local static identity placement D_00497F00 (guard D_004E1D80) copied via VecPair_Copy then lq/sq into place. */
+/* cHumanCollisionRoutine_cFinalLedgeSearchInfo_ctor: ctor; function-local static identity placement D_00497F00 (guard D_004E1D80) copied via VecPair_Copy then lq/sq into place. */
 #pragma cplusplus on
 #pragma exceptions off
 struct V4c {
@@ -36,7 +36,7 @@ static inline const Pair& IdentPl(void)
     }
     return D_00497F00;
 }
-extern "C" T* func_001EC1C0(T* p)
+extern "C" T* cHumanCollisionRoutine_cFinalLedgeSearchInfo_ctor(T* p)
 {
     int i;
     p->b0 = 0;

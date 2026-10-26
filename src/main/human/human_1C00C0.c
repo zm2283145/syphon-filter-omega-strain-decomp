@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-void func_001C00C0(Iter* out, Tree* t) {
+void std_tree_pair_cString_value_compare_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 #pragma pop /* merge_units */
@@ -24,14 +24,14 @@ void func_001C00C0(Iter* out, Tree* t) {
 #pragma push /* merge_units */
 typedef struct { int w[3]; } String;
 extern void String_CopyCtor(String* dst, String* src);
-extern void func_001C4300(String* s, int arg);
+extern void std_basic_string_char_char_traits_char_append_charP(String* s, int arg);
 extern void String_Dtor(String* s, int flags);
 /* Copies src, transforms the copy with arg, and assigns it to dst. */
-int func_001C00D0(String* dst, String* src, int arg)
+int opAdd_cStringR_charP(String* dst, String* src, int arg)
 {
     String tmp;
     String_CopyCtor(&tmp, src);
-    func_001C4300(&tmp, arg);
+    std_basic_string_char_char_traits_char_append_charP(&tmp, arg);
     String_CopyCtor(dst, &tmp);
     String_Dtor(&tmp, 0);
     return 0;

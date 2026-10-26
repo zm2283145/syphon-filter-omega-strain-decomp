@@ -8,14 +8,14 @@ struct Pool3F98 { char pad[0x164]; int heap; };
 struct FEnt3F98 { int d[0x27]; };
 extern "C" {
 extern char D_004BE1F0[];
-void* func_003F9520(void*);
-void* func_003F95E0(Node3F98** out, void* v);
-void* func_003F95F0(List3F98*);
+void* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_11(void*);
+void* std_list_deleter_cHogFile_generic_iterator_ctor(Node3F98** out, void* v);
+void* std_list_deleter_cHogFile_tail(List3F98*);
 int String_CompareNoCase(void*, char*);
-void func_0036D630(void*);
-void func_0036D5D0(void*, int);
-void func_003F9B30(Node3F98** out, List3F98* l, Node3F98** pos, Elem3F98* v);
-void* func_0036E540(void* entry, const char* name, void* handle, int extra);
+void cHogFile_ctor(void*);
+void cHogFile_dtor(void*, int);
+void std_list_deleter_cHogFile_insert(Node3F98** out, List3F98* l, Node3F98** pos, Elem3F98* v);
+void* cFileMan_ctor_charP_cHogFileR_bool(void* entry, const char* name, void* handle, int extra);
 int FileMan_FindMember(void*);
 int FileMan_GetSize(void*);
 void* Mem_Alloc(int pool, int size, char* file, int line);
@@ -23,9 +23,9 @@ int FileMan_LoadMemberSync(void*, char**, int);
 void Hog_OpenInMemory(void*, char*, char*, int);
 void* FileMan_Release(void*, int);
 }
-static inline Node3F98* EndN(List3F98* l) { Node3F98* r; func_003F95E0(&r, func_003F95F0(l)); return r; }
-static inline void Ins(List3F98* l, Elem3F98* v) { Node3F98* ins; Node3F98* pos; pos = &l->sentinel; func_003F9B30(&ins, l, &pos, v); }
-extern "C" Elem3F98* func_003F9850(List3F98* self, char* name, Pool3F98* pool)
+static inline Node3F98* EndN(List3F98* l) { Node3F98* r; std_list_deleter_cHogFile_generic_iterator_ctor(&r, std_list_deleter_cHogFile_tail(l)); return r; }
+static inline void Ins(List3F98* l, Elem3F98* v) { Node3F98* ins; Node3F98* pos; pos = &l->sentinel; std_list_deleter_cHogFile_insert(&ins, l, &pos, v); }
+extern "C" Elem3F98* cHogList_OpenFromHog(List3F98* self, char* name, Pool3F98* pool)
 {
     char* buf;
     int heap;
@@ -33,18 +33,18 @@ extern "C" Elem3F98* func_003F9850(List3F98* self, char* name, Pool3F98* pool)
     Elem3F98 tmp;
     Node3F98* n;
     Elem3F98* el;
-    n = ((Node3F98*)func_003F9520(&self->sentinel))->next;
+    n = ((Node3F98*)details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_11(&self->sentinel))->next;
     while (n != EndN(self)) {
         if (String_CompareNoCase(&n->data, name) == 0 && n->data.loaded) {
             return &n->data;
         }
         n = n->next;
     }
-    func_0036D630(&tmp);
+    cHogFile_ctor(&tmp);
     Ins(self, &tmp);
-    func_0036D5D0(&tmp, -1);
+    cHogFile_dtor(&tmp, -1);
     el = &self->sentinel.prev->data;
-    func_0036E540(&e, name, pool, 0);
+    cFileMan_ctor_charP_cHogFileR_bool(&e, name, pool, 0);
     FileMan_FindMember(&e);
     heap = pool->heap;
     {

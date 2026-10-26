@@ -142,7 +142,7 @@ ret:;
 }
 
 /* Command 8, no arguments (role unknown). */
-int func_003A8240(void) {
+int snd_ResolveBankXREFS(void) {
     return snd_SendIOPCommandNoWait(8, 0, 0, 0, 0);
 }
 #undef snd_SendIOPCommandNoWait /* merge_units */

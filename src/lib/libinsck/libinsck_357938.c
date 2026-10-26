@@ -7,15 +7,15 @@
 /* merge_units: begin func_00357938 */
 extern int sprintf(char* buf, const char* fmt, ...);
 extern int* func_003583F0();
-extern int func_00357D40();
+extern int sceInsockGetErrnoMode();
 extern int* Newlib_Errno();
 extern void String_Copy(char* d, char* s);
-char* func_00357938(unsigned char* a, char* dst, unsigned int size)
+char* inet_ntop4(unsigned char* a, char* dst, unsigned int size)
 {
     char buf[16];
     if (size < (unsigned int)sprintf(buf, "%u.%u.%u.%u", a[0], a[1], a[2], a[3])) {
         *func_003583F0() = 0x1C;
-        if (func_00357D40()) {
+        if (sceInsockGetErrnoMode()) {
             int* e = Newlib_Errno();
             *e = *func_003583F0();
         }
@@ -29,9 +29,9 @@ char* func_00357938(unsigned char* a, char* dst, unsigned int size)
 /* merge_units: begin func_003579D8 */
 extern void* memset(void*, int, unsigned int);
 extern unsigned int strlen(const char*);
-extern char* func_00357938(unsigned char* a, char* dst, unsigned int size);
+extern char* inet_ntop4(unsigned char* a, char* dst, unsigned int size);
 
-char* func_003579D8(unsigned char* src, char* dst, unsigned int size)
+char* inet_ntop6(unsigned char* src, char* dst, unsigned int size)
 {
     char tmp[sizeof "ffff:ffff:ffff:ffff:ffff:ffff:255.255.255.255"], *tp;
     struct { int base, len; } best, cur;
@@ -75,7 +75,7 @@ char* func_003579D8(unsigned char* src, char* dst, unsigned int size)
             *tp++ = ':';
         if (i == 6 && best.base == 0 &&
             (best.len == 6 || (best.len == 5 && words[5] == 0xffff))) {
-            if (!func_00357938(src + 12, tp, sizeof tmp - (tp - tmp)))
+            if (!inet_ntop4(src + 12, tp, sizeof tmp - (tp - tmp)))
                 return 0;
             tp += strlen(tp);
             break;
@@ -88,7 +88,7 @@ char* func_003579D8(unsigned char* src, char* dst, unsigned int size)
 
     if ((unsigned int)(tp - tmp) > size) {
         *func_003583F0() = 0x1C;
-        if (func_00357D40()) {
+        if (sceInsockGetErrnoMode()) {
             int* e = Newlib_Errno();
             *e = *func_003583F0();
         }

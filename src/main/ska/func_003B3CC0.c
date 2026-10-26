@@ -36,8 +36,8 @@ struct Item { void* vt; unsigned char b4; };
 struct NMap { char pad[0x34]; int reg; };
 extern "C" int NodeNameMap_Find(NMap* m, void* name);
 extern "C" SkaClip** Registry_At(int* reg, int idx);
-extern "C" SkaClip* func_003B2C50(SkaClip* d, void* c, int mode);
-extern "C" SkaClip* func_003B3CC0(SkaClip* self, void* name, NMap* m, int mode)
+extern "C" SkaClip* cSkaAnim_ctor_cSkaAnimR_eModifier(SkaClip* d, void* c, int mode);
+extern "C" SkaClip* cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_eModifier(SkaClip* self, void* name, NMap* m, int mode)
 {
     SkaClip* c;
     Base(self, 0, Unit());
@@ -48,7 +48,7 @@ extern "C" SkaClip* func_003B3CC0(SkaClip* self, void* name, NMap* m, int mode)
     c = *Registry_At(&m->reg, NodeNameMap_Find(m, name));
     if (!((Item*)c)->b4) {
         SkaClip t;
-        func_003B2C50(&t, c, mode);
+        cSkaAnim_ctor_cSkaAnimR_eModifier(&t, c, mode);
         *self = t;
     }
     return self;

@@ -769,7 +769,7 @@ extern void _free_r(reent_X* r, void* p);
 #define HASLB(fp) ((fp)->_lb_base != 0)
 #define FREELB(fp) { _free_r((fp)->_data, (char *)(fp)->_lb_base); (fp)->_lb_base = 0; }
 extern int vfprintf(FILE_X* fp, const char* fmt, va_list ap);
-int func_0012EAA8(char *str, const char *fmt, va_list ap)
+int Libc_Vsprintf(char *str, const char *fmt, va_list ap)
 {
   int ret;
   FILE_X f;
@@ -785,7 +785,7 @@ int func_0012EAA8(char *str, const char *fmt, va_list ap)
 /* merge_units: end func_0012EAA8 */
 
 /* merge_units: begin func_0012EB00 */
-int func_0012EB00(reent_X *ptr, char *str, const char *fmt, va_list ap)
+int Newlib_VsprintfR(reent_X *ptr, char *str, const char *fmt, va_list ap)
 {
   int ret;
   FILE_X f;

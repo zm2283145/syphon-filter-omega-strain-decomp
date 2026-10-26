@@ -11,11 +11,11 @@ extern char D_00485E50[];
 void * const D_004932C0[8] = { (void*)D_00477AF0, (void*)D_0047BA70, (void*)D_0047DBA0, (void*)D_00482110, (void*)D_00482BC0, (void*)0x0, (void*)0x0, (void*)0x0 };
 void * const D_004932E0[8] = { (void*)D_0047BA70, (void*)D_0047DB00, (void*)D_00481030, (void*)D_00482BC0, (void*)D_00485E50, (void*)0x0, (void*)0x0, (void*)0x0 };
 extern char D_00537F80[];
-extern void func_00375A30(void* dma, int n, int start, int end);
+extern void cDmaMan_InsertChain(void* dma, int n, int start, int end);
 void Vu1_UploadMicrocode(D2_Vu1Ctx* c, int slot) {
     int p = c->prog[slot];
     if (p != c->cur) {
-        func_00375A30(D_00537F80, 1, ((int*)D_004932C0)[p], ((int*)D_004932E0)[p]);
+        cDmaMan_InsertChain(D_00537F80, 1, ((int*)D_004932C0)[p], ((int*)D_004932E0)[p]);
         c->cur = p;
     }
     c->uploads++;

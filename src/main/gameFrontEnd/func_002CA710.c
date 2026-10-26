@@ -1,7 +1,7 @@
 extern int DME_GetLobby(void);
 extern int Iop_LoadNetModules(int a);
-extern void func_00271280(int a);
-extern void func_002EA4F0(void* a, void* b);
+extern void sceSifMInitRpc(int a);
+extern void NetRegisterMallocFreeCallbacks(void* a, void* b);
 extern void DME_CreateLobby(void);
 extern char* GameIni_GetString(int id);
 extern int sprintf(char* buf, const char* fmt, ...);
@@ -9,14 +9,14 @@ extern char* Libc_Strcat(char* d, const char* s);
 extern unsigned int strlen(const char* s);
 extern char* Agent_GetSelected(void* a, int idx);
 extern void String_Copy(char* d, const char* s);
-extern void func_00453C70(char* o, int a, void* info, char* text, int len, int flag);
+extern void SFOLobby_Init(char* o, int a, void* info, char* text, int len, int flag);
 extern void func_00442670(char* o, int v);
 extern unsigned char Loc_GetLanguage(void);
-extern void func_00452F60(char* o, void* cb);
+extern void SFOLobby_SetStatsCallback(char* o, void* cb);
 extern void func_002C7FC0(void* self);
 extern int Sfo_Malloc();
 extern int sfo_malloc_2CA9B0();
-extern int func_002CC200();
+extern int cGameFrontEnd_LobbyStatsCallback();
 
 typedef struct {
     int v[10];
@@ -56,13 +56,13 @@ int FrontEnd_StartOnline(void* self)
     if (D_0048C250) {
         if (Iop_LoadNetModules(0)) {
             D_0051EEA8 = 1;
-            func_00271280(0);
+            sceSifMInitRpc(0);
             D_0048C250 = 0;
         } else {
             return 0;
         }
     }
-    func_002EA4F0(Sfo_Malloc, sfo_malloc_2CA9B0);
+    NetRegisterMallocFreeCallbacks(Sfo_Malloc, sfo_malloc_2CA9B0);
     DME_CreateLobby();
     o = (char*)DME_GetLobby();
     p = ids.v;
@@ -86,7 +86,7 @@ int FrontEnd_StartOnline(void* self)
         }
     }
     String_Copy(info.name2, ag + 0x80);
-    func_00453C70(o, 0, &info, text, len, 1);
+    SFOLobby_Init(o, 0, &info, text, len, 1);
     {
         int* q = g_OnlineMissionTable;
         for (j = 0; j < 9; j++, q++) {
@@ -107,7 +107,7 @@ int FrontEnd_StartOnline(void* self)
         }
         *(int*)(o + 0x26A4) = lang;
     }
-    func_00452F60(o, func_002CC200);
+    SFOLobby_SetStatsCallback(o, cGameFrontEnd_LobbyStatsCallback);
     func_002C7FC0(self);
     return 1;
 }

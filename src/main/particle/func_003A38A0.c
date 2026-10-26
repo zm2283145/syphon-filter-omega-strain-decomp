@@ -5,7 +5,7 @@
 
 /* Deleting destructor: restore the vtable chain, optionally delete. */
 extern void * const D_004DFAA0[];
-extern "C" VtableChainObject* func_003A38A0(VtableChainObject* self,
+extern "C" VtableChainObject* cParticleDefinition_dtor(VtableChainObject* self,
                                    short deleteFlag)
 {
     if (self) {
@@ -15,4 +15,4 @@ extern "C" VtableChainObject* func_003A38A0(VtableChainObject* self,
     }
     return self;
 }
-void * const D_004DFAA0[6] = { (void*)0x0, (void*)0x0, (void*)func_003A38A0, (void*)0x0, (void*)0x0, (void*)0x0 };
+void * const D_004DFAA0[6] = { (void*)0x0, (void*)0x0, (void*)cParticleDefinition_dtor, (void*)0x0, (void*)0x0, (void*)0x0 };

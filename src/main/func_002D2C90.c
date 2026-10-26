@@ -28,7 +28,7 @@ struct VObj {
 };
 
 /* Forwards to the object's virtual method at vtable +0x1E4. */
-extern "C" void func_002D2C90(VObj* obj)
+extern "C" void cNetNPC_GetAimPercent(VObj* obj)
 {
     obj->Method1E4();
 }

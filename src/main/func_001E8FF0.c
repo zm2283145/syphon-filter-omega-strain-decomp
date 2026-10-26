@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_001E8FF0(Iter* a, Iter* b) {
+int cArray_cTreeNode_cSkaSystemPtrPtr_ConstIterator_opNe(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 
@@ -19,7 +19,7 @@ int func_001E9030(Word* w) {
     return w->value;
 }
 
-void func_001E9040(Iter* out, PtrVec* v) {
+void cArray_cTreeNode_cSkaSystemPtrPtr_End_void_2(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
 

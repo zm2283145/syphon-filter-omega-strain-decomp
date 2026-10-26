@@ -23,7 +23,7 @@ DEFINE_STRING_COMPARE_RANGE(String_Compare_2C3FF0, D_004AC680)
 #include "vector_release_dtor.h"
 
 /* Destroy a vector through its allocator, optionally delete. */
-DEFINE_VECTOR_RELEASE_DTOR(func_002C4120, func_001BFCB0, func_001BFAD0, D_0049ECD8)
+DEFINE_VECTOR_RELEASE_DTOR(func_002C4120, std_vector_deleter_cSkaSliderValue_clear, opDelete_cSkaSliderValueP_int_bool_charP_etc, D_0049ECD8)
 #pragma pop /* merge_units */
 /* merge_units: end func_002C4120 */
 
@@ -33,7 +33,7 @@ DEFINE_VECTOR_RELEASE_DTOR(func_002C4120, func_001BFCB0, func_001BFAD0, D_0049EC
 #include "guarded_destroy_release.h"
 
 /* Destroy and free an allocation under the allocator guard. */
-DEFINE_GUARDED_DESTROY_RELEASE(func_002C41A0, func_001AEFE0)
+DEFINE_GUARDED_DESTROY_RELEASE(func_002C41A0, cSplinedMotion_Scalar0To1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_002C41A0 */
 
@@ -43,7 +43,7 @@ DEFINE_GUARDED_DESTROY_RELEASE(func_002C41A0, func_001AEFE0)
 #include "vector_destroy_dtor.h"
 
 /* Destroy a vector: destroy elements, free the buffer, optionally delete. */
-DEFINE_VECTOR_DESTROY_DTOR(func_002C4280, func_001BFCA0)
+DEFINE_VECTOR_DESTROY_DTOR(func_002C4280, std_vector_deleter_cSkaSwitchValue_clear)
 #pragma pop /* merge_units */
 /* merge_units: end func_002C4280 */
 
@@ -67,13 +67,13 @@ void func_002C4370(PtrVec* v) {
 #pragma push /* merge_units */
 typedef struct { char pad[0x3C]; } G3E_002C4380;
 typedef struct { int vt; int count; G3E_002C4380* data; } G3A_002C4380;
-extern void func_001AEF70(G3E_002C4380* p, int x);
+extern void cSkaSliderValue_dtor(G3E_002C4380* p, int x);
 void func_002C4380(G3A_002C4380* a) {
     G3E_002C4380* begin = a->data;
     G3E_002C4380* p = begin + a->count;
     while (begin < p) {
         p--;
-        func_001AEF70(p, -1);
+        cSkaSliderValue_dtor(p, -1);
     }
     a->count = 0;
 }

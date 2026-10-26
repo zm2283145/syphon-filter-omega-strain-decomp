@@ -6,19 +6,19 @@
 
 #include "types.h"
 
-Word* func_003FCF60(Word* dst, Word* src) {
+Word* cArray_cAnimatorPtr_Iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_003FCF70(Iter* out, PtrVec* v) {
+void std_vector_cAnimatorPtr_end_void(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
 
-void func_003FCF90(Iter* out, void* self, Iter* src) {
+void std_vector_cAnimatorPtr_pointer2iterator_cAnimatorPPR(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }
 
-int func_003FCFA0(PtrVec* v) {
+int std_vector_imp_cAnimatorPtr_1_begin_void(PtrVec* v) {
     return (int)v->data;
 }

@@ -30,7 +30,7 @@ GuiWidget* GuiManager_ReadTree(GuiScreenList* self, char** cursor, GuiWidget* ex
 
 extern void FileMan_FindMember(void* f);             /* file: begin access */
 extern char* FileMan_ReadData(void* f);
-extern void func_0036DEC0(void* f);             /* file: end access */
+extern void cFileMan_Close(void* f);             /* file: end access */
 
 static inline char Rd8_419020(char* volatile* c) { char* t = *c; char v = *t; *c = t + 1; return v; }
 
@@ -51,7 +51,7 @@ GuiWidget* GuiManager_LoadGuiFile(GuiScreenList* self, void* file, GuiWidget* ex
     p = (char*)(((int)p + 3) & ~3);
     p += GUI_FILE_HEADER_SKIP;
     root = GuiManager_ReadTree(self, (char**)&p, existing);
-    func_0036DEC0(file);
+    cFileMan_Close(file);
     return root;
 }
 #pragma pop /* merge_units */

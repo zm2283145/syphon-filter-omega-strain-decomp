@@ -11,7 +11,7 @@ extern int D_005985CC;
 unsigned int D_00497D58[1] = { 0x0 };
 extern int Medius_TerminateString(char *, int);
 extern int Net_SendLocked(int, int, int, int, int, int, void *);
-int func_0046A2D0(char *a, int b)
+int MediusFindWorldByName(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -25,7 +25,7 @@ int func_0046A2D0(char *a, int b)
 
 /* merge_units: begin func_0046A378 */
 extern int D_005985DC;
-int func_0046A378(char *a)
+int MediusSendChatMessage(char *a)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);

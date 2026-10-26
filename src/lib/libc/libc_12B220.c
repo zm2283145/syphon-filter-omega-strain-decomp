@@ -1,5 +1,5 @@
 extern unsigned char D_00499C70[];
-char *func_0012B220(char *a)
+char *Libc_Strupr(char *a)
 {
     char *ret = a;
     while (*a != '\0') {

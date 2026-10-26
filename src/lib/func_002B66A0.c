@@ -4,7 +4,7 @@ extern char D_004AC1C0[];
 char *String_Copy(char *d, const char *s);
 char *strchr(const char *s, int c);
 
-char *func_002B66A0(char *str, char *delim)
+char *_strtok(char *str, char *delim)
 {
     char *tok;
     char *e;

@@ -6,16 +6,16 @@ typedef struct P {
 } P;
 typedef struct Q { int pad[2]; float v[2]; } Q;
 
-extern void func_00323270();
-extern void func_0031A0F0(void *, int, int, float *);
-extern float func_00317B40(void *, int, float *);
-extern void func_00317C08(int, void *, float *, float *, float, int *, int *);
-extern void func_00317F08(void *, float *, float *, Q *, P *, int, int, int *, float *);
-extern void func_0031BB78(P *, Q *, int, short, float, int);
-extern void func_0031E3C8(int, float, float);
-extern void func_003181D0(S7 *, float *, float *);
+extern void updateVuFft();
+extern void PutFrameSpCBM(void *, int, int, float *);
+extern float CoarsePitchAndFrameEnergy(void *, int, float *);
+extern void PitchAdaptiveSpectrum(int, void *, float *, float *, float, int *, int *);
+extern void OuterFrameParam(void *, float *, float *, Q *, P *, int, int, int *, float *);
+extern void MidFrameParam(P *, Q *, int, short, float, int);
+extern void nemAgcVadMain(int, float, float);
+extern void ApplyCustomVoiceFont(S7 *, float *, float *);
 
-int func_003177D0(short *src, P *p, Q *q)
+int NellyEncodeSC(short *src, P *p, Q *q)
 {
     float buf[160];
     float b1[0x204];
@@ -32,29 +32,29 @@ int func_003177D0(short *src, P *p, Q *q)
     float *d;
     float f;
 
-    func_00323270();
+    updateVuFft();
     if (!(p->x28 & p->x20))
         return 1;
     d = buf;
     i = 160;
     while (i-- > 0)
         *d++ = *src++;
-    func_0031A0F0(h, 0, 160, buf);
-    f = func_00317B40(h, p->x10, &p->x2C);
+    PutFrameSpCBM(h, 0, 160, buf);
+    f = CoarsePitchAndFrameEnergy(h, p->x10, &p->x2C);
     v[0] = f;
-    func_00317C08(p->x18, h, b1, b2, f, &n0, &n1);
-    func_00317F08(h, b1, b2, q, p, n0, n1, &k, &g);
-    func_0031BB78(p, q, 0xE1, p->x28, g, k);
+    PitchAdaptiveSpectrum(p->x18, h, b1, b2, f, &n0, &n1);
+    OuterFrameParam(h, b1, b2, q, p, n0, n1, &k, &g);
+    MidFrameParam(p, q, 0xE1, p->x28, g, k);
     p->x34 = v[0];
     p->x24 = p->x28;
     p->x30 = v[1];
     if (p->x4C)
-        func_0031E3C8(p->x4C, p->x2C, v[1]);
+        nemAgcVadMain(p->x4C, p->x2C, v[1]);
     if (p->x44) {
         if (s->x28 & 0xFFFFFFFFFFFFULL) {
             y = v[1];
             x = v[0];
-            func_003181D0(s, &y, &x);
+            ApplyCustomVoiceFont(s, &y, &x);
             v[0] = x;
             v[1] = y;
         }

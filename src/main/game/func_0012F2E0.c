@@ -24,7 +24,7 @@ public:
 };
 struct O_0012F2E0 { char pad[0xC]; unsigned int xC; char pad2[0x58-0x10]; V_0012F2E0* x58; };
 extern "C" { extern unsigned char g_IsMultiplayer; }
-extern "C" int func_0012F2E0(O_0012F2E0* o)
+extern "C" int cGOBJ_GetGobjClientIndex(O_0012F2E0* o)
 {
     int r;
     if (g_IsMultiplayer) {

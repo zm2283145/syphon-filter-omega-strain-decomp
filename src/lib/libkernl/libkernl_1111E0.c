@@ -9,7 +9,7 @@
 extern int D_00486244;
 extern void SignalSema(int);
 
-void func_001111E0(void)
+void _sceFsSigSema(void)
 {
     SignalSema(D_00486244);
 }
@@ -20,17 +20,17 @@ typedef struct { int x0; int x4; } P11F0;
 extern P11F0 D_004E5F80;
 extern volatile int D_004E5FC0;
 int D_0048623C = 0;
-extern void func_001111B0(int);
+extern void _sceFsWaitS(int);
 extern void func_001112E0(void);
 extern int DIntr(void);
 extern void EIntr(void);
-extern void func_001111E0(void);
+extern void _sceFsSigSema(void);
 register int gp __asm__("$28");
-int func_001111F0(int a, int b)
+int scePowerOffHandler(int a, int b)
 {
     P11F0 *p = &D_004E5F80;
     int s, old;
-    func_001111B0(0x1B);
+    _sceFsWaitS(0x1B);
     if (D_0048623C == 0) func_001112E0();
     s = DIntr();
     old = D_004E5F80.x0;
@@ -38,7 +38,7 @@ int func_001111F0(int a, int b)
     D_004E5F80.x0 = a;
     D_004E5FC0 = gp;
     if (s) EIntr();
-    func_001111E0();
+    _sceFsSigSema();
     return old;
 }
 /* merge_units: end func_001111F0 */
@@ -50,7 +50,7 @@ extern void *D_004E5FC0;
 #endif /* merge_units */
 #define D_004E5FC0 (*(void **)&D_004E5FC0) /* merge_units */
 
-void func_00111298(int a, Cb11298 *cb)
+void _sceFs_Poff_Intr(int a, Cb11298 *cb)
 {
     void (*f)(void *) = cb->func;
     if (f != 0) {

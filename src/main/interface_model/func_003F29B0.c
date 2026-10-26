@@ -16,7 +16,7 @@ void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 void Mem_Free(int pool, void* p, char* file, int line);
 void Libc_Abort(void);
 void Libc_Fprintf(void* s, char* msg);
-void func_003F2970(Vec_3F29B0* a, Vec_3F29B0* b);
+void std_swap_vectordeleterR_vectordeleterR_43(Vec_3F29B0* a, Vec_3F29B0* b);
 void func_003F4390(Vec_3F29B0* a);
 }
 
@@ -47,7 +47,7 @@ extern "C" void func_003F29B0(Vec_3F29B0* v0, unsigned int n0)
                 new (d) E_3F29B0(*s);
                 tmp.count++;
             }
-            func_003F2970(&tmp, v);
+            std_swap_vectordeleterR_vectordeleterR_43(&tmp, v);
             func_003F4390(&tmp);
             {
                 E_3F29B0* p = tmp.data;

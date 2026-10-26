@@ -13,7 +13,7 @@ extern void String_CtorCStr_13B480(String*, char*);
 extern char* String_CStr(String*);
 extern void String_Dtor(String*, int);
 
-void func_0033C7C0(O33* self, int buddy, char* name)
+void GuiLobbyScreen_ContactInviteAgent(O33* self, int buddy, char* name)
 {
     int lobby;
     int h;

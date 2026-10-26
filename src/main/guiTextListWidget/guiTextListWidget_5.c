@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-void func_00422ED0(PtrVec* a, PtrVec* b) {
+void std_swap_vectordeleterR_vectordeleterR_50(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;
         int* p;
@@ -40,24 +40,24 @@ void func_00422ED0(PtrVec* a, PtrVec* b) {
 #include "alloc_guard.h"
 
 extern "C" {
-void func_00329930(void* destination, const void* source);
-void func_00421F90(TextListEntryVec* entries);
+void cString_opAssign(void* destination, const void* source);
+void std_vector_deleter_Item_clear(TextListEntryVec* entries);
 void String_Dtor_138350(TextListEntry* entries, int flags);
 void Mem_Free(int pool, void* allocation, char* file, int line);
 void operator_delete(void* allocation);
-void func_00423080(TextListEntry* allocation, int pool, int destroy,
+void opDelete_ItemP_int_bool_charP_etc(TextListEntry* allocation, int pool, int destroy,
                    char* file, int line);
 }
 
 static inline void assign_entry(TextListEntry* destination, const TextListEntry* source)
 {
-    func_00329930(destination->text, source->text);
+    cString_opAssign(destination->text, source->text);
     destination->unk0C = source->unk0C;
     destination->unk10 = source->unk10;
 }
 
 /* Assign a repeated text-entry value across an existing range. */
-extern "C" void func_00422F10(TextListEntry* destination, unsigned int count,
+extern "C" void std_fill_n_Item_int_fill_n(TextListEntry* destination, unsigned int count,
                             const TextListEntry* value)
 {
     while (count) {
@@ -68,7 +68,7 @@ extern "C" void func_00422F10(TextListEntry* destination, unsigned int count,
 }
 
 /* Copy backward so overlapping entry ranges retain their original contents. */
-extern "C" TextListEntry* func_00422F80(TextListEntry* first, TextListEntry* last,
+extern "C" TextListEntry* std_copy_backward_Item_copy_backward(TextListEntry* first, TextListEntry* last,
                                       TextListEntry* destinationEnd)
 {
     while (first < last) {
@@ -82,14 +82,14 @@ extern "C" TextListEntry* func_00422F80(TextListEntry* first, TextListEntry* las
 static inline void release_storage(TextListEntry* data)
 {
     if (data)
-        func_00423080(data, 0, 0, "allocator.hh", 0x64);
+        opDelete_ItemP_int_bool_charP_etc(data, 0, 0, "allocator.hh", 0x64);
 }
 
 /* Destroy live entries, release their storage, then optionally delete the vector. */
-extern "C" TextListEntryVec* func_00423000(TextListEntryVec* self, short deleteFlag)
+extern "C" TextListEntryVec* std_vector_deleter_Item_dtor(TextListEntryVec* self, short deleteFlag)
 {
     if (self) {
-        func_00421F90(self);
+        std_vector_deleter_Item_clear(self);
         TextListEntry* data = self->data;
         if (data)
             release_storage(data);
@@ -100,7 +100,7 @@ extern "C" TextListEntryVec* func_00423000(TextListEntryVec* self, short deleteF
 }
 
 /* Release an entry allocation under the allocator lock, optionally destroying it. */
-extern "C" void func_00423080(TextListEntry* allocation, int pool, int destroy,
+extern "C" void opDelete_ItemP_int_bool_charP_etc(TextListEntry* allocation, int pool, int destroy,
                              char* file, int line)
 {
     AllocGuard guard;

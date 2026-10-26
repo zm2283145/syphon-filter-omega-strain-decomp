@@ -6,6 +6,6 @@
 #include "types.h"
 #include "tank_types.h"
 
-void func_00286560(cTankTurret* self) {
+void cTurret_Reset(cTankTurret* self) {
     self->unk64 = 0;
 }

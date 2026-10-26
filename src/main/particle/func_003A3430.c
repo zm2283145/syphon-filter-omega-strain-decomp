@@ -27,9 +27,9 @@ typedef struct Mgr3430 {
     char list[0xC];             /* 0x04 */
 } Mgr3430;
 
-extern void func_003A3590(It3430* out, void* list);
-extern void func_003A3550(It3430* out, void* list);
-extern It3430* func_003A3580(It3430* dst, It3430* src);
+extern void std_list_cParticleDefinitionPtr_begin_void(It3430* out, void* list);
+extern void std_list_cParticleDefinitionPtr_end_void(It3430* out, void* list);
+extern It3430* cConstLListIterator_cParticleDefinitionPtr_ctor(It3430* dst, It3430* src);
 
 int ParticleDefs_FindByName(Mgr3430* m, Key3430* key)
 {
@@ -42,11 +42,11 @@ int ParticleDefs_FindByName(Mgr3430* m, Key3430* key)
     int i = 0;
     long* khi;
 
-    func_003A3590(&b, m->list);
-    func_003A3580(&cb, &b);
+    std_list_cParticleDefinitionPtr_begin_void(&b, m->list);
+    cConstLListIterator_cParticleDefinitionPtr_ctor(&cb, &b);
     it = cb;
-    func_003A3550(&e, m->list);
-    func_003A3580(&ce, &e);
+    std_list_cParticleDefinitionPtr_end_void(&e, m->list);
+    cConstLListIterator_cParticleDefinitionPtr_ctor(&ce, &e);
     khi = &key->l[1];
     while (it.node != ce.node) {
         Key3430* k = &it.node->item->key;
@@ -56,8 +56,8 @@ int ParticleDefs_FindByName(Mgr3430* m, Key3430* key)
         }
         i++;
         it.node = it.node->next;
-        func_003A3550(&e, m->list);
-        func_003A3580(&ce, &e);
+        std_list_cParticleDefinitionPtr_end_void(&e, m->list);
+        cConstLListIterator_cParticleDefinitionPtr_ctor(&ce, &e);
     }
     return found;
 }

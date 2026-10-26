@@ -5,7 +5,7 @@
  */
 
 /* merge_units: begin func_002F7CE8 */
-int func_002F7CE8(int *a)
+int IsNullRSAKey(int *a)
 {
     unsigned int i;
     if (a != 0) {
@@ -17,7 +17,7 @@ int func_002F7CE8(int *a)
 /* merge_units: end func_002F7CE8 */
 
 /* merge_units: begin func_002F7D28 */
-int func_002F7D28(unsigned char *s)
+int IsNullRCKey(unsigned char *s)
 {
     unsigned int i;
     if (s != 0) {

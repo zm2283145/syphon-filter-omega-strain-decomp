@@ -16,16 +16,16 @@
  */
 
 
-Word* func_0018A6E0(Word* dst, Word* src) {
+Word* cAssocArray_cString16N_3_int_ConstIterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_0018A6F0(Iter* out, Tree* t) {
+void std_map_cString16N_3_int_cAllocator_pair_end_void(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-int* func_0018A700(int* pair, int second) {
+int* cSkaPlaybackGroupId_ctor_int(int* pair, int second) {
     pair[0] = 0;
     pair[1] = second;
     return pair;
@@ -56,7 +56,7 @@ typedef struct {
 } Obj;
 extern void __construct_array(void* array, void (*ctor)(void*), void (*dtor)(void*), int size, int count);
 extern void func_0018A210(void* p);
-extern void func_0018A870(void* p);
+extern void cSkaAnimEvent_ctor_void(void* p);
 #if 0 /* merge_units */
 extern void func_0018A810(Tail* dst, Tail* src);
 #endif /* merge_units */
@@ -64,14 +64,14 @@ extern void func_0018A810(Tail* dst, Tail* src);
 
 
 /* Copy constructor. */
-Obj* func_0018A710(Obj* self, Obj* src)
+Obj* cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(Obj* self, Obj* src)
 {
     int i;
     Tail* tail;
     Pair* dst;
     self->kind = src->kind;
     dst = self->pairs;
-    __construct_array(dst, func_0018A870, func_0018A210, 8, 7);
+    __construct_array(dst, cSkaAnimEvent_ctor_void, func_0018A210, 8, 7);
     for (i = 0; i < 7; i++) {
         dst[i].a = src->pairs[i].a;
         dst[i].b = src->pairs[i].b;

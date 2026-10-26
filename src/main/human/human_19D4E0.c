@@ -10,7 +10,7 @@
 /* merge_units: begin func_0019D4E0 */
 #pragma push /* merge_units */
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
-V4* func_0019D4E0(V4* a) {
+V4* cQuaternion_InvertUnitQuat(V4* a) {
     asm {
         lqc2 vf1, 0x0(a)
         vsub.xyz vf1, vf0, vf1

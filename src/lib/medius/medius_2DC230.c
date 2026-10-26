@@ -1,4 +1,4 @@
-int func_002DC230(char *o)
+int InitCodec(char *o)
 {
     void (*cb)(int);
     int h;

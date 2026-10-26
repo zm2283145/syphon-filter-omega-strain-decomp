@@ -15,7 +15,7 @@ typedef struct Linked208 {
 extern void* NpcPath_GetNode(int handle);
 
 /* Stores the handle, resolves it and marks the object linked. */
-void func_002D3640(Linked208* obj, int handle) {
+void cNetNPC_NetTeleport(Linked208* obj, int handle) {
     obj->handle = handle;
     obj->resolved = NpcPath_GetNode(handle);
     obj->linked = 1;

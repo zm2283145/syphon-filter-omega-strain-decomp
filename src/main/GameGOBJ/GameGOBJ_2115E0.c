@@ -25,7 +25,7 @@ void cElevatorGOBJ_UnlockFloor(void*, int, int);
 }
 #pragma push
 #pragma opt_propagation off
-extern "C" int func_002115E0(int a0, int a1, int a2, Pk2115E0* arg) {
+extern "C" int cNetLockElevatorMsg_NetLockElevatorMsgCallback(int a0, int a1, int a2, Pk2115E0* arg) {
     NetRecvGuard g;
     if (D_005721D0) {
         Pk2115E0* p = arg;
@@ -47,7 +47,7 @@ static inline void merge_flush_func_002115E0(void) {}
 #pragma push /* merge_units */
 #define PACK_BODY(e, b) MP_I(b, 8) = MP_I(e, 0x24); MP_U(b, 0xC) = MP_U(e, 0x28);
 
-DEFINE_MESSAGE_PACK_NOTYPE(func_00211680, 16, D_004F54C0, PACK_BODY)
+DEFINE_MESSAGE_PACK_NOTYPE(cNetLockElevatorMsg_Pack, 16, D_004F54C0, PACK_BODY)
 #pragma pop /* merge_units */
 /* merge_units: end func_00211680 */
 

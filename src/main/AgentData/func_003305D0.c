@@ -35,13 +35,13 @@ extern ObjectiveRowVec D_005329F0;
 extern TpTable D_00532A70[5];
 extern ObjectiveRowVec D_00532AD0;
 
-extern void func_003308D0(ObjectiveRow** out, ObjectiveRowVec* v);
-extern void func_003308B0(ObjectiveRow** out, ObjectiveRowVec* v);
-extern int func_00330830(ObjectiveRow** a, ObjectiveRow** b);
-extern ObjectiveRow* func_003308A0(ObjectiveRow** it);
-extern ObjectiveRow** func_00330850(ObjectiveRow** it);
+extern void cArray_Record_Begin(ObjectiveRow** out, ObjectiveRowVec* v);
+extern void cArray_Record_End(ObjectiveRow** out, ObjectiveRowVec* v);
+extern int cArray_Record_Iterator_opNe(ObjectiveRow** a, ObjectiveRow** b);
+extern ObjectiveRow* cArray_Record_Iterator_opMul(ObjectiveRow** it);
+extern ObjectiveRow** cArray_Record_Iterator_opInc(ObjectiveRow** it);
 extern int AgentData_TestObjectiveBit(unsigned int* bits, int index);
-extern ObjectiveRow** func_00330820(ObjectiveRowVec* v);
+extern ObjectiveRow** std_vector_deleter_RatingRecord_data(ObjectiveRowVec* v);
 extern void func_00296FA0(TpList* l);
 extern void AgentData_GetAwardRows(TpAgent* self, unsigned char kind, TpList* l);
 extern void* func_00299360(TpList* l, short deleteFlag);
@@ -52,12 +52,12 @@ static inline int TpCompleted(TpAgent* self) {
     int sum = 0;
     ObjectiveRow* it;
     ObjectiveRow* end;
-    func_003308D0(&it, &D_005329F0);
-    func_003308B0(&end, &D_005329F0);
-    while (func_00330830(&it, &end)) {
-        if (AgentData_TestObjectiveBit(self->objectiveBits, func_003308A0(&it)->index))
-            sum += func_003308A0(&it)->points;
-        func_00330850(&it);
+    cArray_Record_Begin(&it, &D_005329F0);
+    cArray_Record_End(&end, &D_005329F0);
+    while (cArray_Record_Iterator_opNe(&it, &end)) {
+        if (AgentData_TestObjectiveBit(self->objectiveBits, cArray_Record_Iterator_opMul(&it)->index))
+            sum += cArray_Record_Iterator_opMul(&it)->points;
+        cArray_Record_Iterator_opInc(&it);
     }
     return sum;
 }
@@ -69,8 +69,8 @@ int AgentData_TotalPoints(TpAgent* self) {
     int i;
     TpTable* t;
     total += TpCompleted(self);
-    p = *func_00330820(&D_00532AD0);
-    e = *func_00330820(&D_00532AD0) + D_00532AD0.count;
+    p = *std_vector_deleter_RatingRecord_data(&D_00532AD0);
+    e = *std_vector_deleter_RatingRecord_data(&D_00532AD0) + D_00532AD0.count;
     for (; TpNeq(p, e); p++) {
         if (self->stats[*(unsigned char*)&p->unk08] >= p->unk10)
             total += p->index;

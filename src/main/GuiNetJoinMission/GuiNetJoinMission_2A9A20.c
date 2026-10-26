@@ -34,7 +34,7 @@ void String_Dtor(Str_002A9A20* s, int flags);
 void String_Copy(char* d, const char* s);
 void GuiSaveAgentWidget_HandleEvent(S_002A9A20* self);
 }
-extern "C" void func_002A9A20(S_002A9A20* self)
+extern "C" void GuiOnlineOptions_ApplyChanges(S_002A9A20* self)
 {
     G_002A9A20* g = DME_GetLobby();
     if (g) {
@@ -71,14 +71,14 @@ extern void* DME_GetLobby(void);
 #endif /* merge_units */
 #define DME_GetLobby() ((void *)DME_GetLobby()) /* merge_units */
 
-extern void func_00442E90(void* p);
+extern void SFOLobby_ServerScreenExit(void* p);
 extern void LobbyArray_Free(M2A9B50* m);
 void GuiOnlineOptions_Deactivate(S2A9B50* s)
 {
     if (s->active) {
         void* p = DME_GetLobby();
         if (p)
-            func_00442E90(p);
+            SFOLobby_ServerScreenExit(p);
         LobbyArray_Free(&s->mA0);
         s->active = 0;
     }
@@ -117,9 +117,9 @@ G_002A9BA0* DME_GetLobby(void);
 #endif /* merge_units */
 #define DME_GetLobby() ((G_002A9BA0 *)DME_GetLobby()) /* merge_units */
 
-void func_004426B0(G_002A9BA0* g);
+void SFOLobby_MissionScreenExit(G_002A9BA0* g);
 void App_CardWaitPoll(void);
-int func_00442F40(G_002A9BA0* g, void* cb, void* a);
+int SFOLobby_ServerScreenStart(G_002A9BA0* g, void* cb, void* a);
 #if 0 /* merge_units */
 int GuiScreen_GetLobbyString(S_002A9BA0* self, int a, int b, int c, int d, int e);
 #endif /* merge_units */
@@ -130,7 +130,7 @@ int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_002A9BA0* d, int e);
 #endif /* merge_units */
 #define FrontEnd_OpenPopup(a0, a1, a2, a3, a4, a5) (FrontEnd_OpenPopup((a0), (a1), (a2), (a3), (S_002A9A20 *)(a4), (a5))) /* merge_units */
 
-void func_0041C0F0(Txt_002A9BA0* t, int a);
+void GuiTextWidget_SetDisableWrap(Txt_002A9BA0* t, int a);
 char* Loc_LookupText(char* key);
 void GuiTextWidget_SetText(void* w, char* s, int a);
 void* GuiWidget_FindChildByName(S_002A9BA0* self, char* name);
@@ -184,8 +184,8 @@ extern "C" void GuiOnlineOptions_Activate(S_002A9BA0* self)
     g = DME_GetLobby();
     if (g) {
         if (g->f255C == 4)
-            func_004426B0(g);
-        if (!func_00442F40(g, (void*)App_CardWaitPoll, self->fA0)) {
+            SFOLobby_MissionScreenExit(g);
+        if (!SFOLobby_ServerScreenStart(g, (void*)App_CardWaitPoll, self->fA0)) {
             void* ui = D_004FFC04;
             FrontEnd_OpenPopup(ui, 2, D_004AB808, GuiScreen_GetLobbyString(self, 0x72, 0, 0, 0, 0), self, 0x1E);
             return;
@@ -193,7 +193,7 @@ extern "C" void GuiOnlineOptions_Activate(S_002A9BA0* self)
     }
     self->b80 = 1;
     if (self->p88) {
-        func_0041C0F0(self->p88, 1);
+        GuiTextWidget_SetDisableWrap(self->p88, 1);
         GuiTextWidget_SetText(self->p88, Loc_LookupText("GameTitle"), 0);
     }
     w = FindAs_002A9BA0(self, D_0048BBF8, D_004A7520);

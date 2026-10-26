@@ -8,7 +8,7 @@
 #define R(a) (*(volatile unsigned int *)(a))
 extern int DIntr(void);
 extern void EIntr(void);
-void func_0010D5F0(void)
+void VSync(void)
 {
     int s = DIntr();
     R(0x1000F000) = 4;
@@ -25,7 +25,7 @@ void func_0010D5F0(void)
 
 /* merge_units: begin func_0010D680 */
 extern void SetVSyncFlag(volatile int *, volatile long *);
-long func_0010D680(void)
+long VSync2(void)
 {
     volatile int flag;
     volatile long ret;
@@ -48,33 +48,33 @@ long func_0010D680(void)
 
 /* merge_units: begin func_0010D728 */
 extern int D_00486190;
-extern int func_0010E970(void);
-extern int func_0010E728(int, int);
+extern int sceTtyInit(void);
+extern int sceTtyWrite(int, int);
 int Newlib_SysWrite(int mode, int a, int b)
 {
     if (mode == 1 || mode == 2) {
         if (!D_00486190) {
-            if (!func_0010E970())
+            if (!sceTtyInit())
                 return -1;
             D_00486190 = 1;
         }
-        return func_0010E728(a, b);
+        return sceTtyWrite(a, b);
     }
     return -1;
 }
 /* merge_units: end func_0010D728 */
 
 /* merge_units: begin func_0010D7A8 */
-extern int func_0010E8A0(int, int);
+extern int sceTtyRead(int, int);
 int Newlib_SysRead(int mode, int a, int b)
 {
     if (mode == 0) {
         if (!D_00486190) {
-            if (!func_0010E970())
+            if (!sceTtyInit())
                 return -1;
             D_00486190 = 1;
         }
-        return func_0010E8A0(a, b);
+        return sceTtyRead(a, b);
     }
     return -1;
 }

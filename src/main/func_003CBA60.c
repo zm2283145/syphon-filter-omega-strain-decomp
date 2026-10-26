@@ -6,13 +6,13 @@
 
 #include "types.h"
 
-void* func_003CBA60(char* self) {
+void* std_tree_pair_cSystemPtr_value_compare_node_alloc(char* self) {
     return self + 4;
 }
 
-void func_003CBA70(void) {
+void cAllocator_pair_cSystemPtr_destroy(void) {
 }
 
-void* func_003CBA80(void* self) {
+void* std_tree_pair_cSystemPtr_value_compare_alloc(void* self) {
     return self;
 }

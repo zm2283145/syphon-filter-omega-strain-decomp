@@ -9,21 +9,21 @@
 #include "types.h"
 typedef struct { char d[0x38]; } E124;
 typedef struct { char base[0xC]; E124 e[5]; } T124;
-extern void func_00329930(T124* d, const T124* s);
-extern void func_00409EC0(E124* d, const E124* s);
+extern void cString_opAssign(T124* d, const T124* s);
+extern void cMaterialProperties_MatPropInfo_opAssign(E124* d, const E124* s);
 static inline void t124_assign(T124* d, const T124* s) {
     E124* a;
     const E124* b;
-    func_00329930(d, s);
+    cString_opAssign(d, s);
     a = d->e;
     b = s->e;
     do {
-        func_00409EC0(a, b);
+        cMaterialProperties_MatPropInfo_opAssign(a, b);
         a++;
         b++;
     } while (a != d->e + 5);
 }/* Copies [first, last) backward so it ends at result. */
-T124* func_0040A070(T124* first, T124* last, T124* result) {
+T124* std_copy_backward_cMaterialProperties_copy_backward(T124* first, T124* last, T124* result) {
     while (first < last) {
         --last;
         --result;
@@ -40,10 +40,10 @@ T124* func_0040A070(T124* first, T124* last, T124* result) {
 #include "short_string_replace.h"
 extern "C" void String_Reserve(ShortStr* self, unsigned int n);
 struct V40A110 { int a, b, c; };
-extern "C" V40A110* func_00207310(V40A110* dst, const V40A110* src);
+extern "C" V40A110* cString_ctor_cStringR(V40A110* dst, const V40A110* src);
 struct E40A110 { V40A110 a; int b; int c; V40A110 d; V40A110 e; int f; float g; char h; };
 struct S40A110 { ShortStr s; E40A110 e[5]; };
-extern "C" S40A110* func_0040A110(S40A110* self, const S40A110* src)
+extern "C" S40A110* cMaterialProperties_ctor(S40A110* self, const S40A110* src)
 {
     E40A110* d;
     const E40A110* s;
@@ -60,11 +60,11 @@ extern "C" S40A110* func_0040A110(S40A110* self, const S40A110* src)
     d = self->e;
     s = src->e;
     do {
-        func_00207310(&d->a, &s->a);
+        cString_ctor_cStringR(&d->a, &s->a);
         d->b = s->b;
         d->c = s->c;
-        func_00207310(&d->d, &s->d);
-        func_00207310(&d->e, &s->e);
+        cString_ctor_cStringR(&d->d, &s->d);
+        cString_ctor_cStringR(&d->e, &s->e);
         d->f = s->f;
         d->g = s->g;
         d->h = s->h;
@@ -83,7 +83,7 @@ extern "C" S40A110* func_0040A110(S40A110* self, const S40A110* src)
 
 /* Destroy a vector through its allocator, optionally delete. */
 extern "C" { char D_004BEC88[] = "allocator.hh"; }
-DEFINE_VECTOR_RELEASE_DTOR(func_0040A210, func_0040B000, func_0040A290, D_004BEC88)
+DEFINE_VECTOR_RELEASE_DTOR(std_vector_deleter_cMaterialProperties_dtor, std_vector_deleter_cMaterialProperties_clear, opDelete_cMaterialPropertiesP_int_bool_charP_etc, D_004BEC88)
 #pragma pop /* merge_units */
 /* merge_units: end func_0040A210 */
 
@@ -94,15 +94,15 @@ DEFINE_VECTOR_RELEASE_DTOR(func_0040A210, func_0040B000, func_0040A290, D_004BEC
 extern "C" {
 void Mem_Free(int pool, void* allocation, char* file, int line);
 void __destroy_array(void* p, void* dtor, int size, int n);
-void func_00267740(void);
+void cMaterialProperties_MatPropInfo_dtor(void);
 void String_Dtor_138350(void* self, int flags);
 }
-extern "C" void func_0040A290(void* allocation, int pool, int destroy, char* file, int line)
+extern "C" void opDelete_cMaterialPropertiesP_int_bool_charP_etc(void* allocation, int pool, int destroy, char* file, int line)
 {
     AllocGuard guard;
     if (destroy) {
         if (allocation) {
-            __destroy_array((char*)allocation + 0xC, (void*)func_00267740, 0x38, 5);
+            __destroy_array((char*)allocation + 0xC, (void*)cMaterialProperties_MatPropInfo_dtor, 0x38, 5);
             String_Dtor_138350(allocation, -1);
         }
     }

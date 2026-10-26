@@ -28,7 +28,7 @@ void FileMan_Release(Hog412CF0* h, int flags);
 char* Archive_GetMemberName(Arc412CF0* a, int i);
 void Hog_Register(Hog412CF0* h, char* name, Arc412CF0* a, int z);
 int FileMan_FindMember(Hog412CF0* h);
-void func_003816F0(void* mgr, Hog412CF0* h);
+void cTexMan_RemoveTextureFromFile(void* mgr, Hog412CF0* h);
 Str412CF0* String_Replace(Str412CF0* self, unsigned int pos, unsigned int n, const char* first, const char* last, TagChar412CF0 tag);
 void ArchiveList_CloseNamed(void* t, Arc412CF0* a);
 }
@@ -43,7 +43,7 @@ static inline void* GetData(Self412CF0* self, int idx)
 /* Interface manager: release slot idx; when its refcount drops to zero, frees the
  * loaded data, unregisters every hog entry of its archive, clears the name and
  * closes the archive. The mixed slot-address forms reproduce retail CSE/addu order. */
-extern "C" void func_00412CF0(Self412CF0* self, int idx)
+extern "C" void cInterfaceManager_RemoveInterface(Self412CF0* self, int idx)
 {
     Arc412CF0* arc;
     int n;
@@ -75,7 +75,7 @@ extern "C" void func_00412CF0(Self412CF0* self, int idx)
         for (i = 0; i < n; i++) {
             Hog_Register(&h, Archive_GetMemberName(arc, i), arc, 0);
             FileMan_FindMember(&h);
-            func_003816F0(g_TextureMgr, &h);
+            cTexMan_RemoveTextureFromFile(g_TextureMgr, &h);
         }
         FileMan_Release(&h, -1);
     }

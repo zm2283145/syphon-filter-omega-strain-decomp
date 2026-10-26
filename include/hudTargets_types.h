@@ -49,7 +49,7 @@ typedef struct ObjMarkerRecord {
 typedef struct ObjMarkerMgr {
     MarkerList unk00;               /* 0x00 observers */
     MarkerList records;             /* 0x0C main record list (admission order) */
-    char unk18[0xC];                /* 0x18 initialized by func_00222B60 */
+    char unk18[0xC];                /* 0x18 initialized by std_list_deleter_cSafePtr_cGOBJ_ctor */
     MarkerList secondary;           /* 0x24 secondary record list */
     float unk30;                    /* 0x30 defaults to 1.0 */
     int unk34;                      /* 0x34 */

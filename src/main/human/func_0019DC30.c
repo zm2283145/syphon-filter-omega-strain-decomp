@@ -19,7 +19,7 @@ extern float D_0049CF58;
 extern void Actor_PrepareNeutralChannels(Actor* a, int b, int c, int d, int e);
 extern void AnimChannel_SetTarget(void* a, int idx, unsigned int n, float target, float dur, float damping);
 /* Picks the lean-channel target (left/right/neutral) from the lean value and controller flags. */
-void func_0019DC30(Actor* self)
+void cHuman_Hang_NextFrame(Actor* self)
 {
     AnimBlk* blk = &self->blk;
     float t;

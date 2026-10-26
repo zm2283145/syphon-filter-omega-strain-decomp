@@ -7,8 +7,8 @@ extern void RootCollection_InitFromModel(void*, void*);
 extern void AnimChannel_Construct(Tmp*);
 extern void AnimChannels_ClearCount(Tmp*, float);
 extern void ChannelVector_Resize(void*, int, Tmp*);
-extern void func_001AEFE0(Tmp*, int);
-extern void func_001BE020(void*, int, Pair*);
+extern void cSplinedMotion_Scalar0To1_dtor(Tmp*, int);
+extern void std_vector_imp_cSkaSwitchValue_resize(void*, int, Pair*);
 /* Binds a definition: copies its name and fills both lists with default entries. */
 void Model_Attach_3634D0(S* s, Def* def)
 {
@@ -19,8 +19,8 @@ void Model_Attach_3634D0(S* s, Def* def)
     AnimChannel_Construct(&tmp);
     AnimChannels_ClearCount(&tmp, 0.0f);
     ChannelVector_Resize(s->list1, def->count1, &tmp);
-    func_001AEFE0(&tmp, -1);
+    cSplinedMotion_Scalar0To1_dtor(&tmp, -1);
     p.a = 0;
     p.b = 0;
-    func_001BE020(s->list2, def->count2, &p);
+    std_vector_imp_cSkaSwitchValue_resize(s->list2, def->count2, &p);
 }

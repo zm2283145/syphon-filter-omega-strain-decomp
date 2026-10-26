@@ -3,7 +3,7 @@ extern Cd27C328 D_00504080;
 int D_0048B374 = 0;
 extern int sceSifBindRpc(Cd27C328* cd, unsigned int id, int mode);
 extern int sceSifCheckStatRpc(Cd27C328* cd);
-int func_0027C328(void)
+int sceNetcnfifSetup(void)
 {
     int i;
     if (D_0048B374) return 0;

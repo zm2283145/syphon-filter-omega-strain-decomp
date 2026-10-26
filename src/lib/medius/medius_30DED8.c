@@ -4,8 +4,8 @@
 
 typedef struct { int handle; } Sub;
 typedef struct { char pad[0x58]; Sub* sub; } Obj;
-extern void func_002F5DB0(int handle);
-extern void func_002FB3C0(void* ref);
+extern void rt_comm_destroy(int handle);
+extern void rt_memory_free(void* ref);
 
 /* Releases an object and its sub-object; returns 2 on NULL, 0 otherwise. */
 int func_0030DED8(Obj* obj)
@@ -15,10 +15,10 @@ int func_0030DED8(Obj* obj)
     if (obj != 0) {
         local = obj;
         if (obj->sub != 0) {
-            func_002F5DB0(obj->sub->handle);
-            func_002FB3C0(&local->sub);
+            rt_comm_destroy(obj->sub->handle);
+            rt_memory_free(&local->sub);
         }
-        func_002FB3C0(&local);
+        rt_memory_free(&local);
         ret = 0;
     }
     return ret;

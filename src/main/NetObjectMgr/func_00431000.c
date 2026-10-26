@@ -6,13 +6,13 @@
 
 #include "types.h"
 
-void* func_00431000(char* self) {
+void* std_tree_pair_int_value_compare_node_alloc_void_3(char* self) {
     return self + 4;
 }
 
-void func_00431010(void) {
+void cAllocator_pair_int_destroy_pairP_5(void) {
 }
 
-void* func_00431020(void* self) {
+void* std_tree_pair_int_value_compare_alloc_void_3(void* self) {
     return self;
 }

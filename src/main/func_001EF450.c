@@ -6,9 +6,9 @@
 
 #include "types.h"
 
-extern int func_001C50A0(int, int);
+extern int std_vector_pod_int_opAssign(int, int);
 
-int func_001EF450(int a0, int a1) {
-    func_001C50A0(a0, a1);
+int std_vector_imp_cCollisionEdgePtr_1_opAssign(int a0, int a1) {
+    std_vector_pod_int_opAssign(a0, a1);
     return a0;
 }

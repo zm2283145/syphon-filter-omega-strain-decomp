@@ -29,7 +29,7 @@ extern int D_00494178;
 extern int D_005721A8;
 extern unsigned char g_IsMultiplayer;
 extern int g_HotboxTracker;
-int func_001A3730(Owner_7A40* o);
+int cHuman_CanPackBeDeleted(Owner_7A40* o);
 int NetGame_InitLocalSlot(int*, int);
 void Hotbox_RemoveObjectBox(int, void*);
 int Object_Unregister(void*);
@@ -38,7 +38,7 @@ int Object_DeleteLater(void*, float);
 
 static inline bool HolderReady(BP_7A40* bp) {
     bool r = true;
-    if (!bp->NoHolder() && !func_001A3730(bp->Holder())) r = false;
+    if (!bp->NoHolder() && !cHuman_CanPackBeDeleted(bp->Holder())) r = false;
     return r;
 }
 

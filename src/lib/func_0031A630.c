@@ -1,4 +1,4 @@
-int func_0031A630(float *tab, float *mag, float *pos, int n, float w, float *outA, float *outB, int max)
+int NellySeevocPeaksFast(float *tab, float *mag, float *pos, int n, float w, float *outA, float *outB, int max)
 {
     float half = w * 0.5f;
     float lo = half;

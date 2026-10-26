@@ -3,7 +3,7 @@
 struct Obj_E980 { virtual void Set(int on, signed char st); };
 struct S_E980 { unsigned char mode; bool active; unsigned char state; unsigned char prev; int pad4; Obj_E980* obj; };
 /* switch the attached object on (state 6) or restore its previous state */
-extern "C" void func_001CE980(S_E980* s)
+extern "C" void cDrawAndHolsterWeapon_ActionManager_TriggerCallback(S_E980* s)
 {
     if (s->obj) {
         if (s->state != 6) {

@@ -15,7 +15,7 @@
 #include "types.h"
 
 /* clear(): count = 0. */
-void func_001BFCA0(PtrVec* v) {
+void std_vector_deleter_cSkaSwitchValue_clear(PtrVec* v) {
     v->count = 0;
 }
 #pragma pop /* merge_units */
@@ -23,16 +23,16 @@ void func_001BFCA0(PtrVec* v) {
 
 /* merge_units: begin func_001BFCB0 */
 #pragma push /* merge_units */
-extern void func_001AEF70(void*, int);
+extern void cSkaSliderValue_dtor(void*, int);
 typedef struct { char d[0x3C]; } G6E1B;
 typedef struct { int x; int count; G6E1B* arr; } G6C1B;
-void func_001BFCB0(G6C1B* c)
+void std_vector_deleter_cSkaSliderValue_clear(G6C1B* c)
 {
     G6E1B* arr = c->arr;
     G6E1B* e = arr + c->count;
     while (arr < e) {
         --e;
-        func_001AEF70(e, -1);
+        cSkaSliderValue_dtor(e, -1);
     }
     c->count = 0;
 }

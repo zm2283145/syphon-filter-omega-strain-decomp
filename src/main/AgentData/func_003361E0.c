@@ -33,8 +33,8 @@ typedef struct {
 } Agent_61E0;
 
 extern int g_LevelRowCount;
-int func_00336440(BV_61E0* v);
-char* func_00336450(BV_61E0* v, int i);
+int cArray_eRequirementState_Size(BV_61E0* v);
+char* cArray_eRequirementState_opIndex(BV_61E0* v, int i);
 void AgentLevelVec_Resize(LvlVec_61E0* v, unsigned int n, const Lvl_61E0* value);
 
 void AgentData_Reset(Agent_61E0* a)
@@ -51,7 +51,7 @@ void AgentData_Reset(Agent_61E0* a)
             E20_61E0* e = &a->lists[k].data[(unsigned)j];
             int m;
             e->flag = 0;
-            for (m = 0; m < func_00336440(&e->v); m++) *func_00336450(&e->v, m) = 0;
+            for (m = 0; m < cArray_eRequirementState_Size(&e->v); m++) *cArray_eRequirementState_opIndex(&e->v, m) = 0;
         }
     }
     for (i = 0; i < a->bytes.count; i++) a->bytes.data[i] = 0;

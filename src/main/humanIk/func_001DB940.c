@@ -7,21 +7,21 @@
 #include "types.h"
 #include "humanIk_types.h"
 
-extern void func_001DE2D0(IkIter* out, int a1, int a2);
+extern void std_tree_pair_cWeaponSlotPair_value_compare_find(IkIter* out, int a1, int a2);
 
 /* Iterator equality. */
-int func_001DB940(IkIter* a, IkIter* b) {
+int cAssocArray_cWeaponSlotPair_cIkTarget_LeftRight_Iterator_opEq(IkIter* a, IkIter* b) {
     return (unsigned int)(a->node ^ b->node) < 1u;
 }
 
-void func_001DB960(Iter* out, Tree* t) {
+void cAssocArray_cWeaponSlotPair_cIkTarget_LeftRight_End(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-/* Forwards to func_001DE2D0 through a temporary iterator. */
-void func_001DB970(IkIter* out, int a1, int a2) {
+/* Forwards to std_tree_pair_cWeaponSlotPair_value_compare_find through a temporary iterator. */
+void cAssocArray_cWeaponSlotPair_cIkTarget_LeftRight_Find(IkIter* out, int a1, int a2) {
     IkIter tmp;
 
-    func_001DE2D0(&tmp, a1, a2);
+    std_tree_pair_cWeaponSlotPair_value_compare_find(&tmp, a1, a2);
     out->node = tmp.node;
 }

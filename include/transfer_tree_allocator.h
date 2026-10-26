@@ -27,7 +27,7 @@ extern Unk489738* D_00489738;
 extern char D_004BFB10[];
 void Libc_Fprintf(int channel, const char* message);
 void Libc_Abort(void);
-void func_0013CD40(void* node, void* root);
+void std_red_black_tree_1_balance_insert(void* node, void* root);
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 void Mem_Free(int pool, void* allocation, char* file, int line);
 }
@@ -69,7 +69,7 @@ struct TransferTreeAllocator {
         else
             parent->right = node;
         tree->count++;
-        func_0013CD40(node, tree->root);
+        std_red_black_tree_1_balance_insert(node, tree->root);
         if (first)
             tree->leftmost = node;
         return node;

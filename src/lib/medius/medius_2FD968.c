@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_002FD968(int a0) {
+int rt_msg_client_iecho_set_default_options(int a0) {
     int v0;
     int cond;
 

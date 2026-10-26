@@ -19,14 +19,14 @@ struct E2Npc {
 struct E2Handle { E2Npc* obj; int serial; };
 struct E2Node { int f0; E2Node* next; E2Handle* handle; };
 extern "C" void List_Begin(int*, void*);
-extern "C" void func_0014ABC0(E2Node**, int*);
-extern "C" void func_0014AB80(int*, void*);
-extern "C" void func_0014AB70(E2Node**, int*);
+extern "C" void std_list_cActiveListItemPtr_generic_iterator_ctor(E2Node**, int*);
+extern "C" void std_list_cActiveListItemPtr_end_void(int*, void*);
+extern "C" void cLListIterator_cActiveListItemPtr_ctor(E2Node**, int*);
 extern char g_NpcThinkList[];
 static inline void E2End(E2Node** e) {
     int tmp;
-    func_0014AB80(&tmp, g_NpcThinkList);
-    func_0014AB70(e, &tmp);
+    std_list_cActiveListItemPtr_end_void(&tmp, g_NpcThinkList);
+    cLListIterator_cActiveListItemPtr_ctor(e, &tmp);
 }
 static inline int E2NonNull(E2Npc* p) { return p != 0; }
 static inline bool E2Idle(unsigned char s) { return s == 2 || s == 3; }
@@ -42,7 +42,7 @@ extern "C" int NpcAi_CountThinking(void)
     int b;
     int count = 0;
     List_Begin(&b, g_NpcThinkList);
-    func_0014ABC0(&it, &b);
+    std_list_cActiveListItemPtr_generic_iterator_ctor(&it, &b);
     for (E2Node* n = it; E2End(&e), n != e; n = n->next) {
         if (!E2Idle(E2Get(n->handle)->GetState())) count++;
     }

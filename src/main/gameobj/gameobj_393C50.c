@@ -14,9 +14,9 @@
  */
 
 
-extern Rel* func_00393CC0(Rel* r);
+extern Rel* std_vector_imp_cSkaSliderValue_ctor(Rel* r);
 
-void* func_00393C50(char* self) {
+void* cSkaAnimationSet_AnimAnchorNameList(char* self) {
     return self + 4;
 }
 
@@ -24,15 +24,15 @@ void func_00393C60(int* self, int value) {
     *self = value;
 }
 
-Rel* func_00393C70(Rel* r) {
+Rel* std_vector_cSkaSwitchValue_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
     return r;
 }
 
-RelFlag* func_00393C90(RelFlag* r) {
-    func_00393CC0(&r->rel);
+RelFlag* cArray_cSkaSliderValue_ctor(RelFlag* r) {
+    std_vector_imp_cSkaSliderValue_ctor(&r->rel);
     r->flag = 1;
     return r;
 }
@@ -43,11 +43,11 @@ static inline void merge_flush_func_00393C50(void) {}
 
 /* merge_units: begin func_00393CC0 */
 #pragma push /* merge_units */
-extern Quad4Ext* func_00393D10(Quad4Ext* q);
+extern Quad4Ext* std_deque_cSkaSystem_Request_ctor(Quad4Ext* q);
 extern Quad4Ext* func_00393D40(Quad4Ext* q);
-extern Quad4* func_00393EC0(Quad4* q);
+extern Quad4* cdeque_cSkaSystem_RequestPtr_ctor(Quad4* q);
 
-Rel* func_00393CC0(Rel* r) {
+Rel* std_vector_imp_cSkaSliderValue_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
@@ -55,17 +55,17 @@ Rel* func_00393CC0(Rel* r) {
 }
 
 Quad4Ext* func_00393CE0(Quad4Ext* q) {
-    func_00393D10(q);
+    std_deque_cSkaSystem_Request_ctor(q);
     return q;
 }
 
-Quad4Ext* func_00393D10(Quad4Ext* q) {
+Quad4Ext* std_deque_cSkaSystem_Request_ctor(Quad4Ext* q) {
     func_00393D40(q);
     return q;
 }
 
 Quad4Ext* func_00393D40(Quad4Ext* q) {
-    func_00393EC0(&q->q);
+    cdeque_cSkaSystem_RequestPtr_ctor(&q->q);
     q->unk10 = 0;
     q->unk14 = 0;
     return q;

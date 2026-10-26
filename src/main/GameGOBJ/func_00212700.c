@@ -8,8 +8,8 @@ int Alloc_Unlock(int);
 int Mem_Free(int, char * , char *, int);                      
 char * Object_LookupById(int *);                     
 int func_00211DA0();                                
-int func_002EB650(void **, int);                    
-int func_002EC2A8(int);                               
+int NetGetObject(void **, int);                    
+int NetFreeObject(int);                               
 extern char D_004A4550;
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
@@ -18,7 +18,7 @@ extern unsigned char D_005723C8;
 #pragma push
 #pragma opt_common_subs off
 #pragma opt_propagation off
-void func_00212700(int d0, int arg1) {
+void cPathedGOBJ_PathedGobjCreationCallback(int d0, int arg1) {
     struct { char pad50[4]; int f54; char * f58[2]; } sl;
     char * temp_s1;
     char * temp_s3;
@@ -28,7 +28,7 @@ void func_00212700(int d0, int arg1) {
     if (D_005723C8 == 0) {
         D_005723C8 = 1;
     }
-    if (func_002EB650(sl.f58, arg1) == 0) {
+    if (NetGetObject(sl.f58, arg1) == 0) {
         temp_s1 = (char *)(F_(sl.f58[0], 0x1C, int));
         sl.f54 = F_(temp_s1, 0x10, unsigned short) | (F_(temp_s1, 0xE, unsigned short) << 0x10);
         temp_v0 = (char *)(Object_LookupById(&sl.f54));
@@ -40,7 +40,7 @@ void func_00212700(int d0, int arg1) {
                 temp_s3 = (char *)(F_(temp_v0, 0xD0, int));
                 if (temp_s3 != NULL) {
                     if (F_(temp_s3, 0xC, unsigned char) != 0) {
-                        func_002EC2A8(func_00211DA0());
+                        NetFreeObject(func_00211DA0());
                     } else {
                         if (g_ProfileLockEnabled != 0) {
                             Alloc_Lock(9);

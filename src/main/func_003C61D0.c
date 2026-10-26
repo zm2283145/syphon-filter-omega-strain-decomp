@@ -23,7 +23,7 @@ inline M::M(const M* p) { Mtx_Copy(this, p); }
 static inline M Inv2(const M& m) { M t; return M(Mtx_InvertRigid(Mtx_Copy(&t, &m))); }
 static inline M Inverse(const M& m) { return Inv2(m); }
 static inline void MulV(V_C61D0* d, const V_C61D0* v, const M* m) { __asm__ volatile("lqc2 vf8, 0x0(%1); lqc2 vf4, 0x0(%2); lqc2 vf5, 0x10(%2); lqc2 vf6, 0x20(%2); lqc2 vf7, 0x30(%2); vmulax.xyzw ACC, vf4, vf8x; vmadday.xyzw ACC, vf5, vf8y; vmaddaz.xyzw ACC, vf6, vf8z; vmaddw.xyzw vf12, vf7, vf8w; sqc2 vf12, 0x0(%0)" : : "r"(d), "r"(v), "r"(m) : "memory"); }
-extern "C" T_C61D0* func_003C61D0(T_C61D0* self, M* m)
+extern "C" T_C61D0* cRayMatrix_Transform(T_C61D0* self, M* m)
 {
     M inv = Inverse(*m);
     GMul(&self->m, &self->m, &inv);

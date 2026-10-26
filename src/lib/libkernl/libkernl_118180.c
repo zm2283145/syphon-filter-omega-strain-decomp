@@ -12,7 +12,7 @@ extern HEnt D_004E9AC8[];
 extern int DIntr(void);
 extern void EIntr(void);
 extern void *memset(void *, int, unsigned int);
-HEnt *func_00118180(HEnt *buf, int n)
+HEnt *sceSifSetRebootNotifyBuffer(HEnt *buf, int n)
 {
     int s = DIntr();
     HEnt *old = D_00487868;
@@ -25,7 +25,7 @@ HEnt *func_00118180(HEnt *buf, int n)
 /* merge_units: end func_00118180 */
 
 /* merge_units: begin func_00118200 */
-int func_00118200(unsigned int idx, void *fn, void *arg)
+int sceSifAddRebootNotifyHandler(unsigned int idx, void *fn, void *arg)
 {
     HEnt *tbl;
     unsigned int max;

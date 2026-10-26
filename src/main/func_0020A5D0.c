@@ -2,7 +2,7 @@
 #pragma optimization_level 1
 
 /* Swaps two ints. */
-void func_0020A5D0(int* a, int* b) {
+void std_swap_uintR_uintR(int* a, int* b) {
     int t = *a;
     *a = *b;
     *b = t;

@@ -11,7 +11,7 @@
 #include "trivial_dtor.h"
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_003D5AA0)
+DEFINE_TRIVIAL_DTOR(cShadowMan_tSource_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003D5AA0 */
 
@@ -20,7 +20,7 @@ DEFINE_TRIVIAL_DTOR(func_003D5AA0)
 #pragma cplusplus on
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_003D5AF0)
+DEFINE_TRIVIAL_DTOR(cShadowMan_tReceiver_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003D5AF0 */
 
@@ -29,6 +29,6 @@ DEFINE_TRIVIAL_DTOR(func_003D5AF0)
 #pragma cplusplus on
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_003D5B40)
+DEFINE_TRIVIAL_DTOR(cShadowMan_tShadow_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003D5B40 */

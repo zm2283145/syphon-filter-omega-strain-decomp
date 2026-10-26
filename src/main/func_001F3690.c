@@ -8,21 +8,21 @@
 #include "loose01_types.h"
 
 extern void List_Begin_16E880(Word*, int);
-extern Word* func_001F3620(Word*, int);
-extern void func_001F36E0(void);
-extern void func_001F36F0(void);
+extern Word* std_list_cSkaTransBLENDPtr_generic_iterator_1_ctor_listdeleter(Word*, int);
+extern void std_vector_cSkaTransBLEND_clear(void);
+extern void std_vector_imp_cSkaTransBLEND_clear(void);
 
-void func_001F3690(Word* self, int a1) {
+void std_list_cSkaTransBLENDPtr_begin(Word* self, int a1) {
     Word tmp;
 
     List_Begin_16E880(&tmp, a1);
-    func_001F3620(self, tmp.value);
+    std_list_cSkaTransBLENDPtr_generic_iterator_1_ctor_listdeleter(self, tmp.value);
 }
 
-void func_001F36D0(void) {
-    func_001F36E0();
+void cArray_cSkaTransBLEND_Clear(void) {
+    std_vector_cSkaTransBLEND_clear();
 }
 
-void func_001F36E0(void) {
-    func_001F36F0();
+void std_vector_cSkaTransBLEND_clear(void) {
+    std_vector_imp_cSkaTransBLEND_clear();
 }

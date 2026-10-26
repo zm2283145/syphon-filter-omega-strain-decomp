@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046CC20(void) {
+int MediusUniqueCallbackCreateChannelRequestHandler0(void) {
     return 144;
 }

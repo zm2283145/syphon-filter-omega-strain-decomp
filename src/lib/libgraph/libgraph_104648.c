@@ -7,7 +7,7 @@
 /* merge_units: begin func_00104648 */
 typedef int u_long128 __attribute__((mode(TI)));
 typedef struct { u_long128 *p; int a, b; u_long128 *last; } QBuf;
-void func_00104648(QBuf *b, u_long128 q) { b->last = b->p; *b->p++ = q; }
+void sceGifPkOpenGifTag(QBuf *b, u_long128 q) { b->last = b->p; *b->p++ = q; }
 /* merge_units: end func_00104648 */
 
 /* merge_units: begin func_00104660 */
@@ -18,7 +18,7 @@ typedef struct {
     unsigned long *tag;
 } Pkt4660;
 
-void func_00104660(Pkt4660 *p)
+void sceGifPkCloseGifTag(Pkt4660 *p)
 {
     unsigned long *tag = p->tag;
     unsigned long *cur = p->cur;

@@ -28,9 +28,9 @@ extern char D_00587C90[];
 void* ObjMan_GetService(void);
 T3680A0* ObjMan_GetObjective(void* mgr, int id);
 void List_Begin_16E880(void* out, void* list);
-void func_0026C390(void* out, void* raw);
-void func_0026C320(void* out, void* list);
-void func_0026C350(void* out, void* in);
+void std_list_cHudTargetInfoPtr_generic_iterator_1_ctor(void* out, void* raw);
+void std_list_cHudTargetInfoPtr_end_void(void* out, void* list);
+void cConstLListIterator_cHudTargetInfoPtr_ctor(void* out, void* in);
 void HudMarkers_SetHighlight(void* a, I3680A0* item);
 void HudMap_Commit(int a);
 char* HudMarker_GetTickerText(I3680A0* item, char* buf);
@@ -63,8 +63,8 @@ extern "C" int GuiObjectives_HandleEvent(S3680A0* self, void* sender, unsigned s
                     I3680A0* item;
                     N3680A0* n;
                     List_Begin_16E880(b, list);
-                    func_0026C390(it, b[0]);
-                    for (n = it[0]; func_0026C320(t, list), func_0026C350(end, t), n != end[0]; n = n->next) {
+                    std_list_cHudTargetInfoPtr_generic_iterator_1_ctor(it, b[0]);
+                    for (n = it[0]; std_list_cHudTargetInfoPtr_end_void(t, list), cConstLListIterator_cHudTargetInfoPtr_ctor(end, t), n != end[0]; n = n->next) {
                         item = n->item;
                         if (item->h.Get() != 0 && item->h.Get() == obj) {
                             char* name;

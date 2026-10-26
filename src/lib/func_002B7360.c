@@ -13,13 +13,13 @@ extern int String_CompareN(const char *, const char *, int);
 extern int func_002BC788(int);
 extern int func_002BAA38(int);
 extern int func_002BAA20(int, int *);
-extern int func_002BAA68(int);
-extern void func_002B7308(int, MC2Super *);
-extern void func_002BBE18(int);
+extern int _sceMcpReadSysInfo(int);
+extern void _reset_problem_patch(int, MC2Super *);
+extern void _sceMcCoreWriteBack(int);
 extern int func_002BB358(int, int);
-extern int func_002B70C8(int, MC2Dirent *, int, int);
-extern int func_002B6FF0(int, int *);
-int func_002B7360(int idx, MC2Info *info)
+extern int _GetEntryByPos(int, MC2Dirent *, int, int);
+extern int _sceMcFatGetFreeClustSize(int, int *);
+int _sceMcFatGetInfo(int idx, MC2Info *info)
 {
     int tmp[2];
     MC2Dirent ent;
@@ -45,7 +45,7 @@ int func_002B7360(int idx, MC2Info *info)
         D_00512C88[idx].f804 = -1;
         D_00512C88[idx].f890 = 0;
         __builtin_memcpy(D_00512C88[idx].cwd, D_004AC1C8, 2);
-        if (!func_002BAA68(idx)) return 0x8101006F;
+        if (!_sceMcpReadSysInfo(idx)) return 0x8101006F;
         if (info) info->type = 2;
         if (String_CompareN(sb->magic, D_004AC1D0, 0x1B)) {
             if (info) info->f4 = 0;
@@ -53,8 +53,8 @@ int func_002B7360(int idx, MC2Info *info)
         }
         n = (sb->ver[0] - '0') * 10 + (sb->ver[2] - '0');
         if (n < 11) return 0x81010086;
-        func_002B7308(idx, sb);
-        func_002BBE18(idx);
+        _reset_problem_patch(idx, sb);
+        _sceMcCoreWriteBack(idx);
         cl = sb->f34;
         lim = sb->f30 / 1000 * 1000 + 1;
         cnt = 0;
@@ -62,11 +62,11 @@ int func_002B7360(int idx, MC2Info *info)
             if (cnt == lim) sb->f170 = cl - sb->f34;
             if (func_002BB358(idx, cl++) == 0) cnt++;
         }
-        err = func_002B70C8(idx, &ent, sb->f3C, 0);
+        err = _GetEntryByPos(idx, &ent, sb->f3C, 0);
         if (err) return err;
         if (!(ent.mode & 0x8000)) return 0x8101002F;
         if (strcmp(ent.name, D_004AC1B0)) return 0x8101002F;
-        err = func_002B70C8(idx, &ent, sb->f3C, 1);
+        err = _GetEntryByPos(idx, &ent, sb->f3C, 1);
         if (err) return err;
         if (!(ent.mode & 0x8000)) return 0x8101002F;
         if (strcmp(ent.name, D_004AC1B8)) return 0x8101002F;
@@ -74,7 +74,7 @@ int func_002B7360(int idx, MC2Info *info)
     }
     if (!D_00512C88[idx].f88C) return 0x8101002F;
     if (info) {
-        n = func_002B6FF0(idx, &err);
+        n = _sceMcFatGetFreeClustSize(idx, &err);
         if (err) return err;
         info->f4 = D_00512C88[idx].f88C;
         info->free = n;

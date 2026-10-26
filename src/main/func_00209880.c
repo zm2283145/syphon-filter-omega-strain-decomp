@@ -1,9 +1,9 @@
 #include "types.h"
 #pragma optimization_level 1
 
-extern int* func_001F4150(void);
+extern int* std_vector_deleter_cSkaBlendSequenceItem_data_void(void);
 
-/* Returns the first word of the object returned by func_001F4150. */
-int func_00209880(void) {
-    return *func_001F4150();
+/* Returns the first word of the object returned by std_vector_deleter_cSkaBlendSequenceItem_data_void. */
+int std_vector_imp_cSkaBlendSequenceItem_begin_void_2(void) {
+    return *std_vector_deleter_cSkaBlendSequenceItem_data_void();
 }

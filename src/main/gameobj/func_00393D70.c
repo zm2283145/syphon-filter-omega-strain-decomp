@@ -4,4 +4,4 @@
 #include "base_dtor_chain.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_00393D70, func_00393DD0)
+DEFINE_BASE_DTOR_CHAIN(details_compressed_pair_imp_cAllocator_cSkaSystem_Request_1_dtor, _cdeque_imp_cSkaSystem_RequestPtr_1_dtor)

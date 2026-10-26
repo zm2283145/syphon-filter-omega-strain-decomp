@@ -7,11 +7,11 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern int func_001C5370(ObjVec*, ObjVec*);
+extern int std_vector_pod_int_ctor(ObjVec*, ObjVec*);
 
 /* Array copy constructor: copy contents, then the owns-storage flag. */
-ObjVec* func_001EF4F0(ObjVec* dst, ObjVec* src) {
-    func_001C5370(dst, src);
+ObjVec* cEdgeGroup_ctor_cEdgeGroupR(ObjVec* dst, ObjVec* src) {
+    std_vector_pod_int_ctor(dst, src);
     dst->owned = src->owned;
     return dst;
 }

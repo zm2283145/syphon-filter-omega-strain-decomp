@@ -18,6 +18,6 @@ int func_002564C0(Word* a, Word* b) {
 }
 
 /* out = end() */
-void func_002564E0(Pair** out, PairVec* v) {
+void cArray_cSafePtr_cGOBJ_End(Pair** out, PairVec* v) {
     *out = v->data + v->count;
 }

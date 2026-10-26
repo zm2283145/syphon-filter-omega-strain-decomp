@@ -16,16 +16,16 @@
  */
 
 
-extern Rel* func_00336DC0(Rel* r);
-extern int func_00337140(int a0, int a1, int a2);
+extern Rel* std_vector_imp_eRequirementState_1_ctor(Rel* r);
+extern int std_vector_pod_eRequirementState_resize(int a0, int a1, int a2);
 
-int func_00336D80(int a0, int a1, int a2) {
-    return func_00337140(a0, a1, a2);
+int cArray_eRequirementState_ResizeActual(int a0, int a1, int a2) {
+    return std_vector_pod_eRequirementState_resize(a0, a1, a2);
 }
 
 /* Clears the three words and sets the flag. */
-RelFlag* func_00336D90(RelFlag* self) {
-    func_00336DC0(&self->rel);
+RelFlag* cArray_eRequirementState_ctor(RelFlag* self) {
+    std_vector_imp_eRequirementState_1_ctor(&self->rel);
     self->flag = 1;
     return self;
 }
@@ -37,20 +37,20 @@ static inline void merge_flush_func_00336D80(void) {}
 /* merge_units: begin func_00336DC0 */
 #pragma push /* merge_units */
 extern int PtrVec_Reserve(int, int);
-extern Rel* func_00336E40(Rel* r);
+extern Rel* std_vector_imp_tAchievement_ctor(Rel* r);
 
-Rel* func_00336DC0(Rel* r) {
+Rel* std_vector_imp_eRequirementState_1_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
     return r;
 }
 
-int func_00336DE0(int a0, int a1) {
+int std_vector_charPtr_reserve(int a0, int a1) {
     return PtrVec_Reserve(a0, a1);
 }
 
-Rel* func_00336DF0(Rel* r) {
+Rel* std_vector_eAchievementState_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
@@ -58,8 +58,8 @@ Rel* func_00336DF0(Rel* r) {
 }
 
 /* Clears the three words and sets the flag. */
-RelFlag* func_00336E10(RelFlag* self) {
-    func_00336E40(&self->rel);
+RelFlag* cArray_tAchievement_ctor(RelFlag* self) {
+    std_vector_imp_tAchievement_ctor(&self->rel);
     self->flag = 1;
     return self;
 }
@@ -77,14 +77,14 @@ static inline void merge_flush_func_00336DC0(void) {}
  */
 
 
-Rel* func_00336E40(Rel* r) {
+Rel* std_vector_imp_tAchievement_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
     return r;
 }
 
-Rel* func_00336E60(Rel* r) {
+Rel* std_vector_tMissionStats_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

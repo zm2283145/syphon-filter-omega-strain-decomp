@@ -15,7 +15,7 @@
 #include "types.h"
 #include "loose04_types.h"
 
-int func_003EE500(Unk3EE500* self) {
+int cInterfaceModel_IsInstanced(Unk3EE500* self) {
     return 0 < self->unk8C;
 }
 #pragma pop /* merge_units */
@@ -82,20 +82,20 @@ struct It_3EE610 { LNode_3EE610* n; };
 
 struct Self_3EE610;
 extern "C" {
-It_3EE610 func_003ED850(void* l);
-void func_003ED860(It_3EE610* out, It_3EE610* in);
-It_3EE610 func_003ED870(void* l);
+It_3EE610 std_list_cInterfaceElementPtr_end(void* l);
+void cLListIterator_cInterfaceElementPtr_ctor(It_3EE610* out, It_3EE610* in);
+It_3EE610 std_list_cInterfaceElementPtr_begin(void* l);
 void IeElement_UpdateAnimation(void* p, float f);
 int IeNode_Update(Self_3EE610* self, float f);
 }
-struct ItE_3EE610 : It_3EE610 { ItE_3EE610(const ItE_3EE610& o) { n = o.n; } ItE_3EE610(const It_3EE610& t) { func_003ED860((It_3EE610*)this, (It_3EE610*)&t); } };
+struct ItE_3EE610 : It_3EE610 { ItE_3EE610(const ItE_3EE610& o) { n = o.n; } ItE_3EE610(const It_3EE610& t) { cLListIterator_cInterfaceElementPtr_ctor((It_3EE610*)this, (It_3EE610*)&t); } };
 struct Self_3EE610 {
     char pad0[0x60]; unsigned char b60; char pad61[0x6C - 0x61];
     unsigned short n6C; unsigned short n6E; char pad70[0x84 - 0x70];
     Self_3EE610** a84; void* p88; char l8C[0xD0 - 0x8C];
 };
-static inline ItE_3EE610 B0_3EE610(void* l) { return ItE_3EE610(func_003ED870(l)); }
-static inline ItE_3EE610 E0_3EE610(void* l) { return ItE_3EE610(func_003ED850(l)); }
+static inline ItE_3EE610 B0_3EE610(void* l) { return ItE_3EE610(std_list_cInterfaceElementPtr_begin(l)); }
+static inline ItE_3EE610 E0_3EE610(void* l) { return ItE_3EE610(std_list_cInterfaceElementPtr_end(l)); }
 static inline ItE_3EE610 B1_3EE610(void* l) { return B0_3EE610(l); }
 static inline ItE_3EE610 BeginE_3EE610(void* l) { return B1_3EE610(l); }
 static inline ItE_3EE610 End_3EE610(void* l) { return E0_3EE610(l); }
@@ -132,7 +132,7 @@ struct O3EE740 {
     E3EE740** items;
     O3EE740** kids;
 };
-extern "C" float func_003EE740(O3EE740* o) {
+extern "C" float cInterfaceModel_NumFrames(O3EE740* o) {
     int i;
     int j;
     float m = 0.0f;
@@ -141,7 +141,7 @@ extern "C" float func_003EE740(O3EE740* o) {
         if (v > m) m = v;
     }
     for (j = 0; j < o->n6E; j++) {
-        float v = func_003EE740(o->kids[j]);
+        float v = cInterfaceModel_NumFrames(o->kids[j]);
         if (v > m) m = v;
     }
     return m;
@@ -164,14 +164,14 @@ void IeNode_SetFlag61(char* self, char value) {
 struct Node_003EE840 { char pad[0x6E]; unsigned short count; char p70[0x84 - 0x70]; Node_003EE840** kids; };
 extern "C" {
 int String_AssignCStr_1C43A0(void* s, const char* name);
-int func_003EEAC0(void* s, const char* name);
-int func_003EEAF0(void* s, const char* name);
+int cString_opEq(void* s, const char* name);
+int std_opEq_basicstringR_charP(void* s, const char* name);
 void* func_003EEB20(void* s);
 Node_003EE840* IeNode_FindNode(Node_003EE840* n, const char* name);
 }
 static inline Node_003EE840* F3(Node_003EE840* n, const char* name) {
     int i;
-    if (func_003EEAC0(func_003EEB20(n), name)) return n;
+    if (cString_opEq(func_003EEB20(n), name)) return n;
     for (i = 0; i < n->count; i++) {
         Node_003EE840* r = IeNode_FindNode(n->kids[i], name);
         if (r) return r;
@@ -180,7 +180,7 @@ static inline Node_003EE840* F3(Node_003EE840* n, const char* name) {
 }
 static inline Node_003EE840* F2(Node_003EE840* n, const char* name) {
     int i;
-    if (func_003EEAF0(func_003EEB20(n), name)) return n;
+    if (std_opEq_basicstringR_charP(func_003EEB20(n), name)) return n;
     for (i = 0; i < n->count; i++) {
         Node_003EE840* r = F3(n->kids[i], name);
         if (r) return r;

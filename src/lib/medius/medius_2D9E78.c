@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_002D9E78(int a0) {
+int GetMyPlayer(int a0) {
     int tmp0;
 
     tmp0 = *(int*)((char*)a0 + 104);

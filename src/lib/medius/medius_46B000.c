@@ -11,7 +11,7 @@ extern int D_00598738;
 unsigned int D_00497DA0[1] = { 0x0 };
 extern int Medius_TerminateString(char *, int);
 extern int Net_SendLocked(int, int, int, int, int, int, void *);
-int func_0046B000(char *a, int b)
+int MediusGetWorldSecurityLevel(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -25,7 +25,7 @@ int func_0046B000(char *a, int b)
 /* merge_units: begin func_0046B0A0 */
 extern int D_00598740;
 int D_00497DA4 = 0;
-int func_0046B0A0(char *a, int b)
+int MediusBanPlayer(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);

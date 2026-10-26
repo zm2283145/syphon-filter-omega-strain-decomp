@@ -12,7 +12,7 @@ typedef __int128 Q128;
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
-int func_002EC580(int *);                             
+int NetGetNetUpdateErrors(int *);                             
 
 int func_00453F30(int arg0) {
     struct { int size; int st[4]; int pad[3]; } s;
@@ -20,7 +20,7 @@ int func_00453F30(int arg0) {
         return 0;
     }
     s.size = 0x18;
-    func_002EC580(&s);
+    NetGetNetUpdateErrors(&s);
     return s.st[arg0] == 2;
 }
 #pragma pop /* merge_units */
@@ -35,10 +35,10 @@ int func_00453F30(int arg0) {
  */
 
 
-void func_00453F90(void) {
+void SFOLobby_PingRequest(void) {
 }
 
-void func_00453FA0(void) {
+void SFOLobby_PingIntel(void) {
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00453F90 */
@@ -47,21 +47,21 @@ void func_00453FA0(void) {
 #pragma push /* merge_units */
 #include "loose05_types.h"
 
-extern void func_00438A10(void);
-extern void func_00438770(int enabled);
+extern void cHeadSet_LeaveChannel(void);
+extern void cHeadSet_NextFrame(int enabled);
 
 /* Dispatch the lobby notification only while the suppression flag is clear. */
-void func_00453FB0(SFOLobby* lobby)
+void SFOLobby_AudioShutdown(SFOLobby* lobby)
 {
     if (!lobby->unk23D5)
-        func_00438A10();
+        cHeadSet_LeaveChannel();
 }
 
 /* Enable the lobby operation only while the suppression flag is clear. */
-void func_00453FE0(SFOLobby* lobby)
+void SFOLobby_AudioOnFrame(SFOLobby* lobby)
 {
     if (!lobby->unk23D5)
-        func_00438770(1);
+        cHeadSet_NextFrame(1);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00453FB0 */
@@ -76,7 +76,7 @@ void func_00453FE0(SFOLobby* lobby)
 
 extern int memset(void* dst, int value, int size); /* memset */
 extern void func_0042B420(void* obj);
-extern int func_00438A70(int handle, int arg);
+extern int cHeadSet_JoinChannel(int handle, int arg);
 
 /* Clears an 84-byte record and hands it to func_0042B420. */
 void func_00454010(void* rec) {
@@ -84,9 +84,9 @@ void func_00454010(void* rec) {
     func_0042B420(rec);
 }
 
-void func_00454050(SFOLobby* self) {
+void SFOLobby_AudioStartup(SFOLobby* self) {
     if (self->unk23D5 == 0) {
-        func_00438A70(self->connHandle, 0);
+        cHeadSet_JoinChannel(self->connHandle, 0);
     }
 }
 #pragma pop /* merge_units */

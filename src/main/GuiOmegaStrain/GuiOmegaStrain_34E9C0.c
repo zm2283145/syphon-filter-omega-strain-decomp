@@ -43,7 +43,7 @@ typedef struct { char pad[0x18]; int a18; } E34EA00;
 typedef struct { int a0; int count; E34EA00* data; unsigned char aC; } L34EA00;
 extern char g_Game[];
 extern void func_00296F20(L34EA00* l);
-extern void func_00299270(L34EA00* l, int flags);
+extern void std_vector_deleter_tRequirementInfo_dtor(L34EA00* l, int flags);
 extern void* Agent_GetSelected(void* list, int idx);
 extern void AgentData_GetAwardItems(void* ag, int a, int b, L34EA00* l);
 extern void GuiPersonnelScreen_ShowItem(void* o, int i, int v);
@@ -54,7 +54,7 @@ void GuiOmegaStrain_Show(void* o, int idx)
     l.aC = 1;
     AgentData_GetAwardItems(Agent_GetSelected(g_Game, -1), 4, 0, &l);
     if (idx >= 0 && idx < l.count) GuiPersonnelScreen_ShowItem(o, idx, ((E34EA00*)((char*)l.data + idx * 28))->a18);
-    func_00299270(&l, 0);
+    std_vector_deleter_tRequirementInfo_dtor(&l, 0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0034EA00 */

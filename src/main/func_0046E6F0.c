@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046E6F0(void) {
+int MediusUtilUpdateGameWorldRequestHandler(void) {
     return 32;
 }

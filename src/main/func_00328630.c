@@ -7,9 +7,9 @@
 #include "types.h"
 #include "loose02_types.h"
 
-extern void func_0032A280(void* rec);
+extern void std_vector_deleter_Section_clear(void* rec);
 
 void GuiSlideShow_Clear(Obj328630* self) {
-    func_0032A280(self->unk48);
+    std_vector_deleter_Section_clear(self->unk48);
     self->unk58 = -1;
 }

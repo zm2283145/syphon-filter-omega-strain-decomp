@@ -8,7 +8,7 @@ struct DqTag { char c; };
 extern "C" {
 extern char D_0049AF00[];
 extern char D_0049AE50[];
-unsigned int func_003BA0C0(DqBuf* self, unsigned int n);
+unsigned int _cdeque_deleter_common_int_suggest_new_cap(DqBuf* self, unsigned int n);
 }
 static inline int Distance(DqIt first, DqIt last)
 {
@@ -30,13 +30,13 @@ static inline void Dealloc(int* p)
         Mem_Free(0, p, D_0049AF00, 0x64);
     }
 }
-extern "C" void func_003B9550(DqBuf* self, DqIt first, DqIt last, DqTag t)
+extern "C" void _cdeque_deleter_int_1_do_assign(DqBuf* self, DqIt first, DqIt last, DqTag t)
 {
     unsigned int n = Distance(first, last);
     self->size = 0;
     self->start = 0;
     if ((self->cap == 0 ? 0 : self->cap - 1) < n) {
-        unsigned int c = func_003BA0C0(self, n);
+        unsigned int c = _cdeque_deleter_common_int_suggest_new_cap(self, n);
         if (self->data) {
             Dealloc(self->data);
             self->data = 0;

@@ -9,7 +9,7 @@ extern "C" {
 void operator_delete(void* allocation);
 void ObjectList_EraseRange_37FA60(N37F950** result, L37F950* self, N37F950** first, N37F950** last);
 }
-extern "C" L37F950* func_0037F950(L37F950* self, short deleteFlag)
+extern "C" L37F950* std_list_tDataDelRec_dtor(L37F950* self, short deleteFlag)
 {
     if (self) {
         if (self) {

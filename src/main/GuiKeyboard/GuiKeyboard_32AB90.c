@@ -8,14 +8,14 @@
 #pragma push /* merge_units */
 typedef struct { char d[0x2C]; } E2AB90;
 typedef struct { int first; int count; E2AB90* buf; } V2AB90;
-extern void func_003282A0(E2AB90* e, int flag);
-void func_0032AB90(V2AB90* v)
+extern void GuiSlideShow_Slide_dtor(E2AB90* e, int flag);
+void std_vector_deleter_Slide_clear(V2AB90* v)
 {
     E2AB90* b = v->buf;
     E2AB90* e = b + v->count;
     while (b < e) {
         --e;
-        func_003282A0(e, -1);
+        GuiSlideShow_Slide_dtor(e, -1);
     }
     v->count = 0;
 }

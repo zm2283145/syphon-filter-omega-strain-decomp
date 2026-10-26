@@ -120,7 +120,7 @@ extern unsigned char g_IsMultiplayer;
 int Net_GetClock(int);
 int* Event_GetType(Event3FB020*);
 unsigned char NetObj_SendMessage(int a, int b, void* c, int target, int type);
-void func_002EBBA0(int, int*);
+void NetGetPeerToPeerHostClientIndex(int, int*);
 }
 
 extern "C" int Transport_Send(int target, Event3FB020* e, int a2, int a3)
@@ -152,7 +152,7 @@ extern "C" int Transport_Send(int target, Event3FB020* e, int a2, int a3)
             if (e->flags & 2) {
                 if (!(g_IsMultiplayer ? D_005721C0 : 1)) {
                     int type = e->f1C;
-                    func_002EBBA0(D_005721A8, &peer);
+                    NetGetPeerToPeerHostClientIndex(D_005721A8, &peer);
                     if (!NetObj_SendMessage(handle, r, buf, peer, type))
                         r = -1;
                 }
@@ -174,18 +174,18 @@ extern "C" int Transport_Send(int target, Event3FB020* e, int a2, int a3)
 
 #include "loose04_types.h"
 
-extern int func_003E5060(void);
-extern int func_003E5120(void);
-extern int func_003E51E0(void);
-extern int func_003E52A0(void);
-extern int func_003E5360(void);
-extern int func_003E53F0(void);
-extern int func_003E5470(void);
-extern int func_003E5530(void);
-extern int func_003E55B0(void);
-extern int func_003FF210(void);
-extern int func_003FF4F0(void);
-extern int func_003FF7D0(void);
+extern int cCharActionMsg_InteractParams_InitNet(void);
+extern int cCharActionMsg_DestinationParams_InitNet(void);
+extern int cCharActionMsg_MotionParams_InitNet(void);
+extern int cCharActionMsg_ObjectId_Int_Scalar_Bool_InitNet(void);
+extern int cCharActionMsg_ObjectId_Int_InitNet(void);
+extern int cCharActionMsg_ObjectId_InitNet(void);
+extern int cCharActionMsg_Vector_InitNet(void);
+extern int cCharActionMsg_Scalar_InitNet(void);
+extern int cCharActionMsg_Int_InitNet(void);
+extern int cCharActionMsg_InitNet(void);
+extern int cDisableMsg_InitNet(void);
+extern int cEnableMsg_InitNet(void);
 extern int cDamageMsg_NetRegister(void);
 extern int cActivateMsg_NetRegister(void);
 extern int cDeactivateMsg_NetRegister(void);
@@ -205,16 +205,16 @@ extern int cNetLevelInfoMsg_NetRegister(void);
  * callee registers one class), then stores Net_GetClock(0) in D_0055C7B8.
  */
 void NetMsgTypes_RegisterAll(void) {
-    func_003FF210();
-    func_003E5530();
-    func_003E55B0();
-    func_003E5470();
-    func_003E53F0();
-    func_003E5360();
-    func_003E52A0();
-    func_003E51E0();
-    func_003E5120();
-    func_003E5060();
+    cCharActionMsg_InitNet();
+    cCharActionMsg_Scalar_InitNet();
+    cCharActionMsg_Int_InitNet();
+    cCharActionMsg_Vector_InitNet();
+    cCharActionMsg_ObjectId_InitNet();
+    cCharActionMsg_ObjectId_Int_InitNet();
+    cCharActionMsg_ObjectId_Int_Scalar_Bool_InitNet();
+    cCharActionMsg_MotionParams_InitNet();
+    cCharActionMsg_DestinationParams_InitNet();
+    cCharActionMsg_InteractParams_InitNet();
     cNetActivateAndControlMsg_NetRegister();
     cNetPlayGameMsg_NetRegister();
     cNetSetGobjMsg_NetRegister();
@@ -223,8 +223,8 @@ void NetMsgTypes_RegisterAll(void) {
     cDamageMsg_NetRegister();
     cDeactivateMsg_NetRegister();
     cActivateMsg_NetRegister();
-    func_003FF4F0();
-    func_003FF7D0();
+    cDisableMsg_InitNet();
+    cEnableMsg_InitNet();
     cNetTransferRecvMsg_NetRegister();
     Voice_RegisterHeadsetSemaphore();
     NpcInfo_RegisterNetType();
@@ -257,8 +257,8 @@ struct NMap { NObj* obj; int index; };
 extern "C" {
 NMap* NetMap_Lookup(int id);
 void* Mem_Alloc(int, int, char*, int);
-void* func_00436C00(void* p);
-int func_004343E0(void* mgr, int id);
+void* cNPCInfoObject_ctor(void* p);
+int cNPCInfoObject_GetOwner_uint(void* mgr, int id);
 extern void* D_0055C988;
 extern char D_004BE228[];
 int Player_GetIndex(int id);
@@ -277,10 +277,10 @@ extern "C" int Player_GetIndex(int id) {
                         AllocGuard g;
                         p = Mem_Alloc(0, 1, D_004BE228, 0x22F);
                     }
-                    if (p) p = func_00436C00(p);
+                    if (p) p = cNPCInfoObject_ctor(p);
                     D_0055C988 = p;
                 }
-                r = func_004343E0(D_0055C988, id);
+                r = cNPCInfoObject_GetOwner_uint(D_0055C988, id);
             } else {
                 r = m->index;
             }

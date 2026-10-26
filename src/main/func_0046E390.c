@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046E390(void) {
+int MediusUniqueCallbackFileGetAttributesRequestHandler(void) {
     return 196;
 }

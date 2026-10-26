@@ -48,16 +48,16 @@ extern char D_004BC640[];
 int ParticleLib_FindId(Lib* lib, char* name);
 int FileMan_FindMember(Res* r);
 char* FileMan_ReadData(Res* r);
-void func_0036DEC0(Res* r);
+void cFileMan_Close(Res* r);
 Def* ParticleDef_Parse(Lib* lib, char* str, char* tex, Def* obj);
-void func_0036E310(Res* r, char* name, Res* parent);
+void cFileMan_ctor_charP_cFileManR(Res* r, char* name, Res* parent);
 int TexMan_FindOrLoad(void* mgr, Res* r);
 void FileMan_Release(Res* r, int f);
-void func_003A5C20(void* list, Def** v);
+void std_list_cParticleDefinitionPtr_push_back(void* list, Def** v);
 char* strncpy(void* d, const void* s, int n);
 void Libc_Strcat(char* d, const char* s);
 void Resource_Construct(Res* r);
-void func_0036DFB0(Res* r, char* name, Res* parent);
+void cFileMan_EncodeFilename_charP_cFileManR(Res* r, char* name, Res* parent);
 bool ParticleLib_LoadPar(Lib* lib, Res* res);
 }
 
@@ -68,7 +68,7 @@ extern "C" bool ParticleLib_LoadPar(Lib* lib, Res* res)
     bool ok = true;
     if (ParticleLib_FindId(lib, res->name) == -1 && !(unsigned char)FileMan_FindMember(res)) {
         char* data = FileMan_ReadData(res);
-        func_0036DEC0(res);
+        cFileMan_Close(res);
         if (data) {
             Def* def;
             char texName[0x8C];
@@ -78,7 +78,7 @@ extern "C" bool ParticleLib_LoadPar(Lib* lib, Res* res)
                 Res tex;
                 int i;
                 if (!texName[0]) return 0;
-                func_0036E310(&tex, texName, res);
+                cFileMan_ctor_charP_cFileManR(&tex, texName, res);
                 def->tex = TexMan_FindOrLoad(g_TextureMgr, &tex);
                 def->q80 = IV4(0, 0, 0, 0);
                 def->q90 = V4(0.0f, 0.0f, 0.0f, 0.0f);
@@ -99,7 +99,7 @@ extern "C" bool ParticleLib_LoadPar(Lib* lib, Res* res)
                     FileMan_Release(&tex, -1);
                     return ok;
                 }
-                func_003A5C20(lib->list, &def);
+                std_list_cParticleDefinitionPtr_push_back(lib->list, &def);
                 FileMan_Release(&tex, -1);
             }
             for (k = 0; k < def->nSub; k++) {
@@ -109,7 +109,7 @@ extern "C" bool ParticleLib_LoadPar(Lib* lib, Res* res)
                 name[16] = 0;
                 Libc_Strcat(name, D_004BC640);
                 Resource_Construct(&sub);
-                func_0036DFB0(&sub, name, res);
+                cFileMan_EncodeFilename_charP_cFileManR(&sub, name, res);
                 ParticleLib_LoadPar(lib, &sub);
                 FileMan_Release(&sub, -1);
             }

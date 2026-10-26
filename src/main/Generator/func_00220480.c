@@ -8,19 +8,19 @@
 #include "Generator_types.h"
 
 /* Iterator dereference: address of the node value. */
-int* func_00220480(GenListPos* it) {
+int* cLListIterator_cSafePtr_cGOBJ_opMul(GenListPos* it) {
     return &it->node->value;
 }
 
-Word* func_00220490(Word* dst, Word* src) {
+Word* cLListIterator_cSafePtr_cGOBJ_opAssign(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_002204A0(Iter* out, PtrVec* v) {
+void cLList_cSafePtr_cGOBJ_Begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 
-void* func_002204B0(void* self) {
+void* cLListIterator_cSafePtr_cGOBJ_ctor_void(void* self) {
     return self;
 }

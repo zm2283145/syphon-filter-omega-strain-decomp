@@ -2,7 +2,7 @@
 #include "npc_auth.h"
 typedef struct { char pad[0x30]; void* net; } Npc3BB0;
 extern void cNPC_v72(Npc3BB0* o);
-void func_002D3BB0(Npc3BB0* o)
+void cNetNPC_ActivateByRadiusOff(Npc3BB0* o)
 {
     if (NpcAuth_IsLocal())
         cNPC_v72(o);

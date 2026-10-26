@@ -3,5 +3,5 @@
 
 /* Return the argument unchanged. */
 #pragma optimization_level 1
-DEFINE_IDENTITY_RETURN(func_0020AF70)
+DEFINE_IDENTITY_RETURN(details_compressed_pair_imp_cAllocator_cSkaTransBLEND_int_1_second_void)
 #pragma optimization_level reset

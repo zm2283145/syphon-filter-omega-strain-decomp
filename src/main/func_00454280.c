@@ -5,7 +5,7 @@ typedef struct List { int pad0; int count; Item* items; } List;
 typedef struct Box { char pad[0x94]; unsigned int size; } Box;
 typedef struct Self { char pad[0x48]; Box* box; } Self;
 extern List* g_Hud;
-extern void func_00424410(Box*, int*, unsigned int*);
+extern void GuiArrayWidget_GetSelected(Box*, int*, unsigned int*);
 extern void GuiTextListWidget_Clear(Box*);
 extern void GuiTextListWidget_AddItem(Box*, char*, int, int);
 extern void GuiArrayWidget_Select(Box*, int, unsigned int);
@@ -17,7 +17,7 @@ void GuiRadioLog_Refill(Self* self)
     List* l;
     int i;
     if (self->box == 0) return;
-    func_00424410(self->box, &a, &b);
+    GuiArrayWidget_GetSelected(self->box, &a, &b);
     l = g_Hud;
     if (l == 0) return;
     GuiTextListWidget_Clear(self->box);

@@ -15,7 +15,7 @@ void Game_EndLevel(void*, int);
 }
 #pragma push
 #pragma opt_propagation off
-extern "C" int func_0020E350(int a0, int a1, int a2, Pk20E350* arg) {
+extern "C" int cEndLevelMsg_NetEndLevelCallback(int a0, int a1, int a2, Pk20E350* arg) {
     NetRecvGuard g;
     if (D_005721D0) {
         Pk20E350* p = arg;

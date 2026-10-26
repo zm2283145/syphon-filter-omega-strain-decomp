@@ -6,5 +6,5 @@
 #include "types.h"
 
 /* Empty stub. */
-void func_00403FC0(void) {
+void Monster_MonsterPartMemory(void) {
 }

@@ -6,7 +6,7 @@
 typedef struct { unsigned char c[4]; } Bytes4;
 
 /* Copies four bytes (e.g. an RGBA color) and returns the destination. */
-Bytes4* func_003C21A0(Bytes4* dst, Bytes4* src)
+Bytes4* tFaceFlags_opAssign(Bytes4* dst, Bytes4* src)
 {
     unsigned char g, b, a;
     dst->c[0] = src->c[0];

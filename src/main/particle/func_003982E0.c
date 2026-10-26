@@ -9,11 +9,11 @@
 extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
 
 /* push_back on a pointer vector. */
-int func_003982E0(PtrVec* v, int value) {
+int std_vector_cEffectRequestPtr_push_back(PtrVec* v, int value) {
     return PtrVec_Insert(v, v->data + v->count, 1, value);
 }
 
 /* push_back on a pointer vector. */
-int func_00398300(PtrVec* v, int value) {
+int cArray_intPtr_PushBackActual(PtrVec* v, int value) {
     return PtrVec_Insert(v, v->data + v->count, 1, value);
 }

@@ -105,8 +105,8 @@ static inline int flagok(__int128 k, int flag) {
     else ok = 0;
     return ok;
 }
-void func_00400F20(KState* s, KOut* out, short* sh, __int128 key, __int128 k);
-int func_00400620(KState* s, int step, __int128 key, __int128 cmp, unsigned int start, int idx, int mode, int flag, KOut* out, short* sh)
+void SwapDependencies__7MonsterFR3SKLR8ManParts11(KState* s, KOut* out, short* sh, __int128 key, __int128 k);
+int FindNextAnyTexture__7MonsterFi11UiUiUiUiR3SKLR8ManParts(KState* s, int step, __int128 key, __int128 cmp, unsigned int start, int idx, int mode, int flag, KOut* out, short* sh)
 {
     __int128 m50;
     __int128 mask;
@@ -133,7 +133,7 @@ int func_00400620(KState* s, int step, __int128 key, __int128 cmp, unsigned int 
                 sh[idx + 0x200] = s->tex[start].a;
                 sh[idx + 0x220] = s->tex[start].b;
                 if (!kmeq2(s->m40, K, key))
-                    func_00400F20(s, out, sh, key, s->keys[start]);
+                    SwapDependencies__7MonsterFR3SKLR8ManParts11(s, out, sh, key, s->keys[start]);
                 return start;
             }
         }
@@ -150,7 +150,7 @@ int func_00400620(KState* s, int step, __int128 key, __int128 cmp, unsigned int 
                 sh[idx + 0x200] = s->tex[start].a;
                 sh[idx + 0x220] = s->tex[start].b;
                 if (!kmeq2(s->m40, K, key))
-                    func_00400F20(s, out, sh, key, s->keys[start]);
+                    SwapDependencies__7MonsterFR3SKLR8ManParts11(s, out, sh, key, s->keys[start]);
                 return start;
             }
         }

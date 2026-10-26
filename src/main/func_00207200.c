@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern int func_00207210(int);
+extern int std_basic_string_char_char_traits_char_size(int);
 
-int func_00207200(int a0) {
-    return func_00207210(a0);
+int std_basic_string_char_char_traits_char_length(int a0) {
+    return std_basic_string_char_char_traits_char_size(a0);
 }

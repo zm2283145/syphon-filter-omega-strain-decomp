@@ -8,7 +8,7 @@
 #include "loose04_types.h"
 
 /* Returns the address 8 bytes into the object pointed to by the second word. */
-char* func_003D3600(char** self) {
+char* cLList_int_Back(char** self) {
     return self[1] + 8;
 }
 
@@ -17,7 +17,7 @@ void Renderer_SetAspect(Unk3D3670* self, float value) {
 }
 
 /* Fills an entry: position, a tag byte, and marks it in use. */
-void func_003D3620(L4Entry110* entry, Vec4* pos, int tag) {
+void cXViewport_SetWindow(L4Entry110* entry, Vec4* pos, int tag) {
     entry->unk00.x = pos->x;
     entry->unk00.y = pos->y;
     entry->unk00.z = pos->z;
@@ -26,7 +26,7 @@ void func_003D3620(L4Entry110* entry, Vec4* pos, int tag) {
     entry->unk106 = 1;
 }
 
-Vec4* func_003D3650(Vec4* v, float x, float y, float z, float w) {
+Vec4* tRECT_ctor(Vec4* v, float x, float y, float z, float w) {
     v->x = x;
     v->y = y;
     v->z = z;
@@ -52,18 +52,18 @@ void Renderer_PushCameraState(int a0) {
 }
 
 /* Assumed to act on the same object as its neighbours. */
-void func_003D36C0(Unk3D3670* self, int unused, int value) {
+void XLib_SetDepthTest(Unk3D3670* self, int unused, int value) {
     self->unkF4 = value & 255;
 }
 
-unsigned char func_003D36D0(Unk3D36D0* self) {
+unsigned char cUserFrameEnv_HasZBuffer(Unk3D36D0* self) {
     return self->unk10;
 }
 
-int func_003D36E0(Unk3D36D0* self) {
+int cUserFrameEnv_GetZPSM(Unk3D36D0* self) {
     return self->unk0C;
 }
 
-int func_003D36F0(Unk3D36D0* self) {
+int cUserFrameEnv_GetPSM(Unk3D36D0* self) {
     return self->unk08;
 }

@@ -79,7 +79,7 @@ void* Mem_Alloc(int, int, char*, int);
 int FileMan_FindMember(void*);
 int FileMan_GetSize(void*);
 int FileMan_LoadMemberSync(void*, char**, int);
-void func_0036DEC0(void*);
+void cFileMan_Close(void*);
 int Libc_Sscanf(char*, char*, ...);
 }
 inline int AtEnd(char* a, char* b) { return a >= b; }
@@ -89,7 +89,7 @@ extern "C" void Appearance_LoadPartSortTable(App* self, char* path) {
  if (self->count != 0) return;
  FileManEntry fe;
  char* buf;
- func_0036E4B0(&fe, path, 0, 0);
+ cFileMan_ctor_charP_cFileIOP_bool(&fe, path, 0, 0);
  int count = 0;
  if ((unsigned char)FileMan_FindMember(&fe)) { FileMan_Release(&fe, -1); return; }
  int size = FileMan_GetSize(&fe);
@@ -101,7 +101,7 @@ extern "C" void Appearance_LoadPartSortTable(App* self, char* path) {
  }
  buf = p;
  FileMan_LoadMemberSync(&fe, &buf, size);
- func_0036DEC0(&fe);
+ cFileMan_Close(&fe);
  char* base = buf;
  char* dst = base;
  char* src = base;
@@ -158,9 +158,9 @@ extern char D_004BE7F0[];
 #define D_004BE7F0 ((char*)&D_004BE7F0) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_0036E4B0(FileMan* f, char* name, int a, int b);
+extern void cFileMan_ctor_charP_cFileIOP_bool(FileMan* f, char* name, int a, int b);
 #endif /* merge_units */
-#define func_0036E4B0(a0, a1, a2, a3) ((void)func_0036E4B0((void *)(a0), (const char *)(a1), (void *)(a2), (a3))) /* merge_units */
+#define cFileMan_ctor_charP_cFileIOP_bool(a0, a1, a2, a3) ((void)cFileMan_ctor_charP_cFileIOP_bool((void *)(a0), (const char *)(a1), (void *)(a2), (a3))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int FileMan_FindMember(FileMan* f);
@@ -183,9 +183,9 @@ extern int FileMan_LoadMemberSync(FileMan* f, __int128** out, int size);
 #define FileMan_LoadMemberSync(a0, a1, a2) (FileMan_LoadMemberSync((void *)(a0), (char * *)(a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_0036DEC0(FileMan* f);
+extern void cFileMan_Close(FileMan* f);
 #endif /* merge_units */
-#define func_0036DEC0(a0) (func_0036DEC0((void *)(a0))) /* merge_units */
+#define cFileMan_Close(a0) (cFileMan_Close((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void FileMan_Release(FileMan* f, int a);
@@ -210,7 +210,7 @@ void AgentPartCache_LoadRules(Obj37F0* s, char* name)
     __int128* end;
     __int128* p;
     void* mem;
-    func_0036E4B0(&fm, name, 0, 0);
+    cFileMan_ctor_charP_cFileIOP_bool(&fm, name, 0, 0);
     if (!(unsigned char)FileMan_FindMember(&fm)) {
         size = FileMan_GetSize(&fm);
         if (g_ProfileLockEnabled) Alloc_Lock(9);
@@ -220,7 +220,7 @@ void AgentPartCache_LoadRules(Obj37F0* s, char* name)
         g_ProfileLockDepth--;
         s->buf = (__int128*)mem;
         FileMan_LoadMemberSync(&fm, &s->buf, size);
-        func_0036DEC0(&fm);
+        cFileMan_Close(&fm);
         p = s->buf;
         if (p) {
             end = (__int128*)((char*)p + size);
@@ -233,12 +233,12 @@ void AgentPartCache_LoadRules(Obj37F0* s, char* name)
     FileMan_Release(&fm, -1);
 }
 #undef D_004BE7F0 /* merge_units */
-#undef func_0036E4B0 /* merge_units */
+#undef cFileMan_ctor_charP_cFileIOP_bool /* merge_units */
 #undef FileMan_FindMember /* merge_units */
 #undef FileMan_GetSize /* merge_units */
 #undef Mem_Alloc /* merge_units */
 #undef FileMan_LoadMemberSync /* merge_units */
-#undef func_0036DEC0 /* merge_units */
+#undef cFileMan_Close /* merge_units */
 #undef FileMan_Release /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_004037F0(void) {}
@@ -259,7 +259,7 @@ typedef struct {
 extern int g_TextureMgr;
 extern __int128 D_005716E0;
 extern void Tex_Release(int a, int b, int c);
-void func_00403940(S_403940* s, unsigned int i)
+void Monster_FreeTexture(S_403940* s, unsigned int i)
 {
     if (s->t[i] != 0) {
         s->t[i]--;
@@ -296,7 +296,7 @@ typedef struct {
 extern __int128 D_0055DE00;
 extern __int128 g_AgentPartCache;
 extern int String_CompareN(char* a, char* b, int n);
-extern void func_0036DFB0(void* f, char* name, void* src);
+extern void cFileMan_EncodeFilename_charP_cFileManR(void* f, char* name, void* src);
 extern short TexMan_LoadNewTexture(int lib, void* f, void* key);
 extern short TexCache_LoadErrorTexture(int lib);
 static inline __int128 a3and(__int128 a, __int128 b) {
@@ -356,10 +356,10 @@ void TexCache_LoadPartTexture(A3State* st, __int128 key, void* f, short* outA, s
     st->names[i].q = key;
     sprintf(buf, "%s.TDX", (char*)&key);
     buf[14] = '0';
-    func_0036DFB0(f, buf, f);
+    cFileMan_EncodeFilename_charP_cFileManR(f, buf, f);
     st->tex[i].a = TexMan_LoadNewTexture(g_TextureMgr, f, &key);
     buf[14] = '1';
-    func_0036DFB0(f, buf, f);
+    cFileMan_EncodeFilename_charP_cFileManR(f, buf, f);
     st->tex[i].b = TexMan_LoadNewTexture(g_TextureMgr, f, &key);
     if (st->tex[i].a == -1)
         st->tex[i].a = TexCache_LoadErrorTexture(g_TextureMgr);

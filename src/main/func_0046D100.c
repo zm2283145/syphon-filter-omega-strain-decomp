@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046D100(void) {
+int MediusUniqueCallbackGetPolicyRequestHandler(void) {
     return 44;
 }

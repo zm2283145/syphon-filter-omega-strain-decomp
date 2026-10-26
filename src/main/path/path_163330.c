@@ -32,7 +32,7 @@ static inline void merge_flush_func_00163330(void) {}
 /* merge_units: begin func_001633D0 */
 #pragma push /* merge_units */
 /* Fill an inclusive index range with a value. */
-DEFINE_WORD_FILL_RANGE(func_001633D0)
+DEFINE_WORD_FILL_RANGE(nArray_InitSlots_intP_int_int_intR)
 #pragma pop /* merge_units */
 /* merge_units: end func_001633D0 */
 

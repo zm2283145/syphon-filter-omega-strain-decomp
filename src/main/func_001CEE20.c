@@ -2,12 +2,12 @@
 typedef struct { int* p; } F8It_1CE;
 typedef struct { float m[4][4]; } F8Mtx_1CE;
 typedef struct { char pad0[0x50]; unsigned char dirty; char pad51[0xF]; F8Mtx_1CE basis; char padA0[0x4]; char kids[4]; } F8Bone_1CE;
-extern void func_001CF100(F8It_1CE* out, void* v);
-extern void func_001CF0E0(F8It_1CE* out, void* v);
-extern int func_001CEF10(F8It_1CE* a, F8It_1CE* b);
-extern int* func_001CF0D0(F8It_1CE* it);
-extern void func_001CEF50(int child);
-extern F8It_1CE* func_001CEF30(F8It_1CE* it);
+extern void cArray_cXformNodePtr_Begin(F8It_1CE* out, void* v);
+extern void cArray_cXformNodePtr_End(F8It_1CE* out, void* v);
+extern int cArray_cXformNodePtr_ConstIterator_opNe(F8It_1CE* a, F8It_1CE* b);
+extern int* cArray_cXformNodePtr_ConstIterator_opMul(F8It_1CE* it);
+extern void cXformNode_SetNeedsUpdate(int child);
+extern F8It_1CE* cArray_cXformNodePtr_ConstIterator_opInc(F8It_1CE* it);
 void Bone_SetLocalBasis(F8Bone_1CE* b, F8Mtx_1CE* m)
 {
     b->basis.m[0][0] = m->m[0][0];
@@ -27,12 +27,12 @@ void Bone_SetLocalBasis(F8Bone_1CE* b, F8Mtx_1CE* m)
         F8It_1CE end;
         F8It_1CE* pe;
         b->dirty = 1;
-        func_001CF100(&it, b->kids);
-        func_001CF0E0(&end, b->kids);
+        cArray_cXformNodePtr_Begin(&it, b->kids);
+        cArray_cXformNodePtr_End(&end, b->kids);
         pe = &end;
-        while (func_001CEF10(&it, pe)) {
-            func_001CEF50(*func_001CF0D0(&it));
-            func_001CEF30(&it);
+        while (cArray_cXformNodePtr_ConstIterator_opNe(&it, pe)) {
+            cXformNode_SetNeedsUpdate(*cArray_cXformNodePtr_ConstIterator_opMul(&it));
+            cArray_cXformNodePtr_ConstIterator_opInc(&it);
         }
     }
 }

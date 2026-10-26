@@ -41,8 +41,8 @@
 #define EZNETCTL_FNO_SET_PROPERTIES         1
 #define EZNETCTL_FNO_SET_COMBINATION        2
 #define EZNETCTL_FNO_GET_STATUS             3
-#define EZNETCTL_FNO_5                      5 /* func_00353130, no arguments */
-#define EZNETCTL_FNO_6                      6 /* func_003531B8, no arguments */
+#define EZNETCTL_FNO_5                      5 /* ezNetCtlUpInterface, no arguments */
+#define EZNETCTL_FNO_6                      6 /* ezNetCtlDownInterface, no arguments */
 #define EZNETCTL_FNO_PRELOAD_MODEM_CNF      7
 
 #define ezNetCtl_modId     D_00492C30

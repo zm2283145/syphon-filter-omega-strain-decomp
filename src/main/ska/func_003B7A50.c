@@ -14,11 +14,11 @@ extern "C" {
 extern char D_004BCE80[];
 extern char D_004BCFC8[];
 extern char D_004BC4C0[];
-void func_003B7A10(V3B7A50* a, V3B7A50* b);
+void std_swap_vectordeleterR_vectordeleterR_40(V3B7A50* a, V3B7A50* b);
 }
 /* element copy: three scalar fields, then the quadword through unfolded pointers (VCopyF idiom) */
 static inline void Construct3B7A50(E3B7A50* p, const E3B7A50* s) { if (p) { p->a = s->a; p->b = s->b; p->c = s->c; { void* dv = &p->v; const void* sv = &s->v; VCopyF(dv, sv); } } }
-extern "C" void func_003B7A50(V3B7A50* v, unsigned int n)
+extern "C" void std_vector_imp_cSkaPlaybackItem_reserve(V3B7A50* v, unsigned int n)
 {
     if (v->cap < n) {
         unsigned int max = 0x300000;
@@ -39,7 +39,7 @@ extern "C" void func_003B7A50(V3B7A50* v, unsigned int n)
             Construct3B7A50(d, s);
             tmp.count++;
         }
-        func_003B7A10(&tmp, v);
+        std_swap_vectordeleterR_vectordeleterR_40(&tmp, v);
         {
             E3B7A50* b_ = tmp.data;
             E3B7A50* e_ = b_ + tmp.count;

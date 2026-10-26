@@ -7,17 +7,17 @@
 /* merge_units: begin func_00306540 */
 #include "types.h"
 
-extern int func_00306630(int);
+extern int rt_time_sleep_usecs_platform(int);
 
-int func_00306540(int a0) {
-    return func_00306630(a0);
+int rt_time_sleep_usecs(int a0) {
+    return rt_time_sleep_usecs_platform(a0);
 }
 /* merge_units: end func_00306540 */
 
 /* merge_units: begin func_00306558 */
-extern int func_00306870(int);
+extern int rt_time_platform_get_time_string(int);
 
-int func_00306558(int a0) {
-    return func_00306870(a0);
+int rt_time_get_time_string(int a0) {
+    return rt_time_platform_get_time_string(a0);
 }
 /* merge_units: end func_00306558 */

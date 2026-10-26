@@ -27,7 +27,7 @@ static inline unsigned int MaxSize(void) {
     return (*(int*)D_004BCEE8);
 }
 
-unsigned int func_003BA0C0(Deq* self, unsigned int n)
+unsigned int _cdeque_deleter_common_int_suggest_new_cap(Deq* self, unsigned int n)
 {
     unsigned int m = MaxSize();
     unsigned int c;
@@ -61,7 +61,7 @@ struct M {
 };
 #pragma push
 #pragma opt_unroll_loops off
-extern "C" M* func_003BA1B0(M* d, const V* s)
+extern "C" M* cArray_FixedSize_cVector_4_ctor_cVectorR(M* d, const V* s)
 {
     V* p = d->r;
     V* e = d->r + 4;

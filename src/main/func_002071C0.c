@@ -7,14 +7,14 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern Word* func_002071B0(Word*);
-extern void func_00207200(void);
+extern Word* details_compressed_pair_imp_rep_s_2_first_void(Word*);
+extern void std_basic_string_char_char_traits_char_length(void);
 
 /* Tests bit 0 of the word. */
-int func_002071C0(Word* self) {
-    return (func_002071B0(self)->value & 1) != 0;
+int std_basic_string_char_char_traits_char_is_long(Word* self) {
+    return (details_compressed_pair_imp_rep_s_2_first_void(self)->value & 1) != 0;
 }
 
 void String_Length(void) {
-    func_00207200();
+    std_basic_string_char_char_traits_char_length();
 }

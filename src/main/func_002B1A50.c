@@ -8,7 +8,7 @@ extern int sprintf(char* buf, const char* fmt, ...);
 extern char* Loc_LookupText(char* key);
 extern void GuiTextWidget_SetText(void* w, char* text, int flags);
 /* Relabels the four value buttons from the table row. */
-void func_002B1A50(S2B1A50* s)
+void GuiQuickChat_UpdateDirText(S2B1A50* s)
 {
     int i;
     for (i = 0; i < 4; i++) {

@@ -4,7 +4,7 @@ extern int scePrintf(const char *, ...);
 extern int sceSifCheckStatRpc(void *);
 extern void DelayThread(int);
 
-int func_00118FA0(int mode)
+int sceCdSyncS(int mode)
 {
     if (mode == 0) {
         if (D_00487890 > 0) scePrintf("S cmd wait

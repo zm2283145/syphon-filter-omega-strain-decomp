@@ -12,7 +12,7 @@ extern char g_Game[];
 extern int Service_Lookup(char*, int);
 extern int SoundMgr_IsQuipPlaying(int, int);
 extern void VoiceQueue_Fire(char*);
-extern int func_00461220(char*, int);
+extern int cArray_tQuip_opIndex(char*, int);
 extern int func_00461240(char*);
 extern int func_00461250(void);
 
@@ -22,7 +22,7 @@ extern int func_00461250(void);
         int svc = Service_Lookup(g_Game, func_00461250());                       \
         int idx = *(int*)(self + (idxOff));                                          \
         if (idx < func_00461240(self + (subOff))) {                                  \
-            if (idx == 0 || !SoundMgr_IsQuipPlaying(svc, func_00461220(self + (subOff), idx - 1))) { \
+            if (idx == 0 || !SoundMgr_IsQuipPlaying(svc, cArray_tQuip_opIndex(self + (subOff), idx - 1))) { \
                 float t = *(float*)(self + (subOff) + 0x10) - dt;                    \
                 *(float*)(self + (subOff) + 0x10) = t;                               \
                 if (t < 0.0f) VoiceQueue_Fire(self + (subOff));                        \

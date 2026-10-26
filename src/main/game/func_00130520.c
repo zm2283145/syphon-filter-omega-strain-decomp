@@ -17,7 +17,7 @@ extern void Resource_Construct(H130*);
 extern int sprintf(char*, const char*, ...);
 extern int Archive_Open(char*, char*, int, int);
 extern void Hog_Register(H130*, void*, int, int);
-extern void func_0036E140(H130*, void*, int, int);
+extern void cFileMan_EncodeFilename_charP_cFileIOP_bool(H130*, void*, int, int);
 extern int Loc_GetLanguage(void);
 extern void Subtitles_SelectTrack(int);
 extern void Subtitles_SetEnabled(int);
@@ -45,7 +45,7 @@ extern "C" void GameFlow_StartMovie(O130* o, void* name, unsigned char flag) {
             sprintf(buf, D_0049A950);
             Hog_Register(&hog, name, Archive_Open(o->f3c, buf, 1, 0), 0);
         } else {
-            func_0036E140(&hog, name, 0, 0);
+            cFileMan_EncodeFilename_charP_cFileIOP_bool(&hog, name, 0, 0);
         }
         lang = Loc_GetLanguage();
         l = lang;

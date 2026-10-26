@@ -5,7 +5,7 @@
  */
 
 /* merge_units: begin func_00116278 */
-int func_00116278(volatile unsigned int* d, volatile unsigned int* s, unsigned int n)
+int kCopy_void_2(volatile unsigned int* d, volatile unsigned int* s, unsigned int n)
 {
     unsigned int i;
     n >>= 2;
@@ -15,7 +15,7 @@ int func_00116278(volatile unsigned int* d, volatile unsigned int* s, unsigned i
 /* merge_units: end func_00116278 */
 
 /* merge_units: begin func_001162B0 */
-int *func_001162B0(int *p, int *end, int val)
+int *kFindAddress(int *p, int *end, int val)
 {
     while (*p != val && p < end) p++;
     return p < end ? p : 0;

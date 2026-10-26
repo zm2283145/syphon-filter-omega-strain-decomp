@@ -50,7 +50,7 @@ extern int Script_RegisterType();
 extern int Script_RegisterNative();
 extern int cGOBJ_GetScriptTypeKeyPtr();
 extern int Script_RegisterNative_2();
-extern int func_0014A6A0();
+extern int cNPC_SOBJ_getClassId();
 void StaticInit_RegisterAi(void)
 {
     D_004EE548 = D_0049C670;
@@ -73,5 +73,5 @@ void StaticInit_RegisterAi(void)
     D_004EE658 = Script_RegisterNative_2(Script_TeamSetEnemyAllPlayers, D_00493880, "TeamSetEnemyAllPlayers", 1, D_00493888);
     D_004EE660 = Script_RegisterNative_2(Script_TeamDelEnemyAllPlayers, D_00493880, "TeamDelEnemyAllPlayers", 1, D_00493888);
     D_004EE668 = Script_RegisterNative_2(Script_SetFootstepSoundRadius, D_00493880, "SetFootstepSoundRadius", 2, cGOBJ_GetScriptTypeKeyPtr(), D_00493890);
-    D_004EE670 = Script_RegisterNative_2(Script_CastNPC, func_0014A6A0(), "CastNPC", 1, cGOBJ_GetScriptTypeKeyPtr());
+    D_004EE670 = Script_RegisterNative_2(Script_CastNPC, cNPC_SOBJ_getClassId(), "CastNPC", 1, cGOBJ_GetScriptTypeKeyPtr());
 }

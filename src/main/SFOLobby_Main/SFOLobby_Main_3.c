@@ -11,7 +11,7 @@ int String_Copy(char*, char*);
 int Lobby_GetTime(void);
 int* SFOLobby_AllocZeroed(int);
 void SFOLobby_Free(int*);
-int func_0046A2D0(void*, void*);
+int MediusFindWorldByName(void*, void*);
 void func_00454010(char*);
 int sprintf(char*, const char*, ...);
 void* memset(void*, int, int);
@@ -50,8 +50,8 @@ typedef struct {
     int errLine;
 } Lobby_4526D0;
 int SFOLobby_Poll(Lobby_4526D0*, int, int, int);
-int func_00452050(Lobby_4526D0*, int, char*);
-int func_004524C0(Lobby_4526D0*, char*, char*);
+int SFOLobby_JoinChannel(Lobby_4526D0*, int, char*);
+int SFOLobby_CreateChannel(Lobby_4526D0*, char*, char*);
 
 static inline void SetErr_4526D0(Lobby_4526D0* self, unsigned char code, char* file, int line)
 {
@@ -88,7 +88,7 @@ int func_004526D0(Lobby_4526D0* self, char* room)
     self->f248 = SFOLobby_AllocZeroed(D_00585F90 * 4);
     for (i = 0; i < D_00585F90; i++)
         self->f248[i] = -1;
-    self->f24C = func_0046A2D0(&req, &func_00452A70);
+    self->f24C = MediusFindWorldByName(&req, &func_00452A70);
     while (self->f244 == 0) {
         self->f2409 = 1;
         if (self->cb)
@@ -110,7 +110,7 @@ int func_004526D0(Lobby_4526D0* self, char* room)
     for (j = 0; j < D_00585F90; j++) {
         id = self->f248[j];
         if (id != -1) {
-            if (func_00452050(self, id, info)) {
+            if (SFOLobby_JoinChannel(self, id, info)) {
                 self->f1EB4 = id;
                 sprintf(self->f1EB8, D_004C0FD0, room, j);
                 Free_4526D0(self);
@@ -118,12 +118,12 @@ int func_004526D0(Lobby_4526D0* self, char* room)
             }
         } else {
             sprintf(name, D_004C0FD0, room, j);
-            if (!func_004524C0(self, name, pass)) {
+            if (!SFOLobby_CreateChannel(self, name, pass)) {
                 SetErr_4526D0(self, 0x17, D_004C0FB0, 0x4F6);
                 Free_4526D0(self);
                 return 0;
             }
-            if (!func_00452050(self, self->f1B38, info)) {
+            if (!SFOLobby_JoinChannel(self, self->f1B38, info)) {
                 SetErr_4526D0(self, 0x16, D_004C0FB0, 0x4FF);
                 Free_4526D0(self);
                 return 0;

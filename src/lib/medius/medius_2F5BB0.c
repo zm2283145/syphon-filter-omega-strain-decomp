@@ -1,14 +1,14 @@
 volatile int D_0049089C = 0;
-extern int func_002F7B48(void);
-extern int func_002F67F0(void);
-int func_002F5BB0(void)
+extern int rt_comm_platform_startup(void);
+extern int rt_comm_metric_init(void);
+int rt_comm_startup(void)
 {
     volatile int *p = &D_0049089C;
     int r;
     if (*p == 0) {
-        r = func_002F7B48();
+        r = rt_comm_platform_startup();
         if (r) return r;
-        r = func_002F67F0();
+        r = rt_comm_metric_init();
         if (r) return r;
     }
     (*p)++;

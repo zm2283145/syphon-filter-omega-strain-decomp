@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_003F9E20(char* self) {
+void* details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_10(char* self) {
     return self + 4;
 }

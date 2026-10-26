@@ -7,13 +7,13 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern int func_0013ADF0(void*);
+extern int details_compressed_pair_imp_cAllocator_node_node_base_1_second_void(void*);
 
-int func_001F2690(char* self) {
-    return func_0013ADF0(self + 4);
+int std_list_deleter_voidPtr_tail(char* self) {
+    return details_compressed_pair_imp_cAllocator_node_node_base_1_second_void(self + 4);
 }
 
-Word* func_001F26A0(Word* self, int value) {
+Word* std_list_deleter_voidPtr_generic_iterator_ctor_nodeP(Word* self, int value) {
     self->value = value;
     return self;
 }

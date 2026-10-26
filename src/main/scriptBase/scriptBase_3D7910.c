@@ -20,7 +20,7 @@
 extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
 
 /* push_back: inserts one value at the end. */
-int func_003D7910(PtrVec* v, int value) {
+int std_vector_FuncDefPtr_push_back(PtrVec* v, int value) {
     return PtrVec_Insert(v, v->data + v->count, 1, value);
 }
 /* merge_units: generate this block's code under its own pragmas */

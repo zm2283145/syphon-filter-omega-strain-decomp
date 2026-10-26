@@ -7,15 +7,15 @@
 #include "path_types.h"
 
 /* end(): one past the last element. */
-PathPair* func_0015D3B0(PathPairVec* v) {
+PathPair* std_vector_imp_tNodeLink_end_void_2(PathPairVec* v) {
     return v->data + v->count;
 }
 
-void func_0015D3D0(Iter* out, void* self, Iter* src) {
+void std_vector_tNodeLink_pointer2iterator_tNodeLinkPR_2(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }
 
 /* begin() */
-PathPair* func_0015D3E0(PathPairVec* v) {
+PathPair* std_vector_imp_tNodeLink_begin_void_2(PathPairVec* v) {
     return v->data;
 }

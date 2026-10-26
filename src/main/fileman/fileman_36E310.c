@@ -1,6 +1,6 @@
 #include "types.h"
 typedef struct { unsigned int flags; char name[0x80]; char pad[0x14]; char* a98; } F36DFB0;
-void func_003EBEF0(void*);
+void cFSHandle_ctor(void*);
 char* strncpy(char*, const char*, int);
 static inline int Kind(F36DFB0* f)
 {
@@ -35,9 +35,9 @@ static inline int Init(F36DFB0* d, const char* name, F36DFB0* s)
     return 0;
 }
 
-F36DFB0* func_0036E310(F36DFB0* d, const char* name, F36DFB0* s)
+F36DFB0* cFileMan_ctor_charP_cFileManR(F36DFB0* d, const char* name, F36DFB0* s)
 {
-    func_003EBEF0((char*)d + 0x88);
+    cFSHandle_ctor((char*)d + 0x88);
     d->flags = 0;
     Init(d, name, s);
     return d;

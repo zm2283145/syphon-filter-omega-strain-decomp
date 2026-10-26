@@ -10,7 +10,7 @@
 extern ListPos* List_InsertBefore(ListPos* result, void* list, ListPos* pos, int value);
 
 /* push_back on a list whose sentinel node is at +4. */
-ListPos* func_00268B50(void* list, int value) {
+ListPos* std_list_ArrayPtr_push_back(void* list, int value) {
     ListPos end;
     ListPos result;
 

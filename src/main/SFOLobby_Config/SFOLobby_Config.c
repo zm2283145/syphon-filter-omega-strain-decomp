@@ -18,14 +18,14 @@ extern char D_004C0D58[]; /* DNAS start message */
 extern char D_004C0D70[]; /* "SFOLobby_Config.cc" */
 extern char D_004C0D88[]; /* DNAS done message */
 extern unsigned char D_00585E68;
-void func_00443E60(char*);
-int func_003A6670(int);
+void SFOLobby_DumpMemInfo(char*);
+int SFOLibInit_RequestOverlay(int);
 int GetThreadId(void);
 int ChangeThreadPriority(int, int);
 int func_1E68080(int, char*, unsigned short, int, unsigned char, char*, int*);
 void DecodeKey_XorB3(char*, int);
 
-/* DNAS authentication: switches the network mode (func_003A6670(2)), runs the DNAS
+/* DNAS authentication: switches the network mode (SFOLibInit_RequestOverlay(2)), runs the DNAS
  * check with dnasArg/dnasData at a raised thread priority, and on success decodes
  * the returned password. On failure asks the update hook (event 3) whether to
  * continue anyway. */
@@ -35,9 +35,9 @@ int SFOLobby_DnasAuth(SFOLobby* self)
     int r;
 
     self->dnasResult = 0;
-    func_00443E60(D_004C0D58);
+    SFOLobby_DumpMemInfo(D_004C0D58);
     SFOLobby_CallUpdateHook(self, 2, 2);
-    if (func_003A6670(2) == 0) {
+    if (SFOLibInit_RequestOverlay(2) == 0) {
         SFOLobby_SetError(self, 5, D_004C0D70, 0x27A);
         return 0;
     }
@@ -50,7 +50,7 @@ int SFOLobby_DnasAuth(SFOLobby* self)
     if (self->dnasResult != 0) {
         SFOLobby_SetError(self, 6, D_004C0D70, 0x289);
         ChangeThreadPriority(GetThreadId(), old);
-        if (func_003A6670(1) == 0) {
+        if (SFOLibInit_RequestOverlay(1) == 0) {
             SFOLobby_SetError(self, 5, D_004C0D70, 0x28E);
             return 0;
         }
@@ -59,11 +59,11 @@ int SFOLobby_DnasAuth(SFOLobby* self)
         return r == 1;
     }
     ChangeThreadPriority(GetThreadId(), old);
-    if (func_003A6670(1) == 0) {
+    if (SFOLibInit_RequestOverlay(1) == 0) {
         SFOLobby_SetError(self, 5, D_004C0D70, 0x29B);
         return 0;
     }
-    func_00443E60(D_004C0D88);
+    SFOLobby_DumpMemInfo(D_004C0D88);
     DecodeKey_XorB3(self->password, 0);
     return 1;
 }
@@ -77,11 +77,11 @@ static inline void merge_flush_func_0044B7A0(void) {}
 #include "types.h"
 
 extern char* strchr(const char*, int);
-extern void func_0012B220(char*);
+extern void Libc_Strupr(char*);
 extern void sceCdInit(int);
-extern void func_0010F6E0(void);
+extern void sceSifExitCmd(void);
 extern int func_00169920(void);
-extern void func_00116800(char*, int, char**);
+extern void LoadExecPS2_2(char*, int, char**);
 void SFOLobby_LaunchNetGui(char* name, char* arg) {
     char buf[0x100];
     char* argv[2];
@@ -89,19 +89,19 @@ void SFOLobby_LaunchNetGui(char* name, char* arg) {
     unsigned char has;
     if (D_00585E68) sprintf(buf, "cdrom0:\\%s;1", name);
     else sprintf(buf, "host0:%s", name);
-    func_0012B220(strchr(buf, ':'));
+    Libc_Strupr(strchr(buf, ':'));
     sceCdInit(5);
-    func_0010F6E0();
+    sceSifExitCmd();
     argv[0] = buf;
     argv[1] = arg;
     has = arg && strlen(arg);
     argc = has + 1;
     if (D_00585E68) {
-        if (func_00169920()) func_00116800("cdrom0:\\NETGUI\\NTGUI2CN.ELF;1", argc, argv);
-        else func_00116800("cdrom0:\\NETGUI\\NTGUI2CP.ELF;1", argc, argv);
+        if (func_00169920()) LoadExecPS2_2("cdrom0:\\NETGUI\\NTGUI2CN.ELF;1", argc, argv);
+        else LoadExecPS2_2("cdrom0:\\NETGUI\\NTGUI2CP.ELF;1", argc, argv);
     } else {
-        if (func_00169920()) func_00116800("host0:NETGUI/NTGUI2HN.ELF", argc, argv);
-        else func_00116800("host0:NETGUI/NTGUI2HP.ELF", argc, argv);
+        if (func_00169920()) LoadExecPS2_2("host0:NETGUI/NTGUI2HN.ELF", argc, argv);
+        else LoadExecPS2_2("host0:NETGUI/NTGUI2HP.ELF", argc, argv);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -125,7 +125,7 @@ extern int D_00585CCC;
 extern char D_004C0E40[]; /* "Dummy universe name" */
 extern char D_004C0E60[]; /* "Dummy description" */
 extern void FlushCache(int);
-extern int func_003A6700(int);
+extern int SFOLibInit_RequestNetworkIRX(int);
 extern int SFOLobby_ResolveHost(SFOLobby*, char*, char*);
 #if 0 /* merge_units */
 extern int SFOLobby_DnasAuth(SFOLobby*);
@@ -133,11 +133,11 @@ extern int SFOLobby_DnasAuth(SFOLobby*);
 #define SFOLobby_DnasAuth(a0) (SFOLobby_DnasAuth((a0))) /* merge_units */
 
 extern int SFOLobby_ConnectDir(SFOLobby*);
-extern int func_0044CD20(SFOLobby*);
+extern int SFOLobby_UniverseInformationRequest(SFOLobby*);
 #define LobbyArray_At(a0, a1) ((NetProfile_44BAB0 *)LobbyArray_At((a0), (a1))) /* merge_units */
 extern void LobbyArray_Append(LobbyArray*, LobbyUniverseEntry*);
-extern int func_00452C70(SFOLobby*, int);
-extern int func_00452CD0(SFOLobby*);
+extern int SFOLobby_ShutdownMedius(SFOLobby*, int);
+extern int SFOLobby_InitializeMediusBare(SFOLobby*);
 #if 0 /* merge_units */
 #endif /* merge_units */
 
@@ -186,12 +186,12 @@ int SFOLobby_StartNetwork(SFOLobby* self, int id, unsigned char useDnas) {
     QuadCopy_44BAB0(&D_005849C0, &prof->cfg, sizeof(NetCfg_44BAB0) / 16);
     FlushCache(0);
     if (D_00585CCC == 3) {
-        if (func_003A6700(D_00585CCC) == 0) {
+        if (SFOLibInit_RequestNetworkIRX(D_00585CCC) == 0) {
             SFOLobby_SetError(self, 0xE, D_004C0D70, 0x1D0);
             return 0;
         }
     } else if (D_00585CCC == 1) {
-        if (func_003A6700(D_00585CCC) == 0) {
+        if (SFOLibInit_RequestNetworkIRX(D_00585CCC) == 0) {
             SFOLobby_SetError(self, 0xE, D_004C0D70, 0x1D9);
             return 0;
         }
@@ -206,18 +206,18 @@ int SFOLobby_StartNetwork(SFOLobby* self, int id, unsigned char useDnas) {
         SFOLobby_NetDown(self);
         return 0;
     }
-    if (func_00452CD0(self) == 0) {
+    if (SFOLobby_InitializeMediusBare(self) == 0) {
         SFOLobby_NetDown(self);
         return 0;
     }
     if (self->useDnas != 0 && SFOLobby_DnasAuth(self) == 0) {
-        func_00452C70(self, 1);
+        SFOLobby_ShutdownMedius(self, 1);
         SFOLobby_NetDown(self);
         return 0;
     }
     if (self->directAuth != 0) {
         if (SFOLobby_ResolveHost(self, self->authHostName, self->authServer) == 0) {
-            func_00452C70(self, 1);
+            SFOLobby_ShutdownMedius(self, 1);
             SFOLobby_NetDown(self);
             return 0;
         }
@@ -228,17 +228,17 @@ int SFOLobby_StartNetwork(SFOLobby* self, int id, unsigned char useDnas) {
         LobbyArray_Append(self->universeList, &ent);
     } else {
         if (SFOLobby_ResolveHost(self, self->dirHostName, self->dirServer) == 0) {
-            func_00452C70(self, 1);
+            SFOLobby_ShutdownMedius(self, 1);
             SFOLobby_NetDown(self);
             return 0;
         }
         if (SFOLobby_ConnectDir(self) == 0) {
-            func_00452C70(self, 1);
+            SFOLobby_ShutdownMedius(self, 1);
             SFOLobby_NetDown(self);
             return 0;
         }
-        if (func_0044CD20(self) == 0) {
-            func_00452C70(self, 1);
+        if (SFOLobby_UniverseInformationRequest(self) == 0) {
+            SFOLobby_ShutdownMedius(self, 1);
             SFOLobby_NetDown(self);
             return 0;
         }
@@ -260,8 +260,8 @@ static inline void merge_flush_func_0044BAB0(void) {}
 void FlushCache(int);
 int ezNetCtlSetProperties(int);
 int ezNetCtlGetStatus(void*);
-int func_00353130(void);
-int func_003A6650(int);
+int ezNetCtlUpInterface(void);
+int SFOLibInit_RequestCancel(int);
 extern int D_00585D00;    /* time the network was last brought down (SFOLobby_NetDown) */
 extern char D_00585D40[]; /* ezNetCtl status buffer */
 extern int D_00585D4C;    /* ezNetCtl state: 3 = up, 5 = down */
@@ -289,13 +289,13 @@ int SFOLobby_NetUp(SFOLobby* self, int props)
     }
     D_00585D00 = 0;
     self->waitStart = now;
-    if (func_00353130() < 0) {
+    if (ezNetCtlUpInterface() < 0) {
         SFOLobby_SetError(self, 0x20, D_004C0D70, 0x163);
         return 0;
     }
     for (;;) {
         SFOLobby_CallUpdateHook(self, 1, 0);
-        if (!!func_003A6650(0)) {
+        if (!!SFOLibInit_RequestCancel(0)) {
             SFOLobby_SetError(self, 0x3E, D_004C0D70, 0x16D);
             return 0;
         }
@@ -327,14 +327,14 @@ static inline void merge_flush_func_0044BDE0(void) {}
 
 /* merge_units: begin func_0044BFF0 */
 #pragma push /* merge_units */
-extern int func_003531B8(SFOLobby *);
+extern int ezNetCtlDownInterface(SFOLobby *);
 
 extern int ezNetCtlGetStatus(void *);
 
 /* Stops the network and waits (60 s timeout) until it reports down. */
 int SFOLobby_NetDown(SFOLobby *a) {
     int t;
-    if (func_003531B8(a) < 0) {
+    if (ezNetCtlDownInterface(a) < 0) {
         SFOLobby_SetError(a, 0x20, D_004C0D70, 0x11A);
         return 0;
     }
@@ -480,7 +480,7 @@ void SFOLobby_LeaveNetworkState(SFOLobby* self)
             LobbyArray_Free(self->netConfigList);
         }
         self->netConfigList = 0;
-        func_00452FC0(self, 0);
+        SFOLobby_SetCallback(self, 0);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -492,7 +492,7 @@ static inline void merge_flush_func_0044C3C0(void) {}
 #pragma push /* merge_units */
 /* Reads byte +0x2409 when state +0x255C is 3 (result unused). */
 typedef struct { char pad00[0x2409]; volatile unsigned char flag; char pad[0x255C - 0x240A]; int state; } Obj_00445E60;
-void func_0044C420(Obj_00445E60 *obj) {
+void SFOLobby_ConfigScreenIntel(Obj_00445E60 *obj) {
     if (obj->state == 1) obj->flag;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -521,7 +521,7 @@ int LobbyArray_Free(LobbyArray *);
 #define LobbyArray_Free(a0) (LobbyArray_Free((a0))) /* merge_units */
 
 int LobbyArray_Init(LobbyArray *, int, int, int);
-int func_00452C70(SFOLobby *, int);
+int SFOLobby_ShutdownMedius(SFOLobby *, int);
 #if 0 /* merge_units */
 extern char D_004C0D70; /* "SFOLobby_Config.cc" */
 #endif /* merge_units */
@@ -538,13 +538,13 @@ int SFOLobby_EnterNetworkState(SFOLobby *self, int arg1, LobbyArray *netConfigs,
         return 0;
     }
     self->state = SFOLOBBY_STATE_NETWORK;
-    func_00452FC0(self);
+    SFOLobby_SetCallback(self);
     self->unk2578 = 0;
     if (self->unk1EA8 > 0) {
         if (self->connHandle > 0) {
             SFOLobby_DisconnectAuthServer(self);
         }
-        func_00452C70(self, 1);
+        SFOLobby_ShutdownMedius(self, 1);
         SFOLobby_NetDown(self);
         Iop_LoadEzNetModules(0);
         a = self->outList2404;

@@ -1,5 +1,5 @@
 extern int scePrintf(const char *fmt, ...);
-extern int func_002715D0(void *cd, unsigned int num, int mode, unsigned int bufsize, unsigned int stacksize, int prio);
+extern int sceSifMBindRpcParam(void *cd, unsigned int num, int mode, unsigned int bufsize, unsigned int stacksize, int prio);
 typedef struct { char pad[0x24]; void *serve; } NetCd34B710;
 int sceLibnetInitialize(NetCd34B710 *cd, unsigned int bufsize, unsigned int stacksize, int prio)
 {
@@ -11,7 +11,7 @@ int sceLibnetInitialize(NetCd34B710 *cd, unsigned int bufsize, unsigned int stac
         return -0x21F;
     }
     for (;;) {
-        if (func_002715D0(cd, 0x80001201, 0, bufsize, stacksize, prio) < 0)
+        if (sceSifMBindRpcParam(cd, 0x80001201, 0, bufsize, stacksize, prio) < 0)
             return -0x21C;
         if (cd->serve != 0)
             break;

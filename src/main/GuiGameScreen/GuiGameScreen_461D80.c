@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-void func_00461D80(PtrVec* a, PtrVec* b) {
+void std_swap_vectordeleterR_vectordeleterR_52(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;
         int* p;
@@ -47,6 +47,6 @@ DEFINE_VECTOR_DESTROY_DTOR_FILE(func_00461DC0, func_00461FA0, D_004C2568)
 #pragma cplusplus on
 
 /* Destroy a vector: destroy elements, free the buffer, optionally delete. */
-DEFINE_VECTOR_DESTROY_DTOR_FILE(func_00461EB0, func_00299510, D_004AA5B8)
+DEFINE_VECTOR_DESTROY_DTOR_FILE(std_vector_deleter_tQuip_dtor, std_vector_deleter_tAchievementInfo_clear, D_004AA5B8)
 #pragma pop /* merge_units */
 /* merge_units: end func_00461EB0 */

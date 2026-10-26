@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_002DC298(int a0) {
+int GetEncodedFrameSize(int a0) {
     int tmp0;
 
     tmp0 = *(int*)((char*)a0 + 12);

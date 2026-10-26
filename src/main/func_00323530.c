@@ -8,7 +8,7 @@
 
 extern void func_00323650(int);
 
-int func_00323530(int a0) {
+int nciSetDMAUse(int a0) {
     func_00323650(a0);
     return 0;
 }

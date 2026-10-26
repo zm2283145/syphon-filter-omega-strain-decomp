@@ -5,13 +5,13 @@
 /* Set flags 4 and 0x80 on every other child of the given type. */
 extern "C" {
 extern char D_004A9870[];
-void func_0028C0C0(ChildWidget* o);
+void RecurseChildrenFocusable(ChildWidget* o);
 }
 static inline ChildWidget* cast28C0C0(ChildWidget* w)
 {
     return (w && w->IsA(D_004A9870)) ? w : 0;
 }
-void func_0028C0C0(ChildWidget* o)
+void RecurseChildrenFocusable(ChildWidget* o)
 {
     ChildIter e;
     void* l;

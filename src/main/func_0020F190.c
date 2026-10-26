@@ -24,7 +24,7 @@ static inline void Req_Default(SoundRequest* p) {
     Req_Init(p, -1, -1, 0, 0);
     p->x186 = 0;
 }
-SoundEvent* func_0020F190(SoundEvent* ev, Src_F190* src, Voice_F190* voice) {
+SoundEvent* cPlaySoundMsg_ctor_netPlaySoundMsgR(SoundEvent* ev, Src_F190* src, Voice_F190* voice) {
     SoundRequest* p;
     Event_Construct(ev, D_004F53C8);
     ev->vtable = D_004DAE10;

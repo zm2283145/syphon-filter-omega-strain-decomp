@@ -18,10 +18,10 @@ int func_0030ECC0(ScfConn2 *o)
 /* merge_units: end func_0030ECC0 */
 
 /* merge_units: begin func_0030ECF8 */
-extern int func_002FB3C0(void *pp);
+extern int rt_memory_free(void *pp);
 int func_0030ECF8(ScfConn2 *o)
 {
-    func_002FB3C0(&o->ctx);
+    rt_memory_free(&o->ctx);
     o->ctx = 0;
     return 0;
 }

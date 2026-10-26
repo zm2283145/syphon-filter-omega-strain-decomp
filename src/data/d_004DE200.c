@@ -18,6 +18,11 @@ extern void Npc_IsCorpseRemovable();
 extern void ObjectiveEvent_Clone();
 extern void ObjectiveEvent_Dtor();
 extern void ObjectiveEvent_Serialize();
+extern void cGobjController_CleanUpAfterTeleportationOfGobj();
+extern void cInitMsg_Clone();
+extern void cInitMsg_dtor();
+extern void cLoadMsg_Clone();
+extern void cLoadMsg_dtor();
 extern void cNPC_AddItem();
 extern void cNPC_AddWeapon();
 extern void cNPC_CriticalNextFrame();
@@ -48,137 +53,132 @@ extern void cNPC_v0B();
 extern void cNPC_v22();
 extern void cNPC_v24();
 extern void cNPC_v2F();
+extern void cNetGeneratorCreateMsg_Clone();
+extern void cNetGeneratorCreateMsg_Pack();
+extern void cNetGeneratorCreateMsg_dtor();
+extern void cNetGeneratorDeleteMsg_Clone();
+extern void cNetGeneratorDeleteMsg_Pack();
+extern void cNetGeneratorDeleteMsg_dtor();
 extern void cNetLabelMsg_Clone();
 extern void cNetLabelMsg_Serialize();
 extern void cNetLabelMsg_dtor();
+extern void cNetNPCMsgs_Clone();
+extern void cNetNPCMsgs_Pack();
+extern void cNetNPCMsgs_dtor();
+extern void cNetNPC_Activate();
+extern void cNetNPC_ActivateByRadius();
+extern void cNetNPC_ActivateByRadiusOff();
+extern void cNetNPC_AddAwareness();
+extern void cNetNPC_AddAwarenessOfPlayers();
+extern void cNetNPC_AddGroupToPathRegion();
+extern void cNetNPC_CarryBodyToNode();
+extern void cNetNPC_ChangeWeapon();
+extern void cNetNPC_Deactivate();
+extern void cNetNPC_DeactivateDead();
+extern void cNetNPC_DetermineDeathType();
+extern void cNetNPC_DrawWeapon();
+extern void cNetNPC_DropWeapon();
+extern void cNetNPC_Follow();
+extern void cNetNPC_GetAimPercent();
+extern void cNetNPC_GetBulletDir();
+extern void cNetNPC_GetControllerType();
+extern void cNetNPC_GetCurrentNode();
+extern void cNetNPC_GetDarkness();
+extern void cNetNPC_GetDestinationNode();
+extern void cNetNPC_GetHitPoints();
+extern void cNetNPC_GetMoveMode();
+extern void cNetNPC_GetRawTravelSpeed();
+extern void cNetNPC_GetTargetGobj();
+extern void cNetNPC_GetTravelSpeed_eTravelSpeed();
+extern void cNetNPC_GetTravelSpeed_void();
+extern void cNetNPC_HandleMessage();
+extern void cNetNPC_IsNPC();
+extern void cNetNPC_IsNetNPC();
+extern void cNetNPC_IsNodeInActiveTerrain();
+extern void cNetNPC_IsPlayer();
+extern void cNetNPC_IsTargetVisible();
+extern void cNetNPC_Kill();
+extern void cNetNPC_LookAround();
+extern void cNetNPC_MoveToGobj();
+extern void cNetNPC_MoveToNode();
+extern void cNetNPC_NextFrame();
+extern void cNetNPC_RemoveAwareness();
+extern void cNetNPC_RemoveGroupFromPathRegion();
+extern void cNetNPC_RequestAction();
+extern void cNetNPC_RequestFacial();
+extern void cNetNPC_RequestLookAt_cGOBJP_float_int();
+extern void cNetNPC_RequestLookAt_cVector_float_int();
+extern void cNetNPC_ResendNewAwarenessMessage();
+extern void cNetNPC_RestrictMovementToNodeGroup();
+extern void cNetNPC_ResumeAIAiming();
+extern void cNetNPC_ResumeAIFiring();
+extern void cNetNPC_ResumeAILookAt();
+extern void cNetNPC_ResumeAIMode();
+extern void cNetNPC_ResumeAITravelSpeed();
+extern void cNetNPC_ResumeMovement();
+extern void cNetNPC_SelectTravelMode();
+extern void cNetNPC_SendNewAwarenessOfPlayers();
+extern void cNetNPC_SetAggressiveness();
+extern void cNetNPC_SetAimMode();
+extern void cNetNPC_SetAimSubtarget();
+extern void cNetNPC_SetDarkness();
+extern void cNetNPC_SetFireMode();
+extern void cNetNPC_SetFiringThreshold();
+extern void cNetNPC_SetGrenadeTarget();
+extern void cNetNPC_SetHitPoints();
+extern void cNetNPC_SetMode();
+extern void cNetNPC_SetPickupable();
+extern void cNetNPC_SetTravelSpeed();
+extern void cNetNPC_SetViewConeAngle();
+extern void cNetNPC_SetViewConeRadius();
+extern void cNetNPC_Sound();
+extern void cNetNPC_StopMovement();
+extern void cNetNPC_StoreWeapon();
+extern void cNetNPC_TargetDirectionValid();
+extern void cNetNPC_TargetPositionLastSeen();
+extern void cNetNPC_TargetPositionValid();
+extern void cNetNPC_Team();
+extern void cNetNPC_Teleport();
+extern void cNetNPC_UseCurrentLookAt();
+extern void cNetNPC_dtor();
 extern void cNetPathMsg_Clone();
 extern void cNetPathMsg_Serialize();
 extern void cNetPathMsg_dtor();
-extern void func_0012ECF0();
-extern void func_0012ED00();
-extern void func_0012ED10();
-extern void func_0012ED20();
-extern void func_0012ED30();
-extern void func_0012ED40();
-extern void func_0012ED50();
-extern void func_001383D0();
+extern void cSystem_IsDeliverable();
+extern void cSystem_IsNetworked();
+extern void cSystem_NetActivate();
+extern void cSystem_NetDeactivate();
+extern void cSystem_NetDisable();
+extern void cSystem_NetEnable();
+extern void cSystem_ScriptGetRealObj();
+extern void cSystem_SendCreated();
 extern void func_0015B820();
-extern void func_0015B830();
-extern void func_0021DF80();
-extern void func_00220350();
-extern void func_002C97A0();
-extern void func_002C9800();
-extern void func_002CCF30();
-extern void func_002CD030();
-extern void func_002D0EE0();
-extern void func_002D1100();
-extern void func_002D15C0();
-extern void func_002D1790();
 extern void func_002D29C0();
-extern void func_002D2A80();
-extern void func_002D2A90();
-extern void func_002D2AA0();
-extern void func_002D2AB0();
-extern void func_002D2B20();
-extern void func_002D2B30();
-extern void func_002D2B40();
-extern void func_002D2B50();
-extern void func_002D2B60();
-extern void func_002D2BA0();
-extern void func_002D2BB0();
-extern void func_002D2BC0();
-extern void func_002D2BD0();
 extern void func_002D2C20();
 extern void func_002D2C30();
 extern void func_002D2C40();
-extern void func_002D2C50();
-extern void func_002D2C60();
-extern void func_002D2C70();
-extern void func_002D2C80();
-extern void func_002D2C90();
-extern void func_002D2D50();
-extern void func_002D2DE0();
-extern void func_002D2E60();
-extern void func_002D2EE0();
-extern void func_002D2F60();
-extern void func_002D2F80();
-extern void func_002D2F90();
-extern void func_002D3000();
-extern void func_002D3020();
-extern void func_002D3040();
-extern void func_002D3070();
-extern void func_002D30E0();
-extern void func_002D3170();
-extern void func_002D31B0();
-extern void func_002D3240();
-extern void func_002D32C0();
-extern void func_002D3340();
-extern void func_002D33E0();
-extern void func_002D3480();
-extern void func_002D3490();
-extern void func_002D34A0();
-extern void func_002D34C0();
-extern void func_002D3510();
-extern void func_002D35A0();
-extern void func_002D35E0();
-extern void func_002D3610();
-extern void func_002D3690();
-extern void func_002D36C0();
-extern void func_002D3760();
-extern void func_002D3800();
-extern void func_002D3880();
-extern void func_002D3900();
-extern void func_002D3990();
-extern void func_002D39B0();
-extern void func_002D39D0();
-extern void func_002D3A30();
-extern void func_002D3A90();
-extern void func_002D3B10();
-extern void func_002D3B90();
-extern void func_002D3BB0();
-extern void func_002D3C20();
-extern void func_002D3CE0();
-extern void func_002D3D00();
-extern void func_002D3D30();
-extern void func_002D3DA0();
-extern void func_002D3E20();
-extern void func_002D3EB0();
 extern void func_002D3F20();
 extern void func_002D3FA0();
-extern void func_002D3FB0();
-extern void func_002D3FF0();
-extern void func_002D4030();
-extern void func_002D40A0();
-extern void func_002D4460();
 extern void func_002D4640();
-extern void func_002D4680();
-extern void func_002D46E0();
-extern void func_002D4FF0();
-extern void func_002D5160();
-extern void func_002D5EA0();
-extern void func_002D5FA0();
-extern void func_002D6250();
-extern void func_002D6380();
-extern void func_002D7100();
 
 void *D_004DE200[8] = {
-    0, 0, &func_002C97A0, &func_002CCF30,
+    0, 0, &cLoadMsg_dtor, &cLoadMsg_Clone,
     &Event_PackHeader, &Message_GetScriptTypeKey, 0, 0,
 };
 
 void *D_004DE220[8] = {
-    0, 0, &func_002C9800, &func_002CD030,
+    0, 0, &cInitMsg_dtor, &cInitMsg_Clone,
     &Event_PackHeader, &Message_GetScriptTypeKey, 0, 0,
 };
 
 void *D_004DE240[8] = {
-    0, 0, &func_0021DF80, &func_002D0EE0,
-    &func_002D1100, &Message_GetScriptTypeKey, 0, 0,
+    0, 0, &cNetGeneratorCreateMsg_dtor, &cNetGeneratorCreateMsg_Clone,
+    &cNetGeneratorCreateMsg_Pack, &Message_GetScriptTypeKey, 0, 0,
 };
 
 void *D_004DE260[8] = {
-    0, 0, &func_00220350, &func_002D15C0,
-    &func_002D1790, &Message_GetScriptTypeKey, 0, 0,
+    0, 0, &cNetGeneratorDeleteMsg_dtor, &cNetGeneratorDeleteMsg_Clone,
+    &cNetGeneratorDeleteMsg_Pack, &Message_GetScriptTypeKey, 0, 0,
 };
 
 void *D_004DE280[8] = {
@@ -187,46 +187,46 @@ void *D_004DE280[8] = {
 };
 
 void *D_004DE2A0[140] = {
-    0, 0, &func_002D5FA0, &func_002D4FF0,
-    &Component_GetOwnerId, &func_0012ECF0, &func_001383D0, &func_0012ED00,
-    &func_0012ED10, &func_0012ED20, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &cNPC_v0B, &AiComponent_ScriptFilter, &cNPC_CriticalNextFrame,
-    &func_002D5160, &NpcAi_IsAliveOrEligible, &func_002D40A0, &func_002D4460,
-    &func_0015B820, &func_002D2A90, &func_002D2AA0, &func_002D2B20,
-    &Controller_ToHit, &func_002D46E0, &func_002D5EA0, &Controller_IsEnemyTeam,
+    0, 0, &cNetNPC_dtor, &cNetNPC_HandleMessage,
+    &Component_GetOwnerId, &cSystem_ScriptGetRealObj, &cSystem_IsNetworked, &cSystem_SendCreated,
+    &cSystem_NetActivate, &cSystem_NetDeactivate, &cSystem_NetEnable, &cSystem_NetDisable,
+    &cSystem_IsDeliverable, &cNPC_v0B, &AiComponent_ScriptFilter, &cNPC_CriticalNextFrame,
+    &cNetNPC_NextFrame, &NpcAi_IsAliveOrEligible, &cNetNPC_Activate, &cNetNPC_Deactivate,
+    &func_0015B820, &cNetNPC_IsPlayer, &cNetNPC_IsNPC, &cNetNPC_IsNetNPC,
+    &Controller_ToHit, &cNetNPC_GetBulletDir, &cNetNPC_Team, &Controller_IsEnemyTeam,
     &Controller_IsEnemy, &Controller_GetShooterMotion, &func_002D3FA0, &func_002D4640,
-    &func_0015B830, &func_002D2B30, &func_002D2A80, &Component_AttachOwner,
-    &cNPC_v22, &func_002D2AB0, &cNPC_v24, &func_002D29C0,
-    &func_002D3F20, &func_002D2BD0, &func_002D2B50, &func_002D4030,
-    &func_002D2B60, &func_002D3FF0, &func_002D3FB0, &NpcAi_RequestWeaponDraw,
+    &cGobjController_CleanUpAfterTeleportationOfGobj, &cNetNPC_DetermineDeathType, &cNetNPC_GetControllerType, &Component_AttachOwner,
+    &cNPC_v22, &cNetNPC_IsNodeInActiveTerrain, &cNPC_v24, &func_002D29C0,
+    &func_002D3F20, &cNetNPC_GetMoveMode, &cNetNPC_UseCurrentLookAt, &cNetNPC_TargetPositionValid,
+    &cNetNPC_TargetPositionLastSeen, &cNetNPC_IsTargetVisible, &cNetNPC_GetTargetGobj, &NpcAi_RequestWeaponDraw,
     &NpcAi_DeactivateAnon, &cNPC_v2F, &NpcAi_ActivateMultiplayer, &NpcAttack_FireNotice,
-    &func_002D4680, &func_002D2B40, &func_002D3480, &func_002D3760,
-    &func_002D3EB0, &func_002D3E20, &func_002D3DA0, &func_002D3D30,
-    &cNPC_GetClosestPlayer, &func_002D3D00, &func_002D3CE0, &func_002D2D50,
-    &func_002D3880, &func_002D3800, &func_002D36C0, &func_002D3690,
-    &func_002D3B10, &func_002D3A90, &func_002D3A30, &func_002D39D0,
-    &func_002D3510, &func_002D34C0, &func_002D33E0, &func_002D3340,
-    &func_002D2BB0, &func_002D3240, &cNPC_StopAndLookAround, &func_002D32C0,
-    &func_002D35A0, &func_002D2BC0, &func_002D34A0, &func_002D3490,
-    &func_002D3900, &func_002D30E0, &func_002D3070, &func_002D2C30,
-    &func_002D31B0, &Npc_IsCorpseRemovable, &func_002D2F60, &func_002D3170,
-    &func_002D39B0, &func_002D3990, &func_002D2C40, &cNPC_SetOnFire,
-    &func_002D2C50, &func_002D2C60, &cNPC_InViewCone, &func_002D3610,
-    &func_002D2C20, &func_002D35E0, &cNPC_ForceWeaponFire, &func_002D3040,
-    &cNPC_SetGrenadeThrowAngle, &cNPC_GetActiveWeapon, &func_002D3B90, &func_002D3020,
-    &func_002D3000, &func_002D2C70, &cNPC_AddWeapon, &cNPC_RemoveWeapon,
-    &cNPC_GetWeapon, &cNPC_SetWeaponPreference, &cNPC_SetWeaponPreferenceDistance, &func_002D3C20,
-    &func_002D3BB0, &func_002D2F90, &cNPC_SetHasDisguise, &func_002D2F80,
-    &func_002D2C80, &func_002D2C90, &cNPC_SetInvulnerable, &cNPC_RequestDeathAnimation,
-    &cNPC_EquipGoggles, &func_002D2EE0, &func_002D2E60, &func_002D2DE0,
+    &cNetNPC_Sound, &cNetNPC_SelectTravelMode, &cNetNPC_GetRawTravelSpeed, &cNetNPC_SetMode,
+    &cNetNPC_ResumeAIMode, &cNetNPC_AddAwareness, &cNetNPC_RemoveAwareness, &cNetNPC_AddAwarenessOfPlayers,
+    &cNPC_GetClosestPlayer, &cNetNPC_ResendNewAwarenessMessage, &cNetNPC_SendNewAwarenessOfPlayers, &cNetNPC_Follow,
+    &cNetNPC_MoveToNode, &cNetNPC_MoveToGobj, &cNetNPC_CarryBodyToNode, &cNetNPC_Teleport,
+    &cNetNPC_SetAggressiveness, &cNetNPC_SetAimMode, &cNetNPC_SetAimSubtarget, &cNetNPC_ResumeAIAiming,
+    &cNetNPC_SetFireMode, &cNetNPC_ResumeAIFiring, &cNetNPC_RequestLookAt_cGOBJP_float_int, &cNetNPC_RequestFacial,
+    &cNetNPC_RequestLookAt_cVector_float_int, &cNetNPC_LookAround, &cNPC_StopAndLookAround, &cNetNPC_ResumeAILookAt,
+    &cNetNPC_SetTravelSpeed, &cNetNPC_ResumeAITravelSpeed, &cNetNPC_GetTravelSpeed_eTravelSpeed, &cNetNPC_GetTravelSpeed_void,
+    &cNetNPC_RequestAction, &cNetNPC_StopMovement, &cNetNPC_ResumeMovement, &func_002D2C30,
+    &cNetNPC_DeactivateDead, &Npc_IsCorpseRemovable, &cNetNPC_Kill, &cNetNPC_SetFiringThreshold,
+    &cNetNPC_GetHitPoints, &cNetNPC_SetHitPoints, &func_002D2C40, &cNPC_SetOnFire,
+    &cNetNPC_SetViewConeRadius, &cNetNPC_SetViewConeAngle, &cNPC_InViewCone, &cNetNPC_GetCurrentNode,
+    &func_002D2C20, &cNetNPC_GetDestinationNode, &cNPC_ForceWeaponFire, &cNetNPC_SetGrenadeTarget,
+    &cNPC_SetGrenadeThrowAngle, &cNPC_GetActiveWeapon, &cNetNPC_StoreWeapon, &cNetNPC_DrawWeapon,
+    &cNetNPC_ChangeWeapon, &cNetNPC_DropWeapon, &cNPC_AddWeapon, &cNPC_RemoveWeapon,
+    &cNPC_GetWeapon, &cNPC_SetWeaponPreference, &cNPC_SetWeaponPreferenceDistance, &cNetNPC_ActivateByRadius,
+    &cNetNPC_ActivateByRadiusOff, &cNetNPC_SetPickupable, &cNPC_SetHasDisguise, &cNetNPC_SetDarkness,
+    &cNetNPC_GetDarkness, &cNetNPC_GetAimPercent, &cNPC_SetInvulnerable, &cNPC_RequestDeathAnimation,
+    &cNPC_EquipGoggles, &cNetNPC_RestrictMovementToNodeGroup, &cNetNPC_AddGroupToPathRegion, &cNetNPC_RemoveGroupFromPathRegion,
     &cNPC_DontDropWeapons, &cNPC_SetFireInvulnerability, &cNPC_SetUnconscious, &cNPC_SetNotTaserable,
     &cNPC_SetNotGasable, &cNPC_SetNotTargetable, &cNPC_AddItem, &cNPC_RemoveItem,
-    &cNPC_GetItemCount, &func_002D2BA0, 0, 0,
+    &cNPC_GetItemCount, &cNetNPC_TargetDirectionValid, 0, 0,
 };
 
 void *D_004DE4D0[8] = {
-    0, 0, &func_002D6380, &func_002D6250,
-    &func_002D7100, &Message_GetScriptTypeKey, 0, 0,
+    0, 0, &cNetNPCMsgs_dtor, &cNetNPCMsgs_Clone,
+    &cNetNPCMsgs_Pack, &Message_GetScriptTypeKey, 0, 0,
 };
 
 void *D_004DE4F0[8] = {

@@ -13,7 +13,7 @@ FloatPair* MotionSliderChild_CopyThresholds(FloatPair* dst, FloatPair* src) {
     return dst;
 }
 
-FloatPair* func_001F4460(FloatPair* self, float a, float b) {
+FloatPair* cSkaBlendSequenceExtents_ctor_float_float(FloatPair* self, float a, float b) {
     self->a = a;
     self->b = b;
     return self;

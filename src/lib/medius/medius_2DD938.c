@@ -7,9 +7,9 @@
 #include "types.h"
 
 extern char D_005880A0[];
-extern int func_002DD380(int, int);
+extern int NetIIpStringToBinary(int, int);
 
-int func_002DD938(int a0) {
+int NetIGetCurrentUDPSourceBinaryIP(int a0) {
     int a1, v0;
     int cond;
 
@@ -17,7 +17,7 @@ int func_002DD938(int a0) {
     cond = a0 == 0;
     if (cond) goto L002DD958;
     a1 = (int)D_005880A0;
-    v0 = func_002DD380(a0, a1);
+    v0 = NetIIpStringToBinary(a0, a1);
     v0 = 0;
 L002DD958:;
     goto ret;

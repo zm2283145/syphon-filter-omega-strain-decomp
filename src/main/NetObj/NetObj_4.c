@@ -12,7 +12,7 @@
 #include "guarded_release.h"
 
 /* Free an allocation under the allocator guard. */
-DEFINE_GUARDED_RELEASE(func_003FC6A0)
+DEFINE_GUARDED_RELEASE(opDelete_nodeP_int_bool_charP_etc_6)
 #pragma pop /* merge_units */
 /* merge_units: end func_003FC6A0 */
 
@@ -21,7 +21,7 @@ DEFINE_GUARDED_RELEASE(func_003FC6A0)
 #pragma cplusplus on
 #include "alloc_guard.h"
 extern "C" { extern char D_004BE3A0[]; void Mem_Free(int pool, void* p, char* file, int line); }
-extern "C" void func_003FC750(void* tree, void* node)
+extern "C" void cAllocator_node_deallocate_nodeP_uint_7(void* tree, void* node)
 {
     if (node) {
         AllocGuard guard;
@@ -44,7 +44,7 @@ void* func_003FC7F0(char* self) {
     return self + 4;
 }
 
-void func_003FC800(void) {
+void cAllocator_pair_int_destroy_pairP_2(void) {
 }
 
 void* func_003FC810(void* self) {

@@ -29,10 +29,10 @@ extern void Renderer_RestoreRenderState(R7C350*);
 extern u64_t* DmaPacket_Reserve(void* q, int a, int b, int c, int d, int e);
 extern u64_t Renderer_SetPrmodeReg(R7C350*);
 extern u64_t Renderer_SetTestReg(R7C350*);
-extern int func_003797D0(R7C350*);
-extern u64_t* func_003797B0(int reg, int index);
-extern u64_t* func_00379790(int reg, int index);
-extern void func_00379780(void* q, int n);
+extern int XLib_GetTexMan(R7C350*);
+extern u64_t* cTexMan_GetTEX0_1(int reg, int index);
+extern u64_t* cTexMan_GetTEX1_1(int reg, int index);
+extern void cDmaMan_EndChain_int(void* q, int n);
 extern void LightMgr_GatherModelLights(void* m, unsigned int mask, unsigned int flags, void* out);
 extern void Renderer_SetReceiverConsts(R7C350*, unsigned int);
 static inline u64_t Dup2_7C350(u64_t v) { return v | (v << 2); }
@@ -106,15 +106,15 @@ unsigned int Renderer_SetDrawState(R7C350* r, void* model0, unsigned int req0, u
         q->lo = 0x42;
         n = self->tex;
         if (n != -1) {
-            q->hi = *func_003797B0(func_003797D0(self), n);
+            q->hi = *cTexMan_GetTEX0_1(XLib_GetTexMan(self), n);
             q++;
             q->lo = 6;
-            q->hi = *func_00379790(func_003797D0(self), self->tex);
+            q->hi = *cTexMan_GetTEX1_1(XLib_GetTexMan(self), self->tex);
             q++;
             q->lo = 0x14;
             self->tex = -1;
         }
-        func_00379780(D_00537F80, 1);
+        cDmaMan_EndChain_int(D_00537F80, 1);
         if ((f & 0x80) || (f & 0x100)) {
             if (!(rq & 0x10)) {
                 f &= ~0x180;

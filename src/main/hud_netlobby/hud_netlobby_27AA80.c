@@ -15,13 +15,13 @@
 #include "types.h"
 #include "loose01_types.h"
 
-Word* func_0027AA80(Word* dst, Word* src) {
+Word* std_list_GameInfoPtr_generic_iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
 /* Address 8 bytes past the node stored at +8. */
-char* func_0027AA90(PtrVec* self) {
+char* std_list_GameInfoPtr_front(PtrVec* self) {
     return (char*)self->data + 8;
 }
 #pragma pop /* merge_units */
@@ -31,8 +31,8 @@ char* func_0027AA90(PtrVec* self) {
 #pragma push /* merge_units */
 typedef struct { char pad[0x2C]; int count; char pad2[8]; int sel; int mode; } Menu27AA;
 extern unsigned char D_00504040;
-extern void func_0027B4E0(Menu27AA* s);
-void func_0027AAA0(Menu27AA* s, int dir) {
+extern void cHudNetLobby_SetActive(Menu27AA* s);
+void cHudNetLobby_NextButton(Menu27AA* s, int dir) {
     int n = 0;
     if (s->mode == 0) {
         if (D_00504040 || !s->count) return;
@@ -49,7 +49,7 @@ void func_0027AAA0(Menu27AA* s, int dir) {
             if (s->sel < 0) s->sel = n - 1;
         }
     }
-    func_0027B4E0(s);
+    cHudNetLobby_SetActive(s);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0027AAA0 */

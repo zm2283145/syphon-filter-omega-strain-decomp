@@ -45,15 +45,15 @@ extern int D_00532A40[];
 extern int D_00532A10[];
 int strlen(const char *s);
 int sprintf(char *buf, const char *fmt, ...);
-E5830 **func_003305C0(V5830 *v);
+E5830 **std_vector_deleter_Record_data(V5830 *v);
 const char *Loc_GetStoredKey(int name);
 int Awards_MatchKeyPattern(A5830 *agent, const char *a, const char *name, int c);
 int String_CompareNoCase(const char *a, const char *b);
 float Hud_GetMissionTime(void *ui);
 void AgentData_SetObjectiveBit(A5830 *agent, char *name, int notify);
 void awards_SetAwardsAndBonuses(A5830 *agent, int a, int b);
-void func_002888C0(Awd5830 *a);
-void func_002887C0(Awd5830 *a, int f);
+void std_vector_charPtr_ctor_void_2(Awd5830 *a);
+void std_vector_charPtr_dtor_void_2(Awd5830 *a, int f);
 void AgentData_FilterAwards(A5830 *agent, Awd5830 *a);
 void Appearance_PatchParts(void *p, Awd5830 *a);
 }
@@ -103,8 +103,8 @@ extern "C" void AgentData_EndLevel(A5830 *self, unsigned char done)
             Code5830(name);
             sprintf(D_00532998, D_004B92B8, D_00532990);
             pat = D_00532998;
-            it = *func_003305C0(&D_005329F0);
-            end = *func_003305C0(&D_005329F0) + D_005329F0.count;
+            it = *std_vector_deleter_Record_data(&D_005329F0);
+            end = *std_vector_deleter_Record_data(&D_005329F0) + D_005329F0.count;
             for (; Neq5830(it, end); it++) {
                 n2 = Loc_GetStoredKey(it->name);
                 if (Awards_MatchKeyPattern(self, pat, n2, '*') && !Awards_MatchKeyPattern(self, D_004B92C0, n2, '*')) {
@@ -132,11 +132,11 @@ extern "C" void AgentData_EndLevel(A5830 *self, unsigned char done)
         }
     }
     awards_SetAwardsAndBonuses(self, 0, 1);
-    func_002888C0(&awd);
+    std_vector_charPtr_ctor_void_2(&awd);
     awd.flag = 1;
     AgentData_FilterAwards(self, &awd);
     Appearance_PatchParts(self->p9A4, &awd);
-    func_002887C0(&awd, -1);
+    std_vector_charPtr_dtor_void_2(&awd, -1);
 }
 
 

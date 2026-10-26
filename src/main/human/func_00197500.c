@@ -3,7 +3,7 @@
 extern void NetRead_Float(float* out);
 
 /* Fills a point from three successive NetRead_Float reads (x, y, z) with w = 1. */
-void func_00197500(Vec4* out) {
+void cNetMsg_GetVector(Vec4* out) {
     float z, y, x;
     NetRead_Float(&x);
     out->x = x;

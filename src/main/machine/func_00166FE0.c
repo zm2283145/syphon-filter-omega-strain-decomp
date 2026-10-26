@@ -51,9 +51,9 @@ extern float D_0055A28C;
 int sprintf(char* d, const char* f, ...);
 void Video_BeginFrame(void* p);
 float SoftFloat_U64ToFloat(unsigned long long t);
-void func_0027A830(void* o, float dt);
-void func_0027A7F0(void* o);
-void func_0036A300(void* font, char* s, V4_00166FE0* col, int x, int y, float scale);
+void cHudNetLobby_NextFrame(void* o, float dt);
+void cHudNetLobby_Render(void* o);
+void cFont_Display_charP_tRGBAR_int_int_etc(void* font, char* s, V4_00166FE0* col, int x, int y, float scale);
 int TextManager_Get(void);
 void TextManager_DrawImmediate(int a);
 }
@@ -120,10 +120,10 @@ extern "C" void Game_DrawWaitingForPlayers(Screen_00166FE0* self, int first, int
     }
     {
         unsigned long long now = Now_00166FE0();
-        func_0027A830(self->anim, SoftFloat_U64ToFloat(now - D_004EE4B8) / 100000.0f);
+        cHudNetLobby_NextFrame(self->anim, SoftFloat_U64ToFloat(now - D_004EE4B8) / 100000.0f);
         D_004EE4B8 = now;
     }
-    func_0027A7F0(self->anim);
+    cHudNetLobby_Render(self->anim);
     D_005392D8 = D_004BC1B0;
     n = last - first - 1;
     if (n != 0) {
@@ -134,7 +134,7 @@ extern "C" void Game_DrawWaitingForPlayers(Screen_00166FE0* self, int first, int
         col.x = c.x; col.y = c.y; col.z = c.z; col.w = c.w;
         col.w = (t > 0.5f) ? 2.0f * (1.0f - t) : 2.0f * t;
         sprintf(buf, D_0049C400, n, n > 1 ? D_0049C3E8 : D_0049C3F0);
-        func_0036A300(self->font, buf, &col, -220, -156, 0.001f);
+        cFont_Display_charP_tRGBAR_int_int_etc(self->font, buf, &col, -220, -156, 0.001f);
     }
     TextManager_DrawImmediate(TextManager_Get());
     D_00538C68 = 1;

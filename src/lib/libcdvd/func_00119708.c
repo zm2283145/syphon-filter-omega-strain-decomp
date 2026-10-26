@@ -8,12 +8,12 @@ extern int D_00489300[];
 extern char D_00498DF0[];
 extern char D_00498DB8[];
 extern char D_00498DD8[];
-extern void func_00118718(void);
+extern void cmd_sem_init(void);
 extern int PollSema(int);
 extern int SignalSema(int);
-extern int func_00119510(int);
+extern int sceCdDiskReady_old(int);
 extern void func_0010FBC0(int);
-extern void func_0010FB10(void *, int);
+extern void sceSifWriteBackDCache(void *, int);
 extern int sceSifBindRpc(RpcCd *cd, unsigned int id, int mode);
 extern int sceSifCallRpc(RpcCd *, int, int, void *, int, void *, int, void *, void *);
 extern void scePrintf(const char *, ...);
@@ -27,7 +27,7 @@ int sceCdDiskReady(int mode)
     int ret;
     int j;
     if (D_00487890 > 0) scePrintf(D_00498DF0);
-    func_00118718();
+    cmd_sem_init();
     if (D_004878B0 != PollSema(D_004878B0)) return mode != 8 ? 6 : -1;
     func_0010FBC0(0);
     i = 0;
@@ -44,14 +44,14 @@ int sceCdDiskReady(int mode)
             }
             if (i > 16) {
                 SignalSema(D_004878B0);
-                return func_00119510(mode);
+                return sceCdDiskReady_old(mode);
             }
             DELAY(j);
             i++;
         } while (1);
     }
     D_004E9F90 = mode;
-    func_0010FB10(&D_004E9F90, 4);
+    sceSifWriteBackDCache(&D_004E9F90, 4);
     if (sceSifCallRpc(&D_004E9F50, 0, 0, &D_004E9F90, 4, D_00489300, 4, 0, 0) < 0) {
         SignalSema(D_004878B0);
         return mode != 8 ? 6 : -1;

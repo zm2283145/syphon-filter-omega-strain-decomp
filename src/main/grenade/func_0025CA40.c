@@ -30,8 +30,8 @@ typedef struct Strip_0025CA40 {
     int maxRun;
 } Strip_0025CA40;
 extern void Vec4_Copy(V4_0025CA40* dst, V4_0025CA40* src);
-extern void func_0025CCE0(V4_0025CA40* dst, V4_0025CA40* src);
-void func_0025CA40(Strip_0025CA40* s)
+extern void tIRGBA_opAssign_tIRGBAR(V4_0025CA40* dst, V4_0025CA40* src);
+void XLib_NextBatchVert(Strip_0025CA40* s)
 {
     if (s->run == s->maxRun) {
         int v;
@@ -52,8 +52,8 @@ void func_0025CA40(Strip_0025CA40* s)
         Vec4_Copy(&e->pos[s->nVerts], &e->pos[s->nVerts - 2]);
         Vec4_Copy(&e->pos[s->nVerts + 1], &e->pos[s->nVerts - 1]);
         if (s->flags & 0x200000000LL) {
-            func_0025CCE0(&e->c30[s->nVerts], &e->c30[s->nVerts - 2]);
-            func_0025CCE0(&e->c30[s->nVerts + 1], &e->c30[s->nVerts - 1]);
+            tIRGBA_opAssign_tIRGBAR(&e->c30[s->nVerts], &e->c30[s->nVerts - 2]);
+            tIRGBA_opAssign_tIRGBAR(&e->c30[s->nVerts + 1], &e->c30[s->nVerts - 1]);
         }
         if (s->flags & 0x400000000LL) {
             Vec4_Copy(&e->c34[s->nVerts], &e->c34[s->nVerts - 2]);

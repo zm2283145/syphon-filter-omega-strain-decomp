@@ -28,6 +28,6 @@ DEFINE_VTABLE2_BASE_DTOR(cNetAgentUpdateMsg_dtor, D_004D91A0, D_004DCF10, cMessa
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-DEFINE_VTABLE_BASE_DTOR(func_0012F070, D_004DCF10, cMessage_dtor)
+DEFINE_VTABLE_BASE_DTOR(cNetMsg_dtor, D_004DCF10, cMessage_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0012F070 */

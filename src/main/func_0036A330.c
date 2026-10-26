@@ -39,8 +39,8 @@ typedef struct G_A330 {
 } G_A330;
 extern G_A330 D_00539210;
 void Renderer_BindTexture(TexMan* m, int idx);
-void func_0025CD10(char* r);
-void func_0025CA40(char* r);
+void XLib_NewStrip(char* r);
+void XLib_NextBatchVert(char* r);
 void Vec4_Copy(void* d, const void* s);
 void GuiBatch_AddVertexColor(void* out, const void* in);
 float GuiBatch_AddVertexUV(void);
@@ -63,7 +63,7 @@ static inline void Emit(const V4& pos, const V4& col, float u, float v)
     V4 tmp;
     Ent* e;
     float uu;
-    func_0025CA40(g_Video);
+    XLib_NextBatchVert(g_Video);
     e = EntAt(D_00539210.f10);
     Vec4_Copy(e->pos + (D_00539224 - 1) * 16, &pos);
     GuiBatch_AddVertexColor(e->c30 + (D_00539224 - 1) * 16, &col);
@@ -96,7 +96,7 @@ void Font_DrawString(Font* f, const char* s, V4* col, float x, float y, float z,
         e->c2C += D_00539224 * 16;
         e->c30 += D_00539224 * 16;
         e->c34 += D_00539224 * 16;
-        func_0025CD10(g_Video);
+        XLib_NewStrip(g_Video);
         D_00539224 = 0;
     }
     {

@@ -10,10 +10,10 @@ extern unsigned short D_004908F0;
 extern NcConn **D_004908F4;
 extern void *memcpy(void *, const void *, unsigned int);
 extern int Net_AllocZeroed(void *, int);
-extern void func_002FB3C0(void *);
-extern int func_00301038(NcConn *, int);
-extern int func_002F52A8(void *, unsigned int, int);
-extern int func_00301220(unsigned int);
+extern void rt_memory_free(void *);
+extern int rt_msg_client_change_state(NcConn *, int);
+extern int rt_circ_buf_create(void *, unsigned int, int);
+extern int rt_msg_client_set_scratch_buf_min_size(unsigned int);
 
 int NetConn_Allocate(unsigned short *out, unsigned int kind, unsigned int rx, unsigned int tx)
 {
@@ -38,7 +38,7 @@ int NetConn_Allocate(unsigned short *out, unsigned int kind, unsigned int rx, un
         if (Net_AllocZeroed(&tab, n * 4)) return 8;
         if (D_004908F4) {
             memcpy(tab, D_004908F4, D_004908F0 * 4);
-            func_002FB3C0(&D_004908F4);
+            rt_memory_free(&D_004908F4);
         }
         D_004908F0 = n;
         D_004908F4 = tab;
@@ -47,7 +47,7 @@ int NetConn_Allocate(unsigned short *out, unsigned int kind, unsigned int rx, un
     D_004908F4[i] = (NcConn *)tab;
     D_004908F4[i]->id = i;
     D_004908F4[i]->kind = kind;
-    if ((r = func_00301038(D_004908F4[i], 0)) != 0) return r;
+    if ((r = rt_msg_client_change_state(D_004908F4[i], 0)) != 0) return r;
     if (kind == 1) {
         rx >>= 1;
         tx >>= 1;
@@ -61,9 +61,9 @@ int NetConn_Allocate(unsigned short *out, unsigned int kind, unsigned int rx, un
         s->kind = 1;
         s->id = i;
         s->mode = 0;
-        if (func_002F52A8(s->q68, rx, 0)) return 0x15;
+        if (rt_circ_buf_create(s->q68, rx, 0)) return 0x15;
         s->size50 = rx;
-        if (func_002F52A8(s->q50, tx, 0)) return 0x15;
+        if (rt_circ_buf_create(s->q50, tx, 0)) return 0x15;
         s->size4C = tx;
         D_004908F4[i]->sock[0] = s;
     }
@@ -74,15 +74,15 @@ int NetConn_Allocate(unsigned short *out, unsigned int kind, unsigned int rx, un
         s->kind = kind;
         s->id = i;
         s->mode = kind;
-        if (func_002F52A8(s->q68, rx, 0)) return 0x15;
+        if (rt_circ_buf_create(s->q68, rx, 0)) return 0x15;
         s->size50 = rx;
-        if (func_002F52A8(s->q50, tx, 0)) return 0x15;
+        if (rt_circ_buf_create(s->q50, tx, 0)) return 0x15;
         s->size4C = tx;
         D_004908F4[i]->sock[1] = s;
     }
-    if ((r = func_00301220(rx)) != 0) return r;
-    if ((r = func_00301220(tx)) != 0) return r;
-    if ((r = func_00301038(D_004908F4[i], 1)) != 0) return r;
+    if ((r = rt_msg_client_set_scratch_buf_min_size(rx)) != 0) return r;
+    if ((r = rt_msg_client_set_scratch_buf_min_size(tx)) != 0) return r;
+    if ((r = rt_msg_client_change_state(D_004908F4[i], 1)) != 0) return r;
     *out = i;
     return 0;
 }

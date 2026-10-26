@@ -30,7 +30,7 @@ static inline float Dot_C14(void* b, void* a) {
     }
     return r;
 }
-int func_003C14F0(C14_P* a, C14_P* b, float eps) {
+int AreNearParallel(C14_P* a, C14_P* b, float eps) {
     float d = Dot_C14(&b->n, &a->n);
     int r = 1;
     if (Abs_C14(d) < eps) r = 0;
@@ -92,14 +92,14 @@ static inline int Km(const unsigned char& c) { return c & ~0x80; }
 struct Edge { V p0; V p1; char pad20[0x10]; Flags fl; char pad31[3]; float len; char pad38[8]; V n; };
 extern "C" {
 #if 0 /* merge_units */
-int func_003C14F0(Edge* a, Edge* b, float eps);
+int AreNearParallel(Edge* a, Edge* b, float eps);
 #endif /* merge_units */
-#define func_003C14F0(a0, a1, a2) (func_003C14F0((C14_P *)(a0), (C14_P *)(a1), (a2))) /* merge_units */
+#define AreNearParallel(a0, a1, a2) (AreNearParallel((C14_P *)(a0), (C14_P *)(a1), (a2))) /* merge_units */
 
-V* func_003C14E0(Edge* e);
-V* func_003C14D0(Edge* e);
-V* func_003C13B0(Edge* e);
-float func_003C13C0(const V* a, const V* b, const V* dir);
+V* cCollisionEdge_Vertex0(Edge* e);
+V* cCollisionEdge_UnitEdgeVector(Edge* e);
+V* cCollisionEdge_Vertex1(Edge* e);
+float GetDistanceSquaredPointToLine(const V* a, const V* b, const V* dir);
 float Math_MaxF(float a, float b);
 bool ColEdge_AreConnected(Edge* a, Edge* b, float eps, float maxd, float tol);
 }
@@ -117,9 +117,9 @@ bool ColEdge_AreConnected(Edge* a_, Edge* b_, float eps, float maxd, float tol)
     const Flags* pa = &fa;
     if ((pa->bf & ~0x80) == (fb.bf & ~0x80)) {
         bool ok;
-        if (func_003C14F0(a, b, eps))
-            ok = Math_MaxF(func_003C13C0(func_003C14E0(b), func_003C14E0(a), func_003C14D0(a)),
-                      func_003C13C0(func_003C13B0(b), func_003C14E0(a), func_003C14D0(a))) <= maxd;
+        if (AreNearParallel(a, b, eps))
+            ok = Math_MaxF(GetDistanceSquaredPointToLine(cCollisionEdge_Vertex0(b), cCollisionEdge_Vertex0(a), cCollisionEdge_UnitEdgeVector(a)),
+                      GetDistanceSquaredPointToLine(cCollisionEdge_Vertex1(b), cCollisionEdge_Vertex0(a), cCollisionEdge_UnitEdgeVector(a))) <= maxd;
         else ok = false;
         if (ok) {
             V d0 = b->p0 - a->p0;
@@ -133,7 +133,7 @@ bool ColEdge_AreConnected(Edge* a_, Edge* b_, float eps, float maxd, float tol)
     }
     return r;
 }
-#undef func_003C14F0 /* merge_units */
+#undef AreNearParallel /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003C1540(void) {}
 #pragma pop /* merge_units */

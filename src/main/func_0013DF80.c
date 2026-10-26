@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-void func_0013DF80(Iter* out, PtrVec* v) {
+void std_vector_cGOBJPtr_end(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
 

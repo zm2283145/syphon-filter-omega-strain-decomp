@@ -9,7 +9,7 @@
 extern char D_00497D14[];
 extern char D_00497D18[];
 
-int func_0046CB08(void) {
+int MediusUniqueCallbackAccountUpdatePasswordResponseHandler(void) {
     int v0;
     int cond;
 
@@ -24,11 +24,11 @@ ret:
     return v0;
 }
 
-int func_0046CB38(void) {
+int MediusUniqueCallbackAccountUpdateStatsRequestHandler(void) {
     return 294;
 }
 
-int func_0046CB40(void) {
+int MediusUniqueCallbackAccountUpdateStatsResponseHandler(void) {
     int v0;
     int cond;
 

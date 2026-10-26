@@ -1,5 +1,5 @@
-extern int func_002E52D8(unsigned int, unsigned int, char **);
-int func_002E8E40(unsigned int a, int *out)
+extern int NetGetClientInfo(unsigned int, unsigned int, char **);
+int NetGetNextMigrateOrder(unsigned int a, int *out)
 {
     char *p = 0;
     unsigned int i = 0;
@@ -8,7 +8,7 @@ int func_002E8E40(unsigned int a, int *out)
     *out = 0;
     if (a >= 4) return 0x17;
     for (; i < 0x100; i++) {
-        r = func_002E52D8(a, i, &p);
+        r = NetGetClientInfo(a, i, &p);
         if (r) return r;
         if (p && *out < *(int *)(p + 0x24)) *out = *(int *)(p + 0x24);
     }

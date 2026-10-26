@@ -8,17 +8,17 @@ extern "C" {
     int Gui_GetScreenList();
     void GuiKeyboard_Open(int,int,char*,Screen*,int,int,int);
     void GuiScreen_Navigate(Screen*,int);
-    void func_0033C9E0(Screen*,int,char*);
+    void GuiLobbyScreen_CellInviteAgent(Screen*,int,char*);
     int GuiScreen_GetLobbyString(Screen*,int,char*,char*,int = 0,int = 0);
-    void func_0033D8E0(Screen*,int);
+    void GuiMissionLobbyScreen_SetDisplayMode(Screen*,int);
     int GuiMenuScreen_HandleEvent(Screen*,int,int,int,char*);
     int GuiManager_FindOrLoad(int,char*,char*);
     void GuiTextWidget_SetText(int,char*,int);
     int DME_GetLobby();
-    char* func_0044A060(int);
-    int func_0044A420(int,char*);
-    int func_0044A800(int);
-    int func_0044A810(int,int);
+    char* SFOLobby_CellGetMessage(int);
+    int SFOLobby_CellSetMessage(int,char*);
+    int SFOLobby_CellResign(int);
+    int SFOLobby_CellRemoveAgent(int,int);
     int SFOLobby_LookupAccountId(int,char*);
     unsigned char SFOLobby_FormatError(int,int);
     extern char D_004ABCD0[],D_004ABCD8[],D_004ABCE8[],g_Game[];
@@ -66,10 +66,10 @@ extern "C" int GuiNetAgencyCell_HandleEvent(Screen* arg0, int arg1, int arg2, in
             if (temp_v0_3 != 0) {
                 int temp_s1 = D_004FFC04;
                 int temp_s1_2 = FrontEnd_OpenPopup(temp_s1, 0, D_004ABCD0, GuiScreen_GetLobbyString(temp_s4, 0x42, 0, 0));
-                if (func_0044A420(temp_v0_3, var_s0) != 0) {
+                if (SFOLobby_CellSetMessage(temp_v0_3, var_s0) != 0) {
                     int temp_v0_4 = DME_GetLobby();
                     if (temp_v0_4 != 0) {
-                        var_v0 = func_0044A060(temp_v0_4);
+                        var_v0 = SFOLobby_CellGetMessage(temp_v0_4);
                         int temp_a0 = temp_s4->unk160;
                         if (temp_a0 != 0) {
                             var_v0 = var_v0 ? var_v0 : D_004ABCD0;
@@ -90,7 +90,7 @@ extern "C" int GuiNetAgencyCell_HandleEvent(Screen* arg0, int arg1, int arg2, in
                 selected = Agent_GetSelected(g_Game, -1);
                 int temp_s0_2 = D_004FFC04;
                 int temp_s1_3 = FrontEnd_OpenPopup(temp_s0_2, 0, D_004ABCD0, GuiScreen_GetLobbyString(temp_s4, 0x46, 0, (char*)selected + 0x8BC));
-                if (func_0044A800(temp_v0_5) != 0) {
+                if (SFOLobby_CellResign(temp_v0_5) != 0) {
                     selected = Agent_GetSelected(g_Game, -1);
                     int temp_s0_3 = D_004FFC04;
                     FrontEnd_OpenPopup(temp_s0_3, 2, D_004ABCD0, GuiScreen_GetLobbyString(temp_s4, 0x47, 0, (char*)selected + 0x8BC), temp_s4, 15);
@@ -112,7 +112,7 @@ extern "C" int GuiNetAgencyCell_HandleEvent(Screen* arg0, int arg1, int arg2, in
                         int temp_s0_5 = D_004FFC04;
                         FrontEnd_OpenPopup(temp_s0_5, 2, D_004ABCD0, GuiScreen_GetLobbyString(temp_s4, 0x17, var_s0, 0));
                     } else {
-                        func_0033C9E0(temp_s4, temp_s1_4, var_s0);
+                        GuiLobbyScreen_CellInviteAgent(temp_s4, temp_s1_4, var_s0);
                     }
                 }
             }
@@ -123,7 +123,7 @@ extern "C" int GuiNetAgencyCell_HandleEvent(Screen* arg0, int arg1, int arg2, in
             if (temp_v0_7 != 0) {
                 int temp_s0_6 = D_004FFC04;
                 int temp_s1_5 = FrontEnd_OpenPopup(temp_s0_6, 0, D_004ABCD0, GuiScreen_GetLobbyString(temp_s4, 0x52, 0, 0));
-                if (func_0044A810(temp_v0_7, temp_s4->unk100) != 0) {
+                if (SFOLobby_CellRemoveAgent(temp_v0_7, temp_s4->unk100) != 0) {
                     int temp_s0_7 = D_004FFC04;
                     FrontEnd_OpenPopup(temp_s0_7, 2, D_004ABCD0, GuiScreen_GetLobbyString(temp_s4, 0x53, 0, 0));
                 } else {
@@ -146,11 +146,11 @@ extern "C" int GuiNetAgencyCell_HandleEvent(Screen* arg0, int arg1, int arg2, in
     if (temp_v1 == 0) {
         if (arg1 != temp_s4->unk88) {
             if (arg1 == temp_s4->unk98) {
-                func_0033D8E0(temp_s4, 3);
+                GuiMissionLobbyScreen_SetDisplayMode(temp_s4, 3);
             } else if ((arg1 == temp_s4->unk164) || (arg1 == temp_s4->unk168) || (arg1 == temp_s4->unk16C)) {
-                func_0033D8E0(temp_s4, 4);
+                GuiMissionLobbyScreen_SetDisplayMode(temp_s4, 4);
             } else {
-                func_0033D8E0(temp_s4, 1);
+                GuiMissionLobbyScreen_SetDisplayMode(temp_s4, 1);
             }
         }
 

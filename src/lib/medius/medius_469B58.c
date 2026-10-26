@@ -11,7 +11,7 @@ extern int D_0059856C;
 unsigned int D_00497D38[1] = { 0x0 };
 extern int Medius_TerminateString(char *, int);
 extern int Net_SendLocked(int, int, int, int, int, int, void *);
-int func_00469B58(char *a, int b)
+int MediusCreateChannel(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -27,13 +27,13 @@ int func_00469B58(char *a, int b)
 /* merge_units: begin func_00469C10 */
 int D_00497D3C = 0;
 extern int D_0059857C;
-extern int func_002EA8C8(char *);
-extern void func_00467D90(char *);
-extern void func_00467F38(void);
-extern void func_00467DD0(int);
-extern void func_00467F90(int, char *);
-extern int func_002EA960(char *, char *);
-int func_00469C10(char *a, int b)
+extern int NetSetDefaultResolveAddrParams(char *);
+extern void MediusGetNatServiceAddress(char *);
+extern void MediusResolveAddrCallback(void);
+extern void MediusSetProcessingState(int);
+extern void MediusSetQueuedRequest(int, char *);
+extern int NetResolveAddr(char *, char *);
+int MediusJoinGame(char *a, int b)
 {
     char buf[0x20];
     char buf2[0x10];
@@ -44,13 +44,13 @@ int func_00469C10(char *a, int b)
     if (D_00497CC4 < 0) return -0x10;
     D_00497D3C = b;
     if (*(int *)(a + 0x50) == 2) {
-        if (func_002EA8C8(buf)) return -2;
-        func_00467D90(buf + 8);
-        *(void (**)(void))(buf + 4) = func_00467F38;
-        func_00467DD0(3);
-        func_00467F90(0x2C, a);
-        if (func_002EA960(buf, buf2)) {
-            func_00467DD0(0);
+        if (NetSetDefaultResolveAddrParams(buf)) return -2;
+        MediusGetNatServiceAddress(buf + 8);
+        *(void (**)(void))(buf + 4) = MediusResolveAddrCallback;
+        MediusSetProcessingState(3);
+        MediusSetQueuedRequest(0x2C, a);
+        if (NetResolveAddr(buf, buf2)) {
+            MediusSetProcessingState(0);
             return -2;
         }
         return 0;
@@ -62,7 +62,7 @@ int func_00469C10(char *a, int b)
 /* merge_units: begin func_00469D20 */
 extern int D_00598584;
 unsigned int D_00497D40[1] = { 0x0 };
-int func_00469D20(char *a, int b)
+int MediusJoinChannel(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -77,7 +77,7 @@ int func_00469D20(char *a, int b)
 /* merge_units: begin func_00469DC8 */
 extern int D_00598594;
 int D_00497D44 = 0;
-int func_00469DC8(char *a, int b)
+int MediusGetGames(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -91,7 +91,7 @@ int func_00469DC8(char *a, int b)
 /* merge_units: begin func_00469E68 */
 extern int D_0059859C;
 unsigned int D_00497D48[1] = { 0x0 };
-int func_00469E68(char *a, int b)
+int MediusGetChannels(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);

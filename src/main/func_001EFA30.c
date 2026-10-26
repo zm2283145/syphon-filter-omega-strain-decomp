@@ -7,6 +7,6 @@
 #include "types.h"
 #include "loose01_types.h"
 
-void func_001EFA30(PtrVec* v) {
+void std_vector_deleter_cCollisionEdge_clear(PtrVec* v) {
     v->count = 0;
 }

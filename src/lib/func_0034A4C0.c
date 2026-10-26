@@ -19,10 +19,10 @@ typedef struct Heap {
     int cur;
 } Heap;
 
-int func_0034A458(Blk* b, int size, unsigned int* out);
-int func_0034C9A0(void* dst, void* src, int n);
+int libnetb_block_calc_avail(Blk* b, int size, unsigned int* out);
+int libnetb_trans_data(void* dst, void* src, int n);
 
-int func_0034A4C0(Heap* h, int size, unsigned int* outSize, char* outFlag)
+int libnetb_block_create_space(Heap* h, int size, unsigned int* outSize, char* outFlag)
 {
     unsigned int need;
     unsigned int got;
@@ -44,7 +44,7 @@ int func_0034A4C0(Heap* h, int size, unsigned int* outSize, char* outFlag)
                 goto fail;
             } else {
                 avail = h->total - h->cur;
-                ret = func_0034A458(b, avail, &got);
+                ret = libnetb_block_calc_avail(b, avail, &got);
                 if (ret == 0) {
                     if (got < need && avail - got < 0x40 && b != (Blk*)h->base) {
                         int v = avail - 0x40;
@@ -54,10 +54,10 @@ int func_0034A4C0(Heap* h, int size, unsigned int* outSize, char* outFlag)
                         b->fC = v;
                         b->f3C = 1;
                         b->self = b;
-                        ret = func_0034C9A0(b, h->base2 + h->cur, 0x40);
+                        ret = libnetb_trans_data(b, h->base2 + h->cur, 0x40);
                         if (ret == 0) {
                             h->cur = 0;
-                            ret = func_0034A4C0(h, size, outSize, outFlag);
+                            ret = libnetb_block_create_space(h, size, outSize, outFlag);
                         }
                     } else if (got < need) {
                         goto fail;
@@ -71,7 +71,7 @@ int func_0034A4C0(Heap* h, int size, unsigned int* outSize, char* outFlag)
                             n->f3C = 0;
                             n->f8 = v;
                             n->fC = v;
-                            ret = func_0034C9A0(h->base + h->cur + need, h->base2 + h->cur + need, 0x40);
+                            ret = libnetb_trans_data(h->base + h->cur + need, h->base2 + h->cur + need, 0x40);
                             if (ret != 0)
                                 goto out;
                         }
@@ -83,7 +83,7 @@ int func_0034A4C0(Heap* h, int size, unsigned int* outSize, char* outFlag)
                             b->f4 = 0;
                             b->f8 = v;
                             b->fC = v;
-                            ret = func_0034C9A0(h->base + h->cur, h->base2 + h->cur, 0x40);
+                            ret = libnetb_trans_data(h->base + h->cur, h->base2 + h->cur, 0x40);
                             if (ret == 0) {
                                 *outFlag = 1;
                                 goto ret0;

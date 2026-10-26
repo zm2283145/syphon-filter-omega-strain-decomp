@@ -8,23 +8,23 @@
 typedef struct { int x0; int x4; int x8; int xC[3]; } Out71A8;
 typedef struct { char pad[0x38]; float f38; float f3C; } St71A8;
 typedef struct { float f0; float f4; float f8; float fC; float f10; int x14[3]; } Prm71A8;
-extern int func_003170A8(float a, float b, float c);
-extern void func_00317138(float x, int v, float *a, float *b);
-extern int func_0031D1D8(float x);
-extern float func_0031D260(int v);
-extern float func_0031D290(float a, float b, float c, float d);
-extern int func_00317020(float x);
-extern void func_003191F8(int *a, int *b, int n, float x);
-void func_003171A8(Out71A8 *o, St71A8 *st, Prm71A8 *p)
+extern int QuanPvSC3(float a, float b, float c);
+extern void UnQuanPvSC3(float x, int v, float *a, float *b);
+extern int NellyQuanPitchSC3(float x);
+extern float NellyUnQuanPitchSC3(int v);
+extern float UnQuanMidPitchSC3(float a, float b, float c, float d);
+extern int QuanGainSC3(float x);
+extern void NellyMSVQEncPred(int *a, int *b, int n, float x);
+void NellyQuantSC3(Out71A8 *o, St71A8 *st, Prm71A8 *p)
 {
     float *q = &p->f8;
-    o->x4 = func_003170A8(st->f38, p->f4, q[1]);
-    func_00317138(st->f38, o->x4, &p->f4, &p->fC);
-    o->x8 = func_0031D1D8(q[0]);
-    q[0] = func_0031D260(o->x8);
-    p->f0 = func_0031D290(st->f3C, q[0], st->f38, q[1]);
-    o->x0 = func_00317020(p->f10);
-    func_003191F8(p->x14, o->xC, 0xC, q[1]);
+    o->x4 = QuanPvSC3(st->f38, p->f4, q[1]);
+    UnQuanPvSC3(st->f38, o->x4, &p->f4, &p->fC);
+    o->x8 = NellyQuanPitchSC3(q[0]);
+    q[0] = NellyUnQuanPitchSC3(o->x8);
+    p->f0 = UnQuanMidPitchSC3(st->f3C, q[0], st->f38, q[1]);
+    o->x0 = QuanGainSC3(p->f10);
+    NellyMSVQEncPred(p->x14, o->xC, 0xC, q[1]);
     st->f38 = q[1];
     st->f3C = q[0];
 }
@@ -33,7 +33,7 @@ void func_003171A8(Out71A8 *o, St71A8 *st, Prm71A8 *p)
 /* merge_units: begin func_00317278 */
 extern float *D_004E1D5C;
 
-void func_00317278(float *best, int n, float *x, int *y, float *pos, float step, float f, float end, float init)
+void corrfunc(float *best, int n, float *x, int *y, float *pos, float step, float f, float end, float init)
 {
     int i, v;
     float sum;
@@ -61,9 +61,9 @@ typedef struct {
     float *cep;
 } B;
 
-extern void func_00317550(float *lpc, float gain, float *cep, float *err, float *dist, int p);
+extern void Cepstrum4VocalFry(float *lpc, float gain, float *cep, float *err, float *dist, int p);
 
-int func_00317330(A *a, B *b, float *lpc, int p)
+int Detect_VocalFry(A *a, B *b, float *lpc, int p)
 {
     float err, dist;
     float x = b->x, y = b->y;
@@ -71,7 +71,7 @@ int func_00317330(A *a, B *b, float *lpc, int p)
     float h;
     int r = 0;
     v = a->v;
-    func_00317550(lpc, a->gain, b->cep, &err, &dist, p);
+    Cepstrum4VocalFry(lpc, a->gain, b->cep, &err, &dist, p);
     if (x < v[0] && 0x1.999998p-3f <= v[1]) {
         h = v[0] * 0.5f;
         if (h * 0x1.bd70a2p-1f < x && x < h * 0x1.266666p+0f) r = 1;
@@ -88,7 +88,7 @@ int func_00317330(A *a, B *b, float *lpc, int p)
 typedef struct { float x, y; } G7V2;
 typedef struct { float a; float pad; G7V2 v; } G7A;
 extern float D_004E1BE0, D_004E1CB8, D_004E1C4C, D_004E1C50, D_004E1C30, D_004E1CBC;
-void func_00317490(G7A* a, G7V2* b)
+void UpdateVF_States(G7A* a, G7V2* b)
 {
     G7V2* v = &a->v;
     float x = b->x;

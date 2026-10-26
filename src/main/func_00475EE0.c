@@ -21,9 +21,9 @@ extern "C" {
 V Ladder_RungTarget(Ladder* l, int i);
 void* Root_GetWorldPlacement(void*);
 V* Placement_GetPosition(void*);
-float func_00476230(Ladder* l, int i);
+float cHuman_GetDistanceAlongLadderFromEntryPointInTermsOfNumberOfGraspableRungs(Ladder* l, int i);
 float Math_Floorf(float x);
-float func_00121570(float x);
+float Libc_Ceilf(float x);
 }
 /* the accessor inlines (and the inner pos assignment) give retail's float register colouring */
 static inline float Rung_Lo(Rung* r) { return r->f998 + D_004A0410; }
@@ -34,7 +34,7 @@ static inline bool Rung_Valid(Rung* r) { return r->f990 > -3.4028235e38f && r->f
 V Ladder_RungTarget(Ladder* l, int i)
 {
     if (l->rung && Rung_Valid(l->rung)) {
-        float pos = func_00476230(l, 0);
+        float pos = cHuman_GetDistanceAlongLadderFromEntryPointInTermsOfNumberOfGraspableRungs(l, 0);
         pos = Math_Floorf(0.5f + (pos = pos / 2.0f));
         pos = pos * 2.0f;
         V base = l->rung->base;
@@ -44,7 +44,7 @@ V Ladder_RungTarget(Ladder* l, int i)
         if (!i) {
             lo = lo - 0.5f * Pitch();
             lo = lo / 2.0f;
-            lo = func_00121570(lo);
+            lo = Libc_Ceilf(lo);
             lo = lo * 2.0f;
             hi = hi + 0.5f * Pitch();
             hi = hi / 2.0f;

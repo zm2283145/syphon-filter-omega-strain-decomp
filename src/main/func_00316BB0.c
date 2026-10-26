@@ -3,8 +3,8 @@
 #define NULL 0
 #pragma mpwc_relax on
 int NetMsg_RegisterType(char *, int, char *);               
-int func_002E9A10();                                
-int func_002E9A98(char *, char *, int, int);                  
+int NetRegisterMessageStart();                                
+int NetMessageField(char *, char *, int, int);                  
 int Event_UnpackHeader(char *);                             
 extern char D_0052ACD0;
 extern char cNetWeaponMsg_NetReceive;
@@ -14,7 +14,7 @@ unsigned char cNetWeaponMsg_NetRegister(void) {
     unsigned char var_s0;
 
     var_s0 = 0;
-    if ((func_002E9A10() == 0) && (Event_UnpackHeader(sl.f20) != 0) && (func_002E9A98(sl.f20, &sl.f30, 1, 1) == 0) && (func_002E9A98(sl.f20, sl.f34, 4, 1) == 0) && (func_002E9A98(sl.f20, &sl.f28, 1, 1) == 0) && (func_002E9A98(sl.f20, &sl.f2C, 4, 1) == 0) && (NetMsg_RegisterType(&D_0052ACD0, 2, &cNetWeaponMsg_NetReceive) == 0)) {
+    if ((NetRegisterMessageStart() == 0) && (Event_UnpackHeader(sl.f20) != 0) && (NetMessageField(sl.f20, &sl.f30, 1, 1) == 0) && (NetMessageField(sl.f20, sl.f34, 4, 1) == 0) && (NetMessageField(sl.f20, &sl.f28, 1, 1) == 0) && (NetMessageField(sl.f20, &sl.f2C, 4, 1) == 0) && (NetMsg_RegisterType(&D_0052ACD0, 2, &cNetWeaponMsg_NetReceive) == 0)) {
         var_s0 = 1;
     }
     return var_s0;

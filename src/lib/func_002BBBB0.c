@@ -7,16 +7,16 @@ extern SBBBB0 D_00518A08[];
 extern PBBBB0 D_00518A40;
 extern char D_0051AAC0[];
 extern int D_0048C09C;
-extern int func_0026A8C8(int);
+extern int sceDbcGetConnection(int);
 extern void *memset(void *, int, unsigned int);
 extern int sceDbcSendData3(int, int, void *, void *, void *);
-extern void func_002BB660(void);
-extern E2BB520 *func_002BB520(int);
+extern void sceMc2SifCallback(void);
+extern E2BB520 *SyncDma(int);
 int func_002BBBB0(int i)
 {
     LBBBB0 l;
     int n;
-    if (func_0026A8C8(D_00518A08[i].sock) == 3) return 0;
+    if (sceDbcGetConnection(D_00518A08[i].sock) == 3) return 0;
     D_00518A40.x8 = D_00518A08[i].s.x8;
     D_00518A40.xC = D_00518A08[i].s.xC;
     D_00518A40.x10 = D_00518A08[i].s.x10;
@@ -25,7 +25,7 @@ int func_002BBBB0(int i)
     l.a = 0x2080;
     memset(D_0051AAC0, 0, 0x100);
     D_0048C09C = 4;
-    while (sceDbcSendData3(D_00518A08[i].sock, D_0048C09C, &l, &D_00518A40, func_002BB660) != 1);
-    return func_002BB520(D_00518A08[i].sock)->x8;
+    while (sceDbcSendData3(D_00518A08[i].sock, D_0048C09C, &l, &D_00518A40, sceMc2SifCallback) != 1);
+    return SyncDma(D_00518A08[i].sock)->x8;
 }
 

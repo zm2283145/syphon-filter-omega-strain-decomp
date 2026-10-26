@@ -9,9 +9,9 @@ typedef struct ResNodeE6 {
 typedef struct ResIterE6 { ResNodeE6* node; } ResIterE6;
 
 extern char D_0055A0F0[];
-extern void func_003E2EE0(ResIterE6* out, void* map, int* key);
-extern void func_003DFAF0(ResIterE6* out, void* map);
-extern void func_003DFAE0(ResIterE6* out, ResIterE6* in);
+extern void std_tree_pair_int_value_compare_find_intR_2(ResIterE6* out, void* map, int* key);
+extern void std_map_int_SchedCallbackPtr_end(ResIterE6* out, void* map);
+extern void cAssocArray_int_SchedCallbackPtr_Iterator_ctor(ResIterE6* out, ResIterE6* in);
 
 static inline int IsZeroE6(int x) { return x == 0; }
 static inline int IterE6_Ne(ResNodeE6* a, ResNodeE6* b) { return (a == b) ^ 1; }
@@ -25,10 +25,10 @@ void Script_Reschedule_3DFC40(int id, float seconds)
     int key[1];
     ResNodeE6* node;
     key[0] = id;
-    func_003E2EE0(&it, D_0055A0F0, key);
+    std_tree_pair_int_value_compare_find_intR_2(&it, D_0055A0F0, key);
     node = it.node;
-    func_003DFAF0(&end, D_0055A0F0);
-    func_003DFAE0(&cend, &end);
+    std_map_int_SchedCallbackPtr_end(&end, D_0055A0F0);
+    cAssocArray_int_SchedCallbackPtr_Iterator_ctor(&cend, &end);
     if (IterE6_Ne(node, cend.node)) {
         *node->timer = (int)(1000.0f * seconds);
     }

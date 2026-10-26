@@ -37,6 +37,6 @@ ArgMsg* cAIGOBJMsg_ctor(ArgMsg* self, void* type, int arg) {
     return self;
 }
 
-int func_001AD8B0(char* self) {
+int cGobjController_Gobj(char* self) {
     return *(int*)(self + 48);
 }

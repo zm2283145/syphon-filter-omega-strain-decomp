@@ -1,6 +1,6 @@
 extern const float D_004B3B58[];
 extern const float D_004B3B60;
-int func_00318BB0(float* a, int n, int i)
+int FindBestCandidates(float* a, int n, int i)
 {
     int r = 0;
     n--;

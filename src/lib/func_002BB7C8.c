@@ -5,7 +5,7 @@ extern char D_0051AAC0[];
 extern int func_002BB788(void);
 extern void *memset(void *, int, unsigned int);
 extern int sceDbcCreateSocket(SockP *, char *, char *);
-int func_002BB7C8(SockP *in)
+int _sceMcCoreCreateSocket(SockP *in)
 {
     SockP s;
     int i;

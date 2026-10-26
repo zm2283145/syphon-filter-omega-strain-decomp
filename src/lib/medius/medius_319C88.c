@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-float func_00319C88(int a0, int a1, int a2) {
+float ScalarLUT(int a0, int a1, int a2) {
     float f0;
 
     a1 = a2 < a1;

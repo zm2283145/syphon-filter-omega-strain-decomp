@@ -7,10 +7,10 @@
 #include "types.h"
 
 /* Iterator inequality. */
-int func_002A8890(Iter* a, Iter* b) {
+int opNe_cLListIteratorR_cLListIteratorR_6(Iter* a, Iter* b) {
     return a->p != b->p;
 }
 
-void func_002A88B0(Iter* out, Tree* t) {
+void cLList_GuiWidgetPtr_End(Iter* out, Tree* t) {
     out->p = &t->header;
 }

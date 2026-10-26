@@ -3,37 +3,37 @@ extern unsigned int strlen(const char *);
 extern int strcmp(const char *, const char *);
 extern char *strcpy(char *, const char *);
 extern void String_Copy(char *, char *);
-extern char *func_002B66A0(char *, char *);
+extern char *_strtok(char *, char *);
 extern char *Libc_Strcat(char *, char *);
 extern char D_004AC1B0[];
 extern char D_004AC1B8[];
 typedef struct { char cwd[0x898]; } MC2Port;
 extern MC2Port D_00513490[];
-int func_002B6808(int idx, char *path, char *out)
+int _make_path(int idx, char *path, char *out)
 {
     char *tok;
     if (strlen(path) >= 0x80) return 0;
     String_Copy(out, D_00513490[idx].cwd);
     if (*path == '/') {
         strcpy(out, "/");
-        tok = func_002B66A0(path + 1, "/");
+        tok = _strtok(path + 1, "/");
     } else {
-        tok = func_002B66A0(path, "/");
+        tok = _strtok(path, "/");
     }
     while (tok) {
         if (strcmp(tok, D_004AC1B0) == 0) {
-            tok = func_002B66A0(0, "/");
+            tok = _strtok(0, "/");
         } else if (strcmp(tok, D_004AC1B8) == 0) {
             char *p;
             out[strlen(out) - 1] = 0;
             p = strrchr(out, '/');
             if (!p) return 0;
             p[1] = 0;
-            tok = func_002B66A0(0, "/");
+            tok = _strtok(0, "/");
         } else {
             Libc_Strcat(out, tok);
             Libc_Strcat(out, "/");
-            tok = func_002B66A0(0, "/");
+            tok = _strtok(0, "/");
         }
     }
     if (strcmp(out, "/") != 0) *strrchr(out, '/') = 0;

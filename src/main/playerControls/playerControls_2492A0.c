@@ -86,7 +86,7 @@ static inline void merge_flush_func_00249330(void) {}
 #pragma mpwc_relax on
 typedef struct { char p0[316]; int f13C; } PS0_002493C0;
 typedef struct { char p0[13604]; int f3524; char p3528[92]; int f3584; } PS1_002493C0;
-void func_002493C0(PS0_002493C0 *arg0, PS1_002493C0 *arg1) {
+void cPlayerControls_NetSelectNextWeapon(PS0_002493C0 *arg0, PS1_002493C0 *arg1) {
     int var_v1_2;
     unsigned char temp_a0;
     char * temp_a1;
@@ -119,7 +119,7 @@ typedef struct { char pad[5]; char b5; } Sub49;
 typedef struct { char pad[0x13C]; Sub49* p13C; void* p140; } Owner49;
 typedef struct { char pad[0x3584]; char* p3584; } Ctx49;
 extern void Player_MpAimViewExit(Owner49* self, Ctx49* ctx);
-void func_00249420(Owner49* self, Ctx49* ctx, int a2, char a3) {
+void cPlayerControls_NetAimWeapon(Owner49* self, Ctx49* ctx, int a2, char a3) {
     if (!self->p13C) {
         char* q = ctx->p3584;
         if (q) q += 0x1C;

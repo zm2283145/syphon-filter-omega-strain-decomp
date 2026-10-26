@@ -36,7 +36,7 @@ int GuiAgentLoad_IsType(void) {
 
 /* merge_units: begin func_00293890 */
 #pragma push /* merge_units */
-void func_00293890(void) {
+void GuiSaveAgentWidget_SaveDone(void) {
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00293890 */
@@ -47,7 +47,7 @@ void func_00293890(void) {
 #include "vtable2_base_dtor.h"
 
 /* Two-level destructor: restore vtables, run base destructor, optionally delete. */
-DEFINE_VTABLE2_BASE_DTOR(func_002938A0, D_004DD460, D_004E1220, GuiWidget_Destroy)
+DEFINE_VTABLE2_BASE_DTOR(GuiAgentDirectoryWidget_dtor, D_004DD460, D_004E1220, GuiWidget_Destroy)
 #pragma pop /* merge_units */
 /* merge_units: end func_002938A0 */
 

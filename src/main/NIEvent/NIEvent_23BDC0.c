@@ -70,7 +70,7 @@ void cMessage_dtor(Msg_23BE50* msg, int flags);
 
 extern char g_cEnableMsgClass[];
 extern char D_004E0880[];
-void func_003FF930(Msg_23BE50* msg, int id);
+void cEnableMsg_SendEnabled(Msg_23BE50* msg, int id);
 }
 extern "C" void cNIEventOBJ_v17(Obj_23BE50* self)
 {
@@ -81,7 +81,7 @@ extern "C" void cNIEventOBJ_v17(Obj_23BE50* self)
         msg.vtable = D_004E0880;
         msg.target = -1;
         msg.size = 0x40;
-        func_003FF930(&msg, self->id);
+        cEnableMsg_SendEnabled(&msg, self->id);
         msg.vtable = D_004E0880;
         cMessage_dtor(&msg, 0);
     }
@@ -111,21 +111,21 @@ struct Node_23BEE0 {
 };
 extern "C" {
 extern int D_004F7C60;
-int* func_0023A550(PtrVec* v, int i);
-void func_0023BEE0(Node_23BEE0* self, int arg);
+int* std_vector_cNIEventBasePtr_opIndex(PtrVec* v, int i);
+void cNIEventOBJ_DeactivateChildren(Node_23BEE0* self, int arg);
 void Object_Deactivate(Node_23BEE0* self, int arg);
 }
 #pragma push
 #pragma opt_strength_reduction off
-extern "C" void func_0023BEE0(Node_23BEE0* self, int arg)
+extern "C" void cNIEventOBJ_DeactivateChildren(Node_23BEE0* self, int arg)
 {
     int i;
     if (self->target)
         self->target->slot22(arg);
     for (i = 0; i < self->children.count; i++) {
-        Child_23BEE0* c = (Child_23BEE0*)*func_0023A550(&self->children, i);
+        Child_23BEE0* c = (Child_23BEE0*)*std_vector_cNIEventBasePtr_opIndex(&self->children, i);
         if (c->kind == D_004F7C60)
-            func_0023BEE0((Node_23BEE0*)self->children.data[i], arg);
+            cNIEventOBJ_DeactivateChildren((Node_23BEE0*)self->children.data[i], arg);
         else
             ((Target_23BEE0*)self->children.data[i])->slot22(arg);
     }

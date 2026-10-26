@@ -44,8 +44,8 @@ extern int D_004F7D90;
 extern Player_2423* g_LocalPlayer;
 void List_Begin(It_2423* out, char* l);
 void CalloutList_End(It_2423* out, char* l);
-void func_002426A0(It_2423* out, It_2423* in);
-void func_002426C0(It_2423* out, It_2423* in);
+void cLListIterator_tCalloutPtr_ctor(It_2423* out, It_2423* in);
+void std_list_tCalloutPtr_generic_iterator_ctor(It_2423* out, It_2423* in);
 int Hud_IsGuiFocused(Hud_2423* s);
 void IeElement_SetShown(Elem_2423* e, int v);
 Obj_2423* Object_LookupById(Ent_2423* e);
@@ -60,8 +60,8 @@ static inline bool Visible(Obj_2423* o)
     if (vis) { if (o->Shown()) ok = 1; }
     return ok;
 }
-static inline void Begin_(It_2423* out, char* l) { It_2423 t; List_Begin(&t, l); func_002426C0(out, &t); }
-static inline void End_(It_2423* out, char* l) { It_2423 t; CalloutList_End(&t, l); func_002426A0(out, &t); }
+static inline void Begin_(It_2423* out, char* l) { It_2423 t; List_Begin(&t, l); std_list_tCalloutPtr_generic_iterator_ctor(out, &t); }
+static inline void End_(It_2423* out, char* l) { It_2423 t; CalloutList_End(&t, l); cLListIterator_tCalloutPtr_ctor(out, &t); }
 
 extern "C" void Hud_UpdateCallouts(Hud_2423* self, float dt)
 {

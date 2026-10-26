@@ -5,22 +5,22 @@
  */
 
 /* merge_units: begin func_00323458 */
-extern void func_00322E70(int, int, int);
-extern void func_00322B40(int, int, int);
-void func_00323458(int a, int b, int n)
+extern void fftCore4CFGV(int, int, int);
+extern void unpack2G(int, int, int);
+void nvuRealFft(int a, int b, int n)
 {
     int h = n / 2;
-    func_00322E70(a, b, h);
-    func_00322B40(a, b, h);
+    fftCore4CFGV(a, b, h);
+    unpack2G(a, b, h);
 }
 /* merge_units: end func_00323458 */
 
 /* merge_units: begin func_003234B0 */
-extern void func_00322C68(int, int, int);
-void func_003234B0(int a, int b, int n)
+extern void pack2G(int, int, int);
+void nvuInverseRealFft(int a, int b, int n)
 {
     int h = n / 2;
-    func_00322C68(a, b, h);
-    func_00322E70(b, a, h);
+    pack2G(a, b, h);
+    fftCore4CFGV(b, a, h);
 }
 /* merge_units: end func_003234B0 */

@@ -1,5 +1,5 @@
 extern int IopRing_Send(int a, int b, int c, int d, int e, int g, int *out, int *err);
-int func_0034C590(void *cd, void *buf, int a, int b, int c, int *d, int e, int g, int h)
+int sceBInetSendTo(void *cd, void *buf, int a, int b, int c, int *d, int e, int g, int h)
 {
     int out = 0;
     int err = -0x1F5;

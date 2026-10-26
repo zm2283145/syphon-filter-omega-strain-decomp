@@ -9,7 +9,7 @@
 extern char D_00497DA8[];
 extern char D_00497DAC[];
 
-int func_0046D8F8(void) {
+int MediusUniqueCallbackGetLocationsResponseHandler(void) {
     int v0;
     int cond;
 
@@ -24,11 +24,11 @@ ret:
     return v0;
 }
 
-int func_0046D928(void) {
+int MediusUniqueCallbackPickLocationRequestHandler(void) {
     return 44;
 }
 
-int func_0046D930(void) {
+int MediusUniqueCallbackPickLocationResponseHandler(void) {
     int v0;
     int cond;
 

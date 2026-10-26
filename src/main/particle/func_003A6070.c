@@ -6,14 +6,14 @@
 #include "types.h"
 #include "particle_types.h"
 
-int func_003A6070(void) {
+int cParticleBox_Done(void) {
     return 0;
 }
 
-int func_003A6080(ParticleObj* self) {
+int cParticleBox_Definition(ParticleObj* self) {
     return self->unk100;
 }
 
-int func_003A6090(ParticleObj* self) {
+int cParticleShatter_Definition(ParticleObj* self) {
     return self->unk120;
 }

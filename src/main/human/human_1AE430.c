@@ -54,7 +54,7 @@ extern int StartingArmor;
 
 void* Mem_Alloc(int, int, char*, int);
 void Node_ReleaseComponent58(Act*);
-void func_003FB9C0(Act*);
+void cNetObj_AddPlayer(Act*);
 void Actor_AttachComponent(Act*, void*);
 void* PlayerComponent_Construct(void*);
 void* AiComponent_Construct(void*, Act*, int, int);
@@ -93,7 +93,7 @@ extern "C" void Actor_InitComponents(Act* a, unsigned char kind, int* ai, void* 
         if (comp) {
             Actor_AttachComponent(a, comp);
             a->b31FC = 1;
-            func_003FB9C0(a);
+            cNetObj_AddPlayer(a);
         }
         {
             int v = StartingArmor;
@@ -113,7 +113,7 @@ extern "C" void Actor_InitComponents(Act* a, unsigned char kind, int* ai, void* 
                 a->w339C = v;
                 a->w33A0 = v;
             }
-            func_003FB9C0(a);
+            cNetObj_AddPlayer(a);
         }
         break;
     case 2:
@@ -176,10 +176,10 @@ extern char D_0049E810[];
 extern char D_0049E818[];
 extern char D_0049E820[];
 extern char D_0049E828[];
-void func_001AF160(NIt*, char*, char*);
-void func_001AF150(NIt*, char*);
-int func_001AF130(NIt*, NIt*);
-Model** func_001AF120(NIt*);
+void cAssocArray_cString_cSkaAnimationSetPtr_Find(NIt*, char*, char*);
+void cAssocArray_cString_cSkaAnimationSetPtr_End(NIt*, char*);
+int cAssocArray_cString_cSkaAnimationSetPtr_Iterator_opNe(NIt*, NIt*);
+Model** cAssocArray_cString_cSkaAnimationSetPtr_Iterator_opMul(NIt*);
 void Model_Attach(void*, Model*);
 void AnimModel_InitAnim(Root*);
 void NamedRootMap_Find(NIt*, void*, Name32*);
@@ -246,10 +246,10 @@ static inline Model* Lookup3(char* name)
 {
     NIt it;
     NIt end;
-    func_001AF160(&it, D_004FFBC0, name);
-    func_001AF150(&end, D_004FFBC0);
+    cAssocArray_cString_cSkaAnimationSetPtr_Find(&it, D_004FFBC0, name);
+    cAssocArray_cString_cSkaAnimationSetPtr_End(&end, D_004FFBC0);
     Model* r;
-    if (func_001AF130(&it, &end)) r = *func_001AF120(&it);
+    if (cAssocArray_cString_cSkaAnimationSetPtr_Iterator_opNe(&it, &end)) r = *cAssocArray_cString_cSkaAnimationSetPtr_Iterator_opMul(&it);
     /* empty asm: scheduling barrier only, emits no instructions */
     else { r = 0; asm { .set reorder } }
     return r;

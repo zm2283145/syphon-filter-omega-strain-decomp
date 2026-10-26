@@ -7,6 +7,7 @@ extern void GuiArrayWidget_OnLoseFocus();
 extern void GuiArrayWidget_SendEvent20();
 extern void GuiArrayWidget_SendEvent21();
 extern void GuiArrayWidget_SetDims();
+extern void GuiArrayWidget_onColumnRender();
 extern void GuiNetMessageArray_Create();
 extern void GuiNetMessageArray_GetClassName();
 extern void GuiNetMessageArray_Init();
@@ -15,6 +16,8 @@ extern void GuiNetMessageArray_Sleep();
 extern void GuiNetMessageArray_Update();
 extern void GuiNetMessageArray_Wake();
 extern void GuiNetMessageArray_dtor();
+extern void GuiNetMessageArray_onElementRender();
+extern void GuiNetMessageArray_onRowRender();
 extern void GuiNetMessages_Create();
 extern void GuiWidget_BubbleActivate();
 extern void GuiWidget_ClearFlag4();
@@ -26,9 +29,6 @@ extern void GuiWidget_FocusPrev();
 extern void GuiWidget_Load();
 extern void GuiWidget_OnEvent();
 extern void GuiWidget_SetFlag4();
-extern void func_00347B40();
-extern void func_00348530();
-extern void func_00423660();
 
 void *D_004DEB80[30] = {
     0, 0, &GuiNetMessageArray_dtor, &GuiNetMessageArray_Init,
@@ -37,7 +37,7 @@ void *D_004DEB80[30] = {
     &GuiArrayWidget_Draw, &GuiWidget_BubbleActivate, &GuiNetMessageArray_Update, &GuiWidget_OnEvent,
     &GuiWidget_Load, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
     &GuiWidget_FocusPrev, &GuiNetMessageArray_GetClassName, &GuiNetMessageArray_IsType, &GuiArrayWidget_SetDims,
-    &func_00423660, &func_00347B40, &func_00348530, &GuiArrayWidget_SendEvent20,
+    &GuiArrayWidget_onColumnRender, &GuiNetMessageArray_onRowRender, &GuiNetMessageArray_onElementRender, &GuiArrayWidget_SendEvent20,
     &GuiArrayWidget_SendEvent21, 0,
 };
 

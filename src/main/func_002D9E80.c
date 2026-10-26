@@ -7,6 +7,6 @@
 #include "types.h"
 #include "loose02_types.h"
 
-int func_002D9E80(Obj2D9* self) {
+int GetFirstPlayer(Obj2D9* self) {
     return self->unk6C;
 }

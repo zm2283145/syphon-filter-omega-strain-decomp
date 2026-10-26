@@ -22,7 +22,7 @@ extern int* LoadingScreen_BuildIeScreen(int, int);
 extern int IeNode_SetShown(int, int, int);
 
 /* Constructor: init embedded collection, acquire a handle and clear all fields. */
-Unk27B900* func_0027B900(Unk27B900* self, int a1, int a2) {
+Unk27B900* cHudNetLobby_ctor(Unk27B900* self, int a1, int a2) {
     ScalarCollection_Init(&self->list);
     self->unk50 = 3658;
     self->handle = LoadingScreen_BuildIeScreen(a2, a1);

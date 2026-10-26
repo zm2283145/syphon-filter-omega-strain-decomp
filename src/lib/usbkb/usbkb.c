@@ -31,10 +31,10 @@ char D_004A4CE0[] = "libusbkb : CreateSema Error\n";
 extern int sceSifBindRpc(SifRpcClientData *, unsigned int, int);
 extern int scePrintf(const char *, ...);
 extern int sceUsbKbGetInfo(KbInfo *);
-extern int func_00223360(int, int *);
+extern int sceUsbKbSync(int, int *);
 extern int AddIntcHandler(int, int (*)(int), int);
 extern int Alloc_Unlock(int);
-extern int func_00223AD8(int);
+extern int vblank_e_handler(int);
 
 int sceUsbKbInit(int *max_connect)
 {
@@ -65,7 +65,7 @@ int sceUsbKbInit(int *max_connect)
         D_0048AB18 = -1;
         return -1;
     }
-    func_00223360(0, &r);
+    sceUsbKbSync(0, &r);
     if (r != 0) {
         DeleteSema(D_0048AB18);
         D_0048AB18 = -1;
@@ -104,7 +104,7 @@ int sceUsbKbInit(int *max_connect)
         D_004F5780.ents[i].count = 0;
     }
     D_004F5780.len = 0;
-    D_004F5780.handler = AddIntcHandler(3, func_00223AD8, -1);
+    D_004F5780.handler = AddIntcHandler(3, vblank_e_handler, -1);
     if (D_004F5780.handler < 0) {
         DeleteSema(D_0048AB18);
         D_0048AB18 = -1;

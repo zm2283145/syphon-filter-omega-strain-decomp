@@ -1,4 +1,4 @@
-/* func_00320D50: four-channel variant of func_00320858 (medius voice/codec setup): validates four
+/* nciQuadrupleDecodeVoicePropSase3200: four-channel variant of nciTripleDecodeVoicePropSase3200 (medius voice/codec setup): validates four
  * contexts and buffers, runs the per-channel analysis and copies the results out. */
 typedef struct {
     long magic;
@@ -27,12 +27,12 @@ typedef struct {
 } Out_858;
 
 extern int func_00323248(void);
-extern void func_00323550(Ctx_858* c);
-extern void func_003235B8(Ctx_858* c);
-extern void func_0031F5A0(int h, void* p0, int* f4, void* p8, unsigned short n, unsigned short* pos, unsigned char* bit, float* s, int* k, float* m, float* v, float* g, int last);
-extern void func_003201A8(float s0, int k0, float s1, int k1, float s2, int k2, float s3, int k3, int n, void* p, int h0, int h1, int h2, int h3);
+extern void VU0Save(Ctx_858* c);
+extern void VU0Restore(Ctx_858* c);
+extern void NellyAltDecodeSase3200(int h, void* p0, int* f4, void* p8, unsigned short n, unsigned short* pos, unsigned char* bit, float* s, int* k, float* m, float* v, float* g, int last);
+extern void FftQuadrupleSumCosOlAdd(float s0, int k0, float s1, int k1, float s2, int k2, float s3, int k3, int n, void* p, int h0, int h1, int h2, int h3);
 
-int func_00320D50(Ctx_858* a, Ctx_858* b, Ctx_858* c, Ctx_858* d, Buf_858* e, Buf_858* f, Buf_858* g, Buf_858* h, Out_858* o0, Out_858* o1, Out_858* o2, Out_858* o3)
+int nciQuadrupleDecodeVoicePropSase3200(Ctx_858* a, Ctx_858* b, Ctx_858* c, Ctx_858* d, Buf_858* e, Buf_858* f, Buf_858* g, Buf_858* h, Out_858* o0, Out_858* o1, Out_858* o2, Out_858* o3)
 {
     float m0[12];
     float v0[16];
@@ -97,16 +97,16 @@ int func_00320D50(Ctx_858* a, Ctx_858* b, Ctx_858* c, Ctx_858* d, Buf_858* e, Bu
     c->x28 = g;
     d->x28 = h;
     if (func_00323248() == 3) {
-        func_00323550(d);
-        func_00323550(c);
-        func_00323550(b);
-        func_00323550(a);
+        VU0Save(d);
+        VU0Save(c);
+        VU0Save(b);
+        VU0Save(a);
     }
-    func_0031F5A0(d->x1C, h->p0, &h->f4, h->p8, h->fC, &h->fE, &h->f10, &s3, &k3, m3, v3, &g3, 0);
-    func_0031F5A0(c->x1C, g->p0, &g->f4, g->p8, g->fC, &g->fE, &g->f10, &s2, &k2, m2, v2, &g2, 0);
-    func_0031F5A0(b->x1C, f->p0, &f->f4, f->p8, f->fC, &f->fE, &f->f10, &s1, &k1, m1, v1, &g1, 0);
-    func_0031F5A0(a->x1C, e->p0, &e->f4, e->p8, e->fC, &e->fE, &e->f10, &s0, &k0, m0, v0, &g0, 1);
-    func_003201A8(s0, k0, s1, k1, s2, k2, s3, k3, 0xA0, e->p0, a->x1C, b->x1C, c->x1C, d->x1C);
+    NellyAltDecodeSase3200(d->x1C, h->p0, &h->f4, h->p8, h->fC, &h->fE, &h->f10, &s3, &k3, m3, v3, &g3, 0);
+    NellyAltDecodeSase3200(c->x1C, g->p0, &g->f4, g->p8, g->fC, &g->fE, &g->f10, &s2, &k2, m2, v2, &g2, 0);
+    NellyAltDecodeSase3200(b->x1C, f->p0, &f->f4, f->p8, f->fC, &f->fE, &f->f10, &s1, &k1, m1, v1, &g1, 0);
+    NellyAltDecodeSase3200(a->x1C, e->p0, &e->f4, e->p8, e->fC, &e->fE, &e->f10, &s0, &k0, m0, v0, &g0, 1);
+    FftQuadrupleSumCosOlAdd(s0, k0, s1, k1, s2, k2, s3, k3, 0xA0, e->p0, a->x1C, b->x1C, c->x1C, d->x1C);
     if (o0) {
         o0->f0 = g0;
         for (i = 0; i < 12; i++) o0->a[i] = v0[i];
@@ -128,10 +128,10 @@ int func_00320D50(Ctx_858* a, Ctx_858* b, Ctx_858* c, Ctx_858* d, Buf_858* e, Bu
         for (i = 0; i < 12; i++) o3->b[i] = m3[i];
     }
     if (func_00323248() == 3) {
-        func_003235B8(d);
-        func_003235B8(c);
-        func_003235B8(b);
-        func_003235B8(a);
+        VU0Restore(d);
+        VU0Restore(c);
+        VU0Restore(b);
+        VU0Restore(a);
     }
     return 0;
 }

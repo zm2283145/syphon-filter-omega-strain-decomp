@@ -1,7 +1,7 @@
 /* vector<{float, u8}>::erase(first, last); template clone built with CW 3.0 b50 (mw38 unrolls the copy differently). */
 typedef struct E { float f; unsigned char b; } E;
 typedef struct Vec { int cap; int count; E* data; } Vec;
-E* func_00241430(Vec* v, E* first, E* last)
+E* std_vector_imp_VisKey_erase(Vec* v, E* first, E* last)
 {
     E* end;
     E* s;

@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_002A89A0(Iter* out, PtrVec* v) {
+void std_list_GuiWidgetPtr_begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }

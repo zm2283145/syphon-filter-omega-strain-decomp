@@ -30,7 +30,7 @@ extern void EIntr(void);
 extern void WaitSema(int sema);
 extern void SignalSema(int sema);
 
-int func_003F5050(IpuRing* s)
+int viBufAddDMA(IpuRing* s)
 {
     unsigned int chcr;
     int started = 0;

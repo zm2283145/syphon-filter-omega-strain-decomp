@@ -29,7 +29,7 @@ DEFINE_GOBJ_FLAG_SLOT16(NiEvent_PreLogic)
 #pragma cplusplus on
 
 /* Event virtual 10: call slot 66 while inactive. */
-DEFINE_NIEVENT_V10(func_0023EA10)
+DEFINE_NIEVENT_V10(cNIEventBase_NextFrame)
 #pragma pop /* merge_units */
 /* merge_units: end func_0023EA10 */
 
@@ -60,7 +60,7 @@ void Actor_BaseLogicUpdate(Obj*, float);
 }
 /* Active flags: the && chain must materialise as a bool (sltu/xori), hence the inline. */
 static inline bool Act(Obj* o) { return o->f2D && o->f2C && !o->f2E; }
-extern "C" void func_0023EA50(Obj* o, float dt)
+extern "C" void cNIEventBase_ProcessNextFrame(Obj* o, float dt)
 {
     unsigned char b = o->b130;
     if (b || (o->i60 == 3 && o->bDC && Act(o))) {

@@ -7,10 +7,10 @@
 #include "types.h"
 
 extern void Vector_Reserve_20A790_Thunk_1F4350(void);
-extern void func_0020C420(int);
+extern void std_vector_deleter_cSkaBlendSequenceItem_clear(int);
 
-void func_001F4330(int a0) {
-    func_0020C420(a0);
+void std_vector_imp_cSkaBlendSequenceItem_clear(int a0) {
+    std_vector_deleter_cSkaBlendSequenceItem_clear(a0);
 }
 
 void Vector_Reserve_20A790_Thunk(void) {

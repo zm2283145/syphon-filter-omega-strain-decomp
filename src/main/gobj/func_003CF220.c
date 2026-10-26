@@ -53,4 +53,4 @@ struct TIValueII { int a; int b; };
 struct TIV_003CF220 { int w0; int w1; int w2; };
 
 extern "C" { char D_004BD230[] = "tree::insert length error\n"; }
-DEFINE_TREE_INSERT_V8X(FrameTree_Insert, TIV_003CF220, D_004BD230, D_004BD300, 0x5C, func_0013CD40)
+DEFINE_TREE_INSERT_V8X(FrameTree_Insert, TIV_003CF220, D_004BD230, D_004BD300, 0x5C, std_red_black_tree_1_balance_insert)

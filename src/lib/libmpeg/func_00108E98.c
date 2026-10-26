@@ -3,7 +3,7 @@
 extern int DIntr(void);
 extern void EIntr(void);
 
-void func_00108E98(void *m, int *pic)
+void _cpr8(void *m, int *pic)
 {
     int nf, k, i;
     unsigned int y = pic[0] & 0x0FFFFFFF;

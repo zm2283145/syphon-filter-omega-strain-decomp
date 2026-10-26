@@ -88,7 +88,7 @@ static inline void Dt_DEF0(V_DEF0* v)
     }
 }
 /* Erases [first, last) from the list, destroying each value; returns last. */
-extern "C" void func_002CDEF0(LN_DEF0** result, L_DEF0* list, LN_DEF0** first, LN_DEF0** last)
+extern "C" void std_list_deleter_MessageBoxEntry_erase_listdeleter_listdeleter(LN_DEF0** result, L_DEF0* list, LN_DEF0** first, LN_DEF0** last)
 {
     LN_DEF0* f = *first;
     LN_DEF0* l = *last;
@@ -134,7 +134,7 @@ static inline void VDtor2CE070(V2CE070* v)
             String_Dtor(v->s8, 0);
     }
 }
-extern "C" void func_002CE070(It2CE070* ret, L2CE070* l, It2CE070* pos)
+extern "C" void std_list_deleter_MessageBoxEntry_erase_listdeleter(It2CE070* ret, L2CE070* l, It2CE070* pos)
 {
     N2CE070* n = pos->p;
     pos->p = n->next;
@@ -209,7 +209,7 @@ struct Holder_CE1A0 {
 
 
 
-extern "C" int func_002CE1A0(Node_CE1A0** result, List_CE1A0* list, Node_CE1A0** pos, const Val_CE1A0* value)
+extern "C" int std_list_deleter_MessageBoxEntry_insert(Node_CE1A0** result, List_CE1A0* list, Node_CE1A0** pos, const Val_CE1A0* value)
 {
     Node_CE1A0* n;
     int* alloc = &list->alloc;
@@ -250,6 +250,6 @@ extern "C" int func_002CE1A0(Node_CE1A0** result, List_CE1A0* list, Node_CE1A0**
 #pragma cplusplus on
 
 /* Destructor of a holder that frees its owned pointer. */
-DEFINE_PTR4_HOLDER_DTOR(func_002CE340, D_004AD158)
+DEFINE_PTR4_HOLDER_DTOR(alloc_ptr_node_cAllocator_node_dtor_void, D_004AD158)
 #pragma pop /* merge_units */
 /* merge_units: end func_002CE340 */

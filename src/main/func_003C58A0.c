@@ -25,23 +25,23 @@ extern signed char D_004E9F98;
 extern Surf58 D_004E9FA0;
 extern unsigned char D_004E9FA2;
 extern int D_00542CB8;
-void func_00131BC0(void);
+void cCollisionModel_FaceProperties_dtor(void);
 void __register_global_object(void*, void*, void*);
-char* func_00183AF0(Owner58* owner, int* key);
-int func_003C5B70(TriVec58* v);
+char* cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_3(Owner58* owner, int* key);
+int std_vector_cCollisionFace_capacity(TriVec58* v);
 void Vector_Reserve_139920(TriVec58* v, int n);
-void func_00183B70(TriVec58* v, int n, Tri58* t);
-void* func_001E1D80(int m, unsigned short i);
-float* func_001E1D70(char* p);
-int func_001E1D60(int m);
+void std_vector_imp_cCollisionFace_resize(TriVec58* v, int n, Tri58* t);
+void* cCollisionModel_GetVertex(int m, unsigned short i);
+float* cVector_W(char* p);
+int cCollisionModel_GetXform(int m);
 void* Transform_GetUpdated(int x);
 void Mtx_Multiply4(void* d, void* m);
 void Vec4_Copy(void* d, void* s);
-void func_00139BB0(void* d, void* s);
-signed char func_001E1D50(TriDesc58* d);
-signed char func_001E1D40(TriDesc58* d);
-signed char func_001E1D30(TriDesc58* d);
-void func_001E1D20(void* d, int a, int b);
+void cCollisionModel_FaceProperties_opAssign(void* d, void* s);
+signed char cCollisionModel_Face_IsCamPassThru(TriDesc58* d);
+signed char cCollisionModel_Face_IsReceiveShadow(TriDesc58* d);
+signed char cCollisionModel_Face_IsReceiveReflection(TriDesc58* d);
+void cCollisionModel_FaceLocator_Set(void* d, int a, int b);
 }
 
 static inline Surf58* GetSurf(Owner58* owner, int index)
@@ -51,13 +51,13 @@ static inline Surf58* GetSurf(Owner58* owner, int index)
         if (D_004E9F98 == 0) {
             D_004E9FA0.a = 0;
             D_004E9FA2 = 0;
-            __register_global_object(&D_004E9FA0, func_00131BC0, &D_00542CB8);
+            __register_global_object(&D_004E9FA0, cCollisionModel_FaceProperties_dtor, &D_00542CB8);
             D_004E9F98 = 1;
         }
         return &D_004E9FA0;
     }
     key = owner->key;
-    return (Surf58*)(func_00183AF0(owner, &key) + index * 16);
+    return (Surf58*)(cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_3(owner, &key) + index * 16);
 }
 
 static inline unsigned char Blocked58()
@@ -74,26 +74,26 @@ static inline void Fill58(Tri58* e, TriDesc58* d, int a3, Surf58* s, int m)
     void* mt;
     float f;
     void* x;
-    Vec4_Copy(&e->v[0], func_001E1D80(m, d->v[0]));
-    Vec4_Copy(&e->v[1], func_001E1D80(m, d->v[1]));
-    Vec4_Copy(&e->v[2], func_001E1D80(m, d->v[2]));
+    Vec4_Copy(&e->v[0], cCollisionModel_GetVertex(m, d->v[0]));
+    Vec4_Copy(&e->v[1], cCollisionModel_GetVertex(m, d->v[1]));
+    Vec4_Copy(&e->v[2], cCollisionModel_GetVertex(m, d->v[2]));
     f = d->f0;
-    *func_001E1D70(e->n) = f;
-    x = (void*)func_001E1D60(m);
+    *cVector_W(e->n) = f;
+    x = (void*)cCollisionModel_GetXform(m);
     if (x) {
         mt = Transform_GetUpdated((int)x);
         Mtx_Multiply4(&e->v[0], mt);
         Mtx_Multiply4(&e->v[1], mt);
         Mtx_Multiply4(&e->v[2], mt);
     }
-    func_00139BB0(&e->s, s);
-    e->f50 = func_001E1D50(d);
-    e->f51 = func_001E1D40(d);
-    e->f52 = func_001E1D30(d);
-    func_001E1D20(&e->p, a3, m);
+    cCollisionModel_FaceProperties_opAssign(&e->s, s);
+    e->f50 = cCollisionModel_Face_IsCamPassThru(d);
+    e->f51 = cCollisionModel_Face_IsReceiveShadow(d);
+    e->f52 = cCollisionModel_Face_IsReceiveReflection(d);
+    cCollisionModel_FaceLocator_Set(&e->p, a3, m);
 }
 
-extern "C" void func_003C58A0(Ctx58* self, Owner58* owner, TriDesc58* d, int arg3)
+extern "C" void cCollisionFaceCollector_AddFace(Ctx58* self, Owner58* owner, TriDesc58* d, int arg3)
 {
     int idx = (unsigned char)(d->fa >> 1);
     Surf58* s = GetSurf(owner, idx);
@@ -104,12 +104,12 @@ extern "C" void func_003C58A0(Ctx58* self, Owner58* owner, TriDesc58* d, int arg
     {
         TriVec58* v = self->vec;
         if (v->count >= v->cap)
-            Vector_Reserve_139920(self->vec, func_003C5B70(self->vec) * 3 / 2);
+            Vector_Reserve_139920(self->vec, std_vector_cCollisionFace_capacity(self->vec) * 3 / 2);
     }
     {
         Tri58 t;
         t.Init();
-        func_00183B70(self->vec, self->vec->count + 1, &t);
+        std_vector_imp_cCollisionFace_resize(self->vec, self->vec->count + 1, &t);
     }
     Fill58(&self->vec->back(), d, arg3, s, self->mesh);
 }

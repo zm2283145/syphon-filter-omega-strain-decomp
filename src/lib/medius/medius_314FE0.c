@@ -1,8 +1,8 @@
 #include "types.h"
 
-extern int func_002E6098(int);
+extern int NetIsValidConnectionIndex(int);
 
-int func_00314FE0(int a0) {
+int NetStreamMediaIsValidInfo(int a0) {
     int s0, v0;
     int cond;
 
@@ -15,7 +15,7 @@ int func_00314FE0(int a0) {
     goto L00315014;
     }
     a0 = *(int*)(char*)a0;
-    v0 = func_002E6098(a0);
+    v0 = NetIsValidConnectionIndex(a0);
     cond = v0 == s0;
     if (cond) goto L00315018;
 L00315010:;

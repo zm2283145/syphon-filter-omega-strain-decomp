@@ -30,7 +30,7 @@ extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
 extern int D_005721A8;
 extern char D_0055C770[];
-void func_002EBEC8(int* out, int a);
+void NetGetValidClientCount(int* out, int a);
 int func_002A3BA0(void*);
 int func_0042B4E0(void);
 Slot_3A10* PlayerSlots_Get(int);
@@ -42,7 +42,7 @@ static inline int HostCount_3A10(void)
 {
     if (g_IsMultiplayer) {
         int n;
-        func_002EBEC8(&n, D_005721A8);
+        NetGetValidClientCount(&n, D_005721A8);
         return n;
     }
     return 1;

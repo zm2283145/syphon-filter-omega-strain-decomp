@@ -24,7 +24,7 @@ extern Rel* func_0018A8F0(Rel*);
 
 
 /* Clear the three words and set the byte at +0x0C. */
-Rel* func_0018A8C0(Rel* r) {
+Rel* cArray_cTimedEvent_ctor_void(Rel* r) {
     func_0018A8F0(r);
     *((char*)r + 12) = 1;
     return r;
@@ -40,7 +40,7 @@ static inline void merge_flush_func_0018A8C0(void) {}
 /* Array constructor helper: (array, ctor, dtor, element size, count). */
 extern void* __construct_array(void*, void*, void*, int, int);
 extern int func_0018A210(int, int);
-extern int* func_0018A870(int*);
+extern int* cSkaAnimEvent_ctor_void(int*);
 
 Rel* func_0018A8F0(Rel* r) {
     r->a = 0;
@@ -51,7 +51,7 @@ Rel* func_0018A8F0(Rel* r) {
 
 /* Construct an array of seven 8-byte pairs. */
 void* MotionTokens_Init(void* array) {
-    __construct_array(array, func_0018A870, func_0018A210, 8, 7);
+    __construct_array(array, cSkaAnimEvent_ctor_void, func_0018A210, 8, 7);
     return array;
 }
 /* merge_units: generate this block's code under its own pragmas */

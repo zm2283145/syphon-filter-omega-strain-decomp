@@ -9,7 +9,7 @@
 extern char D_00497D60[];
 extern char D_00497D64[];
 
-int func_0046CEF8(void) {
+int MediusUniqueCallbackChatFwdMessageHandler(void) {
     int v0;
     int cond;
 
@@ -24,11 +24,11 @@ ret:
     return v0;
 }
 
-int func_0046CF28(void) {
+int MediusUniqueCallbackGetBuddyListRequestHandler(void) {
     return 38;
 }
 
-int func_0046CF30(void) {
+int MediusUniqueCallbackGetBuddyListResponseHandler(void) {
     int v0;
     int cond;
 

@@ -4,7 +4,7 @@
 extern "C" {
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void cMessage_ctor(void* self, void* src);
-void func_002C5590(void* dst, void* src);
+void cNetworkTransferNpc_ctor_cNetworkTransferNpcR(void* dst, void* src);
 extern char D_004DE110[];
 }
 struct Msg54C0 { void* vtable; char pad[0x20]; int value; char pad2[8]; char payload[0x10]; };
@@ -19,7 +19,7 @@ extern "C" Msg54C0* cNetCopyMsg_Clone(Msg54C0* src)
         cMessage_ctor(p, src);
         p->vtable = D_004DE110;
         p->value = src->value;
-        func_002C5590(p->payload, src->payload);
+        cNetworkTransferNpc_ctor_cNetworkTransferNpcR(p->payload, src->payload);
     }
     return p;
 }

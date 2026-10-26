@@ -50,7 +50,7 @@ typedef struct {
     char list[8];
     F214Obj** objs;
 } F214Mgr;
-extern F214Ent* func_00172990(void*, int);
+extern F214Ent* std_vector_cGOBJPtr_opIndex(void*, int);
 extern int g_GameGobjClassWord;
 #pragma opt_strength_reduction off
 unsigned char cElevatorGOBJ_LinksClosed(F214Mgr* m)
@@ -58,7 +58,7 @@ unsigned char cElevatorGOBJ_LinksClosed(F214Mgr* m)
     unsigned char result = 1;
     int i;
     for (i = 0; i < m->count; i++) {
-        F214Ent* e = func_00172990(m->list, i);
+        F214Ent* e = std_vector_cGOBJPtr_opIndex(m->list, i);
         if (e->def->type == g_GameGobjClassWord) {
             F214Obj* o = m->objs[i];
             if (((F214Hdr*)o)->kind == 2) {
@@ -147,9 +147,9 @@ extern char D_004DADF0[];
 void SoundStopMsg_Ctor(ElevatorMsg214470* msg, int* floors, Lift214470* self);
 void FileMan_Release(void* member, int flag);
 #if 0 /* merge_units */
-Ent214470** func_00172990(void* list, int i);
+Ent214470** std_vector_cGOBJPtr_opIndex(void* list, int i);
 #endif /* merge_units */
-#define func_00172990(a0, a1) ((Ent214470 * *)func_00172990((a0), (a1))) /* merge_units */
+#define std_vector_cGOBJPtr_opIndex(a0, a1) ((Ent214470 * *)std_vector_cGOBJPtr_opIndex((a0), (a1))) /* merge_units */
 
 }
 static inline int ObjId214470(Obj214470* o) { return o ? o->id : 0; }
@@ -173,7 +173,7 @@ extern "C" unsigned char cElevatorGOBJ_TriggerLinks(Lift214470* l)
     }
     for (i = 0; i < l->count; i++) {
         found = 1;
-        Ent214470* e = *func_00172990(l->list, i); if (e->type == g_GameGobjClassWord) {
+        Ent214470* e = *std_vector_cGOBJPtr_opIndex(l->list, i); if (e->type == g_GameGobjClassWord) {
             if (l->cars[i]->kind == 2) {
                 Msg214470* p = &m;
                 Event_Construct(&m, g_TriggerMsgKey);
@@ -192,7 +192,7 @@ extern "C" unsigned char cElevatorGOBJ_TriggerLinks(Lift214470* l)
     return found;
 }
 #pragma pop
-#undef func_00172990 /* merge_units */
+#undef std_vector_cGOBJPtr_opIndex /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00214470(void) {}
 #pragma pop /* merge_units */
@@ -233,7 +233,7 @@ void Lift_SetFloorLock(Lift_00214640* l, int floor, int lock);
 int PathObj_Receive(Lift_00214640* l, void* ev);
 void Transport_Send(int target, LiftMsg_00214640* msg, int a, int b);
 void func_00214BC0();
-void func_002EC460(void* h);
+void NetReleaseObjectPrivateOwnership(void* h);
 }
 static inline int IsAuth_00214640(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 static inline int ObjId_00214640(Obj_00214640* o) { return o ? o->id : 0; }
@@ -362,7 +362,7 @@ extern "C" int Lift_Receive(Lift_00214640* l, In_00214640* m)
     t = *Event_GetType(m);
     if (t == D_004F7E48) {
         if (func_00214BC0 && l->snd && ((In2_00214640*)m)->floor == -0xFF) {
-            func_002EC460(l->snd->h);
+            NetReleaseObjectPrivateOwnership(l->snd->h);
             return 1;
         }
         {

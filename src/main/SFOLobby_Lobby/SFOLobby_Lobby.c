@@ -214,8 +214,8 @@ static inline void merge_flush_func_0044FA70(void) {}
 extern "C" {
 #define LobbyArray_At(a0, a1) ((char *)LobbyArray_At((a0), (a1))) /* merge_units */
 
-int func_00476998(void);
-int func_00469DC8(void *, void *);
+int KM_GetSoftwareID(void);
+int MediusGetGames(void *, void *);
 #if 0 /* merge_units */
 void func_0044FA70(int, int, int, char *);
 #endif /* merge_units */
@@ -382,10 +382,10 @@ extern "C" void func_00450060(L60 *self)
             memset(&req, 0, 0x30);
             sprintf(req.messageId, D_004C0F38, lo + 1, g->id, g->f4);
             String_Copy(req.sessionKey, self->sessionKey);
-            req.ver = func_00476998();
+            req.ver = KM_GetSoftwareID();
             req.page = lo + 1;
             req.pageSize = D_00497938;
-            self->requestResult = func_00469DC8(&req, (void *)func_0044FA70);
+            self->requestResult = MediusGetGames(&req, (void *)func_0044FA70);
             if (self->requestResult != 0)
                 g->f8 = 0;
             sent++;
@@ -457,8 +457,8 @@ typedef struct {
     unsigned char bF8, bF9;
 } merge_LobbyPlayerInfo_cpp;
 extern "C" {
-int func_004695C8(void*, void*);
-void func_00446CC0(void);
+int MediusAccountUpdateStats(void*, void*);
+void SFOLobby_Callback_UpdateStats(void);
 int Net_ParseIPv4(char*);
 #if 0 /* merge_units */
 void SFOLobby_CacheAccount(SFOLobby*, int, char*, int, LobbyPlayerInfo*);
@@ -470,9 +470,9 @@ extern char D_004C0F68[];           /* "1" */
 extern char D_004C0F70[];           /* "SFOLobby_Lobby.cc" */
 extern LobbyPlayerInfo D_00585E90;  /* own player info */
 }
-/* Uploads the own player info (reply callback func_00446CC0), waits for the reply,
+/* Uploads the own player info (reply callback SFOLobby_Callback_UpdateStats), waits for the reply,
  * then keeps a copy in D_00585E90 and in the account cache. */
-extern "C" int func_004505E0(SFOLobby* self, LobbyPlayerInfo* info)
+extern "C" int SFOLobby_UpdateStats(SFOLobby* self, LobbyPlayerInfo* info)
 {
     Req4505 req;
     int t;
@@ -481,7 +481,7 @@ extern "C" int func_004505E0(SFOLobby* self, LobbyPlayerInfo* info)
     String_Copy(req.messageId, D_004C0F68);
     strncpy(req.sessionKey, self->sessionKey, 0x11);
     memcpy(&req.info, info, 0xFC);
-    self->requestResult = func_004695C8(&req, (void*)func_00446CC0);
+    self->requestResult = MediusAccountUpdateStats(&req, (void*)SFOLobby_Callback_UpdateStats);
     if (self->requestResult != 0) {
         SFOLobby_SetError(self, 1, D_004C0F70, 0x428);
         return 0;
@@ -571,7 +571,7 @@ static inline void merge_flush_func_00450880(void) {}
 #define LobbyArray_At(a0, a1) ((int *)LobbyArray_At((a0), (a1))) /* merge_units */
 
 /* Finds the accountCache entry for an account id. */
-int *func_00450A00(SFOLobby * self, int id) {
+int *SFOLobby_FindAgentData(SFOLobby * self, int id) {
     int *e;
     int n;
     int i;
@@ -595,7 +595,7 @@ static inline void merge_flush_func_00450A00(void) {}
 #define LobbyArray_At(a0, a1) ((int *)LobbyArray_At((a0), (a1))) /* merge_units */
 
 /* Finds the element of t whose first word equals id. */
-int* func_00450A90(LobbyArray* t, int id) {
+int* SFOLobby_FindAgent(LobbyArray* t, int id) {
     int n;
     int i;
     if (!t || !(n = t->count)) return 0;
@@ -620,8 +620,8 @@ extern void func_00450060(SFOLobby*);
 #endif /* merge_units */
 #define func_00450060(a0) (func_00450060((void *)(a0))) /* merge_units */
 
-extern int func_00476998(void);
-extern int func_00469DC8(void*, void*);
+extern int KM_GetSoftwareID(void);
+extern int MediusGetGames(void*, void*);
 extern void LobbyArray_SetDirty(LobbyArray*, int);
 static inline int Off450B30(SFOLobby* self)
 {
@@ -642,10 +642,10 @@ void func_00450B30(SFOLobby* s)
         memset(&req, 0, sizeof(req));
         String_Copy(req.messageId, D_004C0F68);
         String_Copy(req.sessionKey, s->sessionKey);
-        req.f28 = func_00476998();
+        req.f28 = KM_GetSoftwareID();
         req.f2C = 1;
         req.f2E = D_00497938;
-        s->requestResult = func_00469DC8(&req, func_00447790);
+        s->requestResult = MediusGetGames(&req, func_00447790);
         if (s->requestResult != 0) return;
         s->listA8Time = Lobby_GetTime();
         LobbyArray_Clear(&s->listA8);
@@ -674,7 +674,7 @@ int SFOLobby_RequestAccountInfo(SFOLobby *, int);
 
 /* Gets the player info for an account: from the cache when fresh, else by asking
  * the server (SFOLobby_RequestAccountInfo). */
-int func_00450C60(SFOLobby *self, int id, LobbyPlayerInfo *out) {
+int SFOLobby_GetAgentInfo(SFOLobby *self, int id, LobbyPlayerInfo *out) {
     if (func_00450CF0() != 0) {
         return 1;
     }
@@ -796,12 +796,12 @@ typedef struct {
     int f4;
     int id;
 } InboxEntry_450F30;
-int func_00446560(SFOLobby * , InboxEntry_450F30 * , int);
-int func_00449360(SFOLobby * , int, int, char *);
+int SFOLobby_ContactConfirmation(SFOLobby * , InboxEntry_450F30 * , int);
+int SFOLobby_CellRespondToInvitation(SFOLobby * , int, int, char *);
 #define LobbyArray_At(a0) ((InboxEntry_450F30 *)LobbyArray_At((a0))) /* merge_units */
 
 /* Answers inbox entry index (accept when accept != 0) and removes it. */
-int func_00450F30(SFOLobby * self, int index, int accept) {
+int SFOLobby_MessageAck(SFOLobby * self, int index, int accept) {
     int type;
     InboxEntry_450F30 * e;
     if (index < self->inbox.count) {
@@ -810,13 +810,13 @@ int func_00450F30(SFOLobby * self, int index, int accept) {
         switch (type) {
         case 0:
             if (accept != 0) {
-                func_00449360(self, e->id, 1, "Accept");
+                SFOLobby_CellRespondToInvitation(self, e->id, 1, "Accept");
             } else {
-                func_00449360(self, e->id, 2, "Decline");
+                SFOLobby_CellRespondToInvitation(self, e->id, 2, "Decline");
             }
             break;
         case 1:
-            func_00446560(self, e, accept);
+            SFOLobby_ContactConfirmation(self, e, accept);
             break;
         }
         LobbyArray_RemoveAt(&self->inbox, index);
@@ -832,7 +832,7 @@ static inline void merge_flush_func_00450F30(void) {}
 /* merge_units: begin func_00451010 */
 #pragma push /* merge_units */
 /* Element of inbox (0 when empty). */
-int func_00451010(SFOLobby* p) {
+int SFOLobby_MessageGet(SFOLobby* p) {
     /* .set reorder barrier keeps the empty then-arm */
     if (p->inbox.count == 0) { asm { .set reorder } return 0; }
     return (int)LobbyArray_At(&p->inbox);
@@ -846,9 +846,9 @@ static inline void merge_flush_func_00451010(void) {}
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" {
-int func_00469990(void*, void*);
-int func_0046A378(void*);
-void func_00447BB0(void);
+int MediusTextFilter(void*, void*);
+int MediusSendChatMessage(void*);
+void SFOLobby_Callback_ChatTextFilter(void);
 extern char D_004C0F98[];           /* "%d" */
 }
 struct ConnReq_451050 {
@@ -864,10 +864,10 @@ struct JoinReq_451050 {
     int id;
     char name[0x40];
 };
-/* Sends a request named name (reply callback func_00447BB0, message id = id);
- * when id is not the own account also sends the follow-up (func_0046A378).
+/* Sends a request named name (reply callback SFOLobby_Callback_ChatTextFilter, message id = id);
+ * when id is not the own account also sends the follow-up (MediusSendChatMessage).
  * Requires outList23EC. */
-extern "C" int func_00451050(SFOLobby* self, char* name, int id) {
+extern "C" int SFOLobby_SendChat(SFOLobby* self, char* name, int id) {
     ConnReq_451050 req;
     JoinReq_451050 join;
     if (self->outList23EC == 0) {
@@ -881,7 +881,7 @@ extern "C" int func_00451050(SFOLobby* self, char* name, int id) {
     sprintf(req.messageId, D_004C0F98, id);
     strncpy(req.sessionKey, self->sessionKey, 0x11);
     strncpy(req.name, name, 0x40);
-    self->requestResult = func_00469990(&req, (void*)func_00447BB0);
+    self->requestResult = MediusTextFilter(&req, (void*)SFOLobby_Callback_ChatTextFilter);
     if (self->requestResult != 0) {
         SFOLobby_SetError(self, 1, D_004C0F70, 0x19E);
         return 0;
@@ -893,7 +893,7 @@ extern "C" int func_00451050(SFOLobby* self, char* name, int id) {
         strncpy(join.name, name, 0x40);
         { enum { OFF, ON } e = id == 0 ? OFF : ON; join.flag = e; }
         join.id = id;
-        self->requestResult = func_0046A378(&join);
+        self->requestResult = MediusSendChatMessage(&join);
         if (self->requestResult != 0) {
             SFOLobby_SetError(self, 1, D_004C0F70, 0x1B1);
             return 0;
@@ -908,16 +908,16 @@ static inline void merge_flush_func_00451050(void) {}
 
 /* merge_units: begin func_00451200 */
 #pragma push /* merge_units */
-extern char func_00446DB0[];
+extern char SFOLobby_Callback_GetPlayerInfo[];
 
-extern int func_0046A048(void*, void*);
+extern int MediusGetPlayerInfo(void*, void*);
 #if 0 /* merge_units */
 extern void SFOLobby_CacheAccount(SFOLobby*, int, char*, int, int);
 #endif /* merge_units */
 #define SFOLobby_CacheAccount(a0, a1, a2, a3, a4) (SFOLobby_CacheAccount((a0), (a1), (a2), (a3), (void *)(a4))) /* merge_units */
 
 
-/* Asks the server for an account's info (reply callback func_00446DB0 fills
+/* Asks the server for an account's info (reply callback SFOLobby_Callback_GetPlayerInfo fills
  * accountInfoReply), waits for it and stores it in the account cache. */
 int SFOLobby_RequestAccountInfo(SFOLobby* s, int id)
 {
@@ -931,7 +931,7 @@ int SFOLobby_RequestAccountInfo(SFOLobby* s, int id)
     String_Copy(req.messageId, D_004C0F68);
     strncpy(req.sessionKey, s->sessionKey, 0x11);
     req.accountId = id;
-    s->requestResult = func_0046A048(&req, func_00446DB0);
+    s->requestResult = MediusGetPlayerInfo(&req, SFOLobby_Callback_GetPlayerInfo);
     if (s->requestResult != 0) {
         SFOLobby_SetError(s, 1, D_004C0F70, 0x15A);
         return 0;
@@ -961,8 +961,8 @@ static inline void merge_flush_func_00451200(void) {}
 #define SELF ((SFOLobby*)o)
 #define strlen(a0) ((unsigned int)strlen((a0))) /* merge_units */
 #define LobbyArray_At(a0, a1) ((int *)LobbyArray_At((a0), (a1))) /* merge_units */
-extern int func_0046B140(void*, void*);
-extern void func_00446E00(void);  /* reply callback, fills accountIdReply */
+extern int MediusAccountGetID(void*, void*);
+extern void SFOLobby_Callback_AccountGetID(void);  /* reply callback, fills accountIdReply */
 static inline int* Find(char* o, char* name) {
     int n = SELF->accountCache.count;
     int i;
@@ -1006,7 +1006,7 @@ int SFOLobby_LookupAccountId(char* o, char* name) {
     String_Copy(r.messageId, D_004C0F68);
     strncpy(r.sessionKey, SELF->sessionKey, 0x11);
     strncpy(r.accountName, name, 0x1F);
-    SELF->requestResult = func_0046B140(&r, func_00446E00);
+    SELF->requestResult = MediusAccountGetID(&r, SFOLobby_Callback_AccountGetID);
     if (*(int*)(o + 0x248 + 4) /* requestResult */ != 0) {
         SFOLobby_SetError(o, 1, D_004C0F70, 0x11B);
         return -1;
@@ -1036,8 +1036,8 @@ static inline void merge_flush_func_00451370(void) {}
 
 /* merge_units: begin func_004515F0 */
 #pragma push /* merge_units */
-/* Sets the lobby mode (which list func_004516E0 refreshes). */
-void func_004515F0(SFOLobby* o, int value) {
+/* Sets the lobby mode (which list SFOLobby_LobbyScreenIntel refreshes). */
+void SFOLobby_LobbySetDisplay(SFOLobby* o, int value) {
     if (value != o->mode) o->mode = value;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -1057,7 +1057,7 @@ void SFOLobby_LeaveRoom(SFOLobby* self)
         if (self->state != 10) {
             self->state = SFOLOBBY_STATE_IDLE;
         }
-        func_00452FC0(self, 0);
+        SFOLobby_SetCallback(self, 0);
         if (self->outList23EC) {
             LobbyArray_Free(self->outList23EC);
         }
@@ -1085,27 +1085,27 @@ static inline void merge_flush_func_00451610(void) {}
 typedef struct { char messageId[0x18]; int id; } Req_4516E0;
 
 
-extern int func_0046C290(Req_4516E0* a, void* b);
-extern void func_00447A30(void);
+extern int MediusGetLobbyPlayerNames_ExtraInfo(Req_4516E0* a, void* b);
+extern void SFOLobby_Callback_GetLobbyPlayerNames_ExtraInfo(void);
 #if 0 /* merge_units */
 extern void func_00450B30(SFOLobby*);
 #endif /* merge_units */
 #define func_00450B30(a0) (func_00450B30((a0))) /* merge_units */
 
-extern void func_00453FA0(SFOLobby*, void*);
-extern void func_004498C0(SFOLobby*);
-extern void func_0044D700(SFOLobby*, int);
-extern void func_00449800(SFOLobby*, int);
+extern void SFOLobby_PingIntel(SFOLobby*, void*);
+extern void SFOLobby_CellUpdateClanInvitations(SFOLobby*);
+extern void SFOLobby_ContactUpdateMemberList(SFOLobby*, int);
+extern void SFOLobby_CellUpdateMemberList(SFOLobby*, int);
 extern void func_00451B30(SFOLobby*);
 extern int D_00497788;              /* list8C refresh interval */
-/* Re-requests list8C (reply callback func_00447A30) once the interval has passed. */
+/* Re-requests list8C (reply callback SFOLobby_Callback_GetLobbyPlayerNames_ExtraInfo) once the interval has passed. */
 static inline void Tick_4516E0(SFOLobby* self) {
     if (Lobby_GetTime() - self->list8CTime > D_00497788) {
         Req_4516E0 r;
         memset(&r, 0, sizeof(r));
         String_Copy(r.messageId, D_004C0F68);
         r.id = self->list8CId;
-        self->requestResult = func_0046C290(&r, func_00447A30);
+        self->requestResult = MediusGetLobbyPlayerNames_ExtraInfo(&r, SFOLobby_Callback_GetLobbyPlayerNames_ExtraInfo);
         if (self->requestResult != 0)
             return;
         self->list8CTime = Lobby_GetTime();
@@ -1117,23 +1117,23 @@ static inline void Tick_4516E0(SFOLobby* self) {
 }
 /* Per-frame lobby update while in state 5: refreshes the lists for the current
  * mode, then runs the other periodic updates. */
-void func_004516E0(SFOLobby* self) {
+void SFOLobby_LobbyScreenIntel(SFOLobby* self) {
     if (self->state == 5 && !self->inUpdateHook) {
     switch (self->mode) {
     case 0:
         Tick_4516E0(self);
         func_00450B30(self);
-        func_00453FA0(self, &self->list8C);
+        SFOLobby_PingIntel(self, &self->list8C);
         break;
     case 1:
         Tick_4516E0(self);
         func_00450B30(self);
-        func_00453FA0(self, &self->listA8);
+        SFOLobby_PingIntel(self, &self->listA8);
         break;
     }
-    func_004498C0(self);
-    func_0044D700(self, 0);
-    func_00449800(self, 0);
+    SFOLobby_CellUpdateClanInvitations(self);
+    SFOLobby_ContactUpdateMemberList(self, 0);
+    SFOLobby_CellUpdateMemberList(self, 0);
     func_00451B30(self);
     }
 }

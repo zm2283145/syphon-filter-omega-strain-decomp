@@ -6,7 +6,7 @@
  * translation unit). The 12-byte string is either short (in place, bit 0
  * clear, length in bits 1-7 of byte 0) or long (bit 0 set, length at +4,
  * heap data at +8). Two short strings are copied as a block; otherwise the
- * whole current contents are replaced through func_0013D710.
+ * whole current contents are replaced through std_basic_string_char_char_traits_char_replace_uint_uint_basicstringR.
  * C++ only (#pragma cplusplus on before including).
  */
 struct ShortStrLong {
@@ -28,7 +28,7 @@ struct ShortStr {
     } u;
 };
 
-extern "C" ShortStr* func_0013D710(ShortStr* self, unsigned int pos,
+extern "C" ShortStr* std_basic_string_char_char_traits_char_replace_uint_uint_basicstringR(ShortStr* self, unsigned int pos,
                                    unsigned int n, const ShortStr* src);
 
 static inline bool ShortStr_IsLong(const ShortStr* s)
@@ -49,7 +49,7 @@ static inline unsigned char ShortStr_ShortLen(const ShortStr* s)
             *self = *src;                                                     \
             return self;                                                      \
         }                                                                     \
-        return func_0013D710(self, 0,                                         \
+        return std_basic_string_char_char_traits_char_replace_uint_uint_basicstringR(self, 0,                                         \
                              selfLong ? self->u.l.length                      \
                                       : ShortStr_ShortLen(self),              \
                              src);                                            \

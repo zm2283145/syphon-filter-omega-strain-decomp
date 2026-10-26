@@ -17,7 +17,7 @@ extern char D_004C1A38;
 extern char D_004C1A40;
 extern char D_004C1A50;
 
-void func_00455A20(int arg0, int arg1) {
+void GuiWeaponStats_SetItemStats(int arg0, int arg1) {
     int sp40[4];
     int var_s0;
 
@@ -90,7 +90,7 @@ typedef struct { FlagByte b[16]; } FlagRow;
 extern FlagRow* D_004EE620;
 
 /* Clears flag bit 0 of byte [col] in row [row] of the global flag table. */
-void func_00455BF0(int row, int col)
+void TeamDelEnemy_int_int_3(int row, int col)
 {
     D_004EE620[row].b[col].flag = 0;
 }

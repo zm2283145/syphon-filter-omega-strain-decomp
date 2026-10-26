@@ -5,18 +5,18 @@
  */
 
 /* merge_units: begin func_003226E0 */
-extern void func_00322C68(int, int, int);
-extern void func_003227E0(int, int, int);
-void func_003226E0(int a, int b, int n)
+extern void pack2G(int, int, int);
+extern void fftCore4CFG(int, int, int);
+void inverseRealFft(int a, int b, int n)
 {
     int h = n / 2;
-    func_00322C68(a, b, h);
-    func_003227E0(b, a, h);
+    pack2G(a, b, h);
+    fftCore4CFG(b, a, h);
 }
 /* merge_units: end func_003226E0 */
 
 /* merge_units: begin func_00322738 */
-void func_00322738(float *re, float *im, int n)
+void bitreverse(float *re, float *im, int n)
 {
     int i, j = n >> 1, k;
     float t;

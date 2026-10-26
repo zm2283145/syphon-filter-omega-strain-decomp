@@ -12,7 +12,7 @@ typedef struct Binding {
 } Binding;
 
 /* Initializes the binding with target and clears the second word. */
-Binding* func_0017F1E0(Binding* b, int target) {
+Binding* cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_cVector_cVector_ctor(Binding* b, int target) {
     b->target = target;
     b->unk4 = 0;
     return b;

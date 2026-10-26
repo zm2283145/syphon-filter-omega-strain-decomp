@@ -1,9 +1,9 @@
 #include "types.h"
 typedef struct { void* vt; char pad[0xA8]; char mAC[0x1C]; char mC8[0x1C]; char mE4[0x20]; char m104[4]; } O2AD920;
-extern void func_00293890();
+extern void GuiSaveAgentWidget_SaveDone();
 extern void GuiNetContacts_GetClassName();
 extern void GuiNetContacts_IsType();
-extern void func_002ADA10();
+extern void GuiNetContacts_SelectAgentRemove();
 extern void GuiNetContacts_HandleEvent();
 extern void GuiNetContacts_Deactivate();
 extern void GuiNetContacts_Activate();
@@ -56,4 +56,4 @@ O2AD920* GuiNetContacts_dtor(O2AD920* self, short del)
     }
     return self;
 }
-void * const D_004DDC20[32] = { (void*)0x0, (void*)0x0, (void*)GuiNetContacts_dtor, (void*)GuiNetContacts_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiMenuScreen_Wake, (void*)GuiMenuScreen_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiMenuScreen_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiMenuScreen_Update, (void*)GuiNetContacts_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiNetContacts_GetClassName, (void*)GuiNetContacts_IsType, (void*)func_00293890, (void*)GuiScreen_PollLobby, (void*)GuiNetContacts_Activate, (void*)GuiNetContacts_Deactivate, (void*)GuiMenuScreen_OpenKeyboard, (void*)GuiMenuScreen_OpenAgentInfo, (void*)GuiMenuScreen_JoinGame, (void*)func_002ADA10, (void*)0x0 };
+void * const D_004DDC20[32] = { (void*)0x0, (void*)0x0, (void*)GuiNetContacts_dtor, (void*)GuiNetContacts_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiMenuScreen_Wake, (void*)GuiMenuScreen_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiMenuScreen_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiMenuScreen_Update, (void*)GuiNetContacts_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiNetContacts_GetClassName, (void*)GuiNetContacts_IsType, (void*)GuiSaveAgentWidget_SaveDone, (void*)GuiScreen_PollLobby, (void*)GuiNetContacts_Activate, (void*)GuiNetContacts_Deactivate, (void*)GuiMenuScreen_OpenKeyboard, (void*)GuiMenuScreen_OpenAgentInfo, (void*)GuiMenuScreen_JoinGame, (void*)GuiNetContacts_SelectAgentRemove, (void*)0x0 };

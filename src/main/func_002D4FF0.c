@@ -9,10 +9,10 @@ typedef struct {
 extern int D_004ED9B8, g_CasEventMsgClass, D_0051F0C0;
 extern int* Event_GetType(Ev2D4FF0*);
 extern void cNPC_v01(Self2D4FF0*, Ev2D4FF0*);
-extern void func_0015F9B0(Ctl2D4FF0*, int, int, void*);
-extern void func_0015FBD0(Ctl2D4FF0*, void*, int);
-extern void func_002D79A0(Ev2D4FF0*, void*);
-int func_002D4FF0(Self2D4FF0* s, Ev2D4FF0* e)
+extern void cPathNavigator_Request_int_int_cVectorP(Ctl2D4FF0*, int, int, void*);
+extern void cPathNavigator_ForceDestination(Ctl2D4FF0*, void*, int);
+extern void cNetPathMsg_GetDestination(Ev2D4FF0*, void*);
+int cNetNPC_HandleMessage(Self2D4FF0* s, Ev2D4FF0* e)
 {
     int t = *Event_GetType(e);
     if (t == D_004ED9B8 || (t = *Event_GetType(e), t == g_CasEventMsgClass)) {
@@ -22,11 +22,11 @@ int func_002D4FF0(Self2D4FF0* s, Ev2D4FF0* e)
         int b;
         s->val = e->val;
         if ((e->flag != 0) ^ 1) {
-            func_0015F9B0(s->ctl, e->id, s->val, 0);
+            cPathNavigator_Request_int_int_cVectorP(s->ctl, e->id, s->val, 0);
         } else {
-            func_002D79A0(e, s->vec);
-            if (s->val >= 0) func_0015F9B0(s->ctl, e->id, s->val, s->vec);
-            else func_0015FBD0(s->ctl, s->vec, s->ctl->x5C);
+            cNetPathMsg_GetDestination(e, s->vec);
+            if (s->val >= 0) cPathNavigator_Request_int_int_cVectorP(s->ctl, e->id, s->val, s->vec);
+            else cPathNavigator_ForceDestination(s->ctl, s->vec, s->ctl->x5C);
         }
         o = s->obj;
         b = o->b2D != 0 && o->b2C != 0 && !(o->b2E != 0);

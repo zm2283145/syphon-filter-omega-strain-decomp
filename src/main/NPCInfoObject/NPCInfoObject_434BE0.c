@@ -15,7 +15,7 @@
 int Alloc_Lock(int);                                    
 int Alloc_Unlock(int);                                  
 char * Mem_Alloc(int, int, char *, int);                      
-int func_00436DD0(char *, char *, void **);                 
+int std_tree_pair_tNPCInfoPtr_value_compare_insert_one(char *, char *, void **);                 
 extern char D_004BFCA0;
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
@@ -52,7 +52,7 @@ void func_00434BE0(int d0, char * arg1, signed char arg2) {
     }
     sl.f48 = temp_s0;
     sl.f4C[0] = arg2;
-    func_00436DD0(sl.f50, &D_00582B50, &sl.f48);
+    std_tree_pair_tNPCInfoPtr_value_compare_insert_one(sl.f50, &D_00582B50, &sl.f48);
 }
 #pragma pop
 /* merge_units: generate this block's code under its own pragmas */
@@ -64,7 +64,7 @@ static inline void merge_flush_func_00434BE0(void) {}
 #pragma push /* merge_units */
 #pragma mpwc_relax on
                       
-int func_00434BB0(char *, void **);
+int std_list_tNPCInfoPtr_push_back(char *, void **);
 extern char D_00582B10;
 
 void func_00434D10(int d0, char * arg1) {
@@ -95,7 +95,7 @@ void func_00434D10(int d0, char * arg1) {
         F_(temp_s0, 0x10, int) = F_(arg1, 0x10, int);
     }
     sp3C = temp_s0;
-    func_00434BB0(&D_00582B10, &sp3C);
+    std_list_tNPCInfoPtr_push_back(&D_00582B10, &sp3C);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00434D10(void) {}

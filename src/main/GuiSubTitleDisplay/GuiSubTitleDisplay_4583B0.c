@@ -24,6 +24,6 @@ DEFINE_BUF_HOLDER_DTOR(func_004583B0)
 #pragma cplusplus on
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR(func_004584A0)
+DEFINE_BUF_HOLDER_DTOR(std_vector_cLList_TextAtomPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_004584A0 */

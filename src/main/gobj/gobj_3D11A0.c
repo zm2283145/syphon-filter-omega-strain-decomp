@@ -14,15 +14,15 @@
 /* Allocator release(ptr, pool, destroy, file, line): destroy the element's member at +4, then Mem_Free under the guard. */
 extern "C" {
 void Mem_Free(int pool, void* allocation, char* file, int line);
-void* func_003D0DE0(void* self, short flags);
-void func_003D11A0(void* allocation, int pool, int destroy, char* file, int line);
+void* cText_dtor(void* self, short flags);
+void opDelete_nodeP_int_bool_charP_etc_5(void* allocation, int pool, int destroy, char* file, int line);
 }
-void func_003D11A0(void* allocation, int pool, int destroy, char* file, int line)
+void opDelete_nodeP_int_bool_charP_etc_5(void* allocation, int pool, int destroy, char* file, int line)
 {
     AllocGuard guard;
     if (destroy) {
         if (allocation)
-            func_003D0DE0((char*)allocation + 16, -1);
+            cText_dtor((char*)allocation + 16, -1);
     }
     Mem_Free(pool, allocation, file, line);
 }
@@ -54,22 +54,22 @@ struct Flag1280 {
 };
 struct Holder1280;
 extern "C" {
-void* func_003D1470(Holder1280* h);
-Node1280* func_003D1480(Holder1280* h);
-int func_003D1460(Holder1280* h);
-void func_003D1400(void* a, Node1280* n, int c);
-void func_003D1490(void* d, const void* s);
+void* alloc_ptr_node_cAllocator_node_allocator_void_2(Holder1280* h);
+Node1280* alloc_ptr_node_cAllocator_node_get_void_2(Holder1280* h);
+int alloc_ptr_node_cAllocator_node_capacity_void_2(Holder1280* h);
+void cAllocator_node_deallocate_nodeP_uint_6(void* a, Node1280* n, int c);
+void cText_ctor(void* d, const void* s);
 }
 struct Holder1280 {
     int* alloc;
     Node1280* node;
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~Holder1280()
     {
-        if (func_003D1480(this))
-            func_003D1400(func_003D1470(this), func_003D1480(this), func_003D1460(this));
+        if (alloc_ptr_node_cAllocator_node_get_void_2(this))
+            cAllocator_node_deallocate_nodeP_uint_6(alloc_ptr_node_cAllocator_node_allocator_void_2(this), alloc_ptr_node_cAllocator_node_get_void_2(this), alloc_ptr_node_cAllocator_node_capacity_void_2(this));
     }
 };
-extern "C" int func_003D1280(Node1280** result, List1280* list, Node1280** pos, const void* value)
+extern "C" int std_list_deleter_cText_insert(Node1280** result, List1280* list, Node1280** pos, const void* value)
 {
     Node1280* n;
     int* alloc = &list->alloc;
@@ -83,7 +83,7 @@ extern "C" int func_003D1280(Node1280** result, List1280* list, Node1280** pos, 
     h.node = n;
     void* v = Mem_PlacementNew(0x30, h.node->value);
     if (v)
-        func_003D1490(v, value);
+        cText_ctor(v, value);
     Node1280* p;
     Node1280* m = h.node;
     h.node = 0;

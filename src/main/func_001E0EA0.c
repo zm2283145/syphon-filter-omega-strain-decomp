@@ -7,12 +7,12 @@
 #include "types.h"
 #include "loose00_types.h"
 
-extern int func_001C50A0(void*, void*);
+extern int std_vector_pod_int_opAssign(void*, void*);
 extern int Vec16Array_PopBack(Vec16Array*);
-extern int func_001E0FE0(FlagElem16*, int);
+extern int cEdgeGroup_dtor(FlagElem16*, int);
 
 /* End pointer of an array of 0x60-byte records. */
-Elem60* func_001E0EA0(Vec60Array* v) {
+Elem60* std_vector_imp_cCollisionEdge_end(Vec60Array* v) {
     int count;
     Elem60* data;
 
@@ -21,11 +21,11 @@ Elem60* func_001E0EA0(Vec60Array* v) {
     return data + count;
 }
 
-void func_001E0EC0(Iter* out, void* self, Iter* src) {
+void std_vector_cCollisionEdge_pointer2iterator(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }
 
-Elem60* func_001E0ED0(Vec60Array* v) {
+Elem60* std_vector_imp_cCollisionEdge_begin(Vec60Array* v) {
     return v->data;
 }
 
@@ -41,20 +41,20 @@ int Vec16Array_PopBack(Vec16Array* v) {
     count = v->count;
     v->count = count + -1;
     data = v->data;
-    return func_001E0FE0(data + (count + -1), -1);
+    return cEdgeGroup_dtor(data + (count + -1), -1);
 }
 
 /* Copy-construct: base copy then the flag byte at +0x0C. */
-FlagElem16* func_001E0F10(FlagElem16* d, FlagElem16* s) {
+FlagElem16* cEdgeGroup_opAssign(FlagElem16* d, FlagElem16* s) {
     unsigned char flag;
 
-    func_001C50A0(d, s);
+    std_vector_pod_int_opAssign(d, s);
     flag = s->unk0C;
     d->unk0C = flag;
     return d;
 }
 
 /* Last element of a 16-byte array. */
-FlagElem16* func_001E0F50(Vec16Array* v) {
+FlagElem16* cArray_cEdgeGroup_Back(Vec16Array* v) {
     return (v->data + v->count) + -1;
 }

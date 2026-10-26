@@ -14,19 +14,19 @@ typedef struct {
     char pad74[0xC];
 } Req_EDE8;
 extern int (*D_0048C3EC)(int, int, int, Src_EDE8 *);
-extern void func_002EAA08(Req_EDE8 *);
-extern void func_002EAAA0(Req_EDE8 *, int *);
-int func_002CEDE8(int a0, int a1, int a2, Src_EDE8 *s)
+extern void NetSetDefaultIncomingClientParams(Req_EDE8 *);
+extern void NetIncomingClient(Req_EDE8 *, int *);
+int GlobalMediusTypeServerJoinGameCallback(int a0, int a1, int a2, Src_EDE8 *s)
 {
     Req_EDE8 req;
     int out[4];
     int r = 0;
     if (D_0048C3EC != 0) r = D_0048C3EC(a0, a1, a2, s);
     if (r == 0 && s->f18 == 2) {
-        func_002EAA08(&req);
+        NetSetDefaultIncomingClientParams(&req);
         req.a = s->a;
         req.b = s->b;
-        func_002EAAA0(&req, out);
+        NetIncomingClient(&req, out);
     }
     return 0xB4;
 }

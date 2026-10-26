@@ -5,7 +5,7 @@
 #define NULL 0
 typedef __int128 Q128;
 #pragma mpwc_relax on
-char * func_003E7560(char * arg0, char * arg1) {
+char * cTargetInfo_ctor_cTargetInfoR(char * arg0, char * arg1) {
     F_(arg0, 0x0, int) = F_(arg1, 0x0, int);
     F_(arg0, 0x4, int) = F_(arg1, 0x4, int);
     F_(arg0, 0x8, unsigned char) = F_(arg1, 0x8, unsigned char);

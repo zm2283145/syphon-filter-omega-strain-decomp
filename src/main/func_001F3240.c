@@ -1,11 +1,11 @@
 #include "types.h"
 
-extern void func_001F3260(void* self);
+extern void std_list_cSkaSwitchItemPtr_push_back(void* self);
 
 #pragma optimization_level 1
-/* Forwards to func_001F3260 (unit built at -O1: no tail call). */
-void func_001F3240(void* self)
+/* Forwards to std_list_cSkaSwitchItemPtr_push_back (unit built at -O1: no tail call). */
+void cLList_cSkaSwitchItemPtr_PushBackActual(void* self)
 {
-    func_001F3260(self);
+    std_list_cSkaSwitchItemPtr_push_back(self);
 }
 #pragma optimization_level reset

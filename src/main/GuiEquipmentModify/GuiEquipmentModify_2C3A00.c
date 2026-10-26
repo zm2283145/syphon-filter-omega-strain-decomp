@@ -19,7 +19,7 @@ DEFINE_POD8_VECTOR_ERASE(func_002C3A00)
 #pragma cplusplus on
 #include "vector_insert_fill8.h"
 
-DEFINE_VECTOR_INSERT_FILL8(Vector_Insert_2C3B60, D_004AC640, D_0049ECE8, 0x5C, func_001BF9E0, func_001BFBB0)
+DEFINE_VECTOR_INSERT_FILL8(Vector_Insert_2C3B60, D_004AC640, D_0049ECE8, 0x5C, std_swap_vectordeleterR_vectordeleterR_10, std_vector_deleter_cSkaSwitchValue_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_002C3B60 */
 

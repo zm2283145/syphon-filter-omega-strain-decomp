@@ -1,6 +1,6 @@
 #include "types.h"
 typedef struct { float x, y, z, w; } V_190880;
-V_190880* func_00190880(V_190880* v, unsigned char axis, float w)
+V_190880* cAxisAngle_ctor_eCoordinateAxis_float(V_190880* v, unsigned char axis, float w)
 {
     v->w = w;
     switch (axis) {

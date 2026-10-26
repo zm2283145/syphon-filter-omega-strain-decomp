@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046E0E8(void) {
+int MediusUniqueCallbackFileUploadFromClientResponseHandler(void) {
     return 508;
 }

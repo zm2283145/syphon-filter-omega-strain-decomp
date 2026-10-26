@@ -18,6 +18,6 @@ DEFINE_ITER_END(func_00198B60)
 /* merge_units: begin func_00198B90 */
 #pragma push /* merge_units */
 /* Return the begin iterator. */
-DEFINE_ITER_BEGIN(func_00198B90)
+DEFINE_ITER_BEGIN(cArray_cString_REnd)
 #pragma pop /* merge_units */
 /* merge_units: end func_00198B90 */

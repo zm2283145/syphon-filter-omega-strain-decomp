@@ -25,7 +25,7 @@ typedef struct PlayerCamera {
     float fovTarget;           /* 0xC68: field-of-view angle +0xC64 approaches */
 } PlayerCamera;
 
-/* Object whose float at +0x934 is returned negated by func_00250380. */
+/* Object whose float at +0x934 is returned negated by cGameCamera_GetFollowDistance. */
 typedef struct ControlsUnk934 {
     char pad000[0x934];
     float unk934;

@@ -6,13 +6,13 @@
 
 #include "types.h"
 
-Rel* func_003305A0(Rel* r) {
+Rel* std_vector_tColumnData_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
     return r;
 }
 
-void* func_003305C0(char* self) {
+void* std_vector_deleter_Record_data(char* self) {
     return self + 8;
 }

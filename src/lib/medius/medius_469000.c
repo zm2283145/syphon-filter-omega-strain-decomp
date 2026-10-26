@@ -10,7 +10,7 @@ extern int D_00497CC4;
 extern int Medius_TerminateString(char *, int);
 extern int Net_SendLocked(int, int, int, int, int, int, void *);extern int D_005984F0;
 unsigned int D_00497CF8[1] = { 0x0 };
-int func_00469000(char *a, int b)
+int MediusSessionBegin(char *a, int b)
 {
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
@@ -23,7 +23,7 @@ int func_00469000(char *a, int b)
 /* merge_units: begin func_004690A0 */
 extern int D_005984F8;
 int D_00497CFC = 0;
-int func_004690A0(char *a, int b)
+int MediusSessionEnd(char *a, int b)
 {
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
@@ -36,7 +36,7 @@ int func_004690A0(char *a, int b)
 
 /* merge_units: begin func_00469150 */
 extern int D_00598500;
-int func_00469150(char *a)
+int MediusMachineSignature(char *a)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);
@@ -48,7 +48,7 @@ int func_00469150(char *a)
 
 /* merge_units: begin func_004691D8 */
 extern int D_00598504;
-int func_004691D8(char *a)
+int MediusDnasSignature(char *a)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);

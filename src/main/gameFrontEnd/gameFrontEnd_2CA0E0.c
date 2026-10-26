@@ -45,7 +45,7 @@ static inline void merge_flush_func_002CA100(void) {}
 extern char D_004ACA00[];
 static void * const dat_0048C140[2] = { (void*)D_004ACA00, (void*)0x0 };
 typedef struct { char pad[0x26C]; char name[0x40]; } NameObjA140;
-char* func_002CA140(NameObjA140* o)
+char* cGameFrontEnd_LobbyGetUniverseName_void_2(NameObjA140* o)
 {
     if (o->name[0])
         return o->name;
@@ -64,7 +64,7 @@ struct S2CA160 { char pad[0x2EC]; unsigned char b2EC; char pad2ED[3]; void* p2F0
 extern "C" {
 extern char D_004ACF10[];
 void* DME_GetLobby(void);
-void func_00445DC0(void* p);
+void SFOLobby_AccountScreenExit(void* p);
 void LobbyArray_dtor(void* p, int f);
 }
 static inline void Del2CA160(void* p, int line)
@@ -78,7 +78,7 @@ extern "C" int FrontEnd_FreePolicyLists(S2CA160* s)
     if (!s->b2EC)
         return 0;
     if (DME_GetLobby())
-        func_00445DC0(DME_GetLobby());
+        SFOLobby_AccountScreenExit(DME_GetLobby());
     Del2CA160(s->p2F0, 0x5F5);
     Del2CA160(s->p2F4, 0x5F6);
     Del2CA160(s->p2F8, 0x5F7);
@@ -105,7 +105,7 @@ extern int DME_GetLobby(void);
 #define DME_GetLobby() ((int)DME_GetLobby()) /* merge_units */
 
 extern void* LobbyArray_ctor(void* p);
-extern int func_00445E80(int a, void* fn, void* b, void* c, void* d);
+extern int SFOLobby_AccountScreenStart(int a, void* fn, void* b, void* c, void* d);
 extern void App_CardWaitPoll(void);
 }
 
@@ -146,7 +146,7 @@ extern "C" int FrontEnd_DownloadPolicies(ObjCA350* self)
         p = LobbyArray_ctor(p);
     self->c = p;
     self->inited = 1;
-    return func_00445E80(DME_GetLobby(), (void*)App_CardWaitPoll, self->a, self->b, self->c);
+    return SFOLobby_AccountScreenStart(DME_GetLobby(), (void*)App_CardWaitPoll, self->a, self->b, self->c);
 }
 #undef DME_GetLobby /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -167,7 +167,7 @@ extern L2CA580* DME_GetLobby(void);
 #define DME_GetLobby() ((L2CA580 *)DME_GetLobby()) /* merge_units */
 
 extern void SFOLobby_Update(L2CA580* l);
-extern int func_00452FD0(L2CA580* l);
+extern int SFOLobby_IsFatalError(L2CA580* l);
 extern int Gui_GetScreenList(void);
 extern void GuiManager_Update(int mgr, float t);
 extern void func_002CA6F0(void* s);
@@ -176,16 +176,16 @@ extern int FrontEnd_LeaveOnline(void* s, int v);
 #endif /* merge_units */
 #define FrontEnd_LeaveOnline(a0, a1) (FrontEnd_LeaveOnline((void *)(a0), (a1))) /* merge_units */
 
-extern void func_00453B00(L2CA580* l, int v);
+extern void SFOLobby_Reset(L2CA580* l, int v);
 /* Lobby tick: when the session is ready either flags the pending state or starts the game screen. */
-void func_002CA580(void* s)
+void cGameFrontEnd_LobbyUpdate(void* s)
 {
     L2CA580* l;
     if (g_DebugTriangle) return;
     l = DME_GetLobby();
     if (!l) return;
     SFOLobby_Update(l);
-    if (!func_00452FD0(l)) return;
+    if (!SFOLobby_IsFatalError(l)) return;
     if (l->state == 10) {
         D_005723B8 = 1;
         return;
@@ -193,7 +193,7 @@ void func_002CA580(void* s)
     GuiManager_Update(Gui_GetScreenList(), 0.0f);
     func_002CA6F0(s);
     FrontEnd_LeaveOnline(s, 1);
-    func_00453B00(l, 1);
+    SFOLobby_Reset(l, 1);
 }
 #undef DME_GetLobby /* merge_units */
 #undef FrontEnd_LeaveOnline /* merge_units */
@@ -216,12 +216,12 @@ extern G2CA640* DME_GetLobby(void);
 #endif /* merge_units */
 #define DME_GetLobby() ((G2CA640 *)DME_GetLobby()) /* merge_units */
 
-extern void func_00445850(G2CA640* g);
+extern void SFOLobby_AccountLogOut(G2CA640* g);
 extern void FrontEnd_FlushMessages(S2CA640* s);
 #if 0 /* merge_units */
-extern void func_00453B00(G2CA640* g, int a);
+extern void SFOLobby_Reset(G2CA640* g, int a);
 #endif /* merge_units */
-#define func_00453B00(a0, a1) (func_00453B00((void *)(a0), (a1))) /* merge_units */
+#define SFOLobby_Reset(a0, a1) (SFOLobby_Reset((void *)(a0), (a1))) /* merge_units */
 
 extern void DME_SetLobbyActive(int a);
 int FrontEnd_LeaveOnline(S2CA640* s, int a)
@@ -229,10 +229,10 @@ int FrontEnd_LeaveOnline(S2CA640* s, int a)
     FrontEnd_FreePolicyLists(s);
     if (DME_GetLobby()) {
         if (s->b264 && DME_GetLobby()->mode != 10)
-            func_00445850(DME_GetLobby());
+            SFOLobby_AccountLogOut(DME_GetLobby());
         s->b264 = 0;
         FrontEnd_FlushMessages(s);
-        func_00453B00(DME_GetLobby(), a);
+        SFOLobby_Reset(DME_GetLobby(), a);
         DME_SetLobbyActive(0);
         return 1;
     }
@@ -240,7 +240,7 @@ int FrontEnd_LeaveOnline(S2CA640* s, int a)
 }
 #undef FrontEnd_FreePolicyLists /* merge_units */
 #undef DME_GetLobby /* merge_units */
-#undef func_00453B00 /* merge_units */
+#undef SFOLobby_Reset /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002CA640(void) {}
 #pragma pop /* merge_units */

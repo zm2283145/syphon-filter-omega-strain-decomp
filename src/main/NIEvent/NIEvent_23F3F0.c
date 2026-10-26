@@ -19,7 +19,7 @@
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-DEFINE_MEMBER_DTOR_CHAIN(func_0023F3F0, func_00240480)
+DEFINE_MEMBER_DTOR_CHAIN(cArray_VisKey_dtor, std_vector_deleter_VisKey_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0023F3F0 */
 
@@ -27,7 +27,7 @@ DEFINE_MEMBER_DTOR_CHAIN(func_0023F3F0, func_00240480)
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-DEFINE_MEMBER_DTOR_CHAIN(func_0023F460, func_00240390)
+DEFINE_MEMBER_DTOR_CHAIN(cArray_VectorKey_dtor, std_vector_deleter_VectorKey_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0023F460 */
 
@@ -35,6 +35,6 @@ DEFINE_MEMBER_DTOR_CHAIN(func_0023F460, func_00240390)
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-DEFINE_BASE_DTOR_CHAIN(func_0023F4D0, func_0023F530)
+DEFINE_BASE_DTOR_CHAIN(cArray_cNIEventBasePtr_dtor, std_vector_imp_cNIEventBasePtr_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0023F4D0 */

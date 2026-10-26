@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_00177E20(void) {
+int cCBData_IsReferencing(void) {
     return 0;
 }

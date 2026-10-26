@@ -8,7 +8,7 @@ typedef struct LobbyMain {
     char pad0000[0x180];
     int unk180;                 /* 0x180 positive values require cleanup */
     char pad0184[0x1EA8 - 0x184];
-    int unk1EA8;                /* 0x1EA8 cleared by func_00452C70 */
+    int unk1EA8;                /* 0x1EA8 cleared by SFOLobby_ShutdownMedius */
     char pad1EAC[0x2550 - 0x1EAC];
     int unk2550;                /* 0x2550 */
     LobbyMainCallback callback; /* 0x2554 optional notification callback */

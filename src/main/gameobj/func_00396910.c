@@ -11,16 +11,16 @@ extern "C" {
 int Mem_Free(...);                         
 int List_Begin(...);                          
 int func_00396A90(...);                            
-int func_00396AF0(...);                        
-int func_00396B00(...);                          
-int func_00396B10(...);                      
+int cLListIterator_cSkaPlaybackGroupPtr_ctor(...);                        
+int std_list_cSkaPlaybackGroupPtr_end(...);                          
+int std_list_cSkaPlaybackGroupPtr_generic_iterator_ctor(...);                      
 int func_00396C10(...);                            
 int operator_delete(...);                             
 extern unsigned char g_ProfileLockEnabled;
 }
 #pragma inline_depth(10)
-static inline void itb_(char **o, char *l) { int r; List_Begin(&r, l); func_00396B10(o, &r); }
-static inline void ite_(char **o, char *l) { int r; func_00396B00(&r, l); func_00396AF0(o, &r); }
+static inline void itb_(char **o, char *l) { int r; List_Begin(&r, l); std_list_cSkaPlaybackGroupPtr_generic_iterator_ctor(o, &r); }
+static inline void ite_(char **o, char *l) { int r; std_list_cSkaPlaybackGroupPtr_end(&r, l); cLListIterator_cSkaPlaybackGroupPtr_ctor(o, &r); }
 extern "C" int func_00396910(int arg0, long long arg1) {
     int sp6C;
     char * sp68;

@@ -10,7 +10,7 @@ extern char D_00497E1C[];
 int D_00497E48 = 0;
 int D_00497E4C = 0;
 
-int func_0046E6F8(void) {
+int MediusUtilUpdateGameWorldResponseHandler(void) {
     int v0;
     int cond;
 
@@ -40,11 +40,11 @@ ret:
     return v0;
 }
 
-int func_0046E758(void) {
+int MediusUniqueCallbackGetBuddyInvitationsRequestHandler(void) {
     return 21;
 }
 
-int func_0046E760(void) {
+int MediusUniqueCallbackGetBuddyInvitationsResponseHandler(void) {
     int v0;
     int cond;
 

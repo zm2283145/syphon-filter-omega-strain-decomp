@@ -27,7 +27,7 @@ static char D_004BEF00[] = "INIT";
 static char D_004BEF08[] = "END";
 extern void String_PushBack(Str40FBC0* s, int c);
 extern char* String_CStr_Thunk(Str40FBC0* s);
-extern void func_001F12D0(Str40FBC0* s, char* cs);
+extern void cString_ctor_charP(Str40FBC0* s, char* cs);
 #if 0 /* merge_units */
 extern int func_0040FE50(Str40FBC0* s, Str40FBC0* key);
 #endif /* merge_units */
@@ -35,11 +35,11 @@ extern int func_0040FE50(Str40FBC0* s, Str40FBC0* key);
 
 extern void String_Dtor_138350(Str40FBC0* s, int flags);
 extern void String_Dtor(Str40FBC0* s, int flags);
-extern int func_00412C40(Str40FBC0* s);
-extern void func_00410630(Subs40FBC0* self, Str40FBC0* s);
-extern void func_0040FF20(Subs40FBC0* self, Str40FBC0* s);
+extern int nSubtitles_GetLanguageId(Str40FBC0* s);
+extern void cSubtitleFeed_ParseINISectionINIT(Subs40FBC0* self, Str40FBC0* s);
+extern void cSubtitleFeed_ParseINISectionFEED(Subs40FBC0* self, Str40FBC0* s);
 
-void func_0040FBC0(Subs40FBC0* self, const char* s, const char* end)
+void cSubtitleFeed_ParseINI(Subs40FBC0* self, const char* s, const char* end)
 {
     const char* p = s;
     while (p < end) {
@@ -64,19 +64,19 @@ void func_0040FBC0(Subs40FBC0* self, const char* s, const char* end)
                 Str40FBC0 k1;
                 Str40FBC0 k2;
                 Str40FBC0 k3;
-                func_001F12D0(&k1, D_004BEF08);
+                cString_ctor_charP(&k1, D_004BEF08);
                 r = func_0040FE50(&line, &k1);
                 String_Dtor_138350(&k1, -1);
                 if (r) {
                     self->mode = 0;
                 } else {
-                    func_001F12D0(&k2, D_004BEF00);
+                    cString_ctor_charP(&k2, D_004BEF00);
                     r = func_0040FE50(&line, &k2);
                     String_Dtor_138350(&k2, -1);
                     if (r) {
                         self->mode = 1;
                     } else {
-                        func_001F12D0(&k3, D_004BEEF8);
+                        cString_ctor_charP(&k3, D_004BEEF8);
                         r = func_0040FE50(&line, &k3);
                         String_Dtor_138350(&k3, -1);
                         if (r) self->mode = 2;
@@ -84,16 +84,16 @@ void func_0040FBC0(Subs40FBC0* self, const char* s, const char* end)
                 }
                 switch (self->mode) {
                 case 2:
-                    { int r2 = func_00412C40(&line); if (r2 != self->lang) self->mode = 0; }
+                    { int r2 = nSubtitles_GetLanguageId(&line); if (r2 != self->lang) self->mode = 0; }
                     break;
                 }
             } else {
                 switch (self->mode) {
                 case 1:
-                    func_00410630(self, &line);
+                    cSubtitleFeed_ParseINISectionINIT(self, &line);
                     break;
                 case 2:
-                    func_0040FF20(self, &line);
+                    cSubtitleFeed_ParseINISectionFEED(self, &line);
                     break;
                 }
             }
@@ -110,14 +110,14 @@ static inline void merge_flush_func_0040FBC0(void) {}
 
 /* merge_units: begin func_0040FE50 */
 #pragma push /* merge_units */
-extern int func_003CBF70(void* a, Str_40FE50* s, int c);
+extern int std_basic_string_char_char_traits_char_find_basicstringR_uint(void* a, Str_40FE50* s, int c);
 extern char* String_CStr(void* a);
 static inline unsigned int Len_40FE50(Str_40FE50* s) { return (s->u.l.word & 1) ? s->u.l.length : (unsigned char)s->u.s.len; }
 #pragma opt_rotateloops off
 char* func_0040FE50(void* a, Str_40FE50* s)
 {
     char* p = 0;
-    int r = func_003CBF70(a, s, 0);
+    int r = std_basic_string_char_char_traits_char_find_basicstringR_uint(a, s, 0);
     if (r > -1) {
         p = String_CStr(a) + r + Len_40FE50(s);
         while (*p == ' ' || *p == '\t') p++;

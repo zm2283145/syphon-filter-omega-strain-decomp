@@ -1,11 +1,11 @@
 #include "types.h"
 
-extern void func_0020BCC0(void* self);
+extern void std_fill_n_cSkaSwitchItem_int_fill_n(void* self);
 
 #pragma optimization_level 1
-/* Forwards to func_0020BCC0 (unit built at -O1: no tail call). */
-void func_0020BCA0(void* self)
+/* Forwards to std_fill_n_cSkaSwitchItem_int_fill_n (unit built at -O1: no tail call). */
+void std_fill_n_cSkaSwitchItemP_uint_cSkaSwitchItemR(void* self)
 {
-    func_0020BCC0(self);
+    std_fill_n_cSkaSwitchItem_int_fill_n(self);
 }
 #pragma optimization_level reset

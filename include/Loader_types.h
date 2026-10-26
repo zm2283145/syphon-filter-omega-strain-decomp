@@ -5,7 +5,7 @@
 
 /* Vector (three zeroed words, same shape as PtrVec) followed by an ownership flag. */
 typedef struct LoaderOwnedVec {
-    PtrVec vec;         /* 0x00: zeroed by func_001C0700 / func_001C07F0 / func_001C0840 */
+    PtrVec vec;         /* 0x00: zeroed by std_vector_imp_cSkaNodePtr_1_ctor / std_vector_imp_charPtr_1_ctor / std_vector_imp_cString4_ctor */
     char owns;          /* 0x0C: set to 1 by the constructors */
 } LoaderOwnedVec;
 

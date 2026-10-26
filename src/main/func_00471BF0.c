@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-extern int func_00471C20(int, int);
+extern int std_vector_imp_tRecord_reserve(int, int);
 
 int func_00471BF0(int a0, int a1) {
-    return func_00471C20(a0, a1);
+    return std_vector_imp_tRecord_reserve(a0, a1);
 }
 
 Rel* func_00471C00(Rel* r) {

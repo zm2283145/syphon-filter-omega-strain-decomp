@@ -8,6 +8,6 @@
 
 extern void PtrVec_Insert(IndexedList* list, int* end, int n, void* arg);
 
-void func_00130F20(IndexedList* list, void* arg) {
+void std_vector_tVUMNamePairPtr_push_back(IndexedList* list, void* arg) {
     PtrVec_Insert(list, list->base + list->count, 1, arg);
 }

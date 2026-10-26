@@ -10,10 +10,10 @@ char* func_00195DB0(char* base, int i) {
     return base + i;
 }
 
-char* func_00195DC0(char* base, int i) {
+char* cArray_FixedSize_cQuatVec_3_opIndex(char* base, int i) {
     return base + (i << 5);
 }
 
-int* func_00195DD0(int* base, int i) {
+int* cArray_FixedSize_cGOBJPtr_3_opIndex(int* base, int i) {
     return base + i;
 }

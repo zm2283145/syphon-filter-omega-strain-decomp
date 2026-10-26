@@ -14,22 +14,22 @@ extern char D_004D9810[];
 /* action message with sender and target vtable */
 extern void Event_PackHeader();
 extern void Message_GetScriptTypeKey();
-extern void func_0016F890();
-extern void func_0016F910();
-void * const D_004D9870[8] = { (void*)0x0, (void*)0x0, (void*)func_0016F890, (void*)func_0016F910, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
+extern void cAISoundSystemGobjToGobjMessage_dtor();
+extern void cAISoundSystemGobjToGobjMessage_Clone();
+void * const D_004D9870[8] = { (void*)0x0, (void*)0x0, (void*)cAISoundSystemGobjToGobjMessage_dtor, (void*)cAISoundSystemGobjToGobjMessage_Clone, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 extern char D_004EE5C0[];
 extern char D_004EE5C8[];
 extern int Event_Construct(cActionMsg*, int);
 extern int Receiver_Construct(void*, int);
 
-void* func_0016B340(void* self) {
+void* cAISoundSystem_ctor(void* self) {
     Receiver_Construct(self, (int)D_004EE5C0);
     *(int*)self = (int)D_004D9810;
     return self;
 }
 
 /* Builds an action message carrying sender and target identities (event byte ends as 2). */
-cActionMsg* func_0016B380(cActionMsg* msg, int* sender, int* target, int action) {
+cActionMsg* cAISoundSystemGobjToGobjMessage_ctor(cActionMsg* msg, int* sender, int* target, int action) {
     Event_Construct(msg, (int)D_004EE5C8);
     msg->base.vtable = D_004D92A0;
     msg->event = 0;

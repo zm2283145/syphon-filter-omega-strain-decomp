@@ -110,12 +110,12 @@ void Event_Send(Msg* m, void* to, int f);
 void cMessage_dtor(Msg* m, int f);
 void* Service_Lookup(void* a, void* b);
 void AiSound_SendFireNoise(Msg* m, int* sender, int action, float amp, float f);
-void func_0019DC30(Actor* a, float dt);
+void cHuman_Hang_NextFrame(Actor* a, float dt);
 void Ladder_Update(Actor* a, float dt);
 void Actor_UpdatePairChannels(Actor* a, float dt);
 void Actor_PrepareNeutralChannels(Actor* a, int b, int c, int d, int e);
 void func_0019D6E0(void* p, int a, int b);
-void func_0019D6C0(void* p, int a, int b);
+void cSkaParams_SetSwitchNextGoalState(void* p, int a, int b);
 float ActorPhysical_QueryWaterHeight(Ctl* c);
 void Mtx44_SetRotation(M4* m, float, float, float, float, float, float, float, float, float);
 V4* Root_GetWorldQuat(void* r);
@@ -128,8 +128,8 @@ void ActorHeading_RetargetLast(char* h, float f);
 void* Actor_GetEdgeRoot2(Actor* a);
 float* Mtx_ToEuler(V4* e, M4* m);
 V4* Quat_FromYaw(V4* q, V4* aa);
-int func_0019D230(char* h);
-char** func_0019D220(char* h);
+int std_vector_imp_cTargetZRotationStackSlot_size(char* h);
+char** std_vector_deleter_cTargetZRotationStackSlot_data(char* h);
 int Root_GetParent(Root* r);
 void Root_RefreshWorldCache(Root* r);
 char* Root_Identity(Root* r);
@@ -138,7 +138,7 @@ V4* Placement_GetQuat(void* p);
 M4* Quat_ToMatrix(M4* m, V4* q);
 void Mtx34_Copy(M4* d, M4* s);
 void Mtx_SetTranslation(M4* m, V4* p);
-V4* func_0019D1A0(M4* m);
+V4* cMatrix_GetXAxis(M4* m);
 V4* func_0019D190(M4* m);
 float Vec4_GetZ(V4* v);
 float Vec_HeadingFromYX(V4* v);
@@ -354,8 +354,8 @@ static inline void OrientYaw(Actor* a, float yaw)
 }
 static inline void HistRest(Actor* a)
 {
-    int i = func_0019D230(a->hist) - 1;
-    float h = ((float*)(*func_0019D220(a->hist) + i * 8))[1];
+    int i = std_vector_imp_cTargetZRotationStackSlot_size(a->hist) - 1;
+    float h = ((float*)(*std_vector_deleter_cTargetZRotationStackSlot_data(a->hist) + i * 8))[1];
     History_At(a->hist, a->i3098)[1] = h;
     ActorHeading_RetargetLast(a->heading, -1.0f);
 }
@@ -410,11 +410,11 @@ static inline void EdgeHeading(Actor* a)
 }
 struct M4Q { V4 r[4]; M4Q(V4* q) { Quat_ToMatrix((M4*)this, q); } };
 static inline void CopyM(M4* d, const M4Q& s) { Mtx34_Copy(d, (M4*)&s); }
-static inline VV V1A0(M4* m) { return *(VV*)func_0019D1A0(m); }
+static inline VV V1A0(M4* m) { return *(VV*)cMatrix_GetXAxis(m); }
 static inline VV V190(M4* m) { return *(VV*)func_0019D190(m); }
 static inline float PickH(const VV& a, const VV& b) { if (Vec4_GetZ((V4*)&a) < Vec4_GetZ((V4*)&b)) return Vec_HeadingFromYX((V4*)&a); return Vec_HeadingFromNegXY((V4*)&b); }
 static inline void WorldM(M4* m, char* w) { M4 rot; Quat_ToMatrix(&rot, Placement_GetQuat(w)); Mtx34_Copy(m, &rot); }
-static inline float PickH2(M4* m) { V4 va; V4 vb; Vec4_Assign(&va, func_0019D1A0(m)); Vec4_Assign(&vb, func_0019D190(m)); if (Vec4_GetZ(&va) < Vec4_GetZ(&vb)) return Vec_HeadingFromYX(&va); return Vec_HeadingFromNegXY(&vb); }
+static inline float PickH2(M4* m) { V4 va; V4 vb; Vec4_Assign(&va, cMatrix_GetXAxis(m)); Vec4_Assign(&vb, func_0019D190(m)); if (Vec4_GetZ(&va) < Vec4_GetZ(&vb)) return Vec_HeadingFromYX(&va); return Vec_HeadingFromNegXY(&vb); }
 static inline void WorldMW(M4* m, char* w) { WorldM(m, w); }
 static inline float PickHW(M4* m) { return PickH2(m); }
 static inline float HeadingFromWorld(Actor* a, float dt)
@@ -559,7 +559,7 @@ extern "C" void Actor_UpdateAnimationState(Actor* a, float dt)
         St* st2;
         int s = a->st.mode;
         if (s == 8 || s == 7) {
-            func_0019DC30(a, dt);
+            cHuman_Hang_NextFrame(a, dt);
         } else if (s == 16) {
             Ladder_Update(a, dt);
         } else if (((a->i324C >> 3) & 1) || ((a->i324C >> 6) & 1)) {
@@ -577,7 +577,7 @@ extern "C" void Actor_UpdateAnimationState(Actor* a, float dt)
             if (a->ctl && ((a->i3204 >> 3) & 1)) {
                 func_0019D6E0(a->ctl->s30, 0, 1);
             }
-            func_0019D6C0(blk->anim, 3, 0);
+            cSkaParams_SetSwitchNextGoalState(blk->anim, 3, 0);
             g = AnimChannel_GetCurrent(blk->anim, 4);
             g2 = g * g;
             dur = MulF(1.0f + 1.5f * (g2 * g2), 0.16f);
@@ -631,7 +631,7 @@ extern "C" void Actor_UpdateAnimationState(Actor* a, float dt)
             UpdateLean(a, blk);
             SmoothInput(a, MinZ(1.0f, MulF(dt, 1.5f)));
         } else {
-            func_0019D6C0(blk->anim, 3, 0);
+            cSkaParams_SetSwitchNextGoalState(blk->anim, 3, 0);
             if (a->b31B3 && a->in.y > 0.0f && AnimChannel_GetCurrent(blk->anim, 4) == 1.0f) {
                 float k, A, ang, s, c;
                 if (a->b31B3) k = 0.31666666f * a->f31D4; else k = 0.0f;

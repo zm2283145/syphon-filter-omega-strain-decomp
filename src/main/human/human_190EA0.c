@@ -16,11 +16,11 @@
  */
 
 
-int func_00190EA0(char* self) {
+int cSkaAnimData_GetFrameSize(char* self) {
     return *(int*)(self + 8);
 }
 
-int func_00190EB0(char* self) {
+int cSkaAnimData_IsLooping(char* self) {
     return *(unsigned int*)(self + 16) != 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -33,7 +33,7 @@ static inline void merge_flush_func_00190EA0(void) {}
 typedef struct { int unk0; unsigned int count; int unk8; float scale; } ScaledCount;
 
 /* Returns count (unsigned) * scale. */
-float func_00190EC0(ScaledCount* self)
+float cSkaAnimData_GetDuration(ScaledCount* self)
 {
     return (float)self->count * self->scale;
 }
@@ -44,24 +44,24 @@ static inline void merge_flush_func_00190EC0(void) {}
 
 /* merge_units: begin func_00190F00 */
 #pragma push /* merge_units */
-int func_00190F00(char* self) {
+int cSkaAnimData_GetFrameCount(char* self) {
     return *(int*)(self + 4);
 }
 
-int func_00190F10(char* self) {
+int cPointer_cSkaAnimData_opArrow(char* self) {
     return *(int*)(self + 0);
 }
 
-int* func_00190F20(int* self, int value) {
+int* cPointer_cSkaAnimData_ctor(int* self, int value) {
     *self = value;
     return self;
 }
 
-int func_00190F30(char* self) {
+int cSkeleton_GetSkeletonData(char* self) {
     return *(int*)(self + 0);
 }
 
-int func_00190F40(char* self) {
+int cSkaParams_Skeleton(char* self) {
     return *(int*)(self + 32);
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -109,7 +109,7 @@ extern void func_00191040(Tmp20*, int, int*);
 extern void Vector_Insert_1BDA10(void*, Rec14*, int, Tmp20*);
 
 /* Builds a record from (a1, {a2, a3}) and appends it to the vector at +0x3C. */
-Holder_00190F90* func_00190F90(Holder_00190F90* self, int a1, int a2, int a3) {
+Holder_00190F90* cSkaAnimCheckpoints_ScheduleEvent(Holder_00190F90* self, int a1, int a2, int a3) {
     Tmp20 rec;
     int pair[2];
     pair[0] = a2;

@@ -7,10 +7,10 @@
 /* merge_units: begin func_0035A300 */
 #define F(p,o,T) (*(T *)((char *)(p)+(o)))
 extern void *Insck_GetThreadContext(int), *Insck_FindSocket(int);
-extern void func_003581C0(void);
-extern int func_00358158(void), Insck_SetErrno(void *, int), Insck_MapLibnetError(int), func_00359728(void *, void *);
-extern int func_0034B180(void *, int, int, int, void *, int);
-extern void func_00358500(void *, void *);
+extern void unblock(void);
+extern int func_00358158(void), Insck_SetErrno(void *, int), Insck_MapLibnetError(int), connect_check(void *, void *);
+extern int sceInetControl(void *, int, int, int, void *, int);
+extern void conv_addr_from_inet(void *, void *);
 
 int Insck_Getsockopt(int fd, int level, int optname, void *optval, unsigned int *optlen)
 {
@@ -43,25 +43,25 @@ int Insck_Getsockopt(int fd, int level, int optname, void *optval, unsigned int 
         } else {
             return Insck_SetErrno(ctx, 0x6D);
         }
-        r = func_00359728(ctx, sock);
+        r = connect_check(ctx, sock);
         if (r) return Insck_SetErrno(ctx, r);
     } else {
         return Insck_SetErrno(ctx, 0x6D);
     }
 ok:
     if (!optval || !optlen || *optlen < len) return Insck_SetErrno(ctx, 0x16);
-    func_003581C0();
+    unblock();
     if (level == 6 && optname == 1) {
-        r = func_0034B180((char *)ctx + 0x14, F(ctx,0x54,int), F(sock,12,int), 2, &tmp, 4);
+        r = sceInetControl((char *)ctx + 0x14, F(ctx,0x54,int), F(sock,12,int), 2, &tmp, 4);
         *(int *)optval = tmp & 1;
     } else if (level == 0) {
         if (optname == 9) {
-            r = func_0034B180((char *)ctx + 0x14, F(ctx,0x54,int), F(sock,12,int), 5, buf, 0x10);
-            func_00358500(optval, buf);
+            r = sceInetControl((char *)ctx + 0x14, F(ctx,0x54,int), F(sock,12,int), 5, buf, 0x10);
+            conv_addr_from_inet(optval, buf);
         } else if (optname == 10) {
-            r = func_0034B180((char *)ctx + 0x14, F(ctx,0x54,int), F(sock,12,int), 7, optval, 4);
+            r = sceInetControl((char *)ctx + 0x14, F(ctx,0x54,int), F(sock,12,int), 7, optval, 4);
         } else if (optname == 11) {
-            r = func_0034B180((char *)ctx + 0x14, F(ctx,0x54,int), F(sock,12,int), 9, optval, 4);
+            r = sceInetControl((char *)ctx + 0x14, F(ctx,0x54,int), F(sock,12,int), 9, optval, 4);
         }
     }
     if (func_00358158() < 0) return Insck_SetErrno(ctx, -1);
@@ -73,11 +73,11 @@ ok:
 
 /* merge_units: begin func_0035A590 */
 #if 0 /* merge_units */
-extern int func_0034B180(void *, void *, void *, int, void *, int);
+extern int sceInetControl(void *, void *, void *, int, void *, int);
 #endif /* merge_units */
-#define func_0034B180(a0, a1, a2, a3, a4, a5) (func_0034B180((a0), (int)(a1), (int)(a2), (a3), (a4), (a5))) /* merge_units */
+#define sceInetControl(a0, a1, a2, a3, a4, a5) (sceInetControl((a0), (int)(a1), (int)(a2), (a3), (a4), (a5))) /* merge_units */
 
-extern void func_003584B8(void *, const void *);
+extern void conv_addr_to_inet(void *, const void *);
 
 int Insck_Setsockopt(int fd, int level, int optname, const void *optval, unsigned int optlen)
 {
@@ -116,52 +116,52 @@ int Insck_Setsockopt(int fd, int level, int optname, const void *optval, unsigne
         } else {
             return Insck_SetErrno(ctx, 0x6D);
         }
-        r = func_00359728(ctx, sock);
+        r = connect_check(ctx, sock);
         if (r) return Insck_SetErrno(ctx, r);
     } else {
         return Insck_SetErrno(ctx, 0x6D);
     }
 ok:
     if (!optval || optlen < len) return Insck_SetErrno(ctx, 0x16);
-    func_003581C0();
+    unblock();
     if (level == 6 && optname == 1) {
         tmp = *(int *)optval != 0;
-        r = func_0034B180((char *)ctx + 0x14, F(ctx,0x54,void *), F(sock,12,void *), 3, &tmp, 4);
+        r = sceInetControl((char *)ctx + 0x14, F(ctx,0x54,void *), F(sock,12,void *), 3, &tmp, 4);
     } else if (level == 0) {
         if (optname == 9) {
-            func_003584B8(buf, optval);
-            r = func_0034B180((char *)ctx + 0x14, F(ctx,0x54,void *), F(sock,12,void *), 4, buf, 0x10);
+            conv_addr_to_inet(buf, optval);
+            r = sceInetControl((char *)ctx + 0x14, F(ctx,0x54,void *), F(sock,12,void *), 4, buf, 0x10);
         } else if (optname == 10) {
-            r = func_0034B180((char *)ctx + 0x14, F(ctx,0x54,void *), F(sock,12,void *), 6, (void *)optval, len);
+            r = sceInetControl((char *)ctx + 0x14, F(ctx,0x54,void *), F(sock,12,void *), 6, (void *)optval, len);
         } else if (optname == 11) {
-            r = func_0034B180((char *)ctx + 0x14, F(ctx,0x54,void *), F(sock,12,void *), 8, (void *)optval, len);
+            r = sceInetControl((char *)ctx + 0x14, F(ctx,0x54,void *), F(sock,12,void *), 8, (void *)optval, len);
         } else if (optname == 12) {
-            func_003584B8(b12, optval);
-            func_003584B8(b12 + 16, (char *)optval + 4);
-            r = func_0034B180((char *)ctx + 0x14, F(ctx,0x54,void *), F(sock,12,void *), 10, b12, 0x20);
+            conv_addr_to_inet(b12, optval);
+            conv_addr_to_inet(b12 + 16, (char *)optval + 4);
+            r = sceInetControl((char *)ctx + 0x14, F(ctx,0x54,void *), F(sock,12,void *), 10, b12, 0x20);
         } else if (optname == 13) {
-            func_003584B8(b13, optval);
-            func_003584B8(b13 + 16, (char *)optval + 4);
-            r = func_0034B180((char *)ctx + 0x14, F(ctx,0x54,void *), F(sock,12,void *), 11, b13, 0x20);
+            conv_addr_to_inet(b13, optval);
+            conv_addr_to_inet(b13 + 16, (char *)optval + 4);
+            r = sceInetControl((char *)ctx + 0x14, F(ctx,0x54,void *), F(sock,12,void *), 11, b13, 0x20);
         }
     }
     if (func_00358158() < 0) return Insck_SetErrno(ctx, -1);
     if (r < 0) return Insck_SetErrno(ctx, Insck_MapLibnetError(r));
     return Insck_SetErrno(ctx, 0);
 }
-#undef func_0034B180 /* merge_units */
+#undef sceInetControl /* merge_units */
 /* merge_units: end func_0035A590 */
 
 /* merge_units: begin func_0035A890 */
-extern void func_003581C0(void),func_00358500(void *,void *);
-extern int func_00358158(void),Insck_SetErrno(void *,int),Insck_MapLibnetError(int),func_00358558(int);
+extern void unblock(void),conv_addr_from_inet(void *,void *);
+extern int func_00358158(void),Insck_SetErrno(void *,int),Insck_MapLibnetError(int),conv_port_from_inet(int);
 static inline int finishA890(void *ctx,int err){
  int r=Insck_SetErrno(ctx,err);
  /* Return after publishing the socket error. */
  __asm__ volatile("" ::: "memory");
  return r;
 }
-int func_0035A890(int fd,void *addr,unsigned int *len,int peer){
+int _get_peer_or_sock_name(int fd,void *addr,unsigned int *len,int peer){
  int info[19],r,port,id;
  void *ctx=Insck_GetThreadContext(0),*sock,*head;
  if(!ctx)return -1;
@@ -172,14 +172,14 @@ int func_0035A890(int fd,void *addr,unsigned int *len,int peer){
   if(peer)return finishA890(ctx,22);
   if(F(sock,16,int)!=2 || !(head=F(sock,80,void *)) || (id=F(head,12,int),sock=head,!id))return finishA890(ctx,9);
  }
- func_003581C0();
- r=func_0034B180((char *)ctx+20,F(ctx,84,int),F(sock,12,int),1,info,76);
+ unblock();
+ r=sceInetControl((char *)ctx+20,F(ctx,84,int),F(sock,12,int),1,info,76);
  if(func_00358158()<0)return finishA890(ctx,-1);
  if(r<0)return finishA890(ctx,Insck_MapLibnetError(r));
  F(addr,1,unsigned char)=2;
- if(peer){func_00358500((char *)addr+4,info+9);port=info[13];}
- else{func_00358500((char *)addr+4,info+4);port=info[8];}
- F(addr,2,unsigned short)=func_00358558(port);
+ if(peer){conv_addr_from_inet((char *)addr+4,info+9);port=info[13];}
+ else{conv_addr_from_inet((char *)addr+4,info+4);port=info[8];}
+ F(addr,2,unsigned short)=conv_port_from_inet(port);
  /* Publish the converted port before the address length. */
  __asm__ volatile("" ::: "memory");
  *len=16;

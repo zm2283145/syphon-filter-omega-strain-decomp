@@ -6,14 +6,14 @@
 
 #include "types.h"
 
-int* func_00171EA0(PtrVec* v, int i) {
+int* cArray_cGameGOBJPtr_opIndex(PtrVec* v, int i) {
     return v->data + i;
 }
 
-int func_00171EB0(char* self) {
+int cArray_cGameGOBJPtr_Size(char* self) {
     return *(int*)(self + 4);
 }
 
-void* func_00171EC0(char* self) {
+void* std_vector_pod_int_data(char* self) {
     return self + 8;
 }

@@ -4,7 +4,7 @@
 #pragma mpwc_relax on
 int *LobbyArray_At(char * , int);                    
 
-int *func_0044F0C0(char * arg0, int arg1) {
+int *SFOLobby_FindGameData(char * arg0, int arg1) {
     int *temp_v0;
     int temp_s1;
     int var_s0;

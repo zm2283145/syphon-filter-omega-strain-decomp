@@ -20,7 +20,7 @@
 #pragma cplusplus on
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_00396F90)
+DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00396F90 */
 
@@ -31,11 +31,11 @@ DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_00396F90)
 typedef struct { char pad0[0xB0]; int x4; } E_1A07F0;
 typedef struct { E_1A07F0** p; } It_1A07F0;
 typedef struct { char pad[0xB4]; int vec; int xC; } O_1A07F0;
-extern E_1A07F0** func_001E5250(int* v);
-extern E_1A07F0** func_001E5220(int* v);
-extern void func_001E5240(It_1A07F0* out, int* v, E_1A07F0*** p);
+extern E_1A07F0** std_vector_imp_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_1_begin(int* v);
+extern E_1A07F0** std_vector_imp_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_1_end(int* v);
+extern void std_vector_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_pointer2iterator(It_1A07F0* out, int* v, E_1A07F0*** p);
 static inline int Eq_1A07F0(E_1A07F0** a, E_1A07F0** b) { return a == b; }
-void func_00397080(O_1A07F0* self)
+void cTreeNode_cSkaAnimAnchor_TreeNodeData_DetachChildren(O_1A07F0* self)
 {
     It_1A07F0 b;
     It_1A07F0 e;
@@ -43,11 +43,11 @@ void func_00397080(O_1A07F0* self)
     E_1A07F0** t1;
     E_1A07F0** it;
     E_1A07F0** end;
-    t0 = func_001E5250(&self->vec);
-    func_001E5240(&b, &self->vec, &t0);
+    t0 = std_vector_imp_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_1_begin(&self->vec);
+    std_vector_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_pointer2iterator(&b, &self->vec, &t0);
     it = b.p;
-    t1 = func_001E5220(&self->vec);
-    func_001E5240(&e, &self->vec, &t1);
+    t1 = std_vector_imp_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_1_end(&self->vec);
+    std_vector_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_pointer2iterator(&e, &self->vec, &t1);
     end = e.p;
     while (Eq_1A07F0(it, end) ^ 1) {
         (*it)->x4 = 0;
@@ -65,7 +65,7 @@ static inline void merge_flush_func_00397080(void) {}
 #pragma cplusplus on
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_00397120)
+DEFINE_TRIVIAL_DTOR(cArray_FixedSize_cVector_4_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00397120 */
 

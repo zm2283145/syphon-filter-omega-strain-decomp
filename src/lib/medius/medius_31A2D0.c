@@ -1,4 +1,4 @@
-void func_0031A2D0(float *r, int p, float *a, float *k, float *err)
+void NellyDurbin(float *r, int p, float *a, float *k, float *err)
 {
     float tmp[20];
     float *prev;

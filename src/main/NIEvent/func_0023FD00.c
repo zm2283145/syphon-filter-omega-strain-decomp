@@ -19,15 +19,15 @@ extern "C" {
 extern char cNIEventOBJ_vtable[];
 extern char D_004DC190[];
 void Mem_Free(int pool, void* p, char* file, int line);
-void func_00239370(void* p, int f);
-void func_002402A0(void* p, int f);
-void func_0023F3F0(void* p, int f);
-void func_0023F460(void* p, int f);
-void func_0023F4D0(void* p, int f);
+void cNIEventFXTrack_dtor(void* p, int f);
+void std_vector_deleter_FloatKey_dtor(void* p, int f);
+void cArray_VisKey_dtor(void* p, int f);
+void cArray_VectorKey_dtor(void* p, int f);
+void cArray_cNIEventBasePtr_dtor(void* p, int f);
 void cGOBJ_dtor(void* p, int f);
 void operator_delete(void* p);
 }
-static inline void L4_23FD00(void* p) { if (p) func_002402A0(p, 0); }
+static inline void L4_23FD00(void* p) { if (p) std_vector_deleter_FloatKey_dtor(p, 0); }
 static inline void L3_23FD00(void* p) { if (p) L4_23FD00(p); }
 static inline void L2_23FD00(void* p) { if (p) L3_23FD00(p); }
 static inline void L1_23FD00(char* p) { if (p) L2_23FD00(p + 4); }
@@ -35,9 +35,9 @@ static inline void Base_23FD00(Obj_23FD00* l)
 {
     if (l) {
         l->vt = D_004DC190;
-        func_0023F3F0(l->mC4, -1);
-        func_0023F460(l->mAC, -1);
-        func_0023F4D0(l->m9C, -1);
+        cArray_VisKey_dtor(l->mC4, -1);
+        cArray_VectorKey_dtor(l->mAC, -1);
+        cArray_cNIEventBasePtr_dtor(l->m9C, -1);
         cGOBJ_dtor(l, 0);
     }
 }
@@ -52,7 +52,7 @@ extern "C" Obj_23FD00* cNIEventOBJ_dtor(Obj_23FD00* l, short flag)
             o->Destroy(-1);
             Mem_Free(0, o, "NIEvent.hh", 0x166);
         }
-        func_00239370(l->m1A4, -1);
+        cNIEventFXTrack_dtor(l->m1A4, -1);
         L1_23FD00(l->m184);
         L1_23FD00(l->m164);
         L1_23FD00(l->m144);

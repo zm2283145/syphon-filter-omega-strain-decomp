@@ -195,26 +195,26 @@ extern char g_CameraObject[];
 extern char g_HotboxList[];
 extern char D_0053B5C0[];
 Cam10** List_Front(void* p);
-void func_00232EE0(It10* out, void* list);
-It10* func_00232EF0(It10* dst, It10* src);
-void func_00232F00(It10* out, void* list);
-void func_0013B160(It10* out, void* list);
+void std_list_cElementPtr_end_void(It10* out, void* list);
+It10* cLListIterator_cElementPtr_ctor_listR(It10* dst, It10* src);
+void std_list_cElementPtr_begin_void(It10* out, void* list);
+void std_list_deleter_voidPtr_end_void(It10* out, void* list);
 void func_00234070(It10* dst, It10* src);
 void List_Begin_16E880(ONode10** out, void* list);
-void func_002340F0(OIt10* dst, ONode10* n);
-void func_00234090(OIt10* out, void* list);
+void std_list_cHotboxPtr_generic_iterator_1_ctor(OIt10* dst, ONode10* n);
+void std_list_cHotboxPtr_end_void_2(OIt10* out, void* list);
 void func_00234080(OIt10* dst, OIt10* src);
-void func_002340C0(void* list, Entry10** v);
+void std_list_cElementPtr_push_back_cElementPR(void* list, Entry10** v);
 void ActiveList_EraseMatching(void* list, Pred10 p);
 void ParticleInst_Kill(Tracer10* t, int n);
 void Mem_Free(int pool, void* p, char* file, int line);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 Tracer10* Tracer_Create(void* p, int id, M4* m, float scale);
 void ParticleInst_Update(Tracer10* t, float dt, M4* m, int z);
-void func_003A33B0(Tracer10* t, float a, float b, Cam10* cam, float c, int flag);
+void cParticle_SetBoxData_cGOBJP_float_float_float_etc(Tracer10* t, float a, float b, Cam10* cam, float c, int flag);
 void func_003A3340(Tracer10* t, Cam10* cam, Box0* box, bool flag);
-void func_003A3310(Tracer10* t, float s, float f);
-void func_003A5C50(void* p, float dt);
+void cParticle_SetBoxData_float_float(Tracer10* t, float s, float f);
+void cWind_NextFrame(void* p, float dt);
 Box func_00234110(Box0* a, Box0* b);
 }
 
@@ -230,23 +230,23 @@ static inline FxDef* GetDef(signed char id)
 }
 struct F10 { float f; };
 static inline void AssignIt(It10* out, LNode10* n) { It10 v; v.n = n; F10* s = (F10*)&v; F10* d = (F10*)out; *d = *s; }
-static inline void BegI_(It10* out, void* l) { It10 t; func_00232F00(&t, l); func_00232EF0(out, &t); }
+static inline void BegI_(It10* out, void* l) { It10 t; std_list_cElementPtr_begin_void(&t, l); cLListIterator_cElementPtr_ctor_listR(out, &t); }
 static inline void BegI(It10* out, void* l) { BegI_(out, l); }
 static inline void BegW(It10* out, void* l) { BegI(out, l); }
 static inline void Begin(It10* out, void* l) { It10 t2; BegW(&t2, l); F10* s = (F10*)&t2; F10* d = (F10*)out; *d = *s; }
-static inline void EndI_(It10* out, void* l) { It10 t; func_00232EE0(&t, l); func_00232EF0(out, &t); }
+static inline void EndI_(It10* out, void* l) { It10 t; std_list_cElementPtr_end_void(&t, l); cLListIterator_cElementPtr_ctor_listR(out, &t); }
 static inline void EndI(It10* out, void* l) { EndI_(out, l); }
 static inline void End(It10* out, void* l) { EndI(out, l); }
 static inline bool NotEnd(It10* it, void* l) { It10 end; End(&end, l); return it->n != end.n; }
-static inline void OBegI_(OIt10* out, void* l) { ONode10* raw; List_Begin_16E880(&raw, l); func_002340F0(out, raw); }
+static inline void OBegI_(OIt10* out, void* l) { ONode10* raw; List_Begin_16E880(&raw, l); std_list_cHotboxPtr_generic_iterator_1_ctor(out, raw); }
 static inline void OBegI(OIt10* out, void* l) { OBegI_(out, l); }
 static inline void OBegin0(OIt10* out, void* l) { OIt10 t; OBegI(&t, l); *out = t; }
 static inline void OBegin(OIt10* out, void* l) { OBegin0(out, l); }
-static inline void OEndI_(OIt10* out, void* l) { OIt10 e; func_00234090(&e, l); func_00234080(out, &e); }
+static inline void OEndI_(OIt10* out, void* l) { OIt10 e; std_list_cHotboxPtr_end_void_2(&e, l); func_00234080(out, &e); }
 static inline void OEndI(OIt10* out, void* l) { OEndI_(out, l); }
 static inline void OEndW(OIt10* out, void* l) { OEndI(out, l); }
 static inline bool ONotEnd(OIt10* it, void* l) { OIt10 e2; OEndW(&e2, l); return it->n != e2.n; }
-static inline void EndBI_(It10* out, void* l) { It10 t; func_0013B160(&t, l); func_00234070(out, &t); }
+static inline void EndBI_(It10* out, void* l) { It10 t; std_list_deleter_voidPtr_end_void(&t, l); func_00234070(out, &t); }
 static inline void EndBI(It10* out, void* l) { EndBI_(out, l); }
 static inline void EndB0(It10* out, void* l) { It10 t2; EndBI(&t2, l); *out = t2; }
 static inline void EndB(It10* out, void* l) { EndB0(out, l); }
@@ -371,7 +371,7 @@ extern "C" void SnowField_Update(Self10* self, float dt)
                         ne->t = MakeTracerM(self, &m, 0x436);
                         ne->obj = o;
                         ne->active = 1;
-                        func_002340C0(self->list, &ne);
+                        std_list_cElementPtr_push_back_cElementPR(self->list, &ne);
                     }
                 }
             }
@@ -418,16 +418,16 @@ extern "C" void SnowField_Update(Self10* self, float dt)
         }
         scale = 1.0f;
         if (total > 0) scale = (float)self->weight / (float)total;
-        func_003A5C50(D_0053B5C0, dt);
+        cWind_NextFrame(D_0053B5C0, dt);
         for (Begin(&it, self->list); NotEnd(&it, self->list); it.n = it.n->next) {
             e = *it;
             if (e->t && e->vis) {
-                func_003A33B0(e->t, self->fB0, self->size, cam, self->fB8, self->id != 0x16);
+                cParticle_SetBoxData_cGOBJP_float_float_float_etc(e->t, self->fB0, self->size, cam, self->fB8, self->id != 0x16);
                 Box b2;
                 b2 = func_00234110(&big, e->obj->GetBox());
                 SetCP(&m, &b2, V4());
                 func_003A3340(e->t, cam, &b2, self->id != 0x16);
-                func_003A3310(e->t, scale, ((CamF*)*List_Front(g_CameraObject))->f60);
+                cParticle_SetBoxData_float_float(e->t, scale, ((CamF*)*List_Front(g_CameraObject))->f60);
                 ParticleInst_Update(e->t, dt, &m, 0);
             }
         }

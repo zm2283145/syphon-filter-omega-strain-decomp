@@ -5,12 +5,12 @@
  */
 
 /* merge_units: begin func_002DDAC8 */
-extern void func_00306018(int *);
-int func_002DDAC8(int *p)
+extern void rt_time_get_local(int *);
+int NetIGetLocalTime(int *p)
 {
     int t[4];
     if (p == 0) return 0x17;
-    func_00306018(t);
+    rt_time_get_local(t);
     *p = t[0];
     return 0;
 }
@@ -18,7 +18,7 @@ int func_002DDAC8(int *p)
 
 /* merge_units: begin func_002DDB08 */
 extern int D_0058806C;
-int func_002DDB08(int* out)
+int NetIGetTime(int* out)
 {
     if (out == 0)
         return 0x17;
@@ -28,15 +28,15 @@ int func_002DDB08(int* out)
 /* merge_units: end func_002DDB08 */
 
 /* merge_units: begin func_002DDB30 */
-extern int func_002E51B8(unsigned int, int *);
-int func_002DDB30(int *out, unsigned int i)
+extern int NetGetConnInfo(unsigned int, int *);
+int NetIGetSessionMasterClientIndex(int *out, unsigned int i)
 {
     int p = 0;
     int r;
     if (i >= 4) return 0x17;
     if (out == 0) return 0x17;
     *out = 0x100;
-    r = func_002E51B8(i, &p);
+    r = NetGetConnInfo(i, &p);
     if (r) return r;
     if (p) *out = *(int *)(p + 0x404);
     return 0;
@@ -44,14 +44,14 @@ int func_002DDB30(int *out, unsigned int i)
 /* merge_units: end func_002DDB30 */
 
 /* merge_units: begin func_002DDB98 */
-int func_002DDB98(int *out, unsigned int i)
+int NetIGetConnectStatus(int *out, unsigned int i)
 {
     int p = 0;
     int r;
     if (i >= 4) return 0x17;
     if (out == 0) return 0x17;
     *out = 0xFFFFFF;
-    r = func_002E51B8(i, &p);
+    r = NetGetConnInfo(i, &p);
     if (r) return r;
     if (p) *out = *(int *)(p + 0x438);
     return 0;
@@ -60,11 +60,11 @@ int func_002DDB98(int *out, unsigned int i)
 
 /* merge_units: begin func_002DDC00 */
 #if 0 /* merge_units */
-extern int func_002E51B8(unsigned int, unsigned char ***);
+extern int NetGetConnInfo(unsigned int, unsigned char ***);
 #endif /* merge_units */
-#define func_002E51B8(a0, a1) (func_002E51B8((a0), (int *)(a1))) /* merge_units */
+#define NetGetConnInfo(a0, a1) (NetGetConnInfo((a0), (int *)(a1))) /* merge_units */
 
-int func_002DDC00(int *out, unsigned int idx)
+int NetIGetValidClientCount(int *out, unsigned int idx)
 {
     unsigned char **p = 0;
     unsigned int i = 0;
@@ -72,7 +72,7 @@ int func_002DDC00(int *out, unsigned int idx)
     if (out == 0) return 0x17;
     *out = 0;
     if (idx >= 4) return 0x17;
-    r = func_002E51B8(idx, &p);
+    r = NetGetConnInfo(idx, &p);
     if (r) return r;
     if (p == 0) return r;
     for (; i < 0x100; i++) {
@@ -80,63 +80,63 @@ int func_002DDC00(int *out, unsigned int idx)
     }
     return 0;
 }
-#undef func_002E51B8 /* merge_units */
+#undef NetGetConnInfo /* merge_units */
 /* merge_units: end func_002DDC00 */
 
 /* merge_units: begin func_002DDCA0 */
 extern void *memset(void *, int, unsigned int);
 #if 0 /* merge_units */
-extern int func_002E51B8(unsigned int, char **);
+extern int NetGetConnInfo(unsigned int, char **);
 #endif /* merge_units */
-#define func_002E51B8(a0, a1) (func_002E51B8((a0), (int *)(a1))) /* merge_units */
+#define NetGetConnInfo(a0, a1) (NetGetConnInfo((a0), (int *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_002DDB98(int *, unsigned int);
+extern int NetIGetConnectStatus(int *, unsigned int);
 #endif /* merge_units */
-#define func_002DDB98(a0, a1) (func_002DDB98((a0), (a1))) /* merge_units */
+#define NetIGetConnectStatus(a0, a1) (NetIGetConnectStatus((a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_002DDC00(int *, unsigned int);
+extern int NetIGetValidClientCount(int *, unsigned int);
 #endif /* merge_units */
-#define func_002DDC00(a0, a1) (func_002DDC00((a0), (a1))) /* merge_units */
+#define NetIGetValidClientCount(a0, a1) (NetIGetValidClientCount((a0), (a1))) /* merge_units */
 
-int func_002DDCA0(int *out, unsigned int idx)
+int NetIGetConnectionStatus(int *out, unsigned int idx)
 {
     char *p = 0;
     int r;
     if (out == 0) return 0x17;
     memset(out, 0, 0xC);
     if (idx >= 4) return 0x17;
-    r = func_002E51B8(idx, &p);
+    r = NetGetConnInfo(idx, &p);
     if (r) return r;
     if (p == 0) return 0xF;
-    r = func_002DDB98(out, idx);
+    r = NetIGetConnectStatus(out, idx);
     if (r) return r;
-    r = func_002DDC00(out + 1, idx);
+    r = NetIGetValidClientCount(out + 1, idx);
     if (r) return r;
     out[2] = out[1] + *(int *)(p + 0x440);
     return r;
 }
-#undef func_002E51B8 /* merge_units */
-#undef func_002DDB98 /* merge_units */
-#undef func_002DDC00 /* merge_units */
+#undef NetGetConnInfo /* merge_units */
+#undef NetIGetConnectStatus /* merge_units */
+#undef NetIGetValidClientCount /* merge_units */
 /* merge_units: end func_002DDCA0 */
 
 /* merge_units: begin func_002DDD50 */
 extern char *strncpy(char *, const char *, unsigned int);
 #if 0 /* merge_units */
-extern int func_002E51B8(unsigned int, char **);
+extern int NetGetConnInfo(unsigned int, char **);
 #endif /* merge_units */
-#define func_002E51B8(a0, a1) (func_002E51B8((a0), (int *)(a1))) /* merge_units */
+#define NetGetConnInfo(a0, a1) (NetGetConnInfo((a0), (int *)(a1))) /* merge_units */
 
-int func_002DDD50(char *dst, unsigned int idx)
+int NetIGetServerVersion(char *dst, unsigned int idx)
 {
     char *p = 0;
     int r;
     if (idx >= 4) return 0x17;
     if (dst == 0) return 0x17;
     memset(dst, 0, 0x10);
-    r = func_002E51B8(idx, &p);
+    r = NetGetConnInfo(idx, &p);
     if (r) return r;
     if (p) {
         strncpy(dst, p + 0x418, 0x10);
@@ -144,11 +144,11 @@ int func_002DDD50(char *dst, unsigned int idx)
     }
     return r;
 }
-#undef func_002E51B8 /* merge_units */
+#undef NetGetConnInfo /* merge_units */
 /* merge_units: end func_002DDD50 */
 
 /* merge_units: begin func_002DDDD0 */
-void func_002DDDD0(unsigned char *o, int bit)
+void NetSetClientTargetActive(unsigned char *o, int bit)
 {
     if (o == 0 || (unsigned int)bit >= 0x100) return;
     if (bit < *(int *)(o + 0x24)) *(int *)(o + 0x24) = bit;
@@ -161,17 +161,17 @@ void func_002DDDD0(unsigned char *o, int bit)
 typedef struct { unsigned char bits[0x24]; int f24; int f28; } Set;
 typedef struct { char p[0x400]; int f400; char p2[0x40]; int f444; } Ctx;
 #if 0 /* merge_units */
-extern int func_002E51B8(unsigned int, Ctx **);
+extern int NetGetConnInfo(unsigned int, Ctx **);
 #endif /* merge_units */
-#define func_002E51B8(a0, a1) (func_002E51B8((a0), (int *)(a1))) /* merge_units */
+#define NetGetConnInfo(a0, a1) (NetGetConnInfo((a0), (int *)(a1))) /* merge_units */
 
-extern int func_002DB188(int *, unsigned int, int);
+extern int NetIGetClient(int *, unsigned int, int);
 #if 0 /* merge_units */
-extern void func_002DDDD0(Set *, int);
+extern void NetSetClientTargetActive(Set *, int);
 #endif /* merge_units */
-#define func_002DDDD0(a0, a1) (func_002DDDD0((unsigned char *)(a0), (a1))) /* merge_units */
+#define NetSetClientTargetActive(a0, a1) (NetSetClientTargetActive((unsigned char *)(a0), (a1))) /* merge_units */
 
-void func_002DDE30(Set *s, unsigned int a, int (*cb)(int, int))
+void FilterTargetClientBitmask(Set *s, unsigned int a, int (*cb)(int, int))
 {
     Ctx *ctx[1];
     int x[1];
@@ -182,7 +182,7 @@ void func_002DDE30(Set *s, unsigned int a, int (*cb)(int, int))
     if (s == 0) return;
     s->f24 = 0x100;
     s->f28 = -1;
-    if (func_002E51B8(a, ctx)) return;
+    if (NetGetConnInfo(a, ctx)) return;
     if (ctx[0] == 0) return;
     s->f24 = ctx[0]->f444;
     {
@@ -192,17 +192,17 @@ void func_002DDE30(Set *s, unsigned int a, int (*cb)(int, int))
     }
     for (i = 0; i < ctx[0]->f444; i++) {
         x[0] = 0;
-        func_002DB188(x, a, i);
-        if (x[0] && i != ctx[0]->f400 && cb(i, ctx[0]->f400)) func_002DDDD0(s, i);
+        NetIGetClient(x, a, i);
+        if (x[0] && i != ctx[0]->f400 && cb(i, ctx[0]->f400)) NetSetClientTargetActive(s, i);
     }
 }
-#undef func_002E51B8 /* merge_units */
-#undef func_002DDDD0 /* merge_units */
+#undef NetGetConnInfo /* merge_units */
+#undef NetSetClientTargetActive /* merge_units */
 /* merge_units: end func_002DDE30 */
 
 /* merge_units: begin func_002DDF58 */
-extern unsigned short func_002DCD00(unsigned int);
-extern int func_002FBD48(unsigned short, unsigned short, void *, void *, unsigned short);
+extern unsigned short DmeToRtMsgConnectionIndex(unsigned int);
+extern int rt_msg_client_send_target(unsigned short, unsigned short, void *, void *, unsigned short);
 extern int printf(const char *, ...);
 int Net_SendConvertRecipient(signed char a, unsigned int idx, int to, unsigned int len, void *data)
 {
@@ -210,7 +210,7 @@ int Net_SendConvertRecipient(signed char a, unsigned int idx, int to, unsigned i
     recip = to;
     if (to == -1) recip = 0xFFFE;
     else if (to == 0xFFFF) recip = 0xFFFF;
-    r = func_002FBD48(func_002DCD00(idx), recip, (void *)(int)a, data, len);
+    r = rt_msg_client_send_target(DmeToRtMsgConnectionIndex(idx), recip, (void *)(int)a, data, len);
     if (r) {
         printf("SendPacket error sending message, msg error code = %d\n", r);
         return 0xD;

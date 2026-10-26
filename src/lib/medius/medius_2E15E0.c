@@ -16,23 +16,23 @@ extern int D_0058DF90;
 extern unsigned int D_005983E4;
 extern char D_0048C454;
 extern unsigned char D_0048C440;
-extern int func_002E6098(unsigned int);
-extern int func_002E51B8(unsigned int, S **);
-extern E *func_002DB270(unsigned int, unsigned int);
-extern int func_002E52D8(unsigned int, unsigned int, P **);
+extern int NetIsValidConnectionIndex(unsigned int);
+extern int NetGetConnInfo(unsigned int, S **);
+extern E *NetCreateClient(unsigned int, unsigned int);
+extern int NetGetClientInfo(unsigned int, unsigned int, P **);
 extern char *strncpy(char *, const char *, unsigned int);
-extern unsigned char func_002E6090(unsigned int);
-extern void func_002DE880(int, unsigned int, unsigned int, unsigned int, int, void *);
-extern int func_002E5550(unsigned int, unsigned int);
-extern void func_002DB688(unsigned int, unsigned int);
-extern int func_002E1470(unsigned int, int);
+extern unsigned char NetClientIndexToClientIndexPacket(unsigned int);
+extern void NetSendDmeMessage(int, unsigned int, unsigned int, unsigned int, int, void *);
+extern int NetSetSessionMasterClientIndex(unsigned int, unsigned int);
+extern void MyClientJoins(unsigned int, unsigned int);
+extern int NetISetMyClientReceiveBroadcast(unsigned int, int);
 /* weak never-linked stub (discarded section): callee was defined in this TU in the original */
-void __attribute__((weak, section(".dtors_drop"))) func_002DDAC8(unsigned int *p) { }
-extern int func_002E4A30(void);
-extern void func_002DCA70(unsigned int, int);
-extern int func_002E1A20(unsigned int);
+void __attribute__((weak, section(".dtors_drop"))) NetIGetLocalTime(unsigned int *p) { }
+extern int NetIUpdate(void);
+extern void SendMyClientStatus(unsigned int, int);
+extern int NetILeave(unsigned int);
 
-int func_002E15E0(R *r)
+int NetJoin2(R *r)
 {
     unsigned char b[4];
     S *s;
@@ -51,10 +51,10 @@ int func_002E15E0(R *r)
     p = 0;
     if (r == 0) return 0x17;
     if (r->f0 != 1) return 0x26;
-    if (func_002E6098(r->f4) != 1) return 0x17;
+    if (NetIsValidConnectionIndex(r->f4) != 1) return 0x17;
     if (r->f14 > 0x1000) return 0x17;
     if (r->f18 > 0x800) return 0x17;
-    { int r1 = func_002E51B8(r->f4, &s);
+    { int r1 = NetGetConnInfo(r->f4, &s);
     if (r1 != 0) return r1;
     if (s == 0) return r1; }
     if (s->f44C == 4) return 0xF;
@@ -69,16 +69,16 @@ int func_002E15E0(R *r)
     D_0048C450 = r->f4;
     D_0058DF90 = r->f1C;
     D_0048C45C = 0;
-    e = func_002DB270(r->f4, s->f400);
+    e = NetCreateClient(r->f4, s->f400);
     if (e == 0) return 0x16;
     n = s->f400;
     if (n >= 0x100) return 8;
-    ret = func_002E52D8(r->f4, n, &p);
+    ret = NetGetClientInfo(r->f4, n, &p);
     if (ret != 0) return ret;
     if (p == 0) return ret;
     p->f14 = 3;
     for (i = 0; i < s->f444; i++) {
-        int e2 = func_002E52D8(r->f4, i, &p);
+        int e2 = NetGetClientInfo(r->f4, i, &p);
         if (e2 != 0) return e2;
         if (p != 0 && p->f28 == 1 && i != n) p->f14 = 0;
     }
@@ -88,7 +88,7 @@ int func_002E15E0(R *r)
     e->fC = r->f18;
     strncpy(e->name, r->name, 0xB);
     e->f19 = 0;
-    ret = func_002E52D8(r->f4, n, &p);
+    ret = NetGetClientInfo(r->f4, n, &p);
     if (ret != 0) return ret;
     q = p;
     if (q == 0) return 0;
@@ -97,46 +97,46 @@ int func_002E15E0(R *r)
     q->f18 = r->f14;
     q->f1C = r->f18;
     b[0] = 3;
-    b[1] = func_002E6090(s->f400);
+    b[1] = NetClientIndexToClientIndexPacket(s->f400);
     b[2] = r->f14;
     b[3] = r->f18;
     for (; i < s->f444; i++) {
-        int e2 = func_002E52D8(r->f4, i, &p);
+        int e2 = NetGetClientInfo(r->f4, i, &p);
         if (e2 != 0) return e2;
         if (p != 0 && p->f28 == 1 && i != n) {
             cnt++;
-            func_002DE880(0x50, r->f4, i, D_005983E4, 4, b);
+            NetSendDmeMessage(0x50, r->f4, i, D_005983E4, 4, b);
         }
     }
-    ret = func_002E52D8(r->f4, n, &p);
+    ret = NetGetClientInfo(r->f4, n, &p);
     if (ret != 0) return ret;
     q2 = p;
     if (q2 == 0) return 0;
     if (cnt == 0 && s->f440 == 0) {
         q2->f24 = 1;
         q2->f14 = 5;
-        { int r3 = func_002E5550(r->f4, n);
+        { int r3 = NetSetSessionMasterClientIndex(r->f4, n);
         if (r3 != 0) return r3; }
         e->f6 = 0;
         e->fA = 0;
         D_0048C454 = 1;
-        func_002DB688(r->f4, n);
-        func_002E1470(r->f4, 1);
+        MyClientJoins(r->f4, n);
+        NetISetMyClientReceiveBroadcast(r->f4, 1);
     }
     if (D_0058DF88 == 0) {
-        func_002DDAC8(&t0);
+        NetIGetLocalTime(&t0);
         t0 += 30000;
         while (D_0048C440 == 0) {
-            func_002E4A30();
-            func_002DDAC8(&t1);
+            NetIUpdate();
+            NetIGetLocalTime(&t1);
             if (t1 > t0) goto timeout;
         }
         return D_0048C440 ? 0 : 7;
 timeout:
         p->f14 = 2;
-        func_002DCA70(r->f4, -1);
+        SendMyClientStatus(r->f4, -1);
 
-        func_002E1A20(r->f4);
+        NetILeave(r->f4);
         return 0xE;
     }
     return 0;

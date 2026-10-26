@@ -28,8 +28,8 @@ extern void* g_VisionFxMan;
 extern unsigned char g_IsMultiplayer;
 extern char D_004D9DE0[];
 extern void * const D_004DA970[];
-void* func_0013D9F0(void);
-Zone_A130* func_0013D770(void* a, int id);
+void* GetSceneManager(void);
+Zone_A130* cSceneManager_GetSceneBelongingTo(void* a, int id);
 int Zone_IsReady(void* z);
 void ActorFader_Start(Fader_A130* f, float t, int on);
 void ScreenFx_Start(void* s, unsigned char active, float x, float y, float z, float w);
@@ -64,7 +64,7 @@ extern "C" void Actor_FireRespawnTimer(Self_A130* self)
     Zone_A130* z;
     if (g_GameState != 15)
         return;
-    z = func_0013D770(func_0013D9F0(), g_LocalPlayer->zoneId);
+    z = cSceneManager_GetSceneBelongingTo(GetSceneManager(), g_LocalPlayer->zoneId);
     if (!self->started) {
         if (Zone_IsReady(z->zone)) {
             Ev_A130* e;

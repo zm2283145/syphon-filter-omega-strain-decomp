@@ -4,8 +4,8 @@
 #include "vtable_chain_dtor.h"
 
 /* Deleting destructor: restore the vtable chain, optionally delete. */
-extern "C" void func_00397A80();
-extern "C" void func_00397A90();
+extern "C" void cParticleSpray_Definition();
+extern "C" void cParticleSpray_GetRenderMatrix();
 extern "C" void ParticleEmitter_IsDead();
 extern "C" void PhysEmitter_Draw();
 extern "C" void PhysEmitter_Update();
@@ -27,4 +27,4 @@ extern "C" VtableChainObject* PhysEmitter_dtor(VtableChainObject* self,
     }
     return self;
 }
-void * const D_004DFA80[8] = { (void*)0x0, (void*)0x0, (void*)PhysEmitter_dtor, (void*)PhysEmitter_Draw, (void*)PhysEmitter_Update, (void*)func_00397A80, (void*)ParticleEmitter_IsDead, (void*)func_00397A90 };
+void * const D_004DFA80[8] = { (void*)0x0, (void*)0x0, (void*)PhysEmitter_dtor, (void*)PhysEmitter_Draw, (void*)PhysEmitter_Update, (void*)cParticleSpray_Definition, (void*)ParticleEmitter_IsDead, (void*)cParticleSpray_GetRenderMatrix };

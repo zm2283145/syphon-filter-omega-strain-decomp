@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-void func_00180780(void) {
+void cCAMERA_GOBJ_Init(void) {
 }
 
-void func_00180790(void) {
+void cCAMERA_GOBJ_Load(void) {
 }

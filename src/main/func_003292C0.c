@@ -1,5 +1,5 @@
-/* func_003292C0: vector<T>::insert(pos, n, value) for a 0x2C-byte element holding two strings
- * (copy-constructed by String_CopyCtor); same shape as func_00417C60. */
+/* std_vector_imp_Slide_insert: vector<T>::insert(pos, n, value) for a 0x2C-byte element holding two strings
+ * (copy-constructed by String_CopyCtor); same shape as std_vector_imp_GuiAnimationTrack_insert. */
 #pragma cplusplus on
 #include "tstr_types.h"
 
@@ -9,10 +9,10 @@ extern "C" {
 extern char D_004B8810[];
 extern char D_004B88C0[];
 void String_CopyCtor(void* d, const void* s);
-E_3292C0* func_003299D0(E_3292C0* first, E_3292C0* last, E_3292C0* result);
-void func_003298A0(E_3292C0* p, unsigned int n, const E_3292C0* v);
-void func_00329860(V_3292C0* a, V_3292C0* b);
-void func_0032A110(V_3292C0* v, int f);
+E_3292C0* std_copy_backward_Slide_copy_backward(E_3292C0* first, E_3292C0* last, E_3292C0* result);
+void std_fill_n_Slide_int_fill_n(E_3292C0* p, unsigned int n, const E_3292C0* v);
+void std_swap_vectordeleterR_vectordeleterR_26(V_3292C0* a, V_3292C0* b);
+void std_vector_deleter_Slide_dtor(V_3292C0* v, int f);
 }
 
 static inline void construct(E_3292C0* p, const E_3292C0* s)
@@ -29,7 +29,7 @@ static inline void construct(E_3292C0* p, const E_3292C0* s)
 }
 
 #define T E_3292C0
-extern "C" void func_003292C0(V_3292C0* v, T* pos, unsigned int n, const T* value)
+extern "C" void std_vector_imp_Slide_insert(V_3292C0* v, T* pos, unsigned int n, const T* value)
 {
     if (n == 0)
         return;
@@ -61,9 +61,9 @@ extern "C" void func_003292C0(V_3292C0* v, T* pos, unsigned int n, const T* valu
             }
             if (end - (after - n) <= value && value < end)
                 value += n;
-            func_003299D0(pos, pos + (after - n), end);
+            std_copy_backward_Slide_copy_backward(pos, pos + (after - n), end);
         }
-        func_003298A0(pos, n, value);
+        std_fill_n_Slide_int_fill_n(pos, n, value);
     } else {
         V_3292C0 tmp;
         T* dst;
@@ -103,7 +103,7 @@ extern "C" void func_003292C0(V_3292C0* v, T* pos, unsigned int n, const T* valu
             construct(dst, src);
             (*tcount)++;
         }
-        func_00329860(&tmp, v);
-        func_0032A110(&tmp, -1);
+        std_swap_vectordeleterR_vectordeleterR_26(&tmp, v);
+        std_vector_deleter_Slide_dtor(&tmp, -1);
     }
 }

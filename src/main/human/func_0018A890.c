@@ -12,7 +12,7 @@ static inline void QZero_18A890(void* d0) { int n = 3; void* d = d0;
         .set reorder
     }
 }
-Z_18A890* func_0018A890(Z_18A890* d)
+Z_18A890* cString16N_3_ctor_void(Z_18A890* d)
 {
     QZero_18A890(d);
     return d;

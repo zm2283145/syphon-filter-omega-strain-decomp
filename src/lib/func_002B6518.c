@@ -1,7 +1,7 @@
 extern int func_002B6318(char *s, char c);
 extern int String_CompareN(char *a, char *b, int n);
 extern int strcmp(const char *a, const char *b);
-int func_002B6518(char *s, char *p)
+int isWildFit(char *s, char *p)
 {
     int q, a, n;
     while ((q = func_002B6318(p, '?')), (a = func_002B6318(p, '*')), q >= 0 || a >= 0) {
@@ -30,7 +30,7 @@ int func_002B6518(char *s, char *p)
             return 1;
         while ((n = func_002B6318(s, *p)) >= 0) {
             s += n;
-            if (func_002B6518(s++, p) == 1)
+            if (isWildFit(s++, p) == 1)
                 return 1;
         }
         return 0;

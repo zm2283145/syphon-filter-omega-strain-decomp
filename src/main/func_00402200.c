@@ -37,7 +37,7 @@ static inline __int128 ks00402200from(__int128 v) {
 static inline int ks00402200meq(__int128 m, __int128 a, __int128 b) {
     return ks00402200eq(ks00402200and(m, a), ks00402200and(m, b));
 }
-int func_00402200(KS00402200* s, __int128 key, int* out, int mode, __int128 cmp)
+int Monster_CountPartsByName(KS00402200* s, __int128 key, int* out, int mode, __int128 cmp)
 {
     __int128 mask = s->m50;
     unsigned int i;

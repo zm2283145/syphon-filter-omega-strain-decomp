@@ -6,13 +6,13 @@
 
 #include "types.h"
 
-Rel* func_001383B0(Rel* r) {
+Rel* std_vector_tVUMNamePairPtr_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
     return r;
 }
 
-int func_001383D0(void) {
+int cSystem_IsNetworked(void) {
     return 0;
 }

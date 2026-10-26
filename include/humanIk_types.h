@@ -1,7 +1,7 @@
 #ifndef HUMANIK_TYPES_H
 #define HUMANIK_TYPES_H
 
-/* Pair of signed bytes copied by func_001DB8A0. */
+/* Pair of signed bytes copied by cDrawAndHolsterWeapon_ActionManager_cWeaponSlotPair_ctor. */
 typedef struct IkBytePair {
     signed char a;                  /* 0x00 */
     signed char b;                  /* 0x01 */

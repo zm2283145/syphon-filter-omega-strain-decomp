@@ -18,7 +18,7 @@ extern Plc D_00497F00;
 void Quat_SetIdentity(V* q);
 void Vec4_SetOrigin(V* v);
 void Placement_GetIdentity(Plc* p, V* q, V* v);
-void func_003AF2B0(void* self);
+void std_vector_cSkaAnimAnchorListEntry_ctor(void* self);
 }
 static inline Plc Ident()
 {
@@ -32,10 +32,10 @@ static inline Plc Ident()
     return D_00497F00;
 }
 struct S { char pad0[0xC]; unsigned char bC; Plc p10; Plc p30; };
-extern "C" S* func_003AF2D0(S* s);
-S* func_003AF2D0(S* s)
+extern "C" S* cSkaAnimAnchorList_ctor_void(S* s);
+S* cSkaAnimAnchorList_ctor_void(S* s)
 {
-    func_003AF2B0(s);
+    std_vector_cSkaAnimAnchorListEntry_ctor(s);
     s->bC = 1;
     s->p10 = Ident();
     s->p30 = Ident();

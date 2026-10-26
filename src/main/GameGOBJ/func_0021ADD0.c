@@ -73,8 +73,8 @@ GObj_21ADD0* IdMgr_FindCollision(int region, int id);
 unsigned char FileMan_FindMember(void* e);
 unsigned char Game_FindNamedResource(void* m, char* name, int* out);
 VUM_21ADD0* cVUM_GOBJ_ctor2(void* p, int* a);
-void func_00130D10(void* m, VUM_21ADD0* v, char* name, int z);
-void func_0036DEC0(void* e);
+void cGameSystem_AddVUMGOBJ(void* m, VUM_21ADD0* v, char* name, int z);
+void cFileMan_Close(void* e);
 void Node_ClearLocalMatrix(GObj_21ADD0* o);
 void Object_AttachTransform(GObj_21ADD0* o, Mat_21ADD0* m, int z);
 void Object_ShareTransform(VUM_21ADD0* v, void* xf);
@@ -114,7 +114,7 @@ static inline int ObjId_21ADD0(void)
         id = NetLocalId();
     } else {
         int tmp;
-        func_002EBBA0(D_005721A8, &tmp);
+        NetGetPeerToPeerHostClientIndex(D_005721A8, &tmp);
         id = tmp;
     }
     return id;
@@ -226,7 +226,7 @@ self->name18 = NewName_21ADD0();
         }
         self->vum->owner = self;
         if (!have)
-            func_00130D10(g_Game, self->vum, s, 0);
+            cGameSystem_AddVUMGOBJ(g_Game, self->vum, s, 0);
         ld.a = &e;
         ld.b = &e;
         ld.c = got;
@@ -235,7 +235,7 @@ self->name18 = NewName_21ADD0();
         self->vum->Load(0);
         self->vum->Load2(&ld);
         self->b2F = 1;
-        func_0036DEC0(&e);
+        cFileMan_Close(&e);
     } else {
         self->b60 = 0;
         self->vum = 0;

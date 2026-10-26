@@ -7,6 +7,6 @@
 #include "types.h"
 #include "loose02_types.h"
 
-int func_002F3BF0(WordFields* self) {
+int GetUsedCodecCount(WordFields* self) {
     return self->unk18;
 }

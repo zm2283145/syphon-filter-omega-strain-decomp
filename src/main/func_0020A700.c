@@ -1,11 +1,11 @@
 #include "types.h"
 
-extern void func_0020A720(void* self);
+extern void std_copy_backward_cSkaBlendSequenceItem_copy_backward(void* self);
 
 #pragma optimization_level 1
-/* Forwards to func_0020A720 (unit built at -O1: no tail call). */
-void func_0020A700(void* self)
+/* Forwards to std_copy_backward_cSkaBlendSequenceItem_copy_backward (unit built at -O1: no tail call). */
+void std_copy_backward_cSkaBlendSequenceItemP_cSkaBlendSequenceItemP_cSkaBlendSequenceItemP(void* self)
 {
-    func_0020A720(self);
+    std_copy_backward_cSkaBlendSequenceItem_copy_backward(self);
 }
 #pragma optimization_level reset

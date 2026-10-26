@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-void func_001BE560(PtrVec* a, PtrVec* b) {
+void std_swap_vectordeleterR_vectordeleterR_8(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;
         int* p;
@@ -57,6 +57,6 @@ DEFINE_VECTOR_DESTROY_DTOR_FILE(func_001BE690, func_001BFA30, D_0049ED28)
 #include "guarded_buffer_dtor.h"
 
 extern "C" { char D_0049ED18[] = "allocator.hh"; }
-DEFINE_GUARDED_BUFFER_CALL_DTOR(func_001BE780, func_001BFA40, D_0049ED18)
+DEFINE_GUARDED_BUFFER_CALL_DTOR(std_vector_deleter_tItem_dtor, func_001BFA40, D_0049ED18)
 #pragma pop /* merge_units */
 /* merge_units: end func_001BE780 */

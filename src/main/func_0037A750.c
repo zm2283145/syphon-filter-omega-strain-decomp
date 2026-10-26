@@ -35,11 +35,11 @@ typedef struct GsCtx37A750 {
 
 typedef struct Slot37A750 { char p0[0x110]; } Slot37A750;
 
-extern void func_00382060(int);
+extern void cTexMan_TermTextureStream(int);
 extern void Vif1Packet_Flip(void*);
 extern void Video_FreeDeferredBuffers(GsCtx37A750*, int);
 extern void Video_RollFrameStats(GsCtx37A750*);
-extern void func_003820C0(int);
+extern void cTexMan_StartFrame(int);
 extern char D_00537F80[];
 extern int g_TimerAccum;
 extern s64 g_TickCounter64;
@@ -71,7 +71,7 @@ void Video_FrameFlag8(GsCtx37A750* c)
         ;
     while ((*(volatile int*)0x1000A000 & 0x100) || (*(volatile int*)0x10003020 & 0xC00))
         ;
-    func_00382060(c->dev);
+    cTexMan_TermTextureStream(c->dev);
     Vif1Packet_Flip(D_00537F80);
     Video_FreeDeferredBuffers(c, 0);
     c->buf ^= 1;
@@ -79,7 +79,7 @@ void Video_FrameFlag8(GsCtx37A750* c)
     c->frames++;
     GsCtx_SetBufferRegs(c, c->w, c->h, c->psm, c->fbp[c->buf], c->fbmsk, c->zpsm, c->zbp, c->zmsk, c->field);
     ((unsigned char*)c)[c->slot * 0x110 + 0x2F6] = 1;
-    func_003820C0(c->dev);
+    cTexMan_StartFrame(c->dev);
     t = *(volatile int*)0x10000800 + g_TimerAccum;
     g_TickCounter64 += (int)((float)t / 5.76f);
     *(volatile int*)0x10000800 = 0;

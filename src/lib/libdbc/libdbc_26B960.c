@@ -8,10 +8,10 @@
 typedef struct { int f0; int f4; int f8; int fc; char pad[0x334 - 0x10]; } E26B960;
 extern E26B960 D_004FBB88[];
 typedef struct { char pad[0x7C]; int f7c; } R26B960;
-extern R26B960* func_0026B890(int port);
-int func_0026B960(int port)
+extern R26B960* scePad2GetSide(int port);
+int scePad2CheckDma(int port)
 {
-    R26B960* r = func_0026B890(port);
+    R26B960* r = scePad2GetSide(port);
     int v = r->f7c;
     if (v == 0) return 0;
     if (v == D_004FBB88[port].f8) return 0;
@@ -23,7 +23,7 @@ int func_0026B960(int port)
 /* merge_units: begin func_0026B9C0 */
 typedef struct { int on; int w; int a; int b; } DbcBit;
 
-int func_0026B9C0(unsigned char *bits, DbcBit *o)
+int scePad2SetButtonOrder(unsigned char *bits, DbcBit *o)
 {
     int i, bit = 0, a = 0, b = 0;
     for (i = 0; i < 40; i++, o++) {
@@ -65,7 +65,7 @@ extern char D_004A87F0[];
 static void * const dat_0048B260[4] = { (void*)D_004A87F0, (void*)D_004A87E8, (void*)D_004A87E0, (void*)D_004A87D8 };
 extern char D_004A87F8[];
 extern void String_Copy(char* d, char* s);
-void func_0026BA70(unsigned int i, char* dst)
+void scePad2StateIntToStr(unsigned int i, char* dst)
 {
     if (i < 4) {
         String_Copy(dst, ((char**)dat_0048B260)[i]);
@@ -85,7 +85,7 @@ typedef struct {
 
 extern int sceDbcReceiveData(int port, DbcCmd_baa8 cmd, int *len, unsigned char *out);
 
-int func_0026BAA8(int port, unsigned char *out)
+int sceVibGetProfile(int port, unsigned char *out)
 {
     int buf;
     int r;
@@ -112,7 +112,7 @@ typedef struct {
 extern void *memcpy(void *, const void *, unsigned int);
 extern int sceDbcSendData2(int port, DbcCmd_bb28 cmd, int *len, void *in);
 
-int func_0026BB28(int port, int len2, void *src2, int len1, void *src1)
+int sceVibSetActParam(int port, int len2, void *src2, int len1, void *src1)
 {
     struct {
         int len2;

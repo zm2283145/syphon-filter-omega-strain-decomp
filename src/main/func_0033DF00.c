@@ -88,12 +88,12 @@ extern char D_004B9C60[];
 extern int D_00532FF8;
 extern char* D_00533000;
 extern unsigned char D_00532FF0;
-void func_002ABF00(void* list, int mode);
-int func_0033E2A0(MenuScreen* o, void* w, int v);
-void* func_002AC400(void* list, char* data);
-int func_002AC470(void* list, void* item);
+void GuiMissionList_SetSelectMode(void* list, int mode);
+int GuiMissionLobbyScreen_ButtonAction(MenuScreen* o, void* w, int v);
+void* GuiMissionList_GetAgentElemFromIndex(void* list, char* data);
+int GuiMissionList_CanSelectAgent(void* list, void* item);
 int DME_GetLobby(void);
-int func_00451050(int lobby, char* data, int id);
+int SFOLobby_SendChat(int lobby, char* data, int id);
 char* GuiScreen_GetLobbyString(MenuScreen* o, int a, char* b, char* c, int d, int e);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, void* d, int e);
 int GuiScreen_HandleEvent(MenuScreen* o, void* w, unsigned short kind, int code, char* data);
@@ -106,32 +106,32 @@ extern "C" int GuiMenuScreen_HandleEvent(MenuScreen* o, void* w, unsigned short 
 {
     if (kind == 0 && o->list) {
         if (w == o->bt9C) {
-            func_002ABF00(o->list, 0);
+            GuiMissionList_SetSelectMode(o->list, 0);
             return 1;
         }
         if (w == o->bt98) {
-            func_002ABF00(o->list, 2);
+            GuiMissionList_SetSelectMode(o->list, 2);
             return 1;
         }
         if (w == o->btA0) {
-            func_002ABF00(o->list, 1);
+            GuiMissionList_SetSelectMode(o->list, 1);
             return 1;
         }
         if (w == o->btA4) {
-            func_002ABF00(o->list, 3);
+            GuiMissionList_SetSelectMode(o->list, 3);
             return 1;
         }
         if (w != o->list) {
-            func_002ABF00(o->list, 1);
+            GuiMissionList_SetSelectMode(o->list, 1);
             return 1;
         }
     }
-    if (kind == 2 && func_0033E2A0(o, w, 1)) return 1;
+    if (kind == 2 && GuiMissionLobbyScreen_ButtonAction(o, w, 1)) return 1;
     if (w == o->list && kind == 19) {
         void* item;
         if (!o->enabled) return 1;
-        item = func_002AC400(o->list, data);
-        if (!item || !(func_002AC470(o->list, item) & 1)) return 1;
+        item = GuiMissionList_GetAgentElemFromIndex(o->list, data);
+        if (!item || !(GuiMissionList_CanSelectAgent(o->list, item) & 1)) return 1;
         if (o->mode == 0) o->Pick0(item);
         else if (o->mode == 1) o->Pick1(item, 1);
         else if (o->mode == 2) o->Pick2(item);
@@ -141,7 +141,7 @@ extern "C" int GuiMenuScreen_HandleEvent(MenuScreen* o, void* w, unsigned short 
     if (kind == 26 || kind == 27) {
         if (code == 29) {
             if (o->lobbyId != -1 && data && *data) {
-                if (!DME_GetLobby() || !func_00451050(DME_GetLobby(), data, o->lobbyId)) {
+                if (!DME_GetLobby() || !SFOLobby_SendChat(DME_GetLobby(), data, o->lobbyId)) {
                     FrontEnd* dlg = D_004FFC04;
                     FrontEnd_OpenPopup(dlg, 2, D_004B9C60, GuiScreen_GetLobbyString(o, 101, 0, 0, 0, 0), 0, 0);
                 }

@@ -7,7 +7,7 @@
 #include "WaterFx_types.h"
 
 /* Address of the list sentinel (end()). */
-WaterListLink* func_002B4CE0(WaterList* list) {
+WaterListLink* details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_7(WaterList* list) {
     return &list->head;
 }
 

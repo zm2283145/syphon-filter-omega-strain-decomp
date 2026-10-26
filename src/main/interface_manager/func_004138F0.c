@@ -7,6 +7,6 @@
 #include "interface_manager_types.h"
 
 /* Setter for unk1E0. */
-void func_004138F0(IfManager* mgr, int value) {
+void cInterfaceManager_SetHogList(IfManager* mgr, int value) {
     mgr->unk1E0 = value;
 }

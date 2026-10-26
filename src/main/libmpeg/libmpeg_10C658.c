@@ -24,7 +24,7 @@ static inline void merge_flush_func_0010C658(void) {}
 #pragma push /* merge_units */
 char D_00498868[] __attribute__((aligned(8))) = "Unknown Extension"; /* 8-aligned in the original data */
 
-int func_0010C668(int a0) {
+int _unknown_extension(int a0) {
     return func_0010BD90(a0, (int)D_00498868);
 }
 /* merge_units: generate this block's code under its own pragmas */

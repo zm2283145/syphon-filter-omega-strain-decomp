@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_002DCA50(void) {
+void stubDestroy(void) {
 
 }

@@ -9,7 +9,7 @@ static __inline__ void *GetGP_B450(void)
     __asm__ volatile("move %0, $gp" : "=r"(gp));
     return gp;
 }
-CbFnB450 func_0010B450(ObjB450 *o, int type, CbFnB450 func, void *arg)
+CbFnB450 sceMpegAddCallback(ObjB450 *o, int type, CbFnB450 func, void *arg)
 {
     CbTblB450 *t = o->tbl;
     CbFnB450 old = t->cb[type].func;

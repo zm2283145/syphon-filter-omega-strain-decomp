@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-void func_003183A8(int a0) {
+void NellyPrimaryOnSase3200(int a0) {
     *(int*)((char*)a0 + 68) = 1;
 }
 
-void func_003183B8(int a0) {
+void NellyPrimaryOffSase3200(int a0) {
     *(int*)((char*)a0 + 68) = 0;
 }

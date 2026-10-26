@@ -1,7 +1,7 @@
 extern const unsigned short D_004A4E50[2][256],D_004A5250[2][256],D_004A5650[2][256];
 extern int scePrintf(const char *,...);
-extern unsigned short func_00223F10(unsigned char,unsigned char);
-unsigned short func_00223DB8(int type,int mods,int locks,unsigned short key)
+extern unsigned short cnv_keypad(unsigned char,unsigned char);
+unsigned short sceUsbKbCnvRawCode(int type,int mods,int locks,unsigned short key)
 {
  int shift;
  const unsigned short *table=0,v;
@@ -15,7 +15,7 @@ unsigned short func_00223DB8(int type,int mods,int locks,unsigned short key)
  if(!key)return 0;
  if(key>=256)return key;
  v=table[key];
- if(v==0x4000)v=func_00223F10(locks,key);
+ if(v==0x4000)v=cnv_keypad(locks,key);
  if(v==0x8000)v=key|0x8000;
  if((unsigned short)(v-'a')<26 && (locks&2))v-=32;
  if((unsigned short)(v-'A')<26 && (locks&2) && shift)v+=32;

@@ -12,7 +12,7 @@
 #include "base_dtor_chain.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_00418720, String_Dtor)
+DEFINE_BASE_DTOR_CHAIN(std_pair_cString_cFontPtr_dtor, String_Dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00418720 */
 
@@ -28,7 +28,7 @@ DEFINE_BASE_DTOR_CHAIN(func_00418720, String_Dtor)
 
 extern int String_CopyCtor(L4WordVec*, int);
 
-int func_00418780(L4WordVec* v, int a1, int value) {
+int std_make_pair_cString_cFontP(L4WordVec* v, int a1, int value) {
     int ret = String_CopyCtor(v, a1);
 
     v->unk0C = value;
@@ -57,16 +57,16 @@ void* GuiManager_CreateRoot(void* a, void* b, void* c) {
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
 /*fc*/
-int func_0028C090();                        
-int func_0028C0A0();                          
-int func_002A8890();                        
-int func_002A88B0();                          
-int func_002CCDE0();                      
-int func_002CCDF0();                               
-int *func_002CCE10();                            
-int func_002CCE20();                          
-int func_002CCE30();                          
-int func_002CCE40();                               
+int cLListIterator_GuiWidgetPtr_ctor_listR();                        
+int std_list_GuiWidgetPtr_end();                          
+int opNe_cLListIteratorR_cLListIteratorR_6();                        
+int cLList_GuiWidgetPtr_End();                          
+int cLListIterator_GuiWidgetPtr_ctor_cLListIteratorR();                      
+int cLListIterator_GuiWidgetPtr_opInc();                               
+int *cLListIterator_GuiWidgetPtr_opMul();                            
+int cLListIterator_GuiWidgetPtr_opAssign();                          
+int cLList_GuiWidgetPtr_Begin();                          
+int cLListIterator_GuiWidgetPtr_ctor_void();                               
 int GuiManager_UnloadRoot();                    
 
 typedef struct { char pad[0x18]; unsigned short cnt; } N418;
@@ -80,25 +80,25 @@ int GuiManager_ReleaseRoot(char *arg0, char *arg1) {
     unsigned short temp_v0;
     N418 * temp_a1;
 
-    func_002CCE40(&sp44);
-    func_002CCE30(&sp40, arg0 + 0x14);
-    func_002CCE20(&sp44, &sp40);
-    func_002A88B0(&sp3C, arg0 + 0x14);
-    if (func_002A8890(&sp44, &sp3C) != 0) {
+    cLListIterator_GuiWidgetPtr_ctor_void(&sp44);
+    cLList_GuiWidgetPtr_Begin(&sp40, arg0 + 0x14);
+    cLListIterator_GuiWidgetPtr_opAssign(&sp44, &sp40);
+    cLList_GuiWidgetPtr_End(&sp3C, arg0 + 0x14);
+    if (opNe_cLListIteratorR_cLListIteratorR_6(&sp44, &sp3C) != 0) {
 loop_1:
-        if ((void *)(*func_002CCE10(&sp44)) != (void *)(arg1)) {
-            func_002CCDF0(&sp44);
-            func_002A88B0(&sp3C, arg0 + 0x14);
-            if (func_002A8890(&sp44, &sp3C) == 0) {
+        if ((void *)(*cLListIterator_GuiWidgetPtr_opMul(&sp44)) != (void *)(arg1)) {
+            cLListIterator_GuiWidgetPtr_opInc(&sp44);
+            cLList_GuiWidgetPtr_End(&sp3C, arg0 + 0x14);
+            if (opNe_cLListIteratorR_cLListIteratorR_6(&sp44, &sp3C) == 0) {
 
             } else {
                 goto loop_1;
             }
         }
     }
-    func_002CCDE0(&sp4C, &sp44);
-    func_0028C0A0(&sp38, arg0 + 0x14);
-    func_0028C090(&sp48, &sp38);
+    cLListIterator_GuiWidgetPtr_ctor_cLListIteratorR(&sp4C, &sp44);
+    std_list_GuiWidgetPtr_end(&sp38, arg0 + 0x14);
+    cLListIterator_GuiWidgetPtr_ctor_listR(&sp48, &sp38);
     if ((int)sp4C == (int)sp48) {
         return 0;
     }

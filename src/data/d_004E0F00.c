@@ -3,9 +3,9 @@
 extern void Message_GetScriptTypeKey();
 extern void cNetTerrainActivationMsg_v01();
 extern void cNetTerrainActivationMsg_v02();
-extern void func_001576F0();
+extern void cNetTerrainActivation_dtor();
 
 void *D_004E0F00[8] = {
-    0, 0, &func_001576F0, &cNetTerrainActivationMsg_v01,
+    0, 0, &cNetTerrainActivation_dtor, &cNetTerrainActivationMsg_v01,
     &cNetTerrainActivationMsg_v02, &Message_GetScriptTypeKey, 0, 0,
 };

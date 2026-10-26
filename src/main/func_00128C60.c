@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_00128C60(void) {
+int Newlib_Eofread(void) {
     return 0;
 }

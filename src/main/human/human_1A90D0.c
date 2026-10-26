@@ -15,7 +15,7 @@ typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-V4* func_001A90D0(V4* v, V4* qp) {
+V4* cVector_InverseRotate_cQuaternionR(V4* v, V4* qp) {
     V4 u; V4 t;
     V4* d1;
     V4* q2;

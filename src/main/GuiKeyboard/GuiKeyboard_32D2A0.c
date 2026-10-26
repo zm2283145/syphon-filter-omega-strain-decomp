@@ -33,8 +33,8 @@ typedef struct {
 } Widget0032D2A0;
 extern char D_004DE790[];
 extern void GuiWidget_ctor(Widget0032D2A0* w);
-extern void func_0032D730(List0032D2A0* list);
-extern void func_001C10A0(List0032D2A0* list);
+extern void std_vector_GuiWidgetPtr_ctor(List0032D2A0* list);
+extern void std_vector_int_ctor_void(List0032D2A0* list);
 extern unsigned char D_004926B8;
 extern char D_00491580[], D_004917D0[], D_00491A20[], D_004925A0[], D_00491C70[], D_00491C90[];
 extern char D_00491CC0[], D_00491CF0[], D_00491D20[], D_004925D0[], D_00491F70[], D_00491FB0[];
@@ -64,13 +64,13 @@ Widget0032D2A0* GuiKeyboard_ctor(Widget0032D2A0* w)
     List0032D2A0 *l, *l2, *l3, *l4, *l5, *l6, *l7;
     GuiWidget_ctor(w);
     w->vtable = D_004DE790;
-    l = &w->list60; func_0032D730(l); l->flag = 1;
-    l2 = &w->list70; func_001C10A0(l2); l2->flag = 1;
-    l3 = &w->list80; func_001C10A0(l3); l3->flag = 1;
-    l4 = &w->listA0; func_001C10A0(l4); l4->flag = 1;
-    l5 = &w->listB0; func_001C10A0(l5); l5->flag = 1;
-    l6 = &w->listC0; func_001C10A0(l6); l6->flag = 1;
-    l7 = &w->listD0; func_001C10A0(l7); l7->flag = 1;
+    l = &w->list60; std_vector_GuiWidgetPtr_ctor(l); l->flag = 1;
+    l2 = &w->list70; std_vector_int_ctor_void(l2); l2->flag = 1;
+    l3 = &w->list80; std_vector_int_ctor_void(l3); l3->flag = 1;
+    l4 = &w->listA0; std_vector_int_ctor_void(l4); l4->flag = 1;
+    l5 = &w->listB0; std_vector_int_ctor_void(l5); l5->flag = 1;
+    l6 = &w->listC0; std_vector_int_ctor_void(l6); l6->flag = 1;
+    l7 = &w->listD0; std_vector_int_ctor_void(l7); l7->flag = 1;
     w->unk5C = 0;
     w->unkE4 = 0;
     w->unkE1 = 0;
@@ -117,6 +117,6 @@ Widget0032D2A0* GuiKeyboard_ctor(Widget0032D2A0* w)
 #pragma cplusplus on
 #include "nested_null_dtor.h"
 
-DEFINE_NESTED_NULL_DTOR2(func_0032D5E0, func_0032D640)
+DEFINE_NESTED_NULL_DTOR2(cArray_GuiWidgetPtr_dtor, std_vector_imp_GuiWidgetPtr_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0032D5E0 */

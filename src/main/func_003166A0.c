@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_003166A0(void) {
+int lpcDecode(void) {
     return -1;
 }

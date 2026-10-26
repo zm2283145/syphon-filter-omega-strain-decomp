@@ -1,6 +1,6 @@
 #include "types.h"
 
-extern int func_002ACB70(int);
+extern int GuiMissionList_UpdateLobbyList(int);
 extern int GuiWidget_Update(int, float);
 
 void GuiMissionList_Update(int a0) {
@@ -17,7 +17,7 @@ void GuiMissionList_Update(int a0) {
     cond = v1 == 0;
     a0 = s0;
     if (cond) goto L002ACCD8;
-    v0 = func_002ACB70(a0);
+    v0 = GuiMissionList_UpdateLobbyList(a0);
 L002ACCD8:;
     goto ret;
 ret:;

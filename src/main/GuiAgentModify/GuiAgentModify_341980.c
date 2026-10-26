@@ -30,7 +30,7 @@ static inline int kca70eq(__int128 m, __int128 a, __int128 b) {
     return (long)r == -1;
 }
 static inline __int128 kca70q(__int128 v) { __int128 r; asm { pcpyld r, $zero, v } return r; }
-void func_00341980(ObjCA70* self) {
+void GuiAgentModify_findFacePart(ObjCA70* self) {
     __int128 mask = kca70q(0xFFFFFFFF00);
     KeyCA70 key;
     int i;
@@ -57,13 +57,13 @@ typedef struct { char pad0[4]; char bones[0x10]; unsigned char hasMorph; char pa
 typedef struct { char pad0[0xA0]; char name[0x2BC4]; P_Skl* skel; } P_App;
 typedef struct { char pad0[0x8C]; P_App* app; } P_Obj;
 extern P_Tbl D_00571300;
-extern float* func_0028D5F0(void*, int);
+extern float* cArray_cBoneScale_opIndex(void*, int);
 extern void* SkelNodes_GetAt(void*, int);
-extern void func_0028D580(void*, float);
-extern void func_0028D530(void*, float);
-extern void func_0028D4E0(void*, float);
+extern void cBone_SetScaleX(void*, float);
+extern void cBone_SetScaleY(void*, float);
+extern void cBone_SetScaleZ(void*, float);
 
-void func_00341A30(P_Obj* o) {
+void GuiAgentModify_NextBoneSet(P_Obj* o) {
     unsigned int preset;
     int i;
     for (preset = 0; preset < D_00571300.count; preset++) {
@@ -76,14 +76,14 @@ void func_00341A30(P_Obj* o) {
         P_Skl* k;
         float v;
         v = D_00571300.sc[preset][i].x; k = o->app->skel;
-        func_0028D5F0(k->bones, i)[0] = v;
-        if (k->hasMorph) func_0028D580(SkelNodes_GetAt(k->morph, i), v);
+        cArray_cBoneScale_opIndex(k->bones, i)[0] = v;
+        if (k->hasMorph) cBone_SetScaleX(SkelNodes_GetAt(k->morph, i), v);
         v = D_00571300.sc[preset][i].y; k = o->app->skel;
-        func_0028D5F0(k->bones, i)[1] = v;
-        if (k->hasMorph) func_0028D530(SkelNodes_GetAt(k->morph, i), v);
+        cArray_cBoneScale_opIndex(k->bones, i)[1] = v;
+        if (k->hasMorph) cBone_SetScaleY(SkelNodes_GetAt(k->morph, i), v);
         v = D_00571300.sc[preset][i].z; k = o->app->skel;
-        func_0028D5F0(k->bones, i)[2] = v;
-        if (k->hasMorph) func_0028D4E0(SkelNodes_GetAt(k->morph, i), v);
+        cArray_cBoneScale_opIndex(k->bones, i)[2] = v;
+        if (k->hasMorph) cBone_SetScaleZ(SkelNodes_GetAt(k->morph, i), v);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

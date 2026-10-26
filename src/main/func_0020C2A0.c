@@ -3,5 +3,5 @@
 
 #pragma push
 #pragma optimization_level 1
-DEFINE_O1_VECTOR_RESERVE(Vector_Reserve_20C2A0, 0x14, D_004A3ED0, func_0020C1E0, func_0020C240, func_00209950, func_0020C1B0, func_0020BBE0, func_0020BB70, func_001F2DF0, func_0020BBB0, func_0020BB40, func_001F2DB0, func_0020BFD0, func_0020BA30, func_0020C910)
+DEFINE_O1_VECTOR_RESERVE(Vector_Reserve_20C2A0, 0x14, D_004A3ED0, std_vector_imp_cSkaSwitchItem_capacity, std_vector_imp_cSkaSwitchItem_max_size, std_msl_error, std_vector_deleter_cSkaSwitchItem_alloc_void, std_vector_deleter_cSkaSwitchItem_ctor_cAllocatorR, cAllocator_cSkaSwitchItem_allocate, std_vector_deleter_cSkaSwitchItem_data, std_vector_deleter_cSkaSwitchItem_cap_void, std_vector_imp_cSkaSwitchItem_begin, std_vector_imp_cSkaSwitchItem_end, cAllocator_cSkaSwitchItem_construct, std_vector_deleter_cSkaSwitchItem_swap, std_vector_deleter_cSkaSwitchItem_dtor)
 #pragma pop

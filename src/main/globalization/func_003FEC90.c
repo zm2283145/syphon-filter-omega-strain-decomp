@@ -6,7 +6,7 @@
 #include "types.h"
 
 /* Swap the contents of two pointer vectors. */
-void func_003FEC90(PtrVec* a, PtrVec* b) {
+void std_swap_vectordeleterR_vectordeleterR_46(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;
         int* p;

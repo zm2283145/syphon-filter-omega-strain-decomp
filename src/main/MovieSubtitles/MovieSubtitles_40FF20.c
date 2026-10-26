@@ -70,7 +70,7 @@ static inline SubEntry* Alloc_40FF20(int size)
     return (SubEntry*)Mem_Alloc(0, size, D_004BEE90, 0x37E);
 }
 
-extern "C" void func_0040FF20(Subs40FF20* self, void* line)
+extern "C" void cSubtitleFeed_ParseINISectionFEED(Subs40FF20* self, void* line)
 {
     char* p;
     if (self->max == 0) return;
@@ -163,7 +163,7 @@ static char D_004BEEE0[] = "Color";
 extern "C" {
 void String_CtorCStr_13B480(Key_410630* s, const char* c);
 void String_Dtor(Key_410630* s, short f);
-int func_00410C10(void* line, Key_410630* key);
+int cString_Find(void* line, Key_410630* key);
 char* String_CStr_189540(void* line);
 int String_Length(Key_410630* key);
 int atoi(char* s);
@@ -190,7 +190,7 @@ static inline char* Find_410630(void* line, const char* name)
     char* p;
     String_CtorCStr_13B480(&key, name);
     p = 0;
-    int r = func_00410C10(line, &key);
+    int r = cString_Find(line, &key);
     if (r > -1) {
         p = String_CStr_189540(line) + r + String_Length(&key);
         while (*p == ' ' || *p == '\t') p++;
@@ -199,7 +199,7 @@ static inline char* Find_410630(void* line, const char* name)
     return p;
 }
 
-extern "C" void func_00410630(Font_410630* self, void* line)
+extern "C" void cSubtitleFeed_ParseINISectionINIT(Font_410630* self, void* line)
 {
     char* p;
     if ((p = Find_410630(line, D_004BEEC8)) != 0) {

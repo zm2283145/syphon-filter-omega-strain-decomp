@@ -9,7 +9,7 @@
 extern char D_00497DD8[];
 extern char D_00497DDC[];
 
-int func_0046DBC8(void) {
+int MediusUniqueCallbackSetLocalizationParamsResponseHandler(void) {
     int v0;
     int cond;
 
@@ -24,11 +24,11 @@ ret:
     return v0;
 }
 
-int func_0046DBF8(void) {
+int MediusUniqueCallbackSetMessageAsReadRequestHandler(void) {
     return 48;
 }
 
-int func_0046DC00(void) {
+int MediusUniqueCallbackSetMessageAsReadResponseHandler(void) {
     int v0;
     int cond;
 

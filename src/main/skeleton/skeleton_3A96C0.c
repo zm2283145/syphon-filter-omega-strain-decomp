@@ -8,14 +8,14 @@ struct V {
     V(const V& o) { void* xx = this; V* d = this; const V* s = &o; __int128 q;  __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
     float& operator[](int i) { return (&x)[i]; }
 } __attribute__((aligned(16)));
-extern "C" V* func_00151780(void* m, int i);
+extern "C" V* cMatrix_GetAxis(void* m, int i);
 struct R4 {
     float x, y, z, w;
     void Set(float a, float b, float c, float d) { x = a; y = b; z = c; w = d; }
 };
 struct M4 {
     R4 r[4];
-    V* Row(int k) { return func_00151780(this, k); }
+    V* Row(int k) { return cMatrix_GetAxis(this, k); }
     void SetRow(int k, const V& v) { r[k].Set(v.x, v.y, v.z, v.w); }
 };
 template <class T> struct Vec { T* data; T& At(int i) { Vec* p = this; return p->data[i]; } T& At2(int i) { return At(i); } T& operator[](int i) { return At(i); } };

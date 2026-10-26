@@ -5,6 +5,6 @@
 
 #include "types.h"
 
-void func_003A3890(Iter* out, Tree* t) {
+void std_list_cParticleDefinitionPtr_end_void_2(Iter* out, Tree* t) {
     out->p = &t->header;
 }

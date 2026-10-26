@@ -6,9 +6,9 @@
 #include "types.h"
 #include "interface_element_types.h"
 
-extern int func_003EE740(int owner);
+extern int cInterfaceModel_NumFrames(int owner);
 
-/* Forward to func_003EE740 on the element's owner. */
-int func_003E7ED0(IfElement* elem) {
-    return func_003EE740(elem->owner);
+/* Forward to cInterfaceModel_NumFrames on the element's owner. */
+int cInterfaceElement_NumFrames(IfElement* elem) {
+    return cInterfaceModel_NumFrames(elem->owner);
 }

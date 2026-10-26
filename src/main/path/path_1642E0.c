@@ -58,7 +58,7 @@ static inline void merge_flush_func_001642E0(void) {}
 extern "C" {
 int ObjectList_EraseRange(...); 
 int NpcRoute_Release(...);                                 
-int func_00164850(...);                            
+int std_vector_deleter_cBox_dtor(...);                            
 extern int D_0049C1B8;
 extern int D_004EE118;
 extern unsigned char g_ProfileLockEnabled;
@@ -67,7 +67,7 @@ static inline int Identity(int p){return p;}
 #define DECLS int sp48; int sp44; int sp40;
 static inline void clr0(char *arg0) { int sp48; int sp44; int sp40; sp40 = (int)arg0 + 0x30; sp44 = F_(arg0, 0x34, int); ObjectList_EraseRange(&sp48, arg0 + 0x2C, &sp44, &sp40); }
 static inline void fr0(int p) { AllocGuard g; Mem_Free(0, p, &D_0049C1B8, 0x41); }
-extern "C" void func_00164330(char *arg0) {
+extern "C" void cPathSystem_Clear(char *arg0) {
     int temp_s0;
     int temp_s1;
 
@@ -83,7 +83,7 @@ extern "C" void func_00164330(char *arg0) {
         {
             AllocGuard g;
         if ((temp_s0 != 0) && (temp_s0 != 0) && (temp_s0 != 0)) {
-            func_00164850(temp_s0, 0);
+            std_vector_deleter_cBox_dtor(temp_s0, 0);
         }
         Mem_Free(0, temp_s0, &D_0049C1B8, 0xB2E);
         }

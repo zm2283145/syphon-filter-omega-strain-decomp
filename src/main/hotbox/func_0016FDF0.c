@@ -23,11 +23,11 @@ int ScriptType_cHotbox_Init(void) {
     return ScriptType_AddAccepted(D_004EE740, D_004EE700);
 }
 
-void* func_0016FE30(void* self) {
+void* cHotbox_SOBJ_convert(void* self) {
     return self;
 }
 
-int* func_0016FE40(void) {
+int* cHotbox_SOBJ_getClassId(void) {
     return &D_004EE738;
 }
 

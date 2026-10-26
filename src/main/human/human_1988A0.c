@@ -31,23 +31,23 @@ static inline void merge_flush_func_001988A0(void) {}
 struct C4Anim3AC { char pad[0x18]; float value; };
 struct C4It3AC { void* p; C4It3AC() {} C4It3AC(const C4It3AC& o) : p(o.p) {} };
 extern "C" {
-C4It3AC func_00198B90(void* list);
+C4It3AC cArray_cString_REnd(void* list);
 C4It3AC func_00198B60(void* list);
-bool func_001989E0(C4It3AC* a, C4It3AC* b);
-void func_00198A00(C4It3AC* it);
-C4Anim3AC** func_00198B50(C4It3AC* it);
-bool func_00198A20(C4Anim3AC* a, int id);
+bool opNe_cConstLListIteratorR_cConstLListIteratorR(C4It3AC* a, C4It3AC* b);
+void cConstLListIterator_cSkaPlaybackGroupPtr_opInc(C4It3AC* it);
+C4Anim3AC** cConstLListIterator_cSkaPlaybackGroupPtr_opMul(C4It3AC* it);
+bool cSkaPlaybackGroup_CheckId(C4Anim3AC* a, int id);
 }
-extern "C" float func_00198900(void* list, int id) {
+extern "C" float cSkaPlaybackList_FreezePlayback_cSkaPlaybackGroupIdR_bool(void* list, int id) {
     C4Anim3AC* found = 0;
-    C4It3AC it = func_00198B90(list);
+    C4It3AC it = cArray_cString_REnd(list);
     C4It3AC end = func_00198B60(list);
-    while (func_001989E0(&it, &end)) {
-        if (func_00198A20(*func_00198B50(&it), id)) {
-            found = *func_00198B50(&it);
+    while (opNe_cConstLListIteratorR_cConstLListIteratorR(&it, &end)) {
+        if (cSkaPlaybackGroup_CheckId(*cConstLListIterator_cSkaPlaybackGroupPtr_opMul(&it), id)) {
+            found = *cConstLListIterator_cSkaPlaybackGroupPtr_opMul(&it);
             break;
         }
-        func_00198A00(&it);
+        cConstLListIterator_cSkaPlaybackGroupPtr_opInc(&it);
     }
     if (found) return found->value;
     return 0.0f;

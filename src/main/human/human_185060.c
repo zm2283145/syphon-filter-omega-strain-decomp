@@ -18,7 +18,7 @@
 
 extern char g_HumanActorClassKey[];
 
-int func_00185060(char* self, int* key) {
+int cGOBJ_CheckSubclassID(char* self, int* key) {
     return *(int*)(self + 76) == *key;
 }
 

@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-void func_003FAAA0(Iter* out, Tree* t) {
+void std_map_int_netSystemField_begin(Iter* out, Tree* t) {
     out->p = t->leftmost;
 }
 #pragma pop /* merge_units */
@@ -31,7 +31,7 @@ extern char D_0055C7D0[];
 extern char D_0055C7D4[];
 extern unsigned char D_005724B0;
 void printf(void* fmt, int a, int b);
-int func_002EB9A8(void* slot, int addr, int idx);
+int NetGetClientIpAddress(void* slot, int addr, int idx);
 void Net_OnRemoteClientJoined(Join_AAB0* j)
 {
     if (j->busy == 0) {
@@ -48,7 +48,7 @@ void Net_OnRemoteClientJoined(Join_AAB0* j)
         s = s < NetLocalId() ? s : s - 1;
         D_00572418[j->slot] = 0;
         off = s * 0x98;
-        if (func_002EB9A8(D_0055C7C0 + off, j->addr, j->slot) == 0) {
+        if (NetGetClientIpAddress(D_0055C7C0 + off, j->addr, j->slot) == 0) {
             *(unsigned char*)(D_0055C7D4 + off) = 1;
             *(int*)(D_0055C7D0 + off) = j->slot;
         }
@@ -68,9 +68,9 @@ extern unsigned char D_0055C780[];
 extern unsigned int D_0055C990;
 extern unsigned char D_005721D0;
 extern unsigned int Net_GetClock(int);
-extern void func_003FA940(int i);
+extern void cNetObj_SendLocalSystems(int i);
 
-void func_003FAC40(unsigned char* flag)
+void cNetObj_Update(unsigned char* flag)
 {
     unsigned char f = flag ? *flag : 0;
     unsigned int t = D_0055C990;
@@ -82,7 +82,7 @@ void func_003FAC40(unsigned char* flag)
         if (s == 0 || (f && s == 1)) {
             if (D_005721D0) {
                 D_00493A10[i] = 1;
-                func_003FA940(i);
+                cNetObj_SendLocalSystems(i);
                 if (flag) *flag = 0;
                 break;
             }

@@ -33,8 +33,8 @@ void GuiObjectives_Wake(Self_4624E0* self);
 Agent_4624E0* Agent_GetSelected(void* mgr, int idx);
 int cAgentData_GetStat(Agent_4624E0* agent, int stat);
 int sprintf(char* buf, const char* fmt, ...);
-Line_4624E0* func_00462650(Line_4624E0* line, char* voice, int duration);
-void func_00462620(void* vec, Line_4624E0* line);
+Line_4624E0* cQuipList_tQuip_ctor(Line_4624E0* line, char* voice, int duration);
+void cArray_tQuip_PushBackActual(void* vec, Line_4624E0* line);
 W_4624E0* GuiWidget_FindChildByName(void* self, char* name);
 int Awards_GetParTime(void* p, unsigned char f);
 void GuiEndGameObjectives_Wake(Self_4624E0* self);
@@ -52,8 +52,8 @@ void GuiEndGameObjectives_Wake(Self_4624E0* self)
         sprintf(buf, D_004C2698, n + 1);
     {
         Line_4624E0 line;
-        func_00462650(&line, buf, 0x1E);
-        func_00462620(self->lines, &line);
+        cQuipList_tQuip_ctor(&line, buf, 0x1E);
+        cArray_tQuip_PushBackActual(self->lines, &line);
     }
     w = GuiWidget_FindChildByName(self, D_004C26B0);
     if (agent->bB71) {
@@ -62,8 +62,8 @@ void GuiEndGameObjectives_Wake(Self_4624E0* self)
         r = Awards_GetParTime(g_LevelDirName, g_IsMultiplayer);
         if ((int)agent->fD4 <= r) {
             Line_4624E0 line;
-            func_00462650(&line, D_004C26C8, 0x1E);
-            func_00462620(self->lines, &line);
+            cQuipList_tQuip_ctor(&line, D_004C26C8, 0x1E);
+            cArray_tQuip_PushBackActual(self->lines, &line);
         }
     } else {
         if (w) w->flags |= 2;

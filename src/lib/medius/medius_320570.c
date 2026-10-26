@@ -19,8 +19,8 @@ typedef struct {
     short f6A;
 } S320570;
 extern const char D_004B5E00[12];
-extern float func_00121570(float x);
-int func_00320570(S320570 *s)
+extern float Libc_Ceilf(float x);
+int nciGetInfoSase3200(S320570 *s)
 {
     if (s == 0) return 0x181A;
     s->f0 = 4;
@@ -34,7 +34,7 @@ int func_00320570(S320570 *s)
     s->f3A = 16;
     s->f3C = 160;
     s->f48 = 3200;
-    s->f68 = (unsigned int)func_00121570(0.90625f);
+    s->f68 = (unsigned int)Libc_Ceilf(0.90625f);
     s->f3E = 1;
     s->f40 = 1;
     s->f6A = s->f68 * 160 - 0x91;

@@ -2,7 +2,7 @@
 #include "types.h"
 #pragma always_inline on
 #pragma inline_depth(8)
-/* func_001EB0F0: HumanColPreset entry assignment (implicit member-wise operator=: bitset masks, float groups, flags, quad vectors) */
+/* cHumanCollisionRoutine_cIntermediateLedgeSearchInfo_opAssign: HumanColPreset entry assignment (implicit member-wise operator=: bitset masks, float groups, flags, quad vectors) */
 struct Bits {
     int w[1];
     Bits() {}
@@ -29,7 +29,7 @@ struct Col {
     V qB0, qC0, qD0;
     float xE0, xE4;
 };
-extern "C" Col* func_001EB0F0(Col* d, const Col* s)
+extern "C" Col* cHumanCollisionRoutine_cIntermediateLedgeSearchInfo_opAssign(Col* d, const Col* s)
 {
     *d = *s;
     return d;

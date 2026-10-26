@@ -2,7 +2,7 @@
 typedef struct { char b[0x44]; } E2DD9F8;
 const unsigned int D_0048C4A8[1] = { 0x0 };
 E2DD9F8 * __attribute__((weak, section(".dtors_drop"))) Rt_MemoryAllocate(int a0) { return 0; }
-int func_002DD9F8(unsigned int id, E2DD9F8 **out)
+int NetGetStreamChannel(unsigned int id, E2DD9F8 **out)
 {
     unsigned int i;
     E2DD9F8 *t;

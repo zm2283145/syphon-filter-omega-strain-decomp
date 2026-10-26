@@ -16,7 +16,7 @@
 #pragma cplusplus on
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_001AEF20)
+DEFINE_TRIVIAL_DTOR(cSkaSwitchValue_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_001AEF20 */
 
@@ -27,7 +27,7 @@ DEFINE_TRIVIAL_DTOR(func_001AEF20)
 /* Anim channel destructor, optionally delete (DEFINE_ANIM_CHANNEL_DTOR_DEEP of
  * anim_channel_dtor.h written out, so the unit can define the class vtable). */
 extern "C" {
-void func_001AEFE0();
+void cSplinedMotion_Scalar0To1_dtor();
 void AnimChannel_AddOffset();
 void AnimChannel_DirectValueZero();
 void AnimChannel_DirectDerivedZero();
@@ -40,7 +40,7 @@ void operator_delete(void* allocation);
 #endif /* merge_units */
 #define operator_delete(a0) ((void)operator_delete((a0))) /* merge_units */
 
-void* const D_004DA840[12] = { 0, 0, (void*)func_001AEFE0, (void*)AnimChannel_AddOffset, (void*)AnimChannel_DirectValueZero,
+void* const D_004DA840[12] = { 0, 0, (void*)cSplinedMotion_Scalar0To1_dtor, (void*)AnimChannel_AddOffset, (void*)AnimChannel_DirectValueZero,
     (void*)AnimChannel_DirectDerivedZero, (void*)AnimChannel_PreUpdate, (void*)AnimChannel_ClampValue,
     (void*)AnimChannel_UpdateRate, 0, 0, 0 };
 }
@@ -49,7 +49,7 @@ struct AnimChannelObj {
     void* vtable;
 };
 
-extern "C" AnimChannelObj* func_001AEF70(AnimChannelObj* self, short deleteFlag)
+extern "C" AnimChannelObj* cSkaSliderValue_dtor(AnimChannelObj* self, short deleteFlag)
 {
     if (self) {
         if (self) {

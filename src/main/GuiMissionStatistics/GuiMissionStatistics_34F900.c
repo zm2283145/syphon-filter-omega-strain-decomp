@@ -14,14 +14,14 @@
 
 #include "loose03_types.h"
 
-Rel* func_0034F900(Rel* r) {
+Rel* std_vector_imp_StatsRequirement_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
     return r;
 }
 
-Rec34F920* func_0034F920(Rec34F920* self) {
+Rec34F920* MissionStats_StatData_ctor(Rec34F920* self) {
     self->unk00 = 0;
     self->unk04 = 0;
     self->unk08 = 0;

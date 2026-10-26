@@ -9,19 +9,19 @@ extern "C" {
 extern signed char D_00542C88;
 extern unsigned int D_004BCDF0;
 extern char D_004BCFA8[];
-BaDeq* func_003B9170(BaDeq* self, unsigned int n, char** value, void* alloc);
-BaDeq* func_003B9070(BaDeq* self, const BaDeq* x);
-void func_003B9E70(BaDeq* self, unsigned int n);
-void func_003B9C20(BaDeq* self, char** value);
+BaDeq* _cdeque_imp_cSkaSystem_RequestPtr_1_ctor(BaDeq* self, unsigned int n, char** value, void* alloc);
+BaDeq* _cdeque_imp_cSkaSystem_RequestPtr_1_opAssign(BaDeq* self, const BaDeq* x);
+void _cdeque_deleter_int_1_reserve(BaDeq* self, unsigned int n);
+void _cdeque_deleter_int_1_push_back(BaDeq* self, char** value);
 void* Mem_PlacementNew(unsigned int size, void* p);
 void BlendRecord_CopyConstruct(void* self, const void* src);
-void func_003B9B80(BaDeq* x, BaDeq* y);
-void func_00393DD0(BaDeq* self, short flag);
-BlockArray* func_003B8CC0(BaGuard* g);
-char* func_003B8CD0(BaGuard* g);
-int func_003B8CB0(BaGuard* g);
-void func_003B8C50(BlockArray* owner, char* p, int n);
-BaDeq* func_003B8C40(BlockArray* self);
+void _cdeque_deleter_common_int_swap(BaDeq* x, BaDeq* y);
+void _cdeque_imp_cSkaSystem_RequestPtr_1_dtor(BaDeq* self, short flag);
+BlockArray* alloc_ptr_cSkaSystem_Request_int_allocator(BaGuard* g);
+char* alloc_ptr_cSkaSystem_Request_int_get(BaGuard* g);
+int alloc_ptr_cSkaSystem_Request_int_capacity(BaGuard* g);
+void cAllocator_cSkaSystem_Request_deallocate(BlockArray* owner, char* p, int n);
+BaDeq* details_compressed_pair_imp_cAllocator_int_int_1_second(BlockArray* self);
 }
 extern "C" void BlockArray_Append(BlockArray* self, const void* src)
 {
@@ -45,20 +45,20 @@ extern "C" void BlockArray_Append(BlockArray* self, const void* src)
             g.n = 8;
             g.p = nb;
             zero = 0;
-            func_003B9170(&tmp, self->blocks.size * 2, &zero, &alloc);
+            _cdeque_imp_cSkaSystem_RequestPtr_1_ctor(&tmp, self->blocks.size * 2, &zero, &alloc);
             if (self->blocks.size) {
-                func_003B9070(&tmp, &self->blocks);
+                _cdeque_imp_cSkaSystem_RequestPtr_1_opAssign(&tmp, &self->blocks);
             } else {
                 char* z;
-                func_003B9E70(&tmp, 2);
+                _cdeque_deleter_int_1_reserve(&tmp, 2);
                 z = 0;
-                func_003B9C20(&tmp, &z);
+                _cdeque_deleter_int_1_push_back(&tmp, &z);
             }
             {
                 char* z;
                 tmp.data[(tmp.start + tmp.size - 1) % tmp.cap] = nb;
                 z = 0;
-                func_003B9C20(&tmp, &z);
+                _cdeque_deleter_int_1_push_back(&tmp, &z);
             }
             {
                 void* o = Mem_PlacementNew(0xF8, nb);
@@ -66,11 +66,11 @@ extern "C" void BlockArray_Append(BlockArray* self, const void* src)
                     BlendRecord_CopyConstruct(o, src);
             }
             g.p = 0;
-            func_003B9B80(&tmp, &self->blocks);
+            _cdeque_deleter_common_int_swap(&tmp, &self->blocks);
             self->count++;
-            func_00393DD0(&tmp, 0);
-            if (func_003B8CD0(&g))
-                func_003B8C50(func_003B8CC0(&g), func_003B8CD0(&g), func_003B8CB0(&g));
+            _cdeque_imp_cSkaSystem_RequestPtr_1_dtor(&tmp, 0);
+            if (alloc_ptr_cSkaSystem_Request_int_get(&g))
+                cAllocator_cSkaSystem_Request_deallocate(alloc_ptr_cSkaSystem_Request_int_allocator(&g), alloc_ptr_cSkaSystem_Request_int_get(&g), alloc_ptr_cSkaSystem_Request_int_capacity(&g));
             return;
         } else {
             /* fresh loads (the retail code does not reuse cap/size from the test above) */
@@ -78,11 +78,11 @@ extern "C" void BlockArray_Append(BlockArray* self, const void* src)
             char* z;
             *slot = TStr_Alloc(0x7C0, D_004BCFA8, 0x5C);
             z = 0;
-            func_003B9C20(&self->blocks, &z);
+            _cdeque_deleter_int_1_push_back(&self->blocks, &z);
         }
     }
     {
-        BaDeq* d = func_003B8C40(self);
+        BaDeq* d = details_compressed_pair_imp_cAllocator_int_int_1_second(self);
         char* blk = self->blocks.data[(self->blocks.start + (idx >> 3)) % d->cap];
         void* o = Mem_PlacementNew(0xF8, blk + (idx & 7) * 0xF8);
         if (o)

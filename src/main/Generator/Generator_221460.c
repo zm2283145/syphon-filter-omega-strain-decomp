@@ -13,15 +13,15 @@
 typedef struct { char pad[0xC]; char f0C[4]; } Gen00221460;
 extern unsigned char g_IsMultiplayer;
 extern void Object_Deactivate(Gen00221460* self, int a);
-extern void func_0043B190(void* msg);
-extern void func_0043A030(void* msg, void* target);
+extern void cGenInfoObject_ctor(void* msg);
+extern void cGenInfoObject_Deactivate(void* msg, void* target);
 void cGenerator_v16(Gen00221460* self)
 {
     Object_Deactivate(self, 0);
     if (g_IsMultiplayer) {
         int msg[1];
-        func_0043B190(msg);
-        func_0043A030(msg, self->f0C);
+        cGenInfoObject_ctor(msg);
+        cGenInfoObject_Deactivate(msg, self->f0C);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -38,13 +38,13 @@ extern "C" {
 void cNode_v06(void);
 void Object_Activate(void* o, int on);
 #if 0 /* merge_units */
-void func_0043B190(void* ctx);
+void cGenInfoObject_ctor(void* ctx);
 #endif /* merge_units */
-#define func_0043B190(a0) (func_0043B190((a0))) /* merge_units */
+#define cGenInfoObject_ctor(a0) (cGenInfoObject_ctor((a0))) /* merge_units */
 
-int func_0043AB20(void* ctx, void* key);
-void func_00439D00(void* ctx, void* key, int id);
-void func_0043A420(void* ctx, void* key);
+int cGenInfoObject_HasOwner(void* ctx, void* key);
+void cGenInfoObject_SetOwner(void* ctx, void* key, int id);
+void cGenInfoObject_Activate(void* ctx, void* key);
 }
 extern "C" void cGenerator_v15(Gen_12D0* g)
 {
@@ -55,16 +55,16 @@ extern "C" void cGenerator_v15(Gen_12D0* g)
     ok = ok ? g->b2C != 0 : ok;
     ok = ok ? (g->b2E != 0) ^ 1 : ok;
     if (ok) {
-        func_0043B190(ctx);
-        if ((g->maskCC & (1 << NetLocalId())) && func_0043AB20(ctx, g->key) == 0) {
+        cGenInfoObject_ctor(ctx);
+        if ((g->maskCC & (1 << NetLocalId())) && cGenInfoObject_HasOwner(ctx, g->key) == 0) {
             void* key = g->key;
-            func_00439D00(ctx, key, NetLocalId());
+            cGenInfoObject_SetOwner(ctx, key, NetLocalId());
         }
-        func_0043A420(ctx, g->key);
+        cGenInfoObject_Activate(ctx, g->key);
     }
     }
 }
-#undef func_0043B190 /* merge_units */
+#undef cGenInfoObject_ctor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002214B0(void) {}
 #pragma pop /* merge_units */
@@ -129,24 +129,24 @@ extern char D_00555070[];
 extern unsigned char D_005721C0;
 int* Event_GetType(void* ev);
 #if 0 /* merge_units */
-void func_0043B190(void* ctx);
+void cGenInfoObject_ctor(void* ctx);
 #endif /* merge_units */
-#define func_0043B190(a0) (func_0043B190((a0))) /* merge_units */
+#define cGenInfoObject_ctor(a0) (cGenInfoObject_ctor((a0))) /* merge_units */
 
-void func_0021E0C0(Gen_221610* self, void* m);
+void cGenerator_NetSpawn(Gen_221610* self, void* m);
 Tgt_221610* Object_LookupById(int* id);
-void* func_002204B0(It_221610* it);
-void func_002204A0(It_221610* out, List_221610* l);
-It_221610* func_00220490(It_221610* dst, It_221610* src);
-void func_002203E0(It_221610* out, List_221610* l);
-int func_002203C0(It_221610* a, It_221610* b);
-Hnd_221610* func_00220480(It_221610* it);
-int func_00220410(Hnd_221610* a, Hnd_221610* b);
-It_221610* func_002203F0(It_221610* it);
-It_221610* func_002203B0(It_221610* dst, It_221610* src);
-void* func_0021E000(List_221610* l);
-It_221610* func_0021DFE0(It_221610* it, void* n);
-void func_00222880(It_221610* ret, List_221610* l, It_221610* pos);
+void* cLListIterator_cSafePtr_cGOBJ_ctor_void(It_221610* it);
+void cLList_cSafePtr_cGOBJ_Begin(It_221610* out, List_221610* l);
+It_221610* cLListIterator_cSafePtr_cGOBJ_opAssign(It_221610* dst, It_221610* src);
+void cLList_cSafePtr_cGOBJ_End(It_221610* out, List_221610* l);
+int opNe_cLListIteratorR_cLListIteratorR_3(It_221610* a, It_221610* b);
+Hnd_221610* cLListIterator_cSafePtr_cGOBJ_opMul(It_221610* it);
+int cSafePtr_cGOBJ_opEq(Hnd_221610* a, Hnd_221610* b);
+It_221610* cLListIterator_cSafePtr_cGOBJ_opInc(It_221610* it);
+It_221610* cLListIterator_cSafePtr_cGOBJ_ctor_cLListIteratorR(It_221610* dst, It_221610* src);
+void* std_list_deleter_cSafePtr_cGOBJ_tail(List_221610* l);
+It_221610* std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(It_221610* it, void* n);
+void std_list_deleter_cSafePtr_cGOBJ_erase_listdeleter(It_221610* ret, List_221610* l, It_221610* pos);
 void ActorWorld_RequestRemove(int a, Tgt_221610* o);
 void Script_DropFromGroups(void* a, Tgt_221610* o);
 void Object_DeleteLater(Tgt_221610* o, float f);
@@ -182,10 +182,10 @@ extern "C" bool cGenerator_v01(Gen_221610* self, void* msg)
         r = 1;
     } else if (IsType_221610(m, &D_004A4A68)) {
         if (m->kind == 1)
-            func_0043B190(ctx);
+            cGenInfoObject_ctor(ctx);
         r = 1;
     } else if (IsType_221610(m, &D_0051F058)) {
-        func_0021E0C0(self, m);
+        cGenerator_NetSpawn(self, m);
     } else if (IsType_221610(m, &D_0051F068)) {
         Tgt_221610* o;
         id = ((Ev2_221610*)m)->id;
@@ -204,14 +204,14 @@ extern "C" bool cGenerator_v01(Gen_221610* self, void* msg)
                 h1.p = o;
                 *pid = *(o ? &o->id : (none1 = -1, &none1));
             }
-            func_002204B0(&it1);
-            func_002204A0(&beg1, &self->list90);
-            func_00220490(&it1, &beg1);
-            for (; func_002203E0(&end1, &self->list90), func_002203C0(&it1, &end1); func_002203F0(&it1)) if (func_00220410(func_00220480(&it1), &h1)) break; //
-            func_002203B0(&found1, &it1);
+            cLListIterator_cSafePtr_cGOBJ_ctor_void(&it1);
+            cLList_cSafePtr_cGOBJ_Begin(&beg1, &self->list90);
+            cLListIterator_cSafePtr_cGOBJ_opAssign(&it1, &beg1);
+            for (; cLList_cSafePtr_cGOBJ_End(&end1, &self->list90), opNe_cLListIteratorR_cLListIteratorR_3(&it1, &end1); cLListIterator_cSafePtr_cGOBJ_opInc(&it1)) if (cSafePtr_cGOBJ_opEq(cLListIterator_cSafePtr_cGOBJ_opMul(&it1), &h1)) break; //
+            cLListIterator_cSafePtr_cGOBJ_ctor_cLListIteratorR(&found1, &it1);
             {
                 void* f1 = found1.n;
-                func_0021DFE0(&endc1, func_0021E000(&self->list90));
+                std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(&endc1, std_list_deleter_cSafePtr_cGOBJ_tail(&self->list90));
                 if (f1 != endc1.n) {
                     if (self->list9C.size > 0) {
                         void* f2;
@@ -219,16 +219,16 @@ extern "C" bool cGenerator_v01(Gen_221610* self, void* msg)
                         *pid = -1;
                         h2.p = o;
                         *pid = *(o ? &o->id : (none2 = -1, &none2));
-                        func_002204B0(&it2);
-                        func_002204A0(&beg2, &self->list9C);
-                        func_00220490(&it2, &beg2);
-                        for (; func_002203E0(&end2, &self->list9C), func_002203C0(&it2, &end2); func_002203F0(&it2)) if (func_00220410(func_00220480(&it2), &h2)) break; //
-                        func_002203B0(&found2, &it2);
+                        cLListIterator_cSafePtr_cGOBJ_ctor_void(&it2);
+                        cLList_cSafePtr_cGOBJ_Begin(&beg2, &self->list9C);
+                        cLListIterator_cSafePtr_cGOBJ_opAssign(&it2, &beg2);
+                        for (; cLList_cSafePtr_cGOBJ_End(&end2, &self->list9C), opNe_cLListIteratorR_cLListIteratorR_3(&it2, &end2); cLListIterator_cSafePtr_cGOBJ_opInc(&it2)) if (cSafePtr_cGOBJ_opEq(cLListIterator_cSafePtr_cGOBJ_opMul(&it2), &h2)) break; //
+                        cLListIterator_cSafePtr_cGOBJ_ctor_cLListIteratorR(&found2, &it2);
                         f2 = found2.n;
-                        func_0021DFE0(&endc2, func_0021E000(&self->list9C));
+                        std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(&endc2, std_list_deleter_cSafePtr_cGOBJ_tail(&self->list9C));
                         if (f2 != endc2.n) {
                             arg2.n = f2;
-                            func_00222880(&ret2, &self->list9C, &arg2);
+                            std_list_deleter_cSafePtr_cGOBJ_erase_listdeleter(&ret2, &self->list9C, &arg2);
                         }
                     }
                     {
@@ -236,7 +236,7 @@ extern "C" bool cGenerator_v01(Gen_221610* self, void* msg)
                             self->nC0--;
                     }
                     arg1.n = f1;
-                    func_00222880(&ret1, &self->list90, &arg1);
+                    std_list_deleter_cSafePtr_cGOBJ_erase_listdeleter(&ret1, &self->list90, &arg1);
                 }
             }
             ActorWorld_RequestRemove(g_ActorList, o);
@@ -274,7 +274,7 @@ extern "C" bool cGenerator_v01(Gen_221610* self, void* msg)
     }
     return r;
 }
-#undef func_0043B190 /* merge_units */
+#undef cGenInfoObject_ctor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00221610(void) {}
 #pragma pop /* merge_units */

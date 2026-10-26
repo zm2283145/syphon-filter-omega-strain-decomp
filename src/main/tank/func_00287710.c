@@ -27,9 +27,9 @@ struct It {
 
 extern "C" {
 extern char* g_ActorList;
-void* func_00134100(char* self);
-void func_001340C0(It* out, void* v);
-void func_001340E0(It* out, void* v);
+void* cObjList_cHumanPtr_GetList(char* self);
+void cArray_cHumanPtr_Begin(It* out, void* v);
+void cArray_cHumanPtr_End(It* out, void* v);
 void Combat_HitDirection(Mtx* m, V4* v, V4* out);
 }
 
@@ -45,8 +45,8 @@ extern "C" Tgt* cTurret_FindTarget(Self* self) {
     if (n->dirty) n->Refresh();
     { Mtx* src = &n->m; Mtx* dst = &m; Q4(dst, src); }
     char* reg = g_ActorList;
-    func_001340C0(&it, func_00134100(reg));
-    func_001340E0(&end, func_00134100(reg));
+    cArray_cHumanPtr_Begin(&it, cObjList_cHumanPtr_GetList(reg));
+    cArray_cHumanPtr_End(&end, cObjList_cHumanPtr_GetList(reg));
     float best = 1000.0f;
     Tgt* found = 0;
     for (; it != end; it.p++) {

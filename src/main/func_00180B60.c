@@ -6,7 +6,7 @@ typedef struct { char p0[0x10]; V4 a; V4 b; char p1[0x10]; V4 c; char p2[0x10]; 
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-void func_00180B60(O_0B60* o, V4* v) {
+void cSplinedMotion_cQuaternion_TeleportByDelta(O_0B60* o, V4* v) {
     VU0_ADDEQ1(V4, &o->a, v)
     VU0_ADDEQ2(V4, &o->b, v)
     VU0_ADDEQ2(V4, &o->c, v)

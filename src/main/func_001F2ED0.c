@@ -8,16 +8,16 @@
 #include "loose01_types.h"
 
 extern void List_End_13D890(Word*, int);
-extern Word* func_001F2F20(Word*, int);
+extern Word* std_list_cSkaSwitchItemPtr_generic_iterator_1_ctor_listdeleter(Word*, int);
 
-Word* func_001F2ED0(Word* dst, Word* src) {
+Word* std_list_deleter_voidPtr_generic_iterator_1_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_001F2EE0(Word* self, int a1) {
+void std_list_cSkaSwitchItemPtr_end(Word* self, int a1) {
     Word tmp;
 
     List_End_13D890(&tmp, a1);
-    func_001F2F20(self, tmp.value);
+    std_list_cSkaSwitchItemPtr_generic_iterator_1_ctor_listdeleter(self, tmp.value);
 }

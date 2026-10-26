@@ -2,7 +2,7 @@
 typedef struct { void *func; void *arg; void *gp; } CbF748;
 typedef struct { int f0; int f4; int f8; CbF748 *neg; int f10; CbF748 *pos; } CbTblF748;
 extern CbTblF748 D_004E2D58;
-void func_0010F748(int id, void *func, void *arg)
+void sceSifAddCmdHandler(int id, void *func, void *arg)
 {
     void *gp;
     if (id < 0) {

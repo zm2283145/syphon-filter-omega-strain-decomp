@@ -6,12 +6,12 @@
 
 #include "types.h"
 
-extern int func_002DAAB0(int, int);
+extern int AddPlayer(int, int);
 
-int func_002F4FC8(void) {
+int rt_audio_add_player(void) {
     int a0, a1, v0, v1;
 
-    v0 = func_002DAAB0(a0, a1);
+    v0 = AddPlayer(a0, a1);
     v1 = 0 + -1;
     if (v0 != 0) v1 = 0;
     v0 = v1;

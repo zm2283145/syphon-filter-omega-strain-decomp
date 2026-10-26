@@ -10,7 +10,7 @@
 extern int D_004F7DB8;
 extern void HudRadar_SetPlayerId(int* p);
 
-Word* func_002426A0(Word* dst, Word* src) {
+Word* cLListIterator_tCalloutPtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
@@ -19,7 +19,7 @@ void CalloutList_End(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-Word* func_002426C0(Word* dst, Word* src) {
+Word* std_list_tCalloutPtr_generic_iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }

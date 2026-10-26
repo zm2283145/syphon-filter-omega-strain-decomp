@@ -11,7 +11,7 @@ extern void WaitSema(void* lock);
 extern void SignalSema(void* lock);
 
 /* Under the lock, rounds the size up to a multiple of 0x800. */
-void func_003F4A10(LockedBuf* buf) {
+void viBufFlush(LockedBuf* buf) {
     WaitSema(buf->lock);
     buf->size = (buf->size + 0x7FF) / 0x800 * 0x800;
     SignalSema(buf->lock);

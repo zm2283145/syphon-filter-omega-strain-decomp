@@ -6,15 +6,15 @@
 
 #include "types.h"
 
-void func_003AA4E0(Iter* out, Tree* t) {
+void std_list_cSkeletonDataBankEntryPtr_end_void_2(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-Word* func_003AA4F0(Word* dst, Word* src) {
+Word* cLListIterator_cSkeletonDataBankEntryPtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_003AA500(Iter* out, PtrVec* v) {
+void std_list_cSkeletonDataBankEntryPtr_begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }

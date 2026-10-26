@@ -24,14 +24,14 @@ struct Flag_B4AA0 {
 struct E_B4AA0 {};
 struct Ptr_B4AA0 : E_B4AA0 { Node_B4AA0* p; Ptr_B4AA0(const E_B4AA0& e, Node_B4AA0* n) : E_B4AA0(e), p(n) {} };
 struct Holder_B4AA0;
-extern "C" void func_002B4CE0(Holder_B4AA0* h);
+extern "C" void details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_7(Holder_B4AA0* h);
 struct Holder_B4AA0 {
     int* alloc;
     Node_B4AA0* node;
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~Holder_B4AA0()
     {
         if (node) {
-            func_002B4CE0(this);
+            details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_7(this);
             Node_B4AA0* p = node;
             if (p) {
                 AllocGuard guard;
@@ -44,7 +44,7 @@ struct Holder_B4AA0 {
 static inline Node_B4AA0* NewNode() { AllocGuard guard; return (Node_B4AA0*)Mem_Alloc(0, 0x70, D_004ABFC0, 0x5C); }
 #pragma push
 #pragma opt_propagation off
-extern "C" int func_002B4AA0(Node_B4AA0** result, List_B4AA0* list, Node_B4AA0** pos, const Val_B4AA0* value)
+extern "C" int std_list_deleter_tNode_insert(Node_B4AA0** result, List_B4AA0* list, Node_B4AA0** pos, const Val_B4AA0* value)
 {
     Node_B4AA0* n;
     int* alloc = &list->alloc;

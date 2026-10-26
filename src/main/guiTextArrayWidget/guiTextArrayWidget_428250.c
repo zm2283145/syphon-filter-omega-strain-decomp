@@ -33,13 +33,13 @@ void func_00428250(Str0041BCE0* s, int a, int b)
 #include "guiTextArrayWidget_types.h"
 
 extern "C" {
-TextArrayCell* func_004283C0(TextArrayCell* first, TextArrayCell* last,
+TextArrayCell* std_msl_copy_tTextElement_copy(TextArrayCell* first, TextArrayCell* last,
                             TextArrayCell* destination);
-void func_004267B0(TextArrayCell* cell, int flags);
+void GuiTextArrayWidget_tTextElement_dtor(TextArrayCell* cell, int flags);
 }
 
 /* Compact surviving cells, destroy the vacated tail and update the live count. */
-extern "C" TextArrayCell* func_004282A0(TextArrayRow* self, TextArrayCell* first,
+extern "C" TextArrayCell* std_vector_imp_tTextElement_erase(TextArrayRow* self, TextArrayCell* first,
                                      TextArrayCell* last)
 {
     if (first == last)
@@ -47,10 +47,10 @@ extern "C" TextArrayCell* func_004282A0(TextArrayRow* self, TextArrayCell* first
     TextArrayCell* end = self->data + self->count;
     int tailCount = end - last;
     if (tailCount)
-        func_004283C0(last, end, first);
+        std_msl_copy_tTextElement_copy(last, end, first);
     TextArrayCell* tail = first + tailCount;
     while (tail < end) {
-        func_004267B0(tail, -1);
+        GuiTextArrayWidget_tTextElement_dtor(tail, -1);
         ++tail;
     }
     self->count -= last - first;
@@ -58,7 +58,7 @@ extern "C" TextArrayCell* func_004282A0(TextArrayRow* self, TextArrayCell* first
 }
 
 /* Copy cells forward with string ownership and aligned color assignment. */
-extern "C" TextArrayCell* func_004283C0(TextArrayCell* first, TextArrayCell* last,
+extern "C" TextArrayCell* std_msl_copy_tTextElement_copy(TextArrayCell* first, TextArrayCell* last,
                                      TextArrayCell* destination)
 {
     while (first < last) {
@@ -80,8 +80,8 @@ extern "C" {
 void String_CopyCtor(void* d, const void* s);
 extern char D_004BF830[];
 extern char D_004BF878[];
-void func_00428A00(TextArrayCell* d, unsigned int n, const TextArrayCell* v);
-TextArrayCell* func_00428A80(TextArrayCell* f, TextArrayCell* l, TextArrayCell* d);
+void std_fill_n_tTextElement_int_fill_n(TextArrayCell* d, unsigned int n, const TextArrayCell* v);
+TextArrayCell* std_copy_backward_tTextElement_copy_backward(TextArrayCell* f, TextArrayCell* l, TextArrayCell* d);
 }
 
 typedef struct CellVec {
@@ -91,8 +91,8 @@ typedef struct CellVec {
 } CellVec;
 
 extern "C" {
-void func_004289C0(CellVec* a, CellVec* b);
-void func_00428090(CellVec* v, int flag);
+void std_swap_vectordeleterR_vectordeleterR_51(CellVec* a, CellVec* b);
+void std_vector_deleter_tTextElement_dtor(CellVec* v, int flag);
 }
 
 static inline void construct(TextArrayCell* p, const TextArrayCell* v)
@@ -111,7 +111,7 @@ static inline void construct(TextArrayCell* p, const TextArrayCell* v)
 
 #define T TextArrayCell
 /* vector<TextArrayCell>::insert(pos, n, value) */
-extern "C" void func_00428450(CellVec* v, T* pos, unsigned int n, const T* value)
+extern "C" void std_vector_imp_tTextElement_insert(CellVec* v, T* pos, unsigned int n, const T* value)
 {
     if (n == 0)
         return;
@@ -143,9 +143,9 @@ extern "C" void func_00428450(CellVec* v, T* pos, unsigned int n, const T* value
             }
             if (end - (after - n) <= value && value < end)
                 value += n;
-            func_00428A80(pos, pos + (after - n), end);
+            std_copy_backward_tTextElement_copy_backward(pos, pos + (after - n), end);
         }
-        func_00428A00(pos, n, value);
+        std_fill_n_tTextElement_int_fill_n(pos, n, value);
     } else {
         CellVec tmp;
         T* dst;
@@ -185,8 +185,8 @@ extern "C" void func_00428450(CellVec* v, T* pos, unsigned int n, const T* value
             construct(dst, src);
             (*tcount)++;
         }
-        func_004289C0(&tmp, v);
-        func_00428090(&tmp, -1);
+        std_swap_vectordeleterR_vectordeleterR_51(&tmp, v);
+        std_vector_deleter_tTextElement_dtor(&tmp, -1);
     }
 }
 #pragma pop /* merge_units */

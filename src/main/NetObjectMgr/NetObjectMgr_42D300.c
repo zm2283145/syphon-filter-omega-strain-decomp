@@ -44,7 +44,7 @@ extern char D_005826E0[];
 extern "C" void func_0042F400(InsertResult* out, void* map, Pair* p);
 
 /* Inserts the pair (self key, value from obj virtual +0xC) into the D_005826E0 map. */
-extern "C" void func_0042D310(int* self, Obj* obj)
+extern "C" void cNetObjectMgr_AddCopyMsg(int* self, Obj* obj)
 {
     Pair p;
     InsertResult result;

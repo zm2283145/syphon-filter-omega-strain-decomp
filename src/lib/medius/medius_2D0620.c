@@ -1,12 +1,12 @@
 #include "types.h"
 
-extern int func_002EBC48(int);
+extern int NetGetLocalTime(int);
 
-int func_002D0620(int a0) {
+int MGCLGetServerTimestamp(int a0) {
     int s0, v0;
 
     s0 = a0;
-    v0 = func_002EBC48(a0);
+    v0 = NetGetLocalTime(a0);
     if (v0 == 0) {
     goto L002D0648;
     }

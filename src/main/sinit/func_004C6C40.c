@@ -138,7 +138,7 @@ extern char D_0049E828[];
 extern char D_0049D040[];
 extern char D_0049D048[];
 extern char D_0049D050[];
-extern char func_00144930[];
+extern char cSubclassId_dtor[];
 extern char D_004EE970[];
 /* Copies a 4-character tag, zero-filling after the terminator. */
 static inline void Tag4Copy(char* d, const char* s) {
@@ -195,7 +195,7 @@ void StaticInit_ActorTuning(void)
     D_0049D008 = 4.5f;
     D_004EE960 = "cTurnOnWeaponPickupMsg";
     g_HumanActorClassKey = "HUMAN";
-    __register_global_object(&g_HumanActorClassKey, func_00144930, D_004EE970);
+    __register_global_object(&g_HumanActorClassKey, cSubclassId_dtor, D_004EE970);
     g_DefaultMotionTransition = 0.5f;
     Tag4Copy(D_0049D040, D_0049E818);
     Tag4Copy(D_0049D048, D_0049E820);

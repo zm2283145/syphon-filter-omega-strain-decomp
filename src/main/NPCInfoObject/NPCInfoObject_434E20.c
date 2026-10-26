@@ -27,11 +27,11 @@ extern "C" {
 char * Mem_Alloc(...);                      
 int List_Erase(...);                     
                           
-int func_0015AF40(...);                      
+int std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(...);                      
                         
                           
                       
-int func_00434BB0(...);                      
+int std_list_tNPCInfoPtr_push_back(...);                      
 extern char D_004BFCA0;
 extern unsigned char g_ProfileLockEnabled;
 extern char D_00582AB0;
@@ -39,14 +39,14 @@ extern char D_00582AD0;
 }
 struct Raw_4E20 { int p; Raw_4E20() {} };
 extern "C" Raw_4E20 List_Begin(void*);
-extern "C" Raw_4E20 func_00432730(void*);
-extern "C" void func_00432740(char**, const Raw_4E20&);
-extern "C" void func_00432720(char**, const Raw_4E20&);
-static inline void Begin_4E20(char** out) { func_00432740(out, List_Begin(&D_00582AB0)); }
-static inline void End_4E20(char** out) { func_00432720(out, func_00432730(&D_00582AB0)); }
+extern "C" Raw_4E20 std_list_tNPCInfoPtr_end(void*);
+extern "C" void std_list_tNPCInfoPtr_generic_iterator_ctor(char**, const Raw_4E20&);
+extern "C" void cLListIterator_tNPCInfoPtr_ctor(char**, const Raw_4E20&);
+static inline void Begin_4E20(char** out) { std_list_tNPCInfoPtr_generic_iterator_ctor(out, List_Begin(&D_00582AB0)); }
+static inline void End_4E20(char** out) { cLListIterator_tNPCInfoPtr_ctor(out, std_list_tNPCInfoPtr_end(&D_00582AB0)); }
 
 
-extern "C" void func_00434E20(int d0, char * arg1) {
+extern "C" void cNPCInfoObject_AddPendingDeactivate(int d0, char * arg1) {
     char * sp7C;
     char * sp78;
     char * temp_s0;
@@ -69,7 +69,7 @@ extern "C" void func_00434E20(int d0, char * arg1) {
         F_(temp_s0, 0x10, int) = F_(arg1, 0x10, int);
     }
     sp7C = temp_s0;
-    func_00434BB0(&D_00582AD0, &sp7C);
+    std_list_tNPCInfoPtr_push_back(&D_00582AD0, &sp7C);
     {
     char * sp70;
     int * temp_s2;
@@ -91,7 +91,7 @@ extern "C" void func_00434E20(int d0, char * arg1) {
                 int sp64;
                 int sp60;
                 sp68 = temp_s0_2;
-                func_0015AF40(&sp60, &sp68);
+                std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&sp60, &sp68);
                 List_Erase(&sp64, &D_00582AB0, &sp60);
                 }
             }
@@ -112,11 +112,11 @@ static inline void merge_flush_func_00434E20(void) {}
 
 extern "C" {
 }
-static inline void Begin_4E20_00435070(char** out) { func_00432740(out, List_Begin(&D_00582AD0)); }
-static inline void End_4E20_00435070(char** out) { func_00432720(out, func_00432730(&D_00582AD0)); }
+static inline void Begin_4E20_00435070(char** out) { std_list_tNPCInfoPtr_generic_iterator_ctor(out, List_Begin(&D_00582AD0)); }
+static inline void End_4E20_00435070(char** out) { cLListIterator_tNPCInfoPtr_ctor(out, std_list_tNPCInfoPtr_end(&D_00582AD0)); }
 
 
-extern "C" void func_00435070(int d0, char * arg1) {
+extern "C" void cNPCInfoObject_AddPendingActivate(int d0, char * arg1) {
     char * sp7C;
     char * sp78;
     char * temp_s0;
@@ -139,7 +139,7 @@ extern "C" void func_00435070(int d0, char * arg1) {
         F_(temp_s0, 0x10, int) = F_(arg1, 0x10, int);
     }
     sp7C = temp_s0;
-    func_00434BB0(&D_00582AB0, &sp7C);
+    std_list_tNPCInfoPtr_push_back(&D_00582AB0, &sp7C);
     {
     char * sp70;
     int * temp_s2;
@@ -161,7 +161,7 @@ extern "C" void func_00435070(int d0, char * arg1) {
                 int sp64;
                 int sp60;
                 sp68 = temp_s0_2;
-                func_0015AF40(&sp60, &sp68);
+                std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&sp60, &sp68);
                 List_Erase(&sp64, &D_00582AD0, &sp60);
                 }
             }
@@ -178,9 +178,9 @@ static inline void merge_flush_func_00435070(void) {}
 #pragma push /* merge_units */
 #define LOCALID_(X) { int ld_a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */ if (g_IsMultiplayer) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
 #pragma mpwc_relax on
-int func_002EB650(void **, int);                      
+int NetGetObject(void **, int);                      
 int NetGame_InitLocalSlot(int *, int);                        
-int func_002EC460(int);                               
+int NetReleaseObjectPrivateOwnership(int);                               
 extern int D_00494178;
 extern int D_005721A8;
 extern unsigned char g_IsMultiplayer;
@@ -195,7 +195,7 @@ extern int D_00582A88;
 extern int D_00582A90;
 extern int D_00582A98;
 
-void func_004352C0(void) {
+void cNPCInfoObject_CheckForPendingRelease(void) {
     int sp3C;
     int sp38;
     int sp34;
@@ -214,55 +214,55 @@ void func_004352C0(void) {
 
     if (D_005827A0 != 0) {
         temp_s0 = D_00582A78;
-        func_002EB650(&sp3C, temp_s0);
+        NetGetObject(&sp3C, temp_s0);
         if (sp3C != NULL) {
             LOCALID_(var_a0)
             if (F_(sp3C, 0x4, int) == var_a0) {
-                func_002EC460(temp_s0);
+                NetReleaseObjectPrivateOwnership(temp_s0);
             }
         }
         D_005827A0 = 0;
     }
     if (D_005827A8 != 0) {
         temp_s0_2 = D_00582A80;
-        func_002EB650(&sp38, temp_s0_2);
+        NetGetObject(&sp38, temp_s0_2);
         if (sp38 != NULL) {
             LOCALID_(var_a0_2)
             if (F_(sp38, 0x4, int) == var_a0_2) {
-                func_002EC460(temp_s0_2);
+                NetReleaseObjectPrivateOwnership(temp_s0_2);
             }
         }
         D_005827A8 = 0;
     }
     if (D_005827B0 != 0) {
         temp_s0_3 = D_00582A88;
-        func_002EB650(&sp34, temp_s0_3);
+        NetGetObject(&sp34, temp_s0_3);
         if (sp34 != NULL) {
             LOCALID_(var_a0_3)
             if (F_(sp34, 0x4, int) == var_a0_3) {
-                func_002EC460(temp_s0_3);
+                NetReleaseObjectPrivateOwnership(temp_s0_3);
             }
         }
         D_005827B0 = 0;
     }
     if (D_005827B8 != 0) {
         temp_s0_4 = D_00582A90;
-        func_002EB650(&sp30, temp_s0_4);
+        NetGetObject(&sp30, temp_s0_4);
         if (sp30 != NULL) {
             LOCALID_(var_a0_4)
             if (F_(sp30, 0x4, int) == var_a0_4) {
-                func_002EC460(temp_s0_4);
+                NetReleaseObjectPrivateOwnership(temp_s0_4);
             }
         }
         D_005827B8 = 0;
     }
     if (D_005827C0 != 0) {
         temp_s0_5 = D_00582A98;
-        func_002EB650(&sp2C, temp_s0_5);
+        NetGetObject(&sp2C, temp_s0_5);
         if (sp2C != NULL) {
             LOCALID_(var_a0_5)
             if (F_(sp2C, 0x4, int) == var_a0_5) {
-                func_002EC460(temp_s0_5);
+                NetReleaseObjectPrivateOwnership(temp_s0_5);
             }
         }
         D_005827C0 = 0;

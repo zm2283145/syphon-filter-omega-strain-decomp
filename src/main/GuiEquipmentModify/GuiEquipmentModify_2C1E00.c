@@ -22,7 +22,7 @@ DEFINE_VECTOR_ARRAY_MEMBER_DTOR(func_002C1E00)
 #include "base_dtor_chain.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_002C1EA0, func_001AF8E0)
+DEFINE_BASE_DTOR_CHAIN(func_002C1EA0, std_vector_imp_cSkeletonBBoxContributionPtr_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_002C1EA0 */
 
@@ -80,12 +80,12 @@ typedef struct Obj2C20 {
     unsigned char flag; /* 0x0C */
 } Obj2C20;
 
-extern void func_00290B90(Obj2C20* self, int* src, unsigned char flag);
+extern void std_vector_imp_cSkeletonBBoxContributionPtr_1_ctor(Obj2C20* self, int* src, unsigned char flag);
 extern void PtrVec_Reserve(Obj2C20* self, int value);
 
 /* Constructor: base init, copies *src and stores the flag byte. */
 Obj2C20* func_002C2060(Obj2C20* self, int* src, unsigned char flag) {
-    func_00290B90(self, src, flag);
+    std_vector_imp_cSkeletonBBoxContributionPtr_1_ctor(self, src, flag);
     PtrVec_Reserve(self, *src);
     self->flag = flag;
     return self;
@@ -258,6 +258,6 @@ DEFINE_VECTOR_INIT_RANGE(func_002C2510, VRElem20, 0x4CCCCC, D_004AC620, D_0049ED
 #include "tree_find.h"
 
 /* Find a key in a tree; end() when absent. */
-DEFINE_TREE_FIND(func_002C26A0, func_0013C310)
+DEFINE_TREE_FIND(func_002C26A0, std_basic_string_char_char_traits_char_compare_basicstringR)
 #pragma pop /* merge_units */
 /* merge_units: end func_002C26A0 */

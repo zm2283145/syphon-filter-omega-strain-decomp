@@ -13,11 +13,11 @@ extern char D_004A4550[];
 extern int D_004F5480;
 void* Mem_Alloc(int heap, int size, char* file, int line);
 void Mem_Free(int heap, void* p, char* file, int line);
-int func_002EAF28(int* h, int a, int b, int c, int d, int e, int f, void* buf, char* name, int size);
-int func_002EB650(Seg_00212220** o, int h);
+int NetCreateObject(int* h, int a, int b, int c, int d, int e, int f, void* buf, char* name, int size);
+int NetGetObject(Seg_00212220** o, int h);
 int func_00211DA0(void);
-void func_002EC2A8(int a);
-int func_003FBBA0(void);
+void NetFreeObject(int a);
+int cNetObj_GetNetID(void);
 void NetMap_BindReceiver(int a, int b, void* c);
 }
 static inline void* New_00212220(int size, int line)
@@ -46,19 +46,19 @@ extern "C" void PathObj_CreateInfoObject(Self_00212220* self)
         int h;
         Seg_00212220* seg;
         Shm_00212220* p;
-        if (func_002EAF28(&h, 1, 3, 0, 0, 0, 0, self->pD0, "PathedGobjInfoObject", D_004F5480))
+        if (NetCreateObject(&h, 1, 3, 0, 0, 0, 0, self->pD0, "PathedGobjInfoObject", D_004F5480))
             return;
         p = self->pD0;
         if (p) {
             if (p->bC) {
-                func_002EC2A8(func_00211DA0());
+                NetFreeObject(func_00211DA0());
             } else {
                 AllocGuard g;
                 Mem_Free(0, p, D_004A4550, 0xB83);
             }
             self->pD0 = 0;
         }
-        if (func_002EB650(&seg, h))
+        if (NetGetObject(&seg, h))
             return;
         self->pD0 = seg->p1C;
         self->pD0->bC = 1;
@@ -70,7 +70,7 @@ extern "C" void PathObj_CreateInfoObject(Self_00212220* self)
             self->bDC = 0;
         }
         self->pD0->f14 = NetLocalId();
-        self->pD0->f18 = func_003FBBA0();
+        self->pD0->f18 = cNetObj_GetNetID();
         {
             int r = self->f10;
             NetMap_BindReceiver(r, NetLocalId(), self);

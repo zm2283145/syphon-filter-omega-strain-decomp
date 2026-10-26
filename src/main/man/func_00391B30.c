@@ -1,7 +1,7 @@
 #pragma cplusplus on
 #pragma always_inline on
 #include "types.h"
-/* Unit 0x391B30 (built with CodeWarrior 3.0 build 50, like Lpd_Init): func_00391B30 registers the
+/* Unit 0x391B30 (built with CodeWarrior 3.0 build 50, like Lpd_Init): cMan_LipSyncLoad registers the
  * lip-sync tracks of an archive, Actor_UpdateGaze drives the look-at face channels.
  * VU0 macro-mode ops, lq/sq quad copies and the VU0 flag test are inline asm (no C spelling). */
 
@@ -20,12 +20,12 @@ char* strrchr(const char* s, int c);
 int strcmp(const char* a, const char* b);
 void Appearance_RegistryKey(char* dst, int n, const char* src);
 int snd_BankLoad(const char* name, int flags);
-void func_00391B30(Arc_391B30* a, const char* bank);
+void cMan_LipSyncLoad(Arc_391B30* a, const char* bank);
 }
 
 /* Registers every lip-sync track of the archive (members with the track extension): copies
  * the name, relocates the member's 15 offset words in place, then loads the sound bank. */
-extern "C" void func_00391B30(Arc_391B30* a, const char* bank)
+extern "C" void cMan_LipSyncLoad(Arc_391B30* a, const char* bank)
 {
     int n; int* p; int i; int off; char* name;
     n = a->hdr->count;
@@ -90,7 +90,7 @@ struct GazeActor {
 };
 extern "C" {
 void* Skeleton_NodeAt(void* v, int i);
-void* func_0019F420(void* n);
+void* cBone_Xform(void* n);
 M* Transform_GetUpdated(void* x);
 void Actor_ShotFrameNodeWorld(M* out, M* in, M* m);
 void Mtx_Copy(M* d, M* s);
@@ -153,7 +153,7 @@ extern "C" void Actor_UpdateGaze(GazeActor* a)
     GazeRig* r = a->rig;
     int n; int idx; int j;
     if (r->flag14) {
-        M* t = Transform_GetUpdated(func_0019F420(Skeleton_NodeAt(r->nodes, 14)));
+        M* t = Transform_GetUpdated(cBone_Xform(Skeleton_NodeAt(r->nodes, 14)));
         Actor_ShotFrameNodeWorld(&frame, t, Transform_GetUpdated(r->xform));
     } else {
         Mtx_Copy(&frame, Transform_GetUpdated(r->xform));

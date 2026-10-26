@@ -18,7 +18,7 @@
 /* merge_units: begin func_00177C00 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-DEFINE_VT8_CHAIN_DTOR(func_00177C00, D_004D9DC0, D_004D9DE0)
+DEFINE_VT8_CHAIN_DTOR(cPlayerRespawnCB_dtor, D_004D9DC0, D_004D9DE0)
 #pragma pop /* merge_units */
 /* merge_units: end func_00177C00 */
 

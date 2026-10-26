@@ -16,13 +16,13 @@ struct SkelNodesT {
 
 extern "C" {
 void SkelNode_Construct(SNode* n);
-void func_003AA510(SArr* a, unsigned int n, const SNode& fill);
-void func_003BA9A0(SNode* n, int flag);
+void std_vector_imp_cBone_resize(SArr* a, unsigned int n, const SNode& fill);
+void cBone_dtor(SNode* n, int flag);
 void SkelNode_InitFromRecord(SNode* n, SRec* r);
 void SkelNode_AttachParent(SNode* n, SNode* parent);
-SArr* func_003A96B0(SkelNodesT* s);
+SArr* cSkeleton_GetBoneList(SkelNodesT* s);
 SNode* SkelNodes_GetAt(SArr* a, int i);
-int func_003A96A0(SArr* a);
+int cArray_cBone_Size(SArr* a);
 void* Node_GetTransform(SNode* n);
 void Mtx_InvertRigid_13ECA0(SMtx* out, void* in);
 void SkelNode_SetInverseBind(SNode* n, SMtx* m);
@@ -37,8 +37,8 @@ void SkelNodes_Construct(SkelNodesT* s)
     int i;
 
     SkelNode_Construct(&tmp);
-    func_003AA510(&s->nodes, s->hdr->count, tmp);
-    func_003BA9A0(&tmp, -1);
+    std_vector_imp_cBone_resize(&s->nodes, s->hdr->count, tmp);
+    cBone_dtor(&tmp, -1);
     for (i = 0; i < s->nodes.count; i++) {
         SkelNode_InitFromRecord(&s->nodes.At(i), &s->hdr->recs[i]);
     }
@@ -51,9 +51,9 @@ void SkelNodes_Construct(SkelNodesT* s)
             SkelNode_AttachParent(n, 0);
     }
     if (s->flag) {
-        SArr* a = func_003A96B0(s);
+        SArr* a = cSkeleton_GetBoneList(s);
         SNode* n = SkelNodes_GetAt(a, 0);
-        for (i = 0; i < func_003A96A0(a); i++) {
+        for (i = 0; i < cArray_cBone_Size(a); i++) {
             Mtx_InvertRigid_13ECA0(&m, Node_GetTransform(n));
             SkelNode_SetInverseBind(n, &m);
             n++;

@@ -10,7 +10,7 @@
 #include "msg_clone.h"
 extern "C" char D_004D92A0[];
 extern "C" char D_004DFD80[];
-MSG_CLONE_BEGIN(func_00147A20, 0x30, "ai.hh", 0x14C)
+MSG_CLONE_BEGIN(cAISoundSystemMessage_Clone_void_2, 0x30, "ai.hh", 0x14C)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);
@@ -34,6 +34,6 @@ MSG_CLONE_END
 #pragma cplusplus on
 #include "vtable_base_dtor.h"
 
-DEFINE_VTABLE_BASE_DTOR(func_00147B40, D_004D92A0, cMessage_dtor)
+DEFINE_VTABLE_BASE_DTOR(cAISoundSystemMessage_dtor, D_004D92A0, cMessage_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00147B40 */

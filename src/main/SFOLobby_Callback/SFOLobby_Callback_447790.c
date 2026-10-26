@@ -143,7 +143,7 @@ typedef struct {
     int f4C;
 } Req447A30;
 
-extern "C" void func_00447A30(int d0, int d1, int d2, char *arg3)
+extern "C" void SFOLobby_Callback_GetLobbyPlayerNames_ExtraInfo(int d0, int d1, int d2, char *arg3)
 {
     Req447A30 req;
     char *list;

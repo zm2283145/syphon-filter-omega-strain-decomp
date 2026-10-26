@@ -12,7 +12,7 @@ typedef struct {
 
 extern Dev_b6e0 D_004FBB88[];
 
-int func_0026B6E0(int dev, unsigned char *data, int idx)
+int scePad2GetButtonInfo(int dev, unsigned char *data, int idx)
 {
     Field_b6e0 e = D_004FBB88[dev].f[idx];
     unsigned char v;

@@ -7,6 +7,6 @@
 #include "loose03_types.h"
 
 /* Sets the flag byte at +0xD0. */
-void func_003796C0(unsigned char* self) {
+void XLib_FrameEnvChanged(unsigned char* self) {
     self[208] = 1;
 }

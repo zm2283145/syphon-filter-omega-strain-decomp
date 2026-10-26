@@ -7,7 +7,7 @@
 /* merge_units: begin func_003F9300 */
 #pragma push /* merge_units */
 #include "types.h"
-extern void func_003F8390(void* self);
+extern void cMoviePlayer_Purge(void* self);
 extern void MoviePlayer_FreeBuffers(void* self);
 extern void FileMan_Release(void* p, int del);
 extern void operator_delete(void* p);
@@ -15,7 +15,7 @@ void* MoviePlayer_Destroy(void* self, short del)
 {
     if (self) {
         void* m;
-        func_003F8390(self);
+        cMoviePlayer_Purge(self);
         MoviePlayer_FreeBuffers(self);
         FileMan_Release((char*)self + 0x190, -1);
         m = (char*)self + 0x58;
@@ -39,7 +39,7 @@ void* MoviePlayer_Destroy(void* self, short del)
 
 #include "loose04_types.h"
 
-extern int func_0036DFB0(void*, void*, int*);
+extern int cFileMan_EncodeFilename_charP_cFileManR(void*, void*, int*);
 extern int Resource_Construct(void*);
 extern int MoviePlayer_Start(Unk3F9380*);
 extern int MoviePlayer_AllocBuffers(Unk3F9380*);
@@ -78,7 +78,7 @@ Unk3F9380* MoviePlayer_ctor(Unk3F9380* self, int* src, int arg) {
     self->unk234 = 0;
     self->unk235 = 0;
     self->unk236 = 1;
-    func_0036DFB0(self->unk190, src + 1, src);
+    cFileMan_EncodeFilename_charP_cFileManR(self->unk190, src + 1, src);
     MoviePlayer_AllocBuffers(self);
     MoviePlayer_Start(self);
     return self;
@@ -91,14 +91,14 @@ Unk3F9380* MoviePlayer_ctor(Unk3F9380* self, int* src, int arg) {
 typedef struct { char pad[0x14C]; unsigned char active; } O9470;
 typedef struct N9470 { int m0; struct N9470* next; O9470 obj; char pad[0x170 - 0x8 - sizeof(O9470)]; unsigned char keep; } N9470;
 typedef struct { int m0; int list; } T9470;
-extern N9470* func_003F9520(void* list);
+extern N9470* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_11(void* list);
 extern void Hog_Unload(O9470* o);
-extern void func_003F9A30(N9470** out, T9470* self, N9470** pos);
+extern void std_list_deleter_cHogFile_erase_listdeleter(N9470** out, T9470* self, N9470** pos);
 void Archive_ReleaseAll(T9470* self)
 {
     N9470* end;
-    N9470* n = func_003F9520(&self->list)->next;
-    end = func_003F9520(&self->list);
+    N9470* n = details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_11(&self->list)->next;
+    end = details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_11(&self->list);
     while (n != end) {
         O9470* o = &n->obj;
         if (!n->keep || !o->active) {
@@ -107,7 +107,7 @@ void Archive_ReleaseAll(T9470* self)
             if (o->active)
                 Hog_Unload(o);
             pos = n;
-            func_003F9A30(&r, self, &pos);
+            std_list_deleter_cHogFile_erase_listdeleter(&r, self, &pos);
             n = r;
         } else {
             n = n->next;

@@ -20,7 +20,7 @@ typedef struct {
 } E_002ACA00;
 extern S_002ACA00* D_005065C0;
 #define LobbyArray_At(a0, a1) ((E_002ACA00 *)LobbyArray_At((a0), (a1))) /* merge_units */
-int func_002ACA00(const void* a, const void* b)
+int GuiMissionList_Sort_DisplayGames(const void* a, const void* b)
 {
     E_002ACA00* e1 = LobbyArray_At(D_005065C0->p11C, ((It_002ACA00*)a)->idx);
     E_002ACA00* e2 = LobbyArray_At(D_005065C0->p11C, ((It_002ACA00*)b)->idx);
@@ -81,7 +81,7 @@ struct S_002ACB70 : W_002ACB70 {
     int fCC; char padD0[0x110 - 0xD0]; int count; char pad114[0x11C - 0x114]; void* p11C;
 };
 extern "C" {
-void func_002AC070(S_002ACB70* self);
+void GuiMissionList_UpdateSelectList(S_002ACB70* self);
 void GuiArrayWidget_Select(S_002ACB70* self, int a, int b);
 int GuiArrayWidget_IsCellVisible(S_002ACB70* self, int a, unsigned int b);
 void GuiArrayWidget_Scroll(S_002ACB70* self, int a, unsigned int b);
@@ -89,12 +89,12 @@ void LobbyArray_SetDirty(void* p, int a);
 }
 static inline void Upd_(S_002ACB70* s, int n) { s->SetCount(s->f48, n); }
 #pragma opt_dead_assignments off
-extern "C" void func_002ACB70(S_002ACB70* self)
+extern "C" void GuiMissionList_UpdateLobbyList(S_002ACB70* self)
 {
     unsigned int old = 0;
     if (self->f54 > self->f7C)
         old = self->f54 - self->f7C;
-    func_002AC070(self);
+    GuiMissionList_UpdateSelectList(self);
     Upd_(self, self->count);
     GuiArrayWidget_Select(self, 0, self->fCC);
     if (self->f54 >= self->f7C) {

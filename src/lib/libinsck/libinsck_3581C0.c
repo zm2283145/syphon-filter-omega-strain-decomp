@@ -2,7 +2,7 @@
 int SignalSema(int);
 extern int D_00492CC8;
 
-void func_003581C0(void) {
+void unblock(void) {
     if (D_00492CC8 > 0) {
         SignalSema(D_00492CC8);
     }

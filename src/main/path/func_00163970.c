@@ -16,7 +16,7 @@ extern char D_004D9750[]; /* PathLinkedPair vtable */
  * class vtable first, then the derived one. Locals keep the original
  * load order.
  */
-PathLinkedPair* func_00163970(PathLinkedPair* self) {
+PathLinkedPair* cPriorityQueue_cNodeIndex_ctor(PathLinkedPair* self) {
     void* subVtable;
     void* subBaseVtable;
     void* vtable;

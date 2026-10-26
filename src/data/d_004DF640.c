@@ -25,54 +25,54 @@ extern void Xform_SetWorld();
 extern void Xform_Translate();
 extern void Xform_Translate_1BC330();
 extern void Xform_dtor();
+extern void cSceneLight_dtor();
+extern void cXformNode_GetMatrix_ParentRelative();
+extern void cXformNode_GetNode_void();
+extern void cXformNode_GetNode_void_2();
+extern void cXformNode_GetRotationMatrix_ParentRelative();
+extern void cXformNode_GetTranslation_ParentRelative();
+extern void cXformNode_RemoveChild();
+extern void cXformNode_Rotate_cMatrixR();
+extern void cXformNode_Rotate_cQuaternionR();
+extern void cXformNode_SetMatrix_ParentRelative();
+extern void cXformNode_Transform();
+extern void cXform_AddChild();
+extern void cXform_GetMatrix_ParentRelative();
+extern void cXform_GetNode_void();
+extern void cXform_GetNode_void_2();
+extern void cXform_GetRotationMatrix_ParentRelative();
+extern void cXform_GetTranslation_ParentRelative();
+extern void cXform_RemoveChild();
+extern void cXform_RemoveParent();
+extern void cXform_Rotate_cMatrixR();
+extern void cXform_Rotate_cQuaternionR();
+extern void cXform_SetParent();
+extern void cXform_SetTranslation_ParentRelative();
+extern void cXform_Transform();
 extern void func_001479A0();
 extern void func_00147A00();
 extern void func_00147A10();
-extern void func_001CF1F0();
-extern void func_001CF3F0();
-extern void func_001E2100();
-extern void func_00218E30();
-extern void func_0036E7D0();
-extern void func_0036E8F0();
-extern void func_0036EA70();
-extern void func_0036EC10();
-extern void func_0036EC20();
-extern void func_0036ECD0();
-extern void func_0036ECE0();
-extern void func_0036F110();
-extern void func_0036F190();
-extern void func_0036FE60();
-extern void func_0036FF40();
-extern void func_0036FFB0();
-extern void func_0036FFC0();
-extern void func_00370070();
-extern void func_00370080();
-extern void func_00370090();
-extern void func_003700A0();
-extern void func_003700B0();
-extern void func_003700C0();
-extern void func_003718B0();
 
 void *D_004DF640[24] = {
     0, 0, &Xform_dtor, &Xform_SetWorld,
-    &Xform_SetRotation, &Xform_SetTranslation, &func_0036E7D0, &func_0036EA70,
-    &func_0036E8F0, &Xform_Translate, &func_0036EC10, &func_001CF1F0,
-    &func_001CF3F0, &func_0036EC20, &Bone_SetLocalBasis, &Bone_SetLocalTranslation,
-    &func_0036ECE0, &func_0036ECD0, &Xform_Attach, &Xform_Detach,
-    &Xform_AddChild, &func_0036F110, &Xform_RefreshDirty, 0,
+    &Xform_SetRotation, &Xform_SetTranslation, &cXformNode_Transform, &cXformNode_Rotate_cMatrixR,
+    &cXformNode_Rotate_cQuaternionR, &Xform_Translate, &cXformNode_GetMatrix_ParentRelative, &cXformNode_GetRotationMatrix_ParentRelative,
+    &cXformNode_GetTranslation_ParentRelative, &cXformNode_SetMatrix_ParentRelative, &Bone_SetLocalBasis, &Bone_SetLocalTranslation,
+    &cXformNode_GetNode_void_2, &cXformNode_GetNode_void, &Xform_Attach, &Xform_Detach,
+    &Xform_AddChild, &cXformNode_RemoveChild, &Xform_RefreshDirty, 0,
 };
 
 void *D_004DF6A0[24] = {
     0, 0, &TransformNode_dtor, &TransformNode_SetMatrix,
-    &Mtx44_SetRows123FromMtx34, &ActorNode_SetPosition, &func_001E2100, &func_0036FF40,
-    &func_0036FE60, &Xform_Translate_1BC330, &func_0036FFB0, &func_00218E30,
-    &func_0036FFC0, &TransformNode_SetMatrix_36FFD0, &Mtx44_SetRows123FromMtx34_370000, &func_00370070,
-    &func_00370080, &func_0036F190, &func_00370090, &func_003700A0,
-    &func_003700B0, &func_003700C0, &TransformNode_ClearDirty, 0,
+    &Mtx44_SetRows123FromMtx34, &ActorNode_SetPosition, &cXform_Transform, &cXform_Rotate_cMatrixR,
+    &cXform_Rotate_cQuaternionR, &Xform_Translate_1BC330, &cXform_GetMatrix_ParentRelative, &cXform_GetRotationMatrix_ParentRelative,
+    &cXform_GetTranslation_ParentRelative, &TransformNode_SetMatrix_36FFD0, &Mtx44_SetRows123FromMtx34_370000, &cXform_SetTranslation_ParentRelative,
+    &cXform_GetNode_void_2, &cXform_GetNode_void, &cXform_SetParent, &cXform_RemoveParent,
+    &cXform_AddChild, &cXform_RemoveChild, &TransformNode_ClearDirty, 0,
 };
 
 void *D_004DF700[16] = {
-    0, 0, &func_003718B0, &PointLightComp_Start,
+    0, 0, &cSceneLight_dtor, &PointLightComp_Start,
     (void *)0x1479e0, &func_00147A00, &func_00147A10, &func_001479A0,
     &Light_GetCoronaSize, &Light_GetCoronaFlag, &Light_SetPosition, &PntLight_Enable,
     &PntLight_Disable, (void *)0x1479f0, 0, 0,

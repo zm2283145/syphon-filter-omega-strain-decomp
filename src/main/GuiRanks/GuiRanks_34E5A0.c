@@ -21,7 +21,7 @@ extern void GuiSlideShow_Clear(void*);
 extern int GuiTextListWidget_GetItemText(void*, int);
 extern int GuiSlideShow_AddCategory(void*, int);
 extern int sprintf(char*, const char*, ...);
-extern T34E5* func_0034E760(void);
+extern T34E5* cAgentData_GetRanks(void);
 extern G34E5* D_004FFC04;
 extern void GuiSlideShow_AddSlide(void*, int, char*, int, char*);
 extern void GuiStack_SwapScreens(int, O34E5*, void*);
@@ -46,7 +46,7 @@ extern "C" void GuiRanks_Select(O34E5* o, int idx) {
     {
         T34E5* tab;
         Agent_GetSelected(g_Game, -1);
-        tab = func_0034E760();
+        tab = cAgentData_GetRanks();
         GuiSlideShow_AddSlide(w, x, buf, D_004FFC04->f25c, tab->f8[sel].f10);
     }
     GuiStack_SwapScreens(Gui_GetScreenStack(), o, w);

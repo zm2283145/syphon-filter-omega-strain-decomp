@@ -9,11 +9,11 @@
 extern char D_00497CD0[];
 extern char D_00497CFC[];
 
-int func_0046C938(void) {
+int MediusUniqueCallbackSessionEndRequestHandler(void) {
     return 38;
 }
 
-int func_0046C940(int a0, int a1, int a2, int a3) {
+int MediusUniqueCallbackSessionEndResponseHandler(int a0, int a1, int a2, int a3) {
     int v0;
     int cond;
 
@@ -33,6 +33,6 @@ ret:
     return v0;
 }
 
-int func_0046C988(void) {
+int MediusUniqueCallbackMachineSignaturePostHandler(void) {
     return 166;
 }

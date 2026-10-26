@@ -6,7 +6,7 @@
 #include "types.h"
 
 /* Construct an empty map with comparator byte *cmp. */
-Map* func_001C4750(Map* m, unsigned char* cmp) {
+Map* std_tree_pair_cString16N_value_compare_cAllocator_pair_ctor_valuecompareR_cAllocatorR_2(Map* m, unsigned char* cmp) {
     m->count = 0;
     m->head = 0;
     m->cmp = *cmp;

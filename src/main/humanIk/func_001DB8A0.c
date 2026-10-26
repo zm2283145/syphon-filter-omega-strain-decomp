@@ -7,7 +7,7 @@
 #include "types.h"
 #include "humanIk_types.h"
 
-IkBytePair* func_001DB8A0(IkBytePair* dst, IkBytePair* src) {
+IkBytePair* cDrawAndHolsterWeapon_ActionManager_cWeaponSlotPair_ctor(IkBytePair* dst, IkBytePair* src) {
     dst->a = src->a;
     dst->b = src->b;
     return dst;

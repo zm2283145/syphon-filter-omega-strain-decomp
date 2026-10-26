@@ -1,5 +1,5 @@
 #include "types.h"
-void func_001AE170(Q* d, Q* s, int n)
+void MEMCPY16(Q* d, Q* s, int n)
 {
     asm {
         .set noreorder

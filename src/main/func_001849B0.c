@@ -5,7 +5,7 @@ extern char D_004D9360[];
 extern void Event_Construct(Msg* m, void* type);
 extern int TeleportMsg_IsMode3(Msg* m);
 extern void* Mtx_GetIdentity(void);
-extern void func_0015A400(Vec4* out, void* v);
+extern void cVector_Copy_WSet0(Vec4* out, void* v);
 extern void Vec4_CopyAsPoint(Vec4* out, void* v);
 extern void Mtx_SetRotationTranslation(void* data, void* obj, Vec4* v);
 extern void Event_Send(Msg* m, void* target, int immediate);
@@ -22,7 +22,7 @@ void Npc_v2B(void* target, void* pos)
     msg.vtable = D_004D9360;
     msg.kind = 0;
     if (TeleportMsg_IsMode3(m)) {
-        func_0015A400(&a, pos);
+        cVector_Copy_WSet0(&a, pos);
         v = &a;
     } else {
         Vec4_CopyAsPoint(&b, pos);

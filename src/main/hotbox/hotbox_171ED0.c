@@ -9,7 +9,7 @@
 
 /* merge_units: begin func_00171ED0 */
 #pragma push /* merge_units */
-void* func_00172360(char* obj, int n); /* gsynth: defined below */
+void* cLList_cEnvSettingsPtr_opIndex(char* obj, int n); /* gsynth: defined below */
 #pragma cplusplus on
 struct V171 { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int v4(); virtual int v5(); virtual int v6(); virtual int v7(); virtual int v8(); virtual int v9(); virtual int v10(); virtual int v11(); virtual int v12(); virtual int v13(); virtual int v14(); virtual int v15(); virtual int v16(); virtual int v17(); virtual int v18(); virtual int v19(); virtual int v20(); virtual int v21(); virtual int v22(); virtual int v23(); virtual int v24(); virtual int v25(); };
 typedef struct { void* vt; char pad[0x18]; int f1c; unsigned char b20; char p21[3]; int f24; int f28; int f2c; } MA171;
@@ -29,11 +29,11 @@ extern int Player_GetIndex(int);
 extern void Event_Construct(void*, char*);
 extern void Event_Send(void*, void*, int);
 extern void cMessage_dtor(void*, int);
-extern int func_001723F0(void*);
+extern int cLList_cEnvSettingsPtr_Empty(void*);
 #if 0 /* merge_units */
-extern int* func_00172360(void*, int);
+extern int* cLList_cEnvSettingsPtr_opIndex(void*, int);
 #endif /* merge_units */
-#define func_00172360(a0, a1) ((int *)func_00172360((char *)(a0), (a1))) /* merge_units */
+#define cLList_cEnvSettingsPtr_opIndex(a0, a1) ((int *)cLList_cEnvSettingsPtr_opIndex((char *)(a0), (a1))) /* merge_units */
 
 extern void EnvController_ActivateFirst(void*, int);
 extern void ActiveList_RemoveObject(char*, T171*);
@@ -82,7 +82,7 @@ extern "C" void Hotbox_SendLinkMessages(O171* o, E171* ev) {
         break;
     case 5: {
         void* g = D_004FFBD4;
-        EnvController_ActivateFirst(g, func_001723F0(g) ? 0 : *func_00172360(g, 0));
+        EnvController_ActivateFirst(g, cLList_cEnvSettingsPtr_Empty(g) ? 0 : *cLList_cEnvSettingsPtr_opIndex(g, 0));
         break;
     }
     case 8: case 12: case 13: case 14: case 18: {
@@ -120,7 +120,7 @@ extern "C" void Hotbox_SendLinkMessages(O171* o, E171* ev) {
         break;
     }
 }
-#undef func_00172360 /* merge_units */
+#undef cLList_cEnvSettingsPtr_opIndex /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00171ED0(void) {}
 #pragma pop /* merge_units */
@@ -129,10 +129,10 @@ static inline void merge_flush_func_00171ED0(void) {}
 /* merge_units: begin func_00172360 */
 #pragma push /* merge_units */
 typedef struct G7N2 { struct G7N2* prev; struct G7N2* next; } G7N2;
-extern G7N2* func_0013ADF0(void* p);
-void* func_00172360(char* obj, int n)
+extern G7N2* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void(void* p);
+void* cLList_cEnvSettingsPtr_opIndex(char* obj, int n)
 {
-    G7N2* node = func_0013ADF0(obj + 4)->next;
+    G7N2* node = details_compressed_pair_imp_cAllocator_node_node_base_1_second_void(obj + 4)->next;
     if (n >= 0) {
         while (n > 0) { node = node->next; n--; }
     } else {

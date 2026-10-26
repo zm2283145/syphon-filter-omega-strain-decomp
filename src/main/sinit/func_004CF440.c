@@ -1,6 +1,6 @@
 #include "types.h"
 int __register_global_object();
-int func_00144930();
+int cSubclassId_dtor();
 int Script_cNINotice_Action();
 int ScriptType_cNINotice_Init();
 int Script_cNIEventLight_Reset();
@@ -58,10 +58,10 @@ void StaticInit_RegisterNIEvent(void) {
     D_004F7C30 = "MSGGAME_NI_EVENT_NOTICE";
     D_004F7C38 = "MSGGAME_NI_CAMERA_MSG";
     D_004F7C60 = "NI_EVENT";
-    __register_global_object(&D_004F7C60, func_00144930, &D_004F7C50);
+    __register_global_object(&D_004F7C60, cSubclassId_dtor, &D_004F7C50);
     D_004F7C68 = Script_RegisterVariable("LaserRad", (int)&D_0048AE20, &D_00493890);
     D_004F7C98 = "NI_LIGHT";
-    __register_global_object(&D_004F7C98, func_00144930, &D_004F7C88);
+    __register_global_object(&D_004F7C98, cSubclassId_dtor, &D_004F7C88);
     D_004F7CA0 = Script_RegisterType("cNIEventOBJ", ScriptType_cNIEventOBJ_Init, 0, 1);
     D_004F7CA8 = D_004F7CA0;
     D_004F7CB0 = Script_RegisterNative(D_004F7CA0, Script_cNIEventOBJ_Play, &D_00493880, "Play", 1, &D_004F7CA0);

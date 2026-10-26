@@ -15,16 +15,16 @@
 #include "types.h"
 #include "NetObj_types.h"
 
-extern int func_003FB750(int index);
+extern int cNetObj_RemovePlayer_int(int index);
 
 /* Takes the 7-bit field in bits 24..30 of word +0x0C, converts it to a zero-based
- * index (clamped at 0) and forwards it to func_003FB750. */
-int func_003FB720(NetObjFlags* obj) {
+ * index (clamped at 0) and forwards it to cNetObj_RemovePlayer_int. */
+int cNetObj_RemovePlayer_cGOBJP(NetObjFlags* obj) {
     int index = ((obj->flags & 0x7f000000) >> 24) - 1;
     if (index < 0) {
         index = 0;
     }
-    return func_003FB750(index);
+    return cNetObj_RemovePlayer_int(index);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003FB720 */
@@ -55,12 +55,12 @@ struct PsNode { char pad[0x10]; PsRef ref; };
 struct PsIt { PsNode* p; };
 extern "C" {
 extern char D_0055C770[];
-void func_003FC000(PsIt*, void*, int*);
-void func_003FB8C0(PsIt*, void*);
-PsIt* func_003FB8B0(PsIt*, PsIt*);
-void func_003FC0C0(void* map, PsIt* it);
+void std_tree_pair_int_value_compare_cAllocator_pair_find_intR_2(PsIt*, void*, int*);
+void std_map_int_cSafePtr_cGOBJ_cAllocator_pair_end(PsIt*, void*);
+PsIt* cAssocArray_int_cSafePtr_cGOBJ_Iterator_ctor(PsIt*, PsIt*);
+void std_tree_pair_int_value_compare_cAllocator_pair_erase(void* map, PsIt* it);
 }
-extern "C" int func_003FB750(int key)
+extern "C" int cNetObj_RemovePlayer_int(int key)
 {
     if (key < 4 && key >= 0) {
         PsIt e2;
@@ -73,10 +73,10 @@ extern "C" int func_003FB750(int key)
         PsObj* o;
         PsRef* r;
         PsObj* got;
-        func_003FC000(&it, D_0055C770, &key);
+        std_tree_pair_int_value_compare_cAllocator_pair_find_intR_2(&it, D_0055C770, &key);
         n = it.p;
-        func_003FB8C0(&e, D_0055C770);
-        func_003FB8B0(&e2, &e);
+        std_map_int_cSafePtr_cGOBJ_cAllocator_pair_end(&e, D_0055C770);
+        cAssocArray_int_cSafePtr_cGOBJ_Iterator_ctor(&e2, &e);
         if ((n == e2.p) ^ 1) {
             o = n->ref.obj;
             r = &n->ref;
@@ -88,7 +88,7 @@ extern "C" int func_003FB750(int key)
                 if (!((o == 0 || o->serial == r->serial) ? o : 0)->IsBusy()) return 0;
             }
             er.p = n;
-            func_003FC0C0(D_0055C770, &er);
+            std_tree_pair_int_value_compare_cAllocator_pair_erase(D_0055C770, &er);
             return 1;
         }
     }

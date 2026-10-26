@@ -24,7 +24,7 @@ typedef struct ScalarCollection {
     int unk08;
 } ScalarCollection;
 
-/* Object built by func_0027B900 (>= 0x58 bytes). */
+/* Object built by cHudNetLobby_ctor (>= 0x58 bytes). */
 typedef struct Unk27B900 {
     int* handle;               /* 0x00 */
     int unk04;                 /* 0x04 */
@@ -68,9 +68,9 @@ typedef struct ListIter {
 /* Base of the motion-graph nodes (built by MotionNode_BaseCtor, 0x20 bytes). */
 typedef struct MotionNode {
     void* vtable;          /* 0x00 */
-    char type;             /* 0x04: 2 = slider, 3 = node built by func_001F2B70 */
+    char type;             /* 0x04: 2 = slider, 3 = node built by cSkaSwitch_ctor */
     char pad05[0xB];
-    int name;              /* 0x10: initialized by func_00132800, copied by Quat_Assign */
+    int name;              /* 0x10: initialized by cQuaternion_ctor_cQuaternionR, copied by Quat_Assign */
     char pad14[0xC];
 } MotionNode;
 
@@ -106,7 +106,7 @@ typedef struct Vec2f {
     float y;
 } Vec2f;
 
-/* Object built by func_001F0540 on top of func_003B2950 (>= 0x70 bytes). */
+/* Object built by cSkaRotatableAnim_ctor on top of cSkaAnim_ctor_eType_cSkaAnimR_eAxisOfMotion_bool (>= 0x70 bytes). */
 typedef struct Unk1F0540 {
     void* vtable;          /* 0x00 */
     char pad04[0x4C];
@@ -117,7 +117,7 @@ typedef struct Unk1F0540 {
     Vec4 unk60;            /* 0x60 */
 } Unk1F0540;
 
-/* Object built by func_001F32E0: a looked-up motion followed by an array at +4. */
+/* Object built by cSkaSwitchItem_ctor_cString16NR_cSkaAnimationSetR_cSkaInitListOfPointersR: a looked-up motion followed by an array at +4. */
 typedef struct Unk1F32E0 {
     int unk00;             /* 0x00 */
     ObjVec list;           /* 0x04 */
@@ -193,7 +193,7 @@ typedef struct Vec3f {
     float z;
 } Vec3f;
 
-/* Value with "valid" flag: id -1 and flag cleared by func_00237380. */
+/* Value with "valid" flag: id -1 and flag cleared by tLoadRec_ctor. */
 typedef struct IdFlag {
     int id;                /* 0x00 */
     char flag;             /* 0x04 */
@@ -220,7 +220,7 @@ typedef struct Unk251350 {
     int unk18;             /* 0x18 */
 } Unk251350;
 
-/* Object built by func_00288A80 on top of GuiWidget_ctor (>= 0x54 bytes). */
+/* Object built by GuiTitleScreen_ctor on top of GuiWidget_ctor (>= 0x54 bytes). */
 typedef struct Unk288A80 {
     void* vtable;          /* 0x00 */
     char pad04[0x44];

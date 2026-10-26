@@ -11,7 +11,7 @@ struct M {
 };
 #pragma push
 #pragma opt_unroll_loops off
-extern "C" M* func_003B6BC0(M* d, const M* s)
+extern "C" M* cArray_FixedSize_cVector_4_ctor_cArrayFixedSizeR(M* d, const M* s)
 {
     V* p = d->r;
     V* e = d->r + 4;

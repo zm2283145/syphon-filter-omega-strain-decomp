@@ -77,7 +77,7 @@ void* String_Dtor(void* self, short deleteFlag);
 #endif /* merge_units */
 #define String_Dtor(a0, a1) (String_Dtor((Str348FC0 *)(a0), (int)(a1))) /* merge_units */
 
-void* func_0013B2E0(void* self, short deleteFlag);
+void* cArray_int_dtor(void* self, short deleteFlag);
 void* GuiWidget_Destroy(void* self, short deleteFlag);
 }
 struct O3490F0 { void* vtable; };
@@ -90,7 +90,7 @@ extern "C" O3490F0* GuiNetMessageArray_dtor(O3490F0* self, short deleteFlag)
             String_Dtor(m, 0);
         if (self) {
             self->vtable = D_004E0D20;
-            func_0013B2E0((char*)self + 0x60, -1);
+            cArray_int_dtor((char*)self + 0x60, -1);
             GuiWidget_Destroy(self, 0);
         }
         if (deleteFlag > 0)

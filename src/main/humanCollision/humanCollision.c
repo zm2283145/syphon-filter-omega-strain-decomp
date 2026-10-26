@@ -27,12 +27,12 @@ HumanColPresetCfg* HumanColPreset_Copy(HumanColPresetCfg* dst, HumanColPresetCfg
     return dst;
 }
 
-Word* func_001EB380(Word* dst, Word* src) {
+Word* cBitArray_5_ctor_cBitArrayR(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-Word* func_001EB390(Word* dst, Word* src) {
+Word* cBitArray_19_ctor_cBitArrayR(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
@@ -111,7 +111,7 @@ extern "C" {
 int HumanCol_InstallPresets(...);                        
 int *Mem_Alloc(...);                       
 int __construct_array(...);            
-int func_001361D0(...);                     /* returns *p */
+int cArrayCapacity_Int(...);                     /* returns *p */
 int HumanColBufA_Ctor(...);
 int HumanColBufB_Reserve(...);
 int HumanColBufB_Init(...);
@@ -161,7 +161,7 @@ extern "C" void HumanCol_Init(void) {
         if (bufB != NULL) {
             capB = HUMANCOL_VEC_RESERVE;
             HumanColBufB_Init(bufB);
-            HumanColBufB_Reserve(bufB, func_001361D0(&capB));
+            HumanColBufB_Reserve(bufB, cArrayCapacity_Int(&capB));
             ((HumanColVec *)bufB)->flag0C = 1;
         }
         g_HumanColBufB = bufB;

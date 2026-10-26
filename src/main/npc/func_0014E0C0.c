@@ -55,10 +55,10 @@ extern char g_ActorActionMsgClass[], D_004E0840[], D_004E0140[], D_004E01A0[], D
 extern unsigned char g_IsMultiplayer;
 extern unsigned char D_00489DE0, D_00489DE8;
 extern int g_HumanActorClassKey, D_004EA770;
-LNode* func_0014EE80(void*);
-LNode* func_0014EE70(void*);
-void func_0014EE60(It*, LNode*);
-void func_0014EE50(It*, LNode*);
+LNode* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_3(void*);
+LNode* std_list_deleter_cLookAtListItem_tail(void*);
+void std_list_deleter_cLookAtListItem_generic_iterator_ctor_nodeP(It*, LNode*);
+void std_list_deleter_cLookAtListItem_generic_iterator_ctor_nodebaseP(It*, LNode*);
 int NpcPerception_SightTest(void*, V*, int, int);
 void Event_Construct(void*, void*);
 void Event_Send(void*, void*, int);
@@ -122,10 +122,10 @@ static inline void Normalize(V* v, float* len) {
     __asm__ volatile("lqc2 vf1, 0x0(%1); vmul.xyz vf2, vf1, vf1; vmulax.w ACC, vf0, vf2x; vmadday.w ACC, vf0, vf2y; vmaddz.w vf3, vf0, vf2z; vsqrt Q, vf3w; vwaitq; vaddq.x vf4, vf0, Q; vdiv Q, vf0w, vf4x; vwaitq; vmulq.xyz vf1, vf1, Q; sqc2 vf1, 0x0(%1); qmfc2.ni %0, vf4; sw %0, 0x0(%2)" : "=&r"(t) : "r"(v), "r"(len) : "memory");
 }
 
-static inline It First(char* l) { It t(func_0014EE80(l + 4)); return t; }
-static inline It Begin0(LNode* n) { It t; func_0014EE60(&t, n); return t; }
-static inline It Begin(char* l) { It t; func_0014EE60(&t, func_0014EE70(l)->next); return t; }
-static inline It End(char* l) { It t; func_0014EE50(&t, func_0014EE70(l)); return t; }
+static inline It First(char* l) { It t(details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_3(l + 4)); return t; }
+static inline It Begin0(LNode* n) { It t; std_list_deleter_cLookAtListItem_generic_iterator_ctor_nodeP(&t, n); return t; }
+static inline It Begin(char* l) { It t; std_list_deleter_cLookAtListItem_generic_iterator_ctor_nodeP(&t, std_list_deleter_cLookAtListItem_tail(l)->next); return t; }
+static inline It End(char* l) { It t; std_list_deleter_cLookAtListItem_generic_iterator_ctor_nodebaseP(&t, std_list_deleter_cLookAtListItem_tail(l)); return t; }
 static inline void SubEq(V* a, const V& b) { Sub(a, a, (V*)&b); }
 static inline int Sight(void* ai, const V& p) { return NpcPerception_SightTest(ai, (V*)&p, 1, 0); }
 static inline Slot* CurSlot(Npc* self) { unsigned char i = self->cur; Slot* r = 0; if (self->slots[i].on) r = &self->slots[i]; return r; }

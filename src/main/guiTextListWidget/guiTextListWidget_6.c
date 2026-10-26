@@ -53,7 +53,7 @@ extern "C" void GuiArrayWidget_Init(Screen* self)
 
 extern char D_004E0D20[];         /* GuiWidget424C50 vtable */
 extern int PtrVec_PushBack_1C1080(L4OwnedVec*, void*);
-extern int func_001C10A0(L4OwnedVec*);
+extern int std_vector_int_ctor_void(L4OwnedVec*);
 extern GuiWidget* GuiWidget_ctor(GuiWidget*);
 
 /* Constructor of a GuiWidget subclass holding a vector seeded with one entry. */
@@ -63,7 +63,7 @@ GuiWidget424C50* GuiArrayWidget_ctor(GuiWidget424C50* self) {
     GuiWidget_ctor(&self->base);
     vec = &self->unk60;
     self->base.vtable = D_004E0D20;
-    func_001C10A0(vec);
+    std_vector_int_ctor_void(vec);
     vec->owned = 1;
     self->unk58 = 0;
     self->unk48 = 1;

@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-void* func_00139060(char* self) {
+void* details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void(char* self) {
     return self + 4;
 }
 
@@ -32,11 +32,11 @@ List* ScalarCollection_Init(List* l) {
 #include "alloc_guard.h"
 extern "C" {
 void Mem_Free(int pool, void* allocation, char* file, int line);
-void func_0036D5D0(void* p, int flags);
+void cHogFile_dtor(void* p, int flags);
 }
 struct LN_9090 { LN_9090* prev; LN_9090* next; char val[4]; };
 struct L_9090 { int count; };
-extern "C" void func_00139090(LN_9090** result, L_9090* list, LN_9090** first, LN_9090** last)
+extern "C" void std_list_deleter_cHogFile_erase_listdeleter_listdeleter(LN_9090** result, L_9090* list, LN_9090** first, LN_9090** last)
 {
     LN_9090* f = *first;
     LN_9090* l = *last;
@@ -48,7 +48,7 @@ extern "C" void func_00139090(LN_9090** result, L_9090* list, LN_9090** first, L
     f->prev->next = lp->next;
     lp->next->prev = f->prev;
     while (*first != *last) {
-        func_0036D5D0((*first)->val, -1);
+        cHogFile_dtor((*first)->val, -1);
         LN_9090* n = *first;
         *first = (*first)->next;
         if (n) {
@@ -64,7 +64,7 @@ extern "C" void func_00139090(LN_9090** result, L_9090* list, LN_9090** first, L
 
 /* merge_units: begin func_001391E0 */
 #pragma push /* merge_units */
-List* func_001391E0(List* l) {
+List* std_list_deleter_cHogFile_ctor(List* l) {
     l->count = 0;
     l->first = l->last = &l->first;
     return l;

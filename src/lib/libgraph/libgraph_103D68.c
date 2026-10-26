@@ -13,10 +13,10 @@ typedef struct { unsigned char d[0x14]; } sceDmaEnv;
 
 extern DmaChan *D_00485EE0[10];
 static int D_00498320[10] = { 1, 1, 1, 1, 1, 0, 0, 0, 1, 1 };
-extern void func_00103D08(void *, int);
-extern int func_00103E48(sceDmaEnv *);
+extern void memclr(void *, int);
+extern int sceDmaPutEnv(sceDmaEnv *);
 
-int func_00103D68(int mode)
+int sceDmaReset(int mode)
 {
     sceDmaEnv env;
     int ret = *(volatile unsigned int *)0x1000E000 & 1;
@@ -34,8 +34,8 @@ int func_00103D68(int mode)
     }
     *(unsigned int *)0x1000E010 = 0xFF1F;
     *(unsigned int *)0x1000E010 = *(volatile unsigned int *)0x1000E010 & 0xFF1F0000;
-    func_00103D08(&env, sizeof(env));
-    func_00103E48(&env);
+    memclr(&env, sizeof(env));
+    sceDmaPutEnv(&env);
     if (mode == 1)
         *(volatile unsigned int *)0x1000E000 |= 1;
     return ret;

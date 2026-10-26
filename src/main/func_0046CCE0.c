@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046CCE0(void) {
+int MediusUniqueCallbackJoinChannelFwdResponseHandler(void) {
     return 60;
 }

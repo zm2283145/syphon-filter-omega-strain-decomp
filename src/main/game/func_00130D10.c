@@ -7,13 +7,13 @@ int Alloc_Lock(int);
 int Alloc_Unlock(int);                                  
 int *Mem_Alloc(int, int, char *, int);                     
 int String_Copy(int *, int);                          
-int func_00130F20(int, int **);                       
+int std_vector_tVUMNamePairPtr_push_back(int, int **);                       
 int strlen(int);                                    
 extern char D_0049A890;
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
 
-void func_00130D10(int arg0, int arg1, int arg2, int arg3) {
+void cGameSystem_AddVUMGOBJ(int arg0, int arg1, int arg2, int arg3) {
     int temp_s4;
     int *var_s4;
     int *sp6C;
@@ -59,5 +59,5 @@ void func_00130D10(int arg0, int arg1, int arg2, int arg3) {
     *temp_s2 = arg1;
     F_(sp6C, 0x4, int) = (int)(temp_s3_2);
     F_(sp6C, 0x8, int) = (int)(var_s4);
-    func_00130F20(arg0 + 0x2C, &sp6C);
+    std_vector_tVUMNamePairPtr_push_back(arg0 + 0x2C, &sp6C);
 }

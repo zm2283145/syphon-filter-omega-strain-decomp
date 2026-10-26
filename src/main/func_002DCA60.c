@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_002DCA60(void) {
+int stubEncode(void) {
     return 0;
 }

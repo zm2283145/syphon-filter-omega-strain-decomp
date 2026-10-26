@@ -5,14 +5,14 @@
  */
 
 /* merge_units: begin func_002F8EC8 */
-extern int func_002F7D28(unsigned char *);
-extern int func_002F8DC8(int, int, unsigned char *);
-int func_002F8EC8(int a, int b, unsigned char *n)
+extern int IsNullRCKey(unsigned char *);
+extern int KM_GetSymmetricKey(int, int, unsigned char *);
+int KM_CompareSymmetricKey(int a, int b, unsigned char *n)
 {
     unsigned char buf[0x40];
     int i;
-    if (func_002F7D28(n)) return -1;
-    if (func_002F8DC8(a, b, buf)) return 1;
+    if (IsNullRCKey(n)) return -1;
+    if (KM_GetSymmetricKey(a, b, buf)) return 1;
     i = 0x3F;
     do {
         if (n[i] > buf[i]) return 1;
@@ -24,14 +24,14 @@ int func_002F8EC8(int a, int b, unsigned char *n)
 
 /* merge_units: begin func_002F8F70 */
 extern void *memset(void *, int, unsigned int);
-extern int func_002F7D68(int);
-extern char *func_002F7ED8(int, int);
-void func_002F8F70(int a, int b)
+extern int GetKeyMaster(int);
+extern char *GetKeyChain(int, int);
+void KM_DeleteSymmetricKey(int a, int b)
 {
     char *s;
-    int h = func_002F7D68(a);
+    int h = GetKeyMaster(a);
     if (h == 0) return;
-    s = func_002F7ED8(h, b);
+    s = GetKeyChain(h, b);
     if (s == 0) return;
     if (*(void **)(s + 0x18)) memset(*(void **)(s + 0x18), 0, 0x40);
     if (*(void **)(s + 0x10)) memset(*(void **)(s + 0x10), 0, 0x10C);

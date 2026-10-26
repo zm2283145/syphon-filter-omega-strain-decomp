@@ -21,7 +21,7 @@ typedef struct FeListPos {
 
 typedef struct FeWidget {
     char pad00[0x14];
-    unsigned short flags;           /* 0x14 bit 3 tested by func_002CAB70 */
+    unsigned short flags;           /* 0x14 bit 3 tested by cGameFrontEnd_IsMessageBoxAwake_void_2 */
 } FeWidget;
 
 typedef struct FeScreen {

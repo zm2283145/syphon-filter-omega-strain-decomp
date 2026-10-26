@@ -17,11 +17,11 @@
  */
 
 
-void* func_001907B0(char* self) {
+void* cSkaAnimDataSample_Rotation(char* self) {
     return self + 48;
 }
 
-Vec4* func_001907C0(Vec4* dst, Vec4* src) {
+Vec4* cQuaternion_ctor_floatP(Vec4* dst, Vec4* src) {
     dst->x = src->x;
     dst->y = src->y;
     dst->z = src->z;

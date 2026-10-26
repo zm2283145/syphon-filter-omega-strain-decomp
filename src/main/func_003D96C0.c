@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_003D96C0(Word* self) {
+void std_vector_deleter_EnumField_clear(Word* self) {
     self[1].value = 0;
 }

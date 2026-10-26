@@ -11,7 +11,7 @@
  *
  * The destructor is inlined into each user. CodeWarrior also emits an
  * out-of-line copy per translation unit; the original link merged them into
- * the single copy at 0x0012F530 (func_0012F530). Here each per-unit copy is
+ * the single copy at 0x0012F530 (cTimerDisable_dtor). Here each per-unit copy is
  * weak and placed in ".dtors_drop", which the link script discards, so the
  * users stay byte-identical and no extra code reaches the image. (The unit
  * that owns the real copy at 0x0012F530 should define it without these

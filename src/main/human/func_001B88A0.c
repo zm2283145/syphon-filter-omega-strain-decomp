@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-float func_001B88A0(void) {
+float cSplinedMotion_Angle_InitPos(void) {
     return 0.0f;
 }
 
-float func_001B88B0(void) {
+float cSplinedMotion_Angle_ZeroVel(void) {
     return 0.0f;
 }

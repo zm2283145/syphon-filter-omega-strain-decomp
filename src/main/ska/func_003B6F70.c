@@ -5,7 +5,7 @@
 
 #include "types.h"
 
-Word* func_003B6F70(Word* dst, Word* src) {
+Word* cString4_opAssign(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }

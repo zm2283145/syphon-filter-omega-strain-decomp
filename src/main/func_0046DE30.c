@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046DE30(void) {
+int MediusUniqueCallbackInvitePlayerToClan_ByNameRequestHandler(void) {
     return 253;
 }

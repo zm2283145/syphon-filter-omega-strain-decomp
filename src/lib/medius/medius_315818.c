@@ -21,13 +21,13 @@ typedef struct {
     int xBC;
 } Obj5818;
 extern int D_00598428;
-extern int func_00314FE0(Obj5818 *o);
-extern int func_002DE880(int op, int id, int h, int k, int len, Arg5818 *a);
-int func_00315818(Obj5818 *o, Ent5818 *e)
+extern int NetStreamMediaIsValidInfo(Obj5818 *o);
+extern int NetSendDmeMessage(int op, int id, int h, int k, int len, Arg5818 *a);
+int NetStreamMediaSendAddressInfo(Obj5818 *o, Ent5818 *e)
 {
     Arg5818 a;
     int m, r;
-    if (func_00314FE0(o) != 1) return 0x17;
+    if (NetStreamMediaIsValidInfo(o) != 1) return 0x17;
     if (e == 0) return 0x17;
     m = o->mode;
     if (m != 1) return 0x17;
@@ -38,7 +38,7 @@ int func_00315818(Obj5818 *o, Ent5818 *e)
     a.e = o->xAC;
     a.f = o->xB4;
     a.g = o->xBC;
-    r = func_002DE880(0x50, o->id, e->h, D_00598428, 0x1C, &a);
+    r = NetSendDmeMessage(0x50, o->id, e->h, D_00598428, 0x1C, &a);
     if (r == 0) e->b6 = m;
     return r;
 }
@@ -54,14 +54,14 @@ typedef struct {
     unsigned int idx;
     int x214;
 } Obj58D8;
-extern int func_003150D0(int id, Obj58D8 **out);
-int func_003158D8(int id, int unused, unsigned short *msg)
+extern int NetStreamMediaFindValidInfo(int id, Obj58D8 **out);
+int NetStreamMediaEnumChannelCallback(int id, int unused, unsigned short *msg)
 {
     Obj58D8 *o = 0;
     Obj58D8 *p;
     unsigned int i;
     if (msg == 0) return 0;
-    if (func_003150D0(id, &o) != 0) return 0;
+    if (NetStreamMediaFindValidInfo(id, &o) != 0) return 0;
     p = o;
     i = p->idx;
     if (i >= 0x40) return 0;

@@ -14,19 +14,19 @@ typedef struct { char c[16]; } C16;
 typedef struct { Q q[64]; } Q64;
 typedef struct { C16 a; __int128 b; C16 c; C16 d; Q64 e; } Blk;
 
-extern void func_00360510(char*);
+extern void GuiAgentInfo_AgentInfo_Reset(char*);
 extern int String_CtorCStr_13B480(char*, char*);
 extern int String_Dtor(char*, int);
 extern int String_AssignString(char*, char*);
 extern char* DME_GetLobby(void);
-extern int func_0044A1D0(char*);
+extern int SFOLobby_CellIsPlayerCellLeader(char*);
 extern int SFOLobby_FormatError(char*, int);
-extern char* func_0044A070(char*);
+extern char* SFOLobby_CellGetName(char*);
 extern char* func_00448FF0(char*, int);
 extern void* memset(void*, int, int);
 extern void* memcpy(void*, void*, int);
 extern void* Agent_GetSelected(void*, int);
-extern void func_00406EC0(Blk*, char*);
+extern void SKL_UncompressSKL(Blk*, char*);
 extern void Skl_Load(void*, char*, char*);
 extern void GuiAgentInfo_Refresh(char*);
 extern char D_004BB868[];
@@ -39,7 +39,7 @@ extern C16 D_0055D540;
 extern Q64 D_0055D550;
 
 typedef struct { unsigned char type, b1, b2, b3; unsigned short h4, h6, h8, hA, hC, hE; int x10, x14, x18, x1C, x20, mask; char data[0xC0]; int xE8; } Msg;
-void func_00360610(char* self, int* arg1, Msg* arg2) {
+void GuiAgentInfo_DisplayRemoteAgent(char* self, int* arg1, Msg* arg2) {
     char s1[16];
     char s2[16];
     char s3[16];
@@ -50,18 +50,18 @@ void func_00360610(char* self, int* arg1, Msg* arg2) {
     Blk* p;
     int i, j;
 
-    func_00360510(self + 0x88);
+    GuiAgentInfo_AgentInfo_Reset(self + 0x88);
     F_(self, 0xD0, int) = arg2->b1;
     String_CtorCStr_13B480(s1, (char*)(arg1 + 1));
     String_AssignString(self + 0xB8, s1);
     String_Dtor(s1, 0);
     o = DME_GetLobby();
     if (o) {
-        F_(self, 0xF4, char) = func_0044A1D0(o);
+        F_(self, 0xF4, char) = SFOLobby_CellIsPlayerCellLeader(o);
         if (!(unsigned char)SFOLobby_FormatError(o, 0)) {
             if (arg1[0] == F_(o, 0x2480, int)) {
                 F_(self, 0xF8, int) = -1;
-                String_CtorCStr_13B480(s2, func_0044A070(o));
+                String_CtorCStr_13B480(s2, SFOLobby_CellGetName(o));
                 String_AssignString(self + 0xC4, s2);
                 String_Dtor(s2, 0);
             } else {
@@ -110,7 +110,7 @@ void func_00360610(char* self, int* arg1, Msg* arg2) {
         Agent_GetSelected(g_Game, -1);
         p = (Blk*)(F_(self, 0x120, char*) + 0xA0);
         memset(p, 0, 0x440);
-        func_00406EC0(p, buf);
+        SKL_UncompressSKL(p, buf);
     } else {
         Skl_Load(g_AgentPartCache, "GAMEDATA\\FRONTEND\\MALE.SKL", "GAMEDATA\\FRONTEND\\FEMALE.SKL");
         p = (Blk*)(F_(self, 0x120, char*) + 0xA0);
@@ -202,9 +202,9 @@ void func_00299360(Rel_09F0* r, short f);
 void AgentData_GetRatings(Agent_09F0* a, Rel_09F0* r);
 void AgentData_GetAwardRows(Agent_09F0* a, int k, Rel_09F0* r);
 #if 0 /* merge_units */
-void func_00360510(void* p);
+void GuiAgentInfo_AgentInfo_Reset(void* p);
 #endif /* merge_units */
-#define func_00360510(a0) (func_00360510((char *)(a0))) /* merge_units */
+#define GuiAgentInfo_AgentInfo_Reset(a0) (GuiAgentInfo_AgentInfo_Reset((char *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 void GuiAgentInfo_Refresh(Panel_09F0* p);
@@ -223,7 +223,7 @@ extern "C" void GuiAgentInfo_Fill(Panel_09F0* p)
     Rel_09F0 r2;
     Pal_09F0* src;
 
-    func_00360510(&p->s88);
+    GuiAgentInfo_AgentInfo_Reset(&p->s88);
     a = Agent_GetSelected(&g_Game, -1);
     String_CtorCStr_13B480(&s1, AgentData_GetName(a));
     String_AssignString(p->strB8, &s1);
@@ -278,7 +278,7 @@ extern "C" void GuiAgentInfo_Fill(Panel_09F0* p)
 #undef String_CtorCStr_13B480 /* merge_units */
 #undef String_AssignString /* merge_units */
 #undef String_Dtor /* merge_units */
-#undef func_00360510 /* merge_units */
+#undef GuiAgentInfo_AgentInfo_Reset /* merge_units */
 #undef GuiAgentInfo_Refresh /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003609F0 */

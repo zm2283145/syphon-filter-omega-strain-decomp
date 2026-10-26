@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_00104630(int a0, int a1) {
+int sceGifPkReserve(int a0, int a1) {
     int tmp0;
 
     tmp0 = *(int*)(char*)a0;

@@ -7,11 +7,11 @@
 /* merge_units: begin func_0031DD70 */
 #include "types.h"
 extern float D_004E1CA0;
-int func_0031DD70(int n, float x) { int r = (int)(512.0f / x * D_004E1CA0 + 0.5f); if (n < r) r = n; return r; }
+int FindBand4VoicLD(int n, float x) { int r = (int)(512.0f / x * D_004E1CA0 + 0.5f); if (n < r) r = n; return r; }
 /* merge_units: end func_0031DD70 */
 
 /* merge_units: begin func_0031DDB0 */
-void func_0031DDB0(float* in, float* out)
+void NellyWarpSC36(float* in, float* out)
 {
     unsigned int i, j, k;
     out += 255;
@@ -23,7 +23,7 @@ void func_0031DDB0(float* in, float* out)
 /* merge_units: end func_0031DDB0 */
 
 /* merge_units: begin func_0031DE38 */
-int func_0031DE38(float x)
+int NellyAdaptiveWindow(float x)
 {
     if (x > 96.0f) return 0x105;
     if (x > 88.0f) return 0xF1;
@@ -40,8 +40,8 @@ int func_0031DE38(float x)
 
 /* merge_units: begin func_0031DEC8 */
 extern float D_004E1C00;
-extern float func_00121B18(float x);
-float func_0031DEC8(float x) { return func_00121B18(x + 1.0f) * D_004E1C00; }
+extern float Libc_Log10f(float x);
+float EnergyToLevel(float x) { return Libc_Log10f(x + 1.0f) * D_004E1C00; }
 /* merge_units: end func_0031DEC8 */
 
 /* merge_units: begin func_0031DEF8 */
@@ -65,9 +65,9 @@ typedef struct {
 } P_31D;
 extern void* (*D_004E1D34)(int n, int size);
 extern void (*D_004E1D38)(void*);
-extern int func_0031ED08(void** p, short n, float x);
-extern int func_0031E828(void** p);
-int func_0031DEF8(Handle_31D* h)
+extern int nemVadInit(void** p, short n, float x);
+extern int nemAgcInit(void** p);
+int nciEnableVAD(Handle_31D* h)
 {
     Inner_31D* in;
     P_31D* p;
@@ -76,8 +76,8 @@ int func_0031DEF8(Handle_31D* h)
     p = D_004E1D34(1, sizeof(P_31D));
     in->p = p;
     if (!p) return 0x1770;
-    if (func_0031ED08(&p->f4, 160, 8000.0f)) return 0x1770;
-    if (func_0031E828(&p->f8)) return 0x1770;
+    if (nemVadInit(&p->f4, 160, 8000.0f)) return 0x1770;
+    if (nemAgcInit(&p->f8)) return 0x1770;
     p->owner = h;
     p->f14 = 0;
     p->f1E = 0;
@@ -86,16 +86,16 @@ int func_0031DEF8(Handle_31D* h)
 /* merge_units: end func_0031DEF8 */
 
 /* merge_units: begin func_0031DFA8 */
-extern int func_0031EDC8(void** p);
-extern int func_0031E8B0(void** p);
-int func_0031DFA8(Handle_31D* h)
+extern int nemVadFree(void** p);
+extern int nemAgcFree(void** p);
+int nciDisableVAD(Handle_31D* h)
 {
     P_31D* p;
     if (h == 0 || h->magic != 0xFACE) return 0x17D4;
     if (h->state != 10) return 0x17DE;
     p = h->inner->p;
-    if (func_0031EDC8(&p->f4)) return 0x17E8;
-    if (func_0031E8B0(&p->f8)) return 0x17E8;
+    if (nemVadFree(&p->f4)) return 0x17E8;
+    if (nemAgcFree(&p->f8)) return 0x17E8;
     if (p) D_004E1D38(p);
     return 0;
 }

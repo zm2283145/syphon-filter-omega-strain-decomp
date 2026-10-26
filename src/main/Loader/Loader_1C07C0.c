@@ -10,7 +10,7 @@
 
 /* merge_units: begin func_001C07C0 */
 #pragma push /* merge_units */
-Rel* func_001C07F0(Rel* r); /* gsynth: defined below */
+Rel* std_vector_imp_charPtr_1_ctor(Rel* r); /* gsynth: defined below */
 /*
  * Matched functions (byte-identical with the retail executable).
  * Loader.cc
@@ -18,18 +18,18 @@ Rel* func_001C07F0(Rel* r); /* gsynth: defined below */
 
 
 #if 0 /* merge_units */
-extern PtrVec* func_001C07F0(PtrVec* v);
+extern PtrVec* std_vector_imp_charPtr_1_ctor(PtrVec* v);
 #endif /* merge_units */
-#define func_001C07F0(a0) ((PtrVec *)func_001C07F0((void *)(a0))) /* merge_units */
+#define std_vector_imp_charPtr_1_ctor(a0) ((PtrVec *)std_vector_imp_charPtr_1_ctor((void *)(a0))) /* merge_units */
 
 
 /* Construct an empty vector that owns its elements. */
-LoaderOwnedVec* func_001C07C0(LoaderOwnedVec* self) {
-    func_001C07F0(&self->vec);
+LoaderOwnedVec* cArray_charPtr_ctor(LoaderOwnedVec* self) {
+    std_vector_imp_charPtr_1_ctor(&self->vec);
     self->owns = 1;
     return self;
 }
-#undef func_001C07F0 /* merge_units */
+#undef std_vector_imp_charPtr_1_ctor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C07C0(void) {}
 #pragma pop /* merge_units */
@@ -37,15 +37,15 @@ static inline void merge_flush_func_001C07C0(void) {}
 
 /* merge_units: begin func_001C07F0 */
 #pragma push /* merge_units */
-Rel* func_001C0840(Rel* r); /* gsynth: defined below */
+Rel* std_vector_imp_cString4_ctor(Rel* r); /* gsynth: defined below */
 #if 0 /* merge_units */
-extern PtrVec* func_001C0840(PtrVec* v);
+extern PtrVec* std_vector_imp_cString4_ctor(PtrVec* v);
 #endif /* merge_units */
-#define func_001C0840(a0) ((PtrVec *)func_001C0840((void *)(a0))) /* merge_units */
+#define std_vector_imp_cString4_ctor(a0) ((PtrVec *)std_vector_imp_cString4_ctor((void *)(a0))) /* merge_units */
 
 
 /* Zero-initialise a three-word vector. */
-Rel* func_001C07F0(Rel* r) {
+Rel* std_vector_imp_charPtr_1_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
@@ -53,12 +53,12 @@ Rel* func_001C07F0(Rel* r) {
 }
 
 /* Construct an empty vector that owns its elements. */
-LoaderOwnedVec* func_001C0810(LoaderOwnedVec* self) {
-    func_001C0840(&self->vec);
+LoaderOwnedVec* cArray_cString4_ctor(LoaderOwnedVec* self) {
+    std_vector_imp_cString4_ctor(&self->vec);
     self->owns = 1;
     return self;
 }
-#undef func_001C0840 /* merge_units */
+#undef std_vector_imp_cString4_ctor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C07F0(void) {}
 #pragma pop /* merge_units */
@@ -67,7 +67,7 @@ static inline void merge_flush_func_001C07F0(void) {}
 /* merge_units: begin func_001C0840 */
 #pragma push /* merge_units */
 /* Zero-initialise a three-word vector. */
-Rel* func_001C0840(Rel* r) {
+Rel* std_vector_imp_cString4_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

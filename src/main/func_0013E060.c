@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0013E060(void) {
+int cGOBJ_GetFloorPlane(void) {
     return 0;
 }

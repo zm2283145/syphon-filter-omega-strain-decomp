@@ -21,12 +21,12 @@ extern char D_004BBF40[];
 extern char D_004BBF50[];
 extern int sprintf(char* buf, const char* fmt, ...);
 extern void printf(char* fmt, ...);
-extern void func_0036C030(Blk* b, Blk* v);
-extern void func_0036C040(Blk* b, Blk* v);
-extern Blk* func_0036C050(Blk* b);
-extern Blk* func_0036C060(Heap* h, unsigned int size);
-extern unsigned int func_0036C0B0(Blk* b);
-extern unsigned long long func_0036C4F0(Heap* h);
+extern void cMemChunk_SetPrev(Blk* b, Blk* v);
+extern void cMemChunk_SetNext(Blk* b, Blk* v);
+extern Blk* cMemChunk_GetNext(Blk* b);
+extern Blk* cMemBin_FindBin(Heap* h, unsigned int size);
+extern unsigned int cMemChunk_GetSize(Blk* b);
+extern unsigned long long cMemBin_Consolidate(Heap* h);
 
 static inline unsigned char Blk_Valid(Blk* b)
 {
@@ -88,7 +88,7 @@ char* Mem_HeapAlloc(Heap* h, unsigned int size, char* file, int line)
             bin++;
             if (h->last < bin) {
                 if (tries == 0) {
-                    if (func_0036C4F0(h) == 0) tries++;
+                    if (cMemBin_Consolidate(h) == 0) tries++;
                     bin = start;
                 }
                 tries++;
@@ -120,21 +120,21 @@ char* Mem_HeapAlloc(Heap* h, unsigned int size, char* file, int line)
             *(unsigned int*)b = sz;
         }
         if (nb) {
-            tgt = func_0036C060(h, func_0036C0B0(nb));
+            tgt = cMemBin_FindBin(h, cMemChunk_GetSize(nb));
             it = tgt;
-            sz2 = func_0036C0B0(nb);
-            while (func_0036C050(it) != tgt && func_0036C0B0(func_0036C050(it)) < sz2) {
-                if ((char*)func_0036C050(it) < h->base || (char*)func_0036C050(it) > h->cur) {
+            sz2 = cMemChunk_GetSize(nb);
+            while (cMemChunk_GetNext(it) != tgt && cMemChunk_GetSize(cMemChunk_GetNext(it)) < sz2) {
+                if ((char*)cMemChunk_GetNext(it) < h->base || (char*)cMemChunk_GetNext(it) > h->cur) {
                     printf(D_004BBF50, it);
-                    func_0036C040(it, tgt);
+                    cMemChunk_SetNext(it, tgt);
                     break;
                 }
-                it = func_0036C050(it);
+                it = cMemChunk_GetNext(it);
             }
-            func_0036C030(nb, it);
-            func_0036C040(nb, func_0036C050(it));
-            func_0036C030(func_0036C050(it), nb);
-            func_0036C040(it, nb);
+            cMemChunk_SetPrev(nb, it);
+            cMemChunk_SetNext(nb, cMemChunk_GetNext(it));
+            cMemChunk_SetPrev(cMemChunk_GetNext(it), nb);
+            cMemChunk_SetNext(it, nb);
             if (h->last < tgt) h->last = tgt;
         }
         b->line = line;

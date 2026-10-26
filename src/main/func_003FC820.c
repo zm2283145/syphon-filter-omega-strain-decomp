@@ -2,4 +2,4 @@
 #pragma cplusplus on
 #include "tree_erase3.h"
 
-DEFINE_TREE_ERASE3(func_003FC820, 0xC, func_003FCC70, func_003FCC50, func_003FCC60, func_003FCBB0, func_003FCB00, D_0049ED08, 0x64)
+DEFINE_TREE_ERASE3(std_tree_pair_int_value_compare_destroy_nodeP_2, 0xC, std_tree_pair_int_value_compare_alloc_void, std_tree_pair_int_value_compare_node_alloc_void, cAllocator_pair_int_destroy_pairP_3, cAllocator_node_deallocate_nodeP_uint_8, opDelete_nodeP_int_bool_charP_etc_7, D_0049ED08, 0x64)

@@ -28,7 +28,7 @@ extern Cb_46E0F0 D_005984A4;
 extern int D_005984DC;
 extern void* memcpy(void*, const void*, unsigned int);
 extern int Net_SendLocked(int, int, int, int, int, int, void*);
-int func_0046E0F0(int a, int b, int c, In_46E0F0* in)
+int MediusUniqueCallbackFileUploadResponseHandler(int a, int b, int c, In_46E0F0* in)
 {
     Pkt_46E0F0 pkt;
     int n;

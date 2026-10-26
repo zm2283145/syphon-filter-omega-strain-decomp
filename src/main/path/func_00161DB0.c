@@ -24,8 +24,8 @@ typedef struct Pt1RwSelf {
     unsigned char reverse;
     unsigned char retry;
 } Pt1RwSelf;
-extern void func_00162010(Pt1RwSelf* s, int id, int flag);
-extern void func_00161FA0(Pt1RwSelf* s, int id, int flag);
+extern void cNodeRequest_SetNodeLOSResultForRestOfList(Pt1RwSelf* s, int id, int flag);
+extern void cNodeRequest_SetCompanionNodeLOSResultForRestOfList(Pt1RwSelf* s, int id, int flag);
 extern Pt1RwNode* NpcNodeSearch_PopFront(void* list, Pt1RwNode* n);
 extern void NpcRoute_RequestLosChecks(Pt1RwSelf* s, int id, int mask);
 
@@ -34,9 +34,9 @@ void NpcRoute_HandleLosResult(Pt1RwSelf* s, unsigned char* flag)
     Pt1RwNode* cur = s->cur;
     int found = 0;
     if (!s->reverse)
-        func_00162010(s, cur->a, !*flag);
+        cNodeRequest_SetNodeLOSResultForRestOfList(s, cur->a, !*flag);
     else
-        func_00161FA0(s, cur->b, !*flag);
+        cNodeRequest_SetCompanionNodeLOSResultForRestOfList(s, cur->b, !*flag);
     do {
         Pt1RwNode* n = s->cur;
         if (n->b < 0) {

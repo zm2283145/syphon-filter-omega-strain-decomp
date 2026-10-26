@@ -17,7 +17,7 @@ int memset(int *, int, int);
 int strncpy(char *, char * , int);                          
 extern char * D_00585E60;
 
-void func_00447BB0(int d0, int d1, int d2, char * arg3) {
+void SFOLobby_Callback_ChatTextFilter(int d0, int d1, int d2, char * arg3) {
     struct { int f40; int f44[8]; int f64[16]; signed char fA4[12]; } sl;
     int temp_s0;
     int temp_a0;
@@ -49,7 +49,7 @@ int memset();
 
 #pragma push
 #pragma opt_common_subs off
-void func_00447C70(int d0, int d1, int d2, char * arg3) {
+void SFOLobby_Callback_LobbyChat(int d0, int d1, int d2, char * arg3) {
     struct { int f30; int f34[8]; int f54[16]; signed char f94[12]; int fA0[2]; int fA8; int fAC[8]; int fCC[33]; } sl;
     char * temp_s1;
 
@@ -87,10 +87,10 @@ void func_00447C70(int d0, int d1, int d2, char * arg3) {
  */
 
 
-void func_00447D70(void) {
+void SFOLobby_Callback_RemoteClientDisconnect(void) {
 }
 
-void func_00447D80(void) {
+void SFOLobby_Callback_RemoteClientConnect(void) {
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00447D70 */

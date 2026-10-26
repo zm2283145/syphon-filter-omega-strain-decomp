@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_0010B558(int a0, int a1) {
+int sceMpegSetImageBuff(int a0, int a1) {
     int tmp0;
 
     tmp0 = *(int*)((char*)a0 + 64);
@@ -14,7 +14,7 @@ int func_0010B558(int a0, int a1) {
     return 1;
 }
 
-int func_0010B568(int a0) {
+int sceMpegDispWidth(int a0) {
     int tmp0;
     int tmp1;
 
@@ -23,7 +23,7 @@ int func_0010B568(int a0) {
     return tmp1;
 }
 
-int func_0010B578(int a0) {
+int sceMpegDispHeight(int a0) {
     int tmp0;
     int tmp1;
 
@@ -32,21 +32,21 @@ int func_0010B578(int a0) {
     return tmp1;
 }
 
-int func_0010B588(int a0) {
+int sceMpegDispCenterOffX(int a0) {
     int tmp0;
 
     tmp0 = *(int*)((char*)a0 + 64);
     return (tmp0 + 204);
 }
 
-int func_0010B598(int a0) {
+int sceMpegDispCenterOffY(int a0) {
     int tmp0;
 
     tmp0 = *(int*)((char*)a0 + 64);
     return (tmp0 + 204);
 }
 
-int func_0010B5A8(int a0, int a1) {
+int sceSetBrokenLink(int a0, int a1) {
     int tmp0;
     int tmp1;
 

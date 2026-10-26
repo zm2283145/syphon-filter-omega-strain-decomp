@@ -5,9 +5,9 @@ typedef struct Node_C590 { int pad0; struct Node_C590* next; Rec_C590* val; } No
 typedef struct { Node_C590* n; } It_C590;
 typedef struct { int a; } E_C590;
 typedef struct { char pad[0x30]; char map[4]; } Own_C590;
-extern void func_0016BB80(E_C590* out, void* map);
-extern void func_0016BBA0(E_C590* out, void* map);
-extern void func_0016BB90(It_C590* out, E_C590* in);
+extern void std_list_cTargetAwarenessPtr_end_void(E_C590* out, void* map);
+extern void std_list_cTargetAwarenessPtr_begin(E_C590* out, void* map);
+extern void cLListIterator_cTargetAwarenessPtr_ctor(It_C590* out, E_C590* in);
 /* Clears the "seen" flag of every record (or only of the records targeting who). */
 void NpcPerception_ResendAwareness(Own_C590* self, Tgt_C590* who)
 {
@@ -16,10 +16,10 @@ void NpcPerception_ResendAwareness(Own_C590* self, Tgt_C590* who)
     It_C590 end;
     E_C590 t1;
     E_C590 t2;
-    func_0016BBA0(&t1, self->map);
-    func_0016BB90(&b, &t1);
+    std_list_cTargetAwarenessPtr_begin(&t1, self->map);
+    cLListIterator_cTargetAwarenessPtr_ctor(&b, &t1);
     it = b;
-    while (func_0016BB80(&t2, self->map), func_0016BB90(&end, &t2), it.n != end.n) {
+    while (std_list_cTargetAwarenessPtr_end_void(&t2, self->map), cLListIterator_cTargetAwarenessPtr_ctor(&end, &t2), it.n != end.n) {
         if (who) {
             unsigned char ok;
             int isNull;

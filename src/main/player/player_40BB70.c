@@ -15,22 +15,22 @@
 #include "types.h"
 #include "loose04_types.h"
 
-int func_0040BB70(PtrVec* v) {
+int cArray_cBaseObjListPtr_Front(PtrVec* v) {
     return (int)v->data;
 }
 
 /* Address of the previous word (reverse-iterator dereference). */
-int* func_0040BB80(Iter* it) {
+int* cArray_cBaseObjListPtr_ReverseIterator_opMul(Iter* it) {
     return it->p - 1;
 }
 
 /* Steps the pointer back one word. */
-Iter* func_0040BB90(Iter* it) {
+Iter* cArray_cBaseObjListPtr_ReverseIterator_opInc(Iter* it) {
     it->p = it->p - 1;
     return it;
 }
 
-int func_0040BBB0(Iter* a, Iter* b) {
+int cArray_cBaseObjListPtr_ReverseIterator_opNe(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 #pragma pop /* merge_units */
@@ -44,7 +44,7 @@ typedef struct HolderWord {
 } HolderWord;
 
 /* Copy the holder's word through the two value-object temporaries. */
-void func_0040BBD0(Word* result, const HolderWord* source)
+void cArray_cBaseObjListPtr_REnd(Word* result, const HolderWord* source)
 {
     Word first;
     Word second;
@@ -57,7 +57,7 @@ void func_0040BBD0(Word* result, const HolderWord* source)
 
 /* merge_units: begin func_0040BC00 */
 #pragma push /* merge_units */
-Word* func_0040BC00(Word* dst, Word* src) {
+Word* cArray_cBaseObjListPtr_ReverseIterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }

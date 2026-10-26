@@ -8,14 +8,14 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 int DIntr();                                
 int EIntr();                                  
-int func_00117558(int, int);                          
+int iGetTimerUsedUnusedCounters(int, int);                          
 
-int func_001175A8(int arg0, int arg1) {
+int GetTimerUsedUnusedCounters(int arg0, int arg1) {
     int temp_s0;
     int temp_s2;
 
     temp_s2 = DIntr();
-    temp_s0 = func_00117558(arg0, arg1);
+    temp_s0 = iGetTimerUsedUnusedCounters(arg0, arg1);
     if (temp_s2 != 0) {
         EIntr();
     }
@@ -27,23 +27,23 @@ int func_001175A8(int arg0, int arg1) {
 typedef struct Alarm { struct Alarm *next; struct Alarm *prev; volatile int id; int flags; unsigned long long x10; unsigned long long x18; unsigned long long x20; int x28; } Alarm;
 typedef struct { unsigned long long a; int id; volatile int seq; volatile int cnt; Alarm *free; Alarm *head; volatile int cur; } TimCtl;
 extern TimCtl D_00487848;
-extern void func_00117008(Alarm *);
-extern unsigned long long func_001172E0(void);
-extern void func_00116F80(Alarm *);
-extern void func_00116DF0(unsigned long long);
-int func_00117608(int id)
+extern void UnlinkAlarm(Alarm *);
+extern unsigned long long iGetTimerSystemTime(void);
+extern void InsertAlarm(Alarm *);
+extern void SetNextComp(unsigned long long);
+int iStartTimerCounter(int id)
 {
     Alarm *a = (Alarm *)(((unsigned int)id >> 10) << 6);
     unsigned long long t;
     if (id < 0 || (id & 0x3FF) != a->id) return 0x80008002;
     if (D_00487848.cur == id) return 0x80000010;
     if (a->flags & 1) return 1;
-    t = func_001172E0();
+    t = iGetTimerSystemTime();
     a->x10 = t;
     a->flags |= 1;
     if (a->flags & 2) {
-        func_00116F80(a);
-        func_00116DF0(t);
+        InsertAlarm(a);
+        SetNextComp(t);
     }
     return 0;
 }
@@ -61,20 +61,20 @@ extern int EIntr(void);
 #define EIntr() (EIntr()) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_00117608(int);
+extern int iStartTimerCounter(int);
 #endif /* merge_units */
-#define func_00117608(a0) (func_00117608((a0))) /* merge_units */
+#define iStartTimerCounter(a0) (iStartTimerCounter((a0))) /* merge_units */
 
-int func_001176B8(int a)
+int StartTimerCounter(int a)
 {
     int s = DIntr();
-    int r = func_00117608(a);
+    int r = iStartTimerCounter(a);
     if (s) EIntr();
     return r;
 }
 #undef DIntr /* merge_units */
 #undef EIntr /* merge_units */
-#undef func_00117608 /* merge_units */
+#undef iStartTimerCounter /* merge_units */
 /* merge_units: end func_001176B8 */
 
 /* merge_units: begin func_00117708 */
@@ -86,19 +86,19 @@ extern TimCtl_00117708 D_00487848;
 #define D_00487848 (*(TimCtl_00117708*)&D_00487848) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_00117008(Alarm_00117708 *);
+extern void UnlinkAlarm(Alarm_00117708 *);
 #endif /* merge_units */
-#define func_00117008(a0) (func_00117008((Alarm *)(a0))) /* merge_units */
+#define UnlinkAlarm(a0) (UnlinkAlarm((Alarm *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern long long func_001172E0(void);
+extern long long iGetTimerSystemTime(void);
 #endif /* merge_units */
-#define func_001172E0() ((long long)func_001172E0()) /* merge_units */
+#define iGetTimerSystemTime() ((long long)iGetTimerSystemTime()) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_00116DF0(long long);
+extern void SetNextComp(long long);
 #endif /* merge_units */
-#define func_00116DF0(a0) (func_00116DF0((unsigned long long)(a0))) /* merge_units */
+#define SetNextComp(a0) (SetNextComp((unsigned long long)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int DIntr(void);
@@ -110,7 +110,7 @@ extern void EIntr(void);
 #endif /* merge_units */
 #define EIntr() ((void)EIntr()) /* merge_units */
 
-int func_00117708(int id)
+int iStopTimerCounter(int id)
 {
     Alarm_00117708 *a = (Alarm_00117708 *)(((unsigned int)id >> 10) << 6);
     long long t;
@@ -118,20 +118,20 @@ int func_00117708(int id)
     if (id < 0 || (id & 0x3FF) != a->id) return 0x80008002;
     if (D_00487848.cur == id) return 0x80000010;
     if (!(a->flags & 1)) return 0;
-    t = func_001172E0();
+    t = iGetTimerSystemTime();
     f = a->flags;
     a->x18 += t - a->x10;
     a->flags = f & ~1;
     if (f & 2) {
-        func_00117008(a);
-        func_00116DF0(t);
+        UnlinkAlarm(a);
+        SetNextComp(t);
     }
     return 1;
 }
 #undef D_00487848 /* merge_units */
-#undef func_00117008 /* merge_units */
-#undef func_001172E0 /* merge_units */
-#undef func_00116DF0 /* merge_units */
+#undef UnlinkAlarm /* merge_units */
+#undef iGetTimerSystemTime /* merge_units */
+#undef SetNextComp /* merge_units */
 #undef DIntr /* merge_units */
 #undef EIntr /* merge_units */
 /* merge_units: end func_00117708 */
@@ -148,20 +148,20 @@ extern int EIntr(void);
 #define EIntr() (EIntr()) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_00117708(int);
+extern int iStopTimerCounter(int);
 #endif /* merge_units */
-#define func_00117708(a0) (func_00117708((a0))) /* merge_units */
+#define iStopTimerCounter(a0) (iStopTimerCounter((a0))) /* merge_units */
 
-int func_001177D0(int a)
+int StopTimerCounter(int a)
 {
     int s = DIntr();
-    int r = func_00117708(a);
+    int r = iStopTimerCounter(a);
     if (s) EIntr();
     return r;
 }
 #undef DIntr /* merge_units */
 #undef EIntr /* merge_units */
-#undef func_00117708 /* merge_units */
+#undef iStopTimerCounter /* merge_units */
 /* merge_units: end func_001177D0 */
 
 /* merge_units: begin func_00117820 */
@@ -173,19 +173,19 @@ extern TimCtl_00117820 D_00487848;
 #define D_00487848 (*(TimCtl_00117820*)&D_00487848) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_00117008(Alarm_00117820 *);
+extern void UnlinkAlarm(Alarm_00117820 *);
 #endif /* merge_units */
-#define func_00117008(a0) (func_00117008((Alarm *)(a0))) /* merge_units */
+#define UnlinkAlarm(a0) (UnlinkAlarm((Alarm *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern long long func_001172E0(void);
+extern long long iGetTimerSystemTime(void);
 #endif /* merge_units */
-#define func_001172E0() ((long long)func_001172E0()) /* merge_units */
+#define iGetTimerSystemTime() ((long long)iGetTimerSystemTime()) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_00116DF0(long long);
+extern void SetNextComp(long long);
 #endif /* merge_units */
-#define func_00116DF0(a0) (func_00116DF0((unsigned long long)(a0))) /* merge_units */
+#define SetNextComp(a0) (SetNextComp((unsigned long long)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int DIntr(void);
@@ -197,7 +197,7 @@ extern void EIntr(void);
 #endif /* merge_units */
 #define EIntr() ((void)EIntr()) /* merge_units */
 
-long long func_00117820(int id, long long val)
+long long SetTimerCount(int id, long long val)
 {
     Alarm_00117820 *a = (Alarm_00117820 *)(((unsigned int)id >> 10) << 6);
     int s = DIntr();
@@ -209,7 +209,7 @@ long long func_00117820(int id, long long val)
     old = a->x18;
     if (a->flags & 1) {
         long long d;
-        t = func_001172E0();
+        t = iGetTimerSystemTime();
         d = t - a->x10;
         a->x10 = t;
         a->x18 = val;
@@ -221,9 +221,9 @@ long long func_00117820(int id, long long val)
     return old;
 }
 #undef D_00487848 /* merge_units */
-#undef func_00117008 /* merge_units */
-#undef func_001172E0 /* merge_units */
-#undef func_00116DF0 /* merge_units */
+#undef UnlinkAlarm /* merge_units */
+#undef iGetTimerSystemTime /* merge_units */
+#undef SetNextComp /* merge_units */
 #undef DIntr /* merge_units */
 #undef EIntr /* merge_units */
 /* merge_units: end func_00117820 */
@@ -237,19 +237,19 @@ extern TimCtl_001178F0 D_00487848;
 #define D_00487848 (*(TimCtl_001178F0*)&D_00487848) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_00117008(Alarm_001178F0 *);
+extern void UnlinkAlarm(Alarm_001178F0 *);
 #endif /* merge_units */
-#define func_00117008(a0) (func_00117008((Alarm *)(a0))) /* merge_units */
+#define UnlinkAlarm(a0) (UnlinkAlarm((Alarm *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern long long func_001172E0(void);
+extern long long iGetTimerSystemTime(void);
 #endif /* merge_units */
-#define func_001172E0() ((long long)func_001172E0()) /* merge_units */
+#define iGetTimerSystemTime() ((long long)iGetTimerSystemTime()) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_00116DF0(long long);
+extern void SetNextComp(long long);
 #endif /* merge_units */
-#define func_00116DF0(a0) (func_00116DF0((unsigned long long)(a0))) /* merge_units */
+#define SetNextComp(a0) (SetNextComp((unsigned long long)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int DIntr(void);
@@ -261,7 +261,7 @@ extern void EIntr(void);
 #endif /* merge_units */
 #define EIntr() ((void)EIntr()) /* merge_units */
 
-long long func_001178F0(int id)
+long long iGetTimerBaseTime(int id)
 {
     Alarm_001178F0 *a = (Alarm_001178F0 *)(((unsigned int)id >> 10) << 6);
     if (id < 0 || (id & 0x3FF) != a->id) return -1;
@@ -269,9 +269,9 @@ long long func_001178F0(int id)
     return 0;
 }
 #undef D_00487848 /* merge_units */
-#undef func_00117008 /* merge_units */
-#undef func_001172E0 /* merge_units */
-#undef func_00116DF0 /* merge_units */
+#undef UnlinkAlarm /* merge_units */
+#undef iGetTimerSystemTime /* merge_units */
+#undef SetNextComp /* merge_units */
 #undef DIntr /* merge_units */
 #undef EIntr /* merge_units */
 /* merge_units: end func_001178F0 */

@@ -8,7 +8,7 @@
 #pragma push /* merge_units */
 #include "types.h"
 extern void operator_delete(void* p);
-void func_00430A10(int a, void* p) {
+void std_allocator_node_deallocate(int a, void* p) {
     operator_delete(p);
 }
 #pragma pop /* merge_units */

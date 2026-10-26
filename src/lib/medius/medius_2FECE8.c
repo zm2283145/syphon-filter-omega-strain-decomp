@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_002FECE8(int a0, int a1) {
+int rt_msg_client_calc_connect_msg_size(int a0, int a1) {
     int v0;
     int cond;
 

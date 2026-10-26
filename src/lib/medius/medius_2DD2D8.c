@@ -5,7 +5,7 @@
 extern int D_0058806C;
 
 /* Stores the given value into a global setting. */
-void func_002DD2D8(int value)
+void NetResetTime(int value)
 {
     D_0058806C = value;
 }

@@ -4,7 +4,7 @@ typedef struct { VSESeg a; VSESeg b; float dur; float rate; } C_F530;
 #pragma push
 #pragma peephole off
 #pragma opt_propagation off
-void func_001CF530(C_F530* c, float t) {
+void cHermiteSplineWithScaledDuration_cQuaternion_Reset_float(C_F530* c, float t) {
     float k; float r;
     k = t * c->rate;
     { VSESeg* s = &c->a; VU0_ScaleEq(&s->v, k); }

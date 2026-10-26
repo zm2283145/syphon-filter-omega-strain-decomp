@@ -33,7 +33,7 @@ void Mtx_FromRowsAndTranslation(Mtx* m, V* a, V* b, V* c, V* t);
 static inline Obj* GetCam() { return func_00159570(g_CameraObject) ? *List_Front(g_CameraObject) : 0; }
 static inline const V& SubPos(Sub* o) { if (o->f50) o->Sync(); return o->m.t; }
 
-extern "C" void func_00219EA0(Obj* self)
+extern "C" void cFacingGOBJ_NextFrame(Obj* self)
 {
     V cam = SubPos(GetCam()->sub);
     V me = SubPos(self->sub);

@@ -14,7 +14,7 @@
 #pragma push /* merge_units */
 typedef struct { char pad0[0x540]; int mode; char pad1[0x59E - 0x544]; unsigned char ok; unsigned char pad2; unsigned char done; } PDB10;
 typedef struct { PDB10* p; unsigned char busy; char pad[3]; void (*cb)(void); unsigned char state; } CDB10;
-extern int func_0040E5D0(PDB10* p);
+extern int MemCard_MemCardMain(PDB10* p);
 /* Runs the session state machine until it settles; returns its result flag. */
 int MemCardWrap_Format(CDB10* c) {
     PDB10* p = c->p;
@@ -22,7 +22,7 @@ int MemCardWrap_Format(CDB10* c) {
     p->done = 0;
     c->state = 5;
     do {
-        c->busy = func_0040E5D0(c->p) != 0;
+        c->busy = MemCard_MemCardMain(c->p) != 0;
         if (!c->busy)
             c->state = 0;
         if (c->cb)
@@ -67,9 +67,9 @@ typedef struct { char pad0[0x1C]; char item[0x1C]; } EDC80;
 typedef struct { EDC80 e[0x540 / 0x38]; int mode; char pad1[0x560 - 0x544]; int count; int sel; char pad2[0x59C - 0x568]; unsigned char failed; unsigned char pad3; unsigned char ok; unsigned char pad4; unsigned char done; } PDC80;
 typedef struct { PDC80* p; unsigned char busy; char pad[3]; void (*cb)(void); unsigned char state; } CDC80;
 #if 0 /* merge_units */
-extern int func_0040E5D0(PDC80* p);
+extern int MemCard_MemCardMain(PDC80* p);
 #endif /* merge_units */
-#define func_0040E5D0(a0) (func_0040E5D0((void *)(a0))) /* merge_units */
+#define MemCard_MemCardMain(a0) (MemCard_MemCardMain((void *)(a0))) /* merge_units */
 
 static inline int dc80find(PDC80* p, void* key) {
     int i;
@@ -90,7 +90,7 @@ int MemCardWrap_Remove(CDC80* c, void* key) {
     p->mode = 6;
     p->done = 0;
     do {
-        c->busy = func_0040E5D0(c->p) != 0;
+        c->busy = MemCard_MemCardMain(c->p) != 0;
         if (!c->busy)
             c->state = 0;
         if (c->cb)
@@ -98,7 +98,7 @@ int MemCardWrap_Remove(CDC80* c, void* key) {
     } while (!((c->busy != 0) ^ 1) || !c->p->done);
     return c->p->failed == 0;
 }
-#undef func_0040E5D0 /* merge_units */
+#undef MemCard_MemCardMain /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0040DC80(void) {}
 #pragma pop /* merge_units */
@@ -110,9 +110,9 @@ typedef struct { char pad0[0x1C]; char item[0x1C]; } EDDC0;
 typedef struct { EDDC0 e[0x540 / 0x38]; int mode; char pad1[0x560 - 0x544]; int count; int sel; char pad2[0x57C - 0x568]; char name[0x59C - 0x57C]; unsigned char failed; unsigned char pad3; unsigned char ok; unsigned char pad4; unsigned char done; } PDDC0;
 typedef struct { PDDC0* p; unsigned char busy; char pad[3]; void (*cb)(void); unsigned char state; } CDDC0;
 #if 0 /* merge_units */
-extern int func_0040E5D0(PDDC0* p);
+extern int MemCard_MemCardMain(PDDC0* p);
 #endif /* merge_units */
-#define func_0040E5D0(a0) (func_0040E5D0((void *)(a0))) /* merge_units */
+#define MemCard_MemCardMain(a0) (MemCard_MemCardMain((void *)(a0))) /* merge_units */
 
 static inline int dDC0find(PDDC0* p, void* key) {
     int i;
@@ -132,7 +132,7 @@ int MemCardWrap_Rename(CDDC0* c, void* key, void* name) {
     p->mode = 9;
     p->done = 0;
     do {
-        c->busy = func_0040E5D0(c->p) != 0;
+        c->busy = MemCard_MemCardMain(c->p) != 0;
         if (!c->busy)
             c->state = 0;
         if (c->cb)
@@ -140,7 +140,7 @@ int MemCardWrap_Rename(CDDC0* c, void* key, void* name) {
     } while (!((c->busy != 0) ^ 1) || !c->p->done);
     return c->p->failed == 0;
 }
-#undef func_0040E5D0 /* merge_units */
+#undef MemCard_MemCardMain /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0040DDC0(void) {}
 #pragma pop /* merge_units */

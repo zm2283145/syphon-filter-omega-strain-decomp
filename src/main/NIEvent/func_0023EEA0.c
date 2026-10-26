@@ -23,35 +23,35 @@ public:
     Vec kids;
 };
 extern "C" {
-int func_0023DA80(Vec*);
-int func_0023DA90(Vec*);
-Node** func_0023DAA0(Vec*, int);
-Node** func_0023DAB0(Vec*, int);
-Node* func_0023EEA0(Node*);
-Node* func_0023EB70(Node*);
+int std_vector_cNIEventBasePtr_size(Vec*);
+int cArray_cNIEventBasePtr_Size(Vec*);
+Node** cArray_cNIEventBasePtr_opIndex(Vec*, int);
+Node** std_vector_imp_cNIEventBasePtr_1_opIndex(Vec*, int);
+Node* cNIEventBase_GetFirstVUM(Node*);
+Node* cNIEventBase_GetVUMInTree(Node*);
 }
 static inline Node* G(Node* x)
 {
     if (x->Find()) return x->Find();
-    for (int k = 0; k < func_0023DA90(&x->kids); k++) {
-        if (!!func_0023EEA0(*func_0023DAA0(&x->kids, k)))
-            return func_0023EEA0(*func_0023DAA0(&x->kids, k));
+    for (int k = 0; k < cArray_cNIEventBasePtr_Size(&x->kids); k++) {
+        if (!!cNIEventBase_GetFirstVUM(*cArray_cNIEventBasePtr_opIndex(&x->kids, k)))
+            return cNIEventBase_GetFirstVUM(*cArray_cNIEventBasePtr_opIndex(&x->kids, k));
     }
     return 0;
 }
 static inline Node* H(Node* o)
 {
     if (o->Find()) return o->Find();
-    for (int j = 0; j < func_0023DA80(&o->kids); j++) {
-        if (G(*func_0023DAB0(&o->kids, j)))
-            return G(*func_0023DAB0(&o->kids, j));
+    for (int j = 0; j < std_vector_cNIEventBasePtr_size(&o->kids); j++) {
+        if (G(*std_vector_imp_cNIEventBasePtr_1_opIndex(&o->kids, j)))
+            return G(*std_vector_imp_cNIEventBasePtr_1_opIndex(&o->kids, j));
     }
     return 0;
 }
 #pragma push
 #pragma inline_depth(8)
 #pragma opt_strength_reduction off
-extern "C" Node* func_0023EEA0(Node* x)
+extern "C" Node* cNIEventBase_GetFirstVUM(Node* x)
 {
     if (x->Find()) return x->Find();
     for (int i = 0; i < x->kids.n; i++) {

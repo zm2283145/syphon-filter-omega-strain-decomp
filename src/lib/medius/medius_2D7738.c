@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_002D7738(void) {
+int CreateColorArray(void) {
     return 0;
 }

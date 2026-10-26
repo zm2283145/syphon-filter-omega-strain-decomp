@@ -5,6 +5,6 @@
 
 #include "types.h"
 
-void* func_003AD1D0(char* self) {
+void* cSkaPlaybackGroup_PlaybackPosWithHistory(char* self) {
     return self + 8;
 }

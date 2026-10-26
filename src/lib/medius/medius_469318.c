@@ -4,7 +4,7 @@ extern int D_00598518;
 unsigned int D_00497D08[1] = { 0x0 };
 extern int Medius_TerminateString(char *, int);
 extern int Net_SendLocked(int, int, int, int, int, int, void *);
-int func_00469318(char *a, int b)
+int MediusAccountLogout(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);

@@ -1,5 +1,5 @@
 #include "types.h"
-void func_003C6410(void) {
+void nCollision_SyncAfterTransferDataToVu0(void) {
     asm {
         vnop
         sync

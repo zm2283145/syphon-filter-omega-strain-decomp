@@ -21,7 +21,7 @@ static inline int Idx_00323AD0(O_00323AD0* o) {
     }
     return 0;
 }
-extern "C" void func_00323AD0(M_00323AD0* m, O_00323AD0* o) {
+extern "C" void cNetQuickChatMsg_UnpackAndProcess(M_00323AD0* m, O_00323AD0* o) {
     m->a = R32_00323AD0();
     m->b = R32_00323AD0();
     if (o) {

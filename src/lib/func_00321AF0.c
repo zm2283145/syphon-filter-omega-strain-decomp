@@ -3,16 +3,16 @@ typedef struct {
     float x[65];
     float y[65];
 } S_00321AF0;
-extern float func_00321FA0(float a, float b);
+extern float fSetKLFactor(float a, float b);
 /* float parameters listed first: same EE register assignment as the int-first definition, but it gives retail argument setup order */
-extern void func_00321728(float add, float step, float unused, float mix, int n, int start, S_00321AF0* p, float* out1, float* ta, float* out2, float* tb);
-extern void func_00322030(float* s, float* out, int n, float x);
-extern void func_00322168(int n, float* a, float* b, float x, float y);
-extern void func_00322258(int total, int n, int factor, float* b, float* a, int lo);
-extern void func_00322340(int start, int end, int* state, float* out);
-extern void func_003223B8(int n, float* a);
-extern void func_0031FC28(float r, int n, int m, int b, S_00321AF0* c, float* d, float* g, float* h);
-void func_00321AF0(float x, float y, float r, float* a, int b, S_00321AF0* c, float* d, float* e, float* f,
+extern void SetAmpAndPhase(float add, float step, float unused, float mix, int n, int start, S_00321AF0* p, float* out1, float* ta, float* out2, float* tb);
+extern void NellyHFRegeneration(float* s, float* out, int n, float x);
+extern void excitePhaseInvertAmps(int n, float* a, float* b, float x, float y);
+extern void insertSubHarmonics(int total, int n, int factor, float* b, float* a, int lo);
+extern void unvoicedPhase(int start, int end, int* state, float* out);
+extern void scaleAmps(int n, float* a);
+extern void FftSumCosOlAdd(float r, int n, int m, int b, S_00321AF0* c, float* d, float* g, float* h);
+void NellySWSynth(float x, float y, float r, float* a, int b, S_00321AF0* c, float* d, float* e, float* f,
                    float* g, float* h, int* buf)
 {
     float out;
@@ -30,13 +30,13 @@ void func_00321AF0(float x, float y, float r, float* a, int b, S_00321AF0* c, fl
     sk = k / (float)fac;
     total = n * fac;
     start = (int)(y * 0.001953125f * x);
-    add = func_00321FA0(x, sk);
-    func_00321728(add, k, sk, r, n, start, c, h, e, g, f);
+    add = fSetKLFactor(x, sk);
+    SetAmpAndPhase(add, k, sk, r, n, start, c, h, e, g, f);
     mid = start * fac;
-    func_00322030(a, &out, 80, k);
-    func_00322168(n, g, h, out, x);
-    func_00322258(total, n, fac, g, h, start);
-    func_00322340(mid, total, buf, g);
-    func_003223B8(total, h);
-    func_0031FC28(sk, total, 160, b, c, d, g, h);
+    NellyHFRegeneration(a, &out, 80, k);
+    excitePhaseInvertAmps(n, g, h, out, x);
+    insertSubHarmonics(total, n, fac, g, h, start);
+    unvoicedPhase(mid, total, buf, g);
+    scaleAmps(total, h);
+    FftSumCosOlAdd(sk, total, 160, b, c, d, g, h);
 }

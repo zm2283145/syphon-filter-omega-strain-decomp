@@ -39,7 +39,7 @@ extern char* strchr(const char*, int);
 extern int strlen(const char*);
 extern Ent5B0* SFOLobby_GetGameInfo(Lobby5B0*, int);
 extern int SFOLobby_JoinGame(Lobby5B0*, int);
-extern void func_0044E340(Lobby5B0*);
+extern void SFOLobby_ExitGame(Lobby5B0*);
 extern unsigned char SFOLobby_FormatError(Lobby5B0*, int);
 extern void SFOLobby_Update(Lobby5B0*);
 extern void Game_ClearOtherAgentsB70(char*);
@@ -195,7 +195,7 @@ extern "C" void GuiMenuScreen_JoinGame(O5B0* o, Info5B0* info, int arg2) {
                 } else {
                     Net_CleanupGame();
                 }
-                func_0044E340(lobby);
+                SFOLobby_ExitGame(lobby);
                 lobby->f255C = lobby->f2560;
                 LevelSelect_SetLevel(ls, saved);
                 String_Dtor(&a4, 0);

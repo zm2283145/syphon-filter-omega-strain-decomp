@@ -6,7 +6,7 @@ typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-V4 func_00411500(void* m, V4* vp) {
+V4 cMatrix_opMul_cVectorR(void* m, V4* vp) {
     V4 v;
     V4* p; V4* d;
     d = &v; VCopyF(d, vp);

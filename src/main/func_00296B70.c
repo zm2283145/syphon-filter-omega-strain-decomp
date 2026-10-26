@@ -12,7 +12,7 @@ extern char D_004AA200[];
 extern void func_00296FA0(Rows_96B70*);
 extern void func_00299360(Rows_96B70*, int);
 extern void func_00296F20(AwardVec_96B70*);
-extern void func_00299270(AwardVec_96B70*, int);
+extern void std_vector_deleter_tRequirementInfo_dtor(AwardVec_96B70*, int);
 extern void* Agent_GetSelected(char*, int);
 extern void AgentData_GetAwardRows(void*, int, Rows_96B70*);
 extern void AgentData_GetAwardItems(void*, int, int, AwardVec_96B70*);
@@ -34,7 +34,7 @@ struct AwardVec_96B70 {
     AwardVec_96B70() { func_00296F20(this); owns = 1; }
     int Count() const { return count; }
     /* out-of-line copy is weak and dropped at link (as include/alloc_guard.h) */
-    __declspec(weak) __declspec(DROPDTOR) ~AwardVec_96B70() { func_00299270(this, 0); }
+    __declspec(weak) __declspec(DROPDTOR) ~AwardVec_96B70() { std_vector_deleter_tRequirementInfo_dtor(this, 0); }
 };
 #pragma opt_strength_reduction off
 void GuiCommandCenter_ShowBonus(Scr_96B70* s, int idx)

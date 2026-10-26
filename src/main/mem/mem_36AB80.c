@@ -35,7 +35,7 @@ extern void Hog_Register(FileMan* f, char* name, int a, int b);
 extern void FileMan_FindMember(FileMan* f);
 extern int FileMan_GetSize(FileMan* f);
 extern int FileMan_LoadMemberSync(FileMan* f, unsigned char** out, int size);
-extern void func_0036DEC0(FileMan* f);
+extern void cFileMan_Close(FileMan* f);
 extern void FileMan_Release(FileMan* f, int flag);
 extern int TexMan_FindOrLoad(int mgr, FileMan* f);
 extern void* memcpy(void* d, const void* s, unsigned int n);
@@ -84,7 +84,7 @@ void Font_LoadFnt(ObjAB80* obj, int arg1, char* name)
     FileMan_FindMember(&fm);
     data = 0;
     FileMan_LoadMemberSync(&fm, &data, FileMan_GetSize(&fm));
-    func_0036DEC0(&fm);
+    cFileMan_Close(&fm);
     p = data;
     ver = p[0];
     flags = p[1];
@@ -143,7 +143,7 @@ void operator_delete(void* allocation);
 void Tex_Release(int mgr, int handle, int flags);
 }
 struct O36AF40 { int handle; char pad[0x8A70]; void* vtable; };
-extern "C" O36AF40* func_0036AF40(O36AF40* self, short deleteFlag)
+extern "C" O36AF40* cFont_dtor(O36AF40* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004DF630);
@@ -153,7 +153,7 @@ extern "C" O36AF40* func_0036AF40(O36AF40* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DF630[4] = { (void*)0x0, (void*)0x0, (void*)func_0036AF40, (void*)0x0 };
+void * const D_004DF630[4] = { (void*)0x0, (void*)0x0, (void*)cFont_dtor, (void*)0x0 };
 #pragma pop /* merge_units */
 /* merge_units: end func_0036AF40 */
 

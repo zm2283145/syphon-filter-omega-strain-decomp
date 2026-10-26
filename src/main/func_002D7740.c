@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_002D7740(void) {
+void DestroyColorArray(void) {
 
 }

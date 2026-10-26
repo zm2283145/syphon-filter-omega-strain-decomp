@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-Word* func_00408580(Word* dst, Word* src) {
+Word* cAssocArray_cString_char_Iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_00408590(Iter* out, Tree* t) {
+void std_map_cString_char_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }

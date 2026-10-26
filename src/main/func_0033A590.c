@@ -4,4 +4,4 @@
 #include "clear_buffer_dtor.h"
 
 /* Clear and free a vector, optionally delete. */
-DEFINE_CLEAR_BUFFER_DTOR(func_0033A590, D_004B98C8)
+DEFINE_CLEAR_BUFFER_DTOR(std_vector_deleter_tColumnData_dtor, D_004B98C8)

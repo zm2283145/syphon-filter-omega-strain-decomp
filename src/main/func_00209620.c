@@ -4,12 +4,12 @@
 #pragma push
 #pragma optimization_level 1
 
-extern int func_00207210(void* obj);
-extern void func_0013D710(void* obj, int value, int zero, int arg);
+extern int std_basic_string_char_char_traits_char_size(void* obj);
+extern void std_basic_string_char_char_traits_char_replace_uint_uint_basicstringR(void* obj, int value, int zero, int arg);
 
-/* Forwards func_00207210's result to func_0013D710. */
-void func_00209620(void* obj, int arg) {
-    func_0013D710(obj, func_00207210(obj), 0, arg);
+/* Forwards std_basic_string_char_char_traits_char_size's result to std_basic_string_char_char_traits_char_replace_uint_uint_basicstringR. */
+void std_basic_string_char_char_traits_char_append_basicstringR(void* obj, int arg) {
+    std_basic_string_char_char_traits_char_replace_uint_uint_basicstringR(obj, std_basic_string_char_char_traits_char_size(obj), 0, arg);
 }
 
 #pragma pop

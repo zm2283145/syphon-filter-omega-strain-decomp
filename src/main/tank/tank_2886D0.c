@@ -11,7 +11,7 @@
 #include "buf_holder_dtor.h"
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_002886D0)
+DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_charPtr_1_dtor_void_2)
 #pragma pop /* merge_units */
 /* merge_units: end func_002886D0 */
 
@@ -20,7 +20,7 @@ DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_002886D0)
 #pragma cplusplus on
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR(func_002887C0)
+DEFINE_BUF_HOLDER_DTOR(std_vector_charPtr_dtor_void_2)
 #pragma pop /* merge_units */
 /* merge_units: end func_002887C0 */
 
@@ -39,11 +39,11 @@ extern void* g_Game;
 extern int Game_CountAttractMovies(void*);
 extern int GuiWidget_Init(Unk288A80*);
 
-int* func_002888B0(PtrVec* v, int i) {
+int* std_vector_charPtr_opIndex_uint_2(PtrVec* v, int i) {
     return v->data + i;
 }
 
-Rel* func_002888C0(Rel* r) {
+Rel* std_vector_charPtr_ctor_void_2(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
@@ -82,7 +82,7 @@ W_00288920* GuiWidget_FindChildByName(Scr_00288920* s, char* name);
 void* Gui_GetScreenStack(void);
 void GuiScreen_SetFocus(void* stack, void* w);
 }
-extern "C" void func_00288920(Scr_00288920* self, int on)
+extern "C" void GuiTitleScreen_EnableButtons(Scr_00288920* self, int on)
 {
     char* names[3] = { D_0048B3E8, D_0048B3F0, D_0048B3F8 };
     unsigned int i;
@@ -112,7 +112,7 @@ extern void* Time_GetMilliseconds(TimedObj* self);
 extern float SoftFloat_U64ToFloat(void* src);
 
 /* Caches a millisecond value from the source as seconds at +0x4C. */
-void func_00288A40(TimedObj* self) {
+void GuiTitleScreen_ResetTimer(TimedObj* self) {
     self->seconds = SoftFloat_U64ToFloat(Time_GetMilliseconds(self)) / 1000.0f;
 }
 #pragma pop /* merge_units */
@@ -123,7 +123,7 @@ void func_00288A40(TimedObj* self) {
 extern void* D_004DD0A0;
 extern void GuiWidget_ctor(Unk288A80*);
 
-Unk288A80* func_00288A80(Unk288A80* self) {
+Unk288A80* GuiTitleScreen_ctor(Unk288A80* self) {
     GuiWidget_ctor(self);
     self->vtable = &D_004DD0A0;
     self->unk48 = 0;

@@ -1,3 +1,3 @@
 #include "status_report_wrapper.h"
 
-DEFINE_STATUS_REPORT_WRAPPER(func_002B62D8, func_002B5AF0)
+DEFINE_STATUS_REPORT_WRAPPER(sceMc2GetEntSpace, func_002B5AF0)

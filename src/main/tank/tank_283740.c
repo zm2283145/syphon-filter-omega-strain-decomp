@@ -31,29 +31,29 @@ void ScriptType_cTank_Init(void) {
 }
 
 /* Identity casts; volatile mirrors the original stack temporary. */
-int func_00283770(int obj) {
+int cTank_ref_SOBJ_toInt(int obj) {
     volatile int tmp = obj;
     return tmp;
 }
 
-int func_00283790(int obj) {
+int cTank_SOBJ_toInt(int obj) {
     volatile int tmp = obj;
     return tmp;
 }
 
-void* func_002837B0(void* self) {
+void* cTank_ref_SOBJ_convert(void* self) {
     return self;
 }
 
-void* func_002837C0(void* self) {
+void* cTank_SOBJ_convert(void* self) {
     return self;
 }
 
-int* func_002837D0(void) {
+int* cTank_ref_SOBJ_getClassId(void) {
     return &D_00506278;
 }
 
-int* func_002837E0(void) {
+int* cTank_SOBJ_getClassId(void) {
     return &D_00506278;
 }
 

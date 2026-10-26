@@ -1,4 +1,4 @@
-int func_001159F0(volatile unsigned int* d, volatile unsigned int* s, unsigned int n)
+int kCopy_void(volatile unsigned int* d, volatile unsigned int* s, unsigned int n)
 {
     unsigned int i;
     n >>= 2;

@@ -12,12 +12,12 @@ typedef struct {
 } Obj;
 extern void *(*D_004E1D34)(int n, int size);
 extern float D_004E1C74;
-extern int func_0031A018(int, Obj *);
-extern int func_0031C838(float, void *);
-extern int func_00318A70(void *);
-extern int func_00317680(void *);
-extern int func_00318658(void *);
-int func_003179A8(Obj **pp, int arg)
+extern int InitSpCBM(int, Obj *);
+extern int NellyInitPreProc(float, void *);
+extern int NellyInitLDPDA(void *);
+extern int NellyInitVocalFry(void *);
+extern int NellyInitEstOnset(void *);
+int NellyInitEncodeSC3(Obj **pp, int arg)
 {
     Obj *o;
     if (pp == 0) return 1;
@@ -29,12 +29,12 @@ int func_003179A8(Obj **pp, int arg)
     o->f44 = 1;
     o->buf = D_004E1D34(1, 0x40);
     if (o->buf == 0) return 1;
-    if (func_0031A018(0x173, o)) return 1;
-    if (func_0031C838(D_004E1C74, o->a4)) return 1;
+    if (InitSpCBM(0x173, o)) return 1;
+    if (NellyInitPreProc(D_004E1C74, o->a4)) return 1;
     o->f8 = 0;
-    if (func_00318A70(o->a10)) return 1;
-    if (func_00317680(o->a14)) return 1;
-    if (func_00318658(o->a18)) return 1;
+    if (NellyInitLDPDA(o->a10)) return 1;
+    if (NellyInitVocalFry(o->a14)) return 1;
+    if (NellyInitEstOnset(o->a18)) return 1;
     o->f20 = 1;
     o->f1C = 0;
     o->f28 = 1;
@@ -50,20 +50,20 @@ int func_003179A8(Obj **pp, int arg)
 /* merge_units: begin func_00317AC0 */
 typedef struct { void *p0; char a4[0xC]; char a10[4]; char a14[4]; char a18[0x30]; void *buf; } Obj7AC0;
 extern void (*D_004E1D38)(void *p);
-extern void func_0031A090(void *p);
-extern void func_0031C898(void *p);
-extern void func_00318AC8(void *p);
-extern void func_00317728(void *p);
-extern int func_003186E0(void *p);
-int func_00317AC0(Obj7AC0 **pp)
+extern void FreeSpCBM(void *p);
+extern void NellyFreePreProc(void *p);
+extern void NellyFreeLDPDA(void *p);
+extern void NellyFreeVocalFry(void *p);
+extern int NellyFreeEstOnset(void *p);
+int NellyFreeEncodeSC3(Obj7AC0 **pp)
 {
     Obj7AC0 *o = *pp;
     if (o != 0) {
-        func_0031A090(o);
-        func_0031C898(o->a4);
-        func_00318AC8(o->a10);
-        func_00317728(o->a14);
-        func_003186E0(o->a18);
+        FreeSpCBM(o);
+        NellyFreePreProc(o->a4);
+        NellyFreeLDPDA(o->a10);
+        NellyFreeVocalFry(o->a14);
+        NellyFreeEstOnset(o->a18);
         if (o->buf) {
             D_004E1D38(o->buf);
             o->buf = 0;
@@ -104,25 +104,25 @@ static const float D_004B3720[146] = {
     0x1.a7662p+0f, 0x1.a77436p+0f,
 };
 extern float D_004E1CD0;
-extern void func_0031A1E0(void *in, int a, int n, float *out);
-extern void func_00319D30(float *a, float *b, float *out, int n);
-extern float func_00317780(float *a, float *b, int n);
+extern void GetFrameSpCBM(void *in, int a, int n, float *out);
+extern void SymWindowSignal(float *a, float *b, float *out, int n);
+extern float DotProd(float *a, float *b, int n);
 extern int func_00323250(void);
-extern void func_00323330(float *x, int n, int m, float *a, float *b);
-extern void func_00322518(float *x, int n, int m, float *a, float *b);
-extern void func_00318848(float *a, float *b, void *out);
-void func_00317B40(void *in, void *out, float *energy)
+extern void nvuFftCenter512(float *x, int n, int m, float *a, float *b);
+extern void NellyFftCenter512(float *x, int n, int m, float *a, float *b);
+extern void NellyLDPDA(float *a, float *b, void *out);
+void CoarsePitchAndFrameEnergy(void *in, void *out, float *energy)
 {
     float buf[0x124];
     float a[0x104];
     float b[0x104];
-    func_0031A1E0(in, 0x91, 0x123, buf);
-    func_00319D30(buf, D_004B3720, buf, 0x123);
-    *energy = func_00317780(buf, buf, 0x123) * D_004E1CD0;
+    GetFrameSpCBM(in, 0x91, 0x123, buf);
+    SymWindowSignal(buf, D_004B3720, buf, 0x123);
+    *energy = DotProd(buf, buf, 0x123) * D_004E1CD0;
     if (func_00323250())
-        func_00323330(buf, 0x123, 9, a, b);
+        nvuFftCenter512(buf, 0x123, 9, a, b);
     else
-        func_00322518(buf, 0x123, 9, a, b);
-    func_00318848(a, b, out);
+        NellyFftCenter512(buf, 0x123, 9, a, b);
+    NellyLDPDA(a, b, out);
 }
 /* merge_units: end func_00317B40 */

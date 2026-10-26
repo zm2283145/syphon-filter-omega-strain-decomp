@@ -13,9 +13,9 @@ typedef struct { char data[0x30]; } Rank;
 extern char g_RankRows[];
 extern int Loc_FindKeyThunk(const char* s);           /* string hash */
 extern int Awards_ResolveUnlock(int hash);
-extern int func_0032EB80(void* registry);
+extern int cArray_tRankInfo_Size(void* registry);
 extern void* Awards_FormatRankTitle(Rank* r, int a, int b, int req, int index, int d);
-extern void func_0032EAD0(void* registry, void* item);
+extern void cArray_tRankInfo_PushBackActual(void* registry, void* item);
 
 /* Script native: registers a rank (args[0], args[1], requirement named args[2], args[3]); returns 0. */
 int Script_cAgentData__RegisterRank_3(ScriptArg* args)
@@ -39,7 +39,7 @@ int Script_cAgentData__RegisterRank_3(ScriptArg* args)
     p0[0] = args[0].i;
     a0 = *(int*)p0;
     req = Awards_ResolveUnlock(Loc_FindKeyThunk((const char*)a2));
-    func_0032EAD0(g_RankRows, Awards_FormatRankTitle(&r, a0, a1, req, func_0032EB80(g_RankRows), a3));
+    cArray_tRankInfo_PushBackActual(g_RankRows, Awards_FormatRankTitle(&r, a0, a1, req, cArray_tRankInfo_Size(g_RankRows), a3));
     return 0;
 }
 #pragma pop /* merge_units */
@@ -73,9 +73,9 @@ extern int Awards_FormatRankTitle(RankRec* rec, int a0, int a1, int id, int inde
 #define Awards_FormatRankTitle(a0, a1, a2, a3, a4, a5) ((int)Awards_FormatRankTitle((Rank *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_0032EAD0(void* registry, int rec);
+extern void cArray_tRankInfo_PushBackActual(void* registry, int rec);
 #endif /* merge_units */
-#define func_0032EAD0(a0, a1) (func_0032EAD0((a0), (void *)(a1))) /* merge_units */
+#define cArray_tRankInfo_PushBackActual(a0, a1) (cArray_tRankInfo_PushBackActual((a0), (void *)(a1))) /* merge_units */
 
 
 /* Script native: cAgentData._RegisterRank(a0, a1, weapon). */
@@ -90,13 +90,13 @@ int Script_cAgentData__RegisterRank_2(RankArgs* args) {
     w0 = args->a0;
     v0 = w0;
     id = Awards_ResolveUnlock(Loc_FindKeyThunk(v2));
-    func_0032EAD0(g_RankRows, Awards_FormatRankTitle(&rec, v0, v1, id, func_0032EB80(g_RankRows), 0));
+    cArray_tRankInfo_PushBackActual(g_RankRows, Awards_FormatRankTitle(&rec, v0, v1, id, cArray_tRankInfo_Size(g_RankRows), 0));
     return 0;
 }
 #undef Loc_FindKeyThunk /* merge_units */
 #undef Awards_ResolveUnlock /* merge_units */
 #undef Awards_FormatRankTitle /* merge_units */
-#undef func_0032EAD0 /* merge_units */
+#undef cArray_tRankInfo_PushBackActual /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0032EC50 */
 
@@ -114,9 +114,9 @@ extern int Awards_ResolveUnlock(void*);
 #define Awards_ResolveUnlock(a0) (Awards_ResolveUnlock((int)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_0032EB80(void*);
+extern int cArray_tRankInfo_Size(void*);
 #endif /* merge_units */
-#define func_0032EB80(a0) (func_0032EB80((a0))) /* merge_units */
+#define cArray_tRankInfo_Size(a0) (cArray_tRankInfo_Size((a0))) /* merge_units */
 
 #if 0 /* merge_units */
 extern Rank_0032ECF0* Awards_FormatRankTitle(Rank_0032ECF0* r, int name, int score, int a, int b, int c);
@@ -124,9 +124,9 @@ extern Rank_0032ECF0* Awards_FormatRankTitle(Rank_0032ECF0* r, int name, int sco
 #define Awards_FormatRankTitle(a0, a1, a2, a3, a4, a5) ((Rank_0032ECF0 *)Awards_FormatRankTitle((Rank *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_0032EAD0(void* list, Rank_0032ECF0* r);
+extern void cArray_tRankInfo_PushBackActual(void* list, Rank_0032ECF0* r);
 #endif /* merge_units */
-#define func_0032EAD0(a0, a1) (func_0032EAD0((a0), (void *)(a1))) /* merge_units */
+#define cArray_tRankInfo_PushBackActual(a0, a1) (cArray_tRankInfo_PushBackActual((a0), (void *)(a1))) /* merge_units */
 
 /* Script native: registers rank args[0] with threshold args[1]; returns 0. */
 int Script_cAgentData__RegisterRank(ScriptArg* args)
@@ -142,14 +142,14 @@ int Script_cAgentData__RegisterRank(ScriptArg* args)
     name[0] = args[0].i;
     n = *(volatile int*)name;
     agent = Awards_ResolveUnlock(Loc_FindKeyThunk(0));
-    func_0032EAD0(g_RankRows, Awards_FormatRankTitle(&rank, n, s, agent, func_0032EB80(g_RankRows), 0));
+    cArray_tRankInfo_PushBackActual(g_RankRows, Awards_FormatRankTitle(&rank, n, s, agent, cArray_tRankInfo_Size(g_RankRows), 0));
     return 0;
 }
 #undef Loc_FindKeyThunk /* merge_units */
 #undef Awards_ResolveUnlock /* merge_units */
-#undef func_0032EB80 /* merge_units */
+#undef cArray_tRankInfo_Size /* merge_units */
 #undef Awards_FormatRankTitle /* merge_units */
-#undef func_0032EAD0 /* merge_units */
+#undef cArray_tRankInfo_PushBackActual /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0032ECF0 */
 
@@ -160,7 +160,7 @@ typedef struct { char data[0x24]; } BonusReq;
 
 extern char D_00532AA0[];
 extern void* AwardRow_Construct(BonusReq* req, int level, int a, int b, int c, int d);
-extern void func_00147600(void* list, void* item);
+extern void cArray_Record_PushBackActual(void* list, void* item);
 
 /* Script native: registers a bonus level requirement with the agent data. */
 int Script_cAgentData__RegisterBonusLevel(ScriptArg_0032ED90* args)
@@ -172,7 +172,7 @@ int Script_cAgentData__RegisterBonusLevel(ScriptArg_0032ED90* args)
     c[0] = args[2].i;
     b[0] = args[1].i;
     level[0] = args[0].i;
-    func_00147600(D_00532AA0, AwardRow_Construct(&req, *(int*)level, 0, *(int*)b, *(int*)c, 0));
+    cArray_Record_PushBackActual(D_00532AA0, AwardRow_Construct(&req, *(int*)level, 0, *(int*)b, *(int*)c, 0));
     return 0;
 }
 #pragma pop /* merge_units */
@@ -193,12 +193,12 @@ extern int D_00532AF0;
 extern int D_00532B90;
 extern void* ObjectiveRow_Construct(LevelReq*, int, int, int);
 #if 0 /* merge_units */
-extern void func_00147600(void*, void*);
+extern void cArray_Record_PushBackActual(void*, void*);
 #endif /* merge_units */
-#define func_00147600(a0, a1) (func_00147600((a0), (a1))) /* merge_units */
+#define cArray_Record_PushBackActual(a0, a1) (cArray_Record_PushBackActual((a0), (a1))) /* merge_units */
 
-extern void* func_0032EEC0(LevelKey*, int, int);
-extern void func_0032EEA0(void*, void*);
+extern void* cAgentData_tParTimes_ctor(LevelKey*, int, int);
+extern void cArray_tParTimes_PushBackActual(void*, void*);
 
 /* Script: cAgentData::RegisterLevel(a, b, c, d) - registers a level and its key. */
 int Script_cAgentData__RegisterLevel_2(ScriptArg* args) {
@@ -219,10 +219,10 @@ int Script_cAgentData__RegisterLevel_2(ScriptArg* args) {
     D_004926E0 = index + 1;
     cv = *(int*)c;
     bv = *(int*)b;
-    func_00147600(&D_00532AF0, ObjectiveRow_Construct(&req, *(int*)a, *(int*)d, index));
-    func_0032EEA0(&D_00532B90, func_0032EEC0(&key, bv, cv));
+    cArray_Record_PushBackActual(&D_00532AF0, ObjectiveRow_Construct(&req, *(int*)a, *(int*)d, index));
+    cArray_tParTimes_PushBackActual(&D_00532B90, cAgentData_tParTimes_ctor(&key, bv, cv));
     return 0;
 }
-#undef func_00147600 /* merge_units */
+#undef cArray_Record_PushBackActual /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0032EDF0 */

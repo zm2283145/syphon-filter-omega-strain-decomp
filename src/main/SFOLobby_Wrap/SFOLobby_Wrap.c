@@ -68,22 +68,22 @@ extern unsigned char D_00584240;
 extern char D_00584241;
 extern char D_005842C8;
 extern char D_005842CC[];
-extern int func_002EBC48(void* obj);
+extern int NetGetLocalTime(void* obj);
 
-int func_00444020(int value) {
+int SFOMGCL_StartTimer(int value) {
     D_005842C8 = value;
-    return func_002EBC48(D_005842CC);
+    return NetGetLocalTime(D_005842CC);
 }
 
-void func_00444040(int value) {
+void SFOMGCL_SetConnectedFlag(int value) {
     D_00584241 = value;
 }
 
-void func_00444050(int value) {
+void SFOMGCL_SetAsCurrentHost(int value) {
     D_00584240 = value;
 }
 
-int func_00444060(void) {
+int SFOMGCL_AmICurrentHost(void) {
     return D_00584240;
 }
 #pragma pop /* merge_units */
@@ -102,15 +102,15 @@ void* memset(void*, int, unsigned int);
 #define memset(a0, a1, a2) ((void *)memset((int)(a0), (a1), (int)(a2))) /* merge_units */
 
 void String_Copy(char*, const char*);
-int func_002CF2C0(char*, void*);
+int MGCLSessionEnd(char*, void*);
 int Medius_DisconnectServer(void);
 #if 0 /* merge_units */
-void func_002EBC48(int*);
+void NetGetLocalTime(int*);
 #endif /* merge_units */
-#define func_002EBC48(a0) ((void)func_002EBC48((void *)(a0))) /* merge_units */
+#define NetGetLocalTime(a0) ((void)NetGetLocalTime((void *)(a0))) /* merge_units */
 
 
-int func_004446E0(int);
+int SFOMGCL_Update(int);
 void SFOLobby_CallUpdateHook(char*, int, int);
 void func_00445230(void);
 extern unsigned char D_00584231;
@@ -122,7 +122,7 @@ extern char D_004C0B38[];
 
 static inline bool Poll(void) {
     int now = 0;
-    func_002EBC48(&now);
+    NetGetLocalTime(&now);
     if (now - D_00584528 > 30000) return false;
     SFOLobby_CallUpdateHook(D_00585E60, 0, 0);
     return true;
@@ -134,19 +134,19 @@ static inline int Busy(void) {
     return 0;
 }
 
-extern "C" int func_00444070(int arg) {
+extern "C" int SFOMGCL_Shutdown(int arg) {
     if (!D_00584231) return 0;
     if (arg) {
         char buf[0x15];
         memset(buf, 0, sizeof(buf));
         String_Copy(buf, D_004C0B38);
-        if (func_002CF2C0(buf, (void*)func_00445230) == 0) {
+        if (MGCLSessionEnd(buf, (void*)func_00445230) == 0) {
             D_00584528 = 0;
-            func_002EBC48(&D_00584528);
+            NetGetLocalTime(&D_00584528);
             SFOLobby_CallUpdateHook(D_00585E60, 2, 1);
             while (D_00584237 == 0) {
                 if (!Poll()) break;
-                if (func_004446E0(0)) break;
+                if (SFOMGCL_Update(0)) break;
             }
         }
     }
@@ -155,7 +155,7 @@ extern "C" int func_00444070(int arg) {
     return 0;
 }
 #undef memset /* merge_units */
-#undef func_002EBC48 /* merge_units */
+#undef NetGetLocalTime /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00444070 */
 
@@ -186,12 +186,12 @@ extern Info D_005842DC;
 extern short D_0058438E;
 extern short D_00584390;
 extern char D_00584378[];
-int func_00444FF0(int, int, int, int);
-int func_00444EC0(void);
+int SFOMGCL_Initialize_Module(int, int, int, int);
+int SFOMGCL_Initialize_API(void);
 int Medius_GetLibVersion(void*);
-int func_004449C0(int, int, int, int);
+int SFOMGCL_Connect_MAS(int, int, int, int);
 int Medius_ConnectServer(Req*, int*);
-void func_002EBCE0(void*);
+void NetGetTime(void*);
 void Medius_SendServerReport(void*);
 int MGCLUpdate(void);
 #if 0 /* merge_units */
@@ -218,23 +218,23 @@ static inline int Inner_4441D0(Req* req, int* out, char* buf138) {
     if (ret != 0) return ret;
     D_00584390 = 0;
     D_0058438E = 1;
-    func_002EBCE0(buf138);
+    NetGetTime(buf138);
     Medius_SendServerReport(D_00584378);
     ret = MGCLUpdate();
     if (ret != 0) return ret;
     return 0;
 }
 
-int func_004441D0(int a0, int a1, int a2, int a3) {
+int SFOMGCL_Startup(int a0, int a1, int a2, int a3) {
     int out;
     char buf138[4];
     char bufF0[0x48];
     Req req;
 
-    if (!(unsigned char)func_00444FF0(1, 4, 1, 0)) return -12;
-    if (func_00444EC0() != 0) return -12;
+    if (!(unsigned char)SFOMGCL_Initialize_Module(1, 4, 1, 0)) return -12;
+    if (SFOMGCL_Initialize_API() != 0) return -12;
     if (Medius_GetLibVersion(bufF0) != 0) return -12;
-    if (func_004449C0(a0, a1, a2, a3) != 0) return -12;
+    if (SFOMGCL_Connect_MAS(a0, a1, a2, a3) != 0) return -12;
     memset(&req, 0, sizeof(req));
     memset(&out, 0, 4);
     return Inner_4441D0(&req, &out, buf138) != 0 ? -12 : 0;
@@ -277,17 +277,17 @@ extern void String_Copy(char* d, const char* s);
 #define String_Copy(a0, a1) (String_Copy((a0), (a1))) /* merge_units */
 
 
-extern int func_002D0A38(Req444* r, void* cb);
+extern int MGCLCreateGameOnMeRequest(Req444* r, void* cb);
 #if 0 /* merge_units */
-extern void func_002EBC48(int* t);
+extern void NetGetLocalTime(int* t);
 #endif /* merge_units */
-#define func_002EBC48(a0) ((void)func_002EBC48((void *)(a0))) /* merge_units */
+#define NetGetLocalTime(a0) ((void)NetGetLocalTime((void *)(a0))) /* merge_units */
 
 
 #if 0 /* merge_units */
-extern int func_004446E0(int x);
+extern int SFOMGCL_Update(int x);
 #endif /* merge_units */
-#define func_004446E0(a0) (func_004446E0((a0))) /* merge_units */
+#define SFOMGCL_Update(a0) (SFOMGCL_Update((a0))) /* merge_units */
 
 
 #if 0 /* merge_units */
@@ -296,7 +296,7 @@ extern void SFOLobby_CallUpdateHook(int h, int a, int b);
 #define SFOLobby_CallUpdateHook(a0, a1, a2) (SFOLobby_CallUpdateHook((char *)(a0), (a1), (a2))) /* merge_units */
 
 
-extern void func_004446A0(void);
+extern void Callback_MGCLCreateGameOnMeRequest(void);
 extern char D_00584398[];
 extern char D_005843B4[];
 extern int D_0058423C;
@@ -311,12 +311,12 @@ extern int D_00585E60;
 
 static inline unsigned char Poll444(void) {
     int now = 0;
-    func_002EBC48(&now);
+    NetGetLocalTime(&now);
     if (now - D_00584528 > 30000) return 0;
     SFOLobby_CallUpdateHook(D_00585E60, 0, 0);
     return 1;
 }
-int func_00444460(const char* name, const void* data, const char* str, int a, int b, int c, int d, int e,
+int SFOMGCL_CreateGameOnSelf(const char* name, const void* data, const char* str, int a, int b, int c, int d, int e,
                   int f, int g, int h, int i, int j) {
     Req444 req;
     memset(&req, 0, sizeof(req));
@@ -341,20 +341,20 @@ int func_00444460(const char* name, const void* data, const char* str, int a, in
     D_005844FC = d;
     String_Copy(D_005843B4, name);
     D_0058423C = 0;
-    if (func_002D0A38(&req, func_004446A0)) return 0;
+    if (MGCLCreateGameOnMeRequest(&req, Callback_MGCLCreateGameOnMeRequest)) return 0;
     D_00584528 = 0;
-    func_002EBC48(&D_00584528);
+    NetGetLocalTime(&D_00584528);
     SFOLobby_CallUpdateHook(D_00585E60, 2, 1);
     while (!D_0058423C) {
         if (!Poll444()) return 0;
-        if (func_004446E0(0)) return 0;
+        if (SFOMGCL_Update(0)) return 0;
     }
     return D_0058423C == 1;
 }
 #undef memset /* merge_units */
 #undef String_Copy /* merge_units */
-#undef func_002EBC48 /* merge_units */
-#undef func_004446E0 /* merge_units */
+#undef NetGetLocalTime /* merge_units */
+#undef SFOMGCL_Update /* merge_units */
 #undef SFOLobby_CallUpdateHook /* merge_units */
 #undef D_00585E60 /* merge_units */
 #pragma pop /* merge_units */

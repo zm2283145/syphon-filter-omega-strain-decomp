@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_002D7760(void) {
+int CreateRGBArray(void) {
     return 0;
 }

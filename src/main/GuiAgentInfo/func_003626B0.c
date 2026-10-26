@@ -40,17 +40,17 @@ void* Root_GetParent(Nd* n);
 Plc* Root_GetWorldPlacement(void* r);
 void Transform_SetOrientation(Plc* d, Plc* s);
 void Placement_Invert(Plc* p);
-void func_00132840(V4* q);
+void cQuaternion_ctor_void(V4* q);
 void Quat_Multiply(V4* a, V4* b, V4* c);
-void func_00132800(V4* d, V4* s);
-int func_001913E0(Nd* n);
-void* func_001913D0(Nd* n);
-void func_001913C0(It* out, void* vec);
-void func_001913A0(It* out, void* vec);
-bool func_001912A0(It* a, It* b);
-Nd** func_00191390(It* it);
-void func_001912E0(Nd* n);
-void func_001912C0(It* it);
+void cQuaternion_ctor_cQuaternionR(V4* d, V4* s);
+int cTreeNode_cSkaAnimAnchor_TreeNodeData_HasChildren(Nd* n);
+void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(Nd* n);
+void cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Begin(It* out, void* vec);
+void cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_End(It* out, void* vec);
+bool cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opNe(It* a, It* b);
+Nd** cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opMul(It* it);
+void cSkaAnimAnchor_TreeNode_TellNeedToUpdate(Nd* n);
+void cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opInc(It* it);
 }
 static inline void Cp(Plc* d, Plc* s) { QC(&d->rot, &s->rot); QC(&d->pos, &s->pos); }
 extern "C" void Root_SetWorldPlacement_3626B0(Nd* self, Plc* src)
@@ -66,9 +66,9 @@ extern "C" void Root_SetWorldPlacement_3626B0(Nd* self, Plc* src)
         Placement_Invert(&inv);
         ip = &inv;
         p = &self->p;
-        func_00132840(&m);
+        cQuaternion_ctor_void(&m);
         Quat_Multiply(&m, &ip->rot, &p->rot);
-        func_00132800(&r, &m);
+        cQuaternion_ctor_cQuaternionR(&r, &m);
         { void* xx = &r; /* dead on purpose: retail keeps this addiu */ }
         QC(&p->rot, &r);
         V4* v = &p->pos;
@@ -76,11 +76,11 @@ extern "C" void Root_SetWorldPlacement_3626B0(Nd* self, Plc* src)
         VAdd3(&ip->pos, &p->pos);
     }
     self->bA0 = 1;
-    if (func_001913E0(self)) {
+    if (cTreeNode_cSkaAnimAnchor_TreeNodeData_HasChildren(self)) {
         It it, end;
-        func_001913C0(&it, func_001913D0(self));
-        func_001913A0(&end, func_001913D0(self));
-        for (; func_001912A0(&it, &end); func_001912C0(&it))
-            func_001912E0(*func_00191390(&it));
+        cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Begin(&it, cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(self));
+        cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_End(&end, cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(self));
+        for (; cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opNe(&it, &end); cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opInc(&it))
+            cSkaAnimAnchor_TreeNode_TellNeedToUpdate(*cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opMul(&it));
     }
 }

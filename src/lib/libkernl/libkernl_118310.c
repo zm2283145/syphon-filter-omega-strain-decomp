@@ -12,7 +12,7 @@ extern HEnt D_004E9AC8[];
 extern int DIntr(void);
 extern void EIntr(void);
 extern void *memset(void *, int, unsigned int);
-int func_00118310(int which, int arg)
+int sceSifExecNotifyHandler(int which, int arg)
 {
     HEnt *tbl, *p;
     int cnt, i, oldgp, prev;

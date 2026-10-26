@@ -60,7 +60,7 @@ Rel* func_00344CE0(Rel* r) {
 #include "base_dtor_chain.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_00344D00, func_001AF8E0)
+DEFINE_BASE_DTOR_CHAIN(func_00344D00, std_vector_imp_cSkeletonBBoxContributionPtr_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00344D00 */
 
@@ -112,13 +112,13 @@ int func_00344EA0(PtrVec* v, int* value) {
 /* merge_units: begin func_00344EC0 */
 #pragma push /* merge_units */
 typedef struct { char pad[0xC]; unsigned char flag; } Obj0C;
-extern void func_00290B90(Obj0C* self, int* src, unsigned char flag);
+extern void std_vector_imp_cSkeletonBBoxContributionPtr_1_ctor(Obj0C* self, int* src, unsigned char flag);
 extern void PtrVec_Reserve(Obj0C* self, int value);
 
 /* Initializes self from src, sets the value *src and stores flag at +0xC; returns self. */
 Obj0C* func_00344EC0(Obj0C* self, int* src, unsigned char flag)
 {
-    func_00290B90(self, src, flag);
+    std_vector_imp_cSkeletonBBoxContributionPtr_1_ctor(self, src, flag);
     PtrVec_Reserve(self, *src);
     self->flag = flag;
     return self;
@@ -147,7 +147,7 @@ Rel* func_00345000(Rel* r) {
     return r;
 }
 
-int func_00345020(void) {
+int AgentRenderWrapper(void) {
     return GuiAgentModify_DrawModelCallback(D_005331D0);
 }
 #pragma pop /* merge_units */
@@ -155,7 +155,7 @@ int func_00345020(void) {
 
 /* merge_units: begin func_00345030 */
 #pragma push /* merge_units */
-int func_00345030(char* a, char* b) {
+int AgentPartCompare(char* a, char* b) {
     int i;
     for (i = 0; i < 5; i++) {
         a++; b++;
@@ -171,7 +171,7 @@ int func_00345030(char* a, char* b) {
 void func_00345070(void) {
 }
 
-void func_00345080(void) {
+void GuiNetMessages_ProcessNetworkMessages(void) {
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00345070 */

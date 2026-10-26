@@ -16,11 +16,11 @@ struct LNode_345D0 { LNode_345D0* prev; LNode_345D0* next; E_345D0* value; };
 struct It_345D0 { LNode_345D0* n; };
 struct List_345D0 { int x0; int x4; LNode_345D0* x8; };
 extern "C" {
-void func_00232EE0(It_345D0* out, List_345D0* list);
-It_345D0* func_00232EF0(It_345D0* dst, It_345D0* src);
-void func_00232F00(It_345D0* out, List_345D0* list);
+void std_list_cElementPtr_end_void(It_345D0* out, List_345D0* list);
+It_345D0* cLListIterator_cElementPtr_ctor_listR(It_345D0* dst, It_345D0* src);
+void std_list_cElementPtr_begin_void(It_345D0* out, List_345D0* list);
 void ObjectList_EraseRange(It_345D0* out, List_345D0* list, LNode_345D0** first, int** last);
-void func_00234860(List_345D0* l, int flag);
+void std_list_cElementPtr_dtor_void(List_345D0* l, int flag);
 }
 struct S_345D0 {
     virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void v20(); virtual void v21(); virtual void v22(int a);
@@ -30,8 +30,8 @@ struct F_345D0 { float f; };
 #pragma opt_propagation off
 #pragma opt_common_subs off
 static inline bool Ok(S_345D0* s) { return s->b2D && s->b2C && !s->b2E; }
-static inline void Beg1(It_345D0* out, List_345D0* l) { It_345D0 t; func_00232F00(&t, l); func_00232EF0(out, &t); }
-static inline void End1(It_345D0* out, List_345D0* l) { It_345D0 t; func_00232EE0(&t, l); func_00232EF0(out, &t); }
+static inline void Beg1(It_345D0* out, List_345D0* l) { It_345D0 t; std_list_cElementPtr_begin_void(&t, l); cLListIterator_cElementPtr_ctor_listR(out, &t); }
+static inline void End1(It_345D0* out, List_345D0* l) { It_345D0 t; std_list_cElementPtr_end_void(&t, l); cLListIterator_cElementPtr_ctor_listR(out, &t); }
 static inline void Beg2(It_345D0* out, List_345D0* l) { Beg1(out, l); }
 static inline void End2(It_345D0* out, List_345D0* l) { End1(out, l); }
 static inline void Kill2(E_345D0* e) { void* q = e->a; if (q) { AllocGuard g2; ParticleInst_Kill(q, -1); Mem_Free(0, q, D_004A6F38, 0x14F); } }
@@ -62,7 +62,7 @@ extern "C" S_345D0* SnowField_dtor(S_345D0* self, short flag)
         }
         {
             List_345D0* l = &self->list;
-            if (l) func_00234860(l, 0);
+            if (l) std_list_cElementPtr_dtor_void(l, 0);
         }
         if (self) {
             *(char**)self = D_004DF860;

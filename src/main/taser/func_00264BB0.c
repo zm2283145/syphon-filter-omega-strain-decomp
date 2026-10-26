@@ -38,7 +38,7 @@ extern void Vec3_Negate(V* v);
 extern void Mtx_TransformByTranspose(V* v, M* m);
 extern void Mtx_SetTranslation(M* m, V* v);
 extern void World_PushObject(void* w, Tgt* t, Ctl* c);
-extern void func_00264980(HeldItem* h, Tgt* t, int part, V pos);
+extern void cAirTaser_BeginShocking_cHumanP_int_cVector(HeldItem* h, Tgt* t, int part, V pos);
 extern unsigned char g_IsMultiplayer;
 extern signed char ActorNodeCodeTable[];
 extern char g_Game[];
@@ -49,7 +49,7 @@ extern char D_004DCF10[];
 extern char D_004E01E0[];
 extern char D_004E0840[];
 extern int D_0048B1D0;
-void func_00264BB0(HeldItem* h, Tgt* t, int part);
+void cAirTaser_BeginShocking_cHumanP_int(HeldItem* h, Tgt* t, int part);
 }
 static inline void InvertRigid(M* m)
 {
@@ -103,7 +103,7 @@ static inline void TaserMsg_Init(TaserMsg* p, Tgt* t, int part, V v)
     p->part = part;
     p->pos = v;
 }
-void func_00264BB0(HeldItem* h, Tgt* t, int part)
+void cAirTaser_BeginShocking_cHumanP_int(HeldItem* h, Tgt* t, int part)
 {
     V pos;
     M m;
@@ -144,7 +144,7 @@ void func_00264BB0(HeldItem* h, Tgt* t, int part)
         tm.vt = D_004DCF10;
         cMessage_dtor(p, 0);
     }
-    func_00264980(h, t, part, pos);
+    cAirTaser_BeginShocking_cHumanP_int_cVector(h, t, part, pos);
 }
 
 

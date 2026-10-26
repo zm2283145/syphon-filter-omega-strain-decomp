@@ -5,6 +5,6 @@
 
 #include "types.h"
 
-char* func_00151780(char* base, int i) {
+char* cMatrix_GetAxis(char* base, int i) {
     return base + i * 16;
 }

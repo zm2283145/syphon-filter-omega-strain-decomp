@@ -3,9 +3,9 @@ typedef struct { int m0; char name[0x94]; int m98; } YA910;
 typedef struct { int m0; unsigned char type; char pad[3]; YA910* y; } XA910;
 typedef struct NA910 { int m0; struct NA910* next; XA910* data; } NA910;
 extern void List_Begin(int* out, void* list);
-extern void func_003EA900(NA910** out, int* in);
-extern void func_003EA8F0(int* out, void* list);
-extern void func_003EA8E0(NA910** out, int* in);
+extern void std_list_cFSDataPtr_generic_iterator_ctor(NA910** out, int* in);
+extern void std_list_cFSDataPtr_end(int* out, void* list);
+extern void cLListIterator_cFSDataPtr_ctor(NA910** out, int* in);
 extern int String_CompareNoCase(const char* a, const char* b);
 XA910* Fstream_FindRequest(void* self, YA910* key, int type)
 {
@@ -19,8 +19,8 @@ XA910* Fstream_FindRequest(void* self, YA910* key, int type)
     int a;
     NA910* n;
     List_Begin(&t1, self);
-    func_003EA900(&it, &t1);
-    for (n = it; func_003EA8F0(&t2, self), func_003EA8E0(&e, &t2), n != e; n = n->next) {
+    std_list_cFSDataPtr_generic_iterator_ctor(&it, &t1);
+    for (n = it; std_list_cFSDataPtr_end(&t2, self), cLListIterator_cFSDataPtr_ctor(&e, &t2), n != e; n = n->next) {
         YA910* y;
         x = n->data;
         y = x->y;

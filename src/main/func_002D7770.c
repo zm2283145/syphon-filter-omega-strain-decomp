@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_002D7770(void) {
+int YUV2RGB(void) {
     return -1;
 }

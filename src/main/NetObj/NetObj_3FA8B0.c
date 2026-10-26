@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-void func_003FA8B0(Iter* out, Tree* t) {
+void std_tree_pair_int_value_compare_begin_void_2(Iter* out, Tree* t) {
     out->p = t->leftmost;
 }
 #pragma pop /* merge_units */
@@ -28,7 +28,7 @@ extern char D_0055C7A0[];
 extern MapEntry* NetRecvMap_Insert(void* map, int* key);
 
 /* Looks up key in the global map and stores a, b and flag in the entry. */
-void func_003FA8C0(int a, int key, int b, unsigned char flag)
+void cNetObj_AddHumanToQueue(int a, int key, int b, unsigned char flag)
 {
     NetRecvMap_Insert(D_0055C7A0, &key)->a = a;
     NetRecvMap_Insert(D_0055C7A0, &key)->b = b;
@@ -57,17 +57,17 @@ extern char D_0055C780[];
 extern unsigned char D_00572400;
 extern void DME_SendPlayGameMsg(void);
 extern Peer_A940* Player_GetCached(void);
-extern void func_003FAAA0(Iter_A940* out, void* map);
-extern void func_0021D360(Iter_A940* out, void* map);
-extern void func_0021D350(Iter_A940* out, Iter_A940* in);
+extern void std_map_int_netSystemField_begin(Iter_A940* out, void* map);
+extern void std_map_int_netSystemField_end(Iter_A940* out, void* map);
+extern void cAssocArray_int_netSystemField_Iterator_ctor(Iter_A940* out, Iter_A940* in);
 extern void Tree_Successor(Iter_A940* it);
-extern void func_003FAC40(int a);
-void func_003FA940(int id);
+extern void cNetObj_Update(int a);
+void cNetObj_SendLocalSystems(int id);
 }
 static inline int Eq_A940(Iter_A940* a, Iter_A940* b) { return a->p == b->p; }
 #pragma push
 #pragma opt_propagation off
-void func_003FA940(int id)
+void cNetObj_SendLocalSystems(int id)
 {
     Peer_A940* self;
     Iter_A940 it;
@@ -81,15 +81,15 @@ void func_003FA940(int id)
     }
     self = Player_GetCached();
     self->Notify(id);
-    func_003FAAA0(&b1, D_0055C7A0);
-    func_0021D350(&b2, &b1);
+    std_map_int_netSystemField_begin(&b1, D_0055C7A0);
+    cAssocArray_int_netSystemField_Iterator_ctor(&b2, &b1);
     *(IterW_A940*)&it = *(IterW_A940*)&b2;
-    for (func_0021D360(&e1, D_0055C7A0), func_0021D350(&end, &e1); Eq_A940(&it, &end) ^ 1; func_0021D360(&e1, D_0055C7A0), func_0021D350(&end, &e1)) {
+    for (std_map_int_netSystemField_end(&e1, D_0055C7A0), cAssocArray_int_netSystemField_Iterator_ctor(&end, &e1); Eq_A940(&it, &end) ^ 1; std_map_int_netSystemField_end(&e1, D_0055C7A0), cAssocArray_int_netSystemField_Iterator_ctor(&end, &e1)) {
         Peer_A940* p = it.p->peer;
         if (p && p->active && p->h != self->h) {
             p->Notify(id);
         }
-        func_003FAC40(0);
+        cNetObj_Update(0);
         Tree_Successor(&it);
     }
 }

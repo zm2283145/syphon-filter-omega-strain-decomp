@@ -5,23 +5,23 @@
  */
 
 /* merge_units: begin func_002FABD0 */
-extern int func_002FAF18(char *);
-int func_002FABD0(char *o, int *out)
+extern int rt_list_buf_is_valid(char *);
+int rt_list_buf_get_head(char *o, int *out)
 {
-    if (func_002FAF18(o) == 0) return 2;
+    if (rt_list_buf_is_valid(o) == 0) return 2;
     *out = *(int *)(o + 0x14);
     return 0;
 }
 /* merge_units: end func_002FABD0 */
 
 /* merge_units: begin func_002FAC20 */
-extern int func_002FAF00(int);
-int func_002FAC20(char *o, int *out)
+extern int rt_list_buf_get_next(int);
+int rt_list_buf_get_tail(char *o, int *out)
 {
     int v;
-    if (func_002FAF18(o) == 0) return 2;
+    if (rt_list_buf_is_valid(o) == 0) return 2;
     *out = *(int *)(o + 0x14);
-    while ((v = func_002FAF00(*out)) != 0) *out = func_002FAF00(*out);
+    while ((v = rt_list_buf_get_next(*out)) != 0) *out = rt_list_buf_get_next(*out);
     return 0;
 }
 /* merge_units: end func_002FAC20 */

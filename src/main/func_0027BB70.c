@@ -19,7 +19,7 @@ extern int g_HumanActorClassKey[];
 extern "C" void NetStream_ReadObject(int* out);
 extern "C" float Script_ReadFloat(void);
 extern "C" void HeldItem_Release(int h);
-extern "C" void func_00264980(int h, int target, int a, Vec4_27BB70 v);
+extern "C" void cAirTaser_BeginShocking_cHumanP_int_cVector(int h, int target, int a, Vec4_27BB70 v);
 extern "C" void HeldItem_LaunchDart(int h, int target, unsigned char b, int c, Vec4_27BB70 v);
 
 static inline int Key0() { int* p = g_HumanActorClassKey; return *p; }
@@ -52,7 +52,7 @@ void cNetTaserMsg_Apply(cNetTaserMsg* self, T_0027BB70* t)
             if (self->target == 0) {
                 HeldItem_Release(*t->held);
             } else {
-                func_00264980(Held(t), self->target, self->a, self->pos);
+                cAirTaser_BeginShocking_cHumanP_int_cVector(Held(t), self->target, self->a, self->pos);
             }
         } else if (self->mode == 0) {
             HeldItem_LaunchDart(Held(t), self->target, self->b, self->c, self->pos);

@@ -14,11 +14,11 @@ float func_0012F290(char* self) {
     return *(float*)(self + 212);
 }
 
-void* func_0012F2A0(char* self) {
+void* pString_CStr(char* self) {
     return self + 1;
 }
 
-void* func_0012F2B0(char* self) {
+void* cSystem_GetObjectID_void(char* self) {
     return self + 12;
 }
 
@@ -27,7 +27,7 @@ int func_0012F2C0(char* self) {
 }
 
 /* Empties a string buffer. */
-char* func_0012F2D0(char* str) {
+char* pString_ctor(char* str) {
     str[0] = 0;
     return str;
 }

@@ -137,14 +137,14 @@ void WeaponInv_LaunchProjectile(int inv, float a, int* id, void* p);
 void Inventory_ReleaseItem(int inv);
 void ActiveList_RemoveFirst(void* w);
 void* ModelCtx_FindNodeByName(void* s, Name_L* n);
-void* func_00190F40(void* p);
-int func_00190F30(void* p);
+void* cSkaParams_Skeleton(void* p);
+int cSkeleton_GetSkeletonData(void* p);
 Plc_L Clip_ResolveMotionPlacement(void* node, int k);
 void VecPair_Copy(Plc_L* d, Plc_L* s);
 void Root_BaseConstruct(Plc_L* p);
 void* Root_GetWorldPlacement(Root_L* r);
 Q_L* Placement_GetQuat(void* p);
-void* func_0019D1A0(Mtx_L* m);
+void* cMatrix_GetXAxis(Mtx_L* m);
 void* func_0019D190(Mtx_L* m);
 void Vec4_Assign(Q_L* d, void* s);
 float Vec4_GetZ(Q_L* v);
@@ -158,12 +158,12 @@ void AnimChannel_SetDirect(float f, void* ch, int k);
 void* RootCollection_FindByKey_Thunk(void* sys, int* key);
 void Root_ClearChildren(void* r);
 void Root_Attach(void* a, void* b, int f);
-int func_001A77D0(void* p);
-void func_001A77C0(int* it, int v);
-void func_001A77A0(int* it, int v);
-int func_001A6D00(int* a, int* b);
-void func_001A6D20(int* a);
-int* func_001A7790(int* a);
+int cMatrix_GetYAxis(void* p);
+void cArray_cTreeNode_cSkaSystemPtrPtr_Begin_void(int* it, int v);
+void cArray_cTreeNode_cSkaSystemPtrPtr_End_void(int* it, int v);
+int cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opNe(int* a, int* b);
+void cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opInc(int* a);
+int* cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opMul(int* a);
 void** Ptr_IdentityCast(int v);
 void Actor_EnterDeadState(Act_L* a);
 void Model_GetComponentTransform(Plc3_L* out, void* m, signed char k);
@@ -303,7 +303,7 @@ static inline void NodeQ_L(Q_L* out, Act_L* a)
     NAME_COPY(nm.c, D_0049DD50)
     void* nd = ModelCtx_FindNodeByName(sys, &nm);
     if (nd) {
-        VPC_L(&plc, Clip_ResolveMotionPlacement(nd, func_00190F30(func_00190F40(sys + 0x10))));
+        VPC_L(&plc, Clip_ResolveMotionPlacement(nd, cSkeleton_GetSkeletonData(cSkaParams_Skeleton(sys + 0x10))));
     } else {
         Root_BaseConstruct(&plc);
     }
@@ -383,7 +383,7 @@ static inline float Yaw_L(const Q_L* rp)
     {
         Q_L va;
         Q_L vb;
-        Vec4_Assign(&va, func_0019D1A0(mp));
+        Vec4_Assign(&va, cMatrix_GetXAxis(mp));
         Vec4_Assign(&vb, func_0019D190(mp));
         if (Vec4_GetZ(&va) < Vec4_GetZ(&vb)) return Vec_HeadingFromYX(&va);
         return Vec_HeadingFromNegXY(&vb);
@@ -405,7 +405,7 @@ struct PlcR_L {
 static inline PlcR_L NodePlc_L(char* sys, const NameC_L& nm)
 {
     void* nd = ModelCtx_FindNodeByName(sys, (Name_L*)&nm);
-    if (nd) return PlcR_L(nd, func_00190F30(func_00190F40(sys + 0x10)));
+    if (nd) return PlcR_L(nd, cSkeleton_GetSkeletonData(cSkaParams_Skeleton(sys + 0x10)));
     return PlcR_L();
 }
 struct MtxQ_L {
@@ -446,7 +446,7 @@ struct MtxQ_L {
     {
         Q_L va;
         Q_L vb;
-        Vec4_Assign(&va, func_0019D1A0((Mtx_L*)this));
+        Vec4_Assign(&va, cMatrix_GetXAxis((Mtx_L*)this));
         Vec4_Assign(&vb, func_0019D190((Mtx_L*)this));
         if (Vec4_GetZ(&va) < Vec4_GetZ(&vb)) return Vec_HeadingFromYX(&va);
         return Vec_HeadingFromNegXY(&vb);
@@ -1037,12 +1037,12 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         a->f324C |= 8;
         int it;
         int end;
-        func_001A77C0(&it, func_001A77D0(sys + 0x100));
-        func_001A77A0(&end, func_001A77D0(sys + 0x100));
+        cArray_cTreeNode_cSkaSystemPtrPtr_Begin_void(&it, cMatrix_GetYAxis(sys + 0x100));
+        cArray_cTreeNode_cSkaSystemPtrPtr_End_void(&end, cMatrix_GetYAxis(sys + 0x100));
         void* root = RootCollection_FindByKey_Thunk(sys, &D_0049D040);
-        while (func_001A6D00(&it, &end)) {
-            Root_Attach(root, RootCollection_FindByKey_Thunk(*Ptr_IdentityCast(*func_001A7790(&it)), &D_0049D040), 1);
-            func_001A6D20(&it);
+        while (cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opNe(&it, &end)) {
+            Root_Attach(root, RootCollection_FindByKey_Thunk(*Ptr_IdentityCast(*cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opMul(&it)), &D_0049D040), 1);
+            cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opInc(&it);
         }
         break;
     }

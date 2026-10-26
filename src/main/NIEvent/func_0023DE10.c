@@ -31,7 +31,7 @@ extern "C" {
 Mtx NiEvent_BillboardWorld(NiEv* ev);
 Mtx NiEvent_ComputeWorld(NiEv* ev);
 void NiEvent_MulParentMatrix(Mtx* out, Mtx* a, Mtx* b);
-void func_001D3E20(Mtx* m);
+void cMatrix_ctor_void(Mtx* m);
 void Mtx_Copy_23E150(Mtx* d, Mtx* s);
 void Mtx_Copy(Mtx* d, Mtx* s);
 int GameObject_IsCollisionEnabled(NiEv* ev);
@@ -61,7 +61,7 @@ static inline Mtx MulM(MP a, const Mtx& b)
 static inline MP ParentWorld(NiEv* p)
 {
     MP m;
-    func_001D3E20(&m);
+    cMatrix_ctor_void(&m);
     if (p->type == 3) {
         if (GameObject_IsCollisionEnabled(p)) {
             Mtx t = NiEvent_BillboardWorld(p);

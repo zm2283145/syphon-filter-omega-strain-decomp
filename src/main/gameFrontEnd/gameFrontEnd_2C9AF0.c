@@ -105,7 +105,7 @@ static inline void Del2C9C80(V2C9C80* o, int line)
     o->v0(-1);
     Mem_Free(0, o, D_004ACF10, line);
 }
-extern "C" void func_002C9C80(S2C9C80* s, int flag)
+extern "C" void cGameFrontEnd_CloseCharacter(S2C9C80* s, int flag)
 {
     V2C9C80* p = s->p260;
     if (p) {
@@ -156,7 +156,7 @@ static inline void merge_flush_func_002C9D50(void) {}
 struct S2C9E20 { char pad[0x25C]; void* p25C; };
 extern "C" {
 void Hog_Unload(void* p);
-void func_0036D5D0(void* p, short f);
+void cHogFile_dtor(void* p, short f);
 }
 extern "C" void FrontEnd_UnloadZeusHog(S2C9E20* s)
 {
@@ -165,7 +165,7 @@ extern "C" void FrontEnd_UnloadZeusHog(S2C9E20* s)
         {
             void* p = s->p25C;
             AllocGuard g;
-            func_0036D5D0(p, -1);
+            cHogFile_dtor(p, -1);
             Mem_Free(0, p, D_004ACF10, 0x639);
         }
         s->p25C = 0;
@@ -182,11 +182,11 @@ static inline void merge_flush_func_002C9E20(void) {}
 extern "C" {
 extern char D_0048B2F8[];
 char* Loc_GetCurrentLanguageName_Thunk(void);
-void* func_0036D630(void* p);
+void* cHogFile_ctor(void* p);
 #if 0 /* merge_units */
-void func_0036D5D0(void* p, int flags);
+void cHogFile_dtor(void* p, int flags);
 #endif /* merge_units */
-#define func_0036D5D0(a0, a1) (func_0036D5D0((a0), (short)(a1))) /* merge_units */
+#define cHogFile_dtor(a0, a1) (cHogFile_dtor((a0), (short)(a1))) /* merge_units */
 
 int Hog_Load(void* hog, char* path, int mode, int flags);
 }
@@ -202,13 +202,13 @@ extern "C" bool FrontEnd_LoadZeusHog(Obj9EE0* o)
             p = Mem_Alloc(0, 0x16C, D_004ACF10, 0x628);
         }
         if (p)
-            p = func_0036D630(p);
+            p = cHogFile_ctor(p);
         o->hog = p;
         if (Hog_Load(o->hog, path, 2, 0)) {
             void* q = o->hog;
             {
                 AllocGuard guard;
-                func_0036D5D0(q, -1);
+                cHogFile_dtor(q, -1);
                 Mem_Free(0, q, D_004ACF10, 0x62C);
             }
             o->hog = 0;
@@ -216,7 +216,7 @@ extern "C" bool FrontEnd_LoadZeusHog(Obj9EE0* o)
     }
     return o->hog != 0;
 }
-#undef func_0036D5D0 /* merge_units */
+#undef cHogFile_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002C9EE0(void) {}
 #pragma pop /* merge_units */

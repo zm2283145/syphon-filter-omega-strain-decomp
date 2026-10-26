@@ -9,14 +9,14 @@ extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
 cGOBJ* Object_LookupById(const GobjId* id);
 void ObjMap_Find_42EE70(PendingTransferIterator* result, RbTree* tree, const GobjId* id);
-PendingTransferIterator func_0042D780(RbTree* tree);
-void func_0042D770(PendingTransferIterator* result, const PendingTransferIterator& source);
+PendingTransferIterator std_map_int_cMessagePtr_end(RbTree* tree);
+void cAssocArray_int_cMessagePtr_Iterator_ctor(PendingTransferIterator* result, const PendingTransferIterator& source);
 void func_0042F2C0(RbTree* tree, const PendingTransferIterator& position);
 int Transport_Send(unsigned int id, TransferMessage* message, int flags, short peer);
 void Mem_Free(int pool, void* allocation, char* file, int line);
-void func_0042D790(cGOBJ* object);
-void func_00436C00(int* shared);
-void func_00436BA0(int* shared, short flags);
+void cNetObjectMgr_TerrainActivation(cGOBJ* object);
+void cNPCInfoObject_ctor(int* shared);
+void cNPCInfoObject_dtor(int* shared, short flags);
 }
 
 static inline PendingTransferController* controller(cGOBJ* object)
@@ -42,7 +42,7 @@ static inline int is_host(void)
 
 static inline void assign_end(PendingTransferIterator* result, RbTree* tree)
 {
-    func_0042D770(result, func_0042D780(tree));
+    cAssocArray_int_cMessagePtr_Iterator_ctor(result, std_map_int_cMessagePtr_end(tree));
 }
 
 static inline void pending_end(PendingTransferIterator* result)
@@ -58,7 +58,7 @@ static inline void erase_pending(PendingTransferNode* node)
 }
 
 /* Send queued or newly created transfer state, then update the object's transfer status. */
-extern "C" void func_0042D360(const GobjId* id, int peer)
+extern "C" void cNetObjectMgr_TransferRequest(const GobjId* id, int peer)
 {
     int shared;
     GobjId key;
@@ -91,10 +91,10 @@ extern "C" void func_0042D360(const GobjId* id, int peer)
         if (needs_transfer_update(object)) {
             controller(object)->set_transferring(1);
             ((TransferObjectMethods*)object)->set_state(0);
-            func_0042D790(object);
+            cNetObjectMgr_TerrainActivation(object);
         }
     } else {
-        func_00436C00(&shared);
+        cNPCInfoObject_ctor(&shared);
         if (is_host()) {
             TransferMessage* message = controller(object)->create_message();
             if (message) {
@@ -108,6 +108,6 @@ extern "C" void func_0042D360(const GobjId* id, int peer)
                 release_message(message, 0x22F);
             }
         }
-        func_00436BA0(&shared, -1);
+        cNPCInfoObject_dtor(&shared, -1);
     }
 }

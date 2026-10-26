@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-Word* func_00183260(Word* dst, Word* src) {
+Word* cArray_cGOBJPtr_ConstReverseIterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }

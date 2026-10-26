@@ -24,7 +24,7 @@ static inline const V4& Zero()
 }
 /* GCC-style volatile lq/sq quad copy (c57da idiom): keeps the unfolded addiu address regs */
 static inline void V4_Copy(V4* d, const V4* s) { __int128 q; __asm__ volatile("lq %0, 0(%2); sq %0, 0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
-extern "C" void func_002D7D10(Obj* o)
+extern "C" void cNetPlayer_WeaponShoot(Obj* o)
 {
     Info* in = o->info;
     if (in) {

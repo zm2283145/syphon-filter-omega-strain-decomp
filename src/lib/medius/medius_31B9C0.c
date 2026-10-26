@@ -5,7 +5,7 @@
  */
 
 /* merge_units: begin func_0031B9C0 */
-void func_0031B9C0(float *data, int nn)
+void BitRev(float *data, int nn)
 {
     int n = nn << 1;
     int i, j = 1, m;
@@ -26,7 +26,7 @@ void func_0031B9C0(float *data, int nn)
 /* merge_units: end func_0031B9C0 */
 
 /* merge_units: begin func_0031BA78 */
-void func_0031BA78(float *re, float *im, int n, float *out)
+void NellyMagSq(float *re, float *im, int n, float *out)
 {
     for (; n > 0; n--) {
         *out++ = *re * *re + *im * *im;
@@ -37,7 +37,7 @@ void func_0031BA78(float *re, float *im, int n, float *out)
 /* merge_units: end func_0031BA78 */
 
 /* merge_units: begin func_0031BAB8 */
-void func_0031BAB8(float *c, int n, float *out)
+void NellyMagSqIL(float *c, int n, float *out)
 {
     for (; n > 0; n--) {
         *out++ = c[0] * c[0] + c[1] * c[1];

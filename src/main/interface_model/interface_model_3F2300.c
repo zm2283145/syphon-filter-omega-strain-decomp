@@ -30,7 +30,7 @@ extern char D_004BE180[];
 extern char D_004BE190[];
 }
 static inline void Free_3F2300(char* p) { if (p) TStr_Free(p, D_004BE190, 0x64); }
-extern "C" void func_003F2300(BVec_3F2300* v, unsigned int n)
+extern "C" void std_vector_pod_AnimType_reserve(BVec_3F2300* v, unsigned int n)
 {
     if (v->cap < n) {
         if (n > 0x6000000) {
@@ -58,7 +58,7 @@ static inline void merge_flush_func_003F2300(void) {}
 #define VIFC_ASSIGN(d, s) ((d)->x = (s)->x, (d)->y = (s)->y)
 #define VIFC_COPY(d, s) ((d)->x = (s)->x, (d)->y = (s)->y)
 struct E_003F24A0 { float x, y; };
-DEFINE_VECTOR_INSERT_FILL_CSE(func_003F24A0, E_003F24A0, 0xC00000, 0x600000, D_004BE0E0, D_004BE170, 0x5C, func_003F2970, extern char D_004BE140[]; void func_003F4390(func_003F24A0_V* v);, func_003F4390(&tmp); { E_003F24A0* fp_ = tmp.data; if (fp_) { if (fp_) TStr_Free((char*)fp_, D_004BE140, 0x64); } }, VIFC_ASSIGN, VIFC_COPY)
+DEFINE_VECTOR_INSERT_FILL_CSE(func_003F24A0, E_003F24A0, 0xC00000, 0x600000, D_004BE0E0, D_004BE170, 0x5C, std_swap_vectordeleterR_vectordeleterR_43, extern char D_004BE140[]; void func_003F4390(func_003F24A0_V* v);, func_003F4390(&tmp); { E_003F24A0* fp_ = tmp.data; if (fp_) { if (fp_) TStr_Free((char*)fp_, D_004BE140, 0x64); } }, VIFC_ASSIGN, VIFC_COPY)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003F24A0(void) {}
 #pragma pop /* merge_units */

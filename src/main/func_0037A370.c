@@ -2,7 +2,7 @@
 #pragma cplusplus on
 /* Renderer_ClearRect: queues a GS packet that clears a w x h rectangle of the
  * renderer's frame/z buffers with the given RGBA colour (z test off when
- * flag is set). Same packet builder shape as func_0037A1E0/Video_BuildFrameClearPacket. */
+ * flag is set). Same packet builder shape as XLib_ClearZBuffer/Video_BuildFrameClearPacket. */
 typedef unsigned long long u64_t;
 typedef struct { u64_t lo, hi; } GsQ;
 typedef struct {

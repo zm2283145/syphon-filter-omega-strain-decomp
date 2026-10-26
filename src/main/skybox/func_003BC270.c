@@ -6,6 +6,6 @@
 #include "types.h"
 #include "skybox_types.h"
 
-void func_003BC270(cSkyboxGobj* self, int value) {
+void cSKYBOX_GOBJ_Init(cSkyboxGobj* self, int value) {
     self->unk8C = value;
 }

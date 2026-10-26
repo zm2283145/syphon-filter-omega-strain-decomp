@@ -65,7 +65,7 @@ float Vec4_GetX(V4_23B4C0* v);
 float Vec4_GetY(V4_23B4C0* v);
 float Vec4_GetZ(V4_23B4C0* v);
 void Mtx_MakeAxisRotation(M4_23B4C0* m, float x, float y, float z, float a);
-void func_001D3E20(M4_23B4C0* m);
+void cMatrix_ctor_void(M4_23B4C0* m);
 #if 0 /* merge_units */
 void Mtx_Multiply(M4_23B4C0* a, M4_23B4C0* b);
 #endif /* merge_units */
@@ -137,12 +137,12 @@ extern "C" void cNIEventOBJ_v48(Self_23B4C0* self)
         Mtx_MakeAxisRotation(&m0, Vec4_GetX(&ax1), Vec4_GetY(&ax1), Vec4_GetZ(&ax1), ang);
         ang = Rad_23B4C0(self->ry.val);
         ax2.Set(0.0f, 1.0f, 0.0f, 0.0f);
-        func_001D3E20(&m1);
+        cMatrix_ctor_void(&m1);
         MakeRot_23B4C0(&m1, ax2, ang);
         Mtx_Multiply(&m0, &m1);
         ang = Rad_23B4C0(self->rz.val);
         ax3.Set(0.0f, 0.0f, 1.0f, 0.0f);
-        func_001D3E20(&m2);
+        cMatrix_ctor_void(&m2);
         MakeRot_23B4C0(&m2, ax3, ang);
         Mtx_Multiply(&m0, &m2);
         StoreAll_23B4C0(&self->mtx, &m0, LoadQ_23B4C0(&self->pos), &m0.r[3]);

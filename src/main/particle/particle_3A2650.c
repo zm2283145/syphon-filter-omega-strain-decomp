@@ -36,7 +36,7 @@ static inline void merge_flush_func_003A2650(void) {}
 
 
 /* Returns 1 if the emitter has a pending flag set. */
-int func_003A2670(ParticleEmitter* e) {
+int cParticle_EventHappened(ParticleEmitter* e) {
     return e->pending != 0;
 }
 

@@ -9,7 +9,7 @@
 extern char D_005202E8[];
 
 /* Stores the address of D_005202E8 into out; returns 23 on a null argument. */
-int func_002E60A0(void** out) {
+int NetGetNatService(void** out) {
     int result = 23;
 
     if (out != 0) {

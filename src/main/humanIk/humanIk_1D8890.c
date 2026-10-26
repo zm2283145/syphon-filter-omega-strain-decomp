@@ -14,7 +14,7 @@
 /* merge_units: begin func_001D8890 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-DEFINE_TREE_ROOT_DTOR(func_001D8890, func_001DF1F0)
+DEFINE_TREE_ROOT_DTOR(std_map_cWeaponSlotPair_cIkTarget_LeftRight_dtor, std_tree_pair_cWeaponSlotPair_value_compare_destroy)
 #pragma pop /* merge_units */
 /* merge_units: end func_001D8890 */
 
@@ -34,17 +34,17 @@ int Alloc_Unlock(int);
 #define Alloc_Unlock(a0) (Alloc_Unlock((a0))) /* merge_units */
                                   
 int Mem_Alloc(int, int, char *, int);                        
-int func_001D8A60(int);                               
-int func_001D8B10();                                  
-int func_001DBB20();                                  
-int func_001DF780(int, char *, char *);                     
+int cArray_FixedCapacity_cIkTarget_LeftRight_6_ctor(int);                               
+int cDrawAndHolsterWeapon_ActionManager_InitWeaponSlotTransitionTable();                                  
+int cDrawAndHolsterWeapon_ActionManager_InitWeaponSlotIkTargetTable();                                  
+int std_tree_pair_cWeaponSlotPair_value_compare_ctor(int, char *, char *);                     
 extern char D_004A0170;
 extern int D_004F2D80;
 extern int D_004F2D88;
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
 
-void func_001D8900(void) {
+void cDrawAndHolsterWeapon_ActionManager_InitStatics(void) {
     struct { int f20; int f24[3]; } sl;
     int temp_s0;
     int temp_s0_2;
@@ -60,11 +60,11 @@ void func_001D8900(void) {
         }
         g_ProfileLockDepth -= 1;
         if (temp_s0 != 0) {
-            func_001D8A60(temp_s0);
+            cArray_FixedCapacity_cIkTarget_LeftRight_6_ctor(temp_s0);
         }
         D_004F2D80 = temp_s0;
     }
-    func_001DBB20();
+    cDrawAndHolsterWeapon_ActionManager_InitWeaponSlotIkTargetTable();
     if (D_004F2D88 == 0) {
         if (g_ProfileLockEnabled != 0) {
             Alloc_Lock(9);
@@ -76,11 +76,11 @@ void func_001D8900(void) {
         }
         g_ProfileLockDepth -= 1;
         if (temp_s0_2 != 0) {
-            func_001DF780(temp_s0_2, sl.f24, &sl.f20);
+            std_tree_pair_cWeaponSlotPair_value_compare_ctor(temp_s0_2, sl.f24, &sl.f20);
         }
         D_004F2D88 = temp_s0_2;
     }
-    func_001D8B10();
+    cDrawAndHolsterWeapon_ActionManager_InitWeaponSlotTransitionTable();
 }
 #undef Alloc_Lock /* merge_units */
 #undef Alloc_Unlock /* merge_units */

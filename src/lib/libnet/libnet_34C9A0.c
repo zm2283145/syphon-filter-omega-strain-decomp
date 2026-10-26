@@ -9,7 +9,7 @@ typedef struct { void *a; void *b; int n; int z; } NetReq_9A0;
 extern void FlushCache(int a);
 extern int sceSifSetDma(NetReq_9A0 *req, int n);
 extern int sceSifDmaStat(int h);
-int func_0034C9A0(void *a, void *b, int n)
+int libnetb_trans_data(void *a, void *b, int n)
 {
     NetReq_9A0 req;
     int h;
@@ -55,11 +55,11 @@ typedef struct Obj {
     char pad0[0x20];
     Ctx *ctx;
 } Obj;
-extern int func_0034A360(Ctx *p, unsigned char a, unsigned char b, unsigned char *out);
-extern int func_0034C9A0(void *a, void *b, int n);
+extern int libnetb_is_data_waiting(Ctx *p, unsigned char a, unsigned char b, unsigned char *out);
+extern int libnetb_trans_data(void *a, void *b, int n);
 extern void *memcpy(void *d, const void *s, unsigned int n);
 
-int func_0034CA38(Obj *o, void *dst, int size, int *p3, Name16 *p4, int *p5, int *p6, int *p7)
+int libnetb_recv_from(Obj *o, void *dst, int size, int *p3, Name16 *p4, int *p5, int *p6, int *p7)
 {
     unsigned char ready;
     Ctx *c;
@@ -81,7 +81,7 @@ int func_0034CA38(Obj *o, void *dst, int size, int *p3, Name16 *p4, int *p5, int
                     c = o->ctx;
                     if (c != 0) {
                         FlushCache(0);
-                        r = func_0034A360(c, 1, 0, &ready);
+                        r = libnetb_is_data_waiting(c, 1, 0, &ready);
                         if (r != 0)
                             return r;
                         if (ready == 0) {
@@ -106,14 +106,14 @@ int func_0034CA38(Obj *o, void *dst, int size, int *p3, Name16 *p4, int *p5, int
                         b->fC = b->size;
                         b->f3C = 0;
                         b->f4 = 0;
-                        r = func_0034C9A0(b, (void *)b->remote, 0x40);
+                        r = libnetb_trans_data(b, (void *)b->remote, 0x40);
                         if (r != 0)
                             return r;
                         c->cur = c->cur + b->size + 0x40;
                         if (c->cur >= c->total)
                             c->cur = 0;
                         if (more == 1) {
-                            r = func_0034CA38(o, dst, size, p3, p4, p5, p6, p7);
+                            r = libnetb_recv_from(o, dst, size, p3, p4, p5, p6, p7);
                             if (r != 0)
                                 return r;
                         }
@@ -129,11 +129,11 @@ int func_0034CA38(Obj *o, void *dst, int size, int *p3, Name16 *p4, int *p5, int
 
 /* merge_units: begin func_0034CC60 */
 #if 0 /* merge_units */
-extern int func_0034CA38(int a, int b, int c, int *d, int e, int *g, int *h, int *err);
+extern int libnetb_recv_from(int a, int b, int c, int *d, int e, int *g, int *h, int *err);
 #endif /* merge_units */
-#define func_0034CA38(a0, a1, a2, a3, a4, a5, a6, a7) (func_0034CA38((Obj *)(a0), (void *)(a1), (a2), (a3), (Name16 *)(a4), (a5), (a6), (a7))) /* merge_units */
+#define libnetb_recv_from(a0, a1, a2, a3, a4, a5, a6, a7) (libnetb_recv_from((Obj *)(a0), (void *)(a1), (a2), (a3), (Name16 *)(a4), (a5), (a6), (a7))) /* merge_units */
 
-int func_0034CC60(int a, int b, int c, int *out, int *err)
+int libnetb_recv_echo(int a, int b, int c, int *out, int *err)
 {
     int l0;
     int l4;
@@ -148,9 +148,9 @@ int func_0034CC60(int a, int b, int c, int *out, int *err)
     if (err == 0) return ret;
     *err = 0;
     if (a == 0) return ret;
-    ret = func_0034CA38(a, b, 2, &l0, c, &l4, &l8, err);
+    ret = libnetb_recv_from(a, b, 2, &l0, c, &l4, &l8, err);
     if (l8 == 2) *out = 1;
     return ret;
 }
-#undef func_0034CA38 /* merge_units */
+#undef libnetb_recv_from /* merge_units */
 /* merge_units: end func_0034CC60 */

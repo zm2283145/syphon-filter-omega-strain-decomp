@@ -17,17 +17,17 @@ extern "C" {
 extern unsigned char g_LoadoutPending;
 extern char g_Video[];
 void HudRadar_ComputeMarkerMatrix(char* o);
-void func_0037A1E0(void* a);
+void XLib_ClearZBuffer(void* a);
 Mgr_244B90* Gui_GetScreenStack(void);
 void List_Begin_16E880(Word* w, void* l);
-int* func_002440B0(int* dst, int value);
-void func_00244080(Word* w, void* l);
-Word* func_00244070(Word* dst, Word* src);
+int* std_list_tCalloutPtr_generic_iterator_1_ctor(int* dst, int value);
+void std_list_tCalloutPtr_end_void_2(Word* w, void* l);
+Word* cConstLListIterator_tCalloutPtr_ctor(Word* dst, Word* src);
 void IeScreen_Draw(int a);
 void Hud_DrawCallouts(char* o);
 }
-#define Begin_244B90(l) (List_Begin_16E880(&tmp, l), func_002440B0(&r, tmp.value), (char*)r)
-#define End_244B90(l) (func_00244080(&e, l), func_00244070(&e2, &e), (char*)e2.value)
+#define Begin_244B90(l) (List_Begin_16E880(&tmp, l), std_list_tCalloutPtr_generic_iterator_1_ctor(&r, tmp.value), (char*)r)
+#define End_244B90(l) (std_list_tCalloutPtr_end_void_2(&e, l), cConstLListIterator_tCalloutPtr_ctor(&e2, &e), (char*)e2.value)
 
 extern "C" void Hud_Draw(char* o)
 {
@@ -37,7 +37,7 @@ extern "C" void Hud_Draw(char* o)
     Word e2; int r; Word tmp; Word e;
     HudRadar_ComputeMarkerMatrix(o);
     if (!g_LoadoutPending) {
-        func_0037A1E0(g_Video);
+        XLib_ClearZBuffer(g_Video);
         if (F_(o, 0x6A0, int) && F_(o, 0x6A9, unsigned char)) {
             Gui_GetScreenStack()->Refresh();
             for (n = Begin_244B90(o + 0x6E8); n != End_244B90(o + 0x6E8); n = F_(n, 4, char*)) {
@@ -48,7 +48,7 @@ extern "C" void Hud_Draw(char* o)
                 }
             }
             IeScreen_Draw(F_(o, 0x54, int));
-            func_0037A1E0(g_Video);
+            XLib_ClearZBuffer(g_Video);
         } else {
             Hud_DrawCallouts(o);
             IeScreen_Draw(F_(o, 0x54, int));

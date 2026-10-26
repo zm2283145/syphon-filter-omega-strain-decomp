@@ -6,7 +6,7 @@ typedef struct { int f0; char name[4]; } I33E4;
 typedef struct { char pad[0x14]; unsigned short flags; char pad2[0x92]; int fa8; } O33E4;
 extern "C" {
 extern int DME_GetLobby(void);
-extern int func_00450C60(int, int, char*);
+extern int SFOLobby_GetAgentInfo(int, int, char*);
 extern int D_004FFC04;
 extern char D_004B9C60[];
 extern char* GuiScreen_GetLobbyString(O33E4*, int, char*, int, int, int);
@@ -15,14 +15,14 @@ extern void FrontEnd_StartSplashThread(int);
 extern void FrontEnd_StopSplashThread(int);
 extern int Gui_GetScreenList(void);
 extern W33E4* GuiManager_FindOrLoad(int, char*, char*);
-extern void func_00360610(W33E4*, I33E4*, char*);
+extern void GuiAgentInfo_DisplayRemoteAgent(W33E4*, I33E4*, char*);
 extern V33E4* Gui_GetScreenStack(void);
 extern void FrontEnd_ClosePopup(int, int);
 }
 extern "C" void GuiMenuScreen_OpenAgentInfo(O33E4* o, I33E4* info) {
     char buf[0x100];
     if (!o->fa8 || !DME_GetLobby()) return;
-    if (func_00450C60(DME_GetLobby(), info->f0, buf)) {
+    if (SFOLobby_GetAgentInfo(DME_GetLobby(), info->f0, buf)) {
         int g = D_004FFC04;
         int h = FrontEnd_OpenPopup(g, 0, D_004B9C60, GuiScreen_GetLobbyString(o, 0x7D, info->name, 0, 0, 0), 0, 0);
         W33E4* w;
@@ -31,7 +31,7 @@ extern "C" void GuiMenuScreen_OpenAgentInfo(O33E4* o, I33E4* info) {
         FrontEnd_StopSplashThread(D_004FFC04);
         if (w) {
             w->f10 = o;
-            func_00360610(w, info, buf);
+            GuiAgentInfo_DisplayRemoteAgent(w, info, buf);
         }
         o->flags &= ~2;
         Gui_GetScreenStack()->v23(w, 0x14);

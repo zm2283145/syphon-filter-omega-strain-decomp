@@ -321,9 +321,9 @@ extern NpcList_A g_NpcDeadList;
 extern char g_CameraObject[];
 extern float g_LevelFarDistance;
 extern unsigned char g_IsMultiplayer;
-void func_00159580(It_A* out, NpcList_A* l);
-void func_0014ABE0(It_A* out, NpcList_A* l);
-It_A* func_0014ABD0(It_A* dst, It_A* src);
+void std_list_cNPCPtr_begin(It_A* out, NpcList_A* l);
+void std_list_cNPCPtr_end(It_A* out, NpcList_A* l);
+It_A* cLListIterator_cNPCPtr_ctor_listR(It_A* dst, It_A* src);
 CamHolder_A** List_Front(void* v);
 int func_00159570(void* v);
 Actor_A* PlayerSlots_Get(int i);
@@ -356,8 +356,8 @@ extern "C" bool Npc_IsDeadRemovalAllowed(Npc_A* self)
             It_A e;
             It_A bi;
             It_A ei;
-            func_00159580(&bi, l);
-            func_0014ABD0(&b, &bi);
+            std_list_cNPCPtr_begin(&bi, l);
+            cLListIterator_cNPCPtr_ctor_listR(&b, &bi);
             it = b;
             goto cond;
             do {
@@ -370,8 +370,8 @@ extern "C" bool Npc_IsDeadRemovalAllowed(Npc_A* self)
                 }
                 it.q.p = it.q.p->next;
             cond:
-                func_0014ABE0(&ei, &g_NpcDeadList);
-                func_0014ABD0(&e, &ei);
+                std_list_cNPCPtr_end(&ei, &g_NpcDeadList);
+                cLListIterator_cNPCPtr_ctor_listR(&e, &ei);
             } while (it.q.p != e.q.p);
         }
         if (found != self->actor) {

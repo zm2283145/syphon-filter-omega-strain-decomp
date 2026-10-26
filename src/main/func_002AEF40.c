@@ -1,10 +1,10 @@
 #include "types.h"
 typedef struct { void* vt; char pad[0xA8]; char mAC[0x1C]; char mC8[0x1C]; char mE4[0x20]; char m104[0x70]; char m174[4]; } O2AEF40;
-extern void func_00293890();
+extern void GuiSaveAgentWidget_SaveDone();
 extern void GuiNetAgencyCell_GetClassName();
 extern void GuiNetAgencyCell_IsType();
 extern void GuiNetAgencyCell_PollLobby();
-extern void func_002AF190();
+extern void GuiNetAgencyCell_SelectAgentRemove();
 extern void GuiNetAgencyCell_Update();
 extern void GuiNetAgencyCell_HandleEvent();
 extern void GuiNetAgencyCell_Deactivate();
@@ -58,4 +58,4 @@ O2AEF40* GuiNetAgencyCell_dtor(O2AEF40* self, short del)
     }
     return self;
 }
-void * const D_004DDD40[32] = { (void*)0x0, (void*)0x0, (void*)GuiNetAgencyCell_dtor, (void*)GuiNetAgencyCell_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiMenuScreen_Wake, (void*)GuiMenuScreen_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiMenuScreen_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiNetAgencyCell_Update, (void*)GuiNetAgencyCell_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiNetAgencyCell_GetClassName, (void*)GuiNetAgencyCell_IsType, (void*)func_00293890, (void*)GuiNetAgencyCell_PollLobby, (void*)GuiNetAgencyCell_Activate, (void*)GuiNetAgencyCell_Deactivate, (void*)GuiMenuScreen_OpenKeyboard, (void*)GuiMenuScreen_OpenAgentInfo, (void*)GuiMenuScreen_JoinGame, (void*)func_002AF190, (void*)0x0 };
+void * const D_004DDD40[32] = { (void*)0x0, (void*)0x0, (void*)GuiNetAgencyCell_dtor, (void*)GuiNetAgencyCell_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiMenuScreen_Wake, (void*)GuiMenuScreen_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiMenuScreen_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiNetAgencyCell_Update, (void*)GuiNetAgencyCell_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiNetAgencyCell_GetClassName, (void*)GuiNetAgencyCell_IsType, (void*)GuiSaveAgentWidget_SaveDone, (void*)GuiNetAgencyCell_PollLobby, (void*)GuiNetAgencyCell_Activate, (void*)GuiNetAgencyCell_Deactivate, (void*)GuiMenuScreen_OpenKeyboard, (void*)GuiMenuScreen_OpenAgentInfo, (void*)GuiMenuScreen_JoinGame, (void*)GuiNetAgencyCell_SelectAgentRemove, (void*)0x0 };

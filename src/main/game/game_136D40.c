@@ -16,7 +16,7 @@
 #pragma cplusplus on
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_00136D40, func_00136600)
+DEFINE_BASE_DTOR_CHAIN(cArray_cNodePtr_dtor, std_vector_imp_cNodePtr_1_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00136D40 */
 
@@ -25,7 +25,7 @@ DEFINE_BASE_DTOR_CHAIN(func_00136D40, func_00136600)
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
 void Alloc_Lock(int id);
-void* func_00136DA0(void* self)
+void* cTimerDisable_ctor(void* self)
 {
     if (g_ProfileLockEnabled)
         Alloc_Lock(9);

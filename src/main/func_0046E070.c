@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046E070(void) {
+int MediusUniqueCallbackTicketEventRequestHandler(void) {
     return 141;
 }

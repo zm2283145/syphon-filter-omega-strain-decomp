@@ -6,12 +6,12 @@
 #include "ska_types.h"
 
 /* Iterator inequality. */
-int func_003ADDA0(Iter* a, Iter* b) {
+int cArray_cSkaPlaybackItem_Iterator_opNe(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 
 /* Advance an iterator over 32-byte elements. */
-Iter16* func_003ADDC0(Iter16* it) {
+Iter16* cArray_cSkaPlaybackItem_Iterator_opInc(Iter16* it) {
     it->p = it->p + 32;
     return it;
 }

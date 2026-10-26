@@ -8,7 +8,7 @@
 #include "types.h"
 typedef struct { void* p0; int f4; void* p8; unsigned short fC; unsigned short fE; unsigned char f10; char pad11; unsigned short f12; unsigned char f14; } S_00321650;
 extern void (*D_004E1D3C)(void* p, int c, int n);
-int func_00321650(S_00321650* s)
+int nciGetSilenceFrame(S_00321650* s)
 {
     if (!s) return 0x181A;
     if (!s->p8) return 0x17F2;
@@ -24,5 +24,5 @@ int func_00321650(S_00321650* s)
 
 /* merge_units: begin func_003216E0 */
 extern volatile float D_004E1B94, D_004E1B98, D_004E1B9C;
-float func_003216E0(float x) { if (x > 97.0f) return x * (x * D_004E1B94 + D_004E1B98) + 1.7890625f; return x * D_004E1B9C; }
+float CalcWarpedFreq(float x) { if (x > 97.0f) return x * (x * D_004E1B94 + D_004E1B98) + 1.7890625f; return x * D_004E1B9C; }
 /* merge_units: end func_003216E0 */

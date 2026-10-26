@@ -4,7 +4,7 @@ extern int D_0048BD88;
 extern R2B51E0 D_00506640;
 extern int func_002BB898(void);
 extern void func_002BC7E8(void);
-int func_002B51E0(int a, int c)
+int sceMc2GetInfoAsync(int a, int c)
 {
     if (D_0048BD88 == 0) return 0x81018001;
     if (!func_002BB898()) return 0x81018002;

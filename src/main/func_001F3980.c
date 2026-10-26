@@ -1,12 +1,12 @@
 #include "types.h"
 
-extern void func_001F39C0(void* self);
+extern void std_list_imp_voidPtr_ctor(void* self);
 
 #pragma optimization_level 1
-/* Calls func_001F39C0 on self and returns self (unit built at -O1). */
-void* func_001F3980(void* self)
+/* Calls std_list_imp_voidPtr_ctor on self and returns self (unit built at -O1). */
+void* std_list_cSkaTransBLENDPtr_ctor(void* self)
 {
-    func_001F39C0(self);
+    std_list_imp_voidPtr_ctor(self);
     return self;
 }
 #pragma optimization_level reset

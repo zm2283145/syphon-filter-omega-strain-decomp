@@ -9,7 +9,7 @@
 extern char D_00497D8C[];
 extern char D_00497D90[];
 
-int func_0046D188(void) {
+int MediusUniqueCallbackSetGameListFilterResponseHandler(void) {
     int v0;
     int cond;
 
@@ -24,11 +24,11 @@ ret:
     return v0;
 }
 
-int func_0046D1B8(void) {
+int MediusUniqueCallbackClearGameListFilterRequestHandler(void) {
     return 44;
 }
 
-int func_0046D1C0(void) {
+int MediusUniqueCallbackClearGameListFilterResponseHandler(void) {
     int v0;
     int cond;
 

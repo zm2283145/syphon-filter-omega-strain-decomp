@@ -70,7 +70,7 @@ extern struct _reent *D_00489738;
 extern void __sinit(struct _reent *);
 extern int fflush(FILE *);
 extern void Newlib_Smakebuf(FILE *);
-extern int func_00124678(struct _reent *, int, struct stat *);
+extern int Newlib_FstatR(struct _reent *, int, struct stat *);
 extern void _free_r(struct _reent *, void *);
 extern int __srefill(FILE *);
 extern fpos_t Newlib_Sseek(void *, fpos_t, int);
@@ -78,7 +78,7 @@ extern fpos_t Newlib_Sseek(void *, fpos_t, int);
 #define CHECK_INIT(fp) do { if ((fp)->_data == 0) (fp)->_data = D_00489738; if (!(fp)->_data->__sdidinit) __sinit((fp)->_data); } while (0)
 #define HASUB(fp) ((fp)->_ub._base != 0)
 #define FREEUB(fp) { if ((fp)->_ub._base != (fp)->_ubuf) _free_r(fp->_data, (char *)(fp)->_ub._base); (fp)->_ub._base = 0; }
-int func_001241C8(register FILE *fp, long offset, int whence)
+int Libc_Fseek(register FILE *fp, long offset, int whence)
 {
     struct _reent *ptr;
     fpos_t (*seekfn)(void *, fpos_t, int);
@@ -131,7 +131,7 @@ int func_001241C8(register FILE *fp, long offset, int whence)
     if ((fp->_flags & 0x400) == 0) {
         if (seekfn != Newlib_Sseek
             || fp->_file < 0
-            || func_00124678(ptr, fp->_file, &st)
+            || Newlib_FstatR(ptr, fp->_file, &st)
             || (st.st_mode & 0170000) != 0100000) {
             fp->_flags |= 0x800;
             goto dumb;
@@ -143,7 +143,7 @@ int func_001241C8(register FILE *fp, long offset, int whence)
     if (whence == 0)
         target = offset;
     else {
-        if (func_00124678(ptr, fp->_file, &st))
+        if (Newlib_FstatR(ptr, fp->_file, &st))
             goto dumb;
         target = st.st_size + offset;
     }

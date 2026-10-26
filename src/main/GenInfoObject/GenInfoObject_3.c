@@ -26,7 +26,7 @@ static inline int Resolve_ABA0(int i)
     if (i == -1) return NetLocalId();
     return i;
 }
-int func_0043ABA0(void* self, int* key, int idx)
+int cGenInfoObject_IsActive(void* self, int* key, int idx)
 {
     Ent_ABA0* e;
     if (idx > 4) return 0;
@@ -61,7 +61,7 @@ void func_0043ACB0(int unused, int index)
 
 /* merge_units: begin func_0043ACE0 */
 #pragma push /* merge_units */
-/* func_0043ACE0: GenInfoObject teardown (free buffer, free+erase 2 lists, free tree values, Map_Clear).
+/* cGenInfoObject_Clear: GenInfoObject teardown (free buffer, free+erase 2 lists, free tree values, Map_Clear).
  * mw38 MATCH. Slot layout keys: b1/tb declared just before their loops (guards then interleave),
  * erase triples as a level-1 inline, begin/end calls as level-2 inlines (temps allocated breadth-first
  * after main locals), loop-2 iterator "LIt2 it2 __attribute__((aligned(8)))" (pushed to the lowest slot).
@@ -79,13 +79,13 @@ extern "C" {
 void Mem_Free(int pool, void* p, char* file, int line);
 void ObjectList_EraseRange(int* out, void* list, LNode** first, LNode** last);
 LIt List_Begin(void* list);
-LIt func_0043B180(void* list);
-LIt func_00438E00(void* list);
-void func_00438E10(LIt* out, const LIt& in);
-void func_00438DF0(LIt* out, const LIt& in);
-void func_00439380(TIt* out, void* tree);
-TIt func_00439370(void* tree);
-void func_00439360(TIt* out, const TIt& in);
+LIt std_list_tGenInfoPtr_begin(void* list);
+LIt std_list_tGenInfoPtr_end(void* list);
+void std_list_tGenInfoPtr_generic_iterator_ctor(LIt* out, const LIt& in);
+void cLListIterator_tGenInfoPtr_ctor(LIt* out, const LIt& in);
+void std_tree_pair_tGenInfoPtr_value_compare_begin(TIt* out, void* tree);
+TIt std_map_tGenInfoPtr_bool_end(void* tree);
+void cAssocArray_tGenInfoPtr_bool_Iterator_ctor(TIt* out, const TIt& in);
 void Tree_Successor(TIt* it);
 void Map_Clear(void* tree);
 extern char D_004BFD60[];
@@ -116,10 +116,10 @@ extern unsigned char D_005838A2;
 extern unsigned char D_005838A3;
 }
 
-static inline void LB1(LIt* o, void* L) { func_00438E10(o, List_Begin(L)); }
-static inline void LB2(LIt* o, void* L) { func_00438DF0(o, func_0043B180(L)); }
-static inline void LE(LIt* o, void* L) { func_00438DF0(o, func_00438E00(L)); }
-static inline void TE(TIt* o, void* T) { func_00439360(o, func_00439370(T)); }
+static inline void LB1(LIt* o, void* L) { std_list_tGenInfoPtr_generic_iterator_ctor(o, List_Begin(L)); }
+static inline void LB2(LIt* o, void* L) { cLListIterator_tGenInfoPtr_ctor(o, std_list_tGenInfoPtr_begin(L)); }
+static inline void LE(LIt* o, void* L) { cLListIterator_tGenInfoPtr_ctor(o, std_list_tGenInfoPtr_end(L)); }
+static inline void TE(TIt* o, void* T) { cAssocArray_tGenInfoPtr_bool_Iterator_ctor(o, std_map_tGenInfoPtr_bool_end(T)); }
 static inline void LB1x(LIt* o, void* L) { LB1(o, L); }
 static inline void LB2x(LIt* o, void* L) { LB2(o, L); }
 static inline void LEx(LIt* o, void* L) { LE(o, L); }
@@ -127,7 +127,7 @@ static inline void TEx(TIt* o, void* T) { TE(o, T); }
 static inline void Erase(void* L, void* LH, LNode* LF) { int res; LNode* first; LNode* last; last = (LNode*)LH; first = LF; ObjectList_EraseRange(&res, L, &first, &last); }
 static inline unsigned char Ne(TIt* a, TIt* b) { return !(a->node == b->node); }
 
-extern "C" void func_0043ACE0(void* self)
+extern "C" void cGenInfoObject_Clear(void* self)
 {
     LIt it1;
     TIt it;
@@ -172,7 +172,7 @@ extern "C" void func_0043ACE0(void* self)
     }
     Erase(D_005838D8, D_005838DC, D_005838E0);
     TIt tb;
-    func_00439380(&tb, D_00583900);
+    std_tree_pair_tGenInfoPtr_value_compare_begin(&tb, D_00583900);
     it = tb;
     while (TEx(&tend, D_00583900), Ne(&it, &tend)) {
         void* e = it.node->data;

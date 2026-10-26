@@ -13,7 +13,7 @@ static const unsigned int dat_00493460[2] = { 0x0, 0x0 };
 static const unsigned int dat_00493468[2] = { 0x0, 0x0 };
 extern int D_004DA840;
 }
-extern "C" int func_00393BD0(char *arg0, float farg0) {
+extern "C" int cSkaSliderValue_ctor_float(char *arg0, float farg0) {
     PhysicalBase_Construct(arg0, &(*(int*)dat_00493460), &(*(int*)dat_00493468));
     F_(arg0, 0x0, int) = (int)(&D_004DA840);
     F_(arg0, 0x38, signed char) = 0;

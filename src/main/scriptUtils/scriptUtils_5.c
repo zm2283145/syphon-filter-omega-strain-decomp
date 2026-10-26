@@ -15,41 +15,41 @@
 #include "types.h"
 #include "scriptUtils_types.h"
 
-Word* func_00268950(Word* dst, Word* src) {
+Word* cLListIterator_ArrayPtr_ctor_cLListIteratorR(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
 /* Iterator inequality. */
-int func_00268960(ListPos* a, ListPos* b) {
+int opNe_cLListIteratorR_cLListIteratorR_4(ListPos* a, ListPos* b) {
     return a->node != b->node;
 }
 
-void func_00268980(Iter* out, Tree* t) {
+void cLList_ArrayPtr_End(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
 /* List iterator increment: node = node->next. */
-ListPos* func_00268990(ListPos* it) {
+ListPos* cLListIterator_ArrayPtr_opInc(ListPos* it) {
     it->node = ((ListNode*)it->node)->next;
     return it;
 }
 
 /* List iterator dereference: address of the node's value. */
-int* func_002689B0(ListPos* it) {
+int* cLListIterator_ArrayPtr_opMul(ListPos* it) {
     return &((ListNode*)it->node)->value;
 }
 
-float* func_002689C0(float* dst, float* src) {
+float* cLListIterator_ArrayPtr_opAssign(float* dst, float* src) {
     *dst = *src;
     return dst;
 }
 
-void func_002689D0(Iter* out, PtrVec* v) {
+void cLList_ArrayPtr_Begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 
-void* func_002689E0(void* self) {
+void* cLListIterator_ArrayPtr_ctor_void(void* self) {
     return self;
 }
 #pragma pop /* merge_units */
@@ -64,7 +64,7 @@ void* func_002689E0(void* self) {
 int Alloc_Lock(int);                                    
 int Alloc_Unlock(int);                                  
 char * Mem_Alloc(int, int, char *, int);                    
-int func_00268B50(char *, void **);                      
+int std_list_ArrayPtr_push_back(char *, void **);                      
 extern char D_004A82B8;
 extern char D_004F83E0;
 extern unsigned char g_ProfileLockEnabled;
@@ -101,7 +101,7 @@ char * ScriptArray_Create(int arg0) {
             F_(temp_s0, 0x8, int) = 0;
         }
         sp4C = temp_s0;
-        func_00268B50(&D_004F83E0, &sp4C);
+        std_list_ArrayPtr_push_back(&D_004F83E0, &sp4C);
     }
     return sp4C;
 }

@@ -44,11 +44,11 @@ void Quat_Assign(V4* d, V4* s);
 void Vec4_Copy(V4* d, V4* s);
 V4* Placement_GetQuat(Plc* p);
 V4* Placement_GetPosition(Plc* p);
-void func_00132530(Plc* p, V4* q);
-void func_00132510(Plc* p, V4* v);
-void func_00132840(V4* q);
+void cQuatVec_Rotate(Plc* p, V4* q);
+void cQuatVec_Translate(Plc* p, V4* v);
+void cQuaternion_ctor_void(V4* q);
 void Quat_Multiply(V4* a, V4* b, V4* c);
-void func_00132800(V4* d, V4* s);
+void cQuaternion_ctor_cQuaternionR(V4* d, V4* s);
 }
 static inline Plc* WorldX(Nd* n)
 {
@@ -69,8 +69,8 @@ static inline void Refresh(Nd* n)
         Quat_Assign(&w->rot, &l->rot);
         Vec4_Copy(&w->pos, &l->pos);
         Plc* w2 = &Root_Identity(n)->world;
-        func_00132530(w2, Placement_GetQuat(gw));
-        func_00132510(w2, Placement_GetPosition(gw));
+        cQuatVec_Rotate(w2, Placement_GetQuat(gw));
+        cQuatVec_Translate(w2, Placement_GetPosition(gw));
         n->dirty = 0;
     }
 }
@@ -90,9 +90,9 @@ extern "C" void Root_RefreshWorldCache_362AF0(Nd* self)
         { Plc* s = &self->local; QC(&self->world.rot, &s->rot); QC(&self->world.pos, &s->pos); }
         V4 r;
         V4 m;
-        func_00132840(&m);
+        cQuaternion_ctor_void(&m);
         Quat_Multiply(&m, &pw->rot, &self->world.rot);
-        func_00132800(&r, &m);
+        cQuaternion_ctor_cQuaternionR(&r, &m);
         { void* xx = &r; /* dead on purpose: retail keeps this addiu */ }
         V4* v = &self->world.pos;
         QC(&self->world.rot, &r);

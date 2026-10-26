@@ -17,7 +17,7 @@ int sprintf(void *, const void *, ...);
 struct Str4134B0 { int a; int b; int c; };
 struct List4134B0 { int pad0; int count; Str4134B0* data; };
 struct Self4134B0 { char pad[0x1E4]; List4134B0* list; int arc; };
-extern "C" bool func_004134B0(Self4134B0* self, Str4134B0* out, const char* name, unsigned char* isPak); /* gsynth: defined below */
+extern "C" bool cInterfaceManager_FindHogFile(Self4134B0* self, Str4134B0* out, const char* name, unsigned char* isPak); /* gsynth: defined below */
 #pragma pop
 #pragma cplusplus on
 
@@ -27,14 +27,14 @@ struct Self4133B0 { char pad[0x1E0]; int h1E0; int p1E4; int arc; List4133B0* li
 
 extern "C" {
 #if 0 /* merge_units */
-int func_004134B0(Self4133B0* self, Str4133B0* out, int name, unsigned char* isPak);
+int cInterfaceManager_FindHogFile(Self4133B0* self, Str4133B0* out, int name, unsigned char* isPak);
 #endif /* merge_units */
-#define func_004134B0(a0, a1, a2, a3) ((int)func_004134B0((Self4134B0 *)(a0), (Str4134B0 *)(a1), (const char *)(a2), (a3))) /* merge_units */
+#define cInterfaceManager_FindHogFile(a0, a1, a2, a3) ((int)cInterfaceManager_FindHogFile((Self4134B0 *)(a0), (Str4134B0 *)(a1), (const char *)(a2), (a3))) /* merge_units */
 
 char* String_CStr(Str4133B0* s);
-int func_003F9850(int h, char* name, int arc);
+int cHogList_OpenFromHog(int h, char* name, int arc);
 int Archive_Open(int h, char* name, int a, int b);
-void func_00413FB0(List4133B0* list, Str4133B0* pos, int n, Str4133B0* value);
+void std_vector_imp_cString_insert(List4133B0* list, Str4133B0* pos, int n, Str4133B0* value);
 void String_Dtor(Str4133B0* s, int flags);
 }
 
@@ -48,13 +48,13 @@ extern "C" int GuiResource_Find(Self4133B0* self, int* out, int name)
         Str4133B0 s;
         Str4133B0* ps = &s;
         ps->a = 0; ps->b = 0; ps->c = 0;
-        if (func_004134B0(self, ps, name, &inPak)) {
+        if (cInterfaceManager_FindHogFile(self, ps, name, &inPak)) {
             if (inPak) {
-                *out = func_003F9850(self->h1E0, String_CStr(&s), self->arc);
+                *out = cHogList_OpenFromHog(self->h1E0, String_CStr(&s), self->arc);
             } else {
                 *out = Archive_Open(self->h1E0, String_CStr(&s), 0, 0);
             }
-            func_00413FB0(self->list, &self->list->data[self->list->count], 1, &s);
+            std_vector_imp_cString_insert(self->list, &self->list->data[self->list->count], 1, &s);
             String_Dtor(&s, 0);
             return 1;
         }
@@ -63,7 +63,7 @@ extern "C" int GuiResource_Find(Self4133B0* self, int* out, int name)
     }
 }
 #pragma pop
-#undef func_004134B0 /* merge_units */
+#undef cInterfaceManager_FindHogFile /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_004133B0(void) {}
 #pragma pop /* merge_units */
@@ -86,7 +86,7 @@ char* String_CStr(Str4134B0* s);
 
 void Resource_Construct(Hog4134B0* h);
 void FileMan_Release(Hog4134B0* h, int flags);
-void func_0036E140(Hog4134B0* h, char* name, int a, int b);
+void cFileMan_EncodeFilename_charP_cFileIOP_bool(Hog4134B0* h, char* name, int a, int b);
 void Hog_Register(Hog4134B0* h, char* name, int arc, int z);
 int FileMan_FindMember(Hog4134B0* h);
 void String_CtorCStr_13B480(Str4134B0* s, char* src);
@@ -100,7 +100,7 @@ void String_Dtor(Str4134B0* s, int flags);
 
 #pragma push
 #pragma opt_strength_reduction off
-extern "C" bool func_004134B0(Self4134B0* self, Str4134B0* out, const char* name, unsigned char* isPak)
+extern "C" bool cInterfaceManager_FindHogFile(Self4134B0* self, Str4134B0* out, const char* name, unsigned char* isPak)
 {
     Str4134B0 tmp;
     Str4134B0 tmp2;
@@ -120,7 +120,7 @@ extern "C" bool func_004134B0(Self4134B0* self, Str4134B0* out, const char* name
             if (c >= 'a' && c <= 'z')
                 *p -= 0x20;
         }
-        func_0036E140(&h, buf, 0, 0);
+        cFileMan_EncodeFilename_charP_cFileIOP_bool(&h, buf, 0, 0);
         if ((unsigned char)FileMan_FindMember(&h)) {
             FileMan_Release(&h, -1);
             continue;
@@ -173,26 +173,26 @@ struct Self4136F0 { char pad[0x1E4]; List4136F0* list; };
 
 extern "C" {
 int String_AssignCStr_1C43A0(Str4136F0* s, char* name);
-int func_00413870(List4136F0* v);
-Str4136F0* func_00413850(List4136F0* v, int index);
-Str4136F0* func_00329930(Str4136F0* dst, Str4136F0* src);
+int cArray_cString_Size(List4136F0* v);
+Str4136F0* std_vector_cString_opIndex(List4136F0* v, int index);
+Str4136F0* cString_opAssign(Str4136F0* dst, Str4136F0* src);
 void StringVec_PopBack(List4136F0* v);
 }
 
 #pragma push
 #pragma opt_strength_reduction off
-extern "C" void func_004136F0(Self4136F0* self, char* name)
+extern "C" void cInterfaceManager_RemoveHogPath(Self4136F0* self, char* name)
 {
     int i;
     if (self->list) {
         for (i = 0; i < self->list->count; i++) {
             if (!String_AssignCStr_1C43A0(&self->list->data[i], name)) {
                 List4136F0* v = self->list;
-                int n = func_00413870(v);
+                int n = cArray_cString_Size(v);
                 if (i >= 0 && i < n) {
                     int j;
                     for (j = i + 1; j < n; j++) {
-                        func_00329930(func_00413850(v, j - 1), func_00413850(v, j));
+                        cString_opAssign(std_vector_cString_opIndex(v, j - 1), std_vector_cString_opIndex(v, j));
                     }
                     StringVec_PopBack(v);
                 }

@@ -2,18 +2,18 @@
 
 extern void Event_PackHeader();
 extern void Message_GetScriptTypeKey();
-extern void func_0014ED00();
-extern void func_0015AC10();
-extern void func_0015B470();
-extern void func_0015B570();
-extern void func_003FF330();
+extern void cCharActionMsg_Bool_Clone();
+extern void cCharActionMsg_Bool_dtor();
+extern void cCharActionMsg_Pack();
+extern void cSwitchControllersMsg_Clone();
+extern void cSwitchControllersMsg_dtor();
 
 void *D_004D9300[8] = {
-    0, 0, &func_0015AC10, &func_0015B470,
+    0, 0, &cSwitchControllersMsg_dtor, &cSwitchControllersMsg_Clone,
     &Event_PackHeader, &Message_GetScriptTypeKey, 0, 0,
 };
 
 void *D_004D9320[8] = {
-    0, 0, &func_0014ED00, &func_0015B570,
-    &func_003FF330, &Message_GetScriptTypeKey, 0, 0,
+    0, 0, &cCharActionMsg_Bool_dtor, &cCharActionMsg_Bool_Clone,
+    &cCharActionMsg_Pack, &Message_GetScriptTypeKey, 0, 0,
 };

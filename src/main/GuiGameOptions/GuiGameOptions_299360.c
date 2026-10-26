@@ -13,7 +13,7 @@
 
 /* Destroy a vector: destroy elements, free the buffer, optionally delete. */
 extern "C" { char D_004AA5B8[] = "allocator.hh"; }
-DEFINE_VECTOR_DESTROY_DTOR_FILE(func_00299360, func_00299510, D_004AA5B8)
+DEFINE_VECTOR_DESTROY_DTOR_FILE(func_00299360, std_vector_deleter_tAchievementInfo_clear, D_004AA5B8)
 #pragma pop /* merge_units */
 /* merge_units: end func_00299360 */
 

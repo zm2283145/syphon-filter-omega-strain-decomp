@@ -10,17 +10,17 @@ extern short D_004908EE;
 extern char D_005297F0[];
 extern int RecursiveLock_Acquire(void *, int);
 extern int RecursiveLock_Release(void *, int);
-extern int func_00302218(void *);
-extern int func_002FC7A0(void);
-int func_002FB840(void)
+extern int rt_mutex_destroy(void *);
+extern int rt_msg_client_ishutdown(void);
+int rt_msg_client_shutdown(void)
 {
     int r = 1;
     if (D_00490900 != 1) return 0x1A;
     if (RecursiveLock_Acquire(D_005297F0, 0)) return 0x1A;
-    r = func_002FC7A0();
+    r = rt_msg_client_ishutdown();
     if (RecursiveLock_Release(D_005297F0, 0)) return 0x1A;
     if (r == 0 && D_004908EE == 0) {
-        if (func_00302218(D_005297F0)) return 0x1A;
+        if (rt_mutex_destroy(D_005297F0)) return 0x1A;
         D_00490900 = 0;
     }
     return r;
@@ -28,26 +28,26 @@ int func_002FB840(void)
 /* merge_units: end func_002FB840 */
 
 /* merge_units: begin func_002FB8F0 */
-extern int func_002FC928(void);
-int func_002FB8F0(void)
+extern int rt_msg_client_iecho_shutdown(void);
+int rt_msg_client_echo_shutdown(void)
 {
     int r = 1;
     if (D_00490900 != 1) return 0x1A;
     if (RecursiveLock_Acquire(D_005297F0, 0)) return 0x1A;
-    r = func_002FC928();
+    r = rt_msg_client_iecho_shutdown();
     if (RecursiveLock_Release(D_005297F0, 0)) return 0x1A;
     return r;
 }
 /* merge_units: end func_002FB8F0 */
 
 /* merge_units: begin func_002FB968 */
-extern int func_002FC970(void *);
-int func_002FB968(void *a)
+extern int rt_msg_client_ienable_echo(void *);
+int rt_msg_client_enable_echo(void *a)
 {
     int r = 1;
     if (D_00490900 != 1) return 0x1A;
     if (RecursiveLock_Acquire(D_005297F0, 0)) return 0x1A;
-    r = func_002FC970(a);
+    r = rt_msg_client_ienable_echo(a);
     if (RecursiveLock_Release(D_005297F0, 0)) return 0x1A;
     return r;
 }
@@ -55,7 +55,7 @@ int func_002FB968(void *a)
 
 /* merge_units: begin func_002FB9F8 */
 extern int NetSession_CreateSockets(void *, void *);
-int func_002FB9F8(void *a, void *b)
+int rt_msg_client_connect(void *a, void *b)
 {
     int r = 1;
     if (D_00490900 != 1) return 0x1A;
@@ -67,273 +67,273 @@ int func_002FB9F8(void *a, void *b)
 /* merge_units: end func_002FB9F8 */
 
 /* merge_units: begin func_002FBA98 */
-extern int func_002FCE88(unsigned short);
-int func_002FBA98(unsigned short a)
+extern int rt_msg_client_idisconnect(unsigned short);
+int rt_msg_client_disconnect(unsigned short a)
 {
     int r = 1;
     if (D_00490900 != 1) return 0x1A;
     if (RecursiveLock_Acquire(D_005297F0, 0)) return 0x1A;
-    r = func_002FCE88(a);
+    r = rt_msg_client_idisconnect(a);
     if (RecursiveLock_Release(D_005297F0, 0)) return 0x1A;
     return r;
 }
 /* merge_units: end func_002FBA98 */
 
 /* merge_units: begin func_002FBB28 */
-extern int func_002FCFE8(void);
-int func_002FBB28(void)
+extern int rt_msg_client_idisconnect_all(void);
+int rt_msg_client_disconnect_all(void)
 {
     int r = 1;
     if (D_00490900 != 1) return 0x1A;
     if (RecursiveLock_Acquire(D_005297F0, 0)) return 0x1A;
-    r = func_002FCFE8();
+    r = rt_msg_client_idisconnect_all();
     if (RecursiveLock_Release(D_005297F0, 0)) return 0x1A;
     return r;
 }
 /* merge_units: end func_002FBB28 */
 
 /* merge_units: begin func_002FBBA0 */
-extern int func_002FD088(unsigned short, unsigned char);
-int func_002FBBA0(unsigned short a, unsigned char b)
+extern int rt_msg_client_iupdate(unsigned short, unsigned char);
+int rt_msg_client_update(unsigned short a, unsigned char b)
 {
     int r = 1;
     if (D_00490900 != 1) return 0x1A;
     if (RecursiveLock_Acquire(D_005297F0, 0)) return 0x1A;
-    r = func_002FD088(a, b);
+    r = rt_msg_client_iupdate(a, b);
     if (RecursiveLock_Release(D_005297F0, 0)) return 0x1A;
     return r;
 }
 /* merge_units: end func_002FBBA0 */
 
 /* merge_units: begin func_002FBC40 */
-extern int func_002FE168(void);
-int func_002FBC40(void)
+extern int rt_msg_client_iecho_update(void);
+int rt_msg_client_echo_update(void)
 {
     int r = 1;
     if (D_00490900 != 1) return 0x1A;
     if (RecursiveLock_Acquire(D_005297F0, 0)) return 0x1A;
-    r = func_002FE168();
+    r = rt_msg_client_iecho_update();
     if (RecursiveLock_Release(D_005297F0, 0)) return 0x1A;
     return r;
 }
 /* merge_units: end func_002FBC40 */
 
 /* merge_units: begin func_002FBCB8 */
-extern int func_002FD0A8(unsigned char);
-int func_002FBCB8(unsigned char a)
+extern int rt_msg_client_iupdate_all(unsigned char);
+int rt_msg_client_update_all(unsigned char a)
 {
     int r = 1;
     if (D_00490900 != 1) return 0x1A;
     if (RecursiveLock_Acquire(D_005297F0, 0)) return 0x1A;
-    r = func_002FD0A8(a);
+    r = rt_msg_client_iupdate_all(a);
     if (RecursiveLock_Release(D_005297F0, 0)) return 0x1A;
     return r;
 }
 /* merge_units: end func_002FBCB8 */
 
 /* merge_units: begin func_002FBD48 */
-extern int func_002FD180(unsigned short, unsigned short, void *, void *, unsigned short);
-int func_002FBD48(unsigned short a, unsigned short b, void *c, void *d, unsigned short e)
+extern int rt_msg_client_isend_target(unsigned short, unsigned short, void *, void *, unsigned short);
+int rt_msg_client_send_target(unsigned short a, unsigned short b, void *c, void *d, unsigned short e)
 {
     int r = 1;
     if (D_00490900 != 1) return 0x1A;
     if (RecursiveLock_Acquire(D_005297F0, 0)) return 0x1A;
-    r = func_002FD180(a, b, c, d, e);
+    r = rt_msg_client_isend_target(a, b, c, d, e);
     if (RecursiveLock_Release(D_005297F0, 0)) return 0x1A;
     return r;
 }
 /* merge_units: end func_002FBD48 */
 
 /* merge_units: begin func_002FBE18 */
-extern int func_002FD280(unsigned short, unsigned short, unsigned short, void *, void *, void *, unsigned short);
-int func_002FBE18(unsigned short a, unsigned short b, unsigned short c, void *d, void *e, void *f, unsigned short g)
+extern int rt_msg_client_isend_client_set(unsigned short, unsigned short, unsigned short, void *, void *, void *, unsigned short);
+int rt_msg_client_send_client_set(unsigned short a, unsigned short b, unsigned short c, void *d, void *e, void *f, unsigned short g)
 {
     int r = 1;
     if (D_00490900 != 1) return 0x1A;
     if (RecursiveLock_Acquire(D_005297F0, 0)) return 0x1A;
-    r = func_002FD280(a, b, c, d, e, f, g);
+    r = rt_msg_client_isend_client_set(a, b, c, d, e, f, g);
     if (RecursiveLock_Release(D_005297F0, 0)) return 0x1A;
     return r;
 }
 /* merge_units: end func_002FBE18 */
 
 /* merge_units: begin func_002FBF08 */
-extern int func_002FD288(void *, void *, unsigned short);
-int func_002FBF08(void *a, void *b, unsigned short c)
+extern int rt_msg_client_isend_echo(void *, void *, unsigned short);
+int rt_msg_client_send_echo(void *a, void *b, unsigned short c)
 {
     int r = 1;
     if (D_00490900 != 1) return 0x1A;
     if (RecursiveLock_Acquire(D_005297F0, 0)) return 0x1A;
-    r = func_002FD288(a, b, c);
+    r = rt_msg_client_isend_echo(a, b, c);
     if (RecursiveLock_Release(D_005297F0, 0)) return 0x1A;
     return r;
 }
 /* merge_units: end func_002FBF08 */
 
 /* merge_units: begin func_002FBFB8 */
-extern int func_002FD338(unsigned short, void *, void *, void *, void *);
-int func_002FBFB8(unsigned short a, void *b, void *c, void *d, void *e)
+extern int rt_msg_client_iget_buffer_status(unsigned short, void *, void *, void *, void *);
+int rt_msg_client_get_buffer_status(unsigned short a, void *b, void *c, void *d, void *e)
 {
     int r = 1;
     if (D_00490900 != 1) return 0x1A;
     if (RecursiveLock_Acquire(D_005297F0, 0)) return 0x1A;
-    r = func_002FD338(a, b, c, d, e);
+    r = rt_msg_client_iget_buffer_status(a, b, c, d, e);
     if (RecursiveLock_Release(D_005297F0, 0)) return 0x1A;
     return r;
 }
 /* merge_units: end func_002FBFB8 */
 
 /* merge_units: begin func_002FC088 */
-extern int func_002FD518(void *);
-int func_002FC088(void *a)
+extern int rt_msg_client_iget_local_ip(void *);
+int rt_msg_client_get_local_ip(void *a)
 {
     int r = 1;
     if (D_00490900 != 1) return 0x1A;
     if (RecursiveLock_Acquire(D_005297F0, 0)) return 0x1A;
-    r = func_002FD518(a);
+    r = rt_msg_client_iget_local_ip(a);
     if (RecursiveLock_Release(D_005297F0, 0)) return 0x1A;
     return r;
 }
 /* merge_units: end func_002FC088 */
 
 /* merge_units: begin func_002FC118 */
-extern int func_002FD560(void *);
-int func_002FC118(void *a)
+extern int rt_msg_client_iget_broadcast_ip(void *);
+int rt_msg_client_get_broadcast_ip(void *a)
 {
     int r = 1;
     if (D_00490900 != 1) return 0x1A;
     if (RecursiveLock_Acquire(D_005297F0, 0)) return 0x1A;
-    r = func_002FD560(a);
+    r = rt_msg_client_iget_broadcast_ip(a);
     if (RecursiveLock_Release(D_005297F0, 0)) return 0x1A;
     return r;
 }
 /* merge_units: end func_002FC118 */
 
 /* merge_units: begin func_002FC1A8 */
-extern int func_002FD5A8(void *, void *);
-int func_002FC1A8(void *a, void *b)
+extern int rt_msg_client_iget_host_by_name(void *, void *);
+int rt_msg_client_get_host_by_name(void *a, void *b)
 {
     int r = 1;
     if (D_00490900 != 1) return 0x1A;
     if (RecursiveLock_Acquire(D_005297F0, 0)) return 0x1A;
-    r = func_002FD5A8(a, b);
+    r = rt_msg_client_iget_host_by_name(a, b);
     if (RecursiveLock_Release(D_005297F0, 0)) return 0x1A;
     return r;
 }
 /* merge_units: end func_002FC1A8 */
 
 /* merge_units: begin func_002FC248 */
-extern int func_002FD5F8(unsigned short, void *);
-int func_002FC248(unsigned short a, void *b)
+extern int rt_msg_client_iget_connection_ip(unsigned short, void *);
+int rt_msg_client_get_connection_ip(unsigned short a, void *b)
 {
     int r = 1;
     if (D_00490900 != 1) return 0x1A;
     if (RecursiveLock_Acquire(D_005297F0, 0)) return 0x1A;
-    r = func_002FD5F8(a, b);
+    r = rt_msg_client_iget_connection_ip(a, b);
     if (RecursiveLock_Release(D_005297F0, 0)) return 0x1A;
     return r;
 }
 /* merge_units: end func_002FC248 */
 
 /* merge_units: begin func_002FC2E8 */
-extern int func_002FD670(unsigned short, unsigned char);
-int func_002FC2E8(unsigned short a, unsigned char b)
+extern int rt_msg_client_ireceive_broadcasts(unsigned short, unsigned char);
+int rt_msg_client_receive_broadcasts(unsigned short a, unsigned char b)
 {
     int r = 1;
     if (D_00490900 != 1) return 0x1A;
     if (RecursiveLock_Acquire(D_005297F0, 0)) return 0x1A;
-    r = func_002FD670(a, b);
+    r = rt_msg_client_ireceive_broadcasts(a, b);
     if (RecursiveLock_Release(D_005297F0, 0)) return 0x1A;
     return r;
 }
 /* merge_units: end func_002FC2E8 */
 
 /* merge_units: begin func_002FC388 */
-extern int func_002FD718(void *, void *);
-int func_002FC388(void *a, void *b)
+extern int rt_msg_client_iget_metrics(void *, void *);
+int rt_msg_client_get_metrics(void *a, void *b)
 {
     int r = 1;
     if (D_00490900 != 1) return 0x1A;
     if (RecursiveLock_Acquire(D_005297F0, 0)) return 0x1A;
-    r = func_002FD718(a, b);
+    r = rt_msg_client_iget_metrics(a, b);
     if (RecursiveLock_Release(D_005297F0, 0)) return 0x1A;
     return r;
 }
 /* merge_units: end func_002FC388 */
 
 /* merge_units: begin func_002FC428 */
-extern int func_002FD7D8(unsigned short, void *);
-int func_002FC428(unsigned short a, void *b)
+extern int rt_msg_client_iset_send_aggregation_time(unsigned short, void *);
+int rt_msg_client_set_send_aggregation_time(unsigned short a, void *b)
 {
     int r = 1;
     if (D_00490900 != 1) return 0x1A;
     if (RecursiveLock_Acquire(D_005297F0, 0)) return 0x1A;
-    r = func_002FD7D8(a, b);
+    r = rt_msg_client_iset_send_aggregation_time(a, b);
     if (RecursiveLock_Release(D_005297F0, 0)) return 0x1A;
     return r;
 }
 /* merge_units: end func_002FC428 */
 
 /* merge_units: begin func_002FC4C8 */
-extern int func_002FD860(unsigned short, void *);
-int func_002FC4C8(unsigned short a, void *b)
+extern int rt_msg_client_iset_server_send_aggregation_time(unsigned short, void *);
+int rt_msg_client_set_server_send_aggregation_time(unsigned short a, void *b)
 {
     int r = 1;
     if (D_00490900 != 1) return 0x1A;
     if (RecursiveLock_Acquire(D_005297F0, 0)) return 0x1A;
-    r = func_002FD860(a, b);
+    r = rt_msg_client_iset_server_send_aggregation_time(a, b);
     if (RecursiveLock_Release(D_005297F0, 0)) return 0x1A;
     return r;
 }
 /* merge_units: end func_002FC4C8 */
 
 /* merge_units: begin func_002FC568 */
-extern int func_002FD8F0(void *);
-int func_002FC568(void *a)
+extern int rt_msg_client_iset_default_connect_options(void *);
+int rt_msg_client_set_default_connect_options(void *a)
 {
     int r = 1;
     if (D_00490900 != 1) return 0x1A;
     if (RecursiveLock_Acquire(D_005297F0, 0)) return 0x1A;
-    r = func_002FD8F0(a);
+    r = rt_msg_client_iset_default_connect_options(a);
     if (RecursiveLock_Release(D_005297F0, 0)) return 0x1A;
     return r;
 }
 /* merge_units: end func_002FC568 */
 
 /* merge_units: begin func_002FC5F8 */
-extern int func_002FD968(void *);
-int func_002FC5F8(void *a)
+extern int rt_msg_client_iecho_set_default_options(void *);
+int rt_msg_client_echo_set_default_options(void *a)
 {
     int r = 1;
     if (D_00490900 != 1) return 0x1A;
     if (RecursiveLock_Acquire(D_005297F0, 0)) return 0x1A;
-    r = func_002FD968(a);
+    r = rt_msg_client_iecho_set_default_options(a);
     if (RecursiveLock_Release(D_005297F0, 0)) return 0x1A;
     return r;
 }
 /* merge_units: end func_002FC5F8 */
 
 /* merge_units: begin func_002FC688 */
-extern int func_002FD980(void);
-int func_002FC688(void)
+extern int rt_msg_client_idisplay_comm_state(void);
+int rt_msg_client_display_comm_state(void)
 {
     int r = 1;
     if (D_00490900 != 1) return 0x1A;
     if (RecursiveLock_Acquire(D_005297F0, 0)) return 0x1A;
-    r = func_002FD980();
+    r = rt_msg_client_idisplay_comm_state();
     if (RecursiveLock_Release(D_005297F0, 0)) return 0x1A;
     return r;
 }
 /* merge_units: end func_002FC688 */
 
 /* merge_units: begin func_002FC700 */
-extern int func_002FD9B8(unsigned short, void *);
-int func_002FC700(unsigned short a, void *b)
+extern int rt_msg_client_iget_interface_data(unsigned short, void *);
+int rt_msg_client_get_interface_data(unsigned short a, void *b)
 {
     int r = 1;
     if (D_00490900 != 1) return 0x1A;
     if (RecursiveLock_Acquire(D_005297F0, 0)) return 0x1A;
-    r = func_002FD9B8(a, b);
+    r = rt_msg_client_iget_interface_data(a, b);
     if (RecursiveLock_Release(D_005297F0, 0)) return 0x1A;
     return r;
 }
@@ -346,18 +346,18 @@ extern int *D_004908F4;
 extern int D_004908F8;
 extern int D_004908FC;
 extern unsigned char D_005297E0;
-extern int func_002FE7C0(unsigned short);
-extern int func_002FE5A8(unsigned short);
+extern int rt_msg_client_is_valid_connection_id(unsigned short);
+extern int rt_msg_client_free_connection_index(unsigned short);
 #if 0 /* merge_units */
-extern void func_002FC928(void);
+extern void rt_msg_client_iecho_shutdown(void);
 #endif /* merge_units */
-#define func_002FC928() ((void)func_002FC928()) /* merge_units */
+#define rt_msg_client_iecho_shutdown() ((void)rt_msg_client_iecho_shutdown()) /* merge_units */
 
-extern int func_002F5C10(void);
-extern int func_003010C8(int);
-extern int func_002FB3C0(void *);
-extern void func_002F95F8(int);
-int func_002FC7A0(void)
+extern int rt_comm_shutdown(void);
+extern int rt_msg_client_map_comm_error(int);
+extern int rt_memory_free(void *);
+extern void KM_Cleanup(int);
+int rt_msg_client_ishutdown(void)
 {
     unsigned short i = 0;
     int r;
@@ -366,27 +366,27 @@ int func_002FC7A0(void)
     if (D_004908EE == 1) {
         for (; i < D_004908F0; i++) {
             if (D_004908F4[i]) {
-                if (func_002FE7C0(i) == 1) func_002FCE88(i);
-                else func_002FE5A8(i);
+                if (rt_msg_client_is_valid_connection_id(i) == 1) rt_msg_client_idisconnect(i);
+                else rt_msg_client_free_connection_index(i);
             }
         }
-        if (D_005297E0 == 1) func_002FC928();
-        r = func_003010C8(func_002F5C10());
+        if (D_005297E0 == 1) rt_msg_client_iecho_shutdown();
+        r = rt_msg_client_map_comm_error(rt_comm_shutdown());
         if (r) return r;
-        if (D_004908F4) func_002FB3C0(&D_004908F4);
+        if (D_004908F4) rt_memory_free(&D_004908F4);
         D_004908F4 = 0;
         D_004908F0 = 0;
         if (D_004908F8) {
-            func_002FB3C0(&D_004908F8);
+            rt_memory_free(&D_004908F8);
             D_004908FC = 0;
         }
-        func_002F95F8(0);
+        KM_Cleanup(0);
         D_004908EC = 0;
     }
     D_004908EE--;
     return 0;
 }
-#undef func_002FC928 /* merge_units */
+#undef rt_msg_client_iecho_shutdown /* merge_units */
 /* merge_units: end func_002FC7A0 */
 
 /* merge_units: begin func_002FC928 */
@@ -396,11 +396,11 @@ extern S2FC928 D_005297E0;
 #endif /* merge_units */
 #define D_005297E0 (*(S2FC928*)&D_005297E0) /* merge_units */
 
-extern void func_002F5DB0(int);
-int func_002FC928(void)
+extern void rt_comm_destroy(int);
+int rt_msg_client_iecho_shutdown(void)
 {
     if (D_005297E0.on != 1) return 5;
-    func_002F5DB0(D_005297E0.h);
+    rt_comm_destroy(D_005297E0.h);
     D_005297E0.on = 0;
     return 0;
 }

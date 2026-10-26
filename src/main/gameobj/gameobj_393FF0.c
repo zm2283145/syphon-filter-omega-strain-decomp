@@ -80,22 +80,22 @@ typedef struct Actor {
 extern char D_004DF740[];
 extern void cGOBJ_ctor(Actor* self, int* name, int type, int* extra);
 extern void ManModel_ClearAttachPoints(void*);
-extern void func_00393FA0(void*);
+extern void cArray_cBoneScale_ctor(void*);
 extern void SkelNode_Construct(SkelNode*);
-extern void func_00393F30(void*, int, SkelNode*);
-extern void func_003BA9A0(SkelNode*, int);
+extern void cArray_cBone_ctor(void*, int, SkelNode*);
+extern void cBone_dtor(SkelNode*, int);
 extern void Bounds_SetEmpty(void*);
 extern void Vec4_SetOrigin(V4*);
 extern void Vec4_Assign(V4*, V4*);
-extern void func_00393A40(void*, void*, void*);
-extern void func_003939D0(void*, Anim**);
+extern void cSkaParams_ctor(void*, void*, void*);
+extern void cTreeNode_cSkaSystemPtr_ctor(void*, Anim**);
 extern void AnimModel_InitAnim(Anim*);
 
 static inline void Anim_ctor(Anim* a, void* owner)
 {
     a->x0 = 0;
-    func_00393A40(a->x10, owner, 0);
-    func_003939D0(a->x100, &a);
+    cSkaParams_ctor(a->x10, owner, 0);
+    cTreeNode_cSkaSystemPtr_ctor(a->x100, &a);
     AnimModel_InitAnim(a);
 }
 
@@ -109,13 +109,13 @@ Actor* DisplayActor_Construct(Actor* me, int* name)
     ManModel_ClearAttachPoints(self->x60);
     s = &self->x2E50;
     s->x0 = 0;
-    func_00393FA0(s->x4);
+    cArray_cBoneScale_ctor(s->x4);
     s->x14 = 0;
     {
         SkelNode n;
         SkelNode_Construct(&n);
-        func_00393F30(s->x18, 0, &n);
-        func_003BA9A0(&n, -1);
+        cArray_cBone_ctor(s->x18, 0, &n);
+        cBone_dtor(&n, -1);
     }
     s->x28 = 0;
     Bounds_SetEmpty(s->x30);
@@ -140,7 +140,7 @@ static inline void merge_flush_func_00393FF0(void) {}
 #pragma push /* merge_units */
 extern int ParticleInst_GetPosition(int, int);
 
-int func_00394140(int a0) {
+int cPARTICLE_GOBJ_GetEvent(int a0) {
     int a1, v0;
     int cond;
 

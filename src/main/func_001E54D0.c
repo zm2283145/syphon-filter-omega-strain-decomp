@@ -18,7 +18,7 @@ struct S {
     unsigned char c62;
     int i64;
 };
-extern "C" S* func_001E54D0(S* d, const S* s)
+extern "C" S* cCollisionProbe_Ray_opAssign(S* d, const S* s)
 {
     *d = *s; return d;
 }

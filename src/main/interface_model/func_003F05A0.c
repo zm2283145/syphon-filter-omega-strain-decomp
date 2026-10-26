@@ -14,7 +14,7 @@ typedef struct Obj05A0 {
 extern int g_TextureMgr;
 extern char D_004BE048[];
 extern void Resource_Construct(FileMan05A0* f);
-extern void func_0036DFB0(FileMan05A0* f, char* name, int a);
+extern void cFileMan_EncodeFilename_charP_cFileManR(FileMan05A0* f, char* name, int a);
 extern void FileMan_Release(FileMan05A0* f, int flag);
 extern int TexMan_FindOrLoad(int mgr, FileMan05A0* f);
 
@@ -60,7 +60,7 @@ static inline void Append(char* buf, const char* s)
 
 static inline int Len05A0(SsoString* s) { return SSO_IS_LONG(s) ? s->longLen : (unsigned char)s->h.s.len; }
 
-void func_003F05A0(Obj05A0* o, int arg1)
+void cInterfaceModel_Refresh(Obj05A0* o, int arg1)
 {
     PStr05A0 s;
     FileMan05A0 fm;
@@ -70,12 +70,12 @@ void func_003F05A0(Obj05A0* o, int arg1)
         Copy(&s, s.text, String_CStr(&o->name));
         Append((char*)&s, D_004BE048);
         Resource_Construct(&fm);
-        func_0036DFB0(&fm, (char*)&s + 1, arg1);
+        cFileMan_EncodeFilename_charP_cFileManR(&fm, (char*)&s + 1, arg1);
         o->f18 = TexMan_FindOrLoad(g_TextureMgr, &fm);
         FileMan_Release(&fm, -1);
     }
     for (i = 0; i < o->count; i++) {
-        func_003F05A0(o->kids[i], arg1);
+        cInterfaceModel_Refresh(o->kids[i], arg1);
     }
 }
 

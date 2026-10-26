@@ -23,6 +23,6 @@ DEFINE_STRING_COMPARE_RANGE(String_Compare, D_0049AD80)
 #include "tree_find.h"
 
 /* Find a key in a tree; end() when absent. */
-DEFINE_TREE_FIND(func_0013C4A0, func_0013C310)
+DEFINE_TREE_FIND(std_tree_pair_cString_value_compare_find_cStringR, std_basic_string_char_char_traits_char_compare_basicstringR)
 #pragma pop /* merge_units */
 /* merge_units: end func_0013C4A0 */

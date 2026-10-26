@@ -3,7 +3,7 @@
 extern int func_002ACC80(int, int);
 extern int Gui_GetScreenStack(void);
 
-int func_0033F0C0(int a0) {
+int GuiMissionLobbyScreen_ExitLobbyScreen(int a0) {
     int a1, v0, v1;
     int cond;
 

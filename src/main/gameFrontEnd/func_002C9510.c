@@ -19,9 +19,9 @@ extern char D_004DE220[];
 extern char D_004DE200[];
 extern int g_WeaponDatabase;
 extern char g_Video[];
-void func_00412ED0(void* p);
+void cInterfaceManager_Refresh(void* p);
 W_002C9510* App_GetInstance(void);
-void func_003D1730(void* p);
+void cUSBKeybd_SetKeyMode(void* p);
 G_002C9510* DME_GetLobby(void);
 void DME_StartThread(void);
 int Gui_GetScreenStack(void);
@@ -41,9 +41,9 @@ void Video_BeginFrame(void* p);
 void FrontEnd_ResumeGui(Self_002C9510* self)
 {
     if (self->b37) {
-        func_00412ED0(D_00571DC0);
+        cInterfaceManager_Refresh(D_00571DC0);
         App_GetInstance()->b278 = 0;
-        func_003D1730(D_0055A700);
+        cUSBKeybd_SetKeyMode(D_0055A700);
         switch (self->b38) {
         case 0: {
             unsigned char had = 0;

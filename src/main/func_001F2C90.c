@@ -8,9 +8,9 @@
 #include "loose01_types.h"
 
 extern int ListIter_NotEqual(ListIter*, ListIter*);
-extern ListIter* func_001F2CF0(ListIter*);
+extern ListIter* std_list_cSkaSwitchItemPtr_generic_iterator_1_opInc(ListIter*);
 extern ListIter* ListIter_Next(ListIter*);
-extern void func_001F2D50(void);
+extern void std_vector_cSkaSwitchItem_push_back(void);
 
 int ListIter_NotEqual_Thunk_1F2C90(ListIter* a, ListIter* b) {
     return ListIter_NotEqual(a, b);
@@ -21,12 +21,12 @@ int ListIter_NotEqual(ListIter* a, ListIter* b) {
     return ((unsigned int)(0) < (unsigned int)(((int)a->node ^ (int)b->node)));
 }
 
-ListIter* func_001F2CC0(ListIter* it) {
-    func_001F2CF0(it);
+ListIter* cConstLListIterator_cSkaSwitchItemPtr_opInc(ListIter* it) {
+    std_list_cSkaSwitchItemPtr_generic_iterator_1_opInc(it);
     return it;
 }
 
-ListIter* func_001F2CF0(ListIter* it) {
+ListIter* std_list_cSkaSwitchItemPtr_generic_iterator_1_opInc(ListIter* it) {
     ListIter_Next(it);
     return it;
 }
@@ -37,6 +37,6 @@ ListIter* ListIter_Next(ListIter* it) {
     return it;
 }
 
-void func_001F2D40(void) {
-    func_001F2D50();
+void cArray_cSkaSwitchItem_PushBackActual(void) {
+    std_vector_cSkaSwitchItem_push_back();
 }

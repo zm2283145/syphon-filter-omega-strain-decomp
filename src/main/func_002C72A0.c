@@ -20,7 +20,7 @@ extern int D_0051EE70;
 extern void Mtx_ToEuler(V4* out, M4* m);
 extern void* AgentPacking_Compact(void* data, int* len);
 extern bool NetObj_SendMessage(int a, int b, void* c, int target, int type);
-bool func_002C72A0(int idx, int a1, int a2, M4* m, void* data, short* sh, int s1);
+bool netCreatePlayer_SendCreated(int idx, int a1, int a2, M4* m, void* data, short* sh, int s1);
 }
 
 static inline void QCopy(void* dst0, void* src, int n0)
@@ -74,7 +74,7 @@ static inline bool IsConnected(int idx)
 #pragma opt_unroll_loops off
 #pragma opt_rotateloops off
 
-bool func_002C72A0(int idx, int a1, int a2, M4* m, void* data, short* sh, int s1)
+bool netCreatePlayer_SendCreated(int idx, int a1, int a2, M4* m, void* data, short* sh, int s1)
 {
     int len;
     Msg72A0 msg;

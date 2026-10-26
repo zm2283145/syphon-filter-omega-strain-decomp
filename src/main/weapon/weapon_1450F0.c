@@ -33,7 +33,7 @@ extern void WeaponDb_LoadResources(S_HOG* self);
 #define WeaponDb_LoadResources(a0) (WeaponDb_LoadResources((void *)(a0))) /* merge_units */
 
 extern void ArchiveList_CloseNamed(char* a, char* b);
-extern void func_0036DEC0(void* p);
+extern void cFileMan_Close(void* p);
 void WeaponDb_UnloadWpnHog(S_HOG* self)
 {
     if (self->loaded) {
@@ -41,7 +41,7 @@ void WeaponDb_UnloadWpnHog(S_HOG* self)
         WeaponDb_LoadResources(self);
         sprintf(buf, "%s\\COMMON\\WPNHOG.HOG", D_0048B2F8);
         ArchiveList_CloseNamed(D_004FFB8C, buf);
-        func_0036DEC0(self->hog);
+        cFileMan_Close(self->hog);
         self->loaded = 0;
     }
 }
@@ -80,16 +80,16 @@ static inline void merge_flush_func_00145160(void) {}
 struct G_00145200 { char c; };
 extern "C" {
 extern char D_0049B1D0[];
-void func_00136DA0(G_00145200* g);
-void func_0012F530(G_00145200* g, int flag);
-void func_001454E0(void* p, int flag);
+void cTimerDisable_ctor(G_00145200* g);
+void cTimerDisable_dtor(G_00145200* g, int flag);
+void cArray_charPtr_dtor_void(void* p, int flag);
 void ActorModel_Release(void* p);
 }
 
 
 
 static inline void Free_00145200(void* p, int line) { AllocGuard g; Mem_Free(0, p, D_0049B1D0, line); }
-static inline void DelD4_00145200(void* p, int line) { G_00145200 g; func_00136DA0(&g); func_001454E0(p, -1); Mem_Free(0, p, D_0049B1D0, line); func_0012F530(&g, -1); }
+static inline void DelD4_00145200(void* p, int line) { G_00145200 g; cTimerDisable_ctor(&g); cArray_charPtr_dtor_void(p, -1); Mem_Free(0, p, D_0049B1D0, line); cTimerDisable_dtor(&g, -1); }
 extern "C" void WeaponDb_LoadResources(S_00145200* self)
 {
     int i;

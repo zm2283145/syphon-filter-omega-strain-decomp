@@ -4,7 +4,7 @@
 typedef struct { char pad0[0x14]; int size; char pad18[4]; char item[0x1C]; } EDF00;
 typedef struct { EDF00 e[0x540 / 0x38]; int mode; char pad1[0x558 - 0x544]; void* buf; char pad55C[4]; int count; int sel; char pad2[0x59C - 0x568]; unsigned char failed; unsigned char pad3; unsigned char ok; unsigned char pad4; unsigned char done; } PDF00;
 typedef struct { PDF00* p; unsigned char busy; char pad[3]; void (*cb)(void); unsigned char state; } CDF00;
-extern int func_0040E5D0(PDF00* p);
+extern int MemCard_MemCardMain(PDF00* p);
 extern int MemCardWrap_MatchName(void* key, void* item);
 
 static inline int df00find(PDF00* p, void* key) {
@@ -31,7 +31,7 @@ int MemCardWrap_Read(CDF00* c, void* key, void* buf, int bufSize) {
     p->done = 0;
     c->state = 3;
     do {
-        c->busy = func_0040E5D0(c->p) != 0;
+        c->busy = MemCard_MemCardMain(c->p) != 0;
         if (!c->busy)
             c->state = 0;
         if (c->cb)

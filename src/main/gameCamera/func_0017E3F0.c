@@ -84,25 +84,25 @@ extern char D_0048A158[], D_0048A160[];
 extern signed char D_004E1D80;
 void cGOBJ_ctor(Cam_17E3F0*, int*, int, int*);
 void Object_AttachTransform(Cam_17E3F0*, void*, int);
-void func_0017F9D0(void*);
+void cCollisionRoutine_cBox_ctor(void*);
 V4c* Vec4_GetZero(void);
 void Vec4_Assign(V4c* d, const V4c* s);
-void func_00132840(V4c*);
-void func_0017F980(V4c*);
+void cQuaternion_ctor_void(V4c*);
+void cArray_cVector_ctor(V4c*);
 V4c Vec4_SetOrigin(void);
 V4c Quat_SetIdentity(void);
-V4c func_0017F820(void);
+V4c cQuaternion_GetZero(void);
 void func_0017F8B0(void*);
 float func_0017F860(float);
-void func_00132800(V4c* d, const V4c* s);
+void cQuaternion_ctor_cQuaternionR(V4c* d, const V4c* s);
 void CameraCurve_MakeQuaternion(CurveA* c, const V4c* q, const V4c* z);
 void VecCurve_InitState(CurveB* c, const V4c* o, const V4c* z);
 void PhysicalBase_Construct(void*, char*, char*);
-void func_0017F330(void*);
-void func_0017F2E0(void*);
+void cSplinedMotion_Scalar_ctor(void*);
+void cCameraShake_cPulsedShakeMagnitude_ctor(void*);
 void Curve_Construct(void*);
-void func_00136540(CC70*, int*, int*);
-void func_001364B0(V4c*);
+void cCollisionModelList_ctor(CC70*, int*, int*);
+void cActivationTracker_ctor(V4c*);
 void Mtx_SetBasis(Mtx_17E3F0* m, V4c* a, V4c* b, V4c* c);
 void Mtx_SetTranslation(Mtx_17E3F0* m, V4c* t);
 void Node_ClearLocalMatrix(Cam_17E3F0*);
@@ -133,7 +133,7 @@ static inline void ReadV_17E3F0(Reader_17E3F0* r, V4c* v, float w)
 }
 static inline void CurveA_Init(CurveA* c, unsigned char f)
 {
-    CameraCurve_MakeQuaternion(c, &Quat_SetIdentity(), &func_0017F820());
+    CameraCurve_MakeQuaternion(c, &Quat_SetIdentity(), &cQuaternion_GetZero());
     c->vtbl = D_004DA440;
     c->bC0 = f;
 }
@@ -172,11 +172,11 @@ extern "C" Cam_17E3F0* Camera_ConstructStream(Cam_17E3F0* self, Reader_17E3F0* r
     self->vtbl = D_004DA580;
     {
         Base70* p = &self->m70;
-        func_0017F9D0(p);
+        cCollisionRoutine_cBox_ctor(p);
         p->vtbl = D_004DAD90;
         Vec4_Assign(&p->v10, Vec4_GetZero());
-        func_00132840(&p->v20);
-        func_0017F980(&p->v30);
+        cQuaternion_ctor_void(&p->v20);
+        cArray_cVector_ctor(&p->v30);
         Vec4_Assign(&p->v40, &Vec4_SetOrigin());
         Vec4_Assign(&p->v50, &Vec4_SetOrigin());
         p->b60 = 0;
@@ -190,11 +190,11 @@ extern "C" Cam_17E3F0* Camera_ConstructStream(Cam_17E3F0* self, Reader_17E3F0* r
     self->f164 = 0;
     {
         Base170* p = &self->m170;
-        func_0017F9D0(p);
+        cCollisionRoutine_cBox_ctor(p);
         p->vtbl = D_004DAD70;
         p->b4 = 0;
         p->f8 = func_0017F860(D_004A3FC8);
-        func_00132800(&p->v10, &Quat_SetIdentity());
+        cQuaternion_ctor_cQuaternionR(&p->v10, &Quat_SetIdentity());
         p->f20 = 0;
         p->f24 = 0;
         Vec4_Assign(&p->v30, &Vec4_SetOrigin());
@@ -234,8 +234,8 @@ extern "C" Cam_17E3F0* Camera_ConstructStream(Cam_17E3F0* self, Reader_17E3F0* r
     QId_17E3F0(&self->qB10);
     {
         char* p = self->mB20;
-        func_0017F330(p);
-        func_0017F2E0(p + 0x38);
+        cSplinedMotion_Scalar_ctor(p);
+        cCameraShake_cPulsedShakeMagnitude_ctor(p + 0x38);
         Curve_Construct(p + 0x80);
     }
     self->bC60 = 0;
@@ -246,11 +246,11 @@ extern "C" Cam_17E3F0* Camera_ConstructStream(Cam_17E3F0* self, Reader_17E3F0* r
         CC70* p = &self->mC70;
         b1 = 0;
         b0 = 0;
-        func_00136540(p, &b0, &b1);
+        cCollisionModelList_ctor(p, &b0, &b1);
         p->vtbl = D_004DA2F0;
         p->f20 = 0;
         Vec4_Assign(&p->v30, Vec4_GetZero());
-        func_001364B0(&p->v40);
+        cActivationTracker_ctor(&p->v40);
         p->f60 = 0;
     }
     {

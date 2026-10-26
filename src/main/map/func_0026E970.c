@@ -17,7 +17,7 @@ struct Vec { int unk0; int count; Obj** data; };
 
 extern "C" {
 extern Batch D_00542DC0;
-Item** func_0026EBD0(Vec* v, int i);
+Item** std_vector_cVUM_GOBJPtr_opIndex_uint_2(Vec* v, int i);
 void Cull_BatchAdd(Batch* b);
 void Cull_BatchFlush(Batch* b);
 }
@@ -49,8 +49,8 @@ extern "C" void HudMap_Cull(Vec* v) {
                 Cull_BatchFlush(&D_00542DC0);
                 for (k = 0; first < last; first++, k++) {
                     int o = D_00542DC0.out[k];
-                (*func_0026EBD0(v, first))->a = o;
-                    (*func_0026EBD0(v, first))->b = D_00542DC0.val[k];
+                (*std_vector_cVUM_GOBJPtr_opIndex_uint_2(v, first))->a = o;
+                    (*std_vector_cVUM_GOBJPtr_opIndex_uint_2(v, first))->b = D_00542DC0.val[k];
                 }
                 D_00542DC0.count = 0;
                 first = last;
@@ -67,8 +67,8 @@ extern "C" void HudMap_Cull(Vec* v) {
             Cull_BatchFlush(&D_00542DC0);
             for (k = 0; last >= first; first++, k++) {
                 int o = D_00542DC0.out[k];
-                (*func_0026EBD0(v, first))->a = o;
-                (*func_0026EBD0(v, first))->b = D_00542DC0.val[k];
+                (*std_vector_cVUM_GOBJPtr_opIndex_uint_2(v, first))->a = o;
+                (*std_vector_cVUM_GOBJPtr_opIndex_uint_2(v, first))->b = D_00542DC0.val[k];
             }
         }
         return;

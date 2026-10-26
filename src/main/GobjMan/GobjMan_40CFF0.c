@@ -12,7 +12,7 @@
 
 extern "C" { char D_004BECC0[] = "tree::insert length error\n"; }
 extern "C" { char D_004BECE0[] = "allocator.hh"; }
-DEFINE_TREE_INSERT_V8(func_0040CFF0, TIValueII, D_004BECC0, D_004BECE0, 0x5C, func_0013CD40)
+DEFINE_TREE_INSERT_V8(std_tree_pair_cObjectId_value_compare_insert_node_at, TIValueII, D_004BECC0, D_004BECE0, 0x5C, std_red_black_tree_1_balance_insert)
 #pragma pop /* merge_units */
 /* merge_units: end func_0040CFF0 */
 
@@ -22,7 +22,7 @@ DEFINE_TREE_INSERT_V8(func_0040CFF0, TIValueII, D_004BECC0, D_004BECE0, 0x5C, fu
 #include "guarded_release.h"
 
 /* Free an allocation under the allocator guard. */
-DEFINE_GUARDED_RELEASE(func_0040D160)
+DEFINE_GUARDED_RELEASE(opDelete_nodeP_int_bool_charP_etc_10)
 #pragma pop /* merge_units */
 /* merge_units: end func_0040D160 */
 
@@ -31,7 +31,7 @@ DEFINE_GUARDED_RELEASE(func_0040D160)
 #pragma cplusplus on
 #include "alloc_guard.h"
 extern "C" { extern char D_004BECF0[]; void Mem_Free(int pool, void* p, char* file, int line); }
-extern "C" void func_0040D210(void* tree, void* node)
+extern "C" void cAllocator_node_deallocate_nodeP_uint_11(void* tree, void* node)
 {
     if (node) {
         AllocGuard guard;
@@ -50,18 +50,18 @@ extern "C" void func_0040D210(void* tree, void* node)
  */
 
 
-void* func_0040D2B0(char* self) {
+void* std_tree_pair_cObjectId_value_compare_node_alloc(char* self) {
     return self + 4;
 }
 
-void func_0040D2C0(void) {
+void cAllocator_pair_cObjectId_destroy(void) {
 }
 
-void* func_0040D2D0(void* self) {
+void* std_tree_pair_cObjectId_value_compare_alloc(void* self) {
     return self;
 }
 
-Map* func_0040D2E0(Map* m, unsigned char* cmp) {
+Map* std_tree_pair_cObjectId_value_compare_ctor(Map* m, unsigned char* cmp) {
     m->count = 0;
     m->head = 0;
     m->cmp = *cmp;
@@ -74,14 +74,14 @@ Map* func_0040D2E0(Map* m, unsigned char* cmp) {
 /* merge_units: begin func_0040D300 */
 #pragma push /* merge_units */
 typedef struct { int m0; void* m4; } TD300;
-extern void func_0040CD10(TD300* t, void* n);
+extern void std_tree_pair_cObjectId_value_compare_destroy(TD300* t, void* n);
 extern void operator_delete(void* p);
 /* Deleting destructor of a tree owner: erase the root, then delete. */
-TD300* func_0040D300(TD300* t, short del)
+TD300* std_tree_pair_cObjectId_value_compare_dtor(TD300* t, short del)
 {
     if (t) {
         if (t->m4)
-            func_0040CD10(t, t->m4);
+            std_tree_pair_cObjectId_value_compare_destroy(t, t->m4);
         if (del > 0)
             operator_delete(t);
     }
@@ -95,23 +95,23 @@ TD300* func_0040D300(TD300* t, short del)
 typedef struct { int m0; void* m4; } TD360;
 typedef struct { TD360 tree; } OD360;
 #if 0 /* merge_units */
-extern void func_0040D300(TD360* t, short del);
+extern void std_tree_pair_cObjectId_value_compare_dtor(TD360* t, short del);
 #endif /* merge_units */
-#define func_0040D300(a0, a1) ((void)func_0040D300((TD300 *)(a0), (a1))) /* merge_units */
+#define std_tree_pair_cObjectId_value_compare_dtor(a0, a1) ((void)std_tree_pair_cObjectId_value_compare_dtor((TD300 *)(a0), (a1))) /* merge_units */
 
 /* Deleting destructor of a tree wrapper. */
-OD360* func_0040D360(OD360* o, short del)
+OD360* cAssocArray_cObjectId_cSystemPtr_dtor(OD360* o, short del)
 {
     if (o) {
         TD360* t = &o->tree;
         if (t)
-            func_0040D300(t, -1);
+            std_tree_pair_cObjectId_value_compare_dtor(t, -1);
         if (del > 0)
             operator_delete(o);
     }
     return o;
 }
-#undef func_0040D300 /* merge_units */
+#undef std_tree_pair_cObjectId_value_compare_dtor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0040D360 */
 
@@ -132,11 +132,11 @@ struct Pump_D3C0 {
     bool err;
 };
 
-extern "C" int func_0040E5D0(Ctx_D3C0* ctx);
+extern "C" int MemCard_MemCardMain(Ctx_D3C0* ctx);
 
 static inline bool Step(Pump_D3C0* s)
 {
-    s->ok = func_0040E5D0(s->ctx) != 0;
+    s->ok = MemCard_MemCardMain(s->ctx) != 0;
     if (!s->ok) s->err = 0;
     if (s->cb) s->cb();
     return !s->ok;

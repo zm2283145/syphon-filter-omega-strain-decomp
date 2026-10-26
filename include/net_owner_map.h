@@ -15,12 +15,12 @@ extern char D_00583900[];
 extern int D_00497578;
 extern char D_004BFD60[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
-void func_00439380(NetOwnIt* r, void* map);
-NetOwnIt func_00439370(void* map);
-void func_00439360(NetOwnIt* r, const NetOwnIt& s);
+void std_tree_pair_tGenInfoPtr_value_compare_begin(NetOwnIt* r, void* map);
+NetOwnIt std_map_tGenInfoPtr_bool_end(void* map);
+void cAssocArray_tGenInfoPtr_bool_Iterator_ctor(NetOwnIt* r, const NetOwnIt& s);
 void Tree_Successor(NetOwnIt* it);
-void func_0043B340(void* r, void* map, NetOwnVal* v);
-int func_002EB650(NetOwnHdl** out, int id);
+void std_tree_pair_tGenInfoPtr_value_compare_insert_one(void* r, void* map, NetOwnVal* v);
+int NetGetObject(NetOwnHdl** out, int id);
 void func_00439390(int id, int sess, int kind);
 }
 static inline unsigned char NetOwn_Ne(NetOwnIt* a, NetOwnIt* b) { return !(a->node == b->node); }
@@ -44,15 +44,15 @@ static inline NetOwnEnt* NetOwn_Find(int key)
         if (e && TEST(e->hi, 1 << NetLocalId())) {                              \
             NetOwnIt it; NetOwnIt end; NetOwnIt end2; NetOwnIt t;               \
             NetOwnHdl* h;                                                       \
-            func_00439380(&t, D_00583900);                                      \
+            std_tree_pair_tGenInfoPtr_value_compare_begin(&t, D_00583900);                                      \
             it = t;                                                             \
-            while (func_00439360(&end, func_00439370(D_00583900)),              \
+            while (cAssocArray_tGenInfoPtr_bool_Iterator_ctor(&end, std_map_tGenInfoPtr_bool_end(D_00583900)),              \
                    NetOwn_Ne(&it, &end)) {                                      \
                 NetOwnVal* v = &it.node->v;                                     \
                 if (v->first->key == *key) { v->second = (MARK); break; }       \
                 Tree_Successor(&it);                                            \
             }                                                                   \
-            func_00439360(&end2, func_00439370(D_00583900));                    \
+            cAssocArray_tGenInfoPtr_bool_Iterator_ctor(&end2, std_map_tGenInfoPtr_bool_end(D_00583900));                    \
             if (it.node == end2.node) {                                         \
                 NetOwnEnt* n; char res[8]; NetOwnVal pv;                        \
                 UPD(e->hi, 1 << NetLocalId());                                  \
@@ -63,8 +63,8 @@ static inline NetOwnEnt* NetOwn_Find(int key)
                 if (n) { n->key = *key; n->lo = 0xF; n->hi = 0; }               \
                 pv.first = n;                                                   \
                 pv.second = SECOND;                                             \
-                func_0043B340(res, D_00583900, &pv);                            \
-                func_002EB650(&h, D_00497578);                                  \
+                std_tree_pair_tGenInfoPtr_value_compare_insert_one(res, D_00583900, &pv);                            \
+                NetGetObject(&h, D_00497578);                                  \
                 if (h->owner == NetLocalId())                                   \
                     func_00439390(NetLocalId(), D_00497578, -2);                \
             }                                                                   \

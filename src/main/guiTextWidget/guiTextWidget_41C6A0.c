@@ -29,9 +29,9 @@ int GuiWidget_Destroy(...);
 int operator_delete(...);                          
 extern char D_004BF2D0;
 extern "C" void GuiTextWidget_IsType();
-extern "C" void func_00293950();
+extern "C" void GuiWidget_onInput();
 extern "C" void GuiTextWidget_GetClassName();
-extern "C" void func_0041BE50();
+extern "C" void GuiTextWidget_UpdateText();
 extern "C" void GuiTextWidget_Draw();
 extern "C" void GuiTextWidget_OnSleep();
 extern "C" void GuiTextWidget_OnWake();
@@ -83,7 +83,7 @@ extern "C" char * GuiTextWidget_dtor(char * arg0, long long arg1) {
     }
     return arg0;
 }
-void * const D_004E0AC0[24] = { (void*)0x0, (void*)0x0, (void*)GuiTextWidget_dtor, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiTextWidget_OnWake, (void*)GuiTextWidget_OnSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_00293950, (void*)GuiTextWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiTextWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiTextWidget_GetClassName, (void*)GuiTextWidget_IsType, (void*)func_0041BE50 };
+void * const D_004E0AC0[24] = { (void*)0x0, (void*)0x0, (void*)GuiTextWidget_dtor, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiTextWidget_OnWake, (void*)GuiTextWidget_OnSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiWidget_onInput, (void*)GuiTextWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiTextWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiTextWidget_GetClassName, (void*)GuiTextWidget_IsType, (void*)GuiTextWidget_UpdateText };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0041C6A0(void) {}
 #pragma pop /* merge_units */

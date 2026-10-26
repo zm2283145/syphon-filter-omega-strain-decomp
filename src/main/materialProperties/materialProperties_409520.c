@@ -7,13 +7,13 @@
 /* merge_units: begin func_00409520 */
 #pragma push /* merge_units */
 #include "types.h"
-extern void func_00408EA0(void* self);
+extern void cMaterialPropertiesTable_Reset(void* self);
 extern void operator_delete(void* p);
 /* Deleting destructor: run the member destructor, then delete. */
-void* func_00409520(void* self, short del)
+void* cMaterialPropertiesTable_dtor(void* self, short del)
 {
     if (self) {
-        func_00408EA0(self);
+        cMaterialPropertiesTable_Reset(self);
         if (del > 0)
             operator_delete(self);
     }
@@ -32,7 +32,7 @@ void* func_00409520(void* self, short del)
 
 #include "loose04_types.h"
 
-Unk409580* func_00409580(Unk409580* self) {
+Unk409580* cMaterialPropertiesTable_ctor(Unk409580* self) {
     self->unk00 = 0;
     self->unk04 = 0;
     self->unk08 = 0;
@@ -123,7 +123,7 @@ Unk409750* MaterialProp_SetDefaults(Unk409750* self) {
 #include "tree_find.h"
 
 /* Find a key in a tree; end() when absent. */
-DEFINE_TREE_FIND(func_004097A0, func_0013C310)
+DEFINE_TREE_FIND(std_tree_pair_cString_value_compare_find_cStringR_3, std_basic_string_char_char_traits_char_compare_basicstringR)
 #pragma pop /* merge_units */
 /* merge_units: end func_004097A0 */
 
@@ -132,7 +132,7 @@ DEFINE_TREE_FIND(func_004097A0, func_0013C310)
 #pragma cplusplus on
 
 /* Find a key in a tree; end() when absent. */
-DEFINE_TREE_FIND(func_00409870, func_0013C310)
+DEFINE_TREE_FIND(std_tree_pair_cString_value_compare_find_cStringR_4, std_basic_string_char_char_traits_char_compare_basicstringR)
 #pragma pop /* merge_units */
 /* merge_units: end func_00409870 */
 
@@ -142,6 +142,6 @@ DEFINE_TREE_FIND(func_00409870, func_0013C310)
 #include "vector_insert_fill_obj.h"
 
 extern "C" { char D_004BEBB0[] = "vector::insert length error\n"; }
-DEFINE_VECTOR_INSERT_FILL_OBJ(func_00409940, 0x124, 0x542A1, 0x2A150, D_004BEBB0, D_004BEC98, 0x5C, Mem_PlacementNew, func_0040A110, func_0040A070, func_00409E30, func_00409DF0, func_0040A210)
+DEFINE_VECTOR_INSERT_FILL_OBJ(std_vector_imp_cMaterialProperties_insert, 0x124, 0x542A1, 0x2A150, D_004BEBB0, D_004BEC98, 0x5C, Mem_PlacementNew, cMaterialProperties_ctor, std_copy_backward_cMaterialProperties_copy_backward, std_fill_n_cMaterialProperties_int_fill_n, std_swap_vectordeleterR_vectordeleterR_47, std_vector_deleter_cMaterialProperties_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00409940 */

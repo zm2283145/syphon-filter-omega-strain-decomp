@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0046E610(void) {
+int MediusUtilGetServerVersionRequestHandler(void) {
     return 21;
 }

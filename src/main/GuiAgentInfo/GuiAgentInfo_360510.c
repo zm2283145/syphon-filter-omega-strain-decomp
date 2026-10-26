@@ -7,7 +7,7 @@ int String_Dtor(char *, int);
 int String_AssignString(char * , char *);                       
 const unsigned int D_004BB868[2] = { 0x0, 0x0 };
 
-void func_00360510(char * arg0) {
+void GuiAgentInfo_AgentInfo_Reset(char * arg0) {
     int sp30[4];
     int sp20[4];
     int var_a0;

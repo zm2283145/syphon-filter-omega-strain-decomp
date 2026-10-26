@@ -28,7 +28,7 @@ typedef struct {
 } Widget0045E540;
 extern char D_004E1620[];
 extern void GuiWidget_ctor(Widget0045E540* w);
-extern void func_001C10A0(List0045E540* list);
+extern void std_vector_int_ctor_void(List0045E540* list);
 extern void PtrVec_Reserve(List0045E540* list, int n);
 /* Constructor. */
 Widget0045E540* GuiGameScreen_ctor(Widget0045E540* w)
@@ -41,10 +41,10 @@ Widget0045E540* GuiGameScreen_ctor(Widget0045E540* w)
     w->unk5C = 0;
     w->unk60 = 0;
     a = &w->listA;
-    func_001C10A0(a);
+    std_vector_int_ctor_void(a);
     a->flag = 1;
     b = &w->listB;
-    func_001C10A0(b);
+    std_vector_int_ctor_void(b);
     b->flag = 1;
     w->b55 = 0;
     w->b54 = 0;

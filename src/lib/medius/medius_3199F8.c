@@ -18,7 +18,7 @@ static inline float Dist2(Cx* a, Cx* b)
 
 extern float D_004E1D1C[];
 
-void func_003199F8(Cx *pos, Cx *tab, int n, int *idx, int k)
+void VQ2mbest(Cx *pos, Cx *tab, int n, int *idx, int k)
 {
     float best[4];
     float d;

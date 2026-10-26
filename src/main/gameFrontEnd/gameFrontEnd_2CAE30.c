@@ -35,7 +35,7 @@ void String_CtorEmpty(Str* s);
 void String_CtorCStr_13B480(Str* s, const char* c);
 void String_AssignString(Str* d, Str* s);
 void String_Dtor(Str* s, int f);
-void func_002CE1A0(void* ret, void* list, void** it, void* ent);
+void std_list_deleter_MessageBoxEntry_insert(void* ret, void* list, void** it, void* ent);
 void GuiWidget_SendEvent(Mgr* a, Mgr* b, int c, int d, int e);
 extern char D_004ACFE0[];
 }
@@ -110,7 +110,7 @@ extern "C" int FrontEnd_OpenPopup(SelfCAE30* self, int a4, const char* n1, const
                 func_002CAC50(&end, func_002CAC60(&self->list));
                 if (n == end || n->state != 1) {
                     tmp = n;
-                    func_002CE1A0(ret, &self->list, &tmp, &e);
+                    std_list_deleter_MessageBoxEntry_insert(ret, &self->list, &tmp, &e);
                     break;
                 }
                 n = n->next;
@@ -118,7 +118,7 @@ extern "C" int FrontEnd_OpenPopup(SelfCAE30* self, int a4, const char* n1, const
             }
         } else {
             tmp2 = self->head;
-            func_002CE1A0(ret2, &self->list, &tmp2, &e);
+            std_list_deleter_MessageBoxEntry_insert(ret2, &self->list, &tmp2, &e);
         }
         if (first) {
             int c = String_CStr(&e.s14);
@@ -151,7 +151,7 @@ void String_Dtor(void* m, int flags);
 #define String_Dtor(a0, a1) (String_Dtor((Str *)(a0), (a1))) /* merge_units */
 
 }
-extern "C" void* func_002CB0E0(void* self, short deleteFlag)
+extern "C" void* cGameFrontEnd_MessageBoxEntry_dtor(void* self, short deleteFlag)
 {
     if (self) {
         void* m;

@@ -44,7 +44,7 @@ extern void String_CtorCStr_13B480(Str* s, int c);
 extern int String_CStr(Str* s);
 extern void String_Dtor(Str* s, int flags);
 extern int GuiScreen_Navigate(S* self, int v);
-void func_002A96A0(S* self, int flag)
+void GuiOnlineOptions_ExitScreen(S* self, int flag)
 {
     if (flag && self->f98 == -1) {
         Str a;

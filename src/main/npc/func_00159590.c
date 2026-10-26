@@ -161,9 +161,9 @@ extern Npc* D_004EA358;
 extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721D0;
 extern Tab SecondaryStateTable[];
-void func_0014FC10(Iter* out, Tree* t);
-Word* func_0014AB70(Word* dst, Word* src);
-void func_0014AB80(Iter* out, Tree* t);
+void std_list_cActiveListItemPtr_begin_void(Iter* out, Tree* t);
+Word* cLListIterator_cActiveListItemPtr_ctor(Word* dst, Word* src);
+void std_list_cActiveListItemPtr_end_void(Iter* out, Tree* t);
 void cAI_v0E(Npc* self, float dt);
 void NpcAi_RequestAction(Npc* self, unsigned char type, int prio, float f);
 void NpcAi_RunLocomotion(Npc* self);
@@ -185,7 +185,7 @@ V Node_GetTranslation(void* node);
 void Event_Construct(void* m, void* type);
 int TeleportMsg_IsMode3(void* m);
 V* func_00133EC0(M* m);
-void func_0015A400(V* out, V* v);
+void cVector_Copy_WSet0(V* out, V* v);
 void Vec4_CopyAsPoint(V* out, V* v);
 void Mtx_SetRotationTranslation(void* data, M* obj, V* v);
 void Event_Send(const MBase& m, void* target, int immediate);
@@ -276,7 +276,7 @@ static inline void TeleInit(Msg* m, M* mtx)
     V b2;
     V* v;
     if (TeleportMsg_IsMode3(m)) {
-        func_0015A400(&a2, func_00133EC0(mtx));
+        cVector_Copy_WSet0(&a2, func_00133EC0(mtx));
         v = &a2;
     } else {
         Vec4_CopyAsPoint(&b2, func_00133EC0(mtx));
@@ -304,11 +304,11 @@ extern "C" void cNPC_v0E(Npc* self, float dt)
     int fr = g_VideoFrameCounter;
     if (D_004EA3A0 == fr) {} else {
         float best = -1.0f;
-        func_0014FC10(&b, &g_NpcThinkList);
-        func_0014AB70(&w, (Word*)&b);
+        std_list_cActiveListItemPtr_begin_void(&b, &g_NpcThinkList);
+        cLListIterator_cActiveListItemPtr_ctor(&w, (Word*)&b);
         { int v = w.value; tmp = v; }
         FCopy((float*)&it, (float*)&tmp);
-        while (func_0014AB80(&e, &g_NpcThinkList), func_0014AB70(&w2, (Word*)&e), *(volatile int*)&tmp2 = w2.value, *(int*)&it != *(volatile int*)&tmp2) {
+        while (std_list_cActiveListItemPtr_end_void(&e, &g_NpcThinkList), cLListIterator_cActiveListItemPtr_ctor(&w2, (Word*)&e), *(volatile int*)&tmp2 = w2.value, *(int*)&it != *(volatile int*)&tmp2) {
             Obj* o = Get(it->h);
             if (o && Active(o)) {
                 Npc* n = o->npc58;

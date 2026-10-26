@@ -11,7 +11,7 @@
 #define NULL 0
 #pragma mpwc_relax on
 /*fc*/
-int func_001152B8();                       
+int sceSifLoadModule();                       
 int sprintf();                      
 
 int LibInit_LoadIrxModule(char *arg0, int arg1, int arg2, int arg3) {
@@ -24,7 +24,7 @@ int LibInit_LoadIrxModule(char *arg0, int arg1, int arg2, int arg3) {
     sprintf(spF0, "cdrom0:\\IRX\\%s;1", arg0);
     var_s0 = 0;
 loop_1:
-    temp_v0 = func_001152B8(spF0, arg1, arg2);
+    temp_v0 = sceSifLoadModule(spF0, arg1, arg2);
     if (temp_v0 < 0) {
         var_s0 += 1;
         if (var_s0 >= 0x32) {
@@ -56,7 +56,7 @@ loop_1:
 /* Sends IOP sound command `cmd` with `size` bytes of arguments and waits. */
 extern int snd_SendIOPCommandAndWait(int cmd, int size, int *args);
 extern int func_0042B5D0(void);
-extern int func_0042B770(void);
+extern int SFOLibInit_AllowPlayer(void);
 extern int snd_SendIOPCommandNoWait(int cmd, int size, int *args, int a3, int t0);
 
 int func_003A6BB0(void) {
@@ -64,7 +64,7 @@ int func_003A6BB0(void) {
 }
 
 int func_003A6BC0(void) {
-    return func_0042B770();
+    return SFOLibInit_AllowPlayer();
 }
 
 int func_003A6BD0(void) {
@@ -79,11 +79,11 @@ void func_003A6BE0(int a0, int a1) {
     snd_SendIOPCommandAndWait(90, 8, args);
 }
 
-int func_003A6C10(void) {
+int snd_GetTransStatus(void) {
     return snd_SendIOPCommandAndWait(64, 0, 0);
 }
 
-void func_003A6C20(int a0, int a1, int a2, int a3, int t0) {
+void snd_StartMovieSoundEx(int a0, int a1, int a2, int a3, int t0) {
     int args[8];
 
     args[0] = a0;
@@ -94,19 +94,19 @@ void func_003A6C20(int a0, int a1, int a2, int a3, int t0) {
     snd_SendIOPCommandAndWait(62, 20, args);
 }
 
-int func_003A6C60(void) {
+int snd_CloseMovieSound(void) {
     return snd_SendIOPCommandAndWait(60, 0, 0);
 }
 
-int func_003A6C70(void) {
+int snd_PauseMovieSound(void) {
     return snd_SendIOPCommandAndWait(63, 0, 0);
 }
 
-int func_003A6C80(void) {
+int snd_ResetMovieSound(void) {
     return snd_SendIOPCommandAndWait(61, 0, 0);
 }
 
-void func_003A6C90(int a0, int a1, int a2, int a3, int t0, int t1) {
+void snd_InitMovieSoundEx(int a0, int a1, int a2, int a3, int t0, int t1) {
     int args[8];
 
     args[0] = a0;
@@ -127,7 +127,7 @@ void Global_SetReverb(int a0, int a1, int a2) {
     snd_SendIOPCommandNoWait(15, 12, args, 0, 0);
 }
 
-void func_003A6D10(int a0, int a1) {
+void snd_SetReverbType(int a0, int a1) {
     int args[2];
 
     args[0] = a0;

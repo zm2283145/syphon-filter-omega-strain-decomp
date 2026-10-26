@@ -2,7 +2,7 @@
 
 extern char D_00487848[];
 
-int func_00117558(int a0, int a1) {
+int iGetTimerUsedUnusedCounters(int a0, int a1) {
     int v0, v1;
     int cond;
 

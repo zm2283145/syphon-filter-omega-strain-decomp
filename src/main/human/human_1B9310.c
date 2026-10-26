@@ -107,7 +107,7 @@ void AnimChannel_UpdateRate(B7_AnimCh* p, float dt, float speed)
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "vt8_chain_dtor.h"
-DEFINE_VT8_CHAIN_DTOR(func_001B9560, D_004DA870, D_004D9DE0)
+DEFINE_VT8_CHAIN_DTOR(cHumanTimeBasedCallback_dtor, D_004DA870, D_004D9DE0)
 #pragma pop /* merge_units */
 /* merge_units: end func_001B9560 */
 
@@ -180,6 +180,6 @@ struct Msg_0020E560 : ClonedMessageBase {
 
 #define CLONE_BODY(p, s) p->vtable = D_004DA890;
 
-DEFINE_MESSAGE_CLONE(func_001B96B0, Msg_0020E560, 0x24, D_0049D8D0, 0xEF, CLONE_BODY)
+DEFINE_MESSAGE_CLONE(cTurnOnWeaponPickupMsg_Clone, Msg_0020E560, 0x24, D_0049D8D0, 0xEF, CLONE_BODY)
 #pragma pop /* merge_units */
 /* merge_units: end func_001B96B0 */

@@ -38,7 +38,7 @@ void func_00299500(PtrVec* v) {
 }
 
 /* Vector clear (count = 0). */
-void func_00299510(PtrVec* v) {
+void std_vector_deleter_tAchievementInfo_clear(PtrVec* v) {
     v->count = 0;
 }
 #pragma pop /* merge_units */

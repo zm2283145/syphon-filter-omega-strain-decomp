@@ -4,7 +4,7 @@
 
 typedef struct { int head; int value; } ListHead;
 extern void ObjectList_EraseRange_383420(int* out, void* list, int* value, ListHead** head);
-extern void func_00164940(int* out, void* list, ListHead** pos, int* value);
+extern void std_list_deleter_int_insert(int* out, void* list, ListHead** pos, int* value);
 
 typedef struct { int a, b, c; char pad[0x130 - 0xC]; } SMElemA;
 typedef struct { int a; char pad[0x60]; int b; char pad2[0x80 - 0x68]; } SMElemB;
@@ -61,7 +61,7 @@ body:
     {
         int r2;
         ListHead* pos = head;
-        func_00164940(&r2, &self->list, &pos, &i);
+        std_list_deleter_int_insert(&r2, &self->list, &pos, &i);
     }
     i++;
 test:

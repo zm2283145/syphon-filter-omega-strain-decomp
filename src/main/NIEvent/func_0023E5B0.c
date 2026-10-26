@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-int func_0023E5B0(char* self) {
+int std_vector_pod_int_size(char* self) {
     return *(int*)(self + 4);
 }
 
-int func_0023E5C0(char* self) {
+int std_vector_imp_cNIEventBasePtr_1_size(char* self) {
     return *(int*)(self + 4);
 }

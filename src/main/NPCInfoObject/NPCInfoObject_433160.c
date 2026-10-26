@@ -44,9 +44,9 @@ extern int D_00582A80;
 extern int D_00582A88;
 extern int D_00582A90;
 extern int D_00582A98;
-int func_002EB650(Obj_433160** out, int key);
-void func_00434600(Res_433160* r, int* key, unsigned char b);
-void func_00435F30(Res_433160* r, int* key, unsigned char b);
+int NetGetObject(Obj_433160** out, int key);
+void cNPCInfoObject_SetOwner_cObjectIdR_int(Res_433160* r, int* key, unsigned char b);
+void cNPCInfoObject_Add(Res_433160* r, int* key, unsigned char b);
 }
 struct Busy_433160 {
     Busy_433160() { D_00582A68++; }
@@ -59,11 +59,11 @@ struct Reent_433160 {
 static inline unsigned char IsHost_433160() { if (g_IsMultiplayer) return D_005721C0; return 1; }
 static inline void Free_433160(Ent_433160* p, int line) { AllocGuard g; Mem_Free(0, p, D_004BFCA0, line); }
 
-extern "C" void func_00433160(void* self, int key)
+extern "C" void cNPCInfoObject_NPCInfoCreationCallback(void* self, int key)
 {
     Reent_433160 re;
     Obj_433160* o;
-    if (func_002EB650(&o, key) == 0) {
+    if (NetGetObject(&o, key) == 0) {
         if (!D_00582780) {
             Ent_433160* old = 0;
             if (D_005827F0 && !D_00582780) old = D_005827F0;
@@ -75,8 +75,8 @@ extern "C" void func_00433160(void* self, int key)
                 int k[1];
                 Busy_433160 busy;
                 k[0] = old->key;
-                func_00435F30(&r, k, old->b4);
-                func_00434600(&r, k, old->b4);
+                cNPCInfoObject_Add(&r, k, old->b4);
+                cNPCInfoObject_SetOwner_cObjectIdR_int(&r, k, old->b4);
                 Free_433160(old, 0x620);
             }
             D_00582A78 = key;
@@ -110,14 +110,14 @@ static inline void merge_flush_func_00433160(void) {}
 /* merge_units: begin func_004335F0 */
 #pragma push /* merge_units */
 typedef struct { int max; int ver; int flags; unsigned char mode; } Prm_335F0;
-extern int func_002E9B60(void);
-extern int func_002E9BE8(int* db, int offset, int size, int count, int type, Prm_335F0* prm);
-extern int func_002E9CD0(int* table, char* name, int size);
-extern int func_002E9D88(int table, void* a, void* b, void* c);
+extern int NetRegisterObjectStart(void);
+extern int NetObjectField(int* db, int offset, int size, int count, int type, Prm_335F0* prm);
+extern int NetRegisterStructure(int* table, char* name, int size);
+extern int NetRegisterRemoteObjectCallback(int table, void* a, void* b, void* c);
 extern int D_00582A70;
-extern void func_00433160();
-extern void func_00432230();
-extern void func_004321D0();
+extern void cNPCInfoObject_NPCInfoCreationCallback();
+extern void cNPCInfoObject_NPCInfoUpdateCallback();
+extern void cNPCInfoObject_NPCInfoDeleteCallback();
 
 static inline void Reset_335F0(NpcInfoRec* r)
 {
@@ -145,13 +145,13 @@ unsigned char NpcInfo_RegisterNetType(void)
     prm.flags = 0;
     prm.max = 100;
     prm.mode = 0x40;
-    if (func_002E9B60() == 0) {
+    if (NetRegisterObjectStart() == 0) {
         NpcInfoRec* q = arr;
         NpcInfoRec* base = q;
         for (i = 0; i < 29; i++, q++)
-            err = func_002E9BE8(&db, (char*)q - (char*)base, 1, 1, 0x10, &prm);
-        if (err == 0 && func_002E9CD0(&D_00582A70, "tNPCInfoStruct", 0x1D0) == 0) {
-            func_002E9D88(D_00582A70, func_00433160, func_00432230, func_004321D0);
+            err = NetObjectField(&db, (char*)q - (char*)base, 1, 1, 0x10, &prm);
+        if (err == 0 && NetRegisterStructure(&D_00582A70, "tNPCInfoStruct", 0x1D0) == 0) {
+            NetRegisterRemoteObjectCallback(D_00582A70, cNPCInfoObject_NPCInfoCreationCallback, cNPCInfoObject_NPCInfoUpdateCallback, cNPCInfoObject_NPCInfoDeleteCallback);
             ok = 1;
         }
     }
@@ -203,7 +203,7 @@ extern int D_00582810;
 #define D_00582810 (*(int*)&D_00582810) /* merge_units */
 
 }
-extern "C" void func_00433760(void) {
+extern "C" void cNPCInfoObject_DestroyNPCInfoStruct(void) {
     int temp_s0;
     int temp_s0_2;
     int temp_s0_3;
@@ -289,20 +289,20 @@ extern int D_00582810;
 #endif /* merge_units */
 #define D_00582810 (*(int*)&D_00582810) /* merge_units */
 
-int func_002EAF28(int* key, int a, int b, int c, int d, int e, int f, int g, char* h, int i);
+int NetCreateObject(int* key, int a, int b, int c, int d, int e, int f, int g, char* h, int i);
 #if 0 /* merge_units */
-int func_002EB650(P_433A60** out, int key);
+int NetGetObject(P_433A60** out, int key);
 #endif /* merge_units */
-#define func_002EB650(a0, a1) (func_002EB650((void *)(a0), (a1))) /* merge_units */
+#define NetGetObject(a0, a1) (NetGetObject((void *)(a0), (a1))) /* merge_units */
 
 
 static inline void Reg_433A60(int* key, int* out)
 {
     P_433A60* p;
-    if (!func_002EAF28(key, 2, 4, 0, 0, 0, 0, *out, "cNPCInfoObject", D_00582A70) && !func_002EB650(&p, *key)) *out = p->f1C;
+    if (!NetCreateObject(key, 2, 4, 0, 0, 0, 0, *out, "cNPCInfoObject", D_00582A70) && !NetGetObject(&p, *key)) *out = p->f1C;
 }
 
-void func_00433A60(void)
+void cNPCInfoObject_CreateNPCInfoStruct(void)
 {
     if (D_005721D0 && (g_IsMultiplayer ? D_005721C0 : 1)) {
         Reg_433A60(&D_00582A78, &D_005827F0);
@@ -317,7 +317,7 @@ void func_00433A60(void)
 #undef D_00582800 /* merge_units */
 #undef D_00582808 /* merge_units */
 #undef D_00582810 /* merge_units */
-#undef func_002EB650 /* merge_units */
+#undef NetGetObject /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00433A60(void) {}
 #pragma pop /* merge_units */
@@ -325,21 +325,21 @@ static inline void merge_flush_func_00433A60(void) {}
 
 /* merge_units: begin func_00433CE0 */
 #pragma push /* merge_units */
-void func_00434E20(int self, NpcInfoMsg* m);
-void func_00433CE0(int self, int key)
+void cNPCInfoObject_AddPendingDeactivate(int self, NpcInfoMsg* m);
+void cNPCInfoObject_Deactivate(int self, int key)
 {
     int h;
     NpcInfoMsg m;
     NpcInfoRec* r;
-    func_004355D0(self);
-    r = func_004361C0(key, &h);
+    cNPCInfoObject_Setup(self);
+    r = cNPCInfoObject_Find(key, &h);
     if (r) {
         NPC_INFO_COPY(m, r)
         if (D_005721D0) {
             m.f10 = h;
             m.a6[NetLocalId()] = 0;
             r->a6[NetLocalId()] = 0;
-            func_00434E20(self, &m);
+            cNPCInfoObject_AddPendingDeactivate(self, &m);
             func_00434920(self, h);
         } else {
             r->a6[NetLocalId()] = 0;
@@ -355,18 +355,18 @@ static inline void merge_flush_func_00433CE0(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0xA]; unsigned char vals[4]; } R1Rec_33EC0;
 #if 0 /* merge_units */
-extern R1Rec_33EC0* func_004361C0(int key, int flag);
+extern R1Rec_33EC0* cNPCInfoObject_Find(int key, int flag);
 #endif /* merge_units */
-#define func_004361C0(a0, a1) ((R1Rec_33EC0 *)func_004361C0((a0), (void *)(a1))) /* merge_units */
+#define cNPCInfoObject_Find(a0, a1) ((R1Rec_33EC0 *)cNPCInfoObject_Find((a0), (void *)(a1))) /* merge_units */
 
-unsigned char func_00433EC0(void* self, int key, int idx)
+unsigned char cNPCInfoObject_IsInActiveTerrain(void* self, int key, int idx)
 {
-    R1Rec_33EC0* r = func_004361C0(key, 0);
+    R1Rec_33EC0* r = cNPCInfoObject_Find(key, 0);
     if (r && idx >= 0 && idx < 4)
         return r->vals[idx];
     return 0;
 }
-#undef func_004361C0 /* merge_units */
+#undef cNPCInfoObject_Find /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00433EC0(void) {}
 #pragma pop /* merge_units */
@@ -381,8 +381,8 @@ void func_00433F20(int self, int key, signed char v)
     NpcInfoMsg m;
     NpcInfoRec* r;
     if (g_IsMultiplayer) {
-        func_004355D0(self);
-        r = func_004361C0(key, &h);
+        cNPCInfoObject_Setup(self);
+        r = cNPCInfoObject_Find(key, &h);
         if (r) {
             NPC_INFO_COPY(m, r)
             m.aA[NetLocalId()] = v;
@@ -404,20 +404,20 @@ static inline void merge_flush_func_00433F20(void) {}
 #pragma mpwc_relax on
 int NetGame_InitLocalSlot(int *, int);                        
 #if 0 /* merge_units */
-int func_004361C0(int, int);
+int cNPCInfoObject_Find(int, int);
 #endif /* merge_units */
-#define func_004361C0(a0, a1) ((int)func_004361C0((a0), (void *)(a1))) /* merge_units */
+#define cNPCInfoObject_Find(a0, a1) ((int)cNPCInfoObject_Find((a0), (void *)(a1))) /* merge_units */
                             
 extern int D_00494178;
 extern int D_005721A8;
 
-unsigned char func_004340C0(int arg0, int arg1) {
+unsigned char cNPCInfoObject_IsActiveOnRemote(int arg0, int arg1) {
     int temp_v0;
     unsigned char var_s1;
     int var_s0;
     int var_v0;
 
-    temp_v0 = func_004361C0(arg1, 0);
+    temp_v0 = cNPCInfoObject_Find(arg1, 0);
     var_s1 = 0;
     if (temp_v0 != 0) {
         var_s0 = 0;
@@ -431,7 +431,7 @@ unsigned char func_004340C0(int arg0, int arg1) {
     }
     return var_s1;
 }
-#undef func_004361C0 /* merge_units */
+#undef cNPCInfoObject_Find /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_004340C0(void) {}
 #pragma pop /* merge_units */
@@ -441,18 +441,18 @@ static inline void merge_flush_func_004340C0(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0x6]; unsigned char vals[4]; } R1Rec_34190;
 #if 0 /* merge_units */
-extern R1Rec_34190* func_004361C0(int key, int flag);
+extern R1Rec_34190* cNPCInfoObject_Find(int key, int flag);
 #endif /* merge_units */
-#define func_004361C0(a0, a1) ((R1Rec_34190 *)func_004361C0((a0), (void *)(a1))) /* merge_units */
+#define cNPCInfoObject_Find(a0, a1) ((R1Rec_34190 *)cNPCInfoObject_Find((a0), (void *)(a1))) /* merge_units */
 
-unsigned char func_00434190(void* self, int key, int idx)
+unsigned char cNPCInfoObject_IsActive(void* self, int key, int idx)
 {
-    R1Rec_34190* r = func_004361C0(key, 0);
+    R1Rec_34190* r = cNPCInfoObject_Find(key, 0);
     if (r && idx >= 0 && idx < 4)
         return r->vals[idx];
     return 0;
 }
-#undef func_004361C0 /* merge_units */
+#undef cNPCInfoObject_Find /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00434190(void) {}
 #pragma pop /* merge_units */
@@ -460,21 +460,21 @@ static inline void merge_flush_func_00434190(void) {}
 
 /* merge_units: begin func_004341F0 */
 #pragma push /* merge_units */
-void func_00435070(int self, NpcInfoMsg* m);
-void func_004341F0(int self, int key)
+void cNPCInfoObject_AddPendingActivate(int self, NpcInfoMsg* m);
+void cNPCInfoObject_SetActive(int self, int key)
 {
     int h;
     NpcInfoMsg m;
     NpcInfoRec* r;
     if (g_IsMultiplayer) {
-        func_004355D0(self);
-        r = func_004361C0(key, &h);
+        cNPCInfoObject_Setup(self);
+        r = cNPCInfoObject_Find(key, &h);
         if (r) {
             NPC_INFO_COPY(m, r)
             m.a6[NetLocalId()] = 1;
             r->a6[NetLocalId()] = 1;
             m.f10 = h;
-            func_00435070(self, &m);
+            cNPCInfoObject_AddPendingActivate(self, &m);
             func_00434920(self, h);
         }
     }
@@ -488,24 +488,24 @@ static inline void merge_flush_func_004341F0(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[5]; unsigned char state; } E4380;
 #if 0 /* merge_units */
-extern void func_004355D0(int a);
+extern void cNPCInfoObject_Setup(int a);
 #endif /* merge_units */
-#define func_004355D0(a0) (func_004355D0((a0))) /* merge_units */
+#define cNPCInfoObject_Setup(a0) (cNPCInfoObject_Setup((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern E4380* func_004361C0(int key, int b);
+extern E4380* cNPCInfoObject_Find(int key, int b);
 #endif /* merge_units */
-#define func_004361C0(a0, a1) ((E4380 *)func_004361C0((a0), (void *)(a1))) /* merge_units */
+#define cNPCInfoObject_Find(a0, a1) ((E4380 *)cNPCInfoObject_Find((a0), (void *)(a1))) /* merge_units */
 
-int func_00434380(int a, int key) {
+int cNPCInfoObject_GetPrevOwner(int a, int key) {
     E4380* p;
-    func_004355D0(a);
-    p = func_004361C0(key, 0);
+    cNPCInfoObject_Setup(a);
+    p = cNPCInfoObject_Find(key, 0);
     if (p != 0 && p->state != 0xFF) return p->state;
     return -1;
 }
-#undef func_004355D0 /* merge_units */
-#undef func_004361C0 /* merge_units */
+#undef cNPCInfoObject_Setup /* merge_units */
+#undef cNPCInfoObject_Find /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00434380(void) {}
 #pragma pop /* merge_units */

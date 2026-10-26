@@ -24,7 +24,7 @@ extern void GuiWidget_Load();
 extern void * const D_004DE710[];
 extern void FileMan_Release(void* p, int f);
 extern void String_Dtor(void* p, int f);
-extern void func_0032A2F0(void* p, int f);
+extern void std_vector_deleter_Section_dtor(void* p, int f);
 extern void GuiWidget_Destroy(void* p, int f);
 extern void operator_delete(void* p);
 static inline void M326CC0_dtor(M326CC0* m)
@@ -34,7 +34,7 @@ static inline void M326CC0_dtor(M326CC0* m)
         FileMan_Release(m->m48, -1);
     }
 }
-static inline void C326CC0(void* p) { if (p) func_0032A2F0(p, 0); }
+static inline void C326CC0(void* p) { if (p) std_vector_deleter_Section_dtor(p, 0); }
 static inline void B326CC0(void* p) { if (p) C326CC0(p); }
 static inline void A326CC0(void* p) { if (p) B326CC0(p); }
 O326CC0* GuiSlideShow_dtor(O326CC0* self, short del)

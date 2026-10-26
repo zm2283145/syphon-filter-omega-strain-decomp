@@ -4,5 +4,5 @@
 
 /* Deleting destructor that runs the base destructor (built at -O1). */
 #pragma optimization_level 1
-DEFINE_DIRECT_BASE_DTOR(func_001F3D50, func_00135C90)
+DEFINE_DIRECT_BASE_DTOR(std_list_cSkaBlendSequenceItemPtr_dtor, func_00135C90)
 #pragma optimization_level reset

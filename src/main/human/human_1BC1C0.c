@@ -23,7 +23,7 @@ void* Root_GetParent(R*);
 void* Root_GetWorldPlacement(void*);
 V4* Placement_GetQuat(void*);
 V4* Quat_Assign(V4*, V4*);
-V4* func_0019D4E0(V4*);
+V4* cQuaternion_InvertUnitQuat(V4*);
 }
 static inline V4 QMul(const V4& a, const V4& b)
 {
@@ -40,7 +40,7 @@ extern "C" void SceneRoot_SetPoseCacheRot(R* self, V4* q)
     self->q = *q;
     if (self->parent) {
         Quat_Assign(&t, Placement_GetQuat(Root_GetWorldPlacement(Root_GetParent(self))));
-        func_0019D4E0(&t);
+        cQuaternion_InvertUnitQuat(&t);
         { V4* pt = &t; V4* pq = &self->q; *pq = QMul(*pt, *pq); }
     }
     self->dirty = 1;

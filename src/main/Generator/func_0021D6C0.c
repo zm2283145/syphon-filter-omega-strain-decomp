@@ -10,10 +10,10 @@ extern void MsgQueue_QueueClone(Evt21D6C0* e, void* obj, int a, int b);
 extern void cMessage_dtor(Evt21D6C0* e, int f);
 extern void* Object_LookupById(int* id);
 extern char D_0055C7A0[];
-extern void func_001BB080(Node21D6C0** out, void* map, int* key);
+extern void std_tree_pair_int_value_compare_find_intR(Node21D6C0** out, void* map, int* key);
 typedef struct { void* p; } It21D6C0;
-extern It21D6C0 func_0021D360(void* map);
-extern void func_0021D350(Node21D6C0** out, const It21D6C0& in);
+extern It21D6C0 std_map_int_netSystemField_end(void* map);
+extern void cAssocArray_int_netSystemField_Iterator_ctor(Node21D6C0** out, const It21D6C0& in);
 extern char D_004A4A70[];
 extern char D_004DB660[];
 extern char D_004DB640[];
@@ -26,7 +26,7 @@ static inline int Eq21D6C0(Node21D6C0* a, Node21D6C0* b) { return a == b; }
 #pragma bool off
 #pragma opt_propagation off
 #pragma opt_lifetimes off
-extern "C" int func_0021D6C0(int a0, int a1, int a2, Arg21D6C0* arg) {
+extern "C" int cGeneratorMessageBase_GeneratorMessageBaseCallback(int a0, int a1, int a2, Arg21D6C0* arg) {
     NetRecvGuard g;
     if (D_005721D0) {
         int k[1];
@@ -37,9 +37,9 @@ extern "C" int func_0021D6C0(int a0, int a1, int a2, Arg21D6C0* arg) {
         Node21D6C0* n;
 
         k[0] = a->id;
-        func_001BB080(it, D_0055C7A0, k);
+        std_tree_pair_int_value_compare_find_intR(it, D_0055C7A0, k);
         n = it[0];
-        func_0021D350(end, func_0021D360(D_0055C7A0));
+        cAssocArray_int_netSystemField_Iterator_ctor(end, std_map_int_netSystemField_end(D_0055C7A0));
         if (Eq21D6C0(n, end[0]) ^ 1) {
             switch (a->kind) {
             case 0: {

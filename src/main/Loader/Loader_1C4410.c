@@ -20,7 +20,7 @@
 #pragma cplusplus on
 DEFINE_RESIZE_ELEMENT(Elem1C4410, 16)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_001C4410, Elem1C4410, Vector_Insert_1C49F0, func_001C4890)
+DEFINE_VECTOR_RESIZE(std_vector_imp_cArray_int_resize, Elem1C4410, Vector_Insert_1C49F0, std_vector_imp_cArray_int_erase)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_001C4410 */
@@ -31,7 +31,7 @@ DEFINE_VECTOR_RESIZE(func_001C4410, Elem1C4410, Vector_Insert_1C49F0, func_001C4
 extern "C" {
 char D_0049F388[] = "allocator.hh";
 }
-DEFINE_GUARDED_BUFFER_CALL_DTOR(func_001C4480, func_001C4F10, D_0049F388)
+DEFINE_GUARDED_BUFFER_CALL_DTOR(std_vector_deleter_cString4_dtor, std_vector_deleter_cString4_clear, D_0049F388)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C4480(void) {}
 #pragma pop /* merge_units */

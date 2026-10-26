@@ -6,4 +6,4 @@ extern "C" {
 #include "npc_info_rec.h"
 }
 #include "npc_info_purge.h"
-DEFINE_NPC_INFO_PURGE(func_00432910, D_00582AD0, 0, 0x71E)
+DEFINE_NPC_INFO_PURGE(cNPCInfoObject_DoPendingDeactivates, D_00582AD0, 0, 0x71E)

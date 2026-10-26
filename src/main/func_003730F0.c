@@ -20,10 +20,10 @@ extern void Sphere_FromCenter(Pt1LcVec* out, Pt1LcVec* a, Pt1LcVec* b);
 extern void Vec4_Assign(Pt1LcVec* out, Pt1LcVec* src);
 extern void Vec4_NormalizeXYZ_132060(Pt1LcVec* out, Pt1LcVec* src);
 extern float Vec4_Dot3(Pt1LcVec* a, Pt1LcVec* b);
-extern float func_00372AC0(void* light);
-extern Pt1LcVec* func_00372AD0(void* light);
+extern float cSceneLight_GetFalloffAngleCos(void* light);
+extern Pt1LcVec* cSceneLight_GetDirection(void* light);
 extern float func_00372AE0(void* light);
-extern float func_00373290(Pt1LcVec* v);
+extern float cVector_GetLengthSquared(Pt1LcVec* v);
 
 void LightMgr_TestPointSpot(Pt1LcGather* g, Pt1LcEntry* e, Pt1LcVec* pos)
 {
@@ -38,17 +38,17 @@ void LightMgr_TestPointSpot(Pt1LcGather* g, Pt1LcEntry* e, Pt1LcVec* pos)
 
     if (e->flags & 0x14) {
         Sphere_FromCenter(&d, pos, &e->pos);
-        key = func_00373290(&d);
+        key = cVector_GetLengthSquared(&d);
         if (key < e->range * e->range) {
             ok = 1;
             key *= e->weight;
             if (e->flags == 0x10) {
                 light = e->light;
                 if (func_00372AE0(light) != 1.0f) {
-                    Vec4_Assign(&dir, func_00372AD0(light));
+                    Vec4_Assign(&dir, cSceneLight_GetDirection(light));
                     Sphere_FromCenter(&v, &e->pos, pos);
                     Vec4_NormalizeXYZ_132060(&n, &v);
-                    outer = 1.0f - func_00372AC0(light);
+                    outer = 1.0f - cSceneLight_GetFalloffAngleCos(light);
                     if (!(1.0f - Vec4_Dot3(&dir, &n) <= outer))
                         ok = 0;
                 }

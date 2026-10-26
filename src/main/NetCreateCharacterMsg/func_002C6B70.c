@@ -61,14 +61,14 @@ extern int g_Hud;
 extern Cfg D_0048C0C8;
 extern char D_004AC940[];
 GObj* ObjRegistry_Find(RNode* reg, int* id);
-void func_003FB750(int);
+void cNetObj_RemovePlayer_int(int);
 void ActorWorld_RequestRemove(RNode*, GObj*);
 void Object_DeleteLater(float, GObj*);
 float Math_CosThunk(float);
 float Math_SinThunk(float);
 void* Mtx44_SetRotation(M4u* m, float a, float b, float c, float d, float e, float f,
                         float g, float h, float i);
-void func_00406EC0(Blk*, char*);
+void SKL_UncompressSKL(Blk*, char*);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 Actor* Actor_Construct2(void* p, M4u* m, int a, int b, int health, Cfg* cfg, int c, int team,
                      NetId* id, int d, int e, Blk* blk);
@@ -76,13 +76,13 @@ void WeaponInv_Add(void* w, int id, int a, int b, int c, int d);
 void WeaponInv_EquipItem(void* w, int id);
 void ObjRegistry_AppendRecursive(RNode* reg, Actor* a);
 void Actor_SetHealth(Actor* a, int h, int f);
-Comp* func_002D85D0(void* p, int a, Actor* o);
+Comp* cNetPlayer_ctor(void* p, int a, Actor* o);
 void Actor_InitComponents(Actor* a, int n, int b, Comp* c);
 unsigned char Actor_IsInvulnerable(Game*);
 void Actor_SetInvulnerable(Actor* a, int f);
 int NetMap_BindReceiver(int id, int b, Actor* a);
-void func_00185940(Actor* a, int id);
-void func_00185970(Actor* a, int r);
+void cHuman_SetNetworkID(Actor* a, int id);
+void cHuman_SetupNetworkFields(Actor* a, int r);
 void Hud_AppendCalloutName(char*, Actor*, int, int);
 void Hud_ShowCallout(int, char*, char*, int, int, int, float, float);
 }
@@ -149,14 +149,14 @@ extern "C" void Coop_CreatePartnerActor(Msg* msg, int arg1)
     int rid;
 
     if (Lookup(msg->id.v)) {
-        func_003FB750(arg1);
+        cNetObj_RemovePlayer_int(arg1);
         ActorWorld_RequestRemove(g_ActorList, Lookup(msg->id.v));
         Object_DeleteLater(0.1f, Lookup(msg->id.v));
     }
     SetEulerPos(&m, pos.Set(msg->px, msg->py, msg->pz, 1.0f), Ang(msg->rx, msg->ry, msg->rz));
     SetRow(&m.r3, pos);
     id = msg->id;
-    func_00406EC0(&blk, msg->name);
+    SKL_UncompressSKL(&blk, msg->name);
     {
         World* wd = g_LocalPlayer;
         Game* g = wd->game;
@@ -190,15 +190,15 @@ extern "C" void Coop_CreatePartnerActor(Msg* msg, int arg1)
     a->comp->SetMtx(&m);
     {
         void* p = NewMem(0x54, 0x1C9);
-        if (p) p = func_002D85D0(p, 0, a);
+        if (p) p = cNetPlayer_ctor(p, 0, a);
         c = (Comp*)p;
     }
     Actor_InitComponents(a, 3, 0, c);
     Actor_SetInvulnerable(a, Actor_IsInvulnerable(g_LocalPlayer->game));
     a->Activate();
     rid = NetMap_BindReceiver(msg->id.v, arg1, a);
-    func_00185940(a, msg->id.v);
-    func_00185970(a, rid);
+    cHuman_SetNetworkID(a, msg->id.v);
+    cHuman_SetupNetworkFields(a, rid);
     buf[0] = 0;
     Hud_AppendCalloutName(buf, a, arg1, 1);
     Hud_ShowCallout(g_Hud, a->nameC, buf + 1, 0, 0, 0, -1.0f, 0.0f);

@@ -12,7 +12,7 @@ void List_Begin(N_B060** out, void* list);
 void func_0015AD60(N_B060** out, N_B060** in);
 void func_0015AD50(N_B060** out, void* list);
 void func_0015AD40(N_B060** out, N_B060** in);
-void func_0015B1F0(void* list, Ent_B060** e);
+void std_list_cEnabledListItemPtr_push_back(void* list, Ent_B060** e);
 }
 typedef struct { char pad[0xC]; int id; } Ctl_B060;
 typedef struct { char pad[0x30]; Ctl_B060* ctl; } NPC_B060;
@@ -42,7 +42,7 @@ extern "C" void NpcAi_GetPlayerRecord(NPC_B060* self, int bit, int set)
         if (p)
             Ent_Init(p, self->ctl);
         found = p;
-        func_0015B1F0(D_004EA1B0, &found);
+        std_list_cEnabledListItemPtr_push_back(D_004EA1B0, &found);
     }
     if (set) {
         if (bit >= 0)

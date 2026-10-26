@@ -1,4 +1,4 @@
-void func_002F4E20(unsigned int ip, char *out)
+void rt_audio_iptostring(unsigned int ip, char *out)
 {
     unsigned int i, v;
     if (out == 0) return;

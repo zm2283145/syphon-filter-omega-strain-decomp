@@ -9,7 +9,7 @@
 extern char D_005335D8[];
 extern char D_005335DC[];
 
-int func_00358138(int a0) {
+int sceInsockSetMallocFunction(int a0) {
     int tmp0;
 
     tmp0 = *(int*)D_005335D8;
@@ -17,7 +17,7 @@ int func_00358138(int a0) {
     return tmp0;
 }
 
-int func_00358148(int a0) {
+int sceInsockSetFreeFunction(int a0) {
     int tmp0;
 
     tmp0 = *(int*)D_005335DC;

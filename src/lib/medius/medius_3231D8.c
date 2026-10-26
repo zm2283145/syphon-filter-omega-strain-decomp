@@ -6,8 +6,8 @@
 
 /* merge_units: begin func_003231D8 */
 extern int D_004E1D50;
-extern void func_003232E0(void);
-int func_003231D8(int mode)
+extern void nvuInitVuFft4CFG(void);
+int setVuFftMode(int mode)
 {
     int ret = 0;
     switch (mode) {
@@ -17,7 +17,7 @@ int func_003231D8(int mode)
         break;
     case 2:
         D_004E1D50 = mode;
-        func_003232E0();
+        nvuInitVuFft4CFG();
         break;
     case 3:
         D_004E1D50 = mode;

@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_0013A8D0(int a0) {
+int cLosManager_cCollisionModelList_Game_GetNewHandle(int a0) {
     int v0;
     int cond;
 

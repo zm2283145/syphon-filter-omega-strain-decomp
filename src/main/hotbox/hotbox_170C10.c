@@ -27,63 +27,63 @@ int HotboxTracker_LinkBox(Tree* list, int* value) {
     return List_InsertBefore(&result, list, &end, value);
 }
 
-Word* func_00170C40(Word* dst, Word* src) {
+Word* cLListIterator_cHotboxPtr_ctor_cLListIteratorR(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
 /* Iterator inequality. */
-int func_00170C50(HotboxListIter* a, HotboxListIter* b) {
+int opNe_cLListIteratorR_cLListIteratorR_2(HotboxListIter* a, HotboxListIter* b) {
     return a->node != b->node;
 }
 
-void func_00170C70(Iter* out, Tree* t) {
+void cLList_cHotboxPtr_End(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
 /* ++it */
-HotboxListIter* func_00170C80(HotboxListIter* it) {
+HotboxListIter* cLListIterator_cHotboxPtr_opInc(HotboxListIter* it) {
     it->node = it->node->next;
     return it;
 }
 
 /* &*it */
-int* func_00170CA0(HotboxListIter* it) {
+int* cLListIterator_cHotboxPtr_opMul(HotboxListIter* it) {
     return &it->node->value;
 }
 
-float* func_00170CB0(float* dst, float* src) {
+float* cLListIterator_cHotboxPtr_opAssign(float* dst, float* src) {
     *dst = *src;
     return dst;
 }
 
-void func_00170CC0(Iter* out, PtrVec* v) {
+void cLList_cHotboxPtr_Begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 
-void* func_00170CD0(void* self) {
+void* cLListIterator_cHotboxPtr_ctor_void(void* self) {
     return self;
 }
 
-Word* func_00170CE0(Word* dst, Word* src) {
+Word* std_list_cHotboxPtr_generic_iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_00170CF0(Word* dst, Word* src) {
+void std_list_cHotboxPtr_generic_iterator_opCast(Word* dst, Word* src) {
     dst->value = src->value;
 }
 
-void func_00170D00(Iter* out, PtrVec* v) {
+void std_list_cHotboxPtr_begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 
-Word* func_00170D10(Word* dst, Word* src) {
+Word* cLListIterator_cHotboxPtr_ctor_listR(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_00170D20(Iter* out, Tree* t) {
+void std_list_cHotboxPtr_end_void(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -100,7 +100,7 @@ extern Container g_HotboxList;
 extern void ObjectList_EraseRange(int* out, Container* self, int* value, int** where);
 
 /* Calls ObjectList_EraseRange for the global container and for the object's container at +0x28. */
-void func_00170D30(Obj170* self)
+void cHotboxMan_ClearLists(Obj170* self)
 {
     int* where2;
     int value2;

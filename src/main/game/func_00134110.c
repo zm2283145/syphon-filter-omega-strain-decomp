@@ -51,7 +51,7 @@ void GuiManager_Update(void* l, float dt);
 void World_PhysicsTraversal(float dt);
 void GuiCanvas_UpdatePads(Stack_134110* s);
 void* App_GetInstance(void);
-void func_00169390(void* p);
+void cMachine_NetUpdate(void* p);
 void* Service_Lookup(void* a, void* b);
 }
 
@@ -117,7 +117,7 @@ extern "C" void LevelEnd_RunDebrief(void* svc, unsigned char mode)
         GuiCanvas_UpdatePads(Gui_GetScreenStack());
         Gui_GetScreenStack()->Update(dt);
         Gui_GetScreenStack()->Draw();
-        func_00169390(App_GetInstance());
+        cMachine_NetUpdate(App_GetInstance());
         Video_BeginFrame(g_Video);
         {
             CMsg m;

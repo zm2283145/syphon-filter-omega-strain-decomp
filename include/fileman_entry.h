@@ -11,8 +11,8 @@
  * Known fields: flags +0, name[128] +4 (strncpy'd), sub-object +0x88,
  * halFile/handle +0x98.
  *   Resource_Construct(&e);                      default ctor (flags = 0)
- *   func_0036E4B0(&e, name, handle, extra); ctor, flags |= 1 (|4 if extra)
- *   func_0036E540(&e, name, handle, extra); ctor, flags |= 2 (|4 if extra)
+ *   cFileMan_ctor_charP_cFileIOP_bool(&e, name, handle, extra); ctor, flags |= 1 (|4 if extra)
+ *   cFileMan_ctor_charP_cHogFileR_bool(&e, name, handle, extra); ctor, flags |= 2 (|4 if extra)
  *   FileMan_Release(&e, -1);         dtor: frees halFile when flags & 0x10,
  *                                  deletes when flag > 0 (-1 = in place)
  * Destroy embedded entries in reverse order (b then a), as the game does.
@@ -30,8 +30,8 @@ LAYOUT_SIZE(FileManEntry, 0x9C);
 extern "C" {
 #endif
 void* Resource_Construct(void* entry);
-void* func_0036E4B0(void* entry, const char* name, void* handle, int extra);
-void* func_0036E540(void* entry, const char* name, void* handle, int extra);
+void* cFileMan_ctor_charP_cFileIOP_bool(void* entry, const char* name, void* handle, int extra);
+void* cFileMan_ctor_charP_cHogFileR_bool(void* entry, const char* name, void* handle, int extra);
 void* FileMan_Release(void* entry, int flags); /* flags really short */
 #ifdef __cplusplus
 }

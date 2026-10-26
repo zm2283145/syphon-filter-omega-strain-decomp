@@ -9,6 +9,6 @@
 extern int IeElement_Draw(int owner, IfElement* elem, int a2);
 
 /* Forward (elem, a1) to IeElement_Draw on the element's owner. */
-int func_003E8DC0(IfElement* elem, int a1) {
+int cInterfaceElement_Render(IfElement* elem, int a1) {
     return IeElement_Draw(elem->owner, elem, a1);
 }

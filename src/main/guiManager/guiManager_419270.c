@@ -30,9 +30,9 @@ struct NodeIter { GuiPtrNode* node; };
 extern "C" {
 void ObjectList_EraseRange(int*, GuiPtrList*, GuiPtrNode**, GuiPtrNode**);
 NodeIter List_Begin(GuiPtrList*);                 /* begin() */
-NodeIter func_0028C0A0(GuiPtrList*);                 /* end() */
-void func_0028C0B0(GuiPtrNode**, const NodeIter&);   /* iterator copy */
-void func_0028C090(GuiPtrNode**, const NodeIter&);   /* iterator copy */
+NodeIter std_list_GuiWidgetPtr_end(GuiPtrList*);                 /* end() */
+void std_list_GuiWidgetPtr_generic_iterator_ctor(GuiPtrNode**, const NodeIter&);   /* iterator copy */
+void cLListIterator_GuiWidgetPtr_ctor_listR(GuiPtrNode**, const NodeIter&);   /* iterator copy */
 #if 0 /* merge_units */
 void GuiManager_RemoveWidget(GuiScreenList*, VC_9270*);
 #endif /* merge_units */
@@ -48,9 +48,9 @@ extern "C" void GuiManager_FlushDeleted(GuiScreenList* self) {
         {
             GuiPtrNode* n;
             GuiPtrNode* it;
-            func_0028C0B0(&it, List_Begin(&self->pendingDelete));
+            std_list_GuiWidgetPtr_generic_iterator_ctor(&it, List_Begin(&self->pendingDelete));
             n = it;
-            while ((func_0028C090(&end, func_0028C0A0(&self->pendingDelete)), n != end)) {
+            while ((cLListIterator_GuiWidgetPtr_ctor_listR(&end, std_list_GuiWidgetPtr_end(&self->pendingDelete)), n != end)) {
                 VC_9270* w;
                 GuiManager_RemoveWidget(self, (VC_9270*)n->item);
                 w = (VC_9270*)n->item;
@@ -90,15 +90,15 @@ static inline void merge_flush_func_00419270(void) {}
 struct VC004193D0 { virtual int v0(); virtual int v1(); virtual int v2(...); virtual int v3(); virtual int v4(); virtual int v5(); virtual int v6(); virtual int v7(); virtual int v8(); virtual int v9(); virtual int v10(); virtual int v11(); virtual int v12(); virtual int v13(); virtual int v14(); virtual int v15(); virtual int v16(); virtual int v17(); virtual int v18(); virtual int v19(); virtual int v20(); virtual int v21(); virtual int v22(); virtual int v23(); virtual int v24(...); };
 extern "C" {
 int List_Erase(...);                     /* list erase */
-int func_0015AF40(...);
-int func_002A8890(...);                     /* iterator != */
-int func_002A88B0(...);                     /* end() */
-int func_002CCDE0(...);
-int func_002CCDF0(...);                     /* ++iterator */
-int *func_002CCE10(...);                    /* *iterator */
-int func_002CCE20(...);
-int func_002CCE30(...);                     /* begin() */
-int func_002CCE40(...);
+int std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(...);
+int opNe_cLListIteratorR_cLListIteratorR_6(...);                     /* iterator != */
+int cLList_GuiWidgetPtr_End(...);                     /* end() */
+int cLListIterator_GuiWidgetPtr_ctor_cLListIteratorR(...);
+int cLListIterator_GuiWidgetPtr_opInc(...);                     /* ++iterator */
+int *cLListIterator_GuiWidgetPtr_opMul(...);                    /* *iterator */
+int cLListIterator_GuiWidgetPtr_opAssign(...);
+int cLList_GuiWidgetPtr_Begin(...);                     /* begin() */
+int cLListIterator_GuiWidgetPtr_ctor_void(...);
 void **Gui_GetScreenStack(...);
 
 }
@@ -118,23 +118,23 @@ extern "C" void GuiManager_RemoveWidget(GuiScreenList *self, PS0_004193D0 *widge
     void **stack;
 
     if (widget->flags & GUI_WIDGET_SET_UP) {
-        func_002CCE40(&it);
-        func_002CCE30(&begin, &self->widgets);
-        func_002CCE20(&it, &begin);
-        func_002A88B0(&end, &self->widgets);
-        if (func_002A8890(&it, &end) != 0) {
+        cLListIterator_GuiWidgetPtr_ctor_void(&it);
+        cLList_GuiWidgetPtr_Begin(&begin, &self->widgets);
+        cLListIterator_GuiWidgetPtr_opAssign(&it, &begin);
+        cLList_GuiWidgetPtr_End(&end, &self->widgets);
+        if (opNe_cLListIteratorR_cLListIteratorR_6(&it, &end) != 0) {
 loop_3:
-            if ((void *)(*func_002CCE10(&it)) != (void *)(widget)) {
-                func_002CCDF0(&it);
-                func_002A88B0(&end, &self->widgets);
-                if (func_002A8890(&it, &end) == 0) {
+            if ((void *)(*cLListIterator_GuiWidgetPtr_opMul(&it)) != (void *)(widget)) {
+                cLListIterator_GuiWidgetPtr_opInc(&it);
+                cLList_GuiWidgetPtr_End(&end, &self->widgets);
+                if (opNe_cLListIteratorR_cLListIteratorR_6(&it, &end) == 0) {
 
                 } else {
                     goto loop_3;
                 }
             }
         }
-        func_002CCDE0(&found, &it);
+        cLListIterator_GuiWidgetPtr_ctor_cLListIteratorR(&found, &it);
         if (F_(found, 0x8, int) != NULL) {
             if ((Gui_GetScreenStack() != NULL) && (widget->flags & 8)) {
                 stack = Gui_GetScreenStack();
@@ -144,7 +144,7 @@ loop_3:
             sub = (void **)(F_(F_(found, 0x8, int), 0x44, int));
             ((VC004193D0 *)(sub))->v2();
             node = found;
-            func_0015AF40(&pos, &node);
+            std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&pos, &node);
             List_Erase(&erased, &self->widgets, &pos);
         }
     }

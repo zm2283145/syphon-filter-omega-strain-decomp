@@ -266,7 +266,7 @@ struct Obj {
     char pad0[0x300];
     Hnd h;
 };
-extern "C" bool func_00255D90(Obj* o)
+extern "C" bool cBackpack_BodyHasDisguise(Obj* o)
 {
     bool r = 0;
     if (o->h.Get()) {
@@ -304,7 +304,7 @@ struct Obj_00255E50 {
     char pad0[0x300];
     Hnd_00255E50 h;
 };
-extern "C" bool func_00255E50(Obj_00255E50* o)
+extern "C" bool cBackpack_BodyIsPickupable(Obj_00255E50* o)
 {
     bool r = 0;
     if (o->h.Get()) {

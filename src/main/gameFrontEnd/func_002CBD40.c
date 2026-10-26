@@ -1,7 +1,7 @@
 #pragma cplusplus on
 #pragma opt_rotateloops off
 #include "types.h"
-/* func_002CBD40: fills the network agent-info block (version 11) of the
+/* cGameFrontEnd_LobbySetAgentStats: fills the network agent-info block (version 11) of the
  * selected agent: team, accuracy/headshot percentages, stats, rating and
  * award bits, appearance block. Stat use as in GuiAgentInfo_Fill
  * (GuiAgentInfo_360610.c). */
@@ -25,11 +25,11 @@ void func_00296FA0(Rel_BD40* r);
 void func_00299360(Rel_BD40* r, short f);
 void AgentData_GetRatings(Agent_BD40* a, Rel_BD40* r);
 void AgentData_GetAwardRows(Agent_BD40* a, int k, Rel_BD40* r);
-void func_002CBD40(void* self, Info_BD40* info);
+void cGameFrontEnd_LobbySetAgentStats(void* self, Info_BD40* info);
 }
 static inline void CopyApp(App_BD40* d, App_BD40* s) { if (s) memcpy(d, s, sizeof(App_BD40)); }
 
-extern "C" void func_002CBD40(void* self, Info_BD40* info)
+extern "C" void cGameFrontEnd_LobbySetAgentStats(void* self, Info_BD40* info)
 {
     Agent_BD40* a;
     int bits;

@@ -7,4 +7,4 @@ struct G4_00339880 { int a[4]; };
 struct B16_00339880 { char a[16]; };
 union E_00339880 { struct { G4_00339880 m0; float m1; } c; struct { B16_00339880 m0; int m1; } a; };
 static char D_004B9908[] = "allocator.hh";
-DEFINE_VECTOR_INSERT_FILL_CNT(PartsTable_InsertRow, E_00339880, 0x4CCCCC, 0x266666, D_004B9320, D_004B9908, 0x5C, func_00339DF0, void func_0033B770(PartsTable_InsertRow_V* v, int flags);, func_0033B770(&tmp, -1), VIFC_ASSIGN, VIFC_COPY)
+DEFINE_VECTOR_INSERT_FILL_CNT(PartsTable_InsertRow, E_00339880, 0x4CCCCC, 0x266666, D_004B9320, D_004B9908, 0x5C, std_swap_vectordeleterR_vectordeleterR_34, void std_vector_deleter_PartData_dtor(PartsTable_InsertRow_V* v, int flags);, std_vector_deleter_PartData_dtor(&tmp, -1), VIFC_ASSIGN, VIFC_COPY)

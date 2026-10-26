@@ -12,7 +12,7 @@
 #include "member_dtor_chain.h"
 
 /* Deleting destructor that runs the member destructor. */
-DEFINE_MEMBER_DTOR_CHAIN(func_0034EAB0, func_00299270)
+DEFINE_MEMBER_DTOR_CHAIN(func_0034EAB0, std_vector_deleter_tRequirementInfo_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0034EAB0 */
 
@@ -22,7 +22,7 @@ DEFINE_MEMBER_DTOR_CHAIN(func_0034EAB0, func_00299270)
 #include "base_dtor_chain.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_0034EB20, func_00299270)
+DEFINE_BASE_DTOR_CHAIN(func_0034EB20, std_vector_deleter_tRequirementInfo_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0034EB20 */
 

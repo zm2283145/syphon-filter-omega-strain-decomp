@@ -183,7 +183,7 @@ static inline void merge_flush_func_003A1760(void) {}
 #include "vtable_chain_dtor.h"
 
 /* Deleting destructor: restore the vtable chain, optionally delete. */
-DEFINE_VTABLE_CHAIN_DTOR2(func_003A1930, D_004DFB50, D_004DFAD8)
+DEFINE_VTABLE_CHAIN_DTOR2(cParticleBase_dtor, D_004DFB50, D_004DFAD8)
 #pragma pop /* merge_units */
 /* merge_units: end func_003A1930 */
 
@@ -246,7 +246,7 @@ static inline void merge_flush_func_003A1990(void) {}
 #pragma cplusplus on
 
 /* Deleting destructor: restore the vtable chain, optionally delete. */
-DEFINE_VTABLE_CHAIN_DTOR1(func_003A1A80, D_004DFAD8)
+DEFINE_VTABLE_CHAIN_DTOR1(cParticleListItem_cParticleBase_dtor, D_004DFAD8)
 #pragma pop /* merge_units */
 /* merge_units: end func_003A1A80 */
 
@@ -312,10 +312,10 @@ extern M D_005390F0;
 extern float D_00538380;
 extern float D_00538370;
 extern Ids* g_TextureMgr;
-void func_00375A30(void* a, int b, int c, int d);
+void cDmaMan_InsertChain(void* a, int b, int c, int d);
 void Renderer_UpdateCameraMatrices(void* r);
 void Renderer_SetDrawState(void* r, M* m, int a, int f);
-void func_00382910(Ids* p);
+void cTexMan_EndBatch(Ids* p);
 }
 #define RS ((Rs*)g_Video)
 #define SLOT(i) ((SlotX*)((Slot*)g_Video + (i)))
@@ -348,7 +348,7 @@ extern "C" void ParticleInst_Draw(Obj2* o, int flags, M* mtx)
     D_005381C4 = 0;
     int s = D_00538144;
     if (s != D_00538170) {
-        func_00375A30(D_00537F80, 1, D_004932C0[s], D_004932E0[s]);
+        cDmaMan_InsertChain(D_00537F80, 1, D_004932C0[s], D_004932E0[s]);
         D_00538170 = s;
     }
     D_005381C4++;
@@ -382,7 +382,7 @@ extern "C" void ParticleInst_Draw(Obj2* o, int flags, M* mtx)
         AddId(g_TextureMgr, n->GetDef()->f74);
         if (n->bC) { int id = n->f170; if (id >= 0) AddId(g_TextureMgr, id); }
     }
-    func_00382910(g_TextureMgr);
+    cTexMan_EndBatch(g_TextureMgr);
     n = self->first;
     if (!D_0053BAE0) {
         D_0053BAE0 = 1;

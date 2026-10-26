@@ -16,8 +16,8 @@ extern char D_004DFAD8;
 extern "C" void ShatterEmitter_Draw();
 extern "C" void ShatterEmitter_Update();
 extern "C" void ShatterEmitter_IsDead();
-extern "C" void func_003A23F0();
-extern "C" void func_003A6090();
+extern "C" void cParticleBase_GetRenderMatrix();
+extern "C" void cParticleShatter_Definition();
 extern void * const D_004DFB10[];
 extern char D_004DFB50;
 extern unsigned char g_ProfileLockEnabled;
@@ -54,4 +54,4 @@ extern "C" char * ShatterEmitter_Destroy(char * arg0, long long arg1) {
     }
     return arg0;
 }
-void * const D_004DFB10[8] = { (void*)0x0, (void*)0x0, (void*)ShatterEmitter_Destroy, (void*)ShatterEmitter_Draw, (void*)ShatterEmitter_Update, (void*)func_003A6090, (void*)ShatterEmitter_IsDead, (void*)func_003A23F0 };
+void * const D_004DFB10[8] = { (void*)0x0, (void*)0x0, (void*)ShatterEmitter_Destroy, (void*)ShatterEmitter_Draw, (void*)ShatterEmitter_Update, (void*)cParticleShatter_Definition, (void*)ShatterEmitter_IsDead, (void*)cParticleBase_GetRenderMatrix };

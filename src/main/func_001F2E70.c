@@ -1,3 +1,3 @@
 #include "types.h"
-extern void func_001F2EA0(void* s);
-void* func_001F2E70(void* s) { func_001F2EA0(s); return s; }
+extern void std_list_cSkaSwitchItemPtr_generic_iterator_1_ctor_listR(void* s);
+void* cConstLListIterator_cSkaSwitchItemPtr_ctor(void* s) { std_list_cSkaSwitchItemPtr_generic_iterator_1_ctor_listR(s); return s; }

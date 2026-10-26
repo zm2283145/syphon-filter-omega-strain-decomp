@@ -27,7 +27,7 @@ struct V1EF6C0 { unsigned int cap; unsigned int count; E1EF6C0* data; };
 extern "C" {
 extern char D_004A04E0[];
 extern char D_004A0548[];
-void func_001EF890(V1EF6C0* a, V1EF6C0* b);
+void std_swap_vectordeleterR_vectordeleterR_13(V1EF6C0* a, V1EF6C0* b);
 void HumanColBufB_Dtor(V1EF6C0* a, int f);
 }
 inline void* operator new(unsigned int, void* p) { return p; }
@@ -56,7 +56,7 @@ extern "C" void Vector_Reserve_1EF6C0(V1EF6C0* v, unsigned int n)
             Construct1EF6C0(d, s);
             tmp.count++;
         }
-        func_001EF890(&tmp, v);
+        std_swap_vectordeleterR_vectordeleterR_13(&tmp, v);
         HumanColBufB_Dtor(&tmp, -1);
     }
 }

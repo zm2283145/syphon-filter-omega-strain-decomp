@@ -1,10 +1,10 @@
 #include "types.h"
 #pragma optimization_level 1
 
-extern void func_0020BE20(void*);
+extern void std_vector_imp_cSkaTransBLEND_opAssign(void*);
 
-/* Calls func_0020BE20(self) and returns self. */
-void* func_0020BDE0(void* self) {
-    func_0020BE20(self);
+/* Calls std_vector_imp_cSkaTransBLEND_opAssign(self) and returns self. */
+void* std_vector_cSkaTransBLEND_opAssign(void* self) {
+    std_vector_imp_cSkaTransBLEND_opAssign(self);
     return self;
 }

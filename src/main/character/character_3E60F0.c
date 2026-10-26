@@ -8,11 +8,11 @@
 #pragma push /* merge_units */
 #include "types.h"
 #include "message_pack.h"
-extern int func_003FF330(void* e, int a1, int* type, int a3, int a4, unsigned int sz, void* buf);
-#define Event_PackHeader func_003FF330
+extern int cCharActionMsg_Pack(void* e, int a1, int* type, int a3, int a4, unsigned int sz, void* buf);
+#define Event_PackHeader cCharActionMsg_Pack
 #define PACK_BODY(e, b) MP_I(b, 0xC) = MP_I(e, 0x2C); MP_I(b, 0x10) = MP_I(e, 0x30);
 
-DEFINE_MESSAGE_PACK_NOTYPE(func_003E60F0, 20, D_0055A1F8, PACK_BODY)
+DEFINE_MESSAGE_PACK_NOTYPE(cCharActionMsg_ObjectId_Int_Pack, 20, D_0055A1F8, PACK_BODY)
 #pragma pop /* merge_units */
 /* merge_units: end func_003E60F0 */
 
@@ -20,12 +20,12 @@ DEFINE_MESSAGE_PACK_NOTYPE(func_003E60F0, 20, D_0055A1F8, PACK_BODY)
 #pragma push /* merge_units */
 extern char D_0055A1F0[];
 #if 0 /* merge_units */
-extern int func_003FF330(int, int, int, int, int, int, int);
+extern int cCharActionMsg_Pack(int, int, int, int, int, int, int);
 #endif /* merge_units */
-#define func_003FF330(a0, a1, a2, a3, a4, a5, a6) (func_003FF330((void *)(a0), (a1), (int *)(a2), (a3), (a4), (unsigned int)(a5), (void *)(a6))) /* merge_units */
+#define cCharActionMsg_Pack(a0, a1, a2, a3, a4, a5, a6) (cCharActionMsg_Pack((void *)(a0), (a1), (int *)(a2), (a3), (a4), (unsigned int)(a5), (void *)(a6))) /* merge_units */
 
 
-int func_003E6170(int a0, int a1, int a2, int a3, int t0, int t1, int t2) {
+int cCharActionMsg_ObjectId_Pack(int a0, int a1, int a2, int a3, int t0, int t1, int t2) {
     int s0, s1, s2, s3, v0;
     int cond;
 
@@ -39,7 +39,7 @@ int func_003E6170(int a0, int a1, int a2, int a3, int t0, int t1, int t2) {
     cond = s1 == 0;
     a2 = 0;
     if (cond) goto L003E61D0;
-    v0 = func_003FF330(a0, a1, a2, a3, t0, t1, t2);
+    v0 = cCharActionMsg_Pack(a0, a1, a2, a3, t0, t1, t2);
     v0 = *(int*)((char*)s3 + 44);
     cond = s2 == 0;
     *(int*)((char*)s1 + 12) = v0;
@@ -53,7 +53,7 @@ L003E61D0:;
 ret:
     return v0;
 }
-#undef func_003FF330 /* merge_units */
+#undef cCharActionMsg_Pack /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003E6170 */
 
@@ -61,12 +61,12 @@ ret:
 #pragma push /* merge_units */
 extern char D_0055A1E0[];
 #if 0 /* merge_units */
-extern int func_003FF330(int, int, int, int, int, int, int);
+extern int cCharActionMsg_Pack(int, int, int, int, int, int, int);
 #endif /* merge_units */
-#define func_003FF330(a0, a1, a2, a3, a4, a5, a6) (func_003FF330((void *)(a0), (a1), (int *)(a2), (a3), (a4), (unsigned int)(a5), (void *)(a6))) /* merge_units */
+#define cCharActionMsg_Pack(a0, a1, a2, a3, a4, a5, a6) (cCharActionMsg_Pack((void *)(a0), (a1), (int *)(a2), (a3), (a4), (unsigned int)(a5), (void *)(a6))) /* merge_units */
 
 
-int func_003E61F0(int a0, int a1, int a2, int a3, int t0, int t1, int t2) {
+int cCharActionMsg_Scalar_Pack(int a0, int a1, int a2, int a3, int t0, int t1, int t2) {
     int s0, s1, s2, s3, v0;
     float f0;
     int cond;
@@ -81,7 +81,7 @@ int func_003E61F0(int a0, int a1, int a2, int a3, int t0, int t1, int t2) {
     cond = s1 == 0;
     a2 = 0;
     if (cond) goto L003E6250;
-    v0 = func_003FF330(a0, a1, a2, a3, t0, t1, t2);
+    v0 = cCharActionMsg_Pack(a0, a1, a2, a3, t0, t1, t2);
     f0 = *(float*)((char*)s3 + 44);
     cond = s2 == 0;
     *(float*)((char*)s1 + 12) = f0;
@@ -95,7 +95,7 @@ L003E6250:;
 ret:
     return v0;
 }
-#undef func_003FF330 /* merge_units */
+#undef cCharActionMsg_Pack /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003E61F0 */
 
@@ -104,7 +104,7 @@ ret:
 #undef PACK_BODY /* merge_units */
 #define PACK_BODY(e, b) *(float*)(b + 0xC) = (float)MP_I(e, 0x2C);
 
-DEFINE_MESSAGE_PACK_NOTYPE(func_003E6270, 16, D_0055A220, PACK_BODY)
+DEFINE_MESSAGE_PACK_NOTYPE(cCharActionMsg_Int_Pack, 16, D_0055A220, PACK_BODY)
 #pragma pop /* merge_units */
 /* merge_units: end func_003E6270 */
 
@@ -117,7 +117,7 @@ DEFINE_MESSAGE_PACK_NOTYPE(func_003E6270, 16, D_0055A220, PACK_BODY)
  */
 
 
-int func_003E62F0(void) {
+int cCharActionMsg_TargetInfo_Pack(void) {
     return -1;
 }
 #pragma pop /* merge_units */

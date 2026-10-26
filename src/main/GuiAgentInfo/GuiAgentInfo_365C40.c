@@ -44,7 +44,7 @@ DEFINE_PTRVEC_RESERVE(Vector_Reserve_366200, 0x1800000, D_004BBAC0, D_0049AE50, 
 /* Resize a vector of 60-byte elements. */
 DEFINE_RESIZE_ELEMENT(Elem60, 60)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(ChannelVector_Resize_366450, Elem60, AnimChannelVec_Grow, func_001BEB20)
+DEFINE_VECTOR_RESIZE(ChannelVector_Resize_366450, Elem60, AnimChannelVec_Grow, std_vector_imp_cSkaSliderValue_erase)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_00366450 */
@@ -56,7 +56,7 @@ DEFINE_VECTOR_RESIZE(ChannelVector_Resize_366450, Elem60, AnimChannelVec_Grow, f
 /* Resize a vector of 8-byte elements. */
 DEFINE_RESIZE_ELEMENT(Elem8, 8)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_003664E0, Elem8, Vector_Insert_1BF5A0, func_001BF440)
+DEFINE_VECTOR_RESIZE(func_003664E0, Elem8, Vector_Insert_1BF5A0, std_vector_imp_cSkaSwitchValue_erase)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_003664E0 */
@@ -67,7 +67,7 @@ DEFINE_VECTOR_RESIZE(func_003664E0, Elem8, Vector_Insert_1BF5A0, func_001BF440)
 #include "vector_destroy_dtor.h"
 
 /* Destroy a vector: destroy elements, free the buffer, optionally delete. */
-DEFINE_VECTOR_DESTROY_DTOR_FILE(func_00366550, func_00299510, D_004AA5B8)
+DEFINE_VECTOR_DESTROY_DTOR_FILE(func_00366550, std_vector_deleter_tAchievementInfo_clear, D_004AA5B8)
 #pragma pop /* merge_units */
 /* merge_units: end func_00366550 */
 

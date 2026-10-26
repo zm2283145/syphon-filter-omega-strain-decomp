@@ -11,9 +11,9 @@ extern char g_LosResultMsgClass[]; /* "LOS result ready" event descriptor */
 extern int Event_Construct(void*, void*);
 extern int Vec4_Assign(Vec4*, Vec4*);
 extern int Vec4_Copy(Vec4*, Vec4*);
-extern int func_00139B00(LosHitInfo*, LosHitInfo*);
-extern int func_00139BA0(Vec4*, Vec4*);
-extern int func_00139BB0(Vec4*, Vec4*);
+extern int cCollisionFace_ctor_cCollisionFaceR(LosHitInfo*, LosHitInfo*);
+extern int cCollisionModel_FaceLocator_opAssign(Vec4*, Vec4*);
+extern int cCollisionModel_FaceProperties_opAssign(Vec4*, Vec4*);
 
 /* Construct a "LOS result ready" event carrying a copy of the result. */
 LosResultEvent* LosResultEvent_Ctor(LosResultEvent* ev, LosResult* src) {
@@ -24,17 +24,17 @@ LosResultEvent* LosResultEvent_Ctor(LosResultEvent* ev, LosResult* src) {
     ev->vtable = D_004D91C0;
     dst->status = src->status;
     Vec4_Assign(&dst->point, &src->point);
-    func_00139B00(&dst->hit, &src->hit);
+    cCollisionFace_ctor_cCollisionFaceR(&dst->hit, &src->hit);
     dst->unk90 = src->unk90;
     return ev;
 }
 
-void func_0013AA20(LosResult* self, int value) {
+void cLosResult_SetHandle(LosResult* self, int value) {
     self->unk90 = value;
 }
 
 /* Copy the hit detail block into a result. */
-int func_0013AA30(LosResult* dst, LosHitInfo* src) {
+int cLosResult_SetBlockingFace(LosResult* dst, LosHitInfo* src) {
     unsigned char tmp8;
     int tmp11;
     unsigned char tmp13;
@@ -46,8 +46,8 @@ int func_0013AA30(LosResult* dst, LosHitInfo* src) {
     Vec4_Copy(&dst->hit.row3, &src->row3);
     tmp8 = src->unk50;
     dst->hit.unk50 = tmp8;
-    func_00139BB0(&dst->hit.unk40, &src->unk40);
-    tmp11 = func_00139BA0(&dst->hit.unk60, &src->unk60);
+    cCollisionModel_FaceProperties_opAssign(&dst->hit.unk40, &src->unk40);
+    tmp11 = cCollisionModel_FaceLocator_opAssign(&dst->hit.unk60, &src->unk60);
     tmp13 = src->unk51;
     dst->hit.unk51 = tmp13;
     tmp14 = src->unk52;

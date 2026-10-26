@@ -30,17 +30,17 @@ extern unsigned char g_IsMultiplayer;
 extern int D_00494178;
 
 extern unsigned int Net_GetClock(int clock);
-extern int func_002EC3C8(void* key);
-extern int func_002EB650(NetSessionEntry** entry, void* key);
+extern int NetRequestObjectPrivateOwnership(void* key);
+extern int NetGetObject(NetSessionEntry** entry, void* key);
 extern int NetGame_InitLocalSlot(int* id, int session);
-extern void func_00432230(int peer, void* key, int mode);
+extern void cNPCInfoObject_NPCInfoUpdateCallback(int peer, void* key, int mode);
 
 static inline void service_slot(unsigned int* deadline, unsigned char* pending,
                                 void** key, unsigned int interval)
 {
     unsigned int previous = *deadline;
     if (previous < Net_GetClock(1)) {
-        if (*pending && !func_002EC3C8(*key))
+        if (*pending && !NetRequestObjectPrivateOwnership(*key))
             *pending = 0;
         *deadline = Net_GetClock(1) + interval;
     }
@@ -58,7 +58,7 @@ static inline int current_peer(void)
 }
 
 /* Service five pending NPC requests on their independent polling intervals. */
-void func_00434740(void)
+void cNPCInfoObject_CheckForScheduledRequest(void)
 {
     service_slot(&D_00582B60, &D_005827C8, &D_00582A78, 120);
     service_slot(&D_00582B68, &D_005827D0, &D_00582A80, 150);
@@ -71,7 +71,7 @@ void func_00434740(void)
 void func_00434920(void* unused, void* key)
 {
     NetSessionEntry* entry;
-    func_002EB650(&entry, key);
+    NetGetObject(&entry, key);
     if (entry && entry->id != current_peer()) {
         if (key == D_00582A78)
             D_005827C8 = 1;
@@ -84,7 +84,7 @@ void func_00434920(void* unused, void* key)
         else if (key == D_00582A98)
             D_005827E8 = 1;
     } else {
-        func_00432230(current_peer(), key, -2);
+        cNPCInfoObject_NPCInfoUpdateCallback(current_peer(), key, -2);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -100,13 +100,13 @@ static inline void merge_flush_func_00434740(void) {}
 int Alloc_Lock(int);                                    
 int Alloc_Unlock(int);                                  
 char * Mem_Alloc(int, int, char *, int);                      
-int func_00434BB0(char *, void **);                      
+int std_list_tNPCInfoPtr_push_back(char *, void **);                      
 extern char D_004BFCA0;
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
 extern char D_00582AF0;
 
-void func_00434AA0(int d0, char * arg1) {
+void cNPCInfoObject_AddPendingAdd(int d0, char * arg1) {
     char * sp3C;
     char * temp_s0;
 
@@ -134,7 +134,7 @@ void func_00434AA0(int d0, char * arg1) {
         F_(temp_s0, 0x10, int) = F_(arg1, 0x10, int);
     }
     sp3C = temp_s0;
-    func_00434BB0(&D_00582AF0, &sp3C);
+    std_list_tNPCInfoPtr_push_back(&D_00582AF0, &sp3C);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00434AA0(void) {}

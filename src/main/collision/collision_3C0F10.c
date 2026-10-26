@@ -16,7 +16,7 @@ typedef struct Cycle3 {
 } Cycle3;
 
 /* Returns the next index in a 0..2 cycle. */
-unsigned int func_003C0F10(Cycle3* c) {
+unsigned int cCollisionModel_EdgeId_FaceVertexNumber1(Cycle3* c) {
     unsigned int next = c->index + 1;
     return next < 3 ? next : 0;
 }
@@ -39,11 +39,11 @@ int ColTri_GetVertIndex(ColTri* tri, int i) {
     return tri->vert[i];
 }
 
-int func_003C0F40(char* self) {
+int cCollisionModel_EdgeId_FaceVertexNumber0(char* self) {
     return *(int*)(self + 4);
 }
 
-void* func_003C0F50(char* self) {
+void* std_vector_deleter_cCollisionEdge_data(char* self) {
     return self + 8;
 }
 

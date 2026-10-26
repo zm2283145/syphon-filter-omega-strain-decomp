@@ -21,28 +21,28 @@ extern char D_004F2CC0[];
 extern char g_LevelDirName[];
 extern char D_004ACF48[];
 void GuiCanvas_Destroy(void);
-void func_004139C0(void* p);
+void cInterfaceManager_Reset(void* p);
 void FrontEnd_StopSplashThread(Self_002CB160* self);
 void Video_BeginFrame(void* p);
 void Mem_Free(int heap, void* p, char* file, int line);
 W_002CB160* App_GetInstance(void);
-void func_003D1700(void* p);
+void cUSBKeybd_SetAsciiMode(void* p);
 void FrontEnd_UnloadZeusHog(Self_002CB160* self);
 void WeaponDb_UnloadWpnHog(int a);
-void func_002C9C80(Self_002CB160* self, int a);
+void cGameFrontEnd_CloseCharacter(Self_002CB160* self, int a);
 void* Service_Lookup(void* a, void* b);
 char* strncpy(char* d, const char* s, int n);
 void SoundMgr_UnloadLevel(void* svc);
 void* DME_GetLobby(void);
-void func_004538D0(void* g);
+void SFOLobby_FreeLists(void* g);
 void Renderer_Teardown(void* p);
-void func_002CDEF0(Node_002CB160** out, int* list, Node_002CB160** first, Node_002CB160** last);
+void std_list_deleter_MessageBoxEntry_erase_listdeleter_listdeleter(Node_002CB160** out, int* list, Node_002CB160** first, Node_002CB160** last);
 }
 extern "C" void FrontEnd_TeardownGui(Self_002CB160* self)
 {
     if (self->b28) {
         GuiCanvas_Destroy();
-        func_004139C0(D_00571DC0);
+        cInterfaceManager_Reset(D_00571DC0);
         if (self->b310)
             FrontEnd_StopSplashThread(self);
         if (!self->b36) {
@@ -59,10 +59,10 @@ extern "C" void FrontEnd_TeardownGui(Self_002CB160* self)
             }
             self->p260 = 0;
             { W_002CB160* w = App_GetInstance(); w->b278 = 1; }
-            func_003D1700(D_0055A700);
+            cUSBKeybd_SetAsciiMode(D_0055A700);
             FrontEnd_UnloadZeusHog(self);
             WeaponDb_UnloadWpnHog(g_WeaponDatabase);
-            func_002C9C80(self, 1);
+            cGameFrontEnd_CloseCharacter(self, 1);
             svc = Service_Lookup(g_Game, D_004F2CC0);
             if (svc) {
                 PStr_002CB160 buf;
@@ -85,7 +85,7 @@ extern "C" void FrontEnd_TeardownGui(Self_002CB160* self)
                 strncpy(g_LevelDirName, buf.s, 0x80);
             }
             if (DME_GetLobby())
-                func_004538D0(DME_GetLobby());
+                SFOLobby_FreeLists(DME_GetLobby());
             Renderer_Teardown(g_Video);
         }
         self->b29 = 0;
@@ -97,7 +97,7 @@ extern "C" void FrontEnd_TeardownGui(Self_002CB160* self)
             Node_002CB160* last;
             last = &self->head;
             first = self->head.next;
-            func_002CDEF0(&res, &self->list, &first, &last);
+            std_list_deleter_MessageBoxEntry_erase_listdeleter_listdeleter(&res, &self->list, &first, &last);
         }
     }
 }

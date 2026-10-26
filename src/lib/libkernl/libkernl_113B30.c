@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-extern int func_00112668(int, int);
+extern int _sceCallCode(int, int);
 
-int func_00113B30(int a0) {
+int sceUmount(int a0) {
     int tmp0;
 
-    tmp0 = func_00112668(a0, 21);
+    tmp0 = _sceCallCode(a0, 21);
     return tmp0;
 }

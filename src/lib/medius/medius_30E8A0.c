@@ -11,7 +11,7 @@ extern char D_004B02F0[];
 extern int sprintf(char *buf, const char *fmt, ...);
 extern int func_0030ECC0(UpnpE8A0 *u);
 extern int UPnP_SendSoapAction(UpnpE8A0 *u, char *a, char *b);
-extern int func_003060D8(void *p);
+extern int rt_time_get_time_stamp(void *p);
 int UPnP_GetSpecificPortMappingEntry(UpnpE8A0 *u, int arg, int cb)
 {
     int r;
@@ -24,7 +24,7 @@ int UPnP_GetSpecificPortMappingEntry(UpnpE8A0 *u, int arg, int cb)
     r = UPnP_SendSoapAction(u, "GetSpecificPortMappingEntry", u->ctx->buf);
     if (r == 0) {
         u->state = 8;
-        func_003060D8((char *)u->ctx + 0x10);
+        rt_time_get_time_stamp((char *)u->ctx + 0x10);
         u->ctx->cb = cb;
     }
     return r;
@@ -61,7 +61,7 @@ int UPnP_DeletePortMapping(UpnpE968 *u, int arg, int cb)
     if (r == 0) {
 ok:
         u->state = 9;
-        func_003060D8((char *)u->ctx + 0x10);
+        rt_time_get_time_stamp((char *)u->ctx + 0x10);
         u->ctx->cb = cb;
     }
     return r;
@@ -114,7 +114,7 @@ int func_0030EA40(UpnpEA40 *u, const char *host, unsigned short port, void *cb)
         func_0030ECF8(u);
         return 8;
     }
-    func_003060D8(u->timer);
+    rt_time_get_time_stamp(u->timer);
     u->tries++;
     u->state = 10;
     return 0;
@@ -124,7 +124,7 @@ int func_0030EA40(UpnpEA40 *u, const char *host, unsigned short port, void *cb)
 
 /* merge_units: begin func_0030EB60 */
 typedef struct { char pad[0x14]; char name[0x12]; unsigned short port; char pad2[0x28]; int busy; } ScfSvc_B60;
-int func_0030EB60(ScfSvc_B60 *o, char *dst, unsigned short *port)
+int rt_upnp_get_external_address(ScfSvc_B60 *o, char *dst, unsigned short *port)
 {
     int ret = 2;
     if (o == 0) return ret;

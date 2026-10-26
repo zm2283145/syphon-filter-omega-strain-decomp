@@ -5,7 +5,7 @@ typedef struct {
 
 extern VlcEnt D_00485FB0[];
 
-unsigned long func_0010A128(unsigned int i, int v)
+unsigned long _type2id(unsigned int i, int v)
 {
     unsigned long r = 0;
     int sh = 0;

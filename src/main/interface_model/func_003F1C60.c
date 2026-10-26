@@ -29,7 +29,7 @@ typedef struct Model3C60 {
     char fCC[4];
 } Model3C60;
 
-void func_003F1C60(Model3C60* self, RawVec* types)
+void PatchAnimation(Model3C60* self, RawVec* types)
 {
     void** p = self->elems;
     int i;

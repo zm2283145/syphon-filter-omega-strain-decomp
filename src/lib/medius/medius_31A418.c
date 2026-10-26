@@ -1,5 +1,5 @@
 #include "types.h"
-void func_0031A418(float* a, int start, int end, int max, int* out, int* count) {
+void PeakPick(float* a, int start, int end, int max, int* out, int* count) {
     int n = 0;
     int i;
     for (i = start + 1; i < end - 1; i++) {

@@ -8,10 +8,10 @@
 
 extern char D_00504080[];
 extern char D_005040C0[];
-extern int func_0027C3D0(void);
-extern int func_0027D3A8(void*, void*, int);
+extern int sceNetcnfifInit(void);
+extern int sce_call_rpc(void*, void*, int);
 
-int func_0027CFB0(void) {
-    func_0027C3D0();
-    return func_0027D3A8(D_00504080, D_005040C0, 102);
+int sceNetcnfifFreeWorkarea(void) {
+    sceNetcnfifInit();
+    return sce_call_rpc(D_00504080, D_005040C0, 102);
 }

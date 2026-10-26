@@ -5,15 +5,15 @@
 
 #include "loose05_types.h"
 
-extern int func_004498C0(SFOLobby* lobby);
-extern int func_0044D780(SFOLobby* lobby);
+extern int SFOLobby_CellUpdateClanInvitations(SFOLobby* lobby);
+extern int SFOLobby_ContactGetInvites(SFOLobby* lobby);
 extern int func_00451B30(SFOLobby* lobby);
 
 /* Per-frame lobby update: runs three sub-updates while in mode 4 and not suspended. */
-void func_00442700(SFOLobby* self) {
+void SFOLobby_MissionScreenIntel(SFOLobby* self) {
     if (self->state == 4 && self->inUpdateHook == 0) {
-        func_0044D780(self);
-        func_004498C0(self);
+        SFOLobby_ContactGetInvites(self);
+        SFOLobby_CellUpdateClanInvitations(self);
         func_00451B30(self);
     }
 }

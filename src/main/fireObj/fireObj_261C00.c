@@ -11,7 +11,7 @@
 /* merge_units: begin func_00261C00 */
 #pragma push /* merge_units */
 /* Post the "on" event and set the state flag. */
-DEFINE_EVENT_TOGGLE_SEND(cFireObj_v17, g_cEnableMsgClass, D_004E0880, func_003FF930, 1)
+DEFINE_EVENT_TOGGLE_SEND(cFireObj_v17, g_cEnableMsgClass, D_004E0880, cEnableMsg_SendEnabled, 1)
 #pragma pop /* merge_units */
 /* merge_units: end func_00261C00 */
 

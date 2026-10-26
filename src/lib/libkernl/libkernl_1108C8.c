@@ -10,7 +10,7 @@ typedef struct { char pad[0x8]; struct N08C8 *head; } L08C8;
 extern int DIntr(void);
 extern int EIntr(void);
 
-N08C8 *func_001108C8(N08C8 *it, L08C8 *l)
+N08C8 *sceSifRemoveRpc(N08C8 *it, L08C8 *l)
 {
     N08C8 *p, *n;
     DIntr();
@@ -35,7 +35,7 @@ typedef struct N0960 { char pad[0x14]; struct N0960 *next; } N0960;
 typedef struct { char pad[0x28]; struct N0960 *head; } L0960;
 extern L0960 D_004E4780;
 
-N0960 *func_00110960(N0960 *it)
+N0960 *sceSifRemoveRpcQueue(N0960 *it)
 {
     N0960 *p, *n;
     DIntr();
@@ -59,7 +59,7 @@ out:
 typedef struct N09F0 { char pad[0x3C]; struct N09F0 *next; } N09F0;
 typedef struct { int x0; int busy; int x8; N09F0 *head; } Q09F0;
 
-N09F0 *func_001109F0(Q09F0 *q)
+N09F0 *sceSifGetNextRequest(Q09F0 *q)
 {
     N09F0 *n;
     DIntr();
@@ -84,12 +84,12 @@ extern char D_004E4780[];
 #endif /* merge_units */
 #define D_004E4780 ((char*)&D_004E4780) /* merge_units */
 
-extern void func_0010FB10(int, int);
-extern Rend *func_0010FE80(void *, int);
-extern Rend *func_0010FE50(void *);
-extern int func_0010F948(unsigned int, void *, int, int, int, int);
+extern void sceSifWriteBackDCache(int, int);
+extern Rend *_sceRpcGetFPacket2(void *, int);
+extern Rend *_sceRpcGetFPacket(void *);
+extern int sceSifSendCmd(unsigned int, void *, int, int, int, int);
 extern unsigned int sceSifSetDma(DmaT *, int);
-void func_00110A48(Srv *sd)
+void sceSifExecRequest(Srv *sd)
 {
     DmaT dmat[2];
     Rend *rend;
@@ -100,19 +100,19 @@ void func_00110A48(Srv *sd)
     if (rec)
         sz = sd->rsize;
     if (sd->size > 0)
-        func_0010FB10(sd->buf, sd->size);
+        sceSifWriteBackDCache(sd->buf, sd->size);
     if (sz > 0)
-        func_0010FB10(rec, sz);
+        sceSifWriteBackDCache(rec, sz);
     DIntr();
     if (sd->rid & 4)
-        rend = func_0010FE80(D_004E4780, sd->rid >> 16);
+        rend = _sceRpcGetFPacket2(D_004E4780, sd->rid >> 16);
     else
-        rend = func_0010FE50(D_004E4780);
+        rend = _sceRpcGetFPacket(D_004E4780);
     EIntr();
     rend->cid = 0x8000000A;
     rend->client = sd->client;
     if (sd->rmode) {
-        while (!func_0010F948(0x80000008, rend, 0x40, rec, sd->receive, sz))
+        while (!sceSifSendCmd(0x80000008, rend, 0x40, rec, sd->receive, sz))
             ;
         return;
     }
@@ -143,27 +143,27 @@ void func_00110A48(Srv *sd)
 
 /* merge_units: begin func_00110C10 */
 #if 0 /* merge_units */
-extern void *func_001109F0(void *);
+extern void *sceSifGetNextRequest(void *);
 #endif /* merge_units */
-#define func_001109F0(a0) ((void *)func_001109F0((Q09F0 *)(a0))) /* merge_units */
+#define sceSifGetNextRequest(a0) ((void *)sceSifGetNextRequest((Q09F0 *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_00110A48(void *);
+extern void sceSifExecRequest(void *);
 #endif /* merge_units */
-#define func_00110A48(a0) (func_00110A48((Srv *)(a0))) /* merge_units */
+#define sceSifExecRequest(a0) (sceSifExecRequest((Srv *)(a0))) /* merge_units */
 
 extern void SleepThread(void);
 
-void func_00110C10(void *q)
+void sceSifRpcLoop(void *q)
 {
     void *n;
     for (;;) {
-        while ((n = func_001109F0(q)) != 0) func_00110A48(n);
+        while ((n = sceSifGetNextRequest(q)) != 0) sceSifExecRequest(n);
         SleepThread();
     }
 }
-#undef func_001109F0 /* merge_units */
-#undef func_00110A48 /* merge_units */
+#undef sceSifGetNextRequest /* merge_units */
+#undef sceSifExecRequest /* merge_units */
 /* merge_units: end func_00110C10 */
 
 /* merge_units: begin func_00110C50 */
@@ -172,7 +172,7 @@ extern int CreateSema(SemaParam0C50 *);
 int D_00486248 = -1;
 int D_0048624C = -1;
 
-void func_00110C50(void)
+void _sceFsIobSemaMK(void)
 {
     SemaParam0C50 p;
     if (D_00486248 == -1) {
@@ -189,14 +189,14 @@ void func_00110C50(void)
 typedef struct { int x0; int x4; int x8; int xC; } Ent0CB0;
 extern Ent0CB0 D_004E5D00[];
 extern int D_00486248;
-extern void func_00110C50(void);
+extern void _sceFsIobSemaMK(void);
 extern int WaitSema(int);
 extern int SignalSema(int);
 
-Ent0CB0 *func_00110CB0(void)
+Ent0CB0 *new_iob(void)
 {
     Ent0CB0 *e;
-    func_00110C50();
+    _sceFsIobSemaMK();
     WaitSema(D_00486248);
     for (e = D_004E5D00; e < D_004E5D00 + 32; e++) {
         if (e->x4 == 0) {
@@ -218,10 +218,10 @@ extern Ent0D38 D_004E5D00[];
 #define D_004E5D00 ((Ent0D38*)&D_004E5D00) /* merge_units */
 
 
-Ent0D38 *func_00110D38(unsigned int idx)
+Ent0D38 *get_iob(unsigned int idx)
 {
     Ent0D38 *r;
-    func_00110C50();
+    _sceFsIobSemaMK();
     WaitSema(D_00486248);
     if (idx >= 32) {
         SignalSema(D_00486248);

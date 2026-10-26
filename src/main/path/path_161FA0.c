@@ -14,7 +14,7 @@ typedef struct { char pad[0x64]; int flags; } Obj_1FA0;
 typedef struct { int pad[2]; Obj_1FA0** items; } Reg_1FA0;
 typedef struct { char pad[0x18]; N_1FA0* first; int pad1c; N_1FA0 end; } S_1FA0;
 extern Reg_1FA0* D_004FFBE0;
-void func_00161FA0(S_1FA0* self, int id, unsigned char v)
+void cNodeRequest_SetCompanionNodeLOSResultForRestOfList(S_1FA0* self, int id, unsigned char v)
 {
     N_1FA0* n = self->first;
     Obj_1FA0* o = D_004FFBE0->items[id];
@@ -33,7 +33,7 @@ static inline void merge_flush_func_00161FA0(void) {}
 
 /* merge_units: begin func_00162010 */
 #pragma push /* merge_units */
-void func_00162010(S_1FA0* self, int id, unsigned char v)
+void cNodeRequest_SetNodeLOSResultForRestOfList(S_1FA0* self, int id, unsigned char v)
 {
     N_1FA0* n = self->first;
     Obj_1FA0* o = D_004FFBE0->items[id];

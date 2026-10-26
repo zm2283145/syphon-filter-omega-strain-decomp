@@ -1,5 +1,5 @@
 #pragma cplusplus on
-/* func_0017A1E0: set the fog slot, push the camera inverse matrix, and LOS-test from the camera eye to the target position */
+/* cGameCamera_CanSee: set the fog slot, push the camera inverse matrix, and LOS-test from the camera eye to the target position */
 #include "types.h"
 #include "vslot_pad.h"
 #pragma inline_depth(8)
@@ -87,8 +87,8 @@ extern int D_00538C64;
 extern char D_00538C68;
 void* Camera_GetNode(void* o);
 Mq Transform_GetInverseMatrix(void* xf);
-int func_00379EA0(void* r, V* p);
-bool func_0017A1E0(Cam* c, Tgt* t);
+int XLib_Inside(void* r, V* p);
+bool cGameCamera_CanSee(Cam* c, Tgt* t);
 }
 #pragma define_section MSG_DTOR ".dtors_drop" far_absolute RX
 struct MsgB {
@@ -135,7 +135,7 @@ static inline void QR(void* d, void* s) { __int128 qa, qb; __asm__ volatile("lq 
 /* the unused xx reproduces retail's dead addiu of the matrix temporary's address */
 static inline void SetTop(const Mq& m) { const Mq* xx = &m; QR(&RS->mtx[D_00538C64], (void*)&m); }
 
-bool func_0017A1E0(Cam* c, Tgt* t)
+bool cGameCamera_CanSee(Cam* c, Tgt* t)
 {
     bool vis = 0;
     SetFog(c, 2.0f);
@@ -144,7 +144,7 @@ bool func_0017A1E0(Cam* c, Tgt* t)
     SetTop(Transform_GetInverseMatrix(Camera_GetNode(c)));
     D_00538C68 = 1;
     V p = t->GetPos();
-    if ((unsigned char)func_00379EA0(g_Video, &p)) {
+    if ((unsigned char)XLib_Inside(g_Video, &p)) {
         LosRes res;
         M m = c->node->Mtx();
         V eye = m.r3;

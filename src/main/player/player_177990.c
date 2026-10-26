@@ -20,7 +20,7 @@
 #pragma cplusplus on
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_00177990)
+DEFINE_TRIVIAL_DTOR(cModeSwitch_WithHistory_12_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00177990 */
 
@@ -29,7 +29,7 @@ DEFINE_TRIVIAL_DTOR(func_00177990)
 #pragma cplusplus on
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_001779E0)
+DEFINE_TRIVIAL_DTOR(cModeSwitch_WithHistory_2_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_001779E0 */
 
@@ -38,6 +38,6 @@ DEFINE_TRIVIAL_DTOR(func_001779E0)
 #pragma cplusplus on
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_00177A30, func_00177A90)
+DEFINE_BASE_DTOR_CHAIN(cLList_cSafePtr_cGOBJ_dtor, std_list_imp_cSafePtr_cGOBJ_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00177A30 */

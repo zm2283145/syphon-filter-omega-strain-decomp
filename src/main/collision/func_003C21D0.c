@@ -1,5 +1,5 @@
 #include "types.h"
-char* func_003C21D0(char* p)
+char* tFaceFlags_ctor(char* p)
 {
     volatile char* q;
     *p = 0;

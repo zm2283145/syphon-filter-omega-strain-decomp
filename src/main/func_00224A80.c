@@ -14,6 +14,6 @@ void LosRegionArray_End(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
 
-void* func_00224AB0(char* self) {
+void* cObjList_cTerrainPtr_GetList(char* self) {
     return self + 4;
 }

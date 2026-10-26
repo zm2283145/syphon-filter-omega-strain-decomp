@@ -2,16 +2,16 @@ typedef struct { char b[8]; } Name8;
 typedef struct { int id; float x; float y; } Ent;
 typedef struct { Name8 name; Ent e[4]; } Info;
 
-extern int func_002F64A0(Info *out);
-extern int func_003010C8(int r);
+extern int rt_comm_get_metrics(Info *out);
+extern int rt_msg_client_map_comm_error(int r);
 
-int func_002FD718(int a, Info *out)
+int rt_msg_client_iget_metrics(int a, Info *out)
 {
     Info t;
     int r;
     if (out == 0) return 2;
     if (a == 0) {
-    r = func_003010C8(func_002F64A0(&t));
+    r = rt_msg_client_map_comm_error(rt_comm_get_metrics(&t));
     if (r) { __asm__ __volatile__(""); return r; }
     out->name = t.name;
     out->e[0].id = t.e[0].id;

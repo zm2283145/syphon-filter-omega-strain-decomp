@@ -16,7 +16,7 @@ extern "C" {
 extern unsigned char D_005721D0;
 Obj428EF0** NetMap_Lookup(int);
 void* Object_LookupById(int*);
-void func_003FB4B0(void*, int);
+void cNetObj_SetOwner(void*, int);
 }
 #pragma push
 #pragma opt_propagation off
@@ -28,7 +28,7 @@ extern "C" int cActivateMsg_NetReceive(int a0, int a1, int a2, Pk428EF0* arg) {
         Obj428EF0* o;
         if (!e) { int id = p->id; o = (Obj428EF0*)Object_LookupById(&id); } else o = *e;
         if (o) {
-            if (p->val > -1) { o->Reset(); func_003FB4B0(o->f10, p->val); o->f14 = 0; } else o->Reset();
+            if (p->val > -1) { o->Reset(); cNetObj_SetOwner(o->f10, p->val); o->f14 = 0; } else o->Reset();
         }
     }
     return 0x10;
@@ -50,7 +50,7 @@ extern "C" int cActivateMsg_NetReceive(int a0, int a1, int a2, Pk428EF0* arg) {
 extern int Transport_Send(int, int, int, int);
 
 /* Sends with the first two arguments swapped and -1 for the rest. */
-int func_00428FD0(int a0, int a1) {
+int cActivateMsg_SendActivated(int a0, int a1) {
     return Transport_Send(a1, a0, -1, -1);
 }
 #pragma pop /* merge_units */
@@ -76,17 +76,17 @@ DEFINE_MESSAGE_CLONE(cDeactivateMsg_v01, Msg_0022ED30, 0x24, D_004BF970, 0x13, C
 /* merge_units: begin func_004290F0 */
 #pragma push /* merge_units */
 extern int D_005721A0;
-extern int func_002E9A10(void);
+extern int NetRegisterMessageStart(void);
 extern int Event_UnpackHeader(int*);
-extern int func_002E9F08(void*, void*);
+extern int NetRegisterApplicationMessage(void*, void*);
 extern void cDeactivateMsg_NetReceive(void);
 
 /* Registers the cDeactivateMsg_NetReceive handler when the preconditions hold; returns 1 on success. */
 unsigned char cDeactivateMsg_NetRegister(void) {
     unsigned char ok = 0;
     int tmp[2];
-    if (func_002E9A10() == 0 && Event_UnpackHeader(tmp) != 0 &&
-        func_002E9F08(&D_005721A0, cDeactivateMsg_NetReceive) == 0) {
+    if (NetRegisterMessageStart() == 0 && Event_UnpackHeader(tmp) != 0 &&
+        NetRegisterApplicationMessage(&D_005721A0, cDeactivateMsg_NetReceive) == 0) {
         ok = 1;
     }
     return ok;

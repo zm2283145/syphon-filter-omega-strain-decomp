@@ -5,7 +5,7 @@
 #include "gobj_types.h"
 
 /* Swaps the contents of two vectors. */
-void func_0021C7E0(PtrVec* a, PtrVec* b) {
+void std_swap_vectordeleterR_vectordeleterR_17(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;
         int* p;
@@ -21,6 +21,6 @@ void func_0021C7E0(PtrVec* a, PtrVec* b) {
     }
 }
 
-void func_0021C820(PtrVec* v) {
+void std_vector_deleter_cQuaternion_clear(PtrVec* v) {
     v->count = 0;
 }

@@ -47,8 +47,8 @@ extern char D_00538C68;
 extern V4_2A20 D_00539170;
 extern long long D_004BC1B0;
 void Renderer_BindTexture(void* m, int idx);
-void func_0025CD10(void* s);
-void func_0025CA40(void* s);
+void XLib_NewStrip(void* s);
+void XLib_NextBatchVert(void* s);
 void Vec4_Copy(V4_2A20* d, V4_2A20* s);
 void GuiBatch_AddVertexColor(V4_2A20* d, V4_2A20* s);
 float GuiBatch_AddVertexUV(void);
@@ -88,34 +88,34 @@ struct Held_2A20 {
     void* inst;
 };
 extern "C" {
-Head_2A20* func_00262D80(Head_2A20* h);
-Node_2A20* func_00262D70(int* l);
-void func_00262D60(Iter_2A20* it, Node_2A20* n);
+Head_2A20* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_6(Head_2A20* h);
+Node_2A20* std_list_deleter_TaserPulse_tail(int* l);
+void std_list_deleter_TaserPulse_generic_iterator_ctor(Iter_2A20* it, Node_2A20* n);
 void ParticleInst_Draw(void* inst, int key, Mtx_2A20* m);
-void func_003701B0(void* s);
-void func_00262A20(Held_2A20* self);
+void XLib_DrawLines(void* s);
+void cAirTaser_Render(Held_2A20* self);
 }
 static inline unsigned char Prim_2A20(void) { if (g_DrawMode & 1) return 3; return 2; }
 static inline int Mode_2A20(void) { if (g_DrawMode & 1) return 0x41; return 0x62; }
 static inline void Emit_2A20(V4_2A20* pos, V4_2A20* col)
 {
     Ent_2A20* e;
-    func_0025CA40(g_Video);
+    XLib_NextBatchVert(g_Video);
     e = &RS_2A20->ents[D_00539210.f10];
     Vec4_Copy(&e->pos[D_00539224 - 1], pos);
     GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], col);
     D_005381F8 = 2LL << 32;
 }
-static inline Iter_2A20 Begin0_2A20(Head_2A20* h) { Iter_2A20 t; t.n = func_00262D80(h)->next; return t; }
+static inline Iter_2A20 Begin0_2A20(Head_2A20* h) { Iter_2A20 t; t.n = details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_6(h)->next; return t; }
 static inline Iter_2A20 Begin_2A20(Head_2A20* h) { return Begin0_2A20(h); }
-static inline Iter_2A20 End_2A20(int* l) { Iter_2A20 e; func_00262D60(&e, func_00262D70(l)); return e; }
+static inline Iter_2A20 End_2A20(int* l) { Iter_2A20 e; std_list_deleter_TaserPulse_generic_iterator_ctor(&e, std_list_deleter_TaserPulse_tail(l)); return e; }
 
-/* func_00262A20: draws the taser wire: a line strip through the held item's
+/* cAirTaser_Render: draws the taser wire: a line strip through the held item's
  * points, then the spark particles (on each list entry's matrix while
  * attached, or once at the last point while flying). Render state as in
  * VisionFx_DrawScanBand (VisionFx_DrawScanBand.c); item layout as in
  * HeldItem_Release (taser/HeldItem_Release.c). */
-extern "C" void func_00262A20(Held_2A20* self)
+extern "C" void cAirTaser_Render(Held_2A20* self)
 {
     int n;
     int saved;
@@ -139,14 +139,14 @@ extern "C" void func_00262A20(Held_2A20* self)
         e->c30 += D_00539224;
         e->c34 += D_00539224;
     }
-    func_0025CD10(g_Video);
+    XLib_NewStrip(g_Video);
     D_00539224 = 0;
     for (i = 0; i < n; i++) {
         Pt_2A20* p = &self->pts[i];
         V4_2A20* col = &p->col;
         Emit_2A20(&p->pos, col);
     }
-    func_003701B0(g_Video);
+    XLib_DrawLines(g_Video);
     g_DrawMode = saved;
     if (self->state == 2) {
         Iter_2A20 it = Begin_2A20(&self->head);

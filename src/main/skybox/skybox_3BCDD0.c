@@ -9,14 +9,14 @@
 #include "types.h"
 typedef struct { char pad[0x62]; unsigned char useLos; } Col_3BCDD0;
 extern int Los_TraceWithWater(Col_3BCDD0* c, void* ray, int mode, void* out);
-extern int func_003C3880(Col_3BCDD0* c, void* ray, int mode, void* out);
+extern int cCollisionProbe_Ray_DetectForCollision_cArrayR_3(Col_3BCDD0* c, void* ray, int mode, void* out);
 extern int Los_TraceTriangles(Col_3BCDD0* c, void* ray, int mode, void* out);
 extern int Col_TraceFloorTriangles(Col_3BCDD0* c, void* ray, int mode, void* out);
 unsigned char Col_TraceFloorRay(Col_3BCDD0* c, void* ray, int mode, void* out) {
     unsigned char r;
     if (c->useLos) {
         if (mode) r = Los_TraceWithWater(c, ray, mode, out);
-        else r = func_003C3880(c, ray, mode, out);
+        else r = cCollisionProbe_Ray_DetectForCollision_cArrayR_3(c, ray, mode, out);
     } else if (mode) r = Los_TraceTriangles(c, ray, mode, out);
     else r = Col_TraceFloorTriangles(c, ray, mode, out);
     return r;
@@ -30,7 +30,7 @@ typedef struct { char p00[0x62]; unsigned char mask; } ColA_3BCE50;
 typedef struct { char p00[0x40]; unsigned char mask; } ColB_3BCE50;
 extern int Los_TraceWaterSurfaces(ColA_3BCE50* a, ColB_3BCE50* b, int mode, void* d);
 extern int Los_IntersectRecord(ColA_3BCE50* a, ColB_3BCE50* b, int mode, void* d);
-extern int func_003C4120(ColA_3BCE50* a, ColB_3BCE50* b, int mode, void* d);
+extern int cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_2(ColA_3BCE50* a, ColB_3BCE50* b, int mode, void* d);
 extern int Col_SegmentVsTriangle(ColA_3BCE50* a, ColB_3BCE50* b, int mode, void* d);
 unsigned char Col_TestSegmentTriangles(ColA_3BCE50* a, ColB_3BCE50* b, int mode, void* d) {
     unsigned char r;
@@ -42,7 +42,7 @@ unsigned char Col_TestSegmentTriangles(ColA_3BCE50* a, ColB_3BCE50* b, int mode,
             r = Los_IntersectRecord(a, b, mode, d);
     } else {
         if (hit)
-            r = func_003C4120(a, b, mode, d);
+            r = cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_2(a, b, mode, d);
         else
             r = Col_SegmentVsTriangle(a, b, mode, d);
     }

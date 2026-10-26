@@ -15,14 +15,14 @@
 #include "types.h"
 #include "scriptBase_types.h"
 
-extern void func_003D9470(OwnedVec* v, int a1, int a2);
+extern void std_vector_imp_EnumField_init(OwnedVec* v, int a1, int a2);
 
-/* Clears the three PtrVec words, then calls func_003D9470 with the remaining arguments. */
-OwnedVec* func_003D9240(OwnedVec* v, int a1, int a2) {
+/* Clears the three PtrVec words, then calls std_vector_imp_EnumField_init with the remaining arguments. */
+OwnedVec* std_vector_imp_EnumField_ctor(OwnedVec* v, int a1, int a2) {
     v->unk0 = 0;
     v->count = 0;
     v->data = 0;
-    func_003D9470(v, a1, a2);
+    std_vector_imp_EnumField_init(v, a1, a2);
     return v;
 }
 #pragma pop /* merge_units */
@@ -36,7 +36,7 @@ extern char D_004BD3D8[];
 extern char* strrchr(const char* s, int c);
 extern char* strncpy(char* d, const char* s, unsigned int n);
 extern char* Libc_Strcat(char* d, const char* s);
-char* func_003D9280(char* path)
+char* buildNameWithPrefix(char* path)
 {
     char* name;
     char* p = strrchr(path, ':');

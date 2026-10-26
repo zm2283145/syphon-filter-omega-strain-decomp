@@ -8,7 +8,7 @@
 #pragma push /* merge_units */
 typedef struct Int3E3 { int x; int y; int z; } Int3E3;
 typedef struct { int capacity; int count; Int3E3 *data; } Int3E3Vector;
-Int3E3 *func_003E3480(Int3E3Vector *v, Int3E3 *first, Int3E3 *last)
+Int3E3 *std_vector_imp_EnumField_erase(Int3E3Vector *v, Int3E3 *first, Int3E3 *last)
 {
     Int3E3 *end;
     Int3E3 *s;
@@ -142,6 +142,6 @@ Int3E3 *func_003E3480(Int3E3Vector *v, Int3E3 *first, Int3E3 *last)
 
 union E_003E3660 { struct { int a, b, c; } w; struct { char b[12]; } c; };
 extern "C" { char D_004BDA60[] = "vector::insert length error\n"; }
-DEFINE_VIF_U(func_003E3660, E_003E3660, 0x800000, 0x400000, D_004BDA60, D_004BD408, 0x5C, func_003E3B20, func_003D95D0)
+DEFINE_VIF_U(std_vector_imp_EnumField_insert, E_003E3660, 0x800000, 0x400000, D_004BDA60, D_004BD408, 0x5C, std_swap_vectordeleterR_vectordeleterR_42, std_vector_deleter_EnumField_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003E3660 */

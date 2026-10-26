@@ -9,7 +9,7 @@ void GuiScreen_Navigate(O_33DA00* o, int v);
 void GuiMultiLineText_ScrollUp(void* p, int v);
 void GuiMultiLineText_ScrollDown(void* p, int v);
 void func_002AEC60(void* p);
-int func_0033E2A0(O_33DA00* o, void* w, int v);
+int GuiMissionLobbyScreen_ButtonAction(O_33DA00* o, void* w, int v);
 int GuiScreen_HandleInput(O_33DA00* o, Ev_33DA00* ev);
 static inline unsigned char Down_33DA00(Ev_33DA00* e) { unsigned char r = 0; if (e->type == 1 && e->b2 == 0) r = 1; return r; }
 static inline unsigned char Btn_33DA00(Ev_33DA00* e, int b) { unsigned char r = 0; if (Down_33DA00(e) && e->btn == b) r = 1; return r; }
@@ -51,7 +51,7 @@ int GuiMenuScreen_HandleInput(O_33DA00* o, Ev_33DA00* ev)
         func_002AEC60(o->f8C);
         return 1;
     }
-    if (Plain2_33DA00(ev, 0x2000) && func_0033E2A0(o, Gui_GetScreenStack()->f20, 0)) {
+    if (Plain2_33DA00(ev, 0x2000) && GuiMissionLobbyScreen_ButtonAction(o, Gui_GetScreenStack()->f20, 0)) {
         { void* w = Gui_GetScreenStack()->f20; GuiWidget_SendEvent(w, Gui_GetScreenStack(), 0x10, 0, 0); }
         return 1;
     }

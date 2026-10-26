@@ -49,18 +49,18 @@ extern char D_0049D8D0[];
 extern unsigned char g_IsMultiplayer;
 extern float D_004A03E0;
 void MotionTokens_Init(void* p);
-void func_0018A8C0(void* p);
-void func_0018A890(void* p);
-void func_0018A710(void* d, void* s);
-void func_0018A700(void* p, int v);
+void cArray_cTimedEvent_ctor_void(void* p);
+void cString16N_3_ctor_void(void* p);
+void cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(void* d, void* s);
+void cSkaPlaybackGroupId_ctor_int(void* p, int v);
 void Actor_ResolveMotionSelection(Sel_898F0* sel, int* out, Y_898F0* y, void* model);
 float Model_GetFirstFloat(void* m);
 Vec4_898F0* AnimRate_Init(Vec4_898F0* p, float f);
 Vec4_898F0* Vec4_Copy_18A350(Vec4_898F0* d, Vec4_898F0* s);
 void AnimEvent_Construct(Ev_898F0* e);
 signed char MotionRequest_GetMode(Sel_898F0* s);
-void* func_0018A2E0(Sel_898F0* s);
-float func_0018A2D0(Sel_898F0* s);
+void* cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(Sel_898F0* s);
+float cSkaRequestStream_AnimationPacket_GetDuration(Sel_898F0* s);
 float func_0018A2C0(Sel_898F0* s);
 void AnimCtl_InstallMotion(void* ctl, int id, signed char mode, Vec4_898F0* range, void* pair, void* m1, void* m2, void* x, float f0, float f1);
 void AnimEvent_dtor(void* p, int f);
@@ -83,14 +83,14 @@ void* Transform_GetUpdated(void* p);
 void Actor_RequestTeleport(Act_898F0* a, void* t);
 void Actor_Ignite(float f, Act_898F0* a, int b, int c, int d, int e);
 void Actor_SetHealth(Act_898F0* a, int h, int f);
-void func_00142140(int p);
+void cWeapon_SetAmmoPlayerDeath(int p);
 }
 
 static inline void D3_898F0(void* p) { if (p) func_001BE5A0(p, 0); }
 static inline void D2_898F0(void* p) { if (p) D3_898F0(p); }
 static inline void D1_898F0(void* p) { if (p) D2_898F0(p); }
 static inline void PD_898F0(void* p) { if (p) __destroy_array(p, (void*)func_0018A210, 8, 7); }
-static inline void XInit_898F0(X_898F0* x) { x->kind = 0; MotionTokens_Init(x->pairs); func_0018A8C0(x->tail); }
+static inline void XInit_898F0(X_898F0* x) { x->kind = 0; MotionTokens_Init(x->pairs); cArray_cTimedEvent_ctor_void(x->tail); }
 static inline void XDtor_898F0(X_898F0* p) {
     if (p) {
         void* t = p->tail;
@@ -100,10 +100,10 @@ static inline void XDtor_898F0(X_898F0* p) {
 }
 static inline void SelInit_898F0(Sel_898F0* s, int v, X_898F0* x) {
     s->mode = 2;
-    func_0018A890(s->sub);
+    cString16N_3_ctor_void(s->sub);
     s->f44 = v;
     s->f48 = 3;
-    func_0018A710(&s->x, x);
+    cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(&s->x, x);
     s->f98 = -1.0f;
     s->f9C = 0;
 }
@@ -143,7 +143,7 @@ extern "C" void Actor_Revive(Act_898F0* self)
     XInit_898F0(&x);
     SelInit_898F0(&sel, self->f326C, &x);
     an = &self->anim;
-    func_0018A700(&y, -1);
+    cSkaPlaybackGroupId_ctor_int(&y, -1);
     Actor_ResolveMotionSelection(&sel, &out, &y, an->model);
     if (out) {
         Vec4_898F0* r;
@@ -155,7 +155,7 @@ extern "C" void Actor_Revive(Act_898F0* self)
         an->b5 = 0;
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
-        AnimCtl_InstallMotion(an, out, MotionRequest_GetMode(&sel), &vec, &y, &e1, &e2, func_0018A2E0(&sel), func_0018A2D0(&sel), func_0018A2C0(&sel));
+        AnimCtl_InstallMotion(an, out, MotionRequest_GetMode(&sel), &vec, &y, &e1, &e2, cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(&sel), cSkaRequestStream_AnimationPacket_GetDuration(&sel), func_0018A2C0(&sel));
         AnimEvent_dtor(&e2, -1);
         AnimEvent_dtor(&e1, -1);
     }
@@ -207,7 +207,7 @@ extern "C" void Actor_Revive(Act_898F0* self)
     Actor_Ignite(-1.0f, self, 0, 0, 0, 0);
     Actor_SetHealth(self, self->f3398, 1);
     self->f33A0 = self->f339C;
-    func_00142140(self->f3524);
+    cWeapon_SetAmmoPlayerDeath(self->f3524);
     self->f33A8 = 0;
     self->f33AC = 0;
     self->b33A5 = 0;

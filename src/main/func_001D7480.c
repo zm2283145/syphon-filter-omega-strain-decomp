@@ -49,7 +49,7 @@ extern Key D_004E9FC0;
 int NodeNameMap_Find(Owner* m, Key* k);
 Item** Registry_At(int* reg, int idx);
 void Secondary_MakeMotionSlot(Slot* s, int clip, int owner);
-void func_001D7840(Slot* d, Slot* s);
+void cSkaAnimDataIterator_opAssign(Slot* d, Slot* s);
 void Secondary_MotionRecordDtor(Slot* s, int f);
 }
 
@@ -130,7 +130,7 @@ static inline void Load1(Slot* cur, int clip, int owner)
 {
     SlotBuf s;
     Secondary_MakeMotionSlot((Slot*)&s, clip, owner);
-    func_001D7840(cur, (Slot*)&s);
+    cSkaAnimDataIterator_opAssign(cur, (Slot*)&s);
     Secondary_MotionRecordDtor((Slot*)&s, -1);
 }
 static inline void Load2(Slot* cur, int clip, int owner) { Load1(cur, clip, owner); }

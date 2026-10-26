@@ -20,9 +20,9 @@ struct RIt_3AEBA0 {
     RIt_3AEBA0& operator++() { p++; return *this; }
 };
 static inline bool REq(const RIt_3AEBA0* a, const RIt_3AEBA0* b) { REnt_3AEBA0* bp = b->p; return a->p == bp; }
-extern "C" REnt_3AEBA0** func_00393680(RColl_3AEBA0*);
-static inline RIt_3AEBA0 RBegin(RColl_3AEBA0* c) { RIt_3AEBA0 r(*func_00393680(c)); return r; }
-static inline RIt_3AEBA0 REnd(RColl_3AEBA0* c) { RIt_3AEBA0 r(*func_00393680(c) + c->count); return r; }
+extern "C" REnt_3AEBA0** std_vector_deleter_cSkaAnimAnchorListEntry_data(RColl_3AEBA0*);
+static inline RIt_3AEBA0 RBegin(RColl_3AEBA0* c) { RIt_3AEBA0 r(*std_vector_deleter_cSkaAnimAnchorListEntry_data(c)); return r; }
+static inline RIt_3AEBA0 REnd(RColl_3AEBA0* c) { RIt_3AEBA0 r(*std_vector_deleter_cSkaAnimAnchorListEntry_data(c) + c->count); return r; }
 static inline void RSubReset(RSub_3AEBA0* s, float z) {
     *(int*)((char*)s + 0xD0) = 0;
     VZeroF(&s->a);

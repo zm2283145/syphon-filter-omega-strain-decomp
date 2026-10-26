@@ -10,7 +10,7 @@ int* PtrArray_End(PtrVec* v) {
     return v->data + v->count;
 }
 
-void func_00181CD0(Iter* out, void* self, Iter* src) {
+void std_vector_cGOBJPtr_pointer2iterator_cGOBJPPR(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }
 

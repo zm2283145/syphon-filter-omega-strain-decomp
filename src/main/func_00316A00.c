@@ -8,7 +8,7 @@
 #include "loose02_types.h"
 
 /* Resets the record to its empty state. */
-void func_00316A00(Rec316A00* self) {
+void cTargetInfo_Init(Rec316A00* self) {
     self->unk08 = -1;
     self->unk00 = 0;
     self->unk01 = 0;

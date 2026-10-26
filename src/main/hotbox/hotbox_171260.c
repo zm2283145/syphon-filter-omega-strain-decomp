@@ -26,9 +26,9 @@ struct Own171260 { char pad[0x320C]; int state; };
 struct Hb171260 { char pad[0x20]; Own171260* owner; float f24; char list[4]; };
 extern "C" {
 void List_Begin(int* out, void* list);
-void func_00170CE0(N171260** out, int* in);
-void func_00170D20(int* out, void* list);
-void func_00170D10(N171260** out, int* in);
+void std_list_cHotboxPtr_generic_iterator_ctor(N171260** out, int* in);
+void std_list_cHotboxPtr_end_void(int* out, void* list);
+void cLListIterator_cHotboxPtr_ctor_listR(N171260** out, int* in);
 }
 
 extern "C" Ent171260* Hotbox_SelectInteraction(Hb171260* h, int mode)
@@ -44,11 +44,11 @@ extern "C" Ent171260* Hotbox_SelectInteraction(Hb171260* h, int mode)
         int bp;
         N171260* n;
         List_Begin(&t0, h->list);
-        func_00170CE0(&it, &t0);
+        std_list_cHotboxPtr_generic_iterator_ctor(&it, &t0);
         n = it;
         bp = -1;
         if (mode) {
-            while (func_00170D20(&t1, h->list), func_00170D10(&e1, &t1), n != e1) {
+            while (std_list_cHotboxPtr_end_void(&t1, h->list), cLListIterator_cHotboxPtr_ctor_listR(&e1, &t1), n != e1) {
                 Ent171260* o = n->data;
                 n = n->next;
                 if (o->Usable() && o->type == 0x12 && bp < o->prio) {
@@ -57,7 +57,7 @@ extern "C" Ent171260* Hotbox_SelectInteraction(Hb171260* h, int mode)
                 }
             }
         } else {
-            while (func_00170D20(&t2, h->list), func_00170D10(&e2, &t2), n != e2) {
+            while (std_list_cHotboxPtr_end_void(&t2, h->list), cLListIterator_cHotboxPtr_ctor_listR(&e2, &t2), n != e2) {
                 Ent171260* o = n->data;
                 n = n->next;
                 if (o->Usable() && o->type == 0xC) {

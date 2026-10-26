@@ -4,7 +4,7 @@
 int Libc_Free();                                  
 extern int (*D_005335DC)();
 
-void func_00357D88(void) {
+void my_free(void) {
     if (D_005335DC == NULL) {
         Libc_Free();
         return;

@@ -1,7 +1,7 @@
 #include "types.h"
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
 typedef struct { V4 lo, hi; } Box;
-unsigned char func_001821E0(Box* a, Box* b) {
+unsigned char cBox_Intersects(Box* a, Box* b) {
     V4* ahi = &a->hi;
     V4* bhi = &b->hi;
     int r;

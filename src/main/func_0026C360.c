@@ -2,4 +2,4 @@
 #include "iter_return_copy.h"
 
 /* Return the begin iterator. */
-DEFINE_ITER_BEGIN(func_0026C360)
+DEFINE_ITER_BEGIN(std_list_cHudTargetInfoPtr_begin_void)

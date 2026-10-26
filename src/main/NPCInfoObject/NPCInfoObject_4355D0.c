@@ -28,8 +28,8 @@ extern unsigned char D_005721D0;
 extern unsigned char D_00582778;
 extern unsigned char D_00582780;
 void* Mem_Alloc(int heap, int size, char* file, int line);
-void func_00433A60(int a);
-void func_00434740(int a);
+void cNPCInfoObject_CreateNPCInfoStruct(int a);
+void cNPCInfoObject_CheckForScheduledRequest(int a);
 }
 struct E_004355D0 {
     int id;
@@ -50,7 +50,7 @@ inline void* operator new(unsigned int, void* p) { return p; }
 static inline void* New_004355D0(int size, int line) { AllocGuard g; return Mem_Alloc(0, size, D_004BFCA0, line); }
 static inline void Del_004355D0(void* p, int line) { if (p) { AllocGuard g; Mem_Free(0, p, D_004BFCA0, line); } }
 #define NEWARR(dst, line) { E_004355D0* p = (E_004355D0*)New_004355D0(sizeof(E_004355D0) * 29, line); if (p) { E_004355D0* q = p; do { q->Init(); q++; } while (q != p + 29); } dst = p; }
-extern "C" void func_004355D0(int arg)
+extern "C" void cNPCInfoObject_Setup(int arg)
 {
     if (D_005721B8) return;
     if (D_005721D0) {
@@ -61,7 +61,7 @@ extern "C" void func_004355D0(int arg)
                 E_004355D0* p2 = D_00582800;
                 E_004355D0* p3 = D_00582808;
                 E_004355D0* p4 = D_00582810;
-                func_00433A60(arg);
+                cNPCInfoObject_CreateNPCInfoStruct(arg);
                 Del_004355D0(p0, 0x24E);
                 Del_004355D0(p1, 0x251);
                 Del_004355D0(p2, 0x254);
@@ -70,7 +70,7 @@ extern "C" void func_004355D0(int arg)
                 D_00582780 = 1;
             }
         }
-        func_00434740(arg);
+        cNPCInfoObject_CheckForScheduledRequest(arg);
         return;
     }
     if (!D_00582778 && g_IsMultiplayer) {
@@ -104,18 +104,18 @@ void* Mem_Alloc(int, int, char*, int);
 #endif /* merge_units */
 #define Mem_Alloc(a0, a1, a2, a3) (Mem_Alloc((a0), (a1), (a2), (a3))) /* merge_units */
 
-void func_00434BB0(char*, NpcInfoMsg**);
+void std_list_tNPCInfoPtr_push_back(char*, NpcInfoMsg**);
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
 extern char D_00582B30[];
 
-void func_00435D80(int self, int key, unsigned char v)
+void cNPCInfoObject_DisconnectOwner(int self, int key, unsigned char v)
 {
     int h;
     NpcInfoMsg* m;
     NpcInfoRec* r;
     if (NpcAuth_IsLocal()) {
-        r = func_004361C0(key, &h);
+        r = cNPCInfoObject_Find(key, &h);
         if (r) {
             NpcInfoMsg* t;
             if (g_ProfileLockEnabled) Alloc_Lock(9);
@@ -132,7 +132,7 @@ void func_00435D80(int self, int key, unsigned char v)
                 m->f10 = h;
                 r->a6[r->b4] = 0;
                 r->b4 = v;
-                func_00434BB0(D_00582B30, &m);
+                std_list_tNPCInfoPtr_push_back(D_00582B30, &m);
                 func_00434920(self, h);
             }
         }
@@ -178,18 +178,18 @@ extern int D_00582A80;
 extern int D_00582A88;
 extern int D_00582A90;
 extern int D_00582A98;
-void func_004355D0(int self);
+void cNPCInfoObject_Setup(int self);
 #if 0 /* merge_units */
-NpcInfoRec* func_004361C0(int* key, int* out);
+NpcInfoRec* cNPCInfoObject_Find(int* key, int* out);
 #endif /* merge_units */
-#define func_004361C0(a0, a1) (func_004361C0((int)(a0), (a1))) /* merge_units */
+#define cNPCInfoObject_Find(a0, a1) (cNPCInfoObject_Find((int)(a0), (a1))) /* merge_units */
 
 void func_00434920(int self, int h);
-void func_00434AA0(int self, NpcInfoMsg* m);
+void cNPCInfoObject_AddPendingAdd(int self, NpcInfoMsg* m);
 
-void func_00435F30(int self, int* key, unsigned char v)
+void cNPCInfoObject_Add(int self, int* key, unsigned char v)
 {
-    func_004355D0(self);
+    cNPCInfoObject_Setup(self);
     if (D_00582780) {
         NpcInfoMsg m;
         int j;
@@ -200,7 +200,7 @@ void func_00435F30(int self, int* key, unsigned char v)
         m.f10 = 0;
         m.key = *key;
         m.b4 = v;
-        func_00434AA0(self, &m);
+        cNPCInfoObject_AddPendingAdd(self, &m);
         func_00434920(self, D_00582A78);
         func_00434920(self, D_00582A80);
         func_00434920(self, D_00582A88);
@@ -208,7 +208,7 @@ void func_00435F30(int self, int* key, unsigned char v)
         func_00434920(self, D_00582A98);
     } else {
         int i = 0;
-        NpcInfoRec* r = func_004361C0(key, 0);
+        NpcInfoRec* r = cNPCInfoObject_Find(key, 0);
         if (!r) {
             for (i = 0; i != 29; i++) if (D_005827F0[i].key == -1) { r = &D_005827F0[i]; break; }
             if (i == 29) {
@@ -229,7 +229,7 @@ void func_00435F30(int self, int* key, unsigned char v)
 #undef D_00582800 /* merge_units */
 #undef D_00582808 /* merge_units */
 #undef D_00582810 /* merge_units */
-#undef func_004361C0 /* merge_units */
+#undef cNPCInfoObject_Find /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00435F30(void) {}
 #pragma pop /* merge_units */

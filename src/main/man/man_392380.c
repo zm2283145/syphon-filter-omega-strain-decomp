@@ -120,7 +120,7 @@ extern "C" Man* ManModel_ClearAttachPoints(Man* self)
  */
 
 
-int func_003925C0(void) {
+int cSKM_GOBJ_GetFloorPoly(void) {
     return 0;
 }
 #pragma pop /* merge_units */
@@ -228,11 +228,11 @@ void ScriptType_cPARTICLE_GOBJ_Init(void) {
     ScriptType_SetParent(D_0053B508, *cGOBJ_GetScriptTypeKeyPtr());
 }
 
-int func_003926A0(void) {
+int cPARTICLE_GOBJ_getSOBJClassId(void) {
     return D_0053B500;
 }
 
-int func_003926B0(int a0, int a1) {
+int cPARTICLE_GOBJ_ScriptHandleMessage(int a0, int a1) {
     return ScriptFilter_Dispatch(D_00555070, a0, a1);
 }
 #pragma pop /* merge_units */

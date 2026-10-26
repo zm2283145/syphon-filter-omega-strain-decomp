@@ -1,5 +1,5 @@
 #include "types.h"
-int func_0015C130();
+int cNode_SOBJ_getClassId();
 int Script_cAIUnconsciousMsg_Who();
 int ScriptType_cAIUnconsciousMsg_Init();
 int ScriptType_cAIDisguiseTakenMsg_Init();
@@ -102,7 +102,7 @@ void StaticInit_RegisterAiMsgs(void) {
     D_004FF190 = Script_RegisterNative(D_004FF178, Script_cAIGOBJMsg_Who, cGOBJ_GetScriptTypeKeyPtr(), "Who", 1, &D_004FF178);
     D_004FF198 = Script_RegisterType("cAINodeMsg", ScriptType_cAINodeMsg_Init, 1, 0);
     D_004FF1A0 = D_004FF198;
-    D_004FF1A8 = Script_RegisterNative(D_004FF198, Script_cAINodeMsg_GetNode, func_0015C130(), "GetNode", 1, &D_004FF198);
+    D_004FF1A8 = Script_RegisterNative(D_004FF198, Script_cAINodeMsg_GetNode, cNode_SOBJ_getClassId(), "GetNode", 1, &D_004FF198);
     D_004FF1B0 = Script_RegisterType("cAIWaypointReachedMsg", ScriptType_cAIWaypointReachedMsg_Init, 1, 0);
     D_004FF1B8 = D_004FF1B0;
     D_004FF1C0 = Script_RegisterType("cAIDestinationReachedMsg", ScriptType_cAIDestinationReachedMsg_Init, 1, 0);

@@ -11,7 +11,7 @@ extern int D_00598548;
 unsigned int D_00497D20[1] = { 0x0 };
 extern int Medius_TerminateString(char *, int);
 extern int Net_SendLocked(int, int, int, int, int, int, void *);
-int func_004697A0(char *a, int b)
+int MediusAccountDelete(char *a, int b)
 {
 
     if (D_00497CC0 != 1) return -0xF;
@@ -24,7 +24,7 @@ int func_004697A0(char *a, int b)
 /* merge_units: begin func_00469818 */
 extern int D_00598550;
 int D_00497D24 = 0;
-int func_00469818(char *a, int b)
+int MediusAnonymousLogin(char *a, int b)
 {
     Medius_TerminateString(a, 0x15);
     Medius_TerminateString(a + 0x15, 0x11);

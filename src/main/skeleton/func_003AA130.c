@@ -10,7 +10,7 @@
 extern SkelListPos* List_InsertBefore(SkelListPos* result, void* list, SkelListPos* pos, int value);
 
 /* push_back on a list whose sentinel node is at +4. */
-SkelListPos* func_003AA130(void* list, int value) {
+SkelListPos* std_list_cSkeletonDataBankEntryPtr_push_back(void* list, int value) {
     SkelListPos end;
     SkelListPos result;
 

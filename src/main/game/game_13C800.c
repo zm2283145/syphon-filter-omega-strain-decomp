@@ -24,12 +24,12 @@ struct RbNode {
 
 extern "C" {
 void Tree_Successor(RbNode **it);
-void func_0013CF60(RbNode *x, RbNode **root);
-void func_0013CFF0(RbNode *x, RbNode **root);
-void func_0013C800(RbNode *z, RbNode *root);
+void std_red_black_tree_1_rotate_left(RbNode *x, RbNode **root);
+void std_red_black_tree_1_rotate_right(RbNode *x, RbNode **root);
+void std_red_black_tree_1_balance_erase(RbNode *z, RbNode *root);
 }
 
-void func_0013C800(RbNode *z, RbNode *root)
+void std_red_black_tree_1_balance_erase(RbNode *z, RbNode *root)
 {
     RbNode *y = z;
     RbNode *x;
@@ -83,7 +83,7 @@ void func_0013C800(RbNode *z, RbNode *root)
                 if ((bool)((unsigned int)w->pp & 1) == true) {
                     w->set_black();
                     (x_parent->set_red());
-                    func_0013CF60(x_parent, &root);
+                    std_red_black_tree_1_rotate_left(x_parent, &root);
                     w = x_parent->right;
                 }
                 if ((w->left == 0 || !RED(w->left)) && (w->right == 0 || !RED(w->right))) {
@@ -95,13 +95,13 @@ void func_0013C800(RbNode *z, RbNode *root)
                     if (w->right == 0 || !RED(w->right)) {
                         (w->left->set_black());
                         (w->set_red());
-                        func_0013CFF0(w, &root);
+                        std_red_black_tree_1_rotate_right(w, &root);
                         w = x_parent->right;
                     }
                     if (RED(x_parent)) w->set_red(); else w->set_black();
                     (x_parent->set_black());
                     (w->right->set_black());
-                    func_0013CF60(x_parent, &root);
+                    std_red_black_tree_1_rotate_left(x_parent, &root);
                     x = root;
                 }
             } else {
@@ -109,7 +109,7 @@ void func_0013C800(RbNode *z, RbNode *root)
                 if ((bool)((unsigned int)w->pp & 1) == true) {
                     w->set_black();
                     (x_parent->set_red());
-                    func_0013CFF0(x_parent, &root);
+                    std_red_black_tree_1_rotate_right(x_parent, &root);
                     w = x_parent->left;
                 }
                 if ((w->left == 0 || !RED(w->left)) && (w->right == 0 || !RED(w->right))) {
@@ -121,13 +121,13 @@ void func_0013C800(RbNode *z, RbNode *root)
                     if (w->left == 0 || !RED(w->left)) {
                         (w->right->set_black());
                         (w->set_red());
-                        func_0013CF60(w, &root);
+                        std_red_black_tree_1_rotate_left(w, &root);
                         w = x_parent->left;
                     }
                     if (RED(x_parent)) w->set_red(); else w->set_black();
                     (x_parent->set_black());
                     (w->left->set_black());
-                    func_0013CFF0(x_parent, &root);
+                    std_red_black_tree_1_rotate_right(x_parent, &root);
                     x = root;
                 }
             }

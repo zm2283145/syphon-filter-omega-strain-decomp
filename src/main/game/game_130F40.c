@@ -47,7 +47,7 @@ static inline void merge_flush_func_00130F40(void) {}
 #pragma opt_strength_reduction off
 
 
-int func_00131010(Table* t, const char* name, const char* alias, int* out)
+int cGameSystem_FindVUMGOBJ_charP_charP_cVUMGOBJPP(Table* t, const char* name, const char* alias, int* out)
 {
     int i;
     for (i = 0; i < t->count; i++) {

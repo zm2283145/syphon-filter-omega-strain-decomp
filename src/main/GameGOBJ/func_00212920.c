@@ -3,12 +3,12 @@
 typedef struct { int unk0; int unk4; char pad[4]; unsigned char unkC; char pad2[0x1F]; } NetInit;
 
 extern int D_004F5480;
-extern int func_002E9B60(void);
-extern int func_002129A0(NetInit* init);
-extern int func_002E9CD0(int* handle, const char* name, int n);
-extern void func_002E9D88(int handle, void (*a)(), void (*b)(), void (*c)());
-extern void func_00212700();
-extern void func_00212540();
+extern int NetRegisterObjectStart(void);
+extern int cPathedGOBJ_RegisterPathedGobj(NetInit* init);
+extern int NetRegisterStructure(int* handle, const char* name, int n);
+extern void NetRegisterRemoteObjectCallback(int handle, void (*a)(), void (*b)(), void (*c)());
+extern void cPathedGOBJ_PathedGobjCreationCallback();
+extern void cPathedGOBJ_PathedGobjUpdateCallback();
 extern void func_002128A0();
 
 /* Initializes the network service, opens the named handle and registers its callbacks. */
@@ -19,12 +19,12 @@ void NetPathedGobj_NetRegister(void)
     init.unk0 = 0;
     init.unk4 = 0;
     init.unkC = 0;
-    if (func_002E9B60())
+    if (NetRegisterObjectStart())
         return;
-    if (!func_002129A0(&init))
+    if (!cPathedGOBJ_RegisterPathedGobj(&init))
         return;
-    if (func_002E9CD0(&handle, "NetPathedGobj", 0x20))
+    if (NetRegisterStructure(&handle, "NetPathedGobj", 0x20))
         return;
     D_004F5480 = handle;
-    func_002E9D88(handle, func_00212700, func_00212540, func_002128A0);
+    NetRegisterRemoteObjectCallback(handle, cPathedGOBJ_PathedGobjCreationCallback, cPathedGOBJ_PathedGobjUpdateCallback, func_002128A0);
 }

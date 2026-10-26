@@ -6,7 +6,7 @@
 
 /* merge_units: begin func_0031B030 */
 extern float Math_Asinf(float x);
-void func_0031B030(unsigned int n, float *in, float *out)
+void K2ASK(unsigned int n, float *in, float *out)
 {
     while (n != 0) {
         *out++ = Math_Asinf(*in++);
@@ -17,7 +17,7 @@ void func_0031B030(unsigned int n, float *in, float *out)
 
 /* merge_units: begin func_0031B090 */
 #include "types.h"
-void func_0031B090(float* k, float* a, int n)
+void NellyKsToAs(float* k, float* a, int n)
 {
     float tmp[20];
     float *p, *q, *t;
@@ -34,37 +34,37 @@ void func_0031B090(float* k, float* a, int n)
 /* merge_units: end func_0031B090 */
 
 /* merge_units: begin func_0031B140 */
-extern void func_0031B9C0(void *a, int n);
-extern void func_0031B248(void *a, int n);
-extern void func_0031B780(void *a, int n);
-void func_0031B140(void *a, int bits)
+extern void BitRev(void *a, int n);
+extern void Fft(void *a, int n);
+extern void Unpack(void *a, int n);
+void RealFft(void *a, int bits)
 {
-    func_0031B9C0(a, (1 << bits) >> 1);
-    func_0031B248(a, bits - 1);
-    func_0031B780(a, bits);
+    BitRev(a, (1 << bits) >> 1);
+    Fft(a, bits - 1);
+    Unpack(a, bits);
 }
 /* merge_units: end func_0031B140 */
 
 /* merge_units: begin func_0031B190 */
-extern void func_0031B898(float* data, int bits);
+extern void InverseUnpack(float* data, int bits);
 #if 0 /* merge_units */
-extern void func_0031B9C0(float* data, int n);
+extern void BitRev(float* data, int n);
 #endif /* merge_units */
-#define func_0031B9C0(a0, a1) (func_0031B9C0((void *)(a0), (a1))) /* merge_units */
+#define BitRev(a0, a1) (BitRev((void *)(a0), (a1))) /* merge_units */
 
-extern void func_0031B4E0(float* data, int bits);
-void func_0031B190(float* data, int bits, int flags)
+extern void InverseFft(float* data, int bits);
+void RealInverseFft(float* data, int bits, int flags)
 {
     int n = 1 << bits;
     int i;
     float s;
-    func_0031B898(data, bits);
-    func_0031B9C0(data, n >> 1);
-    func_0031B4E0(data, bits - 1);
+    InverseUnpack(data, bits);
+    BitRev(data, n >> 1);
+    InverseFft(data, bits - 1);
     if (!(flags & 8)) {
         s = 1.0f / n;
         for (i = 0; i < n; i++) data[i] *= s;
     }
 }
-#undef func_0031B9C0 /* merge_units */
+#undef BitRev /* merge_units */
 /* merge_units: end func_0031B190 */

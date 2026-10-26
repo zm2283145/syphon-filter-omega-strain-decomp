@@ -9,7 +9,7 @@
 #include "types.h"
 typedef struct { int a[4]; float f; } T_001BED50;
 typedef struct { T_001BED50* t; float v; } D_001BED50;
-void func_001BED50(D_001BED50* d, T_001BED50* t, float v) {
+void cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_float_float_Reset(D_001BED50* d, T_001BED50* t, float v) {
     d->t = t;
     if (v < 0.0f) v = t->f;
     d->v = v;
@@ -27,12 +27,12 @@ void func_001BED50(D_001BED50* d, T_001BED50* t, float v) {
 
 #include "loose00_types.h"
 
-float func_001BED70(FloatPair* self) {
+float cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_float_float_GetTimeLeft(FloatPair* self) {
     return self->b;
 }
 
 /* Copy six floats. */
-Float6* func_001BED80(Float6* d, Float6* s) {
+Float6* cHermiteSplineWithScaledDuration_float_opAssign(Float6* d, Float6* s) {
     d->f[0] = s->f[0];
     d->f[1] = s->f[1];
     d->f[2] = s->f[2];
@@ -50,6 +50,6 @@ Float6* func_001BED80(Float6* d, Float6* s) {
 #include "vector_insert_fill_obj.h"
 
 extern "C" { char D_0049ECF8[] = "allocator.hh"; }
-DEFINE_VECTOR_INSERT_FILL_OBJ(AnimChannelVec_Grow, 0x3C, 0x199999, 0xCCCCC, D_0049E980, D_0049ECF8, 0x5C, Mem_PlacementNew, AnimChannel_CopyCtor, func_001BF2E0, func_001BF280, func_001BF240, func_001BFA50)
+DEFINE_VECTOR_INSERT_FILL_OBJ(AnimChannelVec_Grow, 0x3C, 0x199999, 0xCCCCC, D_0049E980, D_0049ECF8, 0x5C, Mem_PlacementNew, AnimChannel_CopyCtor, std_copy_backward_cSkaSliderValue_copy_backward, std_fill_n_cSkaSliderValue_int_fill_n, std_swap_vectordeleterR_vectordeleterR_9, std_vector_deleter_cSkaSliderValue_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_001BEDC0 */

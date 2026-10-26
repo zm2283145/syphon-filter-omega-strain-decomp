@@ -16,7 +16,7 @@
 #pragma cplusplus on
 
 /* Two-level destructor: restore vtables, run base destructor, optionally delete. */
-DEFINE_VTABLE2_BASE_DTOR(func_00150BF0, D_004E0200, D_004E0840, cMessage_dtor)
+DEFINE_VTABLE2_BASE_DTOR(cCharActionMsg_TargetInfo_dtor, D_004E0200, D_004E0840, cMessage_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00150BF0 */
 

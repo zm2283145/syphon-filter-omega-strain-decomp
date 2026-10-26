@@ -1,6 +1,6 @@
 #include "types.h"
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
-unsigned char func_003C5B80(void* unused, V4* a, V4* b, V4* c) {
+unsigned char cCollisionModel_Data_TestFace(void* unused, V4* a, V4* b, V4* c) {
     int r;
     asm {
         .set noreorder

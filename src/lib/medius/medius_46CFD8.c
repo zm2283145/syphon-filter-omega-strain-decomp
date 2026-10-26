@@ -9,11 +9,11 @@
 extern char D_00497D70[];
 extern char D_00497D74[];
 
-int func_0046CFD8(void) {
+int MediusUniqueCallbackAddToBuddyListConfirmationRequestHandler0(void) {
     return 44;
 }
 
-int func_0046CFE0(void) {
+int MediusUniqueCallbackAddToBuddyListConfirmationResponseHandler(void) {
     int v0;
     int cond;
 
@@ -28,7 +28,7 @@ ret:
     return v0;
 }
 
-int func_0046D010(void) {
+int MediusUniqueCallbackAddToBuddyListFwdConfirmationRequestHandler(void) {
     int v0;
     int cond;
 

@@ -10,10 +10,10 @@ int Mem_Free(int, char * , char *, int);
 int PtrVector_Resize(char *, int, int *);                
 int String_Copy(char *, int);                            
 int Libc_Strcat(char *, char *);                          
-int func_001361D0(int *);                           
-int func_003FDEB0(char * , int);                       
-int func_003FDEC0(char * );                            
-int func_003FEEE0(char * , int);                         
+int cArrayCapacity_Int(int *);                           
+int std_vector_1_reserve(char * , int);                       
+int std_vector_1_ctor(char * );                            
+int std_vector_deleter_1_dtor(char * , int);                         
 int sprintf(char *, char *, int);                           
 extern char D_00493A40;
 extern char D_004BE440;
@@ -44,7 +44,7 @@ void Loc_LoadMissionPool(int arg0, char *arg1) {
         }
         g_ProfileLockDepth += 1;
         if ((temp_s0 != NULL) && (temp_s0 != NULL) && (temp_s0 != NULL)) {
-            func_003FEEE0(temp_s0, 0);
+            std_vector_deleter_1_dtor(temp_s0, 0);
         }
         Mem_Free(0, temp_s0, &D_004BE440, 0x9B);
         if (g_ProfileLockEnabled != 0) {
@@ -67,8 +67,8 @@ void Loc_LoadMissionPool(int arg0, char *arg1) {
         g_ProfileLockDepth -= 1;
         if (temp_s0_2 != NULL) {
             sp13C = 0x190;
-            func_003FDEC0(temp_s0_2);
-            func_003FDEB0(temp_s0_2, func_001361D0(&sp13C));
+            std_vector_1_ctor(temp_s0_2);
+            std_vector_1_reserve(temp_s0_2, cArrayCapacity_Int(&sp13C));
             F_(temp_s0_2, 0xC, signed char) = 1;
         }
         D_0055CA50 = temp_s0_2;

@@ -27,8 +27,8 @@ V* Mtx_DotRowsVec3(void* m, void* v);
 void* ParticleDefs_FindByName(void* a, void* b);
 void ParticleEmitter_SpawnChildren(void* a, void* b, void* c, void* m, float t);
 void ParticleEmitterBase_Update(void* o, void* a, void* b, void* c, float t);
-void func_00136DA0(void*);
-void func_0012F530(void*, int);
+void cTimerDisable_ctor(void*);
+void cTimerDisable_dtor(void*, int);
 void* Mem_Alloc(int, int, char*, int);
 void Mem_Free(int, void*, char*, int);
 extern char D_004BC5D0[];
@@ -108,9 +108,9 @@ static inline float SqrtJ(float x) { float r = 0.0f; r = x; asm { sqrt.s r, r } 
 #pragma define_section G_DTOR ".dtors_drop" far_absolute RX
 struct G {
     char pad[4];
-    G() { func_00136DA0(this); }
-    /* out-of-line copy is weak and dropped at link (merged into func_0012F530 in retail) */
-    __declspec(weak) __declspec(G_DTOR) ~G() { func_0012F530(this, -1); }
+    G() { cTimerDisable_ctor(this); }
+    /* out-of-line copy is weak and dropped at link (merged into cTimerDisable_dtor in retail) */
+    __declspec(weak) __declspec(G_DTOR) ~G() { cTimerDisable_dtor(this, -1); }
 };
 static inline void* Alloc(int size, int line) { G g; return Mem_Alloc(0, size, D_004BC5D0, line); }
 static inline void Free(void* p, int line) { G g; Mem_Free(0, p, D_004BC5D0, line); }

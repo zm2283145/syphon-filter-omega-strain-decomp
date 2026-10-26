@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose00_types.h"
 
-ByteBool* func_001DFAC0(ByteBool* self) {
+ByteBool* cBoneIk_cIntermediatePose_cAnimSource_ctor(ByteBool* self) {
     self->value = 0;
     self->nonZero = 0;
     return self;

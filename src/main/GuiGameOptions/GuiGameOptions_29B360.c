@@ -126,7 +126,7 @@ void GuiWidget_Update(Obj29B920* o, float dt);
 void Tremor_UpdateVibration(float f);
 unsigned long Time_GetMilliseconds(void);
 void GuiGameOptions_VideoRevert(Obj29B920* o, int a);
-void func_0029AE60(Obj29B920* o);
+void GuiGameOptions_UpdateKickList(Obj29B920* o);
 int GuiGameOptions_GetPlayers(void);
 void GuiGameOptions_Update(Obj29B920* o, float dt)
 {
@@ -138,7 +138,7 @@ void GuiGameOptions_Update(Obj29B920* o, float dt)
         }
     }
     if (o->mode == 3) {
-        func_0029AE60(o);
+        GuiGameOptions_UpdateKickList(o);
     } else if (o->sub != 0 && (o->sub->flags & 4)) {
         if (GuiGameOptions_GetPlayers() < 2) {
             o->sub->flags &= ~4;
@@ -225,7 +225,7 @@ DEFINE_VTABLE_BASE_DTOR(func_0029BB40, D_004E1220, GuiWidget_Destroy)
 /* merge_units: begin func_0029BBA0 */
 #pragma push /* merge_units */
 void GameOptions_QueueDialog(signed char arg0, char* arg1, char* arg2); /* gsynth: defined below */
-int func_0029BD70(int arg0); /* gsynth: defined below */
+int cPlayer_GetHuman(int arg0); /* gsynth: defined below */
 typedef struct { void* vt; char pad[0x20]; int id; int arg; char pad2c[4]; } Msg_BBA0;
 typedef struct { char pad[0x90]; } Name_BBA0;
 #if 0 /* merge_units */
@@ -239,13 +239,13 @@ int cMessage_dtor(Msg_BBA0*, int);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
 
-void* func_0029BDA0(void*);
+void* cGameSystem_GetPlayer(void*);
 #if 0 /* merge_units */
-void* func_0029BD70(void*);
+void* cPlayer_GetHuman(void*);
 #endif /* merge_units */
-#define func_0029BD70(a0) ((void *)func_0029BD70((int)(a0))) /* merge_units */
+#define cPlayer_GetHuman(a0) ((void *)cPlayer_GetHuman((int)(a0))) /* merge_units */
 
-int func_0012F2E0(void*);
+int cGOBJ_GetGobjClientIndex(void*);
 #if 0 /* merge_units */
 char* Loc_LookupText(char*);
 #endif /* merge_units */
@@ -257,9 +257,9 @@ void GameOptions_QueueDialog(int, char*, char*);
 #endif /* merge_units */
 #define GameOptions_QueueDialog(a0, a1, a2) (GameOptions_QueueDialog((signed char)(a0), (a1), (a2))) /* merge_units */
 
-void func_0012F2D0(Name_BBA0*);
+void pString_ctor(Name_BBA0*);
 void Hud_FormatPlayerCalloutName(Name_BBA0*, int, int);
-char* func_0012F2A0(Name_BBA0*);
+char* pString_CStr(Name_BBA0*);
 extern char D_00506440[];
 extern char D_004DD5E0[];
 extern char D_004DCF10[];
@@ -276,16 +276,16 @@ void cNetKickMsg_NetReceive(void) {
     m.vt = D_004DD5E0;
     Stream_ReadU32(&m.id);
     Stream_ReadU32(&m.arg);
-    if (func_0029BDA0(g_Game) && func_0029BD70(func_0029BDA0(g_Game))
-        && m.arg == func_0012F2E0(func_0029BD70(func_0029BDA0(g_Game)))) {
+    if (cGameSystem_GetPlayer(g_Game) && cPlayer_GetHuman(cGameSystem_GetPlayer(g_Game))
+        && m.arg == cGOBJ_GetGobjClientIndex(cPlayer_GetHuman(cGameSystem_GetPlayer(g_Game)))) {
         fmt = Loc_LookupText(D_004AA960);
         if (!fmt) {
             Game_EndLevel(g_Game, 2);
             GameOptions_QueueDialog(1, D_004AA970, 0);
         } else {
-            func_0012F2D0(&nm);
+            pString_ctor(&nm);
             Hud_FormatPlayerCalloutName(&nm, m.id, 0);
-            sprintf(buf, fmt, func_0012F2A0(&nm));
+            sprintf(buf, fmt, pString_CStr(&nm));
             Game_EndLevel(g_Game, 2);
             GameOptions_QueueDialog(1, D_004AA970, buf);
         }
@@ -295,7 +295,7 @@ void cNetKickMsg_NetReceive(void) {
 }
 #undef Event_Construct /* merge_units */
 #undef cMessage_dtor /* merge_units */
-#undef func_0029BD70 /* merge_units */
+#undef cPlayer_GetHuman /* merge_units */
 #undef Loc_LookupText /* merge_units */
 #undef GameOptions_QueueDialog /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -334,7 +334,7 @@ static inline void merge_flush_func_0029BD00(void) {}
 extern int g_HumanActorClassKey;
 #pragma push
 
-int func_0029BD70(int arg0) {
+int cPlayer_GetHuman(int arg0) {
     int v = F_(arg0, 0x30, int); return (v && F_(v, 0x4C, int) == g_HumanActorClassKey) ? v : 0;
 }
 #pragma pop

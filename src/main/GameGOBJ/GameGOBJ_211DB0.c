@@ -18,7 +18,7 @@ int Mem_Free();
 #pragma push /* merge_units */
 extern char D_005723C8[];
 
-void func_00211DB0(void) {
+void cElevatorGOBJ_ElevatorUpdateCallback(void) {
     int v1;
     int cond;
 
@@ -50,11 +50,11 @@ extern unsigned char D_005723C8;
 #define D_005723C8 (*(unsigned char*)&D_005723C8) /* merge_units */
 
 extern char D_004A4550[];
-int func_002EB650(Seg_00211DE0** o, int h);
+int NetGetObject(Seg_00211DE0** o, int h);
 int func_00211DA0(void);
-void func_002EC2A8(int a);
+void NetFreeObject(int a);
 Self_00211DE0* Object_LookupById(int* id);
-void func_002189E0(Self_00211DE0* o, int v);
+void cPathedGOBJ_TeleportToPathPoint(Self_00211DE0* o, int v);
 void NetMap_BindReceiver(int a, int b, void* c);
 }
 #pragma define_section DROPDTOR ".dtors_drop" far_absolute RX
@@ -67,7 +67,7 @@ static inline void ReleaseD0_00211DE0(Self_00211DE0* self)
     Shm_00211DE0* p = self->pD0;
     if (p) {
         if (p->bC) {
-            func_002EC2A8(func_00211DA0());
+            NetFreeObject(func_00211DA0());
         } else {
             AllocGuard g;
             Mem_Free(0, p, D_004A4550, 0xB83);
@@ -75,14 +75,14 @@ static inline void ReleaseD0_00211DE0(Self_00211DE0* self)
         self->pD0 = 0;
     }
 }
-extern "C" void func_00211DE0(void* unused, int h)
+extern "C" void cElevatorGOBJ_ElevatorCreationCallback(void* unused, int h)
 {
     Busy_00211DE0 busy;
     Seg_00211DE0* seg;
     int id[1];
     Shm_00211DE0* p;
     Self_00211DE0* o;
-    if (!func_002EB650(&seg, h)) {
+    if (!NetGetObject(&seg, h)) {
         p = seg->p1C;
         id[0] = p->h10 | (p->hE << 16);
         o = Object_LookupById(id);
@@ -102,7 +102,7 @@ extern "C" void func_00211DE0(void* unused, int h)
             }
             o->pD0 = p;
             if (p->f20 != o->pD0->f0)
-                func_002189E0(o, p->f20);
+                cPathedGOBJ_TeleportToPathPoint(o, p->f20);
             o->p128->f1C = h;
             o->p128->bC = 1;
             o->b14 = 0;

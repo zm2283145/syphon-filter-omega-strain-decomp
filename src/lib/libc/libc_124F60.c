@@ -28,11 +28,11 @@ int Newlib_LseekR(struct reent_00124F80* ptr, int fd, void* buf, unsigned int cn
 typedef struct reent_X { char pad[0x3C]; void (*__cleanup)(void); } reent_X;
 typedef struct { unsigned char* _p; int _r; int _w; short _flags; short _file; unsigned char* _bf_base; int _bf_size; int _lbfsize; void* _cookie; void* _read; void* _write; void* _seek; void* _close; unsigned char* _ub_base; int _ub_size; unsigned char* _up; int _ur; unsigned char _ubuf[3]; unsigned char _nbuf[1]; unsigned char* _lb_base; int _lb_size; int _blksize; int _offset; reent_X* _data; } FILE_X;
 struct stat_X { short st_dev; unsigned short st_ino; unsigned int st_mode; char rest[0x68]; };
-extern int func_00124678(reent_X* r, int fd, struct stat_X* st);
+extern int Newlib_FstatR(reent_X* r, int fd, struct stat_X* st);
 extern void* _malloc_r(reent_X* r, unsigned int n);
 extern int Newlib_SysIsatty(int fd);
 extern long Newlib_Sseek();
-extern void func_00123900(void);
+extern void Newlib_CleanupR(void);
 void Newlib_Smakebuf(register FILE_X *fp)
 {
   register unsigned int size, couldbetty;
@@ -45,7 +45,7 @@ void Newlib_Smakebuf(register FILE_X *fp)
       fp->_bf_size = 1;
       return;
     }
-  if (fp->_file < 0 || func_00124678 (fp->_data, fp->_file, &st) < 0)
+  if (fp->_file < 0 || Newlib_FstatR (fp->_data, fp->_file, &st) < 0)
     {
       couldbetty = 0;
       size = 1024;
@@ -71,7 +71,7 @@ void Newlib_Smakebuf(register FILE_X *fp)
     }
   else
     {
-      fp->_data->__cleanup = func_00123900;
+      fp->_data->__cleanup = Newlib_CleanupR;
       fp->_flags |= 0x0080;
       fp->_bf_base = fp->_p = (unsigned char *) p;
       fp->_bf_size = size;
@@ -90,12 +90,12 @@ extern void* D_00489738;
 
 extern void Newlib_MallocLock(void* r);
 extern void Newlib_MallocUnlock(void* r);
-extern void* func_001251A0(void* reent, unsigned int n, unsigned int elem_size);
-void* func_00125138(unsigned int n, unsigned int size)
+extern void* Newlib_MemalignR(void* reent, unsigned int n, unsigned int elem_size);
+void* Libc_Memalign(unsigned int n, unsigned int size)
 {
     void* r;
     Newlib_MallocLock(D_00489738);
-    r = func_001251A0(D_00489738, n, size);
+    r = Newlib_MemalignR(D_00489738, n, size);
     Newlib_MallocUnlock(D_00489738);
     return r;
 }

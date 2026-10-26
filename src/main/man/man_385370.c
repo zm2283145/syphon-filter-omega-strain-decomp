@@ -67,7 +67,7 @@ static inline void merge_flush_func_00385370(void) {}
 /* merge_units: begin func_00385420 */
 #pragma push /* merge_units */
 extern void* Skeleton_NodeAt(void*, int);
-extern void* func_0019F420(void*);
+extern void* cBone_Xform(void*);
 extern Mtx_385420* Transform_GetUpdated(void*);
 extern void Actor_ShotFrameNodeWorld(Mtx_385420*, Mtx_385420*, Mtx_385420*);
 extern void Mtx_Copy(Mtx_385420*, Mtx_385420*);
@@ -88,7 +88,7 @@ void ActorRender_GetAttachPoint(Actor_385420* a, Mtx_385420* out, int i)
     Mtx_385420* pn;
 
     if (s->flag14) {
-        Mtx_385420* t = Transform_GetUpdated(func_0019F420(Skeleton_NodeAt(s->nodes, n)));
+        Mtx_385420* t = Transform_GetUpdated(cBone_Xform(Skeleton_NodeAt(s->nodes, n)));
         Actor_ShotFrameNodeWorld(&node, t, Transform_GetUpdated(s->xform));
     } else {
         Mtx_Copy(&node, Transform_GetUpdated(s->xform));

@@ -21,12 +21,12 @@ Word* func_0042D0E0(Word* dst, Word* src) {
 }
 
 /* end(): iterator at the tree header. */
-void func_0042D0F0(Iter* out, Tree* t) {
+void std_map_cString_cConsCommandPtr_end_void_2(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
 /* begin(): iterator at the leftmost node. */
-void func_0042D100(Iter* out, Tree* t) {
+void std_map_cString_cConsCommandPtr_begin(Iter* out, Tree* t) {
     out->p = t->leftmost;
 }
 #pragma pop /* merge_units */
@@ -43,17 +43,17 @@ extern "C" {
 extern RbTree D_00582720;
 void ObjMap_Find_42EF70(TransferTimerIterator* result, RbTree* tree, const GobjId* id);
 #if 0 /* merge_units */
-void func_0042D0F0(TransferTimerIterator* result, RbTree* tree);
+void std_map_cString_cConsCommandPtr_end_void_2(TransferTimerIterator* result, RbTree* tree);
 #endif /* merge_units */
-#define func_0042D0F0(a0, a1) (func_0042D0F0((Iter *)(a0), (Tree *)(a1))) /* merge_units */
+#define std_map_cString_cConsCommandPtr_end_void_2(a0, a1) (std_map_cString_cConsCommandPtr_end_void_2((Iter *)(a0), (Tree *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
 void func_0042D0E0(TransferTimerIterator* result, const TransferTimerIterator* source);
 #endif /* merge_units */
 #define func_0042D0E0(a0, a1) ((void)func_0042D0E0((Word *)(a0), (Word *)(a1))) /* merge_units */
 
-void func_0042F760(RbTree* tree, TransferTimerIterator* position);
-void func_0042F8A0(TransferInsertResult* result, RbTree* tree, const TransferTimerValue* value);
+void std_tree_pair_int_value_compare_erase_tree_5(RbTree* tree, TransferTimerIterator* position);
+void std_tree_pair_int_value_compare_insert_one_pairR_4(TransferInsertResult* result, RbTree* tree, const TransferTimerValue* value);
 void printf(const char* format, ...);
 }
 
@@ -69,11 +69,11 @@ extern "C" void NetObjectMgr_RemoveTransferTimer(const GobjId* id)
     ObjMap_Find_42EF70(&found, &D_00582720, &key);
     TransferTimerNode* node = found.node;
     printf("RemoveTransferTimer timer for %.8X\n", id->word);
-    func_0042D0F0(&rawEnd, &D_00582720);
+    std_map_cString_cConsCommandPtr_end_void_2(&rawEnd, &D_00582720);
     func_0042D0E0(&end, &rawEnd);
     if ((node == end.node) ^ 1) {
         position.node = node;
-        func_0042F760(&D_00582720, &position);
+        std_tree_pair_int_value_compare_erase_tree_5(&D_00582720, &position);
     }
 }
 
@@ -90,17 +90,17 @@ extern "C" void NetObjectMgr_AddTransferTimer(const GobjId* id)
     ObjMap_Find_42EF70(&found, &D_00582720, &key);
     TransferTimerNode* node = found.node;
     printf("Adding transfer timer for %.8X\n", id->word);
-    func_0042D0F0(&rawEnd, &D_00582720);
+    std_map_cString_cConsCommandPtr_end_void_2(&rawEnd, &D_00582720);
     func_0042D0E0(&end, &rawEnd);
     if (node == end.node) {
         value.id.word = id->word;
         value.deadline = retry_threshold() + 45000;
-        func_0042F8A0(&result, &D_00582720, &value);
+        std_tree_pair_int_value_compare_insert_one_pairR_4(&result, &D_00582720, &value);
     } else {
         node->deadline = retry_threshold() + 45000;
     }
 }
-#undef func_0042D0F0 /* merge_units */
+#undef std_map_cString_cConsCommandPtr_end_void_2 /* merge_units */
 #undef func_0042D0E0 /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0042D110 */

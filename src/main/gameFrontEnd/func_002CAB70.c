@@ -8,7 +8,7 @@
 #include "gameFrontEnd_types.h"
 
 /* True when the screen has a widget with flag bit 3 set. */
-int func_002CAB70(FeScreen* screen) {
+int cGameFrontEnd_IsMessageBoxAwake_void_2(FeScreen* screen) {
     FeWidget* w = screen->widget;
 
     if (w != 0) {

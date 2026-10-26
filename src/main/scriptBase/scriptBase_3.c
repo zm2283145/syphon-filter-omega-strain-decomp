@@ -33,7 +33,7 @@ static inline void* GuardedAlloc(unsigned int size, char* file, int line)
     return Mem_Alloc(0, size, file, line);
 }
 
-extern "C" void func_003D63C0(ScriptWriter* w, int words)
+extern "C" void ScriptFileBuff_expand(ScriptWriter* w, int words)
 {
     if (w->count + words > w->cap) {
         int* nb;
@@ -66,7 +66,7 @@ extern "C" void func_003D63C0(ScriptWriter* w, int words)
 #include "scriptBase_types.h"
 
 /* Number of 4-byte words needed for 'size' bytes. */
-unsigned int func_003D6570(int a0, int size) {
+unsigned int ScriptFileBuff_charsToInts(int a0, int size) {
     return (unsigned int)(size + 3) >> 2;
 }
 #pragma pop /* merge_units */

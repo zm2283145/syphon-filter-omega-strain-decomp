@@ -11,7 +11,7 @@ extern char D_004BFBB8[];
 typedef TransferTreeAllocator<TransferObjectEntry*, D_004BFB78, D_004BFBB8> ObjectAllocator;
 
 /* Allocate and link an owned-object map node. */
-extern "C" ObjectAllocator::Node* func_004304F0(
+extern "C" ObjectAllocator::Node* std_tree_pair_int_value_compare_insert_node_at_nodeP_bool_bool_pairR_3(
     RbTree* tree, ObjectAllocator::Node* parent, int left, int first,
     const ObjectAllocator::Value* value)
 {
@@ -19,14 +19,14 @@ extern "C" ObjectAllocator::Node* func_004304F0(
 }
 
 /* Release an owned-object node through the caller's allocator context. */
-extern "C" void func_00430660(
+extern "C" void opDelete_nodeP_int_bool_charP_etc_13(
     ObjectAllocator::Node* node, int pool, int flags, char* file, int line)
 {
     ObjectAllocator::release(node, pool, flags, file, line);
 }
 
 /* Release one owned-object node using the map's allocation metadata. */
-extern "C" void func_00430710(void* allocator, ObjectAllocator::Node* node, int count)
+extern "C" void cAllocator_node_deallocate_nodeP_uint_14(void* allocator, ObjectAllocator::Node* node, int count)
 {
     ObjectAllocator::deallocate(allocator, node, count);
 }

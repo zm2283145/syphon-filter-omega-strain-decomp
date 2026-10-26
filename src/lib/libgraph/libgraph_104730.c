@@ -1,4 +1,4 @@
-/* libmpeg _motionComp0 (SDK 2.2 mpc.c) on the context-pointer libmpeg: the tag loop is split out into func_00109590,
+/* libmpeg _motionComp0 (SDK 2.2 mpc.c) on the context-pointer libmpeg: the tag loop is split out into dmaRefImage,
    _getAllRefs is func_00104980, _Error1 is func_0010BD58. */
 typedef struct {
     int refBuf;
@@ -42,7 +42,7 @@ typedef struct {
 
 extern void func_0010BD58(Mpeg4730 *, const char *, int);
 extern void func_00104980(Mpeg4730 *, int, int, int, int, int (*)[2][2], int (*)[2], int *);
-extern void func_00109590(Mpeg4730 *);
+extern void dmaRefImage(Mpeg4730 *);
 
 int func_00104730(Mpeg4730 *mp, int mba, int inc, int mb_type, int motion_type, int PMV[2][2][2],
                   int mv_field_sel[2][2], int *dmvector)
@@ -64,7 +64,7 @@ int func_00104730(Mpeg4730 *mp, int mba, int inc, int mb_type, int motion_type, 
         }
         func_00104980(mp, x, y, mb_type, motion_type, PMV, mv_field_sel, dmvector);
         while ((*D9_CHCR >> 8) & 1) {}
-        func_00109590(mp);
+        dmaRefImage(mp);
         mp->rec[mp->cur].busy = 1;
     }
     if (inc == 1 && (mb_type & 2)) {

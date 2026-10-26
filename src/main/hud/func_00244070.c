@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-Word* func_00244070(Word* dst, Word* src) {
+Word* cConstLListIterator_tCalloutPtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }

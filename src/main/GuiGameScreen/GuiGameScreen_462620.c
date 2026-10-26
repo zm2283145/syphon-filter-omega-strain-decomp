@@ -6,19 +6,19 @@
 #include "loose05_types.h"
 
 extern int strncpy(void* dst, int a1, int a2);
-extern int func_00461770(Vec12* v, char* pos, int n, int value);
+extern int std_vector_imp_tQuip_insert(Vec12* v, char* pos, int n, int value);
 
 /* Appends one 12-byte element at the end of the vector. */
-int func_00462620(Vec12* v, int value) {
+int cArray_tQuip_PushBackActual(Vec12* v, int value) {
     char* data;
     int count;
 
     data = v->data;
     count = v->count;
-    return func_00461770(v, data + count * 12, 1, value);
+    return std_vector_imp_tQuip_insert(v, data + count * 12, 1, value);
 }
 
-int* func_00462650(int* self, int a1, int a2) {
+int* cQuipList_tQuip_ctor(int* self, int a1, int a2) {
     strncpy(self, a1, 8);
     self[2] = a2;
     return self;

@@ -14,12 +14,12 @@
 
 #include "types.h"
 
-Word* func_0013C2F0(Word* dst, Word* src) {
+Word* cAssocArray_cString_cConsCommandPtr_Iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_0013C300(Iter* out, Tree* t) {
+void std_map_cString_cConsCommandPtr_end_void(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 #pragma pop /* merge_units */
@@ -30,6 +30,6 @@ void func_0013C300(Iter* out, Tree* t) {
 #include "short_string_compare.h"
 
 /* Compare two strings. */
-DEFINE_SHORT_STRING_COMPARE(func_0013C310)
+DEFINE_SHORT_STRING_COMPARE(std_basic_string_char_char_traits_char_compare_basicstringR)
 #pragma pop /* merge_units */
 /* merge_units: end func_0013C310 */

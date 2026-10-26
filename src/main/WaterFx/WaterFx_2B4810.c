@@ -24,7 +24,7 @@
 #pragma cplusplus on
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_002B4810)
+DEFINE_TRIVIAL_DTOR(cSplash_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_002B4810 */
 
@@ -36,7 +36,7 @@ extern "C" {
 char D_004ABFD0[] = "allocator.hh";
 }
 
-DEFINE_OBJECT_LIST_ERASE_RANGE(func_002B4860)
+DEFINE_OBJECT_LIST_ERASE_RANGE(std_list_deleter_tNode_erase_listdeleter_listdeleter)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002B4860(void) {}
 #pragma pop /* merge_units */
@@ -46,6 +46,6 @@ static inline void merge_flush_func_002B4860(void) {}
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-DEFINE_OBJECT_LIST_ERASE_ONE_FILE(func_002B49A0, D_004ABFD0)
+DEFINE_OBJECT_LIST_ERASE_ONE_FILE(std_list_deleter_tNode_erase_listdeleter, D_004ABFD0)
 #pragma pop /* merge_units */
 /* merge_units: end func_002B49A0 */

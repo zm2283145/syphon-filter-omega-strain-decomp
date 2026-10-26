@@ -16,14 +16,14 @@
 #pragma push /* merge_units */
 typedef struct { int m0; void* m4; } R1Tree_004316F0;
 typedef struct { R1Tree_004316F0 tree; } R1Own_004316F0;
-extern void func_004314E0(R1Tree_004316F0* t, short del);
+extern void std_tree_pair_int_value_compare_dtor_void_5(R1Tree_004316F0* t, short del);
 extern void operator_delete(void* p);
-R1Own_004316F0* func_004316F0(R1Own_004316F0* o, short del)
+R1Own_004316F0* cAssocArray_int_tNetObjectPtr_dtor(R1Own_004316F0* o, short del)
 {
     if (o) {
         R1Tree_004316F0* t = &o->tree;
         if (t)
-            func_004314E0(t, -1);
+            std_tree_pair_int_value_compare_dtor_void_5(t, -1);
         if (del > 0)
             operator_delete(o);
     }
@@ -77,7 +77,7 @@ static inline void merge_flush_func_00431850(void) {}
 
 /* merge_units: begin func_00431890 */
 #pragma push /* merge_units */
-extern int func_002E9A10(void);
+extern int NetRegisterMessageStart(void);
 extern int Event_UnpackHeader(void* p);
 extern int NetMsg_RegisterType(void* t, int id, void* fn);
 extern int D_00582738;
@@ -89,7 +89,7 @@ extern int cNetPlayGameMsg_NetReceive();
 unsigned char cNetPlayGameMsg_NetRegister(void) {
     int buf[4];
     unsigned char r = 0;
-    if (func_002E9A10() == 0 && Event_UnpackHeader(buf + 2) != 0 &&
+    if (NetRegisterMessageStart() == 0 && Event_UnpackHeader(buf + 2) != 0 &&
         NetMsg_RegisterType(&D_00582738, 2, cNetPlayGameMsg_NetReceive) == 0) {
         r = 1;
     }

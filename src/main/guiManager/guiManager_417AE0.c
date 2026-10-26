@@ -12,9 +12,9 @@
 #pragma mpwc_relax on
 /*fc*/
 int String_Dtor();                         
-int func_00412CF0();                          
-int func_00416A00();                         
-int func_00418240();                         
+int cInterfaceManager_RemoveInterface();                          
+int GuiDecorator_dtor();                         
+int std_vector_deleter_GuiAnimationTrack_dtor();                         
 int operator_delete();                          
 extern void GuiWidget_OnActivate();
 extern void GuiWidget_OnDeactivate();
@@ -26,7 +26,7 @@ extern void GuiInterfaceDecorator_Load();
 extern void GuiInterfaceDecorator_Draw();
 extern void GuiInterfaceDecorator_OnEvent();
 extern void GuiInterfaceDecorator_Update();
-extern void func_00417870();
+extern void GuiInterfaceDecorator_onRemove();
 extern void GuiInterfaceDecorator_Init();
 extern void func_00416930();
 extern void func_00416970();
@@ -43,11 +43,11 @@ char * GuiInterfaceDecorator_dtor(char * arg0, long long arg1) {
         F_(arg0, 0x0, int) = (int)(&(*(char*)D_004E09F0));
         temp_a1 = F_(arg0, 0x20, int);
         if (temp_a1 != -1) {
-            func_00412CF0(&D_00571DC0, temp_a1);
+            cInterfaceManager_RemoveInterface(&D_00571DC0, temp_a1);
         }
         temp_a0 = arg0 + 0x70;
         if ((temp_a0 != NULL) && (temp_a0 != NULL) && (temp_a0 != NULL)) {
-            func_00418240(temp_a0, 0);
+            std_vector_deleter_GuiAnimationTrack_dtor(temp_a0, 0);
         }
         temp_a0_2 = arg0 + 0x14;
         if (temp_a0_2 != NULL) {
@@ -57,14 +57,14 @@ char * GuiInterfaceDecorator_dtor(char * arg0, long long arg1) {
         if (temp_a0_3 != NULL) {
             String_Dtor(temp_a0_3, 0);
         }
-        func_00416A00(arg0, 0);
+        GuiDecorator_dtor(arg0, 0);
         if (((long long) (arg1 << 0x30) >> 0x30) > 0) {
             operator_delete(arg0);
         }
     }
     return arg0;
 }
-void * const D_004E09F0[20] = { (void*)0x0, (void*)0x0, (void*)GuiInterfaceDecorator_dtor, (void*)GuiInterfaceDecorator_Init, (void*)func_00417870, (void*)GuiWidget_OnActivate, (void*)GuiWidget_OnDeactivate, (void*)GuiWidget_OnWake, (void*)GuiWidget_OnSleep, (void*)GuiWidget_OnGainFocus, (void*)GuiWidget_OnLoseFocus, (void*)func_00416930, (void*)GuiInterfaceDecorator_Draw, (void*)func_00416970, (void*)GuiInterfaceDecorator_Update, (void*)GuiInterfaceDecorator_OnEvent, (void*)GuiInterfaceDecorator_Load, (void*)0x0, (void*)0x0, (void*)0x0 };
+void * const D_004E09F0[20] = { (void*)0x0, (void*)0x0, (void*)GuiInterfaceDecorator_dtor, (void*)GuiInterfaceDecorator_Init, (void*)GuiInterfaceDecorator_onRemove, (void*)GuiWidget_OnActivate, (void*)GuiWidget_OnDeactivate, (void*)GuiWidget_OnWake, (void*)GuiWidget_OnSleep, (void*)GuiWidget_OnGainFocus, (void*)GuiWidget_OnLoseFocus, (void*)func_00416930, (void*)GuiInterfaceDecorator_Draw, (void*)func_00416970, (void*)GuiInterfaceDecorator_Update, (void*)GuiInterfaceDecorator_OnEvent, (void*)GuiInterfaceDecorator_Load, (void*)0x0, (void*)0x0, (void*)0x0 };
 #pragma pop /* merge_units */
 /* merge_units: end func_00417AE0 */
 
@@ -87,13 +87,13 @@ extern char D_004E09F0[];
 #endif /* merge_units */
 #define D_004E09F0 ((char*)&D_004E09F0) /* merge_units */
 
-extern void func_00416A90(Widget* w);
-extern void func_00417C40(SubState* s);
+extern void GuiDecorator_ctor(Widget* w);
+extern void std_vector_GuiAnimationTrack_ctor(SubState* s);
 /* Constructor. */
 Widget* GuiInterfaceDecorator_ctor(Widget* w)
 {
     SubState* sub;
-    func_00416A90(w);
+    GuiDecorator_ctor(w);
     sub = &w->sub;
     w->vtable = D_004E09F0;
     w->a = 0;
@@ -102,7 +102,7 @@ Widget* GuiInterfaceDecorator_ctor(Widget* w)
     w->d = 0;
     w->e = 0;
     w->f = 0;
-    func_00417C40(sub);
+    std_vector_GuiAnimationTrack_ctor(sub);
     sub->enabled = 1;
     w->count = 0;
     w->index = -1;

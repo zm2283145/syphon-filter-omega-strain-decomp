@@ -5,7 +5,7 @@ int Alloc_Unlock();
 int FileMan_LoadFile();
 int Mem_Free(int, void*, char*, int);
 int FileMan_Release();
-int func_0036E4B0();
+int cFileMan_ctor_charP_cFileIOP_bool();
 int sprintf();
 void* memcpy(void*, const void*, unsigned int);
 extern char D_0048B2F8;
@@ -58,7 +58,7 @@ void WeaponDb_LoadReloadVariant(WDb* db) {
     old = db->data;
     src = (WEnt*)(old + 0x10);
     sprintf(spE0, &D_0049B310, &D_0048B2F8);
-    func_0036E4B0(sp40, spE0, 0, 0);
+    cFileMan_ctor_charP_cFileIOP_bool(sp40, spE0, 0, 0);
     db->loaded = FileMan_LoadFile(db, sp40);
     for (i = 0, dst = (WEnt*)(db->data + 0x10); i < db->hdr->count; i++, src++, dst++) {
         dst->x13C = src->x13C;

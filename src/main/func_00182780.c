@@ -7,18 +7,18 @@
 #include "types.h"
 #include "loose00_types.h"
 
-void* func_00182780(char* self) {
+void* cMovement_PrevTransform(char* self) {
     return self + 16;
 }
 
-unsigned char func_00182790(unsigned char* self) {
+unsigned char cMovement_WasMovingLastFrame(unsigned char* self) {
     return self[0];
 }
 
-int func_001827A0(Unk001827A0* self) {
+int cGOBJ_GetMovementInfo(Unk001827A0* self) {
     return self->unk54;
 }
 
-int func_001827B0(Word* w) {
+int cArray_cGOBJPtr_Iterator_opMul(Word* w) {
     return w->value;
 }

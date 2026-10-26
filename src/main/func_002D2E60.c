@@ -3,7 +3,7 @@
 typedef struct { char pad[0x30]; void* net; } Npc2E60;
 typedef struct { char pad[0x78]; int netId; } Node2E60;
 extern void cNPC_v7C(Npc2E60* o, Node2E60* n);
-void func_002D2E60(Npc2E60* o, Node2E60* n)
+void cNetNPC_AddGroupToPathRegion(Npc2E60* o, Node2E60* n)
 {
     if (NpcAuth_IsLocal())
         cNPC_v7C(o, n);

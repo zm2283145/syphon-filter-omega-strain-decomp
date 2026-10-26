@@ -12,7 +12,7 @@
 #include "guarded_release.h"
 
 /* Free an allocation under the allocator guard. */
-DEFINE_GUARDED_RELEASE(func_0013F5F0)
+DEFINE_GUARDED_RELEASE(opDelete_nodeP_int_bool_charP_etc)
 #pragma pop /* merge_units */
 /* merge_units: end func_0013F5F0 */
 
@@ -21,7 +21,7 @@ DEFINE_GUARDED_RELEASE(func_0013F5F0)
 #pragma cplusplus on
 #include "alloc_guard.h"
 extern "C" { extern char D_0049B030[]; void Mem_Free(int pool, void* p, char* file, int line); }
-extern "C" void func_0013F6A0(void* tree, void* node)
+extern "C" void cAllocator_node_deallocate_nodeP_uint(void* tree, void* node)
 {
     if (node) {
         AllocGuard guard;
@@ -40,14 +40,14 @@ extern "C" void func_0013F6A0(void* tree, void* node)
  */
 
 
-void* func_0013F740(char* self) {
+void* std_tree_pair_float_value_compare_node_alloc(char* self) {
     return self + 4;
 }
 
-void func_0013F750(void) {
+void cAllocator_pair_float_destroy(void) {
 }
 
-void* func_0013F760(void* self) {
+void* std_tree_pair_float_value_compare_alloc(void* self) {
     return self;
 }
 #pragma pop /* merge_units */
@@ -83,7 +83,7 @@ void SceneDrawMap_Insert(C3FtNode** out, C3FtTree* t, float* key)
 
 /* merge_units: begin func_0013F800 */
 #pragma push /* merge_units */
-Map* func_0013F800(Map* m, unsigned char* cmp) {
+Map* std_tree_pair_float_value_compare_ctor(Map* m, unsigned char* cmp) {
     m->count = 0;
     m->head = 0;
     m->cmp = *cmp;

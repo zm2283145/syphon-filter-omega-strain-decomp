@@ -12,7 +12,7 @@ int PtrVec_Reserve_Thunk_1AFCF0(void* self, int arg) {
     return PtrVec_Reserve(self, arg);
 }
 
-Rel* func_001AFD00(Rel* r) {
+Rel* std_vector_cSkeletonBBoxContributionPtr_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
@@ -23,7 +23,7 @@ int PtrVec_Reserve_Thunk_1AFD20(void* self, int arg) {
     return PtrVec_Reserve(self, arg);
 }
 
-Rel* func_001AFD30(Rel* r) {
+Rel* std_vector_cSkeletonCenterOfMassContributionPtr_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

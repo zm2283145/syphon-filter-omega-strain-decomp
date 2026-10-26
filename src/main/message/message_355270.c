@@ -40,7 +40,7 @@ extern void cMessage_dtor(void* msg, int flags);
 extern void SoundAction_CtorVoice(void* action, int kind, char* voice, int a, int b);
 extern void SoundMsg_WrapAction(SoundMsg_355490* msg, void* action);
 extern void GuiBitmapWidget_SetImage(Widget_355490* w, char* s, int v);
-extern void func_0043C810(Widget_355490* w);
+extern void GuiBitmapWidget_ClearBitmap(Widget_355490* w);
 extern int sprintf(char* buf, const char* fmt, ...);
 
 static inline void StopVoice_355490(Self_355490* self)
@@ -71,7 +71,7 @@ static inline void PlayVoice_355490(Self_355490* self, char* voice)
     cMessage_dtor(&play, 0);
 }
 
-void func_00355300(Self_355490* self, char* voice)
+void GuiPersonnelMenu_StartPlayback(Self_355490* self, char* voice)
 {
     PlayVoice_355490(self, voice);
 }

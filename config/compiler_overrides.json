@@ -4917,5 +4917,12 @@
   "main/func_0022B660": "cwps2-3.0b38",
   "main/func_002D48F0": "cwps2-3.0b38",
   "main/ska/func_003AD7A0": "cwps2-3.0b38",
-  "main/man/func_00391B30": "cwps2-3.0b50"
+  "main/man/func_00391B30": "cwps2-3.0b50",
+  "main/ai/func_0016E890": "cwps2-3.0b38",
+  "main/ai/func_0016ECC0": "cwps2-3.0b38",
+  "main/human/func_001B0A50": "cwps2-3.0b38",
+  "main/func_001CFF50": "cwps2-3.0b38",
+  "main/func_002D1940": "cwps2-3.0b38",
+  "main/man/func_00384A70": "cwps2-3.0b38",
+  "main/func_003D4350": "cwps2-3.0b38"
 }

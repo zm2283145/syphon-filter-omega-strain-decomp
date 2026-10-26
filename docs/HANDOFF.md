@@ -9,8 +9,8 @@ This is the working state and the routine for whoever continues this project
 
 | | |
 |---|---|
-| Functions matched | 13,745 of 14,344 |
-| Code matched | 83.72% |
+| Functions matched | 13,765 of 14,345 |
+| Code matched | 84.43% |
 | Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
 
@@ -166,6 +166,40 @@ into translation units. Run it occasionally; see [merge_units.md](merge_units.md
 - Readability edits (names, struct types, comments) are free, but changing a type's
   width or signedness, expression shape or declaration order can change code
   generation. Rebuild after each batch.
+
+## Prototype builds with debug symbols (2026-10-26)
+
+The maintainer has two unstripped prototype executables of the game, kept privately (never
+commit them or raw dumps of them; using their names, types and source layout in this repo is
+approved):
+
+- **SCUS_973.97**, the online beta (January 2004). Closest to retail; prefer it.
+- **SCUS_972.64**, an October 2003 build.
+
+Both were built with "MW MIPS C Compiler (2.4.1.01)", the compiler our `mw304` kind already
+uses (retail game code mostly matches build 38). Each has a full symbol table with mangled C++
+names, relocations, and Metrowerks DWARF v1 debug info: compile units with original source paths
+(`C:\SFO\Code\SFOGame\Source\*.cc`, `Libs\SFOLobby\...`), struct/class layouts with member
+names, and every function's parameters and locals in declaration order. The game uses PS2 SDK 2.8.
+
+A matcher maps prototype functions to retail: 12,114 of 14,343 retail functions with high
+confidence (estimated error about 1%), 976 medium. Its outputs live under the gitignored
+`build/agents/P1/` (rerun instructions in its README): `map.tsv`, `layout.txt` (original source
+file per splat unit), and per prototype `types.txt`, `locals.tsv`, `globals.tsv`.
+
+- **Applied:** 6,617 high-confidence names for functions that were `func_XXXXXXXX` (`c4e49eb`),
+  in the repo's C-identifier form (`Class_Method`, `_ctor`/`_dtor`).
+- **Held back** (`build/agents/P1/names_held.txt`): runtime helper names starting with `__`
+  (the compilers call them implicitly), GCC built-ins (`copysign`, `isinf`), `dptoul` (a libgcc
+  alias line would become `dptoul = dptoul` and hang the old assembler), and names already used
+  as other identifiers in `src/` (e.g. `block`, `GetState`). **Screen new names for all of these
+  before a naming round.**
+- **Awaiting owner review:** 4,606 functions whose existing name differs from the prototype's
+  (`renames.tsv`), and 493 medium-confidence mappings (`names_review.txt`).
+- **For matching:** look a target up in `map.tsv` and write it with the prototype's locals in
+  their declaration order and the real class layout. Code can still differ (the prototypes are
+  2–5 months older and use an older compiler). In `locals.tsv`, "register 2" means the value is
+  still in its incoming argument register.
 
 ## Near-miss techniques (newest)
 

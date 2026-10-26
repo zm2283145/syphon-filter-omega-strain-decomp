@@ -9,8 +9,8 @@ This is the working state and the routine for whoever continues this project
 
 | | |
 |---|---|
-| Functions matched | 13,719 of 14,344 |
-| Code matched | 83.05% |
+| Functions matched | 13,745 of 14,344 |
+| Code matched | 83.72% |
 | Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
 
@@ -168,6 +168,18 @@ into translation units. Run it occasionally; see [merge_units.md](merge_units.md
   generation. Rebuild after each batch.
 
 ## Near-miss techniques (newest)
+
+- **Quad copy split at the call site (M16):** writing a 16-byte copy as a volatile asm `lq` plus
+  a C `sq` (instead of a class `operator=` or a full asm block) changes MW's register pairing; it
+  closed cNIEventOBJ_v01 and PlayerCamera_ComputeSlopePitch. `build/agents/M16/tools/splitlq.py`
+  tries it at every quad-copy site of a draft.
+- **Local message structs:** a destructor can match the inlined teardown yet still emit a weak
+  out-of-line `__dt__…` that check_match counts as an extra function; call an explicit teardown
+  method (`m.Done()`) instead. `#pragma exceptions off` does not stop it.
+- **Below 0x300000, fresh targets and sibling twins are exhausted (2026-10-26).** Remaining small
+  near misses (TargetVis_Test 1 line, Actor_GetEyeNode, ZoneMgr_DeactivateObject,
+  LosRegion_GetCollection, func_0022D3C0, GuiAgentCreate_UpdateCount 4 each) are listed with
+  drafts in `build/agents/M16/FINAL_REPORT.md`; the large functions are now the main lever.
 
 - **MW `asm volatile {}` and float constants (2026-10-26):** after a volatile asm block (MW or
   gcc `__asm__ volatile`), float constants later in the same basic block are stored from FPRs

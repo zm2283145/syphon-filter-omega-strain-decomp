@@ -7,6 +7,18 @@ int operator_delete(char * );
 extern void func_00416820();
 extern void func_00416830();
 extern void func_00416AD0();
+extern void func_00416850();
+extern void func_00416870();
+extern void func_00416890();
+extern void func_004168B0();
+extern void func_004168D0();
+extern void func_004168F0();
+extern void func_00416910();
+extern void func_00416930();
+extern void func_00416950();
+extern void func_00416970();
+extern void func_00416990();
+extern void func_004169B0();
 extern void * const D_004E0960[];
 extern void * const D_004E09B0[];
 extern int D_00572130;
@@ -30,5 +42,5 @@ char * func_00416A00(char * arg0, long long arg1) {
     }
     return arg0;
 }
-void * const D_004E0960[20] = { (void*)0x0, (void*)0x0, (void*)func_00416A00, (void*)func_00416830, (void*)0x416850, (void*)0x4168B0, (void*)0x4168D0, (void*)0x416870, (void*)0x416890, (void*)0x4168F0, (void*)0x416910, (void*)0x416930, (void*)0x416950, (void*)0x416970, (void*)0x4169B0, (void*)0x416990, (void*)func_00416820, (void*)0x0, (void*)0x0, (void*)0x0 };
+void * const D_004E0960[20] = { (void*)0x0, (void*)0x0, (void*)func_00416A00, (void*)func_00416830, (void*)func_00416850, (void*)func_004168B0, (void*)func_004168D0, (void*)func_00416870, (void*)func_00416890, (void*)func_004168F0, (void*)func_00416910, (void*)func_00416930, (void*)func_00416950, (void*)func_00416970, (void*)func_004169B0, (void*)func_00416990, (void*)func_00416820, (void*)0x0, (void*)0x0, (void*)0x0 };
 void * const D_004E09B0[16] = { (void*)0x0, (void*)0x0, (void*)func_00416AD0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0 };

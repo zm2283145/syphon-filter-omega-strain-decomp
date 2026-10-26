@@ -28,6 +28,8 @@ extern void GuiInterfaceDecorator_OnEvent();
 extern void GuiInterfaceDecorator_Update();
 extern void func_00417870();
 extern void GuiInterfaceDecorator_Init();
+extern void func_00416930();
+extern void func_00416970();
 extern void * const D_004E09F0[];
 extern char D_00571DC0;
 
@@ -62,7 +64,7 @@ char * GuiInterfaceDecorator_dtor(char * arg0, long long arg1) {
     }
     return arg0;
 }
-void * const D_004E09F0[20] = { (void*)0x0, (void*)0x0, (void*)GuiInterfaceDecorator_dtor, (void*)GuiInterfaceDecorator_Init, (void*)func_00417870, (void*)GuiWidget_OnActivate, (void*)GuiWidget_OnDeactivate, (void*)GuiWidget_OnWake, (void*)GuiWidget_OnSleep, (void*)GuiWidget_OnGainFocus, (void*)GuiWidget_OnLoseFocus, (void*)0x416930, (void*)GuiInterfaceDecorator_Draw, (void*)0x416970, (void*)GuiInterfaceDecorator_Update, (void*)GuiInterfaceDecorator_OnEvent, (void*)GuiInterfaceDecorator_Load, (void*)0x0, (void*)0x0, (void*)0x0 };
+void * const D_004E09F0[20] = { (void*)0x0, (void*)0x0, (void*)GuiInterfaceDecorator_dtor, (void*)GuiInterfaceDecorator_Init, (void*)func_00417870, (void*)GuiWidget_OnActivate, (void*)GuiWidget_OnDeactivate, (void*)GuiWidget_OnWake, (void*)GuiWidget_OnSleep, (void*)GuiWidget_OnGainFocus, (void*)GuiWidget_OnLoseFocus, (void*)func_00416930, (void*)GuiInterfaceDecorator_Draw, (void*)func_00416970, (void*)GuiInterfaceDecorator_Update, (void*)GuiInterfaceDecorator_OnEvent, (void*)GuiInterfaceDecorator_Load, (void*)0x0, (void*)0x0, (void*)0x0 };
 #pragma pop /* merge_units */
 /* merge_units: end func_00417AE0 */
 

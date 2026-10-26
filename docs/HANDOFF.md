@@ -9,14 +9,16 @@ This is the working state and the routine for whoever continues this project
 
 | | |
 |---|---|
-| Functions matched | 13,667 of 14,331 |
-| Code matched | 81.74% |
-| Data matched | 99.85% |
+| Functions matched | 13,671 of 14,344 |
+| Code matched | 81.84% |
+| Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
 
-Data dropped from 99.92% to 99.85% in R138 (`5b9cc4c4`), the round that split the
-`0x416830` thunk unit with new `symbol_addrs` entries. The build still matches retail,
-so this is most likely a reporting change from the re-split; worth checking.
+The total rose from 14,331 to 14,344 when R138 split the `0x416830` thunk unit. That split
+briefly cost 224 bytes of data credit: the vtables in `func_00416A00.c` and
+`guiManager_417AE0.c` still listed the thunks as raw addresses (`(void*)0x416850`), while the
+target now has relocations to `func_00416850` etc. Naming them restored 99.92% (`aa3e99f`).
+**After adding `// type:func` symbols, grep `src/` for `(void*)0x<addr>` table entries and name them.**
 
 **Staged but not yet built:** `build/pending/r139/` (gitignored, so it exists only on the
 local Windows checkout) holds 10 matches from the last lanes

@@ -4931,5 +4931,11 @@
   "main/GuiAgentInfo/func_00362DC0": "cwps2-3.0b38",
   "main/func_00372C50": "cwps2-3.0b38",
   "main/func_003D3D50": "cwps2-3.0b38",
-  "main/manUtils/func_00404750": "cwps2-3.0b38"
+  "main/manUtils/func_00404750": "cwps2-3.0b38",
+  "lib/func_002BA220": "ee-gcc2.96-G0",
+  "main/tank/func_00286690": "cwps2-3.0b38",
+  "main/func_0036A330": "cwps2-3.0b38",
+  "main/func_003747A0": "cwps2-3.0b38",
+  "main/interface_model/func_003F41C0": "cwps2-3.0b38",
+  "main/func_00475EE0": "cwps2-3.0b38"
 }

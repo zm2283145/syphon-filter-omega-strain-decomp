@@ -17,24 +17,14 @@ This is the state as the last Claude session stopped (usage limit). Read this fi
   prototype→retail matcher). Its README explains how to regenerate the private outputs in
   `build/agents/P1/`: `map.tsv`, `layout.txt`, `types.txt`, `locals.tsv`, `names_*.txt`. This
   needs the two prototype ELFs from the owner; never commit them or the outputs.
+- **Original source layout: done** (`bb957776` .. `6a19a268`; see "Source layout" below).
+  `src/` mirrors the original tree (`src/SFOGame/Source/`, `src/Libs/SFOLib/Source/`,
+  `src/Libs/SFOLobby/SFOLobby/`, `src/Libs/989snd/ee/`, `src/CW_PS2Support/`): 269 original
+  files in 2,525 part files, 30 of them already a single file. SDK code stays in `src/lib/`.
 
 **Not on `main` (work in progress in the last cloud workspace only):**
 
-1. **Original source layout reorganization (owner approved).** Batch 1 is on `main` (`bb957776`): 4,593 units of 270 original files moved into `src/<original dir>/<stem>/`, `tu_ranges.txt` rebuilt from the prototype layout, and `merge_units.py` / `integrate_pending.py` taught the layout (tests in `tests/test_source_layout.py`). Still to do: merge each `<stem>/` folder into one `<stem>.c` (or part-files). Move `src/` to mirror the original
-   project tree, for example `src/SFOGame/Source/GuiAgentModify.c` and
-   `src/Libs/SFOLobby/SFOLobby/SFOLobby_Lobby.c`. SDK code stays in `src/lib/`, the extension
-   stays `.c`, and one file per original source file is merged with `tools/merge_units.py`.
-   - Original files that are not fully matched become numbered part-files (`Human.c`,
-     `Human_2.c`) with asm between them.
-   - Inputs: `layout.txt` and `layout_objects.txt` from the prototype tools. 227 of 327 original
-     files are fully matched. 82 appear in more than one address run, mostly inline and template
-     code.
-   - What blocks it: `merge_units.py`, `configure.py` and `integrate_pending.py` assume
-     `src/<main|lib>/<module>/` paths and must learn arbitrary unit paths. Work in batches, each
-     verified by a full build that prints the OK line, with matched-function counts not dropping.
-   - The README already describes this layout and marks it "in progress". Remove that note once
-     the layout lands.
-2. **Staged matches.** These were verified by `check_match` but not yet integrated. They lived in
+1. **Staged matches.** These were verified by `check_match` but not yet integrated. They lived in
    the last workspace's gitignored `build/pending/r113/`, so redo them if that workspace is gone:
    - cScene_UpdateActivation 0x13DB30
    - cPlayerCamera_GetAngleToTarget 0x280070
@@ -43,8 +33,7 @@ This is the state as the last Claude session stopped (usage limit). Read this fi
 
 **Next steps, in order:**
 
-1. Finish the layout reorganization above, then update the README.
-2. Keep matching. Remaining work by size: 48 functions over 3 KB (258 KB) and 93 of
+1. Keep matching. Remaining work by size: 48 functions over 3 KB (258 KB) and 93 of
    1.2–3 KB (173 KB). For every target:
    - look it up in `build/agents/P1/map.tsv`;
    - write it with the prototype's locals in declaration order and its real class layout;
@@ -54,7 +43,7 @@ This is the state as the last Claude session stopped (usage limit). Read this fi
 
    The prototypes were built with MW 2.4.1 = our `mw304`, so a draft can be calibrated against the
    prototype first.
-3. Closest open near misses (2–6 diff lines, all register allocation):
+2. Closest open near misses (2–6 diff lines, all register allocation):
    - GuiObjectives_SetTab
    - func_00400F20: last function of the AgentPacking unit; stage the whole unit `0x400990`
    - Bone_FinalizeRotation
@@ -67,7 +56,7 @@ This is the state as the last Claude session stopped (usage limit). Read this fi
 
    Each lane's `build/agents/M*/FINAL_REPORT.md` in the last workspace had the drafts; they are
    gitignored, so treat these as known-close targets.
-4. Owner review is still open for 976 medium-confidence prototype names
+3. Owner review is still open for 976 medium-confidence prototype names
    (`build/agents/P1/names_review.txt`). 325 high-confidence names were held back on purpose:
    - C library and runtime names (`memcpy`, `__throw`; renaming can change codegen);
    - GCC built-ins;
@@ -536,18 +525,40 @@ address it cites. Name syncs (2026-10-18/19: 731 function names, 104 data names)
    (`data_gen.py release --all` ... `data_gen.py` ... `ninja`). The whole split is redone.
 4. Commit names separately from matches.
 
+## Source layout
+
+`src/` follows the original project tree from the prototypes' debug information (paths relative
+to the original project's code directory). `config/tu_ranges.txt` lists all 270 original files
+with their retail address ranges (and the old library ranges that do not overlap them).
+
+- **Part files.** Each original file `Dir/Stem.cc` is `src/Dir/Stem.c` if its code merged into
+  one translation unit, else `Stem.c`, `Stem_2.c`, ... in address order. Asm units and units that
+  could not be merged sit between part files. 173 files have no asm left in their range; 26 of
+  those are one file, the rest split on declaration conflicts or data order (below).
+- **New matches.** `tools/integrate_pending.py` puts a function inside an original file's range
+  at `src/Dir/Stem/func_XXXXXXXX.c` (EE-GCC files still go to `src/lib/`). Outside those ranges:
+  `src/main/[<tu>/]func_XXXXXXXX.c` as before.
+- **Merging later.** After integrating, run `python tools/merge_units.py --all` (or name the
+  modules, e.g. `SFOGame/Source/human`), then the full build. New units and neighbouring part
+  files are merged when the byte check passes and the part files are renumbered; a lone unit is
+  renamed to the next part-file name. `-v` prints why groups split. Most splits are conflicting
+  declarations of one helper in different blocks (`cMessage_dtor`, container helpers) or C and
+  C++ blocks declaring the same function: give the helper one prototype in a shared header and
+  rerun. "data subsegments not adjacent" needs the retail data order and cannot be merged.
+- **Not placed:** 982 units under `src/main/` (template/inline code at file boundaries that the
+  prototypes attribute to headers only, code added after the prototypes, `src/main/sinit/`) and
+  22 EE-GCC units inside game files' ranges (they stay in `src/lib/`).
+- **Progress categories:** `main` plus `game`, `libs` and `sdk` (configure.py).
+
 ## Merging into translation units
 
-Matched functions are first committed one per file. Fully matched modules are then merged
-into one translation unit per original source file (`src/main/<mod>/<mod>.c`), checked
-byte for byte over the whole unit's code and data. Merge batches are prepared in
-`build/cleanup/` (not committed) with an apply script that refuses a changed tree and a
-revert list. On 2026-10-19 `merge_units.py --all-complete` merged 284 units of 61 complete
-modules into 110; run it again whenever modules become complete. `--unmerge` cannot split
-`main/guiTextListWidget/guiTextListWidget_6`, whose blocks are themselves earlier merged units. Gotchas: every merged block ends with an empty `static inline` function so
-the compiler emits each function in the right C/C++ mode; MW 3.0.3 and 3.0b38 order
-locals differently; a shared helper prototype that callers use inconsistently is declared
-K&R in a shared header (for example `include/SFOLobby_helpers.h`).
+Matched functions are first committed one per file, then merged per original source file
+(above; docs/merge_units.md). Each merge is checked byte for byte over the whole unit's code and
+data. `--unmerge` cannot split units whose blocks are themselves earlier merged units. Gotchas:
+every merged block ends with an empty `static inline` function so the compiler emits each
+function in the right C/C++ mode; MW 3.0.3 and 3.0b38 order locals differently; a shared helper
+prototype that callers use inconsistently is declared K&R in a shared header (for example
+`include/SFOLobby_helpers.h`).
 
 ## Known blocked work
 

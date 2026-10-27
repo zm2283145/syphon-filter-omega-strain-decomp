@@ -119,7 +119,16 @@ How each block is put together:
   `#if 0 /* merge_units */ ... #endif`, and a call macro is added in its place:
   `#define f(a, b) ((Ret)f((T1)(a), (T2)(b)))`. The call stays a direct `jal`;
   casting to a function-pointer type would give `jalr` and not match. The
-  macro is `#undef`'d at the end of the block.
+  macro is `#undef`'d at the end of the block. `extern "C"` is ignored when
+  prototypes are compared.
+- **A prototype that a later block's definition contradicts** (C blocks
+  only, e.g. `void f(void *)` declared in one block, `int f(struct A *p) {...}`
+  defined in a later one). The early prototype is disabled the same way and
+  replaced by an unprototyped declaration with the definition's return type,
+  `int f(); /* merge_units */`, which C accepts before the definition. Not
+  used when the definition has `char`, `short` or `float` parameters (default
+  promotions would make it incompatible). The byte check decides whether the
+  early block's calls still give the retail code.
 - **Conflicting object declarations** (`extern char D_X;` against
   `char D_X[]`): the same approach with `#define D_X (*(T*)&D_X)` or
   `((T*)&D_X)`.
@@ -173,6 +182,17 @@ writing:
   - A block that *defines* a function another block declared differently.
 - **Sections the build cannot link**, for example `.bss`/COMMON. These only
   showed up in experiments.
+
+The check links with the symbol addresses from splat plus `config/extra.ld`
+and `build/undefined_*_auto.txt` (quoted, since C++ names can hold any
+character). Some invalid merged sources make Metrowerks print the same error
+forever; `check_match.compile_with` stops a compiler after 1 MB of output, so
+such a group just splits.
+
+Split reasons over the whole reorganisation (last pass, `-v`): conflicting
+redeclarations 473, data subsegments not adjacent 396, C/C++ `illegal function
+overloading` 394, code differs/longer/shorter 260, class redefined 83, others
+about 300.
 
 `main/sinit` (static initialisers of many modules, in the tail) is never
 merged.

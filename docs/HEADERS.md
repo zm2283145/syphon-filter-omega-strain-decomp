@@ -28,8 +28,8 @@ Rules of thumb:
 | `rtudp_types.h` | lib net: RtUdpSlot (0xC), RtUdpPeer (0x28; addr@0x12, port@0x22), RtUdpObj (0x1B4) - the 'Upnp*' objects | `RtUdpObj, RtUdpPeer` | 0 | build/agents/types1/proof/rtudp_types_a.c |
 | `script_arg.h` | ScriptArg union {i,f,p,b,c,u8} (4 bytes) for Script_* natives; include FIRST, before any *_types.h | `ScriptArg` | 0 | build/agents/types1/proof/script_arg_a.c |
 | `sif_rpc_types.h` | lib: SifRpcHeader (0x10), SifRpcClientData (0x28; server@0x24) for sceSifBindRpc/CallRpc wrappers | `SifRpcClientData` | 0 | build/agents/types1/proof/sif_rpc_types_a.c |
-| `frontend.h` | main/frontend: FrontEndScene (0x3C; archives@0x2C, characters@0x38), FrontEndScene_vtable / g_skelManager / g_dataRoot aliases | `FrontEndScene` | 4 | src/main/frontend/func_00229D30.c |
-| `movie_player.h` | main/MoviePlayer: MovieBuffers (10 x {aligned, raw}), MOVIE_BUF_SIZE_0..9, MOVIE_ALIGN64 | `MovieBuffers` | 1 | src/main/MoviePlayer/MoviePlayer.c |
+| `frontend.h` | main/frontend: FrontEndScene (0x3C; archives@0x2C, characters@0x38), FrontEndScene_vtable / g_skelManager / g_dataRoot aliases | `FrontEndScene` | 4 | src/SFOGame/Source/frontend_4.c |
+| `movie_player.h` | main/MoviePlayer: MovieBuffers (10 x {aligned, raw}), MOVIE_BUF_SIZE_0..9, MOVIE_ALIGN64 | `MovieBuffers` | 1 | src/Libs/SFOLib/Source/MoviePlayer_2.c |
 | `ezNet.h` | lib/libezcnf + libezctl: RPC server ids, function numbers, buffer sizes, aliases for modId/rpcBound/cd/rpcBuf; SIF RPC + scePrintf (void) prototypes | `EZNETCNF_*, EZNETCTL_*, ezNetCnf_*, ezNetCtl_*` | 2 | src/lib/libezctl/libezctl.c |
 | `sound_event.h` | SoundRequest (0x190), SoundEvent (0x1D0, SoundEvent_Ctor users), SoundEventP (0x1C0 aligned16, CtorFromPreset/WrapAction users) + protos | `SoundRequest, SoundEvent, SoundEventP, SOUND_EVENT_NO_PROTOS` | 0 | build/agents/types1/proof/sound_event_a.c |
 | `sso_string.h` | SsoString: 12-byte short/long string {h(isLong:1,len:7), longLen, longData}; SSO_IS_LONG; ctor/dtor/data/assign/reserve protos | `SsoString, SSO_IS_LONG, SSO_STRING_NO_PROTOS` | 0 | build/agents/types1/proof/sso_string_a.c |
@@ -38,70 +38,70 @@ Rules of thumb:
 
 | Header | Provides | Use | Users | Example |
 |---|---|---|---|---|
-| `types.h` | Core typedefs and generic layouts (PtrVec, Iter, List, Vec4 aligned16, ...) used almost everywhere | `Vec4, PtrVec, Iter` | 7431 | src/lib/func_00102A18.c |
+| `types.h` | Core typedefs and generic layouts (PtrVec, Iter, List, Vec4 aligned16, ...) used almost everywhere | `Vec4, PtrVec, Iter` | 7431 | src/lib/libgraph/libgraph_102A18.c |
 
 ## Allocation (Mem_Alloc / allocator guard / new T)
 
 | Header | Provides | Use | Users | Example |
 |---|---|---|---|---|
 | `alloc_deallocate.h` | allocator<T>::deallocate(p,n) clones: Mem_Free when non-null | `DEFINE_ALLOC_DEALLOCATE, DEFINE_ALLOC_FREE_WRAPPER` | 0 | - |
-| `alloc_guard.h` | AllocGuard scoped allocator lock around Mem_Alloc/Mem_Free (C++ RAII form of the retail lock/unlock pair) | `AllocGuard` | 361 | src/main/func_00139090.c |
-| `guarded_allocate.h` | allocator allocate(size,pool,file,line): Mem_Alloc under the guard | `DEFINE_GUARDED_ALLOCATE` | 2 | src/main/func_0013D5C0.c |
-| `guarded_base_destroy_release.h` | release(ptr,...) calling destroy(p,0) then guarded Mem_Free | `DEFINE_GUARDED_BASE_DESTROY_RELEASE` | 1 | src/main/func_001EF950.c |
-| `guarded_destroy_release.h` | allocator release(ptr,pool,destroy,file,line) template clones | `DEFINE_GUARDED_DESTROY_RELEASE` | 10 | src/main/func_00139F60.c |
-| `guarded_new.h` | "new T" factories: guarded Mem_Alloc(0,size,file,42) + ctor / vtable store | `DEFINE_GUARDED_NEW_CTOR, DEFINE_GUARDED_NEW_VT, DEFINE_GUARDED_NEW_VT_INT` | 43 | src/main/func_0028B2C0.c |
+| `alloc_guard.h` | AllocGuard scoped allocator lock around Mem_Alloc/Mem_Free (C++ RAII form of the retail lock/unlock pair) | `AllocGuard` | 361 | src/main/game/game_139060.c |
+| `guarded_allocate.h` | allocator allocate(size,pool,file,line): Mem_Alloc under the guard | `DEFINE_GUARDED_ALLOCATE` | 2 | src/SFOGame/Source/main_6.c |
+| `guarded_base_destroy_release.h` | release(ptr,...) calling destroy(p,0) then guarded Mem_Free | `DEFINE_GUARDED_BASE_DESTROY_RELEASE` | 1 | src/SFOGame/Source/humanCollision_43.c |
+| `guarded_destroy_release.h` | allocator release(ptr,pool,destroy,file,line) template clones | `DEFINE_GUARDED_DESTROY_RELEASE` | 10 | src/main/game/game_139EE0.c |
+| `guarded_new.h` | "new T" factories: guarded Mem_Alloc(0,size,file,42) + ctor / vtable store | `DEFINE_GUARDED_NEW_CTOR, DEFINE_GUARDED_NEW_VT, DEFINE_GUARDED_NEW_VT_INT` | 43 | src/SFOGame/Source/GuiAccountLogin_6.c |
 | `guarded_new_init.h` | "new T" factories with inline base ctor + per-field init list (GN_B/GN_W/GN_F/GN_VT) | `DEFINE_GUARDED_NEW_VT_INIT` | 8 | src/main/func_00288C70.c |
-| `guarded_release.h` | allocator deallocate(ptr,pool,flags,file,line) template clones | `DEFINE_GUARDED_RELEASE` | 11 | src/main/func_0013F5F0.c |
-| `hook_free_ptr.h` | lib gcc296: free *pp through the installed free hook D_004E1D.. | `DEFINE_HOOK_FREE_PTR_RET0, DEFINE_HOOK_FREE_PTR` | 5 | src/lib/func_003186E0.c |
-| `o1_new_construct.h` | -O1 units: allocate size bytes then construct | `DEFINE_O1_NEW_CONSTRUCT` | 3 | src/main/func_002097C0.c |
-| `ptr_local_release.h` | lib gcc2.95: release p via address of a local copy | `DEFINE_PTR_LOCAL_RELEASE` | 2 | src/lib/func_00313660.c |
+| `guarded_release.h` | allocator deallocate(ptr,pool,flags,file,line) template clones | `DEFINE_GUARDED_RELEASE` | 11 | src/SFOGame/Source/scene_11.c |
+| `hook_free_ptr.h` | lib gcc296: free *pp through the installed free hook D_004E1D.. | `DEFINE_HOOK_FREE_PTR_RET0, DEFINE_HOOK_FREE_PTR` | 5 | src/lib/medius/medius_318658.c |
+| `o1_new_construct.h` | -O1 units: allocate size bytes then construct | `DEFINE_O1_NEW_CONSTRUCT` | 3 | src/SFOGame/Source/humanAnimData_80.c |
+| `ptr_local_release.h` | lib gcc2.95: release p via address of a local copy | `DEFINE_PTR_LOCAL_RELEASE` | 2 | src/lib/medius/medius_313660.c |
 
 ## Destructor and vtable idioms
 
 | Header | Provides | Use | Users | Example |
 |---|---|---|---|---|
-| `anim_channel_base_dtor.h` | AnimChannelBase (vtable D_004DA380) deleting dtor | `DEFINE_ANIM_CHANNEL_BASE_DTOR` | 2 | src/main/gameCamera/func_0017ECD0.c |
-| `anim_channel_dtor.h` | AnimChannelBase-derived (vtable D_004DA840) deleting dtors | `DEFINE_ANIM_CHANNEL_DTOR, DEFINE_ANIM_CHANNEL_DTOR_DEEP` | 4 | src/main/human/func_001AEFE0.c |
-| `base_dtor_chain.h` | Deleting dtor whose only work is the non-deleting base dtor | `DEFINE_BASE_DTOR_CHAIN` | 81 | src/main/func_0013B2E0.c |
-| `buf_holder_dtor.h` | Buffer-holder dtor clones (free data at +8), deep/shallow | `BufHolder` | 75 | src/main/func_0013A040.c |
-| `clear_buffer_dtor.h` | Deleting dtor of a vector of trivially destructible elements | `DEFINE_CLEAR_BUFFER_DTOR` | 10 | src/main/func_00175240.c |
+| `anim_channel_base_dtor.h` | AnimChannelBase (vtable D_004DA380) deleting dtor | `DEFINE_ANIM_CHANNEL_BASE_DTOR` | 2 | src/SFOGame/Source/gameCamera_11.c |
+| `anim_channel_dtor.h` | AnimChannelBase-derived (vtable D_004DA840) deleting dtors | `DEFINE_ANIM_CHANNEL_DTOR, DEFINE_ANIM_CHANNEL_DTOR_DEEP` | 4 | src/SFOGame/Source/human_98.c |
+| `base_dtor_chain.h` | Deleting dtor whose only work is the non-deleting base dtor | `DEFINE_BASE_DTOR_CHAIN` | 81 | src/main/game/game_13B2E0.c |
+| `buf_holder_dtor.h` | Buffer-holder dtor clones (free data at +8), deep/shallow | `BufHolder` | 75 | src/main/game/game_13A040.c |
+| `clear_buffer_dtor.h` | Deleting dtor of a vector of trivially destructible elements | `DEFINE_CLEAR_BUFFER_DTOR` | 10 | src/SFOGame/Source/Env_2.c |
 | `copy_assign_ret.h` | Member-wise copy assignment with inline 16-byte operator= (CAQ4) | `CAQ4, CAQ4Asg` | 0 | - |
-| `direct_base_dtor.h` | Deleting dtor that only runs baseDtor(self,0) (no extra null test) | `DEFINE_DIRECT_BASE_DTOR` | 32 | src/main/func_001F2480.c |
-| `gobj_flag_dtor.h` | Deleting dtors of GOBJ-derived classes with inlined middle dtor | `DEFINE_GOBJ_FLAG_DTOR, DEFINE_GOBJ_FLAG_DTOR2` | 2 | src/main/func_001C5590.c |
-| `guarded_buffer_dtor.h` | Deleting dtors of {first,count,buffer} holders (clear/call variants) | `GuardedBuffer` | 21 | src/main/func_00148380.c |
+| `direct_base_dtor.h` | Deleting dtor that only runs baseDtor(self,0) (no extra null test) | `DEFINE_DIRECT_BASE_DTOR` | 32 | src/SFOGame/Source/humanAnimData_6.c |
+| `gobj_flag_dtor.h` | Deleting dtors of GOBJ-derived classes with inlined middle dtor | `DEFINE_GOBJ_FLAG_DTOR, DEFINE_GOBJ_FLAG_DTOR2` | 2 | src/SFOGame/Source/GameParticle_4.c |
+| `guarded_buffer_dtor.h` | Deleting dtors of {first,count,buffer} holders (clear/call variants) | `GuardedBuffer` | 21 | src/SFOGame/Source/npc_3.c |
 | `identity_return.h` | Functions returning their first argument (inline ctor/conversion) | `DEFINE_IDENTITY_RETURN` | 13 | src/main/func_002098D0.c |
-| `member0_dtor.h` | Deleting dtor destroying only the member at offset 0 (+nested variant) | `DEFINE_MEMBER0_DTOR, DEFINE_NESTED_MEMBER0_DTOR` | 7 | src/main/func_0013BF00.c |
-| `member_dtor_chain.h` | Deleting dtor with one nested member dtor | `DEFINE_MEMBER_DTOR_CHAIN` | 16 | src/main/func_00296D80.c |
-| `message_payload_dtor_460ec0.h` | Message dtor with payload subobject (+0x20) two members, 0x460EC0 family | `DEFINE_MESSAGE_PAYLOAD_DTOR_460EC0` | 2 | src/main/func_00462EB0.c |
-| `message_two_member_dtor.h` | Deleting dtor of a message whose payload at +0x20 owns two members | `DEFINE_MESSAGE_TWO_MEMBER_DTOR` | 19 | src/main/func_00327090.c |
+| `member0_dtor.h` | Deleting dtor destroying only the member at offset 0 (+nested variant) | `DEFINE_MEMBER0_DTOR, DEFINE_NESTED_MEMBER0_DTOR` | 7 | src/main/game/game_13BF00.c |
+| `member_dtor_chain.h` | Deleting dtor with one nested member dtor | `DEFINE_MEMBER_DTOR_CHAIN` | 16 | src/SFOGame/Source/GuiCommandCenter_10.c |
+| `message_payload_dtor_460ec0.h` | Message dtor with payload subobject (+0x20) two members, 0x460EC0 family | `DEFINE_MESSAGE_PAYLOAD_DTOR_460EC0` | 2 | src/SFOGame/Source/GuiEndGameObjectives_6.c |
+| `message_two_member_dtor.h` | Deleting dtor of a message whose payload at +0x20 owns two members | `DEFINE_MESSAGE_TWO_MEMBER_DTOR` | 19 | src/SFOGame/Source/GuiSlideShow_2.c |
 | `nested_null_dtor.h` | Deleting dtor with base dtor inlined behind repeated null checks (2/3 levels) | `DEFINE_NESTED_NULL_DTOR2, DEFINE_NESTED_NULL_DTOR3` | 21 | src/main/func_0015BD60.c |
 | `o1_tree_dtor.h` | -O1 deleting dtor of a tree container | `DEFINE_O1_TREE_DTOR` | 3 | src/main/func_0020C4C0.c |
-| `obj_list_dtor.h` | Object-list dtor clones (erase all, free sentinel) | `ObjList` | 35 | src/main/func_0013DA50.c |
-| `obj_list_dtor_mid.h` | Object-list dtor with two null tests | `DEFINE_OBJ_LIST_DTOR_MID` | 6 | src/main/func_00416020.c |
+| `obj_list_dtor.h` | Object-list dtor clones (erase all, free sentinel) | `ObjList` | 35 | src/SFOGame/Source/scene_4.c |
+| `obj_list_dtor_mid.h` | Object-list dtor with two null tests | `DEFINE_OBJ_LIST_DTOR_MID` | 6 | src/Libs/SFOLib/Source/guiCanvas_6.c |
 | `obj_list_dtor_p.h` | Callee-parameterised object-list dtors | `DEFINE_OBJ_LIST_DTOR_P, DEFINE_OBJ_LIST_DTOR_MID_P, DEFINE_OBJ_LIST_DTOR_SHALLOW_P` | 0 | - |
-| `obj_list_dtor_shallow.h` | Object-list dtor with one null test | `DEFINE_OBJ_LIST_DTOR_SHALLOW` | 5 | src/main/func_004161F0.c |
-| `owned_buffer8_dtor.h` | Deleting dtor of a holder owning the allocation at +8 | `DEFINE_OWNED_BUFFER8_DTOR` | 5 | src/main/func_00352380.c |
-| `owned_buffer8_dtor_deep.h` | owned_buffer8_dtor.h with extra inlined null tests (MID/DEEP) | `DEFINE_OWNED_BUFFER8_DTOR_MID, DEFINE_OWNED_BUFFER8_DTOR_DEEP` | 6 | src/main/func_00351230.c |
-| `ptr4_holder_dtor.h` | Deleting dtor of a holder owning the allocation at +4 | `DEFINE_PTR4_HOLDER_DTOR` | 7 | src/main/func_0026A000.c |
-| `release_buffer_call_dtor.h` | Deleting dtor: preFn(self) then release buffer at +8 | `DEFINE_RELEASE_BUFFER_CALL_DTOR` | 4 | src/main/func_0032A110.c |
-| `self_call_dtor.h` | Deleting dtor whose body is one cleanupFn(self) call | `DEFINE_SELF_CALL_DTOR` | 2 | src/main/func_00374740.c |
-| `stream_string_dtor.h` | String-holder dtor clones (31 copies) | `StreamStringStorage` | 31 | src/main/func_00138B70.c |
-| `triple_member_dtor_de8a0.h` | Deleting dtor of the vtable D_004DE8A0 class (three members) | `DEFINE_TRIPLE_MEMBER_DTOR_DE8A0` | 3 | src/main/func_002A9390.c |
-| `trivial_dtor.h` | Deleting dtor of a class with nothing to destroy | `DEFINE_TRIVIAL_DTOR` | 57 | src/main/func_0013DFD0.c |
-| `two_member_dtor.h` | Deleting dtor destroying two members | `DEFINE_TWO_MEMBER_DTOR` | 2 | src/main/func_00457A30.c |
-| `vector_array_member_dtor.h` | Deleting dtor of an object whose subobject +0x4C owns a vector | `DEFINE_VECTOR_ARRAY_MEMBER_DTOR` | 3 | src/main/func_002C1E00.c |
-| `vector_destroy_dtor.h` | Deleting dtor of a vector whose elements need destruction | `DEFINE_VECTOR_DESTROY_DTOR, DEFINE_VECTOR_DESTROY_DTOR_FILE` | 33 | src/main/func_00139DF0.c |
-| `vector_release_dtor.h` | Deleting dtor of a vector destroyed via destroyFn(self) | `DEFINE_VECTOR_RELEASE_DTOR` | 16 | src/main/func_00139EE0.c |
-| `vslot_classes.h` | Placeholder polymorphic classes for calling virtuals by slot index (VSlots67 = generic 67-slot GUI view; see gui_widget_vslots.h) | `VSlots67, VSlotsInt22` | 6 | src/main/func_002610F0.c |
-| `vslot_pad.h` | VPAD1..VPAD32(x): dummy virtual slots to reach slot N in C++ views | `VPAD1, VPAD2, VPAD4` | 122 | src/main/func_00148290.c |
-| `vt4_dtor.h` | Deleting dtors for classes with vtable at +4 | `DEFINE_VT4_DTOR, DEFINE_VT4_DTOR2` | 2 | src/main/func_00261950.c |
-| `vt8_chain_dtor.h` | Deleting dtor for classes with vtable at +8 | `DEFINE_VT8_CHAIN_DTOR` | 6 | src/main/func_003CB530.c |
-| `vtable2_base_dtor.h` | Deleting dtor two levels below an out-of-line base dtor (+member variant) | `DEFINE_VTABLE2_BASE_DTOR, DEFINE_VTABLE2_MEMBER_DTOR` | 69 | src/main/func_0020FE40.c |
-| `vtable3_base_dtor.h` | Deleting dtor three levels above an out-of-line base dtor | `DEFINE_VTABLE3_BASE_DTOR` | 4 | src/main/func_00292760.c |
+| `obj_list_dtor_shallow.h` | Object-list dtor with one null test | `DEFINE_OBJ_LIST_DTOR_SHALLOW` | 5 | src/Libs/SFOLib/Source/guiCanvas_6.c |
+| `owned_buffer8_dtor.h` | Deleting dtor of a holder owning the allocation at +8 | `DEFINE_OWNED_BUFFER8_DTOR` | 5 | src/main/GuiMissionStatList/GuiMissionStatList_352320.c |
+| `owned_buffer8_dtor_deep.h` | owned_buffer8_dtor.h with extra inlined null tests (MID/DEEP) | `DEFINE_OWNED_BUFFER8_DTOR_MID, DEFINE_OWNED_BUFFER8_DTOR_DEEP` | 6 | src/SFOGame/Source/GuiMissionStatistics_14.c |
+| `ptr4_holder_dtor.h` | Deleting dtor of a holder owning the allocation at +4 | `DEFINE_PTR4_HOLDER_DTOR` | 7 | src/SFOGame/Source/scriptUtils_27.c |
+| `release_buffer_call_dtor.h` | Deleting dtor: preFn(self) then release buffer at +8 | `DEFINE_RELEASE_BUFFER_CALL_DTOR` | 4 | src/main/GuiKeyboard/GuiKeyboard_32A0B0.c |
+| `self_call_dtor.h` | Deleting dtor whose body is one cleanupFn(self) call | `DEFINE_SELF_CALL_DTOR` | 2 | src/Libs/SFOLib/Source/lights_9.c |
+| `stream_string_dtor.h` | String-holder dtor clones (31 copies) | `StreamStringStorage` | 31 | src/SFOGame/Source/game_53.c |
+| `triple_member_dtor_de8a0.h` | Deleting dtor of the vtable D_004DE8A0 class (three members) | `DEFINE_TRIPLE_MEMBER_DTOR_DE8A0` | 3 | src/SFOGame/Source/GuiNetJoinMission_10.c |
+| `trivial_dtor.h` | Deleting dtor of a class with nothing to destroy | `DEFINE_TRIVIAL_DTOR` | 57 | src/SFOGame/Source/scene_6.c |
+| `two_member_dtor.h` | Deleting dtor destroying two members | `DEFINE_TWO_MEMBER_DTOR` | 2 | src/SFOGame/Source/GuiStartMenu_33.c |
+| `vector_array_member_dtor.h` | Deleting dtor of an object whose subobject +0x4C owns a vector | `DEFINE_VECTOR_ARRAY_MEMBER_DTOR` | 3 | src/SFOGame/Source/GuiEquipmentModify_8.c |
+| `vector_destroy_dtor.h` | Deleting dtor of a vector whose elements need destruction | `DEFINE_VECTOR_DESTROY_DTOR, DEFINE_VECTOR_DESTROY_DTOR_FILE` | 33 | src/main/game/game_139D30.c |
+| `vector_release_dtor.h` | Deleting dtor of a vector destroyed via destroyFn(self) | `DEFINE_VECTOR_RELEASE_DTOR` | 16 | src/main/game/game_139EE0.c |
+| `vslot_classes.h` | Placeholder polymorphic classes for calling virtuals by slot index (VSlots67 = generic 67-slot GUI view; see gui_widget_vslots.h) | `VSlots67, VSlotsInt22` | 6 | src/SFOGame/Source/hud_radar.c |
+| `vslot_pad.h` | VPAD1..VPAD32(x): dummy virtual slots to reach slot N in C++ views | `VPAD1, VPAD2, VPAD4` | 122 | src/SFOGame/Source/npc_3.c |
+| `vt4_dtor.h` | Deleting dtors for classes with vtable at +4 | `DEFINE_VT4_DTOR, DEFINE_VT4_DTOR2` | 2 | src/SFOGame/Source/hud_radar_4.c |
+| `vt8_chain_dtor.h` | Deleting dtor for classes with vtable at +8 | `DEFINE_VT8_CHAIN_DTOR` | 6 | src/Libs/SFOLib/Source/system_8.c |
+| `vtable2_base_dtor.h` | Deleting dtor two levels below an out-of-line base dtor (+member variant) | `DEFINE_VTABLE2_BASE_DTOR, DEFINE_VTABLE2_MEMBER_DTOR` | 69 | src/SFOGame/Source/gameSound_msg_11.c |
+| `vtable3_base_dtor.h` | Deleting dtor three levels above an out-of-line base dtor | `DEFINE_VTABLE3_BASE_DTOR` | 4 | src/SFOGame/Source/GuiAgentLoad.c |
 | `vtable_base_dtor.h` | Deleting dtor: restore own vtable, call base dtor, free if flag&1 (most common dtor shape) | `DEFINE_VTABLE_BASE_DTOR` | 127 | src/main/func_0013A940.c |
 | `vtable_chain_dtor.h` | Deleting dtor with the whole vtable chain inlined (1/2/3 levels) | `DEFINE_VTABLE_CHAIN_DTOR1, DEFINE_VTABLE_CHAIN_DTOR2, DEFINE_VTABLE_CHAIN_DTOR3` | 31 | src/main/func_001007A0.c |
-| `vtable_member_base_dtor.h` | Deleting dtor: vtable, one member dtor, base dtor | `DEFINE_VTABLE_MEMBER_BASE_DTOR` | 6 | src/main/func_002AD000.c |
-| `vtable_nested_member_dtor.h` | Deleting dtor: vtable, member at +0x20 with nested member, base | `DEFINE_VTABLE_NESTED_MEMBER_DTOR` | 3 | src/main/interface_model/func_003F1E40.c |
+| `vtable_member_base_dtor.h` | Deleting dtor: vtable, one member dtor, base dtor | `DEFINE_VTABLE_MEMBER_BASE_DTOR` | 6 | src/SFOGame/Source/GuiMissionList_11.c |
+| `vtable_nested_member_dtor.h` | Deleting dtor: vtable, member at +0x20 with nested member, base | `DEFINE_VTABLE_NESTED_MEMBER_DTOR` | 3 | src/main/interface_model/interface_model_3F1E40.c |
 
 ## Containers and STL-like idioms (vector, list, rb-tree)
 
@@ -109,119 +109,119 @@ Rules of thumb:
 |---|---|---|---|---|
 | `bytevec_insert.h` | insert(pos,n,v) for 1-byte-element vector | `DEFINE_BYTEVEC_INSERT` | 3 | src/main/func_0033A700.c |
 | `fam5_container_assign.h` | Container assign through out-of-line iterator helpers | `DEFINE_CONTAINER_ASSIGN` | 0 | - |
-| `int_map_subscript.h` | map<int,V>::operator[](key) | `DEFINE_INT_MAP_SUBSCRIPT` | 2 | src/main/func_003E2DA0.c |
-| `int_tree_find.h` | rb-tree find(int key at node +0xC) | `DEFINE_INT_TREE_FIND` | 4 | src/main/func_003E2E60.c |
-| `iter_return_copy.h` | One-pointer iterator begin()/end() getters | `IterRet` | 12 | src/main/func_0026C360.c |
-| `keyed_copy.h` | Word-vector+flag element (16 bytes) assign / copy / copy_backward | `DEFINE_WORDVEC_ASSIGN, DEFINE_FLAGGED_COPY, DEFINE_FLAGGED_COPY_BACKWARD` | 3 | src/main/func_001C50A0.c |
-| `list_insert_before.h` | std::list insert of one int before *pos | `DEFINE_LIST_INSERT_BEFORE` | 7 | src/main/func_00138EA0.c |
+| `int_map_subscript.h` | map<int,V>::operator[](key) | `DEFINE_INT_MAP_SUBSCRIPT` | 2 | src/Libs/SFOLib/Source/scriptManager_40.c |
+| `int_tree_find.h` | rb-tree find(int key at node +0xC) | `DEFINE_INT_TREE_FIND` | 4 | src/Libs/SFOLib/Source/scriptManager_40.c |
+| `iter_return_copy.h` | One-pointer iterator begin()/end() getters | `IterRet` | 12 | src/SFOGame/Source/map_3.c |
+| `keyed_copy.h` | Word-vector+flag element (16 bytes) assign / copy / copy_backward | `DEFINE_WORDVEC_ASSIGN, DEFINE_FLAGGED_COPY, DEFINE_FLAGGED_COPY_BACKWARD` | 3 | src/SFOGame/Source/GameParticle.c |
+| `list_insert_before.h` | std::list insert of one int before *pos | `DEFINE_LIST_INSERT_BEFORE` | 7 | src/SFOGame/Source/game_55.c |
 | `list_insert_before_p.h` | list_insert_before with file symbols / holder release as params | `DEFINE_LIST_INSERT_BEFORE_P` | 0 | - |
-| `name_tree_find.h` | rb-tree find(48-byte name key at node +0x10) | `DEFINE_NAME_TREE_FIND` | 3 | src/main/func_002C23F0.c |
+| `name_tree_find.h` | rb-tree find(48-byte name key at node +0x10) | `DEFINE_NAME_TREE_FIND` | 3 | src/SFOGame/Source/GuiEquipmentModify_8.c |
 | `o1_vector_clear.h` | -O1 vector clear() | `DEFINE_O1_VECTOR_CLEAR` | 3 | src/main/func_0020C420.c |
 | `o1_vector_insert_fill.h` | -O1 vector insert(pos,n,v) | `DEFINE_O1_VECTOR_INSERT_FILL` | 3 | src/main/func_0020A080.c |
 | `o1_vector_reserve.h` | -O1 vector reserve(n) | `DEFINE_O1_VECTOR_RESERVE` | 3 | src/main/func_0020A790.c |
 | `object_list_erase_file.h` | object_list_erase_* with allocator file symbol params | `DEFINE_OBJECT_LIST_ERASE_RANGE_FILE, DEFINE_OBJECT_LIST_ERASE_ONE_FILE` | 10 | src/main/func_0015B860.c |
-| `object_list_erase_one.h` | Linked-list erase(pos) clones | `DEFINE_OBJECT_LIST_ERASE_ONE` | 5 | src/main/func_00138DA0.c |
-| `object_list_erase_range.h` | Linked-list erase(first,last) clones | `DEFINE_OBJECT_LIST_ERASE_RANGE` | 11 | src/main/func_00138C60.c |
-| `pod8_vector_erase.h` | erase(first,last) for 8-byte two-word elements | `Pod8Vector` | 8 | src/main/func_001BF440.c |
-| `prio_bitset.h` | Priority bitset {top; w[W]}: set/reset/test/find-top | `PB_DEFINE, PB_FIND_TOP` | 2 | src/main/func_001EC340.c |
-| `ptr_copy_loop.h` | Copy every element of one pointer container into another | `DEFINE_PTR_COPY_LOOP` | 3 | src/main/func_001F2BE0.c |
-| `ptrvec_insert.h` | insert(pos,n,src) for 4-byte-element vector (cap/count/data) | `DEFINE_PTRVEC_INSERT` | 12 | src/main/func_00139200.c |
-| `ptrvec_reserve.h` | reserve(n) for 4-byte-element vector | `DEFINE_PTRVEC_RESERVE` | 5 | src/main/func_001396D0.c |
-| `range_copy_assign.h` | copy(first,last,dest) with non-trivial assignment | `DEFINE_COPY_ELEMENT, DEFINE_RANGE_COPY_ASSIGN` | 7 | src/main/func_001BEC50.c |
-| `range_copy_backward_assign.h` | copy_backward(first,last,destEnd) with non-trivial assignment | `DEFINE_COPY_BACKWARD_ELEMENT, DEFINE_RANGE_COPY_BACKWARD_ASSIGN` | 6 | src/main/func_001BF2E0.c |
+| `object_list_erase_one.h` | Linked-list erase(pos) clones | `DEFINE_OBJECT_LIST_ERASE_ONE` | 5 | src/SFOGame/Source/game_54.c |
+| `object_list_erase_range.h` | Linked-list erase(first,last) clones | `DEFINE_OBJECT_LIST_ERASE_RANGE` | 11 | src/SFOGame/Source/game_54.c |
+| `pod8_vector_erase.h` | erase(first,last) for 8-byte two-word elements | `Pod8Vector` | 8 | src/main/human/human_1BF3A0.c |
+| `prio_bitset.h` | Priority bitset {top; w[W]}: set/reset/test/find-top | `PB_DEFINE, PB_FIND_TOP` | 2 | src/SFOGame/Source/humanCollision_29.c |
+| `ptr_copy_loop.h` | Copy every element of one pointer container into another | `DEFINE_PTR_COPY_LOOP` | 3 | src/SFOGame/Source/humanAnimData_9.c |
+| `ptrvec_insert.h` | insert(pos,n,src) for 4-byte-element vector (cap/count/data) | `DEFINE_PTRVEC_INSERT` | 12 | src/main/game/game_139200.c |
+| `ptrvec_reserve.h` | reserve(n) for 4-byte-element vector | `DEFINE_PTRVEC_RESERVE` | 5 | src/main/game/game_139200.c |
+| `range_copy_assign.h` | copy(first,last,dest) with non-trivial assignment | `DEFINE_COPY_ELEMENT, DEFINE_RANGE_COPY_ASSIGN` | 7 | src/main/human/human_1BEC50.c |
+| `range_copy_backward_assign.h` | copy_backward(first,last,destEnd) with non-trivial assignment | `DEFINE_COPY_BACKWARD_ELEMENT, DEFINE_RANGE_COPY_BACKWARD_ASSIGN` | 6 | src/main/human/human_1BF2E0.c |
 | `transfer_tree_allocator.h` | Net transfer rb-tree node allocator (unsigned compare form) | `TransferTreeAllocator` | 4 | src/main/NetObjectMgr/func_004304F0.c |
-| `transfer_tree_destroy.h` | Net transfer rb-tree destroy (TransferTreeNode) | `TransferTreeNode` | 1 | src/main/NetObjectMgr/func_0042F970.c |
-| `transfer_tree_mutations.h` | Net transfer rb-tree insert/next helpers (parent/color low bit) | `TransferObjectValue, TransferObjectInsertResult, PendingTransferValue` | 4 | src/main/NetObjectMgr/func_0042F030.c |
-| `tree_erase3.h` | Recursive rb-tree subtree erase as CW inlined it 3 deep | `DEFINE_TREE_ERASE3` | 9 | src/main/func_0013F310.c |
-| `tree_erase3_strval.h` | tree_erase3 for string-valued nodes | `DEFINE_TREE_ERASE3_STRVAL` | 3 | src/main/func_0040A380.c |
-| `tree_erase_iter.h` | rb-tree erase(iterator), trivial node | `DEFINE_TREE_ERASE_ITER` | 4 | src/main/func_0040CB00.c |
-| `tree_find.h` | rb-tree find(key) clones | `DEFINE_TREE_FIND` | 8 | src/main/func_0013C4A0.c |
-| `tree_insert_obj.h` | rb-tree node insert for a class value | `DEFINE_TREE_INSERT_OBJ` | 5 | src/main/func_0013C570.c |
+| `transfer_tree_destroy.h` | Net transfer rb-tree destroy (TransferTreeNode) | `TransferTreeNode` | 1 | src/main/NetObjectMgr/NetObjectMgr_42F760.c |
+| `transfer_tree_mutations.h` | Net transfer rb-tree insert/next helpers (parent/color low bit) | `TransferObjectValue, TransferObjectInsertResult, PendingTransferValue` | 4 | src/Libs/SFOLib/Source/NetObjectMgr_7.c |
+| `tree_erase3.h` | Recursive rb-tree subtree erase as CW inlined it 3 deep | `DEFINE_TREE_ERASE3` | 9 | src/SFOGame/Source/scene_10.c |
+| `tree_erase3_strval.h` | tree_erase3 for string-valued nodes | `DEFINE_TREE_ERASE3_STRVAL` | 3 | src/main/materialProperties/materialProperties_40A380.c |
+| `tree_erase_iter.h` | rb-tree erase(iterator), trivial node | `DEFINE_TREE_ERASE_ITER` | 4 | src/Libs/SFOLib/Source/GobjMan_15.c |
+| `tree_find.h` | rb-tree find(key) clones | `DEFINE_TREE_FIND` | 8 | src/SFOGame/Source/main.c |
+| `tree_insert_obj.h` | rb-tree node insert for a class value | `DEFINE_TREE_INSERT_OBJ` | 5 | src/SFOGame/Source/main_2.c |
 | `tree_insert_obj_off.h` | tree_insert_obj with value offset parameter | `DEFINE_TREE_INSERT_OBJ_OFF` | 1 | src/main/humanIk/func_001DF7A0.c |
-| `tree_insert_unique_kt.h` | set/map<KT>::insert(value) -> pair<it,bool> | `DEFINE_TREE_INSERT_UNIQUE_KT` | 1 | src/main/func_003E3250.c |
-| `tree_insert_unique_u32.h` | set/map<unsigned>::insert(value) -> pair<it,bool> | `DEFINE_TREE_INSERT_UNIQUE_U32` | 3 | src/main/func_0040CC40.c |
-| `tree_insert_v8.h` | rb-tree node insert for 8-byte value | `DEFINE_TREE_INSERT_V8` | 6 | src/main/func_0013F820.c |
-| `tree_node_free.h` | Recursive rb-tree node release + root dtor | `TreeFreeNode` | 10 | src/main/func_0013BE90.c |
-| `vector_erase_destroy.h` | vector::erase(first,last) for non-trivial elements | `DEFINE_ERASE_ELEMENT, DEFINE_VECTOR_ERASE_DESTROY` | 9 | src/main/func_001BEB20.c |
-| `vector_init_range.h` | vector<T>(first,last) for POD T | `DEFINE_VECTOR_INIT_RANGE` | 4 | src/main/func_002C2510.c |
-| `vector_insert_fill8.h` | vector<T>::insert(pos,n,v) for 8-byte POD | `DEFINE_VECTOR_INSERT_FILL8` | 8 | src/main/func_001BF5A0.c |
-| `vector_insert_fill_cnt.h` | vector<T>::insert(pos,n,v) POD, count cached | `DEFINE_VECTOR_INSERT_FILL_CNT` | 12 | src/main/func_00147CD0.c |
-| `vector_insert_fill_cse.h` | vector<T>::insert(pos,n,v) POD, old end recomputed | `DEFINE_VECTOR_INSERT_FILL_CSE` | 10 | src/main/func_00174B60.c |
+| `tree_insert_unique_kt.h` | set/map<KT>::insert(value) -> pair<it,bool> | `DEFINE_TREE_INSERT_UNIQUE_KT` | 1 | src/main/scriptManager/scriptManager_3E3250.c |
+| `tree_insert_unique_u32.h` | set/map<unsigned>::insert(value) -> pair<it,bool> | `DEFINE_TREE_INSERT_UNIQUE_U32` | 3 | src/Libs/SFOLib/Source/GobjMan_16.c |
+| `tree_insert_v8.h` | rb-tree node insert for 8-byte value | `DEFINE_TREE_INSERT_V8` | 6 | src/main/weapon/weapon_13F820.c |
+| `tree_node_free.h` | Recursive rb-tree node release + root dtor | `TreeFreeNode` | 10 | src/main/game/game_13BE90.c |
+| `vector_erase_destroy.h` | vector::erase(first,last) for non-trivial elements | `DEFINE_ERASE_ELEMENT, DEFINE_VECTOR_ERASE_DESTROY` | 9 | src/main/human/human_1BEB20.c |
+| `vector_init_range.h` | vector<T>(first,last) for POD T | `DEFINE_VECTOR_INIT_RANGE` | 4 | src/SFOGame/Source/GuiEquipmentModify_8.c |
+| `vector_insert_fill8.h` | vector<T>::insert(pos,n,v) for 8-byte POD | `DEFINE_VECTOR_INSERT_FILL8` | 8 | src/main/human/human_1BF3A0.c |
+| `vector_insert_fill_cnt.h` | vector<T>::insert(pos,n,v) POD, count cached | `DEFINE_VECTOR_INSERT_FILL_CNT` | 12 | src/SFOGame/Source/npc_2.c |
+| `vector_insert_fill_cse.h` | vector<T>::insert(pos,n,v) POD, old end recomputed | `DEFINE_VECTOR_INSERT_FILL_CSE` | 10 | src/SFOGame/Source/Env.c |
 | `vector_insert_fill_obj.h` | vector<T>::insert(pos,n,v) for class elements | `DEFINE_VECTOR_INSERT_FILL_OBJ` | 14 | src/main/func_00183D90.c |
-| `vector_insert_fill_t.h` | vector_insert_fill8 generalised to any POD T | `DEFINE_VECTOR_INSERT_FILL_T` | 1 | src/main/func_003AAEE0.c |
-| `vector_insert_fill_tw.h` | vector_insert_fill_t for 8-byte T copied as two words | `DEFINE_VECTOR_INSERT_FILL_TW` | 1 | src/main/backpack/func_00258E10.c |
+| `vector_insert_fill_t.h` | vector_insert_fill8 generalised to any POD T | `DEFINE_VECTOR_INSERT_FILL_T` | 1 | src/Libs/SFOLib/Source/ska_2.c |
+| `vector_insert_fill_tw.h` | vector_insert_fill_t for 8-byte T copied as two words | `DEFINE_VECTOR_INSERT_FILL_TW` | 1 | src/SFOGame/Source/hud_weapon.c |
 | `vector_insert_fill_v2.h` | vector insert(pos,n,v), second library build | `DEFINE_VECTOR_INSERT_FILL_V2` | 2 | src/main/func_00180BD0.c |
 | `vector_resize.h` | vector::resize(n,value) clones | `DEFINE_RESIZE_ELEMENT, DEFINE_VECTOR_RESIZE` | 31 | src/main/func_00183B70.c |
 | `word_fill_range.h` | Fill arr[first..last] with *value (C) | `DEFINE_WORD_FILL_RANGE` | 2 | src/main/func_0013AC60.c |
-| `word_vector_erase.h` | erase(first,last) for 4-byte-element vector | `WordVector` | 4 | src/main/func_002939D0.c |
+| `word_vector_erase.h` | erase(first,last) for 4-byte-element vector | `WordVector` | 4 | src/main/GuiSaveAgentWidget/GuiSaveAgentWidget_2939D0.c |
 
 ## Strings (12-byte short/long string clones)
 
 | Header | Provides | Use | Users | Example |
 |---|---|---|---|---|
-| `canonical_key_copy.h` | Inlined 48-byte CanonicalKey copy (47 chars + NUL pad) | `CKC_COPY, CKC_COPY_S, CANONICAL_KEY_INIT` | 5 | src/main/human/func_0018C9D0.c |
-| `short_string_assign.h` | string assign clones | `DEFINE_SHORT_STRING_ASSIGN` | 21 | src/main/func_0013D680.c |
-| `short_string_assign_inl.h` | string assign with String_Replace inlined | `DEFINE_SHORT_STRING_ASSIGN_INL` | 2 | src/main/func_0029FB30.c |
-| `short_string_compare.h` | compare(a,b) for the short/long string | `DEFINE_SHORT_STRING_COMPARE` | 4 | src/main/func_0013C310.c |
-| `short_string_copy_ctor.h` | string copy ctor clones | `DEFINE_SHORT_STRING_COPY_CTOR` | 6 | src/main/func_0013BCB0.c |
-| `short_string_data.h` | string data() clones | `DEFINE_SHORT_STRING_DATA` | 2 | src/main/human/func_00189540.c |
-| `short_string_replace.h` | replace(pos,n,const string&) clones | `DEFINE_SHORT_STRING_REPLACE` | 20 | src/main/func_0013D710.c |
-| `short_string_substr_ctor.h` | string(src,pos,n) clones | `DEFINE_SHORT_STRING_SUBSTR_CTOR` | 2 | src/main/func_0041BA80.c |
-| `string_compare_range.h` | String_Compare(self,pos,n,s,len) clones | `DEFINE_STRING_COMPARE_RANGE` | 10 | src/main/func_0013C370.c |
-| `string_int_pair_copy_ctor.h` | {string; int} pair copy ctor | `DEFINE_STRING_INT_PAIR_COPY_CTOR` | 3 | src/main/func_003D1490.c |
-| `string_replace_range.h` | replace(pos,n,first,last) clones | `DEFINE_STRING_REPLACE_RANGE` | 20 | src/main/func_0028A860.c |
-| `string_replace_range_xd.h` | string_replace_range with temp destroyed differently | `DEFINE_STRING_REPLACE_RANGE_XD` | 5 | src/main/func_0013B500.c |
-| `string_reserve.h` | String_Reserve clones | `DEFINE_STRING_RESERVE` | 25 | src/main/func_0013B970.c |
-| `tstr_types.h` | 12-byte short/long string layout used by string template clones (see also sso_string.h) | `TStrLong, TStrShort, TStr` | 27 | src/main/func_00139920.c |
+| `canonical_key_copy.h` | Inlined 48-byte CanonicalKey copy (47 chars + NUL pad) | `CKC_COPY, CKC_COPY_S, CANONICAL_KEY_INIT` | 5 | src/SFOGame/Source/human_32.c |
+| `short_string_assign.h` | string assign clones | `DEFINE_SHORT_STRING_ASSIGN` | 21 | src/SFOGame/Source/main_6.c |
+| `short_string_assign_inl.h` | string assign with String_Replace inlined | `DEFINE_SHORT_STRING_ASSIGN_INL` | 2 | src/SFOGame/Source/GuiOnlineConnect_11.c |
+| `short_string_compare.h` | compare(a,b) for the short/long string | `DEFINE_SHORT_STRING_COMPARE` | 4 | src/main/game/game_13C2F0.c |
+| `short_string_copy_ctor.h` | string copy ctor clones | `DEFINE_SHORT_STRING_COPY_CTOR` | 6 | src/main/game/game_13BCB0.c |
+| `short_string_data.h` | string data() clones | `DEFINE_SHORT_STRING_DATA` | 2 | src/SFOGame/Source/human_21.c |
+| `short_string_replace.h` | replace(pos,n,const string&) clones | `DEFINE_SHORT_STRING_REPLACE` | 20 | src/SFOGame/Source/main_6.c |
+| `short_string_substr_ctor.h` | string(src,pos,n) clones | `DEFINE_SHORT_STRING_SUBSTR_CTOR` | 2 | src/Libs/SFOLib/Source/guiTextEditWidget_12.c |
+| `string_compare_range.h` | String_Compare(self,pos,n,s,len) clones | `DEFINE_STRING_COMPARE_RANGE` | 10 | src/SFOGame/Source/main.c |
+| `string_int_pair_copy_ctor.h` | {string; int} pair copy ctor | `DEFINE_STRING_INT_PAIR_COPY_CTOR` | 3 | src/Libs/SFOLib/Source/USBKeybd.c |
+| `string_replace_range.h` | replace(pos,n,first,last) clones | `DEFINE_STRING_REPLACE_RANGE` | 20 | src/SFOGame/Source/GuiAccountLogin_4.c |
+| `string_replace_range_xd.h` | string_replace_range with temp destroyed differently | `DEFINE_STRING_REPLACE_RANGE_XD` | 5 | src/main/game/game_13B500.c |
+| `string_reserve.h` | String_Reserve clones | `DEFINE_STRING_RESERVE` | 25 | src/main/game/game_13B500.c |
+| `tstr_types.h` | 12-byte short/long string layout used by string template clones (see also sso_string.h) | `TStrLong, TStrShort, TStr` | 27 | src/main/game/game_139920.c |
 
 ## VU0, quad copies and vectors
 
 | Header | Provides | Use | Users | Example |
 |---|---|---|---|---|
-| `node_world_q4.h` | 64-byte matrix returned by value (retail copy ctor form) | `NODE_WORLD_Q4_BODY` | 4 | src/main/gobj/func_003CCFF0.c |
-| `pp_quad_copy.h` | Pipelined 64-byte copy / 3x3 transpose copy | `PP_COPY4` | 5 | src/main/func_001CF2D0.c |
+| `node_world_q4.h` | 64-byte matrix returned by value (retail copy ctor form) | `NODE_WORLD_Q4_BODY` | 4 | src/Libs/SFOLib/Source/gobj_6.c |
+| `pp_quad_copy.h` | Pipelined 64-byte copy / 3x3 transpose copy | `PP_COPY4` | 5 | src/SFOGame/Source/humanIk_10.c |
 | `q4_asm_copy.h` | 64-byte copy, two quads alternating (Q4Copy) | `Q4Copy` | 3 | src/main/func_0015BBB0.c |
-| `q4r.h` | 64-byte quad copy, last sq schedulable | `Q4COPY_R, Q4COPY_N` | 5 | src/main/node/func_0015C170.c |
-| `v4_asm_copy.h` | 16-byte quad copies in retail unfolded form (addiu; lq/sq) | `V4Copy, V4CopyNR, V4Load` | 44 | src/main/func_00179E40.c |
-| `vc_copy.h` | Freely scheduled unfolded quad copies (vc1) in MW asm | `VLoadF, VStoreN, VStoreF` | 37 | src/main/func_00179E40.c |
-| `vec4_with_comp.h` | o->v = o->v.With<F>(val) via stack temp | `VEC4_WITH_COMP_FUNC` | 2 | src/main/GuiAgentCreate/func_0028D530.c |
+| `q4r.h` | 64-byte quad copy, last sq schedulable | `Q4COPY_R, Q4COPY_N` | 5 | src/SFOGame/Source/Node_2.c |
+| `v4_asm_copy.h` | 16-byte quad copies in retail unfolded form (addiu; lq/sq) | `V4Copy, V4CopyNR, V4Load` | 44 | src/SFOGame/Source/gameCollision.c |
+| `vc_copy.h` | Freely scheduled unfolded quad copies (vc1) in MW asm | `VLoadF, VStoreN, VStoreF` | 37 | src/SFOGame/Source/gameCollision.c |
+| `vec4_with_comp.h` | o->v = o->v.With<F>(val) via stack temp | `VEC4_WITH_COMP_FUNC` | 2 | src/SFOGame/Source/GuiAgentCreate_10.c |
 | `vu0_addeq.h` | D += *P on VU0 | `VU0_ADDEQ1, VU0_ADDEQ2, VU0_ADDEQ3` | 2 | src/main/func_00180B60.c |
 | `vu0_ops.h` | VU0 macro-mode inline asm helpers (untyped 16-byte pointers) | `VU0_IsZero3, VU0_IsZero4, VU0_UnitMatrix` | 18 | src/main/func_00182290.c |
-| `vu0_quat_rot.h` | VU0 quaternion rotate/negate helpers | `VU0_QROT, VU0_NEG3` | 4 | src/main/game/func_00132530.c |
-| `vu0_scale_eq.h` | v *= k on VU0 (curve retime) | `CURVE_RETIME_FUNC` | 3 | src/main/func_001CF530.c |
-| `vu_byval.h` | By-value 16-byte parameter passed by address | `VU_BYVAL` | 1 | src/main/func_001CF3A0.c |
-| `zero_quad_store.h` | Store a zeroed quad through a stack temp | `ZERO_QUAD_STORE` | 2 | src/main/gameCamera/func_0017F820.c |
+| `vu0_quat_rot.h` | VU0 quaternion rotate/negate helpers | `VU0_QROT, VU0_NEG3` | 4 | src/SFOGame/Source/game_22.c |
+| `vu0_scale_eq.h` | v *= k on VU0 (curve retime) | `CURVE_RETIME_FUNC` | 3 | src/SFOGame/Source/humanIk_11.c |
+| `vu_byval.h` | By-value 16-byte parameter passed by address | `VU_BYVAL` | 1 | src/SFOGame/Source/humanIk_10.c |
+| `zero_quad_store.h` | Store a zeroed quad through a stack temp | `ZERO_QUAD_STORE` | 2 | src/SFOGame/Source/gameCamera_20.c |
 
 ## Messages and network
 
 | Header | Provides | Use | Users | Example |
 |---|---|---|---|---|
-| `ai_msg_pack.h` | Pack() (slot 2) of AI message classes | `AIMSG_PACK_BEGIN, AIMSG_PACK_END` | 7 | src/main/aiMsgs/func_0026F360.c |
-| `event_toggle_send.h` | Toggle helpers sending an event message when enabled | `DEFINE_EVENT_TOGGLE_SEND` | 3 | src/main/func_001C5710.c |
-| `message_clone.h` | Clone() of cMessage-derived msgs: guarded alloc + copy | `DEFINE_MESSAGE_CLONE` | 30 | src/main/func_0020E220.c |
-| `message_pack.h` | Message Pack() serialisers (MP_I/MP_S/MP_U/MP_H fields) | `DEFINE_MESSAGE_PACK, DEFINE_MESSAGE_PACK_NOTYPE, DEFINE_MESSAGE_PACK_PRE` | 38 | src/main/func_0020E4C0.c |
-| `msg_clone.h` | Message clone (new T(*self)) with inlined copy ctors | `MSG_CLONE_BEGIN` | 36 | src/main/func_00147A20.c |
-| `msg_clone_inline28.h` | Clone() of a 0x28-byte message, ctor fully inlined | `DEFINE_MSG_CLONE_INLINE28` | 2 | src/main/func_00323F00.c |
-| `net_local_id.h` | Inlined local-player net id helpers (D_00494178) | `NetLocalId, NetObjId` | 36 | src/main/func_003FAAB0.c |
-| `net_msg_clone.h` | Clone (slot 1) of network messages | `DEFINE_NET_MSG_CLONE` | 28 | src/main/func_0027B9C0.c |
-| `net_owner.h` | Session ownership test for 0x002D2xxx net handlers | `NetOwnerHdl` | 4 | src/main/func_002D1DC0.c |
-| `net_owner_map.h` | 0x0043Axxx owner-map updates (55-entry table D_00583888) | `DEFINE_NET_OWNER_MAP` | 5 | src/main/GenInfoObject/func_00439030.c |
-| `net_recv_guard.h` | NetRecvGuard scoped 'inside receive' flag (D_005723C8) | `NetRecvGuard` | 24 | src/main/func_0020E350.c |
-| `net_register_type.h` | Net message type registration (NETREG_BEGIN/FIELD/END) | `NETREG_BEGIN, NETREG_BEGIN_KEEP, NETREG_FIELD` | 15 | src/main/func_0020E420.c |
+| `ai_msg_pack.h` | Pack() (slot 2) of AI message classes | `AIMSG_PACK_BEGIN, AIMSG_PACK_END` | 7 | src/SFOGame/Source/AIMsgs.c |
+| `event_toggle_send.h` | Toggle helpers sending an event message when enabled | `DEFINE_EVENT_TOGGLE_SEND` | 3 | src/SFOGame/Source/GameParticle_6.c |
+| `message_clone.h` | Clone() of cMessage-derived msgs: guarded alloc + copy | `DEFINE_MESSAGE_CLONE` | 30 | src/SFOGame/Source/game_msg.c |
+| `message_pack.h` | Message Pack() serialisers (MP_I/MP_S/MP_U/MP_H fields) | `DEFINE_MESSAGE_PACK, DEFINE_MESSAGE_PACK_NOTYPE, DEFINE_MESSAGE_PACK_PRE` | 38 | src/SFOGame/Source/game_msg_4.c |
+| `msg_clone.h` | Message clone (new T(*self)) with inlined copy ctors | `MSG_CLONE_BEGIN` | 36 | src/SFOGame/Source/weapon_35.c |
+| `msg_clone_inline28.h` | Clone() of a 0x28-byte message, ctor fully inlined | `DEFINE_MSG_CLONE_INLINE28` | 2 | src/SFOGame/Source/NetQuickChatMsg_2.c |
+| `net_local_id.h` | Inlined local-player net id helpers (D_00494178) | `NetLocalId, NetObjId` | 36 | src/Libs/SFOLib/Source/NetObj_2.c |
+| `net_msg_clone.h` | Clone (slot 1) of network messages | `DEFINE_NET_MSG_CLONE` | 28 | src/SFOGame/Source/hud_netlobby_9.c |
+| `net_owner.h` | Session ownership test for 0x002D2xxx net handlers | `NetOwnerHdl` | 4 | src/SFOGame/Source/NetHuman_2.c |
+| `net_owner_map.h` | 0x0043Axxx owner-map updates (55-entry table D_00583888) | `DEFINE_NET_OWNER_MAP` | 5 | src/Libs/SFOLib/Source/GenInfoObject_4.c |
+| `net_recv_guard.h` | NetRecvGuard scoped 'inside receive' flag (D_005723C8) | `NetRecvGuard` | 24 | src/SFOGame/Source/game_msg_2.c |
+| `net_register_type.h` | Net message type registration (NETREG_BEGIN/FIELD/END) | `NETREG_BEGIN, NETREG_BEGIN_KEEP, NETREG_FIELD` | 15 | src/SFOGame/Source/game_msg_3.c |
 | `net_transfer_types.h` | C++ TransferController virtual view (net object transfer) | `TransferController, TransferObjectMethods, TransferTimerNode` | 4 | src/main/NetObjectMgr/func_0042CF30.c |
-| `net_write_one_word.h` | Serialize slot 4: write word at +0x24 | `DEFINE_NET_WRITE_ONE_WORD` | 3 | src/main/func_002100C0.c |
-| `net_write_two_words.h` | Serialize slot 4: write words at +0x24/+0x28 | `DEFINE_NET_WRITE_TWO_WORDS` | 3 | src/main/human/func_001B9900.c |
-| `network_admission.h` | C++ inline lobby admission checks over net globals (D_00572538, ...) + SoftwareDoubleBits | `retry_threshold, player_count, admission_available` | 4 | src/main/func_0042B4E0.c |
-| `network_session_types.h` | NetworkThreadStatus / NetworkGameAddress / NetworkGameList | `NetworkThreadStatus, NetworkGameAddress, NetworkGameList` | 2 | src/main/DME/func_0042A520.c |
-| `network_value_event_types.h` | NetworkValueEvent / NetworkValuePacket / handler typedef | `NetworkValueEvent, NetworkValuePacket` | 1 | src/main/func_00428CD0.c |
-| `npc_auth.h` | NpcAuth_IsLocal() + NetEvent_Send proto (net authority flags D_005721C0/C8) | `NpcAuth_IsLocal` | 36 | src/main/func_002D2D50.c |
-| `payload_message_clone.h` | Clone() of message with out-of-line payload copy | `DEFINE_PAYLOAD_MESSAGE_CLONE` | 4 | src/main/func_0013B190.c |
-| `payload_message_clone_latevt_p.h` | payload_message_clone_p, vtable stored after payload | `DEFINE_PAYLOAD_MESSAGE_CLONE_LATEVT_P` | 1 | src/main/func_003E4170.c |
+| `net_write_one_word.h` | Serialize slot 4: write word at +0x24 | `DEFINE_NET_WRITE_ONE_WORD` | 3 | src/SFOGame/Source/player_msg.c |
+| `net_write_two_words.h` | Serialize slot 4: write words at +0x24/+0x28 | `DEFINE_NET_WRITE_TWO_WORDS` | 3 | src/SFOGame/Source/human_130.c |
+| `network_admission.h` | C++ inline lobby admission checks over net globals (D_00572538, ...) + SoftwareDoubleBits | `retry_threshold, player_count, admission_available` | 4 | src/Libs/SFOLib/Source/DME_13.c |
+| `network_session_types.h` | NetworkThreadStatus / NetworkGameAddress / NetworkGameList | `NetworkThreadStatus, NetworkGameAddress, NetworkGameList` | 2 | src/Libs/SFOLib/Source/DME_8.c |
+| `network_value_event_types.h` | NetworkValueEvent / NetworkValuePacket / handler typedef | `NetworkValueEvent, NetworkValuePacket` | 1 | src/Libs/SFOLib/Source/ActivateMsg_3.c |
+| `npc_auth.h` | NpcAuth_IsLocal() + NetEvent_Send proto (net authority flags D_005721C0/C8) | `NpcAuth_IsLocal` | 36 | src/SFOGame/Source/NetNPC_2.c |
+| `payload_message_clone.h` | Clone() of message with out-of-line payload copy | `DEFINE_PAYLOAD_MESSAGE_CLONE` | 4 | src/main/game/game_13B0C0.c |
+| `payload_message_clone_latevt_p.h` | payload_message_clone_p, vtable stored after payload | `DEFINE_PAYLOAD_MESSAGE_CLONE_LATEVT_P` | 1 | src/Libs/SFOLib/Source/character_3.c |
 | `payload_message_clone_p.h` | payload_message_clone with base copy-ctor param | `DEFINE_PAYLOAD_MESSAGE_CLONE_P` | 0 | - |
-| `queue_two_member_msg.h` | Script command building a stack msg with two payload members | `DEFINE_QUEUE_TWO_MEMBER_MSG` | 3 | src/main/func_0020E8B0.c |
-| `stored_event_post.h` | Post a stored event (action 4 + angle) once | `DEFINE_STORED_EVENT_POST` | 2 | src/main/func_001D7940.c |
-| `transfer_cleanup_types.h` | Transfer cleanup: TransferObjectEntry/Node, TransferMessage, PendingTransferController | `TransferObjectEntry, TransferObjectNode, TransferMessage` | 4 | src/main/NetObjectMgr/func_0042D360.c |
-| `transfer_ownership_types.h` | Transfer ownership notices and iterator | `TransferObjectIterator, TransferRequestNotice, TransferReleaseNotice` | 1 | src/main/NetObjectMgr/func_0042DA30.c |
+| `queue_two_member_msg.h` | Script command building a stack msg with two payload members | `DEFINE_QUEUE_TWO_MEMBER_MSG` | 3 | src/SFOGame/Source/gameSound_msg_2.c |
+| `stored_event_post.h` | Post a stored event (action 4 + angle) once | `DEFINE_STORED_EVENT_POST` | 2 | src/SFOGame/Source/humanIk_28.c |
+| `transfer_cleanup_types.h` | Transfer cleanup: TransferObjectEntry/Node, TransferMessage, PendingTransferController | `TransferObjectEntry, TransferObjectNode, TransferMessage` | 4 | src/Libs/SFOLib/Source/NetObjectMgr_2.c |
+| `transfer_ownership_types.h` | Transfer ownership notices and iterator | `TransferObjectIterator, TransferRequestNotice, TransferReleaseNotice` | 1 | src/Libs/SFOLib/Source/NetObjectMgr_4.c |
 
 ## Library (ee-gcc) helpers
 
@@ -231,144 +231,144 @@ Rules of thumb:
 | `call_global_hook_p.h` | call_global_hook with the hook symbol as a parameter | `DEFINE_CALL_GLOBAL_HOOK_P` | 0 | - |
 | `call_with_global_arg.h` | gcc296 -G0: tail-call func_0010D1A0 with a global | `DEFINE_CALL_WITH_GLOBAL_ARG` | 2 | src/lib/func_002BC7C8.c |
 | `call_wrapper_o1.h` | Unoptimised one-call wrappers | `DEFINE_CALL_WRAPPER` | 6 | src/main/func_0020A610.c |
-| `float_to_int.h` | cvt.w.s float-to-int helper (C) | `DEFINE_FLOAT_TO_INT` | 2 | src/main/human/func_00190E50.c |
-| `packet_once_process.h` | gcc296: run func_0030F050 once on two packets | `DEFINE_PACKET_ONCE_PROCESS` | 2 | src/lib/func_0030FD30.c |
+| `float_to_int.h` | cvt.w.s float-to-int helper (C) | `DEFINE_FLOAT_TO_INT` | 2 | src/SFOGame/Source/human_38.c |
+| `packet_once_process.h` | gcc296: run func_0030F050 once on two packets | `DEFINE_PACKET_ONCE_PROCESS` | 2 | src/lib/medius/medius_30FD30.c |
 | `sinit_push.h` | Static-initialiser bodies at the end of .text | `DEFINE_SINIT_STORE1, DEFINE_SINIT_PUSH1, DEFINE_SINIT_PUSH2` | 0 | - |
-| `split_half_pair.h` | gcc296: first pass on n/2 then second pass | `DEFINE_SPLIT_HALF_PAIR` | 2 | src/lib/func_00322630.c |
+| `split_half_pair.h` | gcc296: first pass on n/2 then second pass | `DEFINE_SPLIT_HALF_PAIR` | 2 | src/lib/medius/medius_322630.c |
 | `status_report_wrapper.h` | gcc wrappers: forward args, report status on failure | `DEFINE_STATUS_REPORT_WRAPPER` | 13 | src/lib/func_002B5F98.c |
 
 ## Shared game-method bodies
 
 | Header | Provides | Use | Users | Example |
 |---|---|---|---|---|
-| `active_flag_release.h` | If active flag (+0x80) set: stop and release | `DEFINE_ACTIVE_FLAG_RELEASE` | 3 | src/main/func_002A8FD0.c |
-| `agent_record_has.h` | cAgentData_Has* lookups in a global definition table | `DEFINE_AGENT_RECORD_HAS` | 4 | src/main/AgentData/func_0032F680.c |
-| `child_list_iter.h` | Iterate a GUI widget's child list (widget +0x28) | `CHILD_LIST` | 7 | src/main/GuiAgentCreate/func_0028BF90.c |
-| `curve_count_down.h` | Curve count-down (func_0017D540 body) | `DEFINE_CURVE_COUNT_DOWN` | 3 | src/main/gameCamera/func_0017C8A0.c |
-| `event_sound_check.h` | Event handler: type1/sub0/id0x10 -> play sound | `DEFINE_EVENT_SOUND_CHECK` | 4 | src/main/func_00292820.c |
-| `fam5_timed_retry.h` | Per-frame retry timer on a sub-object | `DEFINE_TIMED_RETRY` | 3 | src/main/func_00461020.c |
-| `gated_vcall.h` | Call one virtual unless byte +0x2D set | `DEFINE_GATED_VCALL` | 2 | src/main/func_00280F20.c |
-| `gobj_flag_slot16.h` | GOBJ slot-16 method gated by flags +0x2C/+0x2D | `DEFINE_GOBJ_FLAG_SLOT16` | 2 | src/main/NIEvent/func_0023E9B0.c |
-| `gobj_v06_update.h` | GOBJ virtual 6 shared body | `DEFINE_GOBJ_V06_UPDATE` | 3 | src/main/GameGOBJ/func_00215270.c |
-| `gobj_v07_register.h` | GOBJ virtual 7 (pathed GOBJ register) | `DEFINE_GOBJ_V07_REGISTER` | 2 | src/main/GameGOBJ/func_002192F0.c |
-| `grid16_flag_test.h` | Bit 0 of cell (x,y) of a 16x16 byte grid | `DEFINE_GRID16_FLAG_TEST` | 4 | src/main/func_00455C50.c |
-| `idle_float_getter.h` | Float field getters (identical bodies) | `DEFINE_IDLE_FLOAT_GETTER` | 8 | src/main/func_00375210.c |
-| `label_text_refresh.h` | Screen refresh: set a child label's text | `DEFINE_LABEL_TEXT_REFRESH` | 3 | src/main/func_00292A20.c |
-| `last_key_time.h` | Time of the last 16-byte key in a list | `DEFINE_LAST_KEY_TIME` | 2 | src/main/interface_model/func_003F4190.c |
-| `linked_target_refresh.h` | Refresh linked target when state flags allow | `DEFINE_LINKED_TARGET_REFRESH` | 2 | src/main/GameGOBJ/func_00219E10.c |
-| `name_id_compare.h` | Compare entries by mapped name ids | `DEFINE_NAME_ID_COMPARE` | 2 | src/main/GuiMissionList/func_002AC900.c |
+| `active_flag_release.h` | If active flag (+0x80) set: stop and release | `DEFINE_ACTIVE_FLAG_RELEASE` | 3 | src/SFOGame/Source/GuiNetJoinMission_8.c |
+| `agent_record_has.h` | cAgentData_Has* lookups in a global definition table | `DEFINE_AGENT_RECORD_HAS` | 4 | src/SFOGame/Source/AgentData_14.c |
+| `child_list_iter.h` | Iterate a GUI widget's child list (widget +0x28) | `CHILD_LIST` | 7 | src/SFOGame/Source/GuiAgentCreate_3.c |
+| `curve_count_down.h` | Curve count-down (func_0017D540 body) | `DEFINE_CURVE_COUNT_DOWN` | 3 | src/SFOGame/Source/gameCamera_2.c |
+| `event_sound_check.h` | Event handler: type1/sub0/id0x10 -> play sound | `DEFINE_EVENT_SOUND_CHECK` | 4 | src/SFOGame/Source/GuiAgentLoad_3.c |
+| `fam5_timed_retry.h` | Per-frame retry timer on a sub-object | `DEFINE_TIMED_RETRY` | 3 | src/SFOGame/Source/GuiEndGameAwards_13.c |
+| `gated_vcall.h` | Call one virtual unless byte +0x2D set | `DEFINE_GATED_VCALL` | 2 | src/SFOGame/Source/playerCamera_6.c |
+| `gobj_flag_slot16.h` | GOBJ slot-16 method gated by flags +0x2C/+0x2D | `DEFINE_GOBJ_FLAG_SLOT16` | 2 | src/SFOGame/Source/NIEvent_29.c |
+| `gobj_v06_update.h` | GOBJ virtual 6 shared body | `DEFINE_GOBJ_V06_UPDATE` | 3 | src/SFOGame/Source/GameGOBJ_27.c |
+| `gobj_v07_register.h` | GOBJ virtual 7 (pathed GOBJ register) | `DEFINE_GOBJ_V07_REGISTER` | 2 | src/SFOGame/Source/GameGOBJ_37.c |
+| `grid16_flag_test.h` | Bit 0 of cell (x,y) of a 16x16 byte grid | `DEFINE_GRID16_FLAG_TEST` | 4 | src/SFOGame/Source/GuiStartMenu_13.c |
+| `idle_float_getter.h` | Float field getters (identical bodies) | `DEFINE_IDLE_FLOAT_GETTER` | 8 | src/Libs/SFOLib/Source/viewport_2.c |
+| `label_text_refresh.h` | Screen refresh: set a child label's text | `DEFINE_LABEL_TEXT_REFRESH` | 3 | src/SFOGame/Source/GuiAgentLoad_4.c |
+| `last_key_time.h` | Time of the last 16-byte key in a list | `DEFINE_LAST_KEY_TIME` | 2 | src/Libs/SFOLib/Source/animator.c |
+| `linked_target_refresh.h` | Refresh linked target when state flags allow | `DEFINE_LINKED_TARGET_REFRESH` | 2 | src/SFOGame/Source/GameGOBJ_41.c |
+| `name_id_compare.h` | Compare entries by mapped name ids | `DEFINE_NAME_ID_COMPARE` | 2 | src/SFOGame/Source/GuiMissionList_6.c |
 | `nievent_target_query.h` | cNIEventOBJ queries forwarded to target +0x140 | `DEFINE_NIEVENT_TARGET_QUERY` | 0 | - |
-| `nievent_v10.h` | cNIEvent* virtual 10 shared body | `DEFINE_NIEVENT_V10` | 3 | src/main/NIEvent/func_00237B50.c |
-| `npc_info_purge.h` | NPCInfoObject owned-entry list purge | `DEFINE_NPC_INFO_PURGE` | 2 | src/main/NPCInfoObject/func_00432910.c |
-| `npc_info_rec.h` | NPCInfoObject record + 0x14 update message | `NpcInfoRec, NpcInfoMsg` | 10 | src/main/NPCInfoObject/func_00432910.c |
-| `objective_set_label.h` | cObjective label setters (localized text) | `DEFINE_OBJECTIVE_SET_LABEL` | 8 | src/main/Objective/func_002283A0.c |
-| `player_ctl_level.h` | Player slot-18 clones gated by a global flag | `DEFINE_PLAYER_CTL_LEVEL` | 2 | src/main/func_002D7C80.c |
-| `root_mark_dirty_tree.h` | Set dirty flags 0xA0..0xA2 and recurse children | `DEFINE_ROOT_MARK_DIRTY_TREE` | 3 | src/main/human/func_001912E0.c |
+| `nievent_v10.h` | cNIEvent* virtual 10 shared body | `DEFINE_NIEVENT_V10` | 3 | src/SFOGame/Source/NIEvent_4.c |
+| `npc_info_purge.h` | NPCInfoObject owned-entry list purge | `DEFINE_NPC_INFO_PURGE` | 2 | src/Libs/SFOLib/Source/NPCInfoObject_4.c |
+| `npc_info_rec.h` | NPCInfoObject record + 0x14 update message | `NpcInfoRec, NpcInfoMsg` | 10 | src/Libs/SFOLib/Source/NPCInfoObject_4.c |
+| `objective_set_label.h` | cObjective label setters (localized text) | `DEFINE_OBJECTIVE_SET_LABEL` | 8 | src/SFOGame/Source/Objective.c |
+| `player_ctl_level.h` | Player slot-18 clones gated by a global flag | `DEFINE_PLAYER_CTL_LEVEL` | 2 | src/SFOGame/Source/NetPlayer.c |
+| `root_mark_dirty_tree.h` | Set dirty flags 0xA0..0xA2 and recurse children | `DEFINE_ROOT_MARK_DIRTY_TREE` | 3 | src/SFOGame/Source/human_41.c |
 | `serial_handle_equal.h` | Weak handle {target,serial} equality | `SerialHandle` | 0 | - |
-| `tank_obj_init.h` | cTank-style object init (vtable D_004DCF90, 0x78) | `TankObj` | 1 | src/main/tank/func_00284100.c |
-| `tank_obj_init_vt.h` | tank_obj_init with a unit-defined vtable | `TankObj` | 1 | src/main/tank/func_00283E10.c |
-| `tank_reset.h` | cTank reset (controller slot 0x11C) | `TankResetAim, TankResetTank` | 2 | src/main/tank/func_00282BB0.c |
+| `tank_obj_init.h` | cTank-style object init (vtable D_004DCF90, 0x78) | `TankObj` | 1 | src/SFOGame/Source/tank_10.c |
+| `tank_obj_init_vt.h` | tank_obj_init with a unit-defined vtable | `TankObj` | 1 | src/SFOGame/Source/tank_9.c |
+| `tank_reset.h` | cTank reset (controller slot 0x11C) | `TankResetAim, TankResetTank` | 2 | src/SFOGame/Source/tank.c |
 
 ## Per-area game types (*_types.h)
 
 | Header | Provides | Use | Users | Example |
 |---|---|---|---|---|
-| `AgentData_types.h` | cAgentData (agent progression, objectives, unlocks); STACK_COPY | `AgentScriptArg, cAgentData, ObjectiveRow` | 18 | src/main/AgentData/func_0032F310.c |
-| `Checkpoint_types.h` | cCheckpoint script class and its messages | `CheckpointScriptArg` | 4 | src/main/Checkpoint/func_0022DCF0.c |
-| `FileHalPS2_types.h` | PS2 file HAL handle (>=0xC8) | `FileHalFile` | 1 | src/main/FileHalPS2/func_00369820.c |
-| `GenInfoObject_types.h` | GenInfoObject list iterator | `GioListPos` | 1 | src/main/GenInfoObject/func_00439C40.c |
-| `Generator_types.h` | Generator linked-list node/pos | `GenListNode, GenListPos` | 2 | src/main/Generator/func_002203B0.c |
-| `GobjMan_types.h` | GobjId bitfield word, GobjScope/Entry/MapNode (object manager) | `GobjId, GobjScope, GobjEntry` | 8 | src/main/func_0040B6D0.c |
-| `GuiAgentCreate_types.h` | GuiAgentCreate entries/vectors | `AgentCreateEntry, AgentCreateEntryVec, Rec12` | 2 | src/main/GuiAgentCreate/func_0028D5D0.c |
-| `GuiAgentInfo_types.h` | GuiAgentInfo curves/anim channels/Mtx34 | `CurveSegment, CurveChannel, AnimChannel` | 5 | src/main/GuiAgentInfo/func_003636C0.c |
-| `GuiAgentModify_types.h` | GuiAgentModify entries/vectors | `AgentCreateEntry, AgentCreateEntryVec, Rec12` | 2 | src/main/GuiAgentModify/func_00341C10.c |
-| `GuiEquipmentSetup_types.h` | GuiEquipmentSetup and EquipSlot | `GuiEquipmentSetup, EquipSlot, EquipSetupState` | 5 | src/main/GuiEquipmentSetup/func_002A2EC0.c |
-| `GuiGameScreen_types.h` | GuiGameScreen, choice list, ScriptArg | `ScriptArg, GuiGameChild, GuiChoiceList` | 11 | src/main/func_00457040.c |
-| `GuiMissionList_types.h` | GuiMissionList | `GuiMissionList` | 1 | src/main/GuiMissionList/func_002ACC80.c |
-| `GuiNetMessages_types.h` | GuiNetMessages | `GuiNetMessages` | 1 | src/main/GuiNetMessages/func_00347A40.c |
-| `GuiScoresEquip_types.h` | GuiScoresEquip curves | `Float6, CurveSegment, CurveChannel` | 2 | src/main/GuiScoresEquip/func_0035E8C0.c |
-| `Loader_types.h` | Loader owned vector / StdList (see pop_reader.h for .pop parsing) | `LoaderOwnedVec, LoaderObj, StdList` | 5 | src/main/Loader/func_001C0500.c |
-| `MemCard_types.h` | Memory card state (>=0x0D) | `MemCardState` | 1 | src/main/MemCard/func_0040E320.c |
-| `MovieSubtitles_types.h` | Subtitle blocks/entries | `SubVec4, SubtitleBlock, SubtitleEntry` | 5 | src/main/MovieSubtitles/func_00411550.c |
-| `NIEvent_types.h` | cNIEvent script arg / vec3 / owned vec | `NIEventScriptArg, NIEventVec3, NIEventOwnedVec` | 6 | src/main/NIEvent/func_00237840.c |
-| `NetObj_types.h` | RbTree header (0x10), NetObjFlags | `RbTree, NetObjFlags` | 3 | src/main/NetObj/func_003FB720.c |
-| `NetObjectMgr_types.h` | NetObjectUpdate, NetSessionEntry, RbTree | `NetObjectUpdate, NetSessionEntry, RbTree` | 9 | src/main/func_00437830.c |
-| `Objective_types.h` | cObjective / cObjectiveMan, ScriptArg | `ScriptArg, cObjective, cObjectiveMan` | 10 | src/main/Objective/func_00224F30.c |
-| `SFOLobby_Account_types.h` | Lobby account fields | `LobbyAccount` | 1 | src/main/SFOLobby_Account/func_004459D0.c |
-| `SFOLobby_Callback_types.h` | Lobby state (D_00585E60) and callback results | `LobbyState, LobbyCallbackInfo, LobbyStatusResult` | 6 | src/main/func_004446A0.c |
-| `SFOLobby_Cell_types.h` | Lobby cell object | `LobbyCell` | 5 | src/main/SFOLobby_Cell/func_004499A0.c |
-| `SFOLobby_Lobby_types.h` | Lobby object (list at +0x38) | `LobbyLobby` | 1 | src/main/SFOLobby_Lobby/func_00450EC0.c |
-| `SFOLobby_Main_types.h` | Lobby main object | `LobbyMain` | 3 | src/main/SFOLobby_Main/func_00452C70.c |
-| `SpecFxDefs_types.h` | SpecFxDefs emitters, cNetSpawnParticleMsg, ScriptArg | `ScriptArg, SpecListPos, cNetSpawnParticleMsg` | 7 | src/main/SpecFxDefs/func_00230770.c |
-| `WaterFx_types.h` | WaterFx lists | `WaterListLink, WaterList, WaterListIter` | 3 | src/main/WaterFx/func_002B3920.c |
-| `aiMsgs_types.h` | cAI*Msg classes (0x24 base msg) | `cAIMsgBase, cAIGOBJMsg, cAINodeMsg` | 1 | src/main/aiMsgs/func_0026ECF0.c |
-| `ai_types.h` | cAI script object, AIGObj | `AIScriptArg, AIGObj, AIGObjSub` | 5 | src/main/ai/func_0016AB50.c |
-| `backpack_types.h` | cBackpack and item/crate messages | `BackpackScriptArg, BackpackLink, cBackpack` | 8 | src/main/backpack/func_00253C60.c |
-| `bullet_types.h` | Bullet manager (ptr vector at 0x78) | `BulletOwner` | 1 | src/main/bullet/func_00275750.c |
-| `callback_types.h` | Callback list iterator | `CbListPos` | 1 | src/main/callback/func_003EA2B0.c |
-| `character_types.h` | Character (0x0C) | `Character` | 1 | src/main/character/func_003E5EE0.c |
-| `collision_types.h` | ColTri / ColRef collision triangles | `ColTri, ColRef` | 2 | src/main/collision/func_003C0F30.c |
-| `envSettings_types.h` | EnvVec3 | `EnvVec3` | 1 | src/main/envSettings/func_00178420.c |
-| `fileman_types.h` | FileManEntry layout (>=0x9C; prefer fileman_entry.h) | `FileManEntry` | 1 | src/main/fileman/func_0036DEC0.c |
-| `fireObj_types.h` | cFireObj | `cFireObj` | 1 | src/main/fireObj/func_00261D10.c |
-| `frontCharacter_types.h` | FcVec word vector | `FcVec` | 1 | src/main/frontCharacter/func_0022A200.c |
-| `fstream_types.h` | fstream StdList | `StdList, ListInsertArgs` | 1 | src/main/fstream/func_003EB310.c |
-| `gameFrontEnd_types.h` | Front-end lists, widgets, screens | `FeListNode, FeListPos, FeWidget` | 3 | src/main/gameFrontEnd/func_002CAB70.c |
-| `gameGobjController_types.h` | cGameGobjController, cTimerExpiredMsg | `GgcScriptArg, cGameGobjController, cTimerExpiredMsg` | 3 | src/main/gameGobjController/func_0022F100.c |
-| `gameLight_types.h` | GameLightParams | `GameLightParams` | 2 | src/main/gameLight/func_00179490.c |
-| `gameSound_types.h` | Sound natives, SoundChannel, SoundMgr (see sound_event.h) | `SoundScriptArg, SoundChannel, SoundMgr` | 6 | src/main/gameSound/func_001C70D0.c |
-| `game_types.h` | src/main/game: Float4, Mtx34, lists | `Float4, Mtx34, ListIter` | 8 | src/main/game/func_0012F5B0.c |
-| `globalization_types.h` | LocEntry / LocTable (languages) | `LocEntry, LocTable` | 3 | src/main/globalization/func_003FE090.c |
-| `gobj_types.h` | cGOBJ base and GameGOBJ subclasses, ScriptArg | `ScriptArg, cGOBJ, cGOBJNotice` | 57 | src/main/gobj/func_003CC250.c |
-| `grenade_types.h` | Grenade projectile (vtable 0x004dc6c0) | `GrenadeDefData, Grenade` | 1 | src/main/grenade/func_0025AC20.c |
-| `group_types.h` | cGroup (PtrVec-shaped) | `GroupScriptArg, cGroup` | 3 | src/main/group/func_003D96D0.c |
-| `guiTextArrayWidget_types.h` | guiTextArrayWidget cells/rows | `TextArrayCell, TextArrayRow, TextArrayStore` | 14 | src/main/func_004282A0.c |
-| `guiTextListWidget_types.h` | guiTextListWidget entries | `TextListEntry, TextListEntryVec, TextListWidgetChild` | 11 | src/main/guiTextListWidget/func_00420E50.c |
-| `guiTextWidget_types.h` | guiTextWidget stream strings/records | `GuiStreamString, GuiWidgetStreamRecord, GuiTextStreamRecord` | 5 | src/main/func_0041F210.c |
-| `gui_grid_types.h` | GuiGridRect/Input/Widget (C++ vslots) | `GuiGridRect, GuiGridInput, GuiGridWidget` | 5 | src/main/func_00423670.c |
-| `gui_traversal_types.h` | GUI traversal: GuiMessageHandler vslots, TraversalWidget | `GuiMessageHandler, ChildNode, ChildList` | 9 | src/main/func_0041D400.c |
-| `hotbox_types.h` | cHotbox, cHotboxMsg | `HotboxScriptArg, cHotbox, cHotboxMsg` | 10 | src/main/hotbox/func_0016FB50.c |
-| `hudTargets_types.h` | hudTargets marker lists | `ListNode, ListPos, MarkerList` | 6 | src/main/hudTargets/func_00272CC0.c |
-| `hud_netlobby_types.h` | hud_netlobby ListPos | `ListPos` | 1 | src/main/hud_netlobby/func_0027B4A0.c |
-| `hud_types.h` | hud.cc HudElement, ScriptArg | `ScriptArg, ListPos, HudElement` | 10 | src/main/hud/func_002426A0.c |
-| `humanCollision_types.h` | HumanColPresetCfg | `HumanColPresetCfg` | 1 | src/main/humanCollision/func_001EB340.c |
-| `humanIk_types.h` | IK byte pairs/iterator | `IkBytePair, IkIter` | 2 | src/main/humanIk/func_001DB8A0.c |
-| `human_types.h` | src/main/human: Actor, links, Message | `ActorLink3584, ActorLink3524, Actor` | 46 | src/main/human/func_00184C60.c |
-| `interface_element_types.h` | IfElement (>=0x74) | `IfElement, StdList, ListInsertArgs` | 3 | src/main/interface_element/func_003E7ED0.c |
-| `interface_manager_types.h` | IfManager slots (0x18) | `IfMgrSlot, IfManager, IfRec12` | 3 | src/main/interface_manager/func_00413370.c |
-| `interface_model_types.h` | interface_model containers | `OwnedVec, RawVec, ListPos` | 9 | src/main/interface_model/func_003EF0F0.c |
-| `inventory_types.h` | cNetInventoryMsg | `cNetInventoryMsg` | 1 | src/main/inventory/func_00470C40.c |
+| `AgentData_types.h` | cAgentData (agent progression, objectives, unlocks); STACK_COPY | `AgentScriptArg, cAgentData, ObjectiveRow` | 18 | src/SFOGame/Source/AgentData_13.c |
+| `Checkpoint_types.h` | cCheckpoint script class and its messages | `CheckpointScriptArg` | 4 | src/SFOGame/Source/Checkpoint_3.c |
+| `FileHalPS2_types.h` | PS2 file HAL handle (>=0xC8) | `FileHalFile` | 1 | src/Libs/SFOLib/Source/FileHalPS2.c |
+| `GenInfoObject_types.h` | GenInfoObject list iterator | `GioListPos` | 1 | src/Libs/SFOLib/Source/GenInfoObject_10.c |
+| `Generator_types.h` | Generator linked-list node/pos | `GenListNode, GenListPos` | 2 | src/SFOGame/Source/Generator_18.c |
+| `GobjMan_types.h` | GobjId bitfield word, GobjScope/Entry/MapNode (object manager) | `GobjId, GobjScope, GobjEntry` | 8 | src/Libs/SFOLib/Source/GobjMan_6.c |
+| `GuiAgentCreate_types.h` | GuiAgentCreate entries/vectors | `AgentCreateEntry, AgentCreateEntryVec, Rec12` | 2 | src/SFOGame/Source/GuiAgentCreate_10.c |
+| `GuiAgentInfo_types.h` | GuiAgentInfo curves/anim channels/Mtx34 | `CurveSegment, CurveChannel, AnimChannel` | 5 | src/SFOGame/Source/GuiAgentInfo_7.c |
+| `GuiAgentModify_types.h` | GuiAgentModify entries/vectors | `AgentCreateEntry, AgentCreateEntryVec, Rec12` | 2 | src/SFOGame/Source/GuiAgentModify_7.c |
+| `GuiEquipmentSetup_types.h` | GuiEquipmentSetup and EquipSlot | `GuiEquipmentSetup, EquipSlot, EquipSetupState` | 5 | src/SFOGame/Source/GuiEquipmentSetup_4.c |
+| `GuiGameScreen_types.h` | GuiGameScreen, choice list, ScriptArg | `ScriptArg, GuiGameChild, GuiChoiceList` | 11 | src/SFOGame/Source/GuiStartMenu_19.c |
+| `GuiMissionList_types.h` | GuiMissionList | `GuiMissionList` | 1 | src/SFOGame/Source/GuiMissionList_8.c |
+| `GuiNetMessages_types.h` | GuiNetMessages | `GuiNetMessages` | 1 | src/SFOGame/Source/GuiNetMessages_6.c |
+| `GuiScoresEquip_types.h` | GuiScoresEquip curves | `Float6, CurveSegment, CurveChannel` | 2 | src/main/GuiScoresEquip/GuiScoresEquip_4.c |
+| `Loader_types.h` | Loader owned vector / StdList (see pop_reader.h for .pop parsing) | `LoaderOwnedVec, LoaderObj, StdList` | 5 | src/SFOGame/Source/Loader_8.c |
+| `MemCard_types.h` | Memory card state (>=0x0D) | `MemCardState` | 1 | src/Libs/SFOLib/Source/MemCard_4.c |
+| `MovieSubtitles_types.h` | Subtitle blocks/entries | `SubVec4, SubtitleBlock, SubtitleEntry` | 5 | src/Libs/SFOLib/Source/MovieSubtitles_4.c |
+| `NIEvent_types.h` | cNIEvent script arg / vec3 / owned vec | `NIEventScriptArg, NIEventVec3, NIEventOwnedVec` | 6 | src/SFOGame/Source/NIEvent_4.c |
+| `NetObj_types.h` | RbTree header (0x10), NetObjFlags | `RbTree, NetObjFlags` | 3 | src/Libs/SFOLib/Source/NetObj_4.c |
+| `NetObjectMgr_types.h` | NetObjectUpdate, NetSessionEntry, RbTree | `NetObjectUpdate, NetSessionEntry, RbTree` | 9 | src/Libs/SFOLib/Source/HeadSet_2.c |
+| `Objective_types.h` | cObjective / cObjectiveMan, ScriptArg | `ScriptArg, cObjective, cObjectiveMan` | 10 | src/SFOGame/Source/Objective.c |
+| `SFOLobby_Account_types.h` | Lobby account fields | `LobbyAccount` | 1 | src/Libs/SFOLobby/SFOLobby/SFOLobby_Account.c |
+| `SFOLobby_Callback_types.h` | Lobby state (D_00585E60) and callback results | `LobbyState, LobbyCallbackInfo, LobbyStatusResult` | 6 | src/Libs/SFOLobby/SFOLobby/SFO_MGCL_5.c |
+| `SFOLobby_Cell_types.h` | Lobby cell object | `LobbyCell` | 5 | src/Libs/SFOLobby/SFOLobby/SFOLobby_Cell.c |
+| `SFOLobby_Lobby_types.h` | Lobby object (list at +0x38) | `LobbyLobby` | 1 | src/Libs/SFOLobby/SFOLobby/SFOLobby_Lobby.c |
+| `SFOLobby_Main_types.h` | Lobby main object | `LobbyMain` | 3 | src/Libs/SFOLobby/SFOLobby/SFOLobby_Main_4.c |
+| `SpecFxDefs_types.h` | SpecFxDefs emitters, cNetSpawnParticleMsg, ScriptArg | `ScriptArg, SpecListPos, cNetSpawnParticleMsg` | 7 | src/SFOGame/Source/SpecFxDefs_4.c |
+| `WaterFx_types.h` | WaterFx lists | `WaterListLink, WaterList, WaterListIter` | 3 | src/SFOGame/Source/WaterFx_7.c |
+| `aiMsgs_types.h` | cAI*Msg classes (0x24 base msg) | `cAIMsgBase, cAIGOBJMsg, cAINodeMsg` | 1 | src/SFOGame/Source/AIMsgs.c |
+| `ai_types.h` | cAI script object, AIGObj | `AIScriptArg, AIGObj, AIGObjSub` | 5 | src/SFOGame/Source/ai_11.c |
+| `backpack_types.h` | cBackpack and item/crate messages | `BackpackScriptArg, BackpackLink, cBackpack` | 8 | src/SFOGame/Source/backpack_2.c |
+| `bullet_types.h` | Bullet manager (ptr vector at 0x78) | `BulletOwner` | 1 | src/SFOGame/Source/bullet_2.c |
+| `callback_types.h` | Callback list iterator | `CbListPos` | 1 | src/Libs/SFOLib/Source/callback_2.c |
+| `character_types.h` | Character (0x0C) | `Character` | 1 | src/Libs/SFOLib/Source/character_11.c |
+| `collision_types.h` | ColTri / ColRef collision triangles | `ColTri, ColRef` | 2 | src/Libs/SFOLib/Source/collision_13.c |
+| `envSettings_types.h` | EnvVec3 | `EnvVec3` | 1 | src/main/envSettings/envSettings_2.c |
+| `fileman_types.h` | FileManEntry layout (>=0x9C; prefer fileman_entry.h) | `FileManEntry` | 1 | src/Libs/SFOLib/Source/fileman.c |
+| `fireObj_types.h` | cFireObj | `cFireObj` | 1 | src/SFOGame/Source/fire.c |
+| `frontCharacter_types.h` | FcVec word vector | `FcVec` | 1 | src/SFOGame/Source/frontCharacter_2.c |
+| `fstream_types.h` | fstream StdList | `StdList, ListInsertArgs` | 1 | src/Libs/SFOLib/Source/fstream_4.c |
+| `gameFrontEnd_types.h` | Front-end lists, widgets, screens | `FeListNode, FeListPos, FeWidget` | 3 | src/SFOGame/Source/gameFrontEnd_13.c |
+| `gameGobjController_types.h` | cGameGobjController, cTimerExpiredMsg | `GgcScriptArg, cGameGobjController, cTimerExpiredMsg` | 3 | src/SFOGame/Source/gameGobjController_2.c |
+| `gameLight_types.h` | GameLightParams | `GameLightParams` | 2 | src/SFOGame/Source/gamelight_2.c |
+| `gameSound_types.h` | Sound natives, SoundChannel, SoundMgr (see sound_event.h) | `SoundScriptArg, SoundChannel, SoundMgr` | 6 | src/SFOGame/Source/gameSound_8.c |
+| `game_types.h` | src/main/game: Float4, Mtx34, lists | `Float4, Mtx34, ListIter` | 8 | src/SFOGame/Source/game_5.c |
+| `globalization_types.h` | LocEntry / LocTable (languages) | `LocEntry, LocTable` | 3 | src/Libs/SFOLib/Source/globalization_6.c |
+| `gobj_types.h` | cGOBJ base and GameGOBJ subclasses, ScriptArg | `ScriptArg, cGOBJ, cGOBJNotice` | 57 | src/Libs/SFOLib/Source/gobj.c |
+| `grenade_types.h` | Grenade projectile (vtable 0x004dc6c0) | `GrenadeDefData, Grenade` | 1 | src/SFOGame/Source/grenade_5.c |
+| `group_types.h` | cGroup (PtrVec-shaped) | `GroupScriptArg, cGroup` | 3 | src/Libs/SFOLib/Source/scriptManager.c |
+| `guiTextArrayWidget_types.h` | guiTextArrayWidget cells/rows | `TextArrayCell, TextArrayRow, TextArrayStore` | 14 | src/Libs/SFOLib/Source/ActivateMsg.c |
+| `guiTextListWidget_types.h` | guiTextListWidget entries | `TextListEntry, TextListEntryVec, TextListWidgetChild` | 11 | src/Libs/SFOLib/Source/guiTextListWidget.c |
+| `guiTextWidget_types.h` | guiTextWidget stream strings/records | `GuiStreamString, GuiWidgetStreamRecord, GuiTextStreamRecord` | 5 | src/Libs/SFOLib/Source/guiWidget_5.c |
+| `gui_grid_types.h` | GuiGridRect/Input/Widget (C++ vslots) | `GuiGridRect, GuiGridInput, GuiGridWidget` | 5 | src/Libs/SFOLib/Source/guiArrayWidget_6.c |
+| `gui_traversal_types.h` | GUI traversal: GuiMessageHandler vslots, TraversalWidget | `GuiMessageHandler, ChildNode, ChildList` | 9 | src/Libs/SFOLib/Source/guiWidget.c |
+| `hotbox_types.h` | cHotbox, cHotboxMsg | `HotboxScriptArg, cHotbox, cHotboxMsg` | 10 | src/SFOGame/Source/hotbox_2.c |
+| `hudTargets_types.h` | hudTargets marker lists | `ListNode, ListPos, MarkerList` | 6 | src/SFOGame/Source/hudTargets_2.c |
+| `hud_netlobby_types.h` | hud_netlobby ListPos | `ListPos` | 1 | src/SFOGame/Source/hud_netlobby_6.c |
+| `hud_types.h` | hud.cc HudElement, ScriptArg | `ScriptArg, ListPos, HudElement` | 10 | src/SFOGame/Source/hud_4.c |
+| `humanCollision_types.h` | HumanColPresetCfg | `HumanColPresetCfg` | 1 | src/SFOGame/Source/humanCollision_25.c |
+| `humanIk_types.h` | IK byte pairs/iterator | `IkBytePair, IkIter` | 2 | src/SFOGame/Source/humanIk_39.c |
+| `human_types.h` | src/main/human: Actor, links, Message | `ActorLink3584, ActorLink3524, Actor` | 46 | src/SFOGame/Source/human.c |
+| `interface_element_types.h` | IfElement (>=0x74) | `IfElement, StdList, ListInsertArgs` | 3 | src/Libs/SFOLib/Source/interface_element.c |
+| `interface_manager_types.h` | IfManager slots (0x18) | `IfMgrSlot, IfManager, IfRec12` | 3 | src/Libs/SFOLib/Source/interface_manager_3.c |
+| `interface_model_types.h` | interface_model containers | `OwnedVec, RawVec, ListPos` | 9 | src/Libs/SFOLib/Source/interface_model_10.c |
+| `inventory_types.h` | cNetInventoryMsg | `cNetInventoryMsg` | 1 | src/SFOGame/Source/inventory_6.c |
 | `loose00_types.h` | Loose src/main functions: LOS, collision presets, ... | `HumanColPreset, LosHitInfo, LosResult` | 73 | src/main/func_00100B30.c |
-| `loose01_types.h` | Loose src/main batch 01, ScriptArg | `HandleHolder, SlotTable14, ScalarCollection` | 84 | src/main/func_001EF410.c |
-| `loose02_types.h` | Loose src/main batch 02, ScriptArg, STACK_COPY | `ScriptArg, Float6, Mat3Words` | 66 | src/main/func_00291720.c |
-| `loose03_types.h` | Loose src/main 0x0032-0x003C: textures, ... | `TexInfo, TexEntry, TexRegistry` | 80 | src/main/func_0032AED0.c |
-| `loose04_types.h` | Loose src/main batch 04: GuiWidget, ... | `L4ScalarCollection, GuiWidget, GuiWidget4160A0` | 90 | src/main/func_003C9B20.c |
-| `loose05_types.h` | Loose src/main 0x0042B1F0-0x00476970 (lobby, GUI) | `GuiWidget, GuiWidget43BEF0, GuiWidget43CB20` | 35 | src/main/func_0043BEF0.c |
-| `man_types.h` | man.cc ManMatrix, ManEquipOwner | `ManMatrix, ManEquipOwner` | 4 | src/main/man/func_00384A00.c |
-| `map_types.h` | MapItem/MapEntry/MapView | `MapItem, MapEntry, MapView` | 2 | src/main/map/func_0026C7E0.c |
-| `materialProperties_types.h` | MaterialProps + tree | `MaterialProps, MaterialVec, MatTreeNode` | 2 | src/main/materialProperties/func_00409370.c |
-| `mem_types.h` | MemObj | `MemObj` | 1 | src/main/mem/func_0036C030.c |
-| `node_types.h` | cNode script class | `NodeScriptArg, NodeVec3, NodeScriptObj` | 4 | src/main/node/func_0015BE80.c |
-| `npc_types.h` | npc.cc / NPCInfoObject: NpcActor, NpcAi (see cnpc_vslots.h) | `NpcActor, NpcWeaponSet, NpcAi` | 56 | src/main/npc/func_001485E0.c |
-| `particle_types.h` | Particle emitters/slots | `ParticleEmitter, ParticleSlotTable, ParticleRelFlag` | 11 | src/main/particle/func_00397A80.c |
-| `path_types.h` | path.cc lists/pairs | `PathListLink, PathList, PathListNode` | 13 | src/main/path/func_0015D3B0.c |
-| `pickup_menu_types.h` | PickupMenu | `PickupMenu` | 1 | src/main/pickup_menu/func_00251040.c |
-| `playerControls_types.h` | InputState, PlayerCamera | `InputState, PlayerCamera, ControlsUnk934` | 7 | src/main/playerControls/func_002477B0.c |
-| `player_types.h` | cPlayer script class/component | `PlayerScriptArg, PlayerActor, PlayerInputState` | 4 | src/main/player/func_00175BC0.c |
-| `scriptBase_types.h` | scriptBase OwnedVec, ScriptType | `OwnedVec, ScriptType` | 10 | src/main/scriptBase/func_003D6570.c |
-| `scriptManager_types.h` | ScriptManager / Script, ScriptArg | `ScriptArg, ScriptManager, Script` | 16 | src/main/scriptManager/func_003D9D20.c |
-| `scriptUtils_types.h` | scriptUtils timers/callouts/arrays, ScriptArg | `ScriptArg, ScriptGroup, cNodeList` | 29 | src/main/func_0032E470.c |
-| `ska_types.h` | ska.cc skeletal animation | `SkaVec, SkaTimeStack, SkaTransitionReq` | 26 | src/main/ska/func_003AC4A0.c |
-| `skeleton_types.h` | Skeleton list iterator | `SkelListPos` | 1 | src/main/skeleton/func_003AA130.c |
-| `skybox_types.h` | cSkyboxGobj | `cSkyboxGobj` | 1 | src/main/skybox/func_003BC270.c |
-| `specfx_types.h` | specfx lists | `SpecFxListPos, SpecFx` | 2 | src/main/specfx/func_003EC1D0.c |
-| `system_types.h` | Receiver base class | `Receiver, ListReceiver` | 2 | src/main/system/func_003CB090.c |
-| `tank_types.h` | cTank, cTankTurret | `TankScriptArg, cTankTurret, cTank` | 13 | src/main/tank/func_00282980.c |
-| `targetManager_types.h` | TargetSlot | `TargetSlot` | 1 | src/main/targetManager/func_0022D630.c |
-| `taser_types.h` | Taser 64-byte records | `TaserEntry, TaserVec` | 1 | src/main/taser/func_00264360.c |
-| `texman_types.h` | TexManager and texture lists | `TexListNode, TexListIter, TexEntry` | 8 | src/main/texman/func_00380170.c |
-| `weapon_types.h` | Inventory, WeaponDef | `WeaponScriptArg, WeaponDef, InventorySlot` | 9 | src/main/weapon/func_00142AE0.c |
-| `xlib_types.h` | XlibWord / XlibObj | `XlibWord, XlibObj` | 2 | src/main/xlib/func_0037B2C0.c |
+| `loose01_types.h` | Loose src/main batch 01, ScriptArg | `HandleHolder, SlotTable14, ScalarCollection` | 84 | src/SFOGame/Source/humanCollision_41.c |
+| `loose02_types.h` | Loose src/main batch 02, ScriptArg, STACK_COPY | `ScriptArg, Float6, Mat3Words` | 66 | src/SFOGame/Source/GuiAgentCreate_17.c |
+| `loose03_types.h` | Loose src/main 0x0032-0x003C: textures, ... | `TexInfo, TexEntry, TexRegistry` | 80 | src/SFOGame/Source/GuiKeyboard.c |
+| `loose04_types.h` | Loose src/main batch 04: GuiWidget, ... | `L4ScalarCollection, GuiWidget, GuiWidget4160A0` | 90 | src/Libs/SFOLib/Source/message_3.c |
+| `loose05_types.h` | Loose src/main 0x0042B1F0-0x00476970 (lobby, GUI) | `GuiWidget, GuiWidget43BEF0, GuiWidget43CB20` | 35 | src/Libs/SFOLib/Source/guiScrollBarWidget_4.c |
+| `man_types.h` | man.cc ManMatrix, ManEquipOwner | `ManMatrix, ManEquipOwner` | 4 | src/Libs/SFOLib/Source/man_2.c |
+| `map_types.h` | MapItem/MapEntry/MapView | `MapItem, MapEntry, MapView` | 2 | src/SFOGame/Source/map_4.c |
+| `materialProperties_types.h` | MaterialProps + tree | `MaterialProps, MaterialVec, MatTreeNode` | 2 | src/Libs/SFOLib/Source/materialProperties_7.c |
+| `mem_types.h` | MemObj | `MemObj` | 1 | src/Libs/SFOLib/Source/mem_4.c |
+| `node_types.h` | cNode script class | `NodeScriptArg, NodeVec3, NodeScriptObj` | 4 | src/SFOGame/Source/Node.c |
+| `npc_types.h` | npc.cc / NPCInfoObject: NpcActor, NpcAi (see cnpc_vslots.h) | `NpcActor, NpcWeaponSet, NpcAi` | 56 | src/SFOGame/Source/npc_5.c |
+| `particle_types.h` | Particle emitters/slots | `ParticleEmitter, ParticleSlotTable, ParticleRelFlag` | 11 | src/Libs/SFOLib/Source/particle_3.c |
+| `path_types.h` | path.cc lists/pairs | `PathListLink, PathList, PathListNode` | 13 | src/SFOGame/Source/path_4.c |
+| `pickup_menu_types.h` | PickupMenu | `PickupMenu` | 1 | src/SFOGame/Source/pickup_menu.c |
+| `playerControls_types.h` | InputState, PlayerCamera | `InputState, PlayerCamera, ControlsUnk934` | 7 | src/SFOGame/Source/playerControls_4.c |
+| `player_types.h` | cPlayer script class/component | `PlayerScriptArg, PlayerActor, PlayerInputState` | 4 | src/SFOGame/Source/player_11.c |
+| `scriptBase_types.h` | scriptBase OwnedVec, ScriptType | `OwnedVec, ScriptType` | 10 | src/Libs/SFOLib/Source/scriptBase_5.c |
+| `scriptManager_types.h` | ScriptManager / Script, ScriptArg | `ScriptArg, ScriptManager, Script` | 16 | src/Libs/SFOLib/Source/scriptManager_3.c |
+| `scriptUtils_types.h` | scriptUtils timers/callouts/arrays, ScriptArg | `ScriptArg, ScriptGroup, cNodeList` | 29 | src/SFOGame/Source/AgentData_5.c |
+| `ska_types.h` | ska.cc skeletal animation | `SkaVec, SkaTimeStack, SkaTransitionReq` | 26 | src/Libs/SFOLib/Source/ska_10.c |
+| `skeleton_types.h` | Skeleton list iterator | `SkelListPos` | 1 | src/Libs/SFOLib/Source/skeleton_6.c |
+| `skybox_types.h` | cSkyboxGobj | `cSkyboxGobj` | 1 | src/Libs/SFOLib/Source/skybox_2.c |
+| `specfx_types.h` | specfx lists | `SpecFxListPos, SpecFx` | 2 | src/Libs/SFOLib/Source/specfx_3.c |
+| `system_types.h` | Receiver base class | `Receiver, ListReceiver` | 2 | src/Libs/SFOLib/Source/system_6.c |
+| `tank_types.h` | cTank, cTankTurret | `TankScriptArg, cTankTurret, cTank` | 13 | src/SFOGame/Source/BeamMsg_3.c |
+| `targetManager_types.h` | TargetSlot | `TargetSlot` | 1 | src/SFOGame/Source/targetManager_9.c |
+| `taser_types.h` | Taser 64-byte records | `TaserEntry, TaserVec` | 1 | src/SFOGame/Source/taser_7.c |
+| `texman_types.h` | TexManager and texture lists | `TexListNode, TexListIter, TexEntry` | 8 | src/Libs/SFOLib/Source/texman_3.c |
+| `weapon_types.h` | Inventory, WeaponDef | `WeaponScriptArg, WeaponDef, InventorySlot` | 9 | src/SFOGame/Source/weapon_11.c |
+| `xlib_types.h` | XlibWord / XlibObj | `XlibWord, XlibObj` | 2 | src/Libs/SFOLib/Source/xlib_7.c |
 
 ## Reference layouts synced from the port research (sfo_*)
 

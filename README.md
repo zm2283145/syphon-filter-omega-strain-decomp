@@ -27,15 +27,23 @@ here.
   Examples: `cHuman_Load`, `cTexMan_PatchupTDX`, `cGameSystem_Restart`.
   Functions that could not be matched with confidence keep descriptive or
   `func_XXXXXXXX` names.
-- **Layout** (reorganization in progress). `src/` is being moved to follow
-  the original project tree, for example
+- **Layout.** `src/` follows the original project tree, recovered from the
+  prototypes' debug information: `src/SFOGame/Source/` (the game),
+  `src/Libs/SFOLib/Source/`, `src/Libs/SFOLobby/SFOLobby/`, `src/Libs/989snd/ee/`
+  and `src/CW_PS2Support/` (CodeWarrior runtime), for example
   `src/SFOGame/Source/GuiAgentModify.c` and
-  `src/Libs/SFOLobby/SFOLobby/SFOLobby_Lobby.c`. Each original source file is
-  one C file once all of its functions are matched. Until then it is split into
-  numbered part-files (`Human.c`, `Human_2.c`, ...), with the unmatched code
-  still as assembly between them. SDK and middleware code without debug
-  information stays under `src/lib/`. The original files were C++ (`.cc`); they
-  keep the `.c` extension here for now.
+  `src/Libs/SFOLobby/SFOLobby/SFOLobby_Account.c`. Each original source file
+  is one C file where its code could be merged into one translation unit;
+  otherwise it is split into numbered part-files (`human.c`, `human_2.c`, ...)
+  in address order, with still-unmatched code as assembly between them.
+  `config/tu_ranges.txt` lists each original file's address range. New matches
+  inside a file's range go to `<file>/func_XXXXXXXX.c` (for example
+  `src/SFOGame/Source/human/func_00190000.c`) until `tools/merge_units.py`
+  folds them into the part-files ([docs/merge_units.md](docs/merge_units.md)).
+  SDK and middleware code without debug information stays under `src/lib/`
+  (EE-GCC); template code at file boundaries and code added after the
+  prototypes stays under `src/main/`. The original files were C++ (`.cc`);
+  they keep the `.c` extension here for now.
 - **Types.** The prototypes' debug information also records the original
   struct and class layouts and each function's local variables. It is used as a
   reference while matching. The retail build is a few months newer, so layouts
@@ -65,7 +73,8 @@ here.
     target.sha256         SHA-256 of the retail executable (the build target)
     elf_layout.json       ELF container metadata (header layout of the retail file)
     extra.ld              extra linker definitions
-  src/                    hand-written C (committed)
+  src/                    hand-written C (committed): SFOGame/, Libs/, CW_PS2Support/
+                          (original tree), lib/ (SDK, EE-GCC), main/ (unattributed)
   include/                headers (splat's generated macro.inc/include_asm.h are ignored)
   tools/                  helper scripts
   orig/                   PUT YOUR SCUS_972.64 HERE (ignored)
@@ -222,10 +231,13 @@ ranking nor compiler-trial output authorizes a match claim.
 2. In `config/splat.yaml`, insert a `c` subsegment at its start and an
    `asm` subsegment where the C unit ends, e.g.
    ```
-   - [0x030AE0, c, main/func_00130AE0]
+   - [0x030AE0, c, SFOGame/Source/game/func_00130AE0]
    - [0x030AF0, asm]
    ```
-3. Write `src/main/func_00130AE0.c`, run `python configure.py` and `ninja`.
+   (the path is the original file whose `config/tu_ranges.txt` range holds the
+   address; `tools/integrate_pending.py` does steps 2 and 3 for you).
+3. Write `src/SFOGame/Source/game/func_00130AE0.c`, run `python configure.py`
+   and `ninja`.
    The SHA-256 check is the final word; use objdiff to find differences.
    Only commit functions that build byte-identically.
 

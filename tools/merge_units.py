@@ -2,7 +2,7 @@
 """Merge per-function C units back into translation units.
 
 usage:
-    python tools/merge_units.py MODULE...          # e.g. main/aiMsgs lib/lgaud
+    python tools/merge_units.py MODULE...          # e.g. SFOGame/Source/AIMsgs lib/lgaud
     python tools/merge_units.py --all-complete     # every module with no asm left in its range
     python tools/merge_units.py --all              # every run of adjacent units of one module
     python tools/merge_units.py --dry-run ...      # print the groups, change nothing
@@ -13,8 +13,12 @@ asm/ for the symbol addresses and build/orig/SCUS_972.64.rom). CW38_DIR,
 CW50_DIR and CW304_DIR name the licensed Metrowerks installs, as for
 tools/check_match.py. See docs/merge_units.md.
 
-A *run* is a sequence of `c` subsegments of one module (src/<main|lib>/<module>/)
-with nothing between them in config/splat.yaml. Each run is cut into groups
+A *module* is one original source file, a path from config/tu_ranges.txt such
+as SFOGame/Source/game: its units are the part files src/SFOGame/Source/game.c,
+game_2.c, ... and the per-function units src/SFOGame/Source/game/*.c (see
+module_of). Units outside those files keep the older scheme, one module per
+directory src/<main|lib>/<module>/. A *run* is a sequence of `c` subsegments of
+one module with nothing between them in config/splat.yaml. Each run is cut into groups
 greedily in address order; a unit joins the current group only if the merged
 source, compiled and linked on its own at the retail addresses, reproduces the
 retail bytes of all of the group's code and data:
@@ -497,10 +501,18 @@ def read_chunks(path, kind):
         label = path.stem if FUNC_UNIT.match(path.stem) else path.stem
         return [Chunk(label, text if text.endswith("\n") else text + "\n", kind, is_cpp(text))]
     chunks, cur, label = [], None, None
+    # Text before the first block (some merged files hoist the includes and
+    # declarations their blocks share there) belongs to the first block, minus
+    # the generated title comment.
+    first = next(i for i, l in enumerate(lines) if BEGIN.match(l))
+    pre = "\n".join(lines[:first])
+    pre = re.sub(r"\A\s*/\*.*?\*/\n?", lambda m: "" if "merge_units" in m.group(0) else m.group(0), pre, flags=re.S)
+    pre = re.sub(r"^/\* headers shared by the blocks below \*/\n", "", pre.strip("\n") + "\n", flags=re.M)
+    preamble = [l for l in pre.split("\n") if not l.rstrip().endswith(TAG)] if pre.strip() else []
     for l in lines:
         m = BEGIN.match(l)
         if m:
-            cur, label = [], m.group(1); continue
+            cur, label = ([] if chunks else list(preamble)), m.group(1); continue
         m = END.match(l)
         if m and cur is not None:
             body = [x for x in cur if not x.rstrip().endswith(TAG)]
@@ -649,6 +661,10 @@ def synthesize(chunks, unit_dir, mw, title, cast=False):
         for n in undefs:
             out.append(f"#undef {n} {TAG}\n")
         if mw:
+            if "merge_flush_" not in body:
+                # an empty inline function: MW generates the block's deferred code here,
+                # under the block's own pragmas (C/C++ mode), before the pop
+                out.append(f"static inline void merge_flush_{c.label}(void) {{}} {TAG}\n")
             out.append(f"#pragma pop {TAG}\n")
         out.append(f"/* merge_units: end {c.label} */\n")
     return "".join(out)
@@ -742,14 +758,50 @@ def unit_kind(name, overrides):
     v = overrides.get(name)
     if v:
         return KIND_OF.get(v, v)
-    return "mw" if name.startswith("main/") else "gcc"
+    return "gcc" if ip.is_gcc_unit(name) else "mw"
+
+
+_SOURCES = None
+
+
+def source_modules():
+    """Original source files (config/tu_ranges.txt paths without extension)."""
+    global _SOURCES
+    if _SOURCES is None:
+        _SOURCES = ip.source_modules(ROOT)
+    return _SOURCES
 
 
 def module_of(name):
-    if not name or name.count("/") != 2 or name.startswith("data/"):
+    """The module a c unit is grouped in, or None if it is never merged.
+
+    Original source files: SFOGame/Source/game/<file> (a per-function unit) and
+    SFOGame/Source/game, game_2, ... (part files) all belong to module
+    SFOGame/Source/game. Older scheme: main/<module>/<file> and lib/<module>/<file>
+    belong to main/<module> and lib/<module>; main/<file> belongs to none."""
+    if not name or name.startswith("data/"):
         return None
-    mod = name.rsplit("/", 1)[0]
-    return None if mod in EXCLUDE_MODULES else mod
+    head = name.rsplit("/", 1)[0] if "/" in name else ""
+    if head.split("/")[0] in ("", "main", "lib"):
+        if name.count("/") != 2:
+            return None
+        return None if head in EXCLUDE_MODULES else head
+    if head in source_modules():
+        return head
+    stem = re.sub(r"_\d+$", "", name)
+    if stem in source_modules():
+        return stem
+    return None
+
+
+def is_source_module(mod):
+    return mod.split("/")[0] not in ("main", "lib")
+
+
+def files_dir(mod):
+    """Directory that holds a module's merged files: src/<dir of the original
+    file> for an original source file, src/<module> in the older scheme."""
+    return ROOT / "src" / (mod.rsplit("/", 1)[0] if is_source_module(mod) else mod)
 
 
 def runs(segs):
@@ -791,6 +843,25 @@ def data_of(segs):
 
 
 # --------------------------------------------------------------------------- checking
+def first_error(err):
+    """The compiler's first error message (later ones are mostly consequences)."""
+    lines = [l.strip() for l in (err or "").splitlines()]
+    for i, l in enumerate(lines):
+        if re.match(r"#\s+Error:", l) or re.search(r":\d+: ", l):
+            if l.startswith("#"):
+                # MW: '#   NNN: source', '#   Error:   ^', '#   message...' up to the next block
+                j = i + 1
+                msg = []
+                while j < len(lines) and lines[j].startswith("#") and not lines[j].startswith("###") \
+                        and not re.match(r"#\s+\d+:", lines[j]) and len(msg) < 4:
+                    msg.append(lines[j].lstrip("# ").strip()); j += 1
+                src = lines[i - 1].lstrip("# ").strip() if i else ""
+                return " ".join(msg) + " | at: " + src
+            return l
+    return " | ".join(lines[-8:])
+
+
+
 class Checker:
     def __init__(self, segs, end_off):
         import check_match as cm
@@ -836,7 +907,7 @@ class Checker:
         try:
             obj, err = self.cm.compile_with(kind, Path(src), ["-Iinclude", "-Isrc"], self.dirs)
             if obj is None:
-                return "compile: " + " | ".join(l.strip() for l in (err or "").splitlines()[-8:])
+                return "compile: " + first_error(err)
             start = self.segs[text_idx[0]][0] + BASE
             align = next(a for a in (16, 8, 4) if start % a == 0)
             if kind not in MW_KINDS or align != 16:
@@ -922,7 +993,8 @@ class Checker:
 # --------------------------------------------------------------------------- planning
 def plan_run(chk, mod, idx, segs, overrides, dpieces, log):
     """Greedy grouping of one run. Returns [(kind, [segment index], text or None)]."""
-    unit_dir = ROOT / "src" / mod
+    unit_dir = files_dir(mod)
+    unit_dir.mkdir(parents=True, exist_ok=True)
     units = []
     for i in idx:
         name = segs[i][2]
@@ -974,16 +1046,19 @@ def plan_run(chk, mod, idx, segs, overrides, dpieces, log):
 
 
 def name_groups(mod, groups, segs):
-    """<module>, <module>_2, ... for the merged groups in address order, skipping
-    names of units of the module that are not regrouped."""
+    """Names for the merged groups in address order, skipping names of units of
+    the module that are not regrouped: SFOGame/Source/game, game_2, ... for an
+    original source file; <module>/<base>, <base>_2, ... in the older scheme."""
     base = mod.rsplit("/", 1)[1]
+    prefix = mod if is_source_module(mod) else f"{mod}/{base}"
     merged = [g for g in groups if len(g[1]) > 1]   # a lone unit (merged before or not) stays as is
     mine = {segs[i][2] for g in merged for i in g[1]}
     taken = {n for _, t, n, _ in segs if t == "c" and n and n not in mine}
-    taken |= {f"{mod}/{p.stem}" for p in (ROOT / "src" / mod).glob("*.c")} - mine
+    rel = files_dir(mod).relative_to(ROOT / "src").as_posix()
+    taken |= {f"{rel}/{p.stem}" for p in files_dir(mod).glob("*.c")} - mine
     names, n = {}, 1
     for g in sorted(merged, key=lambda g: segs[g[1][0]][0]):
-        while (name := f"{mod}/{base}" + ("" if n == 1 else f"_{n}")) in taken:
+        while (name := prefix + ("" if n == 1 else f"_{n}")) in taken:
             n += 1
         names[id(g)] = name
         n += 1
@@ -1054,7 +1129,7 @@ def main():
                 continue
             kind, members, chunks, text, cast = g
             new = names[id(g)]
-            text = synthesize(chunks, ROOT / "src" / m, kind in MW_KINDS, f"{m}: {len(chunks)} files, "
+            text = synthesize(chunks, files_dir(m), kind in MW_KINDS, f"{m}: {len(chunks)} files, "
                               f"{segs[members[0]][0] + BASE:08X}-{segs[members[-1]][0] + BASE:08X}", cast)
             new_files[new] = text
             for i in members:
@@ -1089,6 +1164,7 @@ def main():
         if p.exists() and old not in new_files:
             p.unlink()
     for new, text in new_files.items():
+        (ROOT / "src" / (new + ".c")).parent.mkdir(parents=True, exist_ok=True)
         (ROOT / "src" / (new + ".c")).write_text(text, newline="\n")
     y[i0:i1] = ip.dump_segments(out, indent)
     (ROOT / "config" / "splat.yaml").write_text("\n".join(y), newline="\n")
@@ -1115,7 +1191,10 @@ def unmerge(args, y, i0, i1, segs, indent, end_off, overrides, op):
         chunks = read_chunks(path, kind)
         if len(chunks) < 2:
             sys.exit(f"{unit}: not a merged unit")
-        mod = unit.rsplit("/", 1)[0]
+        # per-function units go back to the module's directory: SFOGame/Source/game_2 ->
+        # SFOGame/Source/game/func_<ADDR>, main/aiMsgs/aiMsgs -> main/aiMsgs/func_<ADDR>
+        mod = module_of(unit) or unit.rsplit("/", 1)[0]
+        (ROOT / "src" / mod).mkdir(parents=True, exist_ok=True)
         texts = [standalone(chunks, j, ROOT / "src" / mod, kind in MW_KINDS) for j in range(len(chunks))]
         # new text subsegments
         starts = [c.addr - BASE for c in chunks]

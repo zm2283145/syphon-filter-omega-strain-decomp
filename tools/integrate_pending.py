@@ -5,9 +5,15 @@ usage: python tools/integrate_pending.py REPO PENDING_DIR
 
 Files are named <KIND>_<ADDR>.c, KIND being the compiler the match was made
 with: mw (3.0.3, the default), mw304, mw38, mw50, gcc (2.95.3), gcc296,
-gcc296g0, gcc29 or gcc29as296 (a bare <ADDR>.c is 2.95.3). Metrowerks files go to
-src/main/<tu>/func_<ADDR>.c, EE-GCC ones to src/lib/...; kinds other than the
-defaults get an entry in config/compiler_overrides.json.
+gcc296g0, gcc29 or gcc29as296 (a bare <ADDR>.c is 2.95.3). Where a file goes
+depends on the range of config/tu_ranges.txt that holds its address
+(unit_path): inside an original source file's range (a path such as
+SFOGame/Source/game.cc), a Metrowerks file becomes
+src/SFOGame/Source/game/func_<ADDR>.c, next to the part files game.c, game_2.c
+that tools/merge_units.py later merges it into (docs/merge_units.md). Elsewhere
+Metrowerks files go to src/main/[<tu>/]func_<ADDR>.c and EE-GCC files to
+src/lib/... . Kinds other than the defaults get an entry in
+config/compiler_overrides.json.
 
 Data: a file may define its own data (string literals, float tables, switch
 jump tables, initialised globals). Such a file is compiled (CW304_DIR,
@@ -45,6 +51,38 @@ OVR = {"mw304": "cwps2-3.04", "mw38": "cwps2-3.0b38", "mw50": "cwps2-3.0b50", "g
 MW_KINDS = ("mw", "mw304", "mw38", "mw50")
 PIECE_TYPES = (".data", ".rodata", ".sdata")  # configure.DATA_PIECE_TYPES
 SEG = re.compile(r"(\s*)- \[0x([0-9A-F]+), ([.\w]+)(?:, ([^\]]+))?\]\s*$")
+
+
+def load_tu_ranges(repo):
+    """[(start, end, tu)] from config/tu_ranges.txt (start/end: first/last function
+    address of the file). tu is the file name without '?' and extension: a bare
+    name (libgraph) for library ranges, or the original source path
+    (SFOGame/Source/game) for the files recovered from the prototype builds."""
+    ranges = []
+    for l in (Path(repo) / "config/tu_ranges.txt").read_text().splitlines():
+        if l.startswith("#") or not l.strip():
+            continue
+        s, e, n = l.split()[:3]
+        ranges.append((int(s, 16), int(e, 16), n.rstrip("?").rsplit(".", 1)[0]))
+    return ranges
+
+
+def source_modules(repo):
+    """Original source files (paths without extension) that units are grouped by."""
+    return {tu for _, _, tu in load_tu_ranges(repo) if "/" in tu}
+
+
+def is_gcc_unit(path):
+    """EE-GCC units live under src/lib/; every other C unit is Metrowerks."""
+    return path.startswith("lib/")
+
+
+def unit_path(tu, a, mw):
+    """Unit name (path under src/, no extension) for a new function at address a."""
+    if tu and "/" in tu:
+        # original source file: a per-function unit in <file>/ beside its part files
+        return f"{tu}/func_{a:08X}" if mw else f"lib/func_{a:08X}"
+    return ("main" if mw else "lib") + (f"/{tu}" if tu else "") + f"/func_{a:08X}"
 
 
 def load_segments(lines):
@@ -128,12 +166,7 @@ def main():
                 if m:
                     size[int(m.group(1), 16)] = want; want = None
 
-    ranges = []
-    for l in (repo / "config/tu_ranges.txt").read_text().splitlines():
-        if l.startswith("#") or not l.strip():
-            continue
-        s, e, n = l.split()[:3]
-        ranges.append((int(s, 16), int(e, 16), n.rstrip("?").rsplit(".", 1)[0]))
+    ranges = load_tu_ranges(repo)
 
     def tu_of(a):
         for s, e, n in ranges:
@@ -172,7 +205,7 @@ def main():
                 # a unit of several functions (tools/merge_units.py): the file would replace all of them
                 skipped.append((f.name, f"starts merged unit {path}; run tools/merge_units.py --unmerge first"))
                 continue
-            if path.startswith("main/") != mw:
+            if is_gcc_unit(path) == mw:
                 skipped.append((f.name, f"compiler kind does not fit unit {path}")); continue
             have = any(n == path and t.startswith(".") for _, t, n, _ in segs)
         else:
@@ -186,8 +219,7 @@ def main():
                     skipped.append((f.name, "static initialiser island takes Metrowerks files only")); continue
                 path = f"main/sinit/func_{a:08X}"
             else:
-                tu = tu_of(a)
-                path = ("main" if mw else "lib") + (f"/{tu}" if tu else "") + f"/func_{a:08X}"
+                path = unit_path(tu_of(a), a, mw)
         dst = repo / "src" / (path + ".c")
         if dst.exists() and not existing:
             skipped.append((f.name, "exists")); continue

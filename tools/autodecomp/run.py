@@ -277,14 +277,16 @@ FUNC_START = re.compile(r"^[A-Za-z_][\w \t\*]*?\b(\w+)\(([^;{]*)\)\s*\{", re.M)
 
 
 def read_units():
-    """Return {address: (next, name, body, {ident: extern_line})} for all functions in src/main."""
+    """Return {address: (next, name, body, {ident: extern_line})} for all functions in src/."""
     names = {}
     for line in (ROOT / "config" / "symbol_addrs.txt").read_text().splitlines():
         m = re.match(r"\s*(\w+)\s*=\s*(0x[0-9A-Fa-f]+)", line)
         if m:
             names[m.group(1)] = int(m.group(2), 16)
     units = {}
-    paths = [(p, "cc") for p in sorted((ROOT / "src" / "main").rglob("*.c"))]
+    # Metrowerks units: everything under src/ except src/lib (EE-GCC) and src/data
+    paths = [(p, "cc") for p in sorted((ROOT / "src").rglob("*.c"))
+             if p.relative_to(ROOT / "src").parts[0] not in ("lib", "data")]
     paths += [(p, "gcc") for p in sorted((ROOT / "src" / "lib").rglob("*.c"))]
     for path, kind in paths:
         text = path.read_text()

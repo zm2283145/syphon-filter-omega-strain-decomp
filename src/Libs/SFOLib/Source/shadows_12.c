@@ -1,3 +1,11 @@
+/*
+ * Libs/SFOLib/Source/shadows: 1 file, 003D37E0
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_003D37E0 */
+#pragma push /* merge_units */
 #pragma cplusplus on
 #include "types.h"
 #pragma always_inline on
@@ -115,3 +123,6 @@ extern "C" void cShadowMan_ProcessShadows(Shadow* sh)
         { int c; for (c = 0; c < sh->nCasters; c++) cShadowMan_ProcessCaster(sh, c); }
     }
 }
+static inline void merge_flush_func_003D37E0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003D37E0 */

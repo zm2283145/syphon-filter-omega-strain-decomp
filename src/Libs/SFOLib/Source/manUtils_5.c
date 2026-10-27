@@ -1,5 +1,5 @@
 /*
- * Libs/SFOLib/Source/manUtils: 5 files, 00404060-00404AA0
+ * Libs/SFOLib/Source/manUtils: 6 files, 00404060-00404D90
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -464,30 +464,36 @@ int cHogFile_GetBlockSize(Npc_404AA0* npc, int i);
 #endif /* merge_units */
 #define cHogFile_GetBlockSize(a0, a1) (cHogFile_GetBlockSize((Npc_S *)(a0), (a1))) /* merge_units */
 
+
 #if 0 /* merge_units */
 char* cHogFile_GetBlockName(Npc_404AA0* npc, int i);
 #endif /* merge_units */
 #define cHogFile_GetBlockName(a0, a1) (cHogFile_GetBlockName((Npc_S *)(a0), (a1))) /* merge_units */
+
 
 #if 0 /* merge_units */
 void* cHogFile_GetBlock_int(Npc_404AA0* npc, int i);
 #endif /* merge_units */
 #define cHogFile_GetBlock_int(a0, a1) ((void *)cHogFile_GetBlock_int((Npc_S *)(a0), (a1))) /* merge_units */
 
+
 #if 0 /* merge_units */
 int strcmp(char* a, char* b);
 #endif /* merge_units */
 #define strcmp(a0, a1) (strcmp((const void *)(a0), (const void *)(a1))) /* merge_units */
+
 
 #if 0 /* merge_units */
 unsigned int Monster_AddMonsterPart(Cache_404AA0* c, __int128 key, int k);
 #endif /* merge_units */
 #define Monster_AddMonsterPart(a0, a1, a2) (Monster_AddMonsterPart((Cache_S *)(a0), (a1), (a2))) /* merge_units */
 
+
 #if 0 /* merge_units */
 void Parts_SetManData(Rec_404AA0* r, void* pkt, int a, long long slot, long long k, long long z);
 #endif /* merge_units */
 #define Parts_SetManData(a0, a1, a2, a3, a4, a5) (Parts_SetManData((Rec_S *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+
 
 
 static inline __int128 k4AA0and(__int128 a, __int128 b) {
@@ -585,3 +591,110 @@ void Monster_LoadParts(Cache_404AA0* c, Npc_404AA0* npc)
 static inline void merge_flush_func_00404AA0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00404AA0 */
+
+/* merge_units: begin func_00404D90 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+/* Monster_FreePart: drop one reference to cached part i; on the last release of a part above the
+ * static range, release its two loaded streams ("<name><suffix>1", "<name><suffix>0"), clear their
+ * slots and the part's key. */
+
+struct Res { char c[0xA0]; };
+struct Slot { int a; int b; int stream; int d; };
+struct Cache {
+    char pad0[0xC8];
+    unsigned int nStatic;
+    char padCC[0x210 - 0xCC];
+    short refs[0x1500];
+    __int128 names[0x300];
+    Slot slots[0x100][2];
+};
+
+extern "C" {
+extern __int128 D_005716E0;
+void cFileMan_ctor_void(Res* r);
+void Libc_Strcpy(char* d, const char* s);
+void Libc_Strcat(char* d, const char* s);
+void cFileMan_EncodeFilename_charP_cFileIOP_bool(Res* r, char* name, int a, int b);
+#if 0 /* merge_units */
+void* GetFileStreamMan(void);
+#endif /* merge_units */
+#define GetFileStreamMan() ((void *)GetFileStreamMan()) /* merge_units */
+
+void cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode(void* l, Res* r, int f);
+void cFileMan_dtor(Res* r, int flags);
+void Monster_FreePart(Cache* c, unsigned int i);
+}
+
+/* quad/byte clear loop with addi counters and hand-placed nops (retail shape); no C equivalent */
+static inline void MemClear(void* d0, int n0)
+{
+    int n = n0;
+    void* dst = d0;
+    asm volatile {
+        .set noreorder
+        blez n, done
+        nop
+        andi $a0, dst, 0xF
+        andi $v1, n, 0xF
+        or $a0, $a0, $v1
+        nop
+        bgtz $a0, bytes
+        srl $v1, n, 4
+        nop
+        blez $v1, bytes
+        nop
+        nop
+    quads:
+        addi $v1, $v1, -1
+        sq $zero, 0(dst)
+        bgtz $v1, quads
+        addiu dst, dst, 0x10
+        b done
+        nop
+    bytes:
+        addi n, n, -1
+        sb $zero, 0(dst)
+        bgtz n, bytes
+        addiu dst, dst, 1
+    done:
+        .set reorder
+    }
+}
+
+
+void Monster_FreePart(Cache* c, unsigned int i)
+{
+    c->refs[i]--;
+    if (i < c->nStatic) return;
+    if (c->refs[i]) return;
+    {
+        Res r;
+        char name[0x20];
+        int k;
+        cFileMan_ctor_void(&r);
+        Libc_Strcpy(name, (char*)&c->names[i]);
+        Libc_Strcat(name, D_004BE830);
+        for (k = 1; k > 0; k--) {
+            if (c->slots[i][k].stream != c->slots[i][k - 1].stream && c->slots[i][k].stream) {
+                name[0xE] = '0' + k;
+                cFileMan_EncodeFilename_charP_cFileIOP_bool(&r, name, 0, 0);
+                cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode(GetFileStreamMan(), &r, 1);
+            }
+            MemClear(&c->slots[i][k], 16);
+        }
+        if (c->slots[i][0].stream) {
+            name[0xE] = '0';
+            cFileMan_EncodeFilename_charP_cFileIOP_bool(&r, name, 0, 0);
+            cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode(GetFileStreamMan(), &r, 1);
+        }
+        MemClear(&c->slots[i][0], 16);
+        c->names[i] = D_005716E0;
+        cFileMan_dtor(&r, -1);
+    }
+}
+#undef GetFileStreamMan /* merge_units */
+static inline void merge_flush_func_00404D90(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00404D90 */

@@ -1,3 +1,11 @@
+/*
+ * SFOGame/Source/decals: 1 file, 002797C0
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_002797C0 */
+#pragma push /* merge_units */
 #pragma cplusplus on
 #include "types.h"
 #include "vslot_pad.h"
@@ -153,3 +161,6 @@ void cDecalMan_AddProjectedDecal(DecalMgr_7C0* self, V* pos, int seed, V* normal
         }
     }
 }
+static inline void merge_flush_func_002797C0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_002797C0 */

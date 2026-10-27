@@ -14,6 +14,33 @@ See [PROGRESS.md](PROGRESS.md) for the current match percentage, evidence and
 open decisions, and [DECOMP_DEV.md](DECOMP_DEV.md) for listing on decomp.dev.
 To continue the work, start with [docs/HANDOFF.md](docs/HANDOFF.md).
 
+## Original names and source layout
+
+Function names and the source layout come from the game itself. Two prototype
+builds of the game shipped with their symbol tables and debug information:
+an October 2003 build and the January 2004 online beta. They are not included
+here.
+
+- **Names.** About 11,000 retail functions carry their original names, matched
+  from the prototypes to the retail executable. Class methods are written as
+  `Class_Method`, constructors and destructors as `Class_ctor` and `Class_dtor`.
+  Examples: `cHuman_Load`, `cTexMan_PatchupTDX`, `cGameSystem_Restart`.
+  Functions that could not be matched with confidence keep descriptive or
+  `func_XXXXXXXX` names.
+- **Layout** (reorganization in progress). `src/` is being moved to follow
+  the original project tree, for example
+  `src/SFOGame/Source/GuiAgentModify.c` and
+  `src/Libs/SFOLobby/SFOLobby/SFOLobby_Lobby.c`. Each original source file is
+  one C file once all of its functions are matched. Until then it is split into
+  numbered part-files (`Human.c`, `Human_2.c`, ...), with the unmatched code
+  still as assembly between them. SDK and middleware code without debug
+  information stays under `src/lib/`. The original files were C++ (`.cc`); they
+  keep the `.c` extension here for now.
+- **Types.** The prototypes' debug information also records the original
+  struct and class layouts and each function's local variables. It is used as a
+  reference while matching. The retail build is a few months newer, so layouts
+  can differ, and every match is still checked against the retail bytes.
+
 ## Toolchain (identified)
 
 | Part | Tool |

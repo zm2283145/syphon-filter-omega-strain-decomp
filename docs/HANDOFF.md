@@ -20,7 +20,7 @@ This is the state as the last Claude session stopped (usage limit). Read this fi
 
 **Not on `main` (work in progress in the last cloud workspace only):**
 
-1. **Original source layout reorganization (owner approved).** Move `src/` to mirror the original
+1. **Original source layout reorganization (owner approved).** Batch 1 is on `main` (`bb957776`): 4,593 units of 270 original files moved into `src/<original dir>/<stem>/`, `tu_ranges.txt` rebuilt from the prototype layout, and `merge_units.py` / `integrate_pending.py` taught the layout (tests in `tests/test_source_layout.py`). Still to do: merge each `<stem>/` folder into one `<stem>.c` (or part-files). Move `src/` to mirror the original
    project tree, for example `src/SFOGame/Source/GuiAgentModify.c` and
    `src/Libs/SFOLobby/SFOLobby/SFOLobby_Lobby.c`. SDK code stays in `src/lib/`, the extension
    stays `.c`, and one file per original source file is merged with `tools/merge_units.py`.
